@@ -23,6 +23,13 @@ class MuSportIcon extends StatelessWidget {
   }
 }
 
+/// The custom MatchUp glyphs drawn to sit next to Phosphor Regular (Iconography).
+abstract final class MuGlyph {
+  static const whistle = 'assets/icons/sport/whistle.svg';
+  static const trophy = 'assets/icons/sport/trophy.svg';
+  static const court = 'assets/icons/sport/court.svg';
+}
+
 enum MuMediaTileSize { row, tile }
 
 /// The media square of a ChoiceCard: `<sport>-soft` + sport icon, or `surface-muted` + a
@@ -30,13 +37,21 @@ enum MuMediaTileSize { row, tile }
 /// icon 28 in tiles).
 class MuSportTile extends StatelessWidget {
   const MuSportTile(this.sport, {super.key, this.size = MuMediaTileSize.row})
-      : icon = null;
+      : icon = null,
+        asset = null;
 
   const MuSportTile.icon(IconData this.icon, {super.key, this.size = MuMediaTileSize.row})
-      : sport = null;
+      : sport = null,
+        asset = null;
+
+  /// One of the custom MatchUp glyphs (`whistle`, `trophy`, `court`), e.g. [MuGlyph.whistle].
+  const MuSportTile.asset(String this.asset, {super.key, this.size = MuMediaTileSize.row})
+      : sport = null,
+        icon = null;
 
   final MuSport? sport;
   final IconData? icon;
+  final String? asset;
   final MuMediaTileSize size;
 
   // ChoiceCard.md: tile icon 28.
@@ -58,7 +73,15 @@ class MuSportTile extends StatelessWidget {
       ),
       child: sport != null
           ? MuSportIcon(sport!, size: iconSize)
-          : Icon(icon, size: iconSize, color: c.text),
+          : asset != null
+              ? SvgPicture.asset(
+                  asset!,
+                  width: iconSize,
+                  height: iconSize,
+                  colorFilter: ColorFilter.mode(c.text, BlendMode.srcIn),
+                  excludeFromSemantics: true,
+                )
+              : Icon(icon, size: iconSize, color: c.text),
     );
   }
 }

@@ -33,6 +33,7 @@ class MuBanner extends StatelessWidget {
     this.action,
     this.onDismiss,
     this.dismissLabel = 'Masquer',
+    this.footer,
   });
 
   final String title;
@@ -43,6 +44,9 @@ class MuBanner extends StatelessWidget {
   final MuAction? action;
   final VoidCallback? onDismiss;
   final String dismissLabel;
+
+  /// Extra content under the detail, e.g. an inline link (« Réinitialiser mon mot de passe »).
+  final Widget? footer;
 
   // Banner.md: the strip's bottom rule is the tone ink at 22 %.
   static const double _ruleAlpha = 0.22;
@@ -96,7 +100,11 @@ class MuBanner extends StatelessWidget {
         texts = Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
-          children: [titleText, ?detailText],
+          children: [
+            titleText,
+            ?detailText,
+            if (footer != null) ...[const SizedBox(height: MuSpace.s1), footer!],
+          ],
         );
       }
       if (wide) {
