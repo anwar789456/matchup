@@ -144,6 +144,8 @@ class MuCheckbox extends StatelessWidget {
           child: InkWell(
             onTap: _enabled ? _toggle : null,
             borderRadius: MuRadius.smAll,
+            // Keyboard focus shows the focus ring only, not a wash.
+            focusColor: Colors.transparent,
             child: ConstrainedBox(
               constraints: const BoxConstraints(
                 minHeight: MuSize.touchTarget,

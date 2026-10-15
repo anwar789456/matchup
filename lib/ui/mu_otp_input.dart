@@ -60,10 +60,11 @@ class _MuOtpInputState extends State<MuOtpInput> with TickerProviderStateMixin {
   Timer? _timer;
   int _secondsLeft = 0;
 
-  late final AnimationController _shake =
-      AnimationController(vsync: this, duration: MuMotion.slow);
-  late final AnimationController _caret =
-      AnimationController(vsync: this, duration: MuMotion.pulse ~/ 2);
+  late final AnimationController _shake = AnimationController(vsync: this, duration: MuMotion.slow);
+  late final AnimationController _caret = AnimationController(
+    vsync: this,
+    duration: MuMotion.pulse ~/ 2,
+  );
 
   TextEditingController get _controller => widget.controller ?? (_own ??= TextEditingController());
 
@@ -89,9 +90,11 @@ class _MuOtpInputState extends State<MuOtpInput> with TickerProviderStateMixin {
   @override
   void didUpdateWidget(MuOtpInput old) {
     super.didUpdateWidget(old);
-    if (widget.error != null && widget.error != old.error &&
-        !MediaQuery.of(context).disableAnimations) {
-      _shake.forward(from: 0);
+    if (widget.error != null && widget.error != old.error) {
+      if (!MediaQuery.of(context).disableAnimations) _shake.forward(from: 0);
+      // Keep what was typed; the next digit (or a paste) starts a new code.
+      _replaceNext = true;
+      _focus.requestFocus();
     }
     if (widget.resendIn != old.resendIn) _startCountdown();
   }
@@ -120,13 +123,42 @@ class _MuOtpInputState extends State<MuOtpInput> with TickerProviderStateMixin {
 
   void _rebuild() => setState(() {});
 
+  /// Tapping a filled box selects its digit, so the next keypress replaces just that box.
+  void _tapBox(double dx) {
+    _focus.requestFocus();
+    const pitch = MuSize.controlL + MuSpace.s2;
+    final i = (dx / pitch).floor().clamp(0, widget.length - 1);
+    final len = _controller.text.length;
+    _controller.selection = i < len
+        ? TextSelection(baseOffset: i, extentOffset: i + 1)
+        : TextSelection.collapsed(offset: len);
+  }
+
+  /// After an error, the next insertion replaces the whole code.
+  bool _replaceNext = false;
+
+  TextEditingValue _restartAfterError(TextEditingValue old, TextEditingValue next) {
+    if (!_replaceNext || next.text == old.text) return next;
+    _replaceNext = false;
+    if (next.text.length <= old.text.length) return next; // deletions edit in place
+    final inserted = next.text.length - old.text.length;
+    final end = next.selection.end.clamp(inserted, next.text.length);
+    final typed = next.text.substring(end - inserted, end);
+    return TextEditingValue(text: typed, selection: TextSelection.collapsed(offset: typed.length));
+  }
+
   bool get _locked => widget.verifying || widget.disabled != null || widget.success != null;
 
   @override
   Widget build(BuildContext context) {
     final c = context.mu;
     final code = _controller.text;
-    final active = _focus.hasFocus && !_locked ? math.min(code.length, widget.length - 1) : -1;
+    final sel = _controller.selection;
+    // A single selected digit (a tapped box) is the active one; otherwise the next empty box.
+    final selectedOne = sel.isValid && sel.end - sel.start == 1 ? sel.start : null;
+    final active = _focus.hasFocus && !_locked
+        ? (selectedOne ?? math.min(code.length, widget.length - 1))
+        : -1;
 
     final boxes = Row(
       mainAxisSize: MainAxisSize.min,
@@ -154,33 +186,38 @@ class _MuOtpInputState extends State<MuOtpInput> with TickerProviderStateMixin {
     final input = Stack(
       children: [
         Positioned.fill(
-          child: Opacity(
-            opacity: 0,
-            child: TextField(
-              controller: _controller,
-              focusNode: _focus,
-              autofocus: widget.autofocus,
-              enabled: !_locked,
-              keyboardType: TextInputType.number,
-              autofillHints: const [AutofillHints.oneTimeCode],
-              maxLength: widget.length,
-              showCursor: false,
-              enableInteractiveSelection: false,
-              inputFormatters: [
-                FilteringTextInputFormatter.digitsOnly,
-                LengthLimitingTextInputFormatter(widget.length),
-              ],
-              decoration: const InputDecoration(
-                counterText: '',
-                border: InputBorder.none,
-                enabledBorder: InputBorder.none,
-                focusedBorder: InputBorder.none,
-                filled: false,
+          // Taps go to the boxes (_tapBox), which move focus and selection themselves.
+          child: IgnorePointer(
+            child: Opacity(
+              opacity: 0,
+              child: TextField(
+                controller: _controller,
+                focusNode: _focus,
+                autofocus: widget.autofocus,
+                // Read-only, not disabled, while locked: disabling would drop keyboard focus.
+                readOnly: _locked,
+                keyboardType: TextInputType.number,
+                autofillHints: const [AutofillHints.oneTimeCode],
+                // No maxLength: on the web it caps the DOM input before the formatters run.
+                showCursor: false,
+                enableInteractiveSelection: false,
+                inputFormatters: [
+                  TextInputFormatter.withFunction(_restartAfterError),
+                  FilteringTextInputFormatter.digitsOnly,
+                  LengthLimitingTextInputFormatter(widget.length),
+                ],
+                decoration: const InputDecoration(
+                  counterText: '',
+                  border: InputBorder.none,
+                  enabledBorder: InputBorder.none,
+                  focusedBorder: InputBorder.none,
+                  filled: false,
+                ),
+                onChanged: (v) {
+                  widget.onChanged?.call(v);
+                  if (v.length == widget.length) widget.onCompleted?.call(v);
+                },
               ),
-              onChanged: (v) {
-                widget.onChanged?.call(v);
-                if (v.length == widget.length) widget.onCompleted?.call(v);
-              },
             ),
           ),
         ),
@@ -198,7 +235,7 @@ class _MuOtpInputState extends State<MuOtpInput> with TickerProviderStateMixin {
       },
       child: GestureDetector(
         behavior: HitTestBehavior.opaque,
-        onTap: _locked ? null : () => _focus.requestFocus(),
+        onTapUp: _locked ? null : (d) => _tapBox(d.localPosition.dx),
         child: input,
       ),
     );
@@ -207,11 +244,13 @@ class _MuOtpInputState extends State<MuOtpInput> with TickerProviderStateMixin {
     if (widget.verifying) {
       message = Semantics(
         liveRegion: true,
-        child: Row(children: [
-          MuSpinner(size: MuSize.iconXs, color: c.textSecondary),
-          const SizedBox(width: MuSpace.s2),
-          Text('Vérification du code…', style: MuType.caption.copyWith(color: c.textSecondary)),
-        ]),
+        child: Row(
+          children: [
+            MuSpinner(size: MuSize.iconXs, color: c.textSecondary),
+            const SizedBox(width: MuSpace.s2),
+            Text('Vérification du code…', style: MuType.caption.copyWith(color: c.textSecondary)),
+          ],
+        ),
       );
     } else if (widget.disabled != null) {
       message = MuFieldMessage.error(widget.disabled!);
@@ -223,7 +262,8 @@ class _MuOtpInputState extends State<MuOtpInput> with TickerProviderStateMixin {
       message = MuFieldMessage.helper(widget.helper!);
     }
 
-    final showResend = widget.success == null && (widget.resendIn != null || widget.onResend != null);
+    final showResend =
+        widget.success == null && (widget.resendIn != null || widget.onResend != null);
 
     return Semantics(
       container: true,
@@ -234,28 +274,41 @@ class _MuOtpInputState extends State<MuOtpInput> with TickerProviderStateMixin {
         children: [
           MuFieldLabel(label: widget.label, enabled: widget.disabled == null),
           const SizedBox(height: MuSpace.s2),
-          Directionality(textDirection: TextDirection.ltr, child: shaking),
-          if (message != null) ...[
-            const SizedBox(height: MuSpace.s2),
-            message,
-          ],
+          Directionality(
+            textDirection: TextDirection.ltr,
+            // 328 px of boxes scale down on very narrow screens instead of overflowing.
+            child: FittedBox(
+              fit: BoxFit.scaleDown,
+              alignment: AlignmentDirectional.centerStart,
+              child: shaking,
+            ),
+          ),
+          if (message != null) ...[const SizedBox(height: MuSpace.s2), message],
           if (showResend) ...[
             const SizedBox(height: MuSpace.s4),
             if (_secondsLeft > 0)
               Text.rich(
-                TextSpan(children: [
-                  const TextSpan(text: 'Renvoyer le code dans '),
-                  TextSpan(
-                    text: '${_secondsLeft ~/ 60}:${(_secondsLeft % 60).toString().padLeft(2, '0')}',
-                    style: MuType.numS.copyWith(color: c.text),
-                  ),
-                ]),
+                TextSpan(
+                  children: [
+                    const TextSpan(text: 'Renvoyer le code dans '),
+                    TextSpan(
+                      text:
+                          '${_secondsLeft ~/ 60}:${(_secondsLeft % 60).toString().padLeft(2, '0')}',
+                      style: MuType.numS.copyWith(color: c.text),
+                    ),
+                  ],
+                ),
                 style: MuType.body.copyWith(color: c.textSecondary),
               )
             else
               MuButton.link(
                 label: 'Renvoyer le code',
-                onPressed: widget.disabled != null || widget.verifying ? null : widget.onResend,
+                onPressed: widget.disabled != null || widget.verifying || widget.onResend == null
+                    ? null
+                    : () {
+                        widget.onResend!();
+                        setState(_startCountdown);
+                      },
               ),
           ],
         ],
@@ -293,12 +346,12 @@ class _Box extends StatelessWidget {
     final (Color fill, Color border, double width, Color text) = disabled
         ? (c.disabledFill, c.border, 1.0, c.textDisabled)
         : success
-            ? (c.successSoft, c.success, 1.0, c.successText)
-            : error
-                ? (c.surface, c.error, active ? 2.0 : 1.0, c.text)
-                : active
-                    ? (c.surface, c.focus, 2.0, c.text)
-                    : (c.surface, c.borderControl, 1.0, c.text);
+        ? (c.successSoft, c.success, 1.0, c.successText)
+        : error
+        ? (c.surface, c.error, active ? 2.0 : 1.0, c.text)
+        : active
+        ? (c.surface, c.focus, 2.0, c.text)
+        : (c.surface, c.borderControl, 1.0, c.text);
     return AnimatedContainer(
       duration: MuMotion.durationOf(context, MuMotion.fast),
       curve: MuMotion.enter,
@@ -313,11 +366,11 @@ class _Box extends StatelessWidget {
       child: digit != null
           ? Text(digit!, style: MuType.numL.copyWith(color: text))
           : caretFilled
-              ? FadeTransition(
-                  opacity: caret,
-                  child: Container(width: _caretWidth, height: _caretHeight, color: c.focus),
-                )
-              : null,
+          ? FadeTransition(
+              opacity: caret,
+              child: Container(width: _caretWidth, height: _caretHeight, color: c.focus),
+            )
+          : null,
     );
   }
 }

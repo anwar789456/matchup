@@ -93,18 +93,28 @@ class MuGameCard extends StatelessWidget {
                 height: _tile,
                 decoration: BoxDecoration(color: g.sport.soft(c), borderRadius: MuRadius.smAll),
                 alignment: Alignment.center,
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text(
-                      '${formatWeekday(g.start)} ${g.start.day}'.replaceAll('.', '').toUpperCase(),
-                      style: MuType.overline.copyWith(color: sportText),
-                    ),
-                    Directionality(
-                      textDirection: TextDirection.ltr,
-                      child: Text(formatTime(g.start), style: MuType.numM.copyWith(color: c.text)),
-                    ),
-                  ],
+                padding: const EdgeInsets.all(MuSpace.s1),
+                // Large text sizes shrink the tile content instead of overflowing it.
+                child: FittedBox(
+                  fit: BoxFit.scaleDown,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        '${formatWeekday(g.start)} ${g.start.day}'
+                            .replaceAll('.', '')
+                            .toUpperCase(),
+                        style: MuType.overline.copyWith(color: sportText),
+                      ),
+                      Directionality(
+                        textDirection: TextDirection.ltr,
+                        child: Text(
+                          formatTime(g.start),
+                          style: MuType.numM.copyWith(color: c.text),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
               const SizedBox(width: MuSpace.s3),
@@ -113,10 +123,12 @@ class MuGameCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Text(g.title,
-                        style: MuType.label.copyWith(color: c.text),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis),
+                    Text(
+                      g.title,
+                      style: MuType.label.copyWith(color: c.text),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
                     const SizedBox(height: MuSpace.s1),
                     Row(
                       children: [
@@ -144,10 +156,12 @@ class MuGameCard extends StatelessWidget {
                           const SizedBox(width: MuSpace.s2),
                         ],
                         Flexible(
-                          child: Text(spotsLabel,
-                              style: MuType.labelS.copyWith(color: c.text),
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis),
+                          child: Text(
+                            spotsLabel,
+                            style: MuType.labelS.copyWith(color: c.text),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
                         ),
                       ],
                     ),

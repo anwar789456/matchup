@@ -58,6 +58,7 @@ class MuPasswordField extends StatefulWidget {
     this.strength = false,
     this.rules,
     this.showRuleErrors = false,
+    this.newPassword = false,
     this.enabled = true,
     this.textInputAction,
     this.onChanged,
@@ -76,6 +77,9 @@ class MuPasswordField extends StatefulWidget {
   final bool strength;
   final List<MuPasswordRule>? rules;
   final bool showRuleErrors;
+
+  /// A new password without meter or rules (the confirmation field): `new-password` autofill.
+  final bool newPassword;
   final bool enabled;
   final TextInputAction? textInputAction;
   final ValueChanged<String>? onChanged;
@@ -119,7 +123,7 @@ class _MuPasswordFieldState extends State<MuPasswordField> {
 
   @override
   Widget build(BuildContext context) {
-    final isNew = widget.strength || widget.rules != null;
+    final isNew = widget.newPassword || widget.strength || widget.rules != null;
     final value = _controller.text;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,

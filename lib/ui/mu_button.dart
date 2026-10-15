@@ -28,7 +28,8 @@ class MuButton extends StatelessWidget {
     this.loading = false,
     this.success = false,
     this.fullWidth = false,
-  });
+  })  : inline = false,
+        linkStyle = null;
 
   const MuButton.primary({
     super.key,
@@ -42,7 +43,9 @@ class MuButton extends StatelessWidget {
     this.loading = false,
     this.success = false,
     this.fullWidth = false,
-  }) : variant = MuButtonVariant.primary;
+  })  : variant = MuButtonVariant.primary,
+        inline = false,
+        linkStyle = null;
 
   const MuButton.secondary({
     super.key,
@@ -56,7 +59,9 @@ class MuButton extends StatelessWidget {
     this.loading = false,
     this.success = false,
     this.fullWidth = false,
-  }) : variant = MuButtonVariant.secondary;
+  })  : variant = MuButtonVariant.secondary,
+        inline = false,
+        linkStyle = null;
 
   const MuButton.tertiary({
     super.key,
@@ -70,13 +75,19 @@ class MuButton extends StatelessWidget {
     this.loading = false,
     this.success = false,
     this.fullWidth = false,
-  }) : variant = MuButtonVariant.tertiary;
+  })  : variant = MuButtonVariant.tertiary,
+        inline = false,
+        linkStyle = null;
 
+  /// A text link. [inline] links sit inside a sentence: no 44 px row, [linkStyle] matches the
+  /// surrounding text (`label`, `label-l`…).
   const MuButton.link({
     super.key,
     required this.label,
     required this.onPressed,
     this.size = MuButtonSize.m,
+    this.inline = false,
+    this.linkStyle,
   })  : variant = MuButtonVariant.link,
         leading = null,
         trailing = null,
@@ -92,6 +103,12 @@ class MuButton extends StatelessWidget {
   final MuButtonSize size;
   final IconData? leading;
   final IconData? trailing;
+
+  /// Link only: sits inside running text.
+  final bool inline;
+
+  /// Link only: overrides the label style.
+  final TextStyle? linkStyle;
 
   /// Price per person, e.g. '15 DT'.
   final String? price;
@@ -137,7 +154,12 @@ class MuButton extends StatelessWidget {
     final enabled = onPressed != null && !loading;
 
     if (variant == MuButtonVariant.link) {
-      return _LinkButton(label: label, onPressed: onPressed, style: _labelStyle);
+      return _LinkButton(
+        label: label,
+        onPressed: onPressed,
+        style: linkStyle ?? _labelStyle,
+        inline: inline,
+      );
     }
 
     final style = _style(c);
@@ -284,11 +306,17 @@ class _Dot extends StatelessWidget {
 }
 
 class _LinkButton extends StatelessWidget {
-  const _LinkButton({required this.label, required this.onPressed, required this.style});
+  const _LinkButton({
+    required this.label,
+    required this.onPressed,
+    required this.style,
+    required this.inline,
+  });
 
   final String label;
   final VoidCallback? onPressed;
   final TextStyle style;
+  final bool inline;
 
   @override
   Widget build(BuildContext context) {
@@ -302,7 +330,7 @@ class _LinkButton extends StatelessWidget {
           onTap: onPressed,
           borderRadius: MuRadius.xsAll,
           child: ConstrainedBox(
-            constraints: const BoxConstraints(minHeight: MuSize.touchTarget),
+            constraints: BoxConstraints(minHeight: inline ? 0 : MuSize.touchTarget),
             child: Align(
               widthFactor: 1,
               child: Text(

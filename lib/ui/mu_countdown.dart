@@ -165,7 +165,7 @@ class _MuCountdownState extends State<MuCountdown> with SingleTickerProviderStat
             mainAxisSize: MainAxisSize.min,
             children: [
               iconWidget,
-              if (label != null) ...[const SizedBox(width: MuSpace.s2), label],
+              if (label != null) ...[const SizedBox(width: MuSpace.s2), Flexible(child: label)],
             ],
           ),
           SizedBox(height: widget.size == MuCountdownSize.hero ? MuSpace.s1 : MuSpace.s2),

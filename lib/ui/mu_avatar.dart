@@ -93,9 +93,11 @@ class MuAvatar extends StatelessWidget {
         children: [
           circle,
           if (showLevel)
+            // The ring sits outside the badge (a box-shadow in the spec), so it does not count
+            // in the offsets: end −6 / bottom −4 (XL −4 / 2).
             PositionedDirectional(
-              end: xl ? -MuSpace.s1 : -(MuSpace.s1 + _ring),
-              bottom: xl ? _ring : -MuSpace.s1,
+              end: (xl ? -MuSpace.s1 : -(MuSpace.s1 + _ring)) - _ring,
+              bottom: (xl ? _ring : -MuSpace.s1) - _ring,
               child: _LevelBadge(level: level!, size: size),
             ),
           if (online)
