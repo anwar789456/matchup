@@ -103,6 +103,10 @@ class _GalleryBodyState extends State<_GalleryBody> {
   String? _otpSuccess;
   final _otp = TextEditingController();
   final _email = TextEditingController(text: 'yassine.b@email.tn');
+  bool _lights = true;
+  String _courtType = 'Extérieur';
+  String? _surface = 'Gazon synthétique';
+  MuBillingPeriod _period = MuBillingPeriod.month;
 
   @override
   void dispose() {
@@ -599,6 +603,191 @@ class _GalleryBodyState extends State<_GalleryBody> {
             tone: MuBannerTone.neutral,
             title: 'Ta progression est enregistrée',
             detail: 'Tu peux reprendre plus tard.',
+          ),
+        ]),
+        _Section('Switch', [
+          MuSwitch(
+            value: _lights,
+            onChanged: (v) => setState(() => _lights = v),
+            label: 'Éclairage',
+            description: 'Projecteurs LED pour les matchs du soir',
+          ),
+          const SizedBox(height: MuSpace.s3),
+          MuSwitch(
+            value: _lights,
+            size: MuSwitchSize.s,
+            onChanged: (v) => setState(() => _lights = v),
+            label: 'Éclairage',
+          ),
+          const SizedBox(height: MuSpace.s3),
+          const MuSwitch(value: true, onChanged: null, label: 'Désactivé'),
+        ]),
+        _Section('RadioGroup', [
+          MuRadioGroup<String>(
+            label: 'Type',
+            horizontal: true,
+            value: _courtType,
+            onChanged: (v) => setState(() => _courtType = v),
+            options: const [
+              MuRadioOption(value: 'Extérieur', label: 'Extérieur'),
+              MuRadioOption(value: 'Intérieur', label: 'Intérieur'),
+            ],
+          ),
+        ]),
+        _Section('Select', [
+          MuSelect<String>(
+            label: 'Surface',
+            value: _surface,
+            onChanged: (v) => setState(() => _surface = v),
+            options: const [
+              MuSelectOption(value: 'Gazon synthétique', label: 'Gazon synthétique'),
+              MuSelectOption(value: 'Béton poreux', label: 'Béton poreux'),
+              MuSelectOption(value: 'Résine', label: 'Résine'),
+              MuSelectOption(value: 'Parquet', label: 'Parquet'),
+            ],
+          ),
+        ]),
+        _Section('StatusBadge', [
+          Wrap(
+            spacing: MuSpace.s2,
+            runSpacing: MuSpace.s2,
+            children: [
+              for (final s in MuStatus.values) MuStatusBadge(status: s),
+              const MuStatusBadge(
+                  status: MuStatus.pending, label: 'RIB en vérification', size: MuBadgeSize.s),
+            ],
+          ),
+        ]),
+        const _Section('WizardStepper', [
+          MuWizardStepper(
+            label: 'Espace propriétaire · étapes',
+            current: 2,
+            steps: [
+              MuWizardStep('Entreprise', summary: 'Arena Five SARL'),
+              MuWizardStep('Adresse', summary: 'La Marsa'),
+              MuWizardStep('Terrains'),
+              MuWizardStep('Horaires'),
+            ],
+          ),
+          SizedBox(height: MuSpace.s4),
+          MuWizardStepper(
+            label: 'Espace propriétaire · étapes',
+            variant: MuStepperVariant.compact,
+            current: 2,
+            steps: [
+              MuWizardStep('Entreprise'),
+              MuWizardStep('Adresse'),
+              MuWizardStep('Terrains'),
+              MuWizardStep('Horaires'),
+            ],
+          ),
+        ]),
+        _Section('FileUpload', [
+          MuFileUpload.dropzone(
+            label: 'Attestation de RIB',
+            title: 'Glisse ou choisis ton attestation',
+            linkPart: 'choisis ton attestation',
+            hint: 'PDF, JPG, PNG · 5 Mo max',
+            onAdd: () {},
+            onRemove: (_) {},
+            files: const [
+              MuUploadFile(id: 'a', name: 'Attestation RIB Arena Five.pdf', sizeBytes: 420000),
+              MuUploadFile(
+                id: 'b',
+                name: 'Relevé.pdf',
+                sizeBytes: 900000,
+                status: MuUploadStatus.uploading,
+                progress: 0.6,
+              ),
+            ],
+          ),
+          const SizedBox(height: MuSpace.s4),
+          MuFileUpload.grid(
+            label: 'Tes photos',
+            maxFiles: 20,
+            helper: 'La 1re photo sert de couverture.',
+            onAdd: () {},
+            onRemove: (_) {},
+            files: const [
+              MuUploadFile(id: '1', name: 'Terrain 1.jpg', sizeBytes: 2400000),
+              MuUploadFile(
+                id: '2',
+                name: 'Vestiaires.jpg',
+                sizeBytes: 1800000,
+                status: MuUploadStatus.uploading,
+                progress: 0.4,
+              ),
+              MuUploadFile(
+                id: '3',
+                name: 'Tribune de nuit.png',
+                sizeBytes: 14200000,
+                status: MuUploadStatus.error,
+                shortError: 'Trop lourde',
+              ),
+            ],
+          ),
+          const SizedBox(height: MuSpace.s4),
+          MuFileUpload.avatar(
+            label: 'Photo de profil',
+            name: 'Skander T.',
+            helper: 'JPG, PNG · visage bien visible',
+            onAdd: () {},
+          ),
+        ]),
+        _Section('PricingCard', [
+          MuPricingCard(
+            recommended: true,
+            chosen: true,
+            period: _period,
+            savings: '2 mois offerts',
+            onCta: () => setState(() => _period = _period == MuBillingPeriod.month
+                ? MuBillingPeriod.year
+                : MuBillingPeriod.month),
+            plan: const MuPlan(
+              name: 'Pro',
+              audience: 'Propriétaire',
+              pitch: 'Pour les complexes de plusieurs terrains.',
+              monthly: 149,
+              yearly: 1490,
+              features: [('Terrains illimités', true), ('Comptes gérants', false)],
+            ),
+          ),
+        ]),
+        const _Section('KpiCard', [
+          MuKpiCard(
+              label: 'Taux d’occupation', value: '—', note: 'Calculé dès ta première réservation'),
+          SizedBox(height: MuSpace.s3),
+          MuKpiCard(
+            label: 'Revenus du jour',
+            value: '1 240',
+            unit: 'DT',
+            delta: 1,
+            deltaText: '+12 %',
+            period: 'vs mer. dernier',
+          ),
+        ]),
+        _Section('EmptyState', [
+          MuEmptyState(
+            illustration: MuEmptyIllustration.bookings,
+            compact: true,
+            title: 'Aucune réservation pour l’instant',
+            description: 'Publie ton premier créneau : il apparaîtra aux joueurs de La Marsa.',
+            actions: [
+              MuButton.secondary(label: 'Ouvrir le planning', onPressed: () {}),
+            ],
+          ),
+        ]),
+        _Section('AiSuggestionCard', [
+          MuAiSuggestionCard(
+            context: 'Assistant programme',
+            title: 'L’IA peut proposer un plan de 4 semaines à partir de ta bio',
+            content: 'Rien n’est publié sans toi : tu relis et modifies chaque séance.',
+            reasonLead: 'Basé sur',
+            reason: 'ta bio et tes spécialités.',
+            primary: MuAction('Proposer un plan', () {}),
+            primaryIcon: PhosphorIcons.sparkle(),
+            secondary: MuAction('Plus tard', () {}),
+            onDismiss: () {},
           ),
         ]),
         const _Section('Avatar', [
