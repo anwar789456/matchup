@@ -1,0 +1,19 @@
+include: package:flutter_lints/flutter.yaml
+
+analyzer:
+  exclude:
+    - build/**
+    - android/**
+    - ios/**
+    - web/**
+    # Design handoff (reference only, not part of the app).
+    - design/**
+    # Generated from design/design-system/tokens.json — do not edit, do not lint.
+    - lib/theme/**
+
+linter:
+  rules:
+    - prefer_const_constructors
+    - prefer_const_declarations
+    - prefer_final_locals
+    - use_super_parameters

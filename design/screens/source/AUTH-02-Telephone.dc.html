@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Téléphone</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/matchup/tokens.css">
+<link rel="stylesheet" href="ds/matchup/components/bundle.css">
+<script src="ds/matchup/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0}
+a{color:var(--link)}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; box-sizing: border-box; display: flex; flex-direction: column; background: var(--surface); color: var(--text); font-family: var(--font-sans)">
+<div style="display: flex; align-items: center; justify-content: space-between; padding: 52px 8px 0 8px">
+<a href="AUTH-01-Inscription.dc.html" class="mu-iconbtn mu-iconbtn--l mu-iconbtn--ghost" aria-label="Retour" style="color: var(--text)"><x-import component-from-global-scope="MatchUp.Icon" name="arrow-left" size="{{i24}}"></x-import></a>
+</div>
+<div style="flex: 1; min-height: 0; overflow: auto; display: flex; flex-direction: column; gap: 24px; padding: 8px 16px 24px 16px">
+<div style="display: flex; flex-direction: column; gap: 8px">
+<h1 class="h1" style="margin: 0">Ajoute ton numéro</h1>
+<p class="body-l" style="margin: 0; color: var(--text-secondary)">Pour confirmer les parties et sécuriser les paiements.</p>
+</div>
+<x-import component-from-global-scope="MatchUp.PhoneField" default-value="20 123 456" helper="On t’envoie un code à 6 chiffres par SMS."></x-import>
+<div style="display: flex; flex-direction: column; gap: 16px; padding: 16px; border-radius: var(--radius-md); background: var(--surface-muted)">
+<div style="display: flex; align-items: flex-start; gap: 12px">
+<span style="display: inline-flex; flex: none; color: var(--text-secondary)"><x-import component-from-global-scope="MatchUp.Icon" name="calendar-check" size="{{i20}}"></x-import></span>
+<p class="body" style="margin: 0; color: var(--text-secondary)"><span class="label" style="color: var(--text)">Des parties confirmées.</span> Un numéro vérifié par joueur, c’est moins d’absents le jour J.</p>
+</div>
+<div style="display: flex; align-items: flex-start; gap: 12px">
+<span style="display: inline-flex; flex: none; color: var(--text-secondary)"><x-import component-from-global-scope="MatchUp.Icon" name="shield-check" size="{{i20}}"></x-import></span>
+<p class="body" style="margin: 0; color: var(--text-secondary)"><span class="label" style="color: var(--text)">Des paiements protégés.</span> On s’assure que c’est bien toi avant de débiter ta part.</p>
+</div>
+<div style="display: flex; align-items: flex-start; gap: 12px">
+<span style="display: inline-flex; flex: none; color: var(--text-secondary)"><x-import component-from-global-scope="MatchUp.Icon" name="lock-simple" size="{{i20}}"></x-import></span>
+<p class="body" style="margin: 0; color: var(--text-secondary)"><span class="label" style="color: var(--text)">Ton numéro reste privé.</span> Seuls les organisateurs de tes parties le voient.</p>
+</div>
+</div>
+</div>
+<div style="padding: 12px 16px 34px 16px; background: var(--surface); box-shadow: var(--elevation-2-up); display: flex; flex-direction: column; gap: 12px">
+<a href="AUTH-03-Code-SMS.dc.html" class="mu-btn mu-btn--primary mu-btn--xl mu-btn--block"><span class="mu-btn__content"><span class="mu-btn__label label-l">Recevoir le code</span></span></a>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() { return { yes: true, i20: 20, i24: 24 }; }
+}
+</script>
+</body>
+</html>

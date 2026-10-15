@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Bienvenue 1</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/matchup/tokens.css">
+<link rel="stylesheet" href="ds/matchup/components/bundle.css">
+<script src="ds/matchup/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0}
+a{color:var(--link)}
+</style>
+</helmet>
+<div data-theme="dark" style="width: 390px; height: 844px; box-sizing: border-box; position: relative; overflow: hidden; display: flex; flex-direction: column; background: var(--bg); color: var(--text); font-family: var(--font-sans)">
+<div aria-hidden="true" style="position: absolute; top: 96px; left: 0; right: 0; height: 500px">
+<x-import component-from-global-scope="MatchUp.CourtArt" variant="poster" sport="football" dc-props="{{art}}"></x-import>
+<div style="position: absolute; inset: 0; background: linear-gradient(180deg, var(--bg) 0%, transparent 22%, transparent 60%, var(--bg) 100%)"></div>
+</div>
+<div style="position: relative; display: flex; align-items: center; justify-content: space-between; padding: 52px 8px 0 8px">
+<div style="width: 48px; height: 48px"></div>
+<a href="ONB-04-Bienvenue-3.dc.html" class="mu-btn mu-btn--tertiary mu-btn--m"><span class="mu-btn__content"><span class="mu-btn__label label">Passer</span></span></a>
+</div>
+<div aria-hidden="true" style="position: relative; flex: 1; min-height: 0; display: flex; flex-direction: column; justify-content: flex-end; gap: 12px; padding: 0 16px">
+<div class="mu-card" style="align-self: flex-start; width: 300px; box-sizing: border-box; padding: 12px 16px 16px 16px; display: flex; flex-direction: column; gap: 12px; background: var(--surface-elevated)">
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 8px">
+<span class="overline" style="color: var(--text-secondary)">À ton niveau</span>
+<x-import component-from-global-scope="MatchUp.Chip" kind="level" level="{{lvMe}}" size="s"></x-import>
+</div>
+<div style="display: flex; justify-content: space-between">
+<div style="display: flex; flex-direction: column; align-items: center; gap: 6px; width: 56px">
+<x-import component-from-global-scope="MatchUp.Avatar" name="Mariem K." size="m" level="{{lv1}}"></x-import>
+<span class="caption" style="color: var(--text-secondary)">Mariem</span>
+</div>
+<div style="display: flex; flex-direction: column; align-items: center; gap: 6px; width: 56px">
+<x-import component-from-global-scope="MatchUp.Avatar" name="Skander T." size="m" level="{{lv2}}"></x-import>
+<span class="caption" style="color: var(--text-secondary)">Skander</span>
+</div>
+<div style="display: flex; flex-direction: column; align-items: center; gap: 6px; width: 56px">
+<x-import component-from-global-scope="MatchUp.Avatar" name="Ines M." size="m" level="{{lv3}}"></x-import>
+<span class="caption" style="color: var(--text-secondary)">Ines</span>
+</div>
+<div style="display: flex; flex-direction: column; align-items: center; gap: 6px; width: 56px">
+<x-import component-from-global-scope="MatchUp.Avatar" name="Hamza R." size="m" level="{{lv4}}"></x-import>
+<span class="caption" style="color: var(--text-secondary)">Hamza</span>
+</div>
+</div>
+</div>
+<div>
+<x-import component-from-global-scope="MatchUp.GameCard" variant="compact" sport="football" venue="Arena Five" court="Terrain 2" place="La Marsa" start="2025-10-18T20:00:00" spots-total="{{n10}}" spots-left="{{n2}}" price="{{n15}}" level-min="{{lvMin}}" level-max="{{lvMax}}"></x-import>
+</div>
+</div>
+<div style="position: relative; display: flex; flex-direction: column; align-items: center; gap: 12px; padding: 24px 24px 0 24px; text-align: center">
+<h1 class="h1" style="margin: 0; text-wrap: balance">Trouve des joueurs à ton niveau</h1>
+<p class="body-l" style="margin: 0; color: var(--text-secondary); text-wrap: balance">Rejoins des parties près de chez toi, équilibrées selon le niveau de chacun.</p>
+</div>
+<div style="position: relative; padding: 24px 16px 0 16px">
+<x-import component-from-global-scope="MatchUp.StepIndicator" variant="dots" step="{{n1}}" total="{{n3}}" label="Diapo 1 sur 3"></x-import>
+</div>
+<div style="position: relative; padding: 24px 16px 34px 16px; display: flex; flex-direction: column; gap: 12px">
+<a href="ONB-03-Bienvenue-2.dc.html" class="mu-btn mu-btn--primary mu-btn--xl mu-btn--block"><span class="mu-btn__content"><span class="mu-btn__label label-l">Suivant</span><x-import component-from-global-scope="MatchUp.Icon" name="arrow-right" size="{{i24}}"></x-import></span></a>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      i24: 24, n1: 1, n2: 2, n3: 3, n10: 10, n15: 15,
+      lvMe: 3.5, lv1: 3.5, lv2: 3.8, lv3: 3.2, lv4: 4.0, lvMin: 3, lvMax: 4.5,
+      art: { style: { width: '100%', height: '100%' } }
+    };
+  }
+}
+</script>
+</body>
+</html>

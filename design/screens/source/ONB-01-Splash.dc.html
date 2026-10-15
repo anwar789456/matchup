@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Splash</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/matchup/tokens.css">
+<link rel="stylesheet" href="ds/matchup/components/bundle.css">
+<script src="ds/matchup/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0}
+@keyframes mu-splash-bar{from{transform:translateX(-100%)}to{transform:translateX(250%)}}
+@media (prefers-reduced-motion: reduce){.mu-splash-bar{animation:none!important}}
+</style>
+</helmet>
+<a href="ONB-02-Bienvenue-1.dc.html" aria-label="Ouvrir MatchUp" data-theme="dark" style="width: 390px; height: 844px; box-sizing: border-box; position: relative; overflow: hidden; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 20px; background: var(--ink-900); color: var(--white); text-decoration: none; font-family: var(--font-sans)">
+<div style="position: relative; display: flex; flex-direction: column; align-items: center; gap: 16px">
+<x-import component-from-global-scope="MatchUp.Logo" tone="dark" height="{{logoH}}"></x-import>
+<p class="body-l" style="margin: 0; color: var(--ink-300)">Joue. Réserve. Progresse.</p>
+</div>
+<div aria-hidden="true" style="position: absolute; bottom: 72px; left: 155px; width: 80px; height: 4px; border-radius: 9999px; background: rgba(255,255,255,0.12); overflow: hidden">
+<div class="mu-splash-bar" style="width: 40%; height: 100%; border-radius: 9999px; background: var(--volt-400); animation: mu-splash-bar 1.4s cubic-bezier(0.2, 0, 0, 1) infinite"></div>
+</div>
+</a>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() { return { logoH: 44 }; }
+}
+</script>
+</body>
+</html>

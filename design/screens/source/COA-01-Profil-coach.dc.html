@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Coach · Profil</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/matchup/tokens.css">
+<link rel="stylesheet" href="ds/matchup/components/bundle.css">
+<script src="ds/matchup/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0}
+a{color:var(--link)}
+.ob-compact{display:none}
+.ob-hours .mu-tf__head{position:absolute!important;width:1px;height:1px;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+@media (max-width: 1199px){.ob-draft{display:none!important}}
+@media (max-width: 959px){.ob-aside{display:none!important}.ob-compact{display:flex!important}}
+@media (max-width: 719px){.ob-cols{grid-template-columns:1fr!important}}
+</style>
+</helmet>
+<div class="dc-root" style="min-height: 900px; box-sizing: border-box; display: flex; background: var(--bg); color: var(--text); font-family: var(--font-sans)">
+<aside class="ob-aside" data-theme="dark" style="flex: none; width: 304px; box-sizing: border-box; display: flex; flex-direction: column; gap: var(--space-8); padding: var(--space-6) var(--space-6) var(--space-6) var(--space-8); background: var(--nav-bg); color: var(--text)">
+<div style="display: flex; flex-direction: column; gap: var(--space-5)">
+<div style="display: flex; align-items: center; height: 40px"><x-import component-from-global-scope="MatchUp.Logo" tone="dark" height="{{logoH}}"></x-import></div>
+<span style="align-self: flex-start; display: inline-flex; align-items: center; gap: var(--space-2); padding: var(--space-1) var(--space-3) var(--space-1) var(--space-2); border-radius: var(--radius-full); background: var(--surface-elevated); color: var(--text)"><x-import component-from-global-scope="MatchUp.Icon" name="sport-whistle" size="{{i16}}"></x-import><span class="label-s">Espace coach</span></span>
+</div>
+<div style="display: flex; flex-direction: column; gap: var(--space-1)">
+<p class="h3" style="margin: 0">Deviens coach sur MatchUp</p>
+<p class="caption" style="margin: 0; color: var(--text-secondary)">3 étapes · environ 5 min</p>
+</div>
+<x-import component-from-global-scope="MatchUp.WizardStepper" variant="vertical" label="Espace coach · étapes" steps="{{steps}}" current="{{current}}"></x-import>
+<div style="margin-top: auto; display: flex; gap: var(--space-3); padding: var(--space-4); border-radius: var(--radius-md); background: var(--surface-elevated)">
+<span style="flex: none; display: inline-flex; color: var(--text-secondary)"><x-import component-from-global-scope="MatchUp.Icon" name="lifebuoy" size="{{i20}}"></x-import></span>
+<div style="display: flex; flex-direction: column; gap: 2px">
+<span class="label">Besoin d’aide ?</span>
+<span class="caption" style="color: var(--text-secondary)">Appelle-nous au +216 71 234 567, du lundi au samedi, de 9h00 à 18h00.</span>
+</div>
+</div>
+</aside>
+<main style="flex: 1; min-width: 0; display: flex; flex-direction: column">
+<div class="ob-compact" style="flex-direction: column; gap: var(--space-4); padding: var(--space-4) var(--space-8); background: var(--surface); border-bottom: 1px solid var(--border)">
+<div style="display: flex; align-items: center; justify-content: space-between; gap: var(--space-4)"><x-import component-from-global-scope="MatchUp.Logo" height="{{logoH}}"></x-import><span class="label-s" style="display: inline-flex; align-items: center; gap: var(--space-2); color: var(--text-secondary)"><x-import component-from-global-scope="MatchUp.Icon" name="sport-whistle" size="{{i16}}"></x-import>Espace coach</span></div>
+<x-import component-from-global-scope="MatchUp.WizardStepper" variant="compact" label="Espace coach · étapes" steps="{{steps}}" current="{{current}}"></x-import>
+</div>
+<div style="flex: 1; display: flex; justify-content: center; padding: var(--space-10) var(--space-8) var(--space-8)">
+<div style="width: 100%; max-width: 720px; display: flex; flex-direction: column; gap: var(--space-6)">
+<div style="display: flex; flex-direction: column; gap: var(--space-2)">
+<span class="overline" style="color: var(--text-secondary)">Étape 1 sur 3 · Profil</span>
+<h1 class="h1" style="margin: 0">Présente-toi aux joueurs</h1>
+<p class="body-l" style="margin: 0; color: var(--text-secondary)">Les élèves choisissent d’abord un coach, puis un programme. Sois précis.</p>
+</div>
+<div class="mu-card" style="padding: var(--space-8); display: flex; flex-direction: column; gap: var(--space-5)"><div class="ob-cols" style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-5) var(--space-4)"><x-import component-from-global-scope="MatchUp.FileUpload" variant="avatar" label="Photo de profil" name="Skander T." helper="JPG, PNG · visage bien visible"></x-import><x-import component-from-global-scope="MatchUp.Select" size="m" label="Ville où tu coaches" options="{{cities}}" default-value="lac2" helper="Les élèves cherchent un coach près de chez eux."></x-import></div><x-import component-from-global-scope="MatchUp.TextField" size="m" multiline="{{yes}}" rows="{{bioRows}}" label="Bio" max-length="{{bioMax}}" counter="{{yes}}" default-value="{{bio}}"></x-import><div style="height: 1px; background: var(--border)"></div><div role="group" aria-labelledby="coa-spec" style="display: flex; flex-direction: column; gap: var(--space-3)">
+<div style="display: flex; align-items: baseline; justify-content: space-between; gap: var(--space-4)"><span class="label" id="coa-spec">Spécialités</span><span class="caption" style="color: var(--text-secondary)">{{specCount}}</span></div>
+<div style="display: flex; flex-wrap: wrap; gap: var(--space-2)"><x-import component-from-global-scope="MatchUp.Chip" kind="filter" selected="{{sPadel}}" on-click="{{tPadel}}">Padel</x-import><x-import component-from-global-scope="MatchUp.Chip" kind="filter" selected="{{sPrepa}}" on-click="{{tPrepa}}">Préparation physique</x-import><x-import component-from-global-scope="MatchUp.Chip" kind="filter" selected="{{sService}}" on-click="{{tService}}">Service</x-import><x-import component-from-global-scope="MatchUp.Chip" kind="filter" selected="{{sDebutants}}" on-click="{{tDebutants}}">Débutants</x-import><x-import component-from-global-scope="MatchUp.Chip" kind="filter" selected="{{sFilet}}" on-click="{{tFilet}}">Jeu au filet</x-import><x-import component-from-global-scope="MatchUp.Chip" kind="filter" selected="{{sTactique}}" on-click="{{tTactique}}">Tactique</x-import><x-import component-from-global-scope="MatchUp.Chip" kind="filter" selected="{{sJuniors}}" on-click="{{tJuniors}}">Juniors</x-import><x-import component-from-global-scope="MatchUp.Chip" kind="filter" selected="{{sCompetition}}" on-click="{{tCompetition}}">Compétition</x-import></div>
+</div><div class="ob-cols" style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-5) var(--space-4)">
+<div role="group" aria-labelledby="coa-sports" style="display: flex; flex-direction: column; gap: var(--space-3)"><span class="label" id="coa-sports">Sports</span><div style="display: flex; flex-wrap: wrap; gap: var(--space-2)"><x-import component-from-global-scope="MatchUp.Chip" kind="filter" icon="sport-padel" selected="{{sSpPadel}}" on-click="{{tSpPadel}}">Padel</x-import><x-import component-from-global-scope="MatchUp.Chip" kind="filter" icon="sport-football" selected="{{sSpFoot}}" on-click="{{tSpFoot}}">Football</x-import><x-import component-from-global-scope="MatchUp.Chip" kind="filter" icon="sport-basketball" selected="{{sSpBasket}}" on-click="{{tSpBasket}}">Basketball</x-import></div></div>
+<x-import component-from-global-scope="MatchUp.Checkbox.Group" label="Niveaux que tu entraînes" orientation="horizontal" default-value="{{levels}}"><x-import component-from-global-scope="MatchUp.Checkbox" value="debutant" label="Débutant"></x-import><x-import component-from-global-scope="MatchUp.Checkbox" value="intermediaire" label="Intermédiaire"></x-import><x-import component-from-global-scope="MatchUp.Checkbox" value="avance" label="Avancé"></x-import><x-import component-from-global-scope="MatchUp.Checkbox" value="expert" label="Expert"></x-import></x-import>
+</div></div>
+</div>
+</div>
+<footer style="position: sticky; bottom: 0; z-index: 2; background: var(--surface); box-shadow: var(--elevation-2-up); padding: var(--space-4) var(--space-8)">
+<div style="max-width: 720px; margin: 0 auto; display: flex; align-items: center; gap: var(--space-4)">
+<a href="AUTH-11-Choix-du-role.dc.html" class="mu-btn mu-btn--tertiary mu-btn--l" style="flex: none"><span class="mu-btn__content"><x-import component-from-global-scope="MatchUp.Icon" name="arrow-left" size="{{i20}}"></x-import><span class="mu-btn__label label-l">Retour</span></span></a>
+<span class="ob-draft caption" style="flex: 1; min-width: 0; display: inline-flex; align-items: center; justify-content: flex-end; gap: var(--space-2); white-space: nowrap; color: var(--text-secondary)"><x-import component-from-global-scope="MatchUp.Icon" name="cloud-check" size="{{i16}}"></x-import>Brouillon enregistré · il y a 1 min</span>
+<a href="COA-03-Premier-programme.dc.html" class="mu-btn mu-btn--secondary mu-btn--l" style="flex: none; margin-inline-start: auto"><span class="mu-btn__content"><span class="mu-btn__label label-l">Enregistrer et quitter</span></span></a>
+<a href="COA-02-Certification.dc.html" class="mu-btn mu-btn--primary mu-btn--l" style="flex: none"><span class="mu-btn__content"><span class="mu-btn__label label-l">Continuer</span><x-import component-from-global-scope="MatchUp.Icon" name="arrow-right" size="{{i20}}"></x-import></span></a>
+</div>
+</footer>
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":900}}'>
+class Component extends DCLogic {
+  state = { sel: { padel: true, prepa: true, service: true, debutants: true, filet: false, tactique: false, juniors: false, competition: false,
+                  spPadel: true, spFoot: false, spBasket: false } };
+  toggle(k) { this.setState({ sel: Object.assign({}, this.state.sel, { [k]: !this.state.sel[k] }) }); }
+  renderVals() {
+    return {
+      yes: true,
+      no: false,
+      i16: 16,
+      i20: 20,
+      i24: 24,
+      i32: 32,
+      logoH: 28,
+      steps: [{"label": "Profil"}, {"label": "Certification"}, {"label": "Premier programme"}],
+      current: 0,
+      bioRows: 3,
+      bioMax: 400,
+      bio: "Coach de padel diplômé d’État, j’entraîne à Smash Padel Club (Lac 2) depuis 6 ans. J’aide les joueurs débutants et intermédiaires à fiabiliser leur service et à mieux se placer. Séances en français, en arabe ou en anglais.",
+      levels: ["debutant", "intermediaire", "avance"],
+      cities: [{"value": "lac2", "label": "Lac 2, Tunis"}, {"value": "marsa", "label": "La Marsa"}, {"value": "ennasr", "label": "Ennasr, Ariana"}, {"value": "menzah", "label": "Menzah 6"}, {"value": "sousse", "label": "Sousse"}, {"value": "sfax", "label": "Sfax"}],
+      sPadel: this.state.sel.padel, tPadel: () => this.toggle('padel'),
+      sPrepa: this.state.sel.prepa, tPrepa: () => this.toggle('prepa'),
+      sService: this.state.sel.service, tService: () => this.toggle('service'),
+      sDebutants: this.state.sel.debutants, tDebutants: () => this.toggle('debutants'),
+      sFilet: this.state.sel.filet, tFilet: () => this.toggle('filet'),
+      sTactique: this.state.sel.tactique, tTactique: () => this.toggle('tactique'),
+      sJuniors: this.state.sel.juniors, tJuniors: () => this.toggle('juniors'),
+      sCompetition: this.state.sel.competition, tCompetition: () => this.toggle('competition'),
+      sSpPadel: this.state.sel.spPadel, tSpPadel: () => this.toggle('spPadel'),
+      sSpFoot: this.state.sel.spFoot, tSpFoot: () => this.toggle('spFoot'),
+      sSpBasket: this.state.sel.spBasket, tSpBasket: () => this.toggle('spBasket'),
+      specCount: ['padel', 'prepa', 'service', 'debutants', 'filet', 'tactique', 'juniors', 'competition'].filter((k) => this.state.sel[k]).length + ' spécialités sur 6 max'
+    };
+  }
+}
+</script>
+</body>
+</html>

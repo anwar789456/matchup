@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Bienvenue 2</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/matchup/tokens.css">
+<link rel="stylesheet" href="ds/matchup/components/bundle.css">
+<script src="ds/matchup/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0}
+a{color:var(--link)}
+</style>
+</helmet>
+<div data-theme="dark" style="width: 390px; height: 844px; box-sizing: border-box; position: relative; overflow: hidden; display: flex; flex-direction: column; background: var(--bg); color: var(--text); font-family: var(--font-sans)">
+<div aria-hidden="true" style="position: absolute; top: 96px; left: 0; right: 0; height: 500px">
+<x-import component-from-global-scope="MatchUp.CourtArt" variant="poster" sport="padel" dc-props="{{art}}"></x-import>
+<div style="position: absolute; inset: 0; background: linear-gradient(180deg, var(--bg) 0%, transparent 22%, transparent 60%, var(--bg) 100%)"></div>
+</div>
+<div style="position: relative; display: flex; align-items: center; justify-content: space-between; padding: 52px 8px 0 8px">
+<a href="ONB-02-Bienvenue-1.dc.html" class="mu-iconbtn mu-iconbtn--l mu-iconbtn--ghost" aria-label="Retour" style="color: var(--text)"><x-import component-from-global-scope="MatchUp.Icon" name="arrow-left" size="{{i24}}"></x-import></a>
+<a href="ONB-04-Bienvenue-3.dc.html" class="mu-btn mu-btn--tertiary mu-btn--m"><span class="mu-btn__content"><span class="mu-btn__label label">Passer</span></span></a>
+</div>
+<div aria-hidden="true" style="position: relative; flex: 1; min-height: 0; display: flex; flex-direction: column; justify-content: flex-end; padding: 0 16px">
+<div class="mu-card" style="align-self: flex-start; width: 326px; box-sizing: border-box; padding: 16px 16px 0 16px; display: flex; flex-direction: column; gap: 16px; overflow: hidden; background: var(--surface-elevated)">
+<div style="display: flex; align-items: flex-start; justify-content: space-between; gap: 12px">
+<div style="display: flex; flex-direction: column; gap: 2px; min-width: 0">
+<span class="label-l">Smash Padel Club</span>
+<span class="caption" style="color: var(--text-secondary)">Terrain 3 · sam. 18 oct. · 20h00</span>
+</div>
+<x-import component-from-global-scope="MatchUp.Chip" kind="sport" sport="padel" size="s">Padel</x-import>
+</div>
+<div style="display: flex; align-items: flex-end; justify-content: space-between; gap: 12px; padding: 12px 16px; margin: 0 -16px; background: var(--surface-muted); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border)">
+<div style="display: flex; flex-direction: column; gap: 2px">
+<span class="overline" style="color: var(--text-secondary)">Ta part</span>
+<span style="display: flex; align-items: baseline; gap: 4px"><span class="num-xl">15 DT</span><span class="label" style="color: var(--text-secondary)">/pers.</span></span>
+</div>
+<span class="caption" style="color: var(--text-secondary); padding-bottom: 6px">Terrain <span class="num-xs" style="color: var(--text)">60 DT</span> ÷ 4 joueurs</span>
+</div>
+<div style="display: flex; align-items: center; gap: 12px; padding-bottom: 36px">
+<x-import component-from-global-scope="MatchUp.AvatarStack" people="{{people}}" size="s"></x-import>
+<span class="caption" style="color: var(--text-secondary)"><span class="label-s" style="color: var(--text)">3 sur 4</span> ont payé leur part</span>
+</div>
+</div>
+<div style="align-self: flex-end; width: 300px; margin-top: -28px; position: relative">
+<x-import component-from-global-scope="MatchUp.Toast" tone="success" title="Ta part est payée" description="15 DT · Smash Padel Club" persistent="{{yes}}" dismissible="{{no}}"></x-import>
+</div>
+</div>
+<div style="position: relative; display: flex; flex-direction: column; align-items: center; gap: 12px; padding: 24px 24px 0 24px; text-align: center">
+<h1 class="h1" style="margin: 0; text-wrap: balance">Réserve et paie en quelques secondes</h1>
+<p class="body-l" style="margin: 0; color: var(--text-secondary); text-wrap: balance">Choisis ton créneau et paie seulement ta part. Chacun règle la sienne.</p>
+</div>
+<div style="position: relative; padding: 24px 16px 0 16px">
+<x-import component-from-global-scope="MatchUp.StepIndicator" variant="dots" step="{{n2}}" total="{{n3}}" label="Diapo 2 sur 3"></x-import>
+</div>
+<div style="position: relative; padding: 24px 16px 34px 16px; display: flex; flex-direction: column; gap: 12px">
+<a href="ONB-04-Bienvenue-3.dc.html" class="mu-btn mu-btn--primary mu-btn--xl mu-btn--block"><span class="mu-btn__content"><span class="mu-btn__label label-l">Suivant</span><x-import component-from-global-scope="MatchUp.Icon" name="arrow-right" size="{{i24}}"></x-import></span></a>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      yes: true, no: false, i24: 24, n2: 2, n3: 3,
+      people: [{ name: 'Yassine B.' }, { name: 'Mariem K.' }, { name: 'Skander T.' }, { name: 'Ines M.' }],
+      art: { style: { width: '100%', height: '100%' } }
+    };
+  }
+}
+</script>
+</body>
+</html>

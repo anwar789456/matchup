@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Accueil · visite guidée</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/matchup/tokens.css">
+<link rel="stylesheet" href="ds/matchup/components/bundle.css">
+<script src="ds/matchup/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0}
+a{color:var(--link)}
+.ply-rail{display:flex; gap:12px; overflow-x:auto; scroll-snap-type:x mandatory; scroll-padding-inline:16px; padding:4px 16px 8px 16px; scrollbar-width:none}
+.ply-rail::-webkit-scrollbar{display:none}
+.ply-rail > *{scroll-snap-align:start}
+@keyframes ply-tour-in{from{opacity:0; transform:translateY(6px)}to{opacity:1; transform:none}}
+.ply-tour__bubble{animation:ply-tour-in var(--duration-base) var(--ease-enter)}
+.ply-tour__spot{transition:all var(--duration-slow) var(--ease-move)}
+@media (prefers-reduced-motion: reduce){.ply-tour__bubble{animation:none}}
+</style>
+</helmet>
+<div style="position: relative; width: 390px; height: 844px; box-sizing: border-box; overflow: hidden; background: var(--bg); color: var(--text); font-family: var(--font-sans)">
+<div style="height: 100%; overflow: auto; padding-bottom: 120px; box-sizing: border-box">
+<x-import component-from-global-scope="MatchUp.TopAppBar" variant="home" greeting="Salut Yassine" location="La Marsa" notifications="{{n3}}" user="{{me}}" inset="{{inset}}"></x-import>
+<div style="display: flex; flex-direction: column; gap: 20px; padding-top: 4px">
+<div style="padding: 0 16px">
+<button type="button" class="ply-ask" aria-label="Demande à MatchUp, l’assistant IA" style="appearance: none; border: 0; margin: 0; width: 100%; font: inherit; text-align: start; cursor: pointer; display: flex; align-items: center; gap: 10px; min-height: 48px; padding: 0 16px; border-radius: var(--radius-full); background: var(--surface); box-shadow: inset 0 0 0 1.5px var(--ai-500), var(--elevation-1); color: var(--text-secondary); text-decoration: none">
+<span style="display: flex; color: var(--ai-500)"><x-import component-from-global-scope="MatchUp.Icon" name="sparkle" weight="fill" size="{{i20}}"></x-import></span>
+<span class="body-l" style="flex: 1">Demande à MatchUp…</span>
+</button>
+</div>
+<section id="ply-foryou" style="display: flex; flex-direction: column; gap: 8px">
+<div style="display: flex; align-items: center; justify-content: space-between; padding: 0 16px">
+<div style="display: flex; align-items: center; gap: 8px">
+<h2 class="h3" style="margin: 0">Parties pour toi</h2>
+<x-import component-from-global-scope="MatchUp.AiLabel" size="s"></x-import>
+</div>
+<button type="button" class="mu-btn mu-btn--tertiary mu-btn--s"><span class="mu-btn__content"><span class="mu-btn__label label">Voir tout</span></span></button>
+</div>
+<div class="ply-rail">
+<div style="flex: none; width: 316px"><x-import component-from-global-scope="MatchUp.GameCard" dc-props="{{padel}}"></x-import></div>
+<div style="flex: none; width: 316px"><x-import component-from-global-scope="MatchUp.GameCard" dc-props="{{foot}}"></x-import></div>
+</div>
+</section>
+<section id="ply-actions" aria-label="Actions rapides" style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; padding: 0 16px">
+<button type="button" class="mu-card mu-card--interactive" style="appearance: none; border: 0; margin: 0; width: 100%; font: inherit; text-align: start; cursor: pointer; display: flex; align-items: center; gap: 10px; min-height: 64px; padding: 12px; box-sizing: border-box; text-decoration: none; color: var(--text)">
+<span style="flex: none; width: 40px; height: 40px; border-radius: var(--radius-sm); background: var(--surface-muted); display: flex; align-items: center; justify-content: center"><x-import component-from-global-scope="MatchUp.Icon" name="sport-court" size="{{i24}}"></x-import></span>
+<span class="label">Réserver un terrain</span>
+</button>
+<button type="button" id="ply-create" class="mu-card mu-card--interactive" style="appearance: none; border: 0; margin: 0; width: 100%; font: inherit; text-align: start; cursor: pointer; display: flex; align-items: center; gap: 10px; min-height: 64px; padding: 12px; box-sizing: border-box; text-decoration: none; color: var(--text)">
+<span style="flex: none; width: 40px; height: 40px; border-radius: var(--radius-sm); background: var(--accent); color: var(--on-accent); display: flex; align-items: center; justify-content: center"><x-import component-from-global-scope="MatchUp.Icon" name="plus" size="{{i24}}"></x-import></span>
+<span class="label">Créer une partie</span>
+</button>
+</section>
+</div>
+</div>
+<x-import component-from-global-scope="MatchUp.TabBar" items="{{tabs}}" value="accueil" safe-area="{{sa}}" fab="{{yes}}" dc-props="{{tabStyle}}"></x-import>
+
+<sc-if value="{{tour0}}">
+<div role="dialog" aria-modal="true" aria-labelledby="ply-tour-t1" style="position: absolute; inset: 0; z-index: var(--z-modal)">
+<div class="ply-tour__spot" aria-hidden="true" style="position: absolute; left: 8px; top: 222px; width: 374px; height: 356px; border-radius: var(--radius-lg); box-shadow: 0 0 0 2px var(--white), 0 0 0 9999px var(--scrim); pointer-events: none"></div>
+<div class="ply-tour__bubble" style="position: absolute; left: 16px; right: 16px; top: 596px; display: flex; flex-direction: column; gap: 8px; padding: 16px; border-radius: var(--radius-md); background: var(--surface-elevated); box-shadow: var(--elevation-3); color: var(--text)">
+<span aria-hidden="true" style="position: absolute; top: -6px; left: 64px; width: 12px; height: 12px; transform: rotate(45deg); background: var(--surface-elevated)"></span>
+<div style="display: flex; align-items: center; justify-content: space-between">
+<x-import component-from-global-scope="MatchUp.AiLabel" size="s"></x-import>
+<span class="num-xs" style="color: var(--text-secondary)" aria-label="Étape 1 sur 3">1/3</span>
+</div>
+<h2 id="ply-tour-t1" class="label-l" style="margin: 0">Des parties choisies pour toi</h2>
+<p class="body" style="margin: 0; color: var(--text-secondary)">Recommandé car ton niveau (3,5), tes soirs libres et tes zones correspondent.</p>
+<div style="display: flex; align-items: center; justify-content: space-between; padding-top: 4px">
+<button type="button" class="mu-btn mu-btn--tertiary mu-btn--m" onclick="{{closeTour}}" style="margin-left: -12px"><span class="mu-btn__content"><span class="mu-btn__label label">Passer la visite</span></span></button>
+<button type="button" class="mu-btn mu-btn--primary mu-btn--m" onclick="{{nextTour}}"><span class="mu-btn__content"><span class="mu-btn__label label">Suivant</span></span></button>
+</div>
+</div>
+</div>
+</sc-if>
+<sc-if value="{{tour1}}">
+<div role="dialog" aria-modal="true" aria-labelledby="ply-tour-t2" style="position: absolute; inset: 0; z-index: var(--z-modal)">
+<div class="ply-tour__spot" aria-hidden="true" style="position: absolute; left: 197px; top: 596px; width: 181px; height: 72px; border-radius: var(--radius-lg); box-shadow: 0 0 0 2px var(--white), 0 0 0 9999px var(--scrim); pointer-events: none"></div>
+<div class="ply-tour__bubble" style="position: absolute; left: 16px; right: 16px; bottom: 260px; display: flex; flex-direction: column; gap: 8px; padding: 16px; border-radius: var(--radius-md); background: var(--surface-elevated); box-shadow: var(--elevation-3); color: var(--text)">
+<span aria-hidden="true" style="position: absolute; bottom: -6px; right: 88px; width: 12px; height: 12px; transform: rotate(45deg); background: var(--surface-elevated)"></span>
+<div style="display: flex; align-items: center; justify-content: space-between">
+<span class="overline" style="color: var(--text-secondary)">Organiser</span>
+<span class="num-xs" style="color: var(--text-secondary)" aria-label="Étape 2 sur 3">2/3</span>
+</div>
+<h2 id="ply-tour-t2" class="label-l" style="margin: 0">Crée ta partie en 1 minute</h2>
+<p class="body" style="margin: 0; color: var(--text-secondary)">Choisis le terrain et l’heure : on invite des joueurs à ton niveau, et chacun paie sa part.</p>
+<div style="display: flex; align-items: center; justify-content: space-between; padding-top: 4px">
+<button type="button" class="mu-btn mu-btn--tertiary mu-btn--m" onclick="{{closeTour}}" style="margin-left: -12px"><span class="mu-btn__content"><span class="mu-btn__label label">Passer la visite</span></span></button>
+<button type="button" class="mu-btn mu-btn--primary mu-btn--m" onclick="{{nextTour}}"><span class="mu-btn__content"><span class="mu-btn__label label">Suivant</span></span></button>
+</div>
+</div>
+</div>
+</sc-if>
+<sc-if value="{{tour2}}">
+<div role="dialog" aria-modal="true" aria-labelledby="ply-tour-t3" style="position: absolute; inset: 0; z-index: var(--z-modal)">
+<div class="ply-tour__spot" aria-hidden="true" style="position: absolute; left: 136px; top: 748px; width: 74px; height: 60px; border-radius: var(--radius-md); box-shadow: 0 0 0 2px var(--white), 0 0 0 9999px var(--scrim); pointer-events: none"></div>
+<div class="ply-tour__bubble" style="position: absolute; left: 16px; right: 16px; bottom: 112px; display: flex; flex-direction: column; gap: 8px; padding: 16px; border-radius: var(--radius-md); background: var(--surface-elevated); box-shadow: var(--elevation-3); color: var(--text)">
+<span aria-hidden="true" style="position: absolute; bottom: -6px; left: 167px; width: 12px; height: 12px; transform: rotate(45deg); background: var(--surface-elevated)"></span>
+<div style="display: flex; align-items: center; justify-content: space-between">
+<span class="overline" style="color: var(--text-secondary)">Mes matchs</span>
+<span class="num-xs" style="color: var(--text-secondary)" aria-label="Étape 3 sur 3">3/3</span>
+</div>
+<h2 id="ply-tour-t3" class="label-l" style="margin: 0">Tous tes matchs au même endroit</h2>
+<p class="body" style="margin: 0; color: var(--text-secondary)">Parties à venir, invitations et paiements en attente : tout se retrouve ici.</p>
+<div style="display: flex; align-items: center; justify-content: flex-end; padding-top: 4px">
+<button type="button" class="mu-btn mu-btn--primary mu-btn--m" onclick="{{closeTour}}"><span class="mu-btn__content"><span class="mu-btn__label label">C’est parti</span></span></button>
+</div>
+</div>
+</div>
+</sc-if>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  state = { tour: 0 };
+  renderVals() {
+    const t = this.state.tour;
+    const today = new Date(2026, 9, 18, 20, 0);
+    return {
+      yes: true, no: false, i20: 20, i24: 24, n3: 3, inset: 44, sa: 34,
+      tour0: t === 0, tour1: t === 1, tour2: t === 2,
+      nextTour: () => this.setState({ tour: Math.min(3, t + 1) }),
+      closeTour: () => this.setState({ tour: 3 }),
+      me: { name: 'Yassine B.' },
+      tabs: [
+        { value: 'accueil', label: 'Accueil', icon: 'house' },
+        { value: 'explorer', label: 'Explorer', icon: 'compass' },
+        { value: 'matchs', label: 'Mes matchs', icon: 'calendar-check', badge: 1, badgeLabel: '1 invitation' },
+        { value: 'entrainement', label: 'Entraînement', icon: 'barbell' },
+        { value: 'communaute', label: 'Communauté', icon: 'users-three' }
+      ],
+      tabStyle: { style: { position: 'absolute', left: 0, right: 0, bottom: 0 } },
+      padel: {
+        sport: 'padel', gameType: 'mixte', venue: 'Smash Padel Club', court: 'Court 3', place: 'Lac 2', distance: 3.1,
+        start: new Date(2026, 9, 14, 20, 0), dateLabel: 'Ce soir', spotsTotal: 4, spotsLeft: 2, price: 15, levelMin: 3, levelMax: 4,
+        players: [{ name: 'Mariem K.', level: 3.5 }, { name: 'Ines M.', level: 3.0 }], organiser: { name: 'Mariem K.', reliability: 98 },
+        matchFit: 92, matchFitReason: 'ton niveau (3,5) et tes soirées en semaine', href: '#'
+      },
+      foot: {
+        sport: 'football', gameType: 'mixte', venue: 'Arena Five', court: 'Terrain 2', place: 'La Marsa', distance: 1.4,
+        start: today, spotsTotal: 10, spotsLeft: 2, price: 15, levelMin: 3, levelMax: 4.5,
+        players: [{ name: 'Skander T.' }, { name: 'Hamza R.' }, { name: 'Nour A.' }, { name: 'Aziz H.' }, { name: 'Omar D.' }, { name: 'Salma G.' }, { name: 'Lina F.' }, { name: 'Ines M.' }],
+        organiser: { name: 'Skander T.', reliability: 96 }, matchFit: 85, matchFitReason: 'Milieu recherché et terrain à 1,4 km', href: '#'
+      }
+    };
+  }
+}
+</script>
+</body>
+</html>

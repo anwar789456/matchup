@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Choix du rôle</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/matchup/tokens.css">
+<link rel="stylesheet" href="ds/matchup/components/bundle.css">
+<script src="ds/matchup/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0}
+a{color:var(--link)}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; box-sizing: border-box; display: flex; flex-direction: column; background: var(--surface); color: var(--text); font-family: var(--font-sans)">
+<div style="display: flex; align-items: center; justify-content: space-between; padding: 52px 8px 0 8px">
+<a href="AUTH-04-Verifie-ton-email.dc.html" class="mu-iconbtn mu-iconbtn--l mu-iconbtn--ghost" aria-label="Retour" style="color: var(--text)"><x-import component-from-global-scope="MatchUp.Icon" name="arrow-left" size="{{i24}}"></x-import></a>
+</div>
+<div style="flex: 1; min-height: 0; overflow: auto; display: flex; flex-direction: column; gap: 24px; padding: 8px 16px 24px 16px">
+<div style="display: flex; flex-direction: column; gap: 8px">
+<h1 class="h1" style="margin: 0">Comment vas-tu utiliser MatchUp ?</h1>
+<p class="body-l" style="margin: 0; color: var(--text-secondary)">Choisis un ou plusieurs rôles.</p>
+</div>
+<x-import component-from-global-scope="MatchUp.ChoiceCard.Group" type="checkbox" aria-label="Tes rôles sur MatchUp" name="roles" value="{{roles}}" on-change="{{setRoles}}">
+<x-import component-from-global-scope="MatchUp.ChoiceCard" value="joueur" icon="person-simple-run" title="Joueur" description="Trouve des parties, réserve des terrains et paie ta part."></x-import>
+<x-import component-from-global-scope="MatchUp.ChoiceCard" value="proprietaire" icon="storefront" title="Propriétaire de terrain" description="Gère tes terrains, ton planning et tes réservations."></x-import>
+<x-import component-from-global-scope="MatchUp.ChoiceCard" value="coach" icon="sport-whistle" title="Coach" description="Publie tes programmes et suis la progression de tes élèves."></x-import>
+<x-import component-from-global-scope="MatchUp.ChoiceCard" value="organisateur" icon="sport-trophy" title="Organisateur" description="Crée et gère tes tournois et tes événements."></x-import>
+</x-import>
+<div style="display: flex; align-items: flex-start; gap: 8px; color: var(--text-secondary)">
+<span style="display: inline-flex; flex: none; padding-top: 2px"><x-import component-from-global-scope="MatchUp.Icon" name="info" size="{{i16}}"></x-import></span>
+<p class="caption" style="margin: 0">Tu pourras en ajouter d’autres plus tard depuis ton profil.</p>
+</div>
+</div>
+<div style="padding: 12px 16px 34px 16px; background: var(--surface); box-shadow: var(--elevation-2-up); display: flex; flex-direction: column; gap: 12px">
+<a href="{{nextHref}}" class="mu-btn mu-btn--primary mu-btn--xl mu-btn--block" aria-disabled="{{noRole}}"><span class="mu-btn__content"><span class="mu-btn__label label-l">{{nextLabel}}</span></span></a>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(props) { super(props); this.state = { roles: ['joueur'] }; }
+  renderVals() {
+    const roles = this.state.roles || [];
+    const order = [['joueur', 'PLY-01-Sports.dc.html', 'Joueur'], ['proprietaire', 'OWN-01-Entreprise.dc.html', 'Propriétaire'], ['coach', 'COA-01-Profil-coach.dc.html', 'Coach'], ['organisateur', 'ORG-01-Organisation.dc.html', 'Organisateur']];
+    const first = order.find((o) => roles.indexOf(o[0]) !== -1);
+    return {
+      yes: true, i16: 16, i24: 24, roles,
+      setRoles: (v) => this.setState({ roles: Array.isArray(v) ? v : [v] }),
+      nextHref: first ? first[1] : 'AUTH-11-Choix-du-role.dc.html',
+      noRole: first ? 'false' : 'true',
+      nextLabel: first ? (roles.length > 1 ? 'Continuer · ' + first[2] + ' d’abord' : 'Continuer') : 'Choisis au moins un rôle',
+    };
+  }
+}
+</script>
+</body>
+</html>

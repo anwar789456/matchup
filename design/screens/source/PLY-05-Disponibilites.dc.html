@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Tes disponibilités</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/matchup/tokens.css">
+<link rel="stylesheet" href="ds/matchup/components/bundle.css">
+<script src="ds/matchup/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0}
+a{color:var(--link)}
+.ply-slot{appearance:none; margin:0; padding:0; border:0; font:inherit; display:flex; align-items:center; justify-content:center; height:44px; border-radius:var(--radius-sm); background:var(--surface-muted); box-shadow:inset 0 0 0 1px var(--border); color:var(--on-accent); cursor:pointer; transition:background-color var(--duration-fast) var(--ease-enter), box-shadow var(--duration-fast) var(--ease-enter), transform var(--duration-fast) var(--ease-enter)}
+.ply-slot:hover{box-shadow:inset 0 0 0 1px var(--border-strong)}
+.ply-slot:active{transform:scale(var(--scale-press))}
+.ply-slot:focus-visible{outline:none; box-shadow:var(--focus-ring)}
+.ply-slot[aria-pressed="true"]{background:var(--accent); box-shadow:inset 0 0 0 1px var(--accent)}
+.ply-slot[aria-pressed="true"]:hover{box-shadow:inset 0 0 0 2px var(--primary)}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; box-sizing: border-box; display: flex; flex-direction: column; background: var(--surface); color: var(--text); font-family: var(--font-sans)">
+<div style="display: flex; align-items: center; justify-content: space-between; min-height: 48px; padding: 52px 8px 0 8px">
+<a href="PLY-04-Poste.dc.html" class="mu-iconbtn mu-iconbtn--l mu-iconbtn--ghost" aria-label="Retour" style="color: var(--text)"><x-import component-from-global-scope="MatchUp.Icon" name="arrow-left" size="{{i24}}"></x-import></a>
+<a href="PLY-06-Localisation.dc.html" class="mu-btn mu-btn--tertiary mu-btn--m"><span class="mu-btn__content"><span class="mu-btn__label label">Passer</span></span></a>
+</div>
+<div style="padding: 4px 16px 0 16px">
+<x-import component-from-global-scope="MatchUp.StepIndicator" step="{{step}}" total="{{total}}" title="Tes disponibilités"></x-import>
+</div>
+<div style="flex: 1; min-height: 0; overflow: auto; display: flex; flex-direction: column; gap: 20px; padding: 24px 16px 24px 16px">
+<div style="display: flex; flex-direction: column; gap: 8px">
+<h1 class="h1" style="margin: 0">Quand es-tu dispo ?</h1>
+<p class="body-l" style="margin: 0; color: var(--text-secondary)">Touche les créneaux où tu peux jouer, on s’en sert pour te proposer des parties.</p>
+</div>
+<div role="group" aria-label="Tes disponibilités dans la semaine" style="display: flex; flex-direction: column; gap: 6px">
+<div aria-hidden="true" style="display: grid; grid-template-columns: 48px repeat(3, minmax(0, 1fr)); gap: 6px; align-items: end; padding-bottom: 2px">
+<span></span>
+<span style="display: flex; flex-direction: column; align-items: center"><span class="label-s">Matin</span><span class="caption" style="color: var(--text-secondary)">8h–12h</span></span>
+<span style="display: flex; flex-direction: column; align-items: center"><span class="label-s">Après-midi</span><span class="caption" style="color: var(--text-secondary)">12h–18h</span></span>
+<span style="display: flex; flex-direction: column; align-items: center"><span class="label-s">Soir</span><span class="caption" style="color: var(--text-secondary)">18h–23h</span></span>
+</div>
+<sc-for list="{{days}}" as="day">
+<div style="display: grid; grid-template-columns: 48px repeat(3, minmax(0, 1fr)); gap: 6px; align-items: center">
+<span class="label" style="color: var(--text)">{{day.short}}</span>
+<sc-for list="{{day.slots}}" as="slot">
+<button type="button" class="ply-slot" aria-pressed="{{slot.on}}" aria-label="{{slot.aria}}" onclick="{{slot.toggle}}"><sc-if value="{{slot.on}}"><x-import component-from-global-scope="MatchUp.Icon" name="check" size="{{i20}}"></x-import></sc-if></button>
+</sc-for>
+</div>
+</sc-for>
+</div>
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 12px">
+<div style="display: flex; align-items: center; gap: 16px; color: var(--text-secondary)">
+<span style="display: inline-flex; align-items: center; gap: 6px"><span style="width: 16px; height: 16px; border-radius: var(--radius-xs); background: var(--accent); color: var(--on-accent); display: inline-flex; align-items: center; justify-content: center"><x-import component-from-global-scope="MatchUp.Icon" name="check" size="{{i12}}"></x-import></span><span class="caption">Dispo</span></span>
+<span style="display: inline-flex; align-items: center; gap: 6px"><span style="width: 16px; height: 16px; box-sizing: border-box; border-radius: var(--radius-xs); background: var(--surface-muted); border: 1px solid var(--border)"></span><span class="caption">Pas dispo</span></span>
+</div>
+<span class="label" aria-live="polite">{{countLabel}}</span>
+</div>
+</div>
+<div style="padding: 12px 16px 34px 16px; background: var(--surface); box-shadow: var(--elevation-2-up); display: flex; flex-direction: column; gap: 12px">
+<a href="PLY-06-Localisation.dc.html" class="mu-btn mu-btn--primary mu-btn--xl mu-btn--block"><span class="mu-btn__content"><span class="mu-btn__label label-l">Continuer</span></span></a>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  state = { on: { 'lun-soir': true, 'mar-soir': true, 'mer-soir': true, 'jeu-soir': true, 'ven-soir': true, 'sam-aprem': true } };
+  renderVals() {
+    const on = this.state.on;
+    const DAYS = [['lun', 'lun.', 'lundi'], ['mar', 'mar.', 'mardi'], ['mer', 'mer.', 'mercredi'], ['jeu', 'jeu.', 'jeudi'], ['ven', 'ven.', 'vendredi'], ['sam', 'sam.', 'samedi'], ['dim', 'dim.', 'dimanche']];
+    const SLOTS = [['matin', 'matin'], ['aprem', 'après-midi'], ['soir', 'soir']];
+    const toggle = (k) => () => this.setState({ on: { ...this.state.on, [k]: !this.state.on[k] } });
+    const days = DAYS.map(([id, short, long]) => ({
+      short,
+      slots: SLOTS.map(([sid, name]) => {
+        const k = id + '-' + sid;
+        return { on: !!on[k], aria: long.charAt(0).toUpperCase() + long.slice(1) + ' ' + name, toggle: toggle(k) };
+      })
+    }));
+    const n = Object.values(on).filter(Boolean).length;
+    return {
+      i12: 12, i20: 20, i24: 24, step: 4, total: 8, days,
+      countLabel: n === 0 ? 'Aucun créneau' : n === 1 ? '1 créneau' : n + ' créneaux'
+    };
+  }
+}
+</script>
+</body>
+</html>

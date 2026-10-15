@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Notifications</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/matchup/tokens.css">
+<link rel="stylesheet" href="ds/matchup/components/bundle.css">
+<script src="ds/matchup/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet><style>body{margin:0} a{color:var(--link)}</style></helmet>
+<div style="width: 390px; height: 844px; box-sizing: border-box; display: flex; flex-direction: column; background: var(--surface); color: var(--text); font-family: var(--font-sans)">
+<div style="display: flex; align-items: center; justify-content: space-between; min-height: 48px; padding: 52px 8px 0 8px">
+<a href="PLY-07-Zones.dc.html" class="mu-iconbtn mu-iconbtn--l mu-iconbtn--ghost" aria-label="Retour" style="color: var(--text)"><x-import component-from-global-scope="MatchUp.Icon" name="arrow-left" size="{{i24}}"></x-import></a>
+<a href="PLY-10-Profil.dc.html" class="mu-btn mu-btn--tertiary mu-btn--m"><span class="mu-btn__content"><span class="mu-btn__label label">Passer</span></span></a>
+</div>
+<div style="padding: 4px 16px 0 16px">
+<x-import component-from-global-scope="MatchUp.StepIndicator" step="{{step}}" total="{{total}}" title="Notifications"></x-import>
+</div>
+<div style="flex: 1; min-height: 0; overflow: auto; display: flex; flex-direction: column; gap: 24px; padding: 24px 16px 24px 16px">
+<div role="img" aria-label="Exemples de notifications MatchUp : une place libérée, une invitation de Mariem K., un rappel de match" style="position: relative; border-radius: var(--radius-lg); overflow: hidden">
+<x-import component-from-global-scope="MatchUp.CourtArt" sport="padel" variant="photo" dc-props="{{art}}"></x-import>
+<div style="position: absolute; inset: 0; background: var(--scrim)"></div>
+<div aria-hidden="true" style="position: relative; display: flex; flex-direction: column; gap: 8px; padding: 16px 12px">
+<div style="border-radius: var(--radius-md); background: var(--surface-elevated); box-shadow: var(--elevation-2); overflow: hidden">
+<x-import component-from-global-scope="MatchUp.NotificationItem" category="matches" sport="padel" priority="urgent" title="Une place s’est libérée" body="Padel ce soir à Smash Padel Club. Tu as 14:59 pour la réclamer." time="maintenant" swipeable="{{no}}"></x-import>
+</div>
+<div style="border-radius: var(--radius-md); background: var(--surface-elevated); box-shadow: var(--elevation-2); overflow: hidden">
+<x-import component-from-global-scope="MatchUp.NotificationItem" category="matches" sport="padel" avatar="{{mariem}}" title="Mariem K. t’invite à jouer" body="Padel 2 vs 2 · dim. 19 oct. · 18h30 · 15 DT par personne." time="12 min" swipeable="{{no}}"></x-import>
+</div>
+<div style="border-radius: var(--radius-md); background: var(--surface-elevated); box-shadow: var(--elevation-2); overflow: hidden">
+<x-import component-from-global-scope="MatchUp.NotificationItem" category="matches" sport="football" title="Rappel : match ce soir 20h00" body="Arena Five · Terrain 2 · La Marsa. Pars vers 19h35." time="1 h" swipeable="{{no}}"></x-import>
+</div>
+</div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 8px">
+<h1 class="h1" style="margin: 0">Ne rate aucune partie</h1>
+<p class="body-l" style="margin: 0; color: var(--text-secondary)">Places libérées, invitations, rappels : on te prévient seulement pour ce qui compte. Tu règles tout dans Paramètres.</p>
+</div>
+</div>
+<div style="padding: 12px 16px 34px 16px; background: var(--surface); box-shadow: var(--elevation-2-up); display: flex; flex-direction: column; gap: 8px">
+<p class="caption" style="margin: 0 0 4px 0; display: flex; align-items: center; justify-content: center; gap: 6px; color: var(--text-secondary)"><x-import component-from-global-scope="MatchUp.Icon" name="device-mobile" size="{{i16}}"></x-import>Ton téléphone va te demander l’autorisation juste après.</p>
+<a href="PLY-10-Profil.dc.html" class="mu-btn mu-btn--primary mu-btn--xl mu-btn--block"><span class="mu-btn__content"><x-import component-from-global-scope="MatchUp.Icon" name="bell-ringing" size="{{i20}}"></x-import><span class="mu-btn__label label-l">Activer les notifications</span></span></a>
+<a href="PLY-10-Profil.dc.html" class="mu-btn mu-btn--tertiary mu-btn--l mu-btn--block"><span class="mu-btn__content"><span class="mu-btn__label label-l">Plus tard</span></span></a>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      yes: true, no: false, i16: 16, i20: 20, i24: 24, step: 6, total: 8,
+      mariem: { name: 'Mariem K.' },
+      art: { style: { position: 'absolute', inset: 0, width: '100%', height: '100%' } }
+    };
+  }
+}
+</script>
+</body>
+</html>

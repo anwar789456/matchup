@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Niveau estimé</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/matchup/tokens.css">
+<link rel="stylesheet" href="ds/matchup/components/bundle.css">
+<script src="ds/matchup/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0}
+a{color:var(--link)}
+.ply-scale-only .mu-level__head{display:none}
+.ply-adjust .mu-level__head{flex-direction:column; align-items:stretch}
+.ply-adjust .mu-level__readout{flex-direction:row; align-items:baseline; gap:var(--space-3)}
+.ply-adjust > summary{list-style:none}
+.ply-adjust > summary::-webkit-details-marker{display:none}
+.ply-adjust__caret{display:flex; transition:transform var(--duration-base) var(--ease-move)}
+.ply-adjust[open] .ply-adjust__caret{transform:rotate(180deg)}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; box-sizing: border-box; display: flex; flex-direction: column; background: var(--surface); color: var(--text); font-family: var(--font-sans)">
+<div style="display: flex; align-items: center; justify-content: space-between; min-height: 48px; padding: 52px 8px 0 8px">
+<a href="PLY-02-Questionnaire-IA.dc.html" class="mu-iconbtn mu-iconbtn--l mu-iconbtn--ghost" aria-label="Retour" style="color: var(--text)"><x-import component-from-global-scope="MatchUp.Icon" name="arrow-left" size="{{i24}}"></x-import></a>
+</div>
+<div style="padding: 4px 16px 0 16px">
+<x-import component-from-global-scope="MatchUp.StepIndicator" step="{{step}}" total="{{total}}" title="Ton niveau"></x-import>
+</div>
+<div style="flex: 1; min-height: 0; overflow: auto; display: flex; flex-direction: column; gap: 16px; padding: 20px 16px 20px 16px">
+<h1 class="h1" style="margin: 0">Ton niveau de padel</h1>
+
+<section aria-label="Niveau padel estimé" style="display: flex; flex-direction: column; gap: 12px; padding: 16px; border-radius: var(--radius-md); background: var(--surface); box-shadow: inset 0 0 0 1px var(--border), var(--elevation-1)">
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 8px">
+<div style="display: flex; align-items: center; gap: 8px">
+<x-import component-from-global-scope="MatchUp.AiLabel"></x-import>
+<span class="label" style="color: var(--text-secondary)">Niveau estimé</span>
+</div>
+<span style="display: inline-flex; align-items: center; gap: 6px; height: 28px; padding: 0 10px 0 6px; border-radius: var(--radius-full); background: var(--padel-soft); color: var(--padel-text)"><x-import component-from-global-scope="MatchUp.Icon" name="sport-padel" size="{{i16}}"></x-import><span class="label-s">Padel</span></span>
+</div>
+<div style="display: flex; align-items: flex-end; gap: 16px">
+<span class="num-hero" aria-label="3,5 sur 7">3,5</span>
+<div style="display: flex; flex-direction: column; gap: 2px; padding-bottom: 6px">
+<span class="h3">Intermédiaire</span>
+<span class="caption" style="color: var(--text-secondary)">sur une échelle de 1,0 à 7,0</span>
+</div>
+</div>
+<div class="ply-scale-only">
+<x-import component-from-global-scope="MatchUp.LevelIndicator" variant="bar" level="{{lvl}}" label="Niveau padel estimé"></x-import>
+</div>
+<div style="display: flex; align-items: center; gap: 8px; padding-top: 12px; border-top: 1px solid var(--border)">
+<span aria-hidden="true" style="display: inline-flex; gap: 3px">
+<span style="width: 6px; height: 6px; border-radius: var(--radius-full); background: var(--text)"></span>
+<span style="width: 6px; height: 6px; border-radius: var(--radius-full); background: var(--text)"></span>
+<span style="width: 6px; height: 6px; border-radius: var(--radius-full); background: var(--border-strong)"></span>
+</span>
+<span class="caption" style="color: var(--text-secondary)"><span class="label-s" style="color: var(--text)">Confiance : moyenne</span> · s’affine après 3 matchs</span>
+</div>
+</section>
+
+<section style="display: flex; flex-direction: column; gap: 10px">
+<div style="display: flex; align-items: baseline; justify-content: space-between; gap: 8px">
+<h2 class="h3" style="margin: 0">Pourquoi ce niveau ?</h2>
+<span class="caption" style="color: var(--text-secondary)">Basé sur tes réponses</span>
+</div>
+<ul style="margin: 0; padding: 0; list-style: none; display: grid; grid-template-columns: 1fr 1fr; gap: 10px 12px">
+<li style="display: flex; align-items: center; gap: 8px"><span style="flex: none; display: flex; color: var(--text-secondary)"><x-import component-from-global-scope="MatchUp.Icon" name="clock" size="{{i20}}"></x-import></span><span class="body">2 à 5 ans de pratique</span></li>
+<li style="display: flex; align-items: center; gap: 8px"><span style="flex: none; display: flex; color: var(--text-secondary)"><x-import component-from-global-scope="MatchUp.Icon" name="calendar-check" size="{{i20}}"></x-import></span><span class="body">2 fois par semaine</span></li>
+<li style="display: flex; align-items: center; gap: 8px"><span style="flex: none; display: flex; color: var(--text-secondary)"><x-import component-from-global-scope="MatchUp.Icon" name="target" size="{{i20}}"></x-import></span><span class="body">Volée à l’aise (3/5)</span></li>
+<li style="display: flex; align-items: center; gap: 8px"><span style="flex: none; display: flex; color: var(--text-secondary)"><x-import component-from-global-scope="MatchUp.Icon" name="sport-trophy" size="{{i20}}"></x-import></span><span class="body">Tournois amicaux</span></li>
+</ul>
+</section>
+
+<div style="display: flex; flex-direction: column; gap: 12px">
+<details class="ply-adjust" style="display: flex; flex-direction: column">
+<summary class="mu-btn mu-btn--secondary mu-btn--l mu-btn--block" style="box-sizing: border-box"><span class="mu-btn__content"><x-import component-from-global-scope="MatchUp.Icon" name="pencil-simple" size="{{i20}}"></x-import><span class="mu-btn__label label-l">Ajuster mon niveau</span><span class="ply-adjust__caret"><x-import component-from-global-scope="MatchUp.Icon" name="caret-down" size="{{i16}}"></x-import></span></span></summary>
+<div style="display: flex; flex-direction: column; gap: 8px; margin-top: 12px; padding: 16px; border-radius: var(--radius-md); background: var(--surface-muted)">
+<x-import component-from-global-scope="MatchUp.LevelSlider" label="Ton niveau padel" ai-estimate="{{lvl}}" default-value="{{lvl}}" ai-note="d’après tes réponses"></x-import>
+<p class="caption" style="margin: 0; color: var(--text-secondary)">Tu connais ton jeu mieux que personne : ton choix remplace l’estimation.</p>
+</div>
+</details>
+<p class="caption" style="margin: 0; display: flex; align-items: center; gap: 6px; color: var(--text-secondary)"><x-import component-from-global-scope="MatchUp.Icon" name="arrows-clockwise" size="{{i16}}"></x-import>Le niveau se met à jour automatiquement après tes matchs.</p>
+</div>
+
+<div style="display: flex; align-items: center; gap: 12px; padding: 12px 8px 12px 12px; border-radius: var(--radius-md); background: var(--surface-muted)">
+<span style="flex: none; width: 40px; height: 40px; border-radius: var(--radius-sm); background: var(--football-soft); color: var(--football-text); display: flex; align-items: center; justify-content: center"><x-import component-from-global-scope="MatchUp.Icon" name="sport-football" size="{{i24}}"></x-import></span>
+<div style="flex: 1; min-width: 0; display: flex; flex-direction: column">
+<span class="label">Football 5 · à estimer</span>
+<span class="caption" style="color: var(--text-secondary)">6 questions, moins d’une minute</span>
+</div>
+<a href="PLY-02-Questionnaire-IA.dc.html" class="mu-btn mu-btn--tertiary mu-btn--s"><span class="mu-btn__content"><span class="mu-btn__label label">Estimer</span></span></a>
+</div>
+</div>
+<div style="padding: 12px 16px 34px 16px; background: var(--surface); box-shadow: var(--elevation-2-up); display: flex; flex-direction: column; gap: 12px">
+<a href="PLY-04-Poste.dc.html" class="mu-btn mu-btn--primary mu-btn--xl mu-btn--block"><span class="mu-btn__content"><span class="mu-btn__label label-l">C’est bon</span></span></a>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() { return { yes: true, no: false, i16: 16, i20: 20, i24: 24, step: 2, total: 8, lvl: 3.5 }; }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Propriétaire · Tableau de bord</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/matchup/tokens.css">
+<link rel="stylesheet" href="ds/matchup/components/bundle.css">
+<script src="ds/matchup/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0}
+a{color:var(--link)}
+@media (max-width: 1199px){.db-cols--ai{grid-template-columns:minmax(0,1.3fr) minmax(0,1fr)!important}.db-cols--ai>*{grid-column:auto!important}}
+@media (max-width: 959px){.db-cols{grid-template-columns:1fr!important}.db-cols>*{grid-column:auto!important}.db-kpis{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
+</style>
+</helmet>
+<div class="dc-root" style="min-height: 900px; box-sizing: border-box; display: flex; background: var(--bg); color: var(--text); font-family: var(--font-sans)">
+<div style="flex: none; display: flex; align-self: stretch"><x-import component-from-global-scope="MatchUp.Sidebar" sections="{{nav}}" active-id="dashboard" role="{{role}}" user="{{navUser}}" default-collapsed="{{railCollapsed}}"></x-import></div>
+<div style="flex: 1; min-width: 0; display: flex; flex-direction: column">
+<x-import component-from-global-scope="MatchUp.TopBar" title="Tableau de bord" notifications="{{bell}}" user="{{barUser}}" style="position: sticky; top: 0; z-index: 3"></x-import>
+
+<main style="flex: 1; box-sizing: border-box; width: 100%; max-width: calc(var(--content-max) + 2 * var(--grid-desktop-margin)); margin: 0 auto; padding: var(--space-8) var(--grid-desktop-margin); display: flex; flex-direction: column; gap: var(--space-6)">
+<div style="display: flex; align-items: flex-end; justify-content: space-between; gap: var(--space-6); flex-wrap: wrap">
+<div style="display: flex; flex-direction: column; gap: var(--space-1); min-width: 0">
+<h1 class="h1" style="margin: 0">Bonjour Skander</h1>
+<p class="body-l" style="margin: 0; color: var(--text-secondary)">Ton essai Pro court jusqu’au mer. 28 oct. Voici où en est Arena Five.</p>
+</div>
+<x-import component-from-global-scope="MatchUp.StatusBadge" status="draft" label="Pas encore visible des joueurs"></x-import>
+</div><div class="db-cols" style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-6); align-items: stretch"><section class="mu-card" style="grid-column: span 2; padding: var(--space-6) var(--space-6) var(--space-4); display: flex; flex-direction: column; gap: var(--space-3)">
+<div style="display: flex; align-items: flex-end; justify-content: space-between; gap: var(--space-6); flex-wrap: wrap">
+<div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: var(--space-1)">
+<span class="overline" style="color: var(--text-secondary)">Mise en route</span>
+<h2 class="h2" style="margin: 0">Termine la configuration d’Arena Five</h2>
+<p class="body" style="margin: 0; color: var(--text-secondary)">Encore 2 étapes et les joueurs pourront réserver.</p>
+</div>
+<div style="width: 220px; max-width: 100%; padding-bottom: var(--space-1)"><x-import component-from-global-scope="MatchUp.ProgressBar" size="l" label="Configuration" value="{{done}}" max="{{total}}" value-label="4/6 · 67 %"></x-import></div>
+</div>
+<ul style="margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column"><li style="display: flex; align-items: center; gap: var(--space-3); min-height: 52px; padding-block: var(--space-2); border-bottom: 1px solid var(--border); ">
+<span style="flex: none; display: inline-flex; color: var(--success-text)"><x-import component-from-global-scope="MatchUp.Icon" name="check-circle" size="{{i24}}" weight="fill"></x-import></span>
+<div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px">
+<span class="body" style="color: var(--text-secondary)">Infos de l’entreprise</span>
+<span class="caption" style="color: var(--text-secondary)">Arena Five SARL · matricule fiscal ajouté</span>
+</div>
+<a href="OWN-01-Entreprise.dc.html" class="mu-btn mu-btn--tertiary mu-btn--s" aria-label="Modifier les infos de l’entreprise" style="flex: none"><span class="mu-btn__content"><span class="mu-btn__label label">Modifier</span></span></a>
+</li><li style="display: flex; align-items: center; gap: var(--space-3); min-height: 52px; padding-block: var(--space-2); border-bottom: 1px solid var(--border); ">
+<span style="flex: none; display: inline-flex; color: var(--success-text)"><x-import component-from-global-scope="MatchUp.Icon" name="check-circle" size="{{i24}}" weight="fill"></x-import></span>
+<div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px">
+<span class="body" style="color: var(--text-secondary)">Adresse et terrains</span>
+<span class="caption" style="color: var(--text-secondary)">12 rue Hédi Nouira, La Marsa · 3 terrains Football 5</span>
+</div>
+<a href="OWN-02-Adresse.dc.html" class="mu-btn mu-btn--tertiary mu-btn--s" aria-label="Modifier l’adresse et les terrains" style="flex: none"><span class="mu-btn__content"><span class="mu-btn__label label">Modifier</span></span></a>
+</li><li style="display: flex; align-items: center; gap: var(--space-3); min-height: 52px; padding-block: var(--space-2); border-bottom: 1px solid var(--border); ">
+<span style="flex: none; display: inline-flex; color: var(--success-text)"><x-import component-from-global-scope="MatchUp.Icon" name="check-circle" size="{{i24}}" weight="fill"></x-import></span>
+<div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px">
+<span class="body" style="color: var(--text-secondary)">Horaires et tarifs</span>
+<span class="caption" style="color: var(--text-secondary)">6j/7 · de 120 à 170 DT /h, soit 12 à 17 DT /pers.</span>
+</div>
+<a href="OWN-04-Horaires.dc.html" class="mu-btn mu-btn--tertiary mu-btn--s" aria-label="Modifier les horaires et les tarifs" style="flex: none"><span class="mu-btn__content"><span class="mu-btn__label label">Modifier</span></span></a>
+</li><li style="display: flex; align-items: center; gap: var(--space-3); min-height: 52px; padding-block: var(--space-2); border-bottom: 1px solid var(--border); ">
+<span style="flex: none; display: inline-flex; color: var(--success-text)"><x-import component-from-global-scope="MatchUp.Icon" name="check-circle" size="{{i24}}" weight="fill"></x-import></span>
+<div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px">
+<span class="body" style="color: var(--text-secondary)">Photos et versements</span>
+<span class="caption" style="color: var(--text-secondary)">6 photos · Attijari bank •••• 12 34</span>
+</div>
+<x-import component-from-global-scope="MatchUp.StatusBadge" status="pending" label="RIB en vérification" size="s"></x-import><a href="OWN-06-Photos.dc.html" class="mu-btn mu-btn--tertiary mu-btn--s" aria-label="Modifier les photos et les versements" style="flex: none"><span class="mu-btn__content"><span class="mu-btn__label label">Modifier</span></span></a>
+</li><li style="display: flex; align-items: center; gap: var(--space-3); min-height: 52px; padding-block: var(--space-2); border-bottom: 1px solid var(--border); ">
+<span style="flex: none; display: inline-flex; color: var(--text-secondary)"><x-import component-from-global-scope="MatchUp.Icon" name="circle-dashed" size="{{i24}}"></x-import></span>
+<div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px">
+<span class="label" style="color: var(--text)">Ajoute ta politique d’annulation</span>
+<span class="caption" style="color: var(--text-secondary)">Les joueurs la lisent avant de payer. Par exemple : remboursé jusqu’à 24 h avant.</span>
+</div>
+<x-import component-from-global-scope="MatchUp.Button" size="m" leading-icon="plus">Ajouter</x-import>
+</li><li style="display: flex; align-items: center; gap: var(--space-3); min-height: 52px; padding-block: var(--space-2); ">
+<span style="flex: none; display: inline-flex; color: var(--text-secondary)"><x-import component-from-global-scope="MatchUp.Icon" name="circle-dashed" size="{{i24}}"></x-import></span>
+<div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px">
+<span class="label" style="color: var(--text)">Publie ton premier créneau</span>
+<span class="caption" style="color: var(--text-secondary)">Tes terrains deviennent réservables et visibles à La Marsa.</span>
+</div>
+<x-import component-from-global-scope="MatchUp.Button" size="m" variant="secondary">Publier</x-import>
+</li></ul>
+</section><section class="mu-card" style="padding: var(--space-6); display: flex; flex-direction: column; gap: var(--space-2)">
+<div style="display: flex; align-items: baseline; justify-content: space-between; gap: var(--space-3)"><h2 class="h3" style="margin: 0">Réservations du jour</h2><span class="caption" style="color: var(--text-secondary)">mer. 14 oct.</span></div>
+<div style="flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center">
+<x-import component-from-global-scope="MatchUp.EmptyState" compact="{{yes}}" illustration="bookings" title="Aucune réservation pour l’instant" description="Publie ton premier créneau : il apparaîtra aux joueurs de La Marsa."></x-import>
+<x-import component-from-global-scope="MatchUp.Button" size="m" variant="secondary" leading-icon="calendar-dots">Ouvrir le planning</x-import>
+</div>
+</section></div><div class="db-kpis" style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--space-6)"><x-import component-from-global-scope="MatchUp.KpiCard" label="Taux d’occupation" value="—" note="Calculé dès ta première réservation"></x-import><x-import component-from-global-scope="MatchUp.KpiCard" label="Revenus du jour" value="0" note="Aucun paiement encaissé" unit="DT"></x-import><x-import component-from-global-scope="MatchUp.KpiCard" label="Réservations" value="0" note="Pas encore de comparaison"></x-import><x-import component-from-global-scope="MatchUp.KpiCard" label="Note moyenne" value="—" note="Après les premiers avis des joueurs"></x-import></div>
+</main>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":900}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      yes: true,
+      no: false,
+      i16: 16,
+      i20: 20,
+      i24: 24,
+      i32: 32,
+      logoH: 28,
+      nav: [{"items": [{"id": "dashboard", "label": "Tableau de bord", "icon": "squares-four"}]}, {"heading": "Activité", "items": [{"id": "planning", "label": "Planning", "icon": "calendar-dots"}, {"id": "reservations", "label": "Réservations", "icon": "ticket"}, {"id": "terrains", "label": "Terrains", "icon": "sport-court"}, {"id": "tarifs", "label": "Tarifs", "icon": "tag"}]}, {"heading": "Clientèle", "items": [{"id": "clients", "label": "Clients", "icon": "users"}, {"id": "avis", "label": "Avis", "icon": "star"}]}, {"heading": "Gestion", "items": [{"id": "revenus", "label": "Revenus", "icon": "coins"}, {"id": "abonnement", "label": "Abonnement", "icon": "crown-simple"}, {"id": "parametres", "label": "Paramètres", "icon": "gear-six"}]}],
+      role: {"label": "Propriétaire", "context": "Arena Five"},
+      navUser: {"name": "Skander T.", "caption": "contact@arenafive.tn"},
+      barUser: {"name": "Skander T.", "role": "Propriétaire", "email": "contact@arenafive.tn", "wallet": 0},
+      bell: 1,
+      done: 4,
+      total: 6,
+      railCollapsed: typeof window !== 'undefined' && window.innerWidth < 1200
+    };
+  }
+}
+</script>
+</body>
+</html>

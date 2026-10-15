@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Questionnaire niveau</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/matchup/tokens.css">
+<link rel="stylesheet" href="ds/matchup/components/bundle.css">
+<script src="ds/matchup/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0}
+a{color:var(--link)}
+@keyframes ply-q-in{from{opacity:0; transform:translateX(12px)}to{opacity:1; transform:none}}
+.ply-q{animation:ply-q-in var(--duration-base) var(--ease-enter)}
+@media (prefers-reduced-motion: reduce){.ply-q{animation:none}}
+.ply-scale__opt{position:relative; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4px; min-height:84px; padding:8px 4px; box-sizing:border-box; border-radius:var(--radius-md); background:var(--surface); box-shadow:inset 0 0 0 1px var(--border-control); color:var(--text); text-align:center; cursor:pointer; transition:background-color var(--duration-fast) var(--ease-enter), box-shadow var(--duration-fast) var(--ease-enter), transform var(--duration-fast) var(--ease-enter)}
+.ply-scale__opt:hover{box-shadow:inset 0 0 0 1px var(--border-strong), var(--elevation-2)}
+.ply-scale__opt:active{transform:scale(var(--scale-press))}
+.ply-scale__opt:has(input:checked){background:var(--accent); color:var(--on-accent); box-shadow:inset 0 0 0 2px var(--primary)}
+.ply-scale__opt:has(input:focus-visible){box-shadow:inset 0 0 0 2px var(--primary), var(--focus-ring)}
+.ply-scale__word{color:var(--text-secondary)}
+.ply-scale__opt:has(input:checked) .ply-scale__word{color:var(--on-accent)}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; box-sizing: border-box; display: flex; flex-direction: column; background: var(--surface); color: var(--text); font-family: var(--font-sans)">
+<div style="display: flex; align-items: center; justify-content: space-between; min-height: 48px; padding: 52px 8px 0 8px">
+<sc-if value="{{isFirst}}"><a href="PLY-01-Sports.dc.html" class="mu-iconbtn mu-iconbtn--l mu-iconbtn--ghost" aria-label="Retour" style="color: var(--text)"><x-import component-from-global-scope="MatchUp.Icon" name="arrow-left" size="{{i24}}"></x-import></a></sc-if>
+<sc-if value="{{notFirst}}"><button type="button" class="mu-iconbtn mu-iconbtn--l mu-iconbtn--ghost" aria-label="Question précédente" onclick="{{prev}}" style="color: var(--text)"><x-import component-from-global-scope="MatchUp.Icon" name="arrow-left" size="{{i24}}"></x-import></button></sc-if>
+</div>
+<div style="padding: 4px 16px 0 16px">
+<x-import component-from-global-scope="MatchUp.StepIndicator" step="{{stepN}}" total="{{total}}" title="Ton niveau"></x-import>
+</div>
+<div style="flex: 1; min-height: 0; overflow: auto; display: flex; flex-direction: column; gap: 24px; padding: 24px 16px 24px 16px">
+<div style="display: flex; flex-direction: column; gap: 10px; padding: 12px 16px 14px 16px; border-radius: var(--radius-md); background: var(--ai-soft)">
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 8px">
+<div style="display: flex; align-items: center; gap: 8px">
+<x-import component-from-global-scope="MatchUp.AiLabel" size="s"></x-import>
+<span class="label-s" style="color: var(--ai-text)">Niveau padel</span>
+</div>
+<span class="label-s" style="color: var(--ai-text)">Question {{qNum}} sur 6</span>
+</div>
+<x-import component-from-global-scope="MatchUp.ProgressBar" variant="segmented" value="{{qNum}}" max="{{six}}" size="s" tone="ai" show-value="{{no}}" aria-label="Question {{qNum}} sur 6"></x-import>
+<p class="caption" style="margin: 0; color: var(--text-secondary)">6 questions rapides pour te proposer des parties équilibrées.</p>
+</div>
+
+<sc-if value="{{s0}}">
+<div class="ply-q" style="display: flex; flex-direction: column; gap: 20px">
+<h2 class="h2" style="margin: 0">Depuis quand joues-tu au padel ?</h2>
+<x-import component-from-global-scope="MatchUp.ChoiceCard.Group" aria-label="Depuis quand joues-tu au padel ?" value="{{q1}}" on-change="{{setQ1}}">
+<x-import component-from-global-scope="MatchUp.ChoiceCard" value="lt6m" title="Moins de 6 mois" description="Je découvre encore les règles."></x-import>
+<x-import component-from-global-scope="MatchUp.ChoiceCard" value="6m2y" title="6 mois à 2 ans" description="Je joue entre amis, sans trop de tactique."></x-import>
+<x-import component-from-global-scope="MatchUp.ChoiceCard" value="2y5y" title="2 à 5 ans" description="J’ai mes coups et je lis le jeu."></x-import>
+<x-import component-from-global-scope="MatchUp.ChoiceCard" value="gt5y" title="Plus de 5 ans" description="Je joue en club ou en compétition."></x-import>
+</x-import>
+</div>
+</sc-if>
+
+<sc-if value="{{s1}}">
+<div class="ply-q" style="display: flex; flex-direction: column; gap: 20px">
+<h2 class="h2" style="margin: 0">À quelle fréquence joues-tu ?</h2>
+<x-import component-from-global-scope="MatchUp.ChoiceCard.Group" aria-label="À quelle fréquence joues-tu ?" value="{{q2}}" on-change="{{setQ2}}">
+<x-import component-from-global-scope="MatchUp.ChoiceCard" value="rare" title="Moins d’une fois par mois" description="Quand l’occasion se présente."></x-import>
+<x-import component-from-global-scope="MatchUp.ChoiceCard" value="month" title="2 à 3 fois par mois" description="Un match de temps en temps."></x-import>
+<x-import component-from-global-scope="MatchUp.ChoiceCard" value="week" title="1 fois par semaine" description="Mon créneau fixe avec les mêmes partenaires."></x-import>
+<x-import component-from-global-scope="MatchUp.ChoiceCard" value="2week" title="2 fois par semaine ou plus" description="Le padel fait partie de ma semaine."></x-import>
+</x-import>
+</div>
+</sc-if>
+
+<sc-if value="{{s2}}">
+<div class="ply-q" style="display: flex; flex-direction: column; gap: 20px">
+<h2 class="h2" style="margin: 0">As-tu déjà joué des tournois ?</h2>
+<x-import component-from-global-scope="MatchUp.ChoiceCard.Group" aria-label="As-tu déjà joué des tournois ?" value="{{q3}}" on-change="{{setQ3}}">
+<x-import component-from-global-scope="MatchUp.ChoiceCard" value="never" title="Jamais" description="Je joue seulement des matchs entre amis."></x-import>
+<x-import component-from-global-scope="MatchUp.ChoiceCard" value="friendly" title="1 ou 2 tournois amicaux" description="Organisés par un club ou des amis."></x-import>
+<x-import component-from-global-scope="MatchUp.ChoiceCard" value="club" title="Des tournois de club" description="Plusieurs fois par saison."></x-import>
+<x-import component-from-global-scope="MatchUp.ChoiceCard" value="ranked" title="Des tournois classés" description="J’ai un classement fédéral."></x-import>
+</x-import>
+</div>
+</sc-if>
+
+<sc-if value="{{s3}}">
+<div class="ply-q" style="display: flex; flex-direction: column; gap: 20px">
+<div style="display: flex; flex-direction: column; gap: 8px">
+<h2 class="h2" style="margin: 0">Ton jeu au filet : comment est ta volée ?</h2>
+<p class="body" style="margin: 0; color: var(--text-secondary)">Note-toi de 1 à 5. Pas besoin d’être parfait, le niveau s’ajuste après tes matchs.</p>
+</div>
+<div role="radiogroup" aria-label="Ta volée, de 1 à 5" style="display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 8px">
+<label class="ply-scale__opt"><input type="radio" class="mu-visually-hidden" name="q4" value="1" checked="{{q4is1}}" onchange="{{onQ4}}"><span class="num-l">1</span><span class="caption ply-scale__word">Je l’évite</span></label>
+<label class="ply-scale__opt"><input type="radio" class="mu-visually-hidden" name="q4" value="2" checked="{{q4is2}}" onchange="{{onQ4}}"><span class="num-l">2</span><span class="caption ply-scale__word">Hésitant</span></label>
+<label class="ply-scale__opt"><input type="radio" class="mu-visually-hidden" name="q4" value="3" checked="{{q4is3}}" onchange="{{onQ4}}"><span class="num-l">3</span><span class="caption ply-scale__word">À l’aise</span></label>
+<label class="ply-scale__opt"><input type="radio" class="mu-visually-hidden" name="q4" value="4" checked="{{q4is4}}" onchange="{{onQ4}}"><span class="num-l">4</span><span class="caption ply-scale__word">Solide</span></label>
+<label class="ply-scale__opt"><input type="radio" class="mu-visually-hidden" name="q4" value="5" checked="{{q4is5}}" onchange="{{onQ4}}"><span class="num-l">5</span><span class="caption ply-scale__word">Mon arme</span></label>
+</div>
+<div aria-live="polite" style="display: flex; flex-direction: column; gap: 2px; padding: 12px 16px; border-radius: var(--radius-md); background: var(--surface-muted)">
+<span class="label">{{q4Title}}</span>
+<span class="body" style="color: var(--text-secondary)">{{q4Desc}}</span>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{s4}}">
+<div class="ply-q" style="display: flex; flex-direction: column; gap: 20px">
+<h2 class="h2" style="margin: 0">Et tes sorties de vitre ?</h2>
+<x-import component-from-global-scope="MatchUp.ChoiceCard.Group" aria-label="Et tes sorties de vitre ?" value="{{q5}}" on-change="{{setQ5}}">
+<x-import component-from-global-scope="MatchUp.ChoiceCard" value="skip" title="Je laisse passer la balle" description="Je ne joue pas encore le rebond sur la vitre."></x-import>
+<x-import component-from-global-scope="MatchUp.ChoiceCard" value="some" title="Je la remets en jeu" description="Surtout quand la balle revient lentement."></x-import>
+<x-import component-from-global-scope="MatchUp.ChoiceCard" value="often" title="Je la sors régulièrement" description="Je contrôle la vitre du fond et la latérale."></x-import>
+<x-import component-from-global-scope="MatchUp.ChoiceCard" value="attack" title="J’attaque en sortie de vitre" description="Double vitre et contre-vitre comprises."></x-import>
+</x-import>
+</div>
+</sc-if>
+
+<sc-if value="{{s5}}">
+<div class="ply-q" style="display: flex; flex-direction: column; gap: 20px">
+<h2 class="h2" style="margin: 0">Et ton service ?</h2>
+<x-import component-from-global-scope="MatchUp.ChoiceCard.Group" aria-label="Et ton service ?" value="{{q6}}" on-change="{{setQ6}}">
+<x-import component-from-global-scope="MatchUp.ChoiceCard" value="basic" title="Je le mets en jeu" description="L’important, c’est qu’il passe."></x-import>
+<x-import component-from-global-scope="MatchUp.ChoiceCard" value="steady" title="Régulier" description="Peu de fautes, toujours sous la ceinture."></x-import>
+<x-import component-from-global-scope="MatchUp.ChoiceCard" value="placed" title="Placé" description="Je vise la vitre ou le T pour gêner."></x-import>
+<x-import component-from-global-scope="MatchUp.ChoiceCard" value="varied" title="Varié" description="Je change d’effet et de zone selon l’adversaire."></x-import>
+</x-import>
+</div>
+</sc-if>
+</div>
+<div style="padding: 12px 16px 34px 16px; background: var(--surface); box-shadow: var(--elevation-2-up); display: flex; flex-direction: column; gap: 12px">
+<sc-if value="{{notLast}}"><button type="button" class="mu-btn mu-btn--primary mu-btn--xl mu-btn--block" onclick="{{next}}"><span class="mu-btn__content"><span class="mu-btn__label label-l">Continuer</span></span></button></sc-if>
+<sc-if value="{{isLast}}"><a href="PLY-03-Niveau-estime.dc.html" class="mu-btn mu-btn--primary mu-btn--xl mu-btn--block"><span class="mu-btn__content"><span class="mu-btn__label label-l">Voir mon niveau</span><x-import component-from-global-scope="MatchUp.Icon" name="arrow-right" size="{{i20}}"></x-import></span></a></sc-if>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  state = { step: 0, q1: '2y5y', q2: '2week', q3: 'friendly', q4: '3', q5: 'often', q6: 'steady' };
+  renderVals() {
+    const s = this.state.step;
+    const q4 = this.state.q4;
+    const volley = {
+      '1': ['1 · Je l’évite', 'Je reste au fond dès que je peux.'],
+      '2': ['2 · Hésitant', 'Je monte au filet, mais je rate encore beaucoup de volées.'],
+      '3': ['3 · À l’aise', 'Je tiens la volée sur les balles faciles et je la place parfois.'],
+      '4': ['4 · Solide', 'Je place mes volées et je finis souvent le point.'],
+      '5': ['5 · Mon arme', 'Volée, bandeja, víbora : je gagne mes points au filet.']
+    };
+    const set = (k) => (v) => this.setState({ [k]: v });
+    return {
+      yes: true, no: false, i20: 20, i24: 24, total: 8, stepN: 2, six: 6,
+      qNum: s + 1,
+      s0: s === 0, s1: s === 1, s2: s === 2, s3: s === 3, s4: s === 4, s5: s === 5,
+      isFirst: s === 0, notFirst: s > 0, isLast: s === 5, notLast: s < 5,
+      next: () => this.setState({ step: Math.min(5, s + 1) }),
+      prev: () => this.setState({ step: Math.max(0, s - 1) }),
+      q1: this.state.q1, q2: this.state.q2, q3: this.state.q3, q5: this.state.q5, q6: this.state.q6,
+      setQ1: set('q1'), setQ2: set('q2'), setQ3: set('q3'), setQ5: set('q5'), setQ6: set('q6'),
+      q4is1: q4 === '1', q4is2: q4 === '2', q4is3: q4 === '3', q4is4: q4 === '4', q4is5: q4 === '5',
+      onQ4: (e) => this.setState({ q4: e.target.value }),
+      q4Title: volley[q4][0], q4Desc: volley[q4][1]
+    };
+  }
+}
+</script>
+</body>
+</html>

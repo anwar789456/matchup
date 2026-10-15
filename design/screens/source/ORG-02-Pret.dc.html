@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Organisateur · Premiers pas</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/matchup/tokens.css">
+<link rel="stylesheet" href="ds/matchup/components/bundle.css">
+<script src="ds/matchup/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0}
+a{color:var(--link)}
+@media (max-width: 1199px){.db-cols--ai{grid-template-columns:minmax(0,1.3fr) minmax(0,1fr)!important}.db-cols--ai>*{grid-column:auto!important}}
+@media (max-width: 959px){.db-cols{grid-template-columns:1fr!important}.db-cols>*{grid-column:auto!important}.db-kpis{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
+</style>
+</helmet>
+<div class="dc-root" style="min-height: 900px; box-sizing: border-box; display: flex; background: var(--bg); color: var(--text); font-family: var(--font-sans)">
+<div style="flex: none; display: flex; align-self: stretch"><x-import component-from-global-scope="MatchUp.Sidebar" sections="{{nav}}" active-id="dashboard" role="{{role}}" user="{{navUser}}" default-collapsed="{{railCollapsed}}"></x-import></div>
+<div style="flex: 1; min-width: 0; display: flex; flex-direction: column">
+<x-import component-from-global-scope="MatchUp.TopBar" title="Tableau de bord" notifications="{{bell}}" user="{{barUser}}" style="position: sticky; top: 0; z-index: 3"></x-import>
+
+<main style="flex: 1; box-sizing: border-box; width: 100%; max-width: calc(var(--content-max) + 2 * var(--grid-desktop-margin)); margin: 0 auto; padding: var(--space-8) var(--grid-desktop-margin); display: flex; flex-direction: column; gap: var(--space-6)">
+<div style="display: flex; align-items: flex-end; justify-content: space-between; gap: var(--space-6); flex-wrap: wrap">
+<div style="display: flex; flex-direction: column; gap: var(--space-1); min-width: 0">
+<h1 class="h1" style="margin: 0">Bienvenue, Ines</h1>
+<p class="body-l" style="margin: 0; color: var(--text-secondary)">Tunis Padel Series est prête. Lance ton premier tournoi en quelques minutes.</p>
+</div>
+<a href="ORG-01-Organisation.dc.html" class="mu-btn mu-btn--tertiary mu-btn--m" style="flex: none"><span class="mu-btn__content"><x-import component-from-global-scope="MatchUp.Icon" name="pencil-simple" size="{{i20}}"></x-import><span class="mu-btn__label label">Modifier l’organisation</span></span></a>
+</div><section class="mu-card" style="overflow: hidden; display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr)">
+<div style="padding: var(--space-8); display: flex; flex-direction: column; justify-content: center; gap: var(--space-4)">
+<span class="overline" style="color: var(--text-secondary)">Premier pas</span>
+<h2 class="h2" style="margin: 0">Crée ton premier tournoi</h2>
+<p class="body-l" style="margin: 0; color: var(--text-secondary)">Format, terrains, dates, frais d’inscription : on te guide étape par étape. Ton brouillon est enregistré à chaque étape.</p>
+<div style="display: flex; flex-wrap: wrap; gap: var(--space-3); margin-top: var(--space-2)">
+<x-import component-from-global-scope="MatchUp.Button" size="l" leading-icon="plus">Créer un tournoi</x-import>
+<x-import component-from-global-scope="MatchUp.Button" size="l" variant="secondary" leading-icon="copy">Reprendre Padel Cup Lac 2</x-import>
+</div>
+</div>
+<div style="position: relative; min-height: 260px">
+<x-import component-from-global-scope="MatchUp.CourtArt" sport="padel" variant="photo" label="Court de padel éclairé le soir" dc-props="{{heroArt}}"></x-import>
+</div>
+</section><section style="display: flex; flex-direction: column; gap: var(--space-4)">
+<h2 class="h3" style="margin: 0">Comment ça marche</h2>
+<ol class="db-kpis" style="margin: 0; padding: 0; list-style: none; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-6)">
+<li class="mu-card" style="padding: var(--space-5); display: flex; flex-direction: column; gap: var(--space-3)">
+<div style="display: flex; align-items: center; justify-content: space-between">
+<span style="display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: var(--radius-sm); background: var(--surface-muted); color: var(--text)"><x-import component-from-global-scope="MatchUp.Icon" name="trophy" size="{{i20}}"></x-import></span>
+<span class="num-l" style="color: var(--text-secondary)">01</span>
+</div>
+<span class="label-l">Crée</span>
+<span class="body" style="color: var(--text-secondary)">Choisis le format, les terrains, les dates et les frais d’inscription.</span>
+</li>
+<li class="mu-card" style="padding: var(--space-5); display: flex; flex-direction: column; gap: var(--space-3)">
+<div style="display: flex; align-items: center; justify-content: space-between">
+<span style="display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: var(--radius-sm); background: var(--surface-muted); color: var(--text)"><x-import component-from-global-scope="MatchUp.Icon" name="users-three" size="{{i20}}"></x-import></span>
+<span class="num-l" style="color: var(--text-secondary)">02</span>
+</div>
+<span class="label-l">Ouvre les inscriptions</span>
+<span class="body" style="color: var(--text-secondary)">Partage le lien : les équipes s’inscrivent et paient leur place en ligne.</span>
+</li>
+<li class="mu-card" style="padding: var(--space-5); display: flex; flex-direction: column; gap: var(--space-3)">
+<div style="display: flex; align-items: center; justify-content: space-between">
+<span style="display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: var(--radius-sm); background: var(--surface-muted); color: var(--text)"><x-import component-from-global-scope="MatchUp.Icon" name="list-numbers" size="{{i20}}"></x-import></span>
+<span class="num-l" style="color: var(--text-secondary)">03</span>
+</div>
+<span class="label-l">Publie le tableau</span>
+<span class="body" style="color: var(--text-secondary)">Poules et tableau final, puis les scores en direct le jour J.</span>
+</li>
+</ol>
+</section><div style="display: flex; align-items: center; gap: var(--space-4); padding: var(--space-4) var(--space-5); border-radius: var(--radius-md); background: var(--ai-soft)">
+<x-import component-from-global-scope="MatchUp.AiLabel" ></x-import>
+<div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px">
+<span class="label">Bientôt : l’IA prépare ton tableau et ton planning</span>
+<span class="body" style="color: var(--text-secondary)">À partir de tes terrains, de tes créneaux et du repos entre deux matchs. Tu modifies et valides tout avant de publier.</span>
+</div>
+</div>
+</main>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":900}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      yes: true,
+      no: false,
+      i16: 16,
+      i20: 20,
+      i24: 24,
+      i32: 32,
+      logoH: 28,
+      nav: [{"items": [{"id": "dashboard", "label": "Tableau de bord", "icon": "squares-four"}]}, {"heading": "Compétitions", "items": [{"id": "tournois", "label": "Tournois & événements", "icon": "trophy"}, {"id": "equipes", "label": "Équipes", "icon": "users-three"}, {"id": "calendrier", "label": "Calendrier", "icon": "calendar-dots"}, {"id": "scores", "label": "Scores en direct", "icon": "broadcast"}]}, {"heading": "Gestion", "items": [{"id": "annonces", "label": "Annonces", "icon": "megaphone"}, {"id": "revenus", "label": "Revenus", "icon": "coins"}]}],
+      role: {"label": "Organisateur", "context": "Tunis Padel Series", "initials": "TS"},
+      navUser: {"name": "Ines M.", "caption": "contact@tunispadelseries.tn"},
+      barUser: {"name": "Ines M.", "role": "Organisatrice", "email": "contact@tunispadelseries.tn", "wallet": 0},
+      bell: 0,
+      heroArt: {"style": {"position": "absolute", "inset": 0, "width": "100%", "height": "100%"}},
+      railCollapsed: typeof window !== 'undefined' && window.innerWidth < 1200
+    };
+  }
+}
+</script>
+</body>
+</html>
