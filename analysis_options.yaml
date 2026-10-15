@@ -8,6 +8,7 @@ analyzer:
     - web/**
     # Design handoff (reference only, not part of the app).
     - design/**
+    - packages/**
     # Generated from design/design-system/tokens.json — do not edit, do not lint.
     - lib/theme/**
 

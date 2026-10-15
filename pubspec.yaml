@@ -29,3 +29,8 @@ flutter:
     - assets/icons/sport/
     - assets/logo/
     - assets/illustrations/
+
+# phosphor_flutter 2.1.0 does not compile on current Flutter; see packages/phosphor_flutter/PATCHED.md.
+dependency_overrides:
+  phosphor_flutter:
+    path: packages/phosphor_flutter

@@ -1,0 +1,17 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "matchup-web",
+      "runtimeExecutable": "flutter",
+      "runtimeArgs": ["run", "-d", "web-server", "--web-port", "8080", "--web-hostname", "localhost"],
+      "port": 8080
+    },
+    {
+      "name": "matchup-web-static",
+      "runtimeExecutable": "python",
+      "runtimeArgs": ["-m", "http.server", "8081", "--bind", "localhost", "--directory", "build/web"],
+      "port": 8081
+    }
+  ]
+}
