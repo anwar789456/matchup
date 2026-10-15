@@ -8,11 +8,20 @@ enum MuSegmentedSize { m, s }
 /// One option of a [MuSegmentedControl].
 @immutable
 class MuSegment<T> {
-  const MuSegment({required this.value, required this.label, this.icon, this.selectedIcon});
+  const MuSegment({
+    required this.value,
+    required this.label,
+    this.icon,
+    this.selectedIcon,
+    this.badge,
+  });
 
   final T value;
   final String label;
   final IconData? icon;
+
+  /// One short fact about the option (« 2 mois offerts » on « Annuel »).
+  final String? badge;
 
   /// Fill-weight icon for the selected state.
   final IconData? selectedIcon;
@@ -38,6 +47,10 @@ class MuSegmentedControl<T> extends StatelessWidget {
   final String semanticLabel;
   final MuSegmentedSize size;
   final bool expand;
+
+  // SegmentedControl.md: badge min-width 18, padding-inline 5.
+  static const double _badgeMin = 18;
+  static const double _badgePad = 5;
 
   @override
   Widget build(BuildContext context) {
@@ -74,6 +87,23 @@ class MuSegmentedControl<T> extends StatelessWidget {
                     const SizedBox(width: MuSpace.s2),
                   ],
                   Text(s.label, style: MuType.label.copyWith(color: fg)),
+                  if (s.badge != null) ...[
+                    const SizedBox(width: MuSpace.s2),
+                    Container(
+                      constraints: const BoxConstraints(minWidth: _badgeMin),
+                      padding: const EdgeInsets.symmetric(horizontal: _badgePad),
+                      decoration: BoxDecoration(
+                        color: selected ? c.onAccent : c.surface,
+                        borderRadius: MuRadius.fullAll,
+                        border: selected ? null : Border.all(color: c.border),
+                      ),
+                      child: Text(
+                        s.badge!,
+                        textAlign: TextAlign.center,
+                        style: MuType.labelS.copyWith(color: selected ? c.accent : c.text),
+                      ),
+                    ),
+                  ],
                 ],
               ),
             ),
@@ -98,9 +128,7 @@ class MuSegmentedControl<T> extends StatelessWidget {
               child: _Thumb(height: segH),
             ),
           ),
-          Row(
-            children: [for (var i = 0; i < segments.length; i++) Expanded(child: segment(i))],
-          ),
+          Row(children: [for (var i = 0; i < segments.length; i++) Expanded(child: segment(i))]),
         ],
       );
     } else {

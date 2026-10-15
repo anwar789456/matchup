@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 
+import '../core/format.dart';
 import '../theme/theme.dart';
 import 'mu_avatar.dart';
 import 'mu_icon_button.dart';
@@ -46,10 +47,13 @@ class MuNavSection {
 /// The role trigger at the top: « Propriétaire » over « Arena Five ».
 @immutable
 class MuSidebarRole {
-  const MuSidebarRole({required this.role, required this.name, this.image});
+  const MuSidebarRole({required this.role, required this.name, this.initials, this.image});
 
   final String role;
   final String name;
+
+  /// The tile's letters (« AF », « ST »); the first letters of [name] by default.
+  final String? initials;
   final ImageProvider? image;
 }
 
@@ -129,20 +133,27 @@ class MuSidebar extends StatelessWidget {
     final nav = <Widget>[];
     for (final (i, s) in sections.indexed) {
       if (s.heading != null) {
-        nav.add(collapsed
-            ? Padding(
-                padding: const EdgeInsets.symmetric(vertical: MuSpace.s3),
-                child: Container(height: 1, color: c.navHover),
-              )
-            : Padding(
-                padding: const EdgeInsetsDirectional.only(
-                    start: MuSpace.s4, top: MuSpace.s4, bottom: MuSpace.s1),
-                child: Semantics(
-                  header: true,
-                  child: Text(s.heading!.toUpperCase(),
-                      style: MuType.overline.copyWith(color: c.navTextMuted)),
+        nav.add(
+          collapsed
+              ? Padding(
+                  padding: const EdgeInsets.symmetric(vertical: MuSpace.s3),
+                  child: Container(height: 1, color: c.navHover),
+                )
+              : Padding(
+                  padding: const EdgeInsetsDirectional.only(
+                    start: MuSpace.s4,
+                    top: MuSpace.s4,
+                    bottom: MuSpace.s1,
+                  ),
+                  child: Semantics(
+                    header: true,
+                    child: Text(
+                      s.heading!.toUpperCase(),
+                      style: MuType.overline.copyWith(color: c.navTextMuted),
+                    ),
+                  ),
                 ),
-              ));
+        );
       } else if (i > 0) {
         nav.add(const SizedBox(height: MuSpace.s3));
       }
@@ -172,14 +183,11 @@ class MuSidebar extends StatelessWidget {
                 SizedBox(
                   height: MuSize.topBar,
                   child: Padding(
-                    padding: EdgeInsetsDirectional.only(
-                        start: collapsed ? 0 : MuSpace.s6),
+                    padding: EdgeInsetsDirectional.only(start: collapsed ? 0 : MuSpace.s6),
                     child: Align(
-                      alignment:
-                          collapsed ? Alignment.center : AlignmentDirectional.centerStart,
+                      alignment: collapsed ? Alignment.center : AlignmentDirectional.centerStart,
                       child: collapsed
-                          ? const MuLogo(
-                              variant: MuLogoVariant.icon, height: MuSize.iconL)
+                          ? const MuLogo(variant: MuLogoVariant.icon, height: MuSize.iconL)
                           : const MuLogo(tone: MuLogoTone.dark, height: _wordmark),
                     ),
                   ),
@@ -233,11 +241,16 @@ class MuSidebar extends StatelessWidget {
                   height: MuSize.topBar,
                   child: Padding(
                     padding: EdgeInsetsDirectional.only(
-                        start: collapsed ? 0 : MuSpace.s5, end: collapsed ? 0 : MuSpace.s2),
+                      start: collapsed ? 0 : MuSpace.s5,
+                      end: collapsed ? 0 : MuSpace.s2,
+                    ),
                     child: collapsed
                         ? Center(
                             child: MuAvatar(
-                                name: user.name, image: user.image, size: MuAvatarSize.s),
+                              name: user.name,
+                              image: user.image,
+                              size: MuAvatarSize.s,
+                            ),
                           )
                         : Row(
                             children: [
@@ -248,14 +261,18 @@ class MuSidebar extends StatelessWidget {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text(user.name,
-                                        maxLines: 1,
-                                        overflow: TextOverflow.ellipsis,
-                                        style: MuType.label.copyWith(color: c.navText)),
-                                    Text(user.email,
-                                        maxLines: 1,
-                                        overflow: TextOverflow.ellipsis,
-                                        style: MuType.caption.copyWith(color: c.navTextMuted)),
+                                    Text(
+                                      user.name,
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: MuType.label.copyWith(color: c.navText),
+                                    ),
+                                    Text(
+                                      user.email,
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: MuType.caption.copyWith(color: c.navTextMuted),
+                                    ),
                                   ],
                                 ),
                               ),
@@ -296,12 +313,10 @@ class _RoleTrigger extends StatelessWidget {
       decoration: BoxDecoration(
         color: c.navHover,
         borderRadius: MuRadius.smAll,
-        image: role.image == null
-            ? null
-            : DecorationImage(image: role.image!, fit: BoxFit.cover),
+        image: role.image == null ? null : DecorationImage(image: role.image!, fit: BoxFit.cover),
       ),
       child: role.image == null
-          ? Text(_initials(role.name), style: MuType.labelS.copyWith(color: c.navText))
+          ? Text(role.initials ?? initialsOf(role.name), style: MuType.labelS.copyWith(color: c.navText))
           : null,
     );
 
@@ -335,19 +350,26 @@ class _RoleTrigger extends StatelessWidget {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(role.role,
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: MuType.caption.copyWith(color: c.navTextMuted)),
-                                Text(role.name,
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: MuType.label.copyWith(color: c.navText)),
+                                Text(
+                                  role.role,
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: MuType.caption.copyWith(color: c.navTextMuted),
+                                ),
+                                Text(
+                                  role.name,
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: MuType.label.copyWith(color: c.navText),
+                                ),
                               ],
                             ),
                           ),
-                          Icon(PhosphorIcons.caretUpDown(),
-                              size: MuSize.iconXs, color: c.navTextMuted),
+                          Icon(
+                            PhosphorIcons.caretUpDown(),
+                            size: MuSize.iconXs,
+                            color: c.navTextMuted,
+                          ),
                         ],
                       ),
               ),
@@ -356,11 +378,6 @@ class _RoleTrigger extends StatelessWidget {
         ),
       ),
     );
-  }
-
-  static String _initials(String name) {
-    final words = name.split(RegExp(r'\s+')).where((w) => w.isNotEmpty).toList();
-    return words.take(2).map((w) => w[0].toUpperCase()).join();
   }
 }
 
@@ -404,7 +421,8 @@ class _SidebarItem extends StatelessWidget {
         : Container(
             padding: const EdgeInsets.symmetric(horizontal: MuSpace.s2),
             decoration: BoxDecoration(
-              color: active ? c.onAccent.withValues(alpha: _countAlpha)
+              color: active
+                  ? c.onAccent.withValues(alpha: _countAlpha)
                   : c.navText.withValues(alpha: _countAlpha),
               borderRadius: MuRadius.fullAll,
             ),
@@ -420,8 +438,7 @@ class _SidebarItem extends StatelessWidget {
               clipBehavior: Clip.none,
               children: [
                 icon,
-                if (countBadge != null)
-                  PositionedDirectional(top: 0, end: 0, child: countBadge),
+                if (countBadge != null) PositionedDirectional(top: 0, end: 0, child: countBadge),
               ],
             )
           : Padding(

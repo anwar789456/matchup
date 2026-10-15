@@ -25,6 +25,7 @@ class MuTextField extends StatefulWidget {
     this.success,
     this.messageExtra,
     this.optional = false,
+    this.hideLabel = false,
     this.labelAside,
     this.leadingIcon,
     this.prefix,
@@ -65,6 +66,9 @@ class MuTextField extends StatefulWidget {
   /// Extra line under the message (e.g. « C'est le tien ? Se connecter »).
   final Widget? messageExtra;
   final bool optional;
+
+  /// Keeps the label for screen readers only (cells of a table with column heads).
+  final bool hideLabel;
 
   /// Widget at the end of the label row (e.g. « Mot de passe oublié ? »).
   final Widget? labelAside;
@@ -274,17 +278,23 @@ class _MuTextFieldState extends State<MuTextField> {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       mainAxisSize: MainAxisSize.min,
       children: [
-        MuFieldLabel(
-          label: widget.label,
-          optional: widget.optional,
-          enabled: widget.enabled,
-          aside: widget.labelAside,
-        ),
-        const SizedBox(height: MuSpace.s2),
+        if (!widget.hideLabel) ...[
+          MuFieldLabel(
+            label: widget.label,
+            optional: widget.optional,
+            enabled: widget.enabled,
+            aside: widget.labelAside,
+          ),
+          const SizedBox(height: MuSpace.s2),
+        ],
         MouseRegion(
           onEnter: (_) => setState(() => _hovered = true),
           onExit: (_) => setState(() => _hovered = false),
-          child: MuFocusRing(borderRadius: MuRadius.smAll, forceVisible: true, child: field),
+          child: MuFocusRing(
+            borderRadius: MuRadius.smAll,
+            forceVisible: true,
+            child: widget.hideLabel ? Semantics(label: widget.label, child: field) : field,
+          ),
         ),
         if (error != null || widget.success != null || widget.helper != null ||
             widget.maxLength != null) ...[

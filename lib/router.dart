@@ -15,10 +15,27 @@ import 'features/auth/screens/signup_screen.dart';
 import 'features/auth/screens/sms_code_screen.dart';
 import 'features/auth/screens/verify_email_screen.dart';
 import 'features/dev/gallery_screen.dart';
-import 'features/dev/pending_screen.dart';
+import 'features/coach_onboarding/controllers/coach_controller.dart';
+import 'features/coach_onboarding/screens/certification_screen.dart';
+import 'features/coach_onboarding/screens/coach_dashboard_screen.dart';
+import 'features/coach_onboarding/screens/coach_profile_screen.dart';
+import 'features/common/widgets/pro_gate.dart';
 import 'features/home/screens/home_screen.dart';
 import 'features/onboarding/screens/splash_screen.dart';
+import 'features/organizer_onboarding/controllers/organizer_controller.dart';
+import 'features/organizer_onboarding/screens/organisation_screen.dart';
+import 'features/organizer_onboarding/screens/organizer_dashboard_screen.dart';
 import 'features/onboarding/screens/welcome_screen.dart';
+import 'features/owner_onboarding/controllers/owner_controller.dart';
+import 'features/owner_onboarding/screens/address_screen.dart';
+import 'features/owner_onboarding/screens/company_screen.dart';
+import 'features/owner_onboarding/screens/courts_screen.dart';
+import 'features/owner_onboarding/screens/hours_screen.dart';
+import 'features/owner_onboarding/screens/owner_dashboard_screen.dart';
+import 'features/owner_onboarding/screens/payout_screen.dart';
+import 'features/owner_onboarding/screens/photos_screen.dart';
+import 'features/owner_onboarding/screens/plan_screen.dart';
+import 'features/owner_onboarding/screens/prices_screen.dart';
 import 'features/player_onboarding/screens/availability_screen.dart';
 import 'features/player_onboarding/screens/level_result_screen.dart';
 import 'features/player_onboarding/screens/location_denied_screen.dart';
@@ -65,8 +82,31 @@ abstract final class Routes {
 
   // Pro onboardings (phase 4).
   static const ownerCompany = '/own/company'; // OWN-01
+  static const ownerAddress = '/own/address'; // OWN-02
+  static const ownerCourts = '/own/courts'; // OWN-03
+  static const ownerHours = '/own/hours'; // OWN-04
+  static const ownerPrices = '/own/prices'; // OWN-05
+  static const ownerPhotos = '/own/photos'; // OWN-06
+  static const ownerPayout = '/own/payout'; // OWN-07
+  static const ownerPlan = '/own/plan'; // OWN-08
+  static const ownerDashboard = '/own/dashboard'; // OWN-09
   static const coachProfile = '/coa/profile'; // COA-01
+  static const coachCertification = '/coa/certification'; // COA-02
+  static const coachDashboard = '/coa/dashboard'; // COA-03
   static const organizerOrganisation = '/org/organisation'; // ORG-01
+  static const organizerDashboard = '/org/dashboard'; // ORG-02
+
+  /// The owner wizard, in order.
+  static const owner = [
+    ownerCompany,
+    ownerAddress,
+    ownerCourts,
+    ownerHours,
+    ownerPrices,
+    ownerPhotos,
+    ownerPayout,
+    ownerPlan,
+  ];
 
   /// Debug-only widget gallery.
   static const gallery = '/dev/gallery';
@@ -89,6 +129,14 @@ MuSport _sport(GoRouterState state) =>
 
 GoRoute _route(String path, Widget Function(GoRouterState state) build) =>
     GoRoute(path: path, builder: (context, state) => build(state));
+
+/// A pro screen, once its draft has loaded.
+GoRoute _owner(String path, Widget screen) =>
+    _route(path, (_) => ProGate(provider: ownerProvider, child: screen));
+GoRoute _coach(String path, Widget screen) =>
+    _route(path, (_) => ProGate(provider: coachProvider, child: screen));
+GoRoute _organizer(String path, Widget screen) =>
+    _route(path, (_) => ProGate(provider: organizerProvider, child: screen));
 
 final routerProvider = Provider<GoRouter>((ref) {
   return GoRouter(
@@ -126,12 +174,20 @@ final routerProvider = Provider<GoRouter>((ref) {
       _route(Routes.playerNotifications, (_) => const NotificationsScreen()),
       _route(Routes.playerProfile, (_) => const ProfileScreen()),
       _route(Routes.home, (_) => const HomeScreen()),
-      for (final (path, code) in [
-        (Routes.ownerCompany, 'OWN-01 · Entreprise'),
-        (Routes.coachProfile, 'COA-01 · Profil coach'),
-        (Routes.organizerOrganisation, 'ORG-01 · Organisation'),
-      ])
-        _route(path, (_) => PendingScreen(code: code)),
+      _owner(Routes.ownerCompany, const CompanyScreen()),
+      _owner(Routes.ownerAddress, const AddressScreen()),
+      _owner(Routes.ownerCourts, const CourtsScreen()),
+      _owner(Routes.ownerHours, const HoursScreen()),
+      _owner(Routes.ownerPrices, const PricesScreen()),
+      _owner(Routes.ownerPhotos, const PhotosScreen()),
+      _owner(Routes.ownerPayout, const PayoutScreen()),
+      _owner(Routes.ownerPlan, const PlanScreen()),
+      _owner(Routes.ownerDashboard, const OwnerDashboardScreen()),
+      _coach(Routes.coachProfile, const CoachProfileScreen()),
+      _coach(Routes.coachCertification, const CertificationScreen()),
+      _coach(Routes.coachDashboard, const CoachDashboardScreen()),
+      _organizer(Routes.organizerOrganisation, const OrganisationScreen()),
+      _organizer(Routes.organizerDashboard, const OrganizerDashboardScreen()),
       if (kDebugMode) _route(Routes.gallery, (_) => const GalleryScreen()),
     ],
   );

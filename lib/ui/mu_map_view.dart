@@ -61,6 +61,9 @@ class MuMapView extends StatefulWidget {
   final String? district;
   final String? street;
 
+  /// The static map's projection: pixels per degree at zoom 1 (to move a pin by dragging).
+  static const double pixelsPerDegree = 5000;
+
   @override
   State<MuMapView> createState() => _MuMapViewState();
 }
@@ -73,7 +76,7 @@ class _MuMapViewState extends State<MuMapView> with SingleTickerProviderStateMix
   );
 
   // Projection: pixels per degree at zoom 1.
-  static const double _pxPerDegree = 5000;
+  static const double _pxPerDegree = MuMapView.pixelsPerDegree;
   // MapView.md: pin 36 with a 2 px white ring, icon 18; you: 16 dot, 3 px ring, 56 halo at 16 %.
   static const double _pin = 36;
   static const double _pinIcon = 18;

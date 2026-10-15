@@ -45,6 +45,7 @@ class MuTopBar extends StatefulWidget {
     this.notifications = 0,
     this.onNotifications,
     this.menuItems = const [],
+    this.leading,
   });
 
   final String title;
@@ -60,6 +61,9 @@ class MuTopBar extends StatefulWidget {
   final int notifications;
   final VoidCallback? onNotifications;
   final List<MuMenuEntry> menuItems;
+
+  /// Menu button opening the sidebar drawer below `bp-expanded`.
+  final Widget? leading;
 
   @override
   State<MuTopBar> createState() => _MuTopBarState();
@@ -77,6 +81,9 @@ class _MuTopBarState extends State<MuTopBar> {
   static const double _menuMin = 280;
   static const double _menuItem = 40;
 
+  // Below this bar width the search shrinks to its icon and the account to its avatar.
+  static const double _compact = 760;
+
   bool get _apple =>
       defaultTargetPlatform == TargetPlatform.macOS || defaultTargetPlatform == TargetPlatform.iOS;
 
@@ -92,53 +99,87 @@ class _MuTopBarState extends State<MuTopBar> {
       },
       child: Container(
         height: MuSize.topBar,
-        padding: const EdgeInsets.symmetric(horizontal: MuSpace.s8),
+        padding: EdgeInsetsDirectional.only(
+          start: widget.leading == null ? MuSpace.s8 : MuSpace.s2,
+          end: MediaQuery.sizeOf(context).width < MuLayout.bpMedium ? MuSpace.s2 : MuSpace.s8,
+        ),
         decoration: BoxDecoration(
           color: c.surface,
           border: Border(bottom: BorderSide(color: c.border)),
         ),
-        child: Row(
-          children: [
-            Semantics(
+        child: LayoutBuilder(
+          builder: (context, constraints) {
+            final compact = constraints.maxWidth < _compact;
+            final title = Semantics(
               header: true,
-              child: Text(widget.title,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: MuType.h3.copyWith(color: c.text)),
-            ),
-            const SizedBox(width: MuSpace.s8),
-            Flexible(
-              child: ConstrainedBox(
-                constraints: const BoxConstraints(minWidth: _searchMin, maxWidth: _searchMax),
-                child: _SearchTrigger(
-                  placeholder: widget.searchPlaceholder,
-                  shortcut: shortcut,
-                  onTap: widget.onSearch,
-                ),
+              child: Text(
+                widget.title,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: MuType.h3.copyWith(color: c.text),
               ),
-            ),
-            const Spacer(),
-            if (widget.onAssistant != null) ...[
-              _AssistantButton(onTap: widget.onAssistant!),
-              const SizedBox(width: MuSpace.s4),
-            ],
-            MuIconButton(
-              icon: PhosphorIcons.bell(),
-              label: widget.notifications > 0
-                  ? 'Notifications, ${widget.notifications} non lues'
-                  : 'Notifications',
-              badge: widget.notifications > 0 ? widget.notifications : null,
-              onPressed: widget.onNotifications ?? () {},
-            ),
-            const SizedBox(width: MuSpace.s2),
-            _accountMenu(c),
-          ],
+            );
+            return Row(
+              children: [
+                if (widget.leading != null) ...[widget.leading!, const SizedBox(width: MuSpace.s2)],
+                if (compact)
+                  Expanded(child: title)
+                else ...[
+                  title,
+                  const SizedBox(width: MuSpace.s8),
+                  // The search takes the leftover width up to 480, never under 200.
+                  Expanded(
+                    child: Align(
+                      alignment: AlignmentDirectional.centerStart,
+                      child: ConstrainedBox(
+                        constraints:
+                            const BoxConstraints(minWidth: _searchMin, maxWidth: _searchMax),
+                        child: _SearchTrigger(
+                          placeholder: widget.searchPlaceholder,
+                          shortcut: shortcut,
+                          onTap: widget.onSearch,
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: MuSpace.s4),
+                ],
+                if (compact)
+                  MuIconButton(
+                    icon: PhosphorIcons.magnifyingGlass(),
+                    label: 'Rechercher',
+                    onPressed: widget.onSearch ?? () {},
+                  ),
+                if (widget.onAssistant != null && compact)
+                  MuIconButton(
+                    icon: PhosphorIcons.sparkle(PhosphorIconsStyle.fill),
+                    label: 'Assistant',
+                    color: c.aiText,
+                    onPressed: widget.onAssistant,
+                  )
+                else if (widget.onAssistant != null) ...[
+                  _AssistantButton(onTap: widget.onAssistant!),
+                  const SizedBox(width: MuSpace.s4),
+                ],
+                MuIconButton(
+                  icon: PhosphorIcons.bell(),
+                  label: widget.notifications > 0
+                      ? 'Notifications, ${widget.notifications} non lues'
+                      : 'Notifications',
+                  badge: widget.notifications > 0 ? widget.notifications : null,
+                  onPressed: widget.onNotifications ?? () {},
+                ),
+                const SizedBox(width: MuSpace.s2),
+                _accountMenu(c, compact: compact),
+              ],
+            );
+          },
         ),
       ),
     );
   }
 
-  Widget _accountMenu(MuColors c) {
+  Widget _accountMenu(MuColors c, {required bool compact}) {
     final duration = MuMotion.durationOf(context, MuMotion.base);
     return MenuAnchor(
       controller: _menu,
@@ -165,8 +206,7 @@ class _MuTopBarState extends State<MuTopBar> {
                 children: [
                   Text(widget.userName, style: MuType.label.copyWith(color: c.text)),
                   if (widget.userEmail != null)
-                    Text(widget.userEmail!,
-                        style: MuType.caption.copyWith(color: c.textSecondary)),
+                    Text(widget.userEmail!, style: MuType.caption.copyWith(color: c.textSecondary)),
                 ],
               ),
             ],
@@ -184,7 +224,8 @@ class _MuTopBarState extends State<MuTopBar> {
             style: ButtonStyle(
               minimumSize: const WidgetStatePropertyAll(Size(_menuMin, _menuItem)),
               shape: const WidgetStatePropertyAll(
-                  RoundedRectangleBorder(borderRadius: MuRadius.smAll)),
+                RoundedRectangleBorder(borderRadius: MuRadius.smAll),
+              ),
               textStyle: WidgetStatePropertyAll(MuType.body),
               foregroundColor: WidgetStatePropertyAll(c.text),
             ),
@@ -215,25 +256,31 @@ class _MuTopBarState extends State<MuTopBar> {
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    MuAvatar(
-                        name: widget.userName, image: widget.userImage, size: MuAvatarSize.s),
-                    const SizedBox(width: MuSpace.s3),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(widget.userName, style: MuType.label.copyWith(color: c.text)),
-                        Text(widget.userRole,
-                            style: MuType.caption.copyWith(color: c.textSecondary)),
-                      ],
-                    ),
-                    const SizedBox(width: MuSpace.s3),
+                    MuAvatar(name: widget.userName, image: widget.userImage, size: MuAvatarSize.s),
+                    if (!compact) ...[
+                      const SizedBox(width: MuSpace.s3),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(widget.userName, style: MuType.label.copyWith(color: c.text)),
+                          Text(
+                            widget.userRole,
+                            style: MuType.caption.copyWith(color: c.textSecondary),
+                          ),
+                        ],
+                      ),
+                    ],
+                    const SizedBox(width: MuSpace.s2),
                     AnimatedRotation(
                       turns: _menuOpen ? 0.5 : 0,
                       duration: duration,
                       curve: MuMotion.move,
-                      child: Icon(PhosphorIcons.caretDown(),
-                          size: MuSize.iconXs, color: c.textSecondary),
+                      child: Icon(
+                        PhosphorIcons.caretDown(),
+                        size: MuSize.iconXs,
+                        color: c.textSecondary,
+                      ),
                     ),
                   ],
                 ),
@@ -289,14 +336,19 @@ class _SearchTriggerState extends State<_SearchTrigger> {
                 ),
                 child: Row(
                   children: [
-                    Icon(PhosphorIcons.magnifyingGlass(),
-                        size: MuSize.iconS, color: c.textSecondary),
+                    Icon(
+                      PhosphorIcons.magnifyingGlass(),
+                      size: MuSize.iconS,
+                      color: c.textSecondary,
+                    ),
                     const SizedBox(width: MuSpace.s2),
                     Expanded(
-                      child: Text(widget.placeholder,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: MuType.body.copyWith(color: c.textSecondary)),
+                      child: Text(
+                        widget.placeholder,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: MuType.body.copyWith(color: c.textSecondary),
+                      ),
                     ),
                     const SizedBox(width: MuSpace.s2),
                     Container(
@@ -306,8 +358,10 @@ class _SearchTriggerState extends State<_SearchTrigger> {
                         borderRadius: MuRadius.xsAll,
                         border: Border.all(color: c.border),
                       ),
-                      child: Text(widget.shortcut,
-                          style: MuType.labelS.copyWith(color: c.textSecondary)),
+                      child: Text(
+                        widget.shortcut,
+                        style: MuType.labelS.copyWith(color: c.textSecondary),
+                      ),
                     ),
                   ],
                 ),
@@ -359,8 +413,11 @@ class _AssistantButtonState extends State<_AssistantButton> {
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Icon(PhosphorIcons.sparkle(PhosphorIconsStyle.fill),
-                          size: MuSize.iconS, color: c.aiText),
+                      Icon(
+                        PhosphorIcons.sparkle(PhosphorIconsStyle.fill),
+                        size: MuSize.iconS,
+                        color: c.aiText,
+                      ),
                       const SizedBox(width: MuSpace.s2),
                       Text('Assistant', style: MuType.label.copyWith(color: c.aiText)),
                     ],

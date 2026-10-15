@@ -2,6 +2,7 @@ import 'dart:math' as math;
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/semantics.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 import '../theme/theme.dart';
@@ -48,26 +49,28 @@ class MuUploadFile {
   bool get isPdf => name.toLowerCase().endsWith('.pdf');
 
   MuUploadFile copyWith({MuUploadStatus? status, double? progress}) => MuUploadFile(
-        id: id,
-        name: name,
-        sizeBytes: sizeBytes,
-        status: status ?? this.status,
-        progress: progress ?? this.progress,
-        error: error,
-        shortError: shortError,
-        bytes: bytes,
-      );
+    id: id,
+    name: name,
+    sizeBytes: sizeBytes,
+    status: status ?? this.status,
+    progress: progress ?? this.progress,
+    error: error,
+    shortError: shortError,
+    bytes: bytes,
+  );
 }
 
 /// « 1,8 Mo », « 410 Ko ».
 String formatFileSize(int bytes) {
-  const kb = 1024;
-  const mb = kb * 1024;
+  // Decimal units, as file managers show them (« 14,2 Mo »).
+  const kb = 1000;
+  const mb = kb * 1000;
   if (bytes >= mb) {
-    final v = bytes / mb;
-    return '${v.toStringAsFixed(v >= 10 ? 0 : 1).replaceAll('.', ',')} Mo';
+    final v = (bytes / mb * 10).round() / 10;
+    final text = v == v.roundToDouble() ? v.round().toString() : v.toStringAsFixed(1);
+    return '${text.replaceAll('.', ',')} Mo';
   }
-  return '${(bytes / kb).round()} Ko';
+  return '${(bytes / kb).round()} Ko';
 }
 
 /// FileUpload (components/FileUpload.md).
@@ -92,11 +95,12 @@ class MuFileUpload extends StatelessWidget {
     this.onRemove,
     this.onRetry,
     this.error,
-  })  : _variant = _Variant.dropzone,
-        maxFiles = null,
-        helper = null,
-        name = null,
-        image = null;
+  }) : _variant = _Variant.dropzone,
+       onReorder = null,
+       maxFiles = null,
+       helper = null,
+       name = null,
+       image = null;
 
   const MuFileUpload.grid({
     super.key,
@@ -107,13 +111,14 @@ class MuFileUpload extends StatelessWidget {
     this.helper,
     this.onRemove,
     this.onRetry,
+    this.onReorder,
     this.error,
-  })  : _variant = _Variant.grid,
-        title = '',
-        linkPart = null,
-        hint = null,
-        name = null,
-        image = null;
+  }) : _variant = _Variant.grid,
+       title = '',
+       linkPart = null,
+       hint = null,
+       name = null,
+       image = null;
 
   const MuFileUpload.avatar({
     super.key,
@@ -123,14 +128,15 @@ class MuFileUpload extends StatelessWidget {
     this.image,
     this.helper,
     this.onRemove,
-  })  : _variant = _Variant.avatar,
-        title = '',
-        linkPart = null,
-        hint = null,
-        files = const [],
-        maxFiles = null,
-        onRetry = null,
-        error = null;
+  }) : _variant = _Variant.avatar,
+       title = '',
+       linkPart = null,
+       hint = null,
+       files = const [],
+       maxFiles = null,
+       onRetry = null,
+       onReorder = null,
+       error = null;
 
   final _Variant _variant;
   final String label;
@@ -149,12 +155,16 @@ class MuFileUpload extends StatelessWidget {
   final ValueChanged<MuUploadFile>? onRemove;
   final ValueChanged<MuUploadFile>? onRetry;
 
+  /// Grid: a tile dragged onto another (or moved with the screen-reader actions) — the first one
+  /// is the cover.
+  final void Function(int from, int to)? onReorder;
+
   @override
   Widget build(BuildContext context) => switch (_variant) {
-        _Variant.dropzone => _dropzone(context),
-        _Variant.grid => _grid(context),
-        _Variant.avatar => _avatar(context),
-      };
+    _Variant.dropzone => _dropzone(context),
+    _Variant.grid => _grid(context),
+    _Variant.avatar => _avatar(context),
+  };
 
   // FileUpload.md: zone min 176, 1,5 px dashed border, 48 icon circle; rows with a 40 type tile;
   // grid tiles min 104, 28 remove button, 56 progress ring.
@@ -164,6 +174,8 @@ class MuFileUpload extends StatelessWidget {
   static const double _typeTile = 40;
   static const double _tileMin = 104;
   static const double _ring = 56;
+  static const double _dragOpacity = 0.6;
+  static const double _dropScale = 0.94;
 
   Widget _dropzone(BuildContext context) {
     final c = context.mu;
@@ -199,30 +211,38 @@ class MuFileUpload extends StatelessWidget {
                         width: _iconCircle,
                         height: _iconCircle,
                         decoration: BoxDecoration(color: c.surfaceMuted, shape: BoxShape.circle),
-                        child: Icon(PhosphorIcons.uploadSimple(), size: MuSize.iconM, color: c.text),
+                        child: Icon(
+                          PhosphorIcons.uploadSimple(),
+                          size: MuSize.iconM,
+                          color: c.text,
+                        ),
                       ),
                       const SizedBox(height: MuSpace.s3),
                       Text.rich(
-                        TextSpan(children: [
-                          TextSpan(text: before),
-                          if (link != null)
-                            TextSpan(
-                              text: link,
-                              style: TextStyle(
-                                color: c.link,
-                                decoration: TextDecoration.underline,
-                                decorationColor: c.link,
+                        TextSpan(
+                          children: [
+                            TextSpan(text: before),
+                            if (link != null)
+                              TextSpan(
+                                text: link,
+                                style: TextStyle(
+                                  color: c.link,
+                                  decoration: TextDecoration.underline,
+                                  decorationColor: c.link,
+                                ),
                               ),
-                            ),
-                          TextSpan(text: after),
-                        ]),
+                            TextSpan(text: after),
+                          ],
+                        ),
                         textAlign: TextAlign.center,
                         style: MuType.label.copyWith(color: c.text),
                       ),
                       if (hint != null)
-                        Text(hint!,
-                            textAlign: TextAlign.center,
-                            style: MuType.caption.copyWith(color: c.textSecondary)),
+                        Text(
+                          hint!,
+                          textAlign: TextAlign.center,
+                          style: MuType.caption.copyWith(color: c.textSecondary),
+                        ),
                     ],
                   ),
                 ),
@@ -244,40 +264,56 @@ class MuFileUpload extends StatelessWidget {
           const SizedBox(height: MuSpace.s3),
           _FileRow(file: f, onRemove: onRemove, onRetry: onRetry),
         ],
-        if (error != null) ...[
-          const SizedBox(height: MuSpace.s1),
-          MuFieldMessage.error(error!),
-        ],
+        if (error != null) ...[const SizedBox(height: MuSpace.s1), MuFieldMessage.error(error!)],
       ],
     );
   }
 
   Widget _grid(BuildContext context) {
     final c = context.mu;
-    final count = files.where((f) => f.status != MuUploadStatus.error).length;
+    final count = files.length;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       mainAxisSize: MainAxisSize.min,
       children: [
         MuFieldLabel(label: label),
         const SizedBox(height: MuSpace.s2),
-        LayoutBuilder(builder: (context, constraints) {
-          final columns = math.max(1, (constraints.maxWidth / (_tileMin + MuSpace.s2)).floor());
-          final tile = (constraints.maxWidth - MuSpace.s2 * (columns - 1)) / columns;
-          return Wrap(
-            spacing: MuSpace.s2,
-            runSpacing: MuSpace.s2,
-            children: [
-              for (final (i, f) in files.indexed)
-                SizedBox.square(
-                  dimension: tile,
-                  child: _PhotoTile(file: f, cover: i == 0, onRemove: onRemove, onRetry: onRetry),
-                ),
-              if (maxFiles == null || files.length < maxFiles!)
-                SizedBox.square(dimension: tile, child: _AddTile(onTap: onAdd)),
-            ],
-          );
-        }),
+        LayoutBuilder(
+          builder: (context, constraints) {
+            final columns = math.max(1, (constraints.maxWidth / (_tileMin + MuSpace.s2)).floor());
+            final tile = (constraints.maxWidth - MuSpace.s2 * (columns - 1)) / columns;
+            return Wrap(
+              spacing: MuSpace.s2,
+              runSpacing: MuSpace.s2,
+              children: [
+                for (final (i, f) in files.indexed)
+                  _reorderable(
+                    i,
+                    tile,
+                    SizedBox.square(
+                      dimension: tile,
+                      child: _PhotoTile(
+                        file: f,
+                        cover: i == 0,
+                        onRemove: onRemove,
+                        onRetry: onRetry,
+                        onMove: onReorder == null || f.status != MuUploadStatus.done
+                            ? null
+                            : (to) => onReorder!(i, to),
+                        index: i,
+                        count: files.length,
+                      ),
+                    ),
+                  ),
+                if (maxFiles == null || files.length < maxFiles!)
+                  SizedBox.square(
+                    dimension: tile,
+                    child: _AddTile(onTap: onAdd),
+                  ),
+              ],
+            );
+          },
+        ),
         const SizedBox(height: MuSpace.s2),
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -292,11 +328,30 @@ class MuFileUpload extends StatelessWidget {
               Text('$count/$maxFiles', style: MuType.caption.copyWith(color: c.textSecondary)),
           ],
         ),
-        if (error != null) ...[
-          const SizedBox(height: MuSpace.s2),
-          MuFieldMessage.error(error!),
-        ],
+        if (error != null) ...[const SizedBox(height: MuSpace.s2), MuFieldMessage.error(error!)],
       ],
+    );
+  }
+
+  /// Drag a done photo onto another tile to take its place.
+  Widget _reorderable(int index, double size, Widget child) {
+    if (onReorder == null || files[index].status != MuUploadStatus.done) return child;
+    return DragTarget<int>(
+      onWillAcceptWithDetails: (d) => d.data != index,
+      onAcceptWithDetails: (d) => onReorder!(d.data, index),
+      builder: (context, candidates, _) => Draggable<int>(
+        data: index,
+        feedback: Opacity(
+          opacity: _dragOpacity,
+          child: SizedBox.square(dimension: size, child: child),
+        ),
+        childWhenDragging: Opacity(opacity: _dragOpacity, child: child),
+        child: AnimatedScale(
+          scale: candidates.isEmpty ? 1 : _dropScale,
+          duration: MuMotion.durationOf(context, MuMotion.fast),
+          child: child,
+        ),
+      ),
     );
   }
 
@@ -346,13 +401,12 @@ class MuFileUpload extends StatelessWidget {
                     size: MuButtonSize.s,
                     onPressed: onAdd,
                   ),
-                  if (onRemove != null)
+                  if (onRemove != null && image != null)
                     MuButton.tertiary(
                       label: 'Retirer',
                       size: MuButtonSize.s,
-                      onPressed: () => onRemove!(
-                        const MuUploadFile(id: 'avatar', name: '', sizeBytes: 0),
-                      ),
+                      onPressed: () =>
+                          onRemove!(const MuUploadFile(id: 'avatar', name: '', sizeBytes: 0)),
                     ),
                 ],
               ),
@@ -406,27 +460,36 @@ class _FileRow extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(file.name,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: MuType.label.copyWith(color: c.text)),
+                Text(
+                  file.name,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: MuType.label.copyWith(color: c.text),
+                ),
                 Row(
                   children: [
                     Expanded(
                       child: Text(
                         error ? file.error ?? '' : formatFileSize(file.sizeBytes),
-                        style: MuType.caption.copyWith(color: error ? c.errorText : c.textSecondary),
+                        style: MuType.caption.copyWith(
+                          color: error ? c.errorText : c.textSecondary,
+                        ),
                       ),
                     ),
                     if (file.status == MuUploadStatus.done) ...[
-                      Icon(PhosphorIcons.checkCircle(PhosphorIconsStyle.fill),
-                          size: MuSize.iconXs, color: c.successText),
+                      Icon(
+                        PhosphorIcons.checkCircle(PhosphorIconsStyle.fill),
+                        size: MuSize.iconXs,
+                        color: c.successText,
+                      ),
                       const SizedBox(width: MuSpace.s1),
                       Text('Envoyé', style: MuType.caption.copyWith(color: c.successText)),
                     ],
                     if (file.status == MuUploadStatus.uploading)
-                      Text('${(file.progress * 100).round()} %',
-                          style: MuType.numXs.copyWith(color: c.textSecondary)),
+                      Text(
+                        '${(file.progress * 100).round()} %',
+                        style: MuType.numXs.copyWith(color: c.textSecondary),
+                      ),
                   ],
                 ),
                 if (file.status == MuUploadStatus.uploading) ...[
@@ -446,11 +509,19 @@ class _FileRow extends StatelessWidget {
           ),
           const SizedBox(width: MuSpace.s2),
           if (error && onRetry != null)
-            MuButton.tertiary(label: 'Remplacer', size: MuButtonSize.s, onPressed: () => onRetry!(file))
+            MuButton.tertiary(
+              label: 'Remplacer',
+              size: MuButtonSize.s,
+              onPressed: () => onRetry!(file),
+            )
           else if (onRemove != null)
             MuIconButton(
-              icon: file.status == MuUploadStatus.uploading ? PhosphorIcons.x() : PhosphorIcons.trash(),
-              label: file.status == MuUploadStatus.uploading ? 'Annuler l’envoi' : 'Supprimer ${file.name}',
+              icon: file.status == MuUploadStatus.uploading
+                  ? PhosphorIcons.x()
+                  : PhosphorIcons.trash(),
+              label: file.status == MuUploadStatus.uploading
+                  ? 'Annuler l’envoi'
+                  : 'Supprimer ${file.name}',
               size: MuIconButtonSize.s,
               color: c.textSecondary,
               onPressed: () => onRemove!(file),
@@ -467,12 +538,20 @@ class _PhotoTile extends StatelessWidget {
     required this.cover,
     required this.onRemove,
     required this.onRetry,
+    this.onMove,
+    this.index = 0,
+    this.count = 1,
   });
 
   final MuUploadFile file;
   final bool cover;
   final ValueChanged<MuUploadFile>? onRemove;
   final ValueChanged<MuUploadFile>? onRetry;
+
+  /// Moves this photo to another position (screen-reader actions).
+  final ValueChanged<int>? onMove;
+  final int index;
+  final int count;
 
   // FileUpload.md: faded thumbnail while uploading; 3 px ring; 2 px pill padding.
   static const double _fade = 0.45;
@@ -497,9 +576,11 @@ class _PhotoTile extends StatelessWidget {
                   children: [
                     Icon(PhosphorIcons.imageBroken(), size: MuSize.iconS, color: c.errorText),
                     const SizedBox(height: MuSpace.s1),
-                    Text(file.shortError ?? 'Erreur',
-                        textAlign: TextAlign.center,
-                        style: MuType.labelS.copyWith(color: c.errorText)),
+                    Text(
+                      file.shortError ?? 'Erreur',
+                      textAlign: TextAlign.center,
+                      style: MuType.labelS.copyWith(color: c.errorText),
+                    ),
                   ],
                 ),
               ),
@@ -531,8 +612,10 @@ class _PhotoTile extends StatelessWidget {
                             backgroundColor: c.border,
                           ),
                         ),
-                        Text('${(file.progress * 100).round()} %',
-                            style: MuType.numXs.copyWith(color: c.text)),
+                        Text(
+                          '${(file.progress * 100).round()} %',
+                          style: MuType.numXs.copyWith(color: c.text),
+                        ),
                       ],
                     ),
                   ),
@@ -542,7 +625,10 @@ class _PhotoTile extends StatelessWidget {
                   start: MuSpace.s2,
                   bottom: MuSpace.s2,
                   child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: MuSpace.s2, vertical: _pillPadY),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: MuSpace.s2,
+                      vertical: _pillPadY,
+                    ),
                     decoration: BoxDecoration(
                       color: c.surfaceInverse,
                       borderRadius: MuRadius.fullAll,
@@ -554,10 +640,21 @@ class _PhotoTile extends StatelessWidget {
           );
 
     return Semantics(
-      label: '${file.name}${cover ? ', couverture' : ''}'
+      label:
+          '${file.name}${cover ? ', couverture' : ''}'
           '${uploading ? ', envoi ${(file.progress * 100).round()} %' : ''}'
           '${error ? ', ${file.error ?? 'erreur'}' : ''}',
       container: true,
+      customSemanticsActions: onMove == null
+          ? null
+          : {
+              if (index > 0) ...{
+                const CustomSemanticsAction(label: 'Utiliser comme couverture'): () => onMove!(0),
+                const CustomSemanticsAction(label: 'Déplacer avant'): () => onMove!(index - 1),
+              },
+              if (index < count - 1)
+                const CustomSemanticsAction(label: 'Déplacer après'): () => onMove!(index + 1),
+            },
       child: Container(
         clipBehavior: Clip.antiAlias,
         decoration: BoxDecoration(

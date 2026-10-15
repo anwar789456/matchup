@@ -34,13 +34,14 @@ String maskPhone(String digits) {
   return '+216 ${digits.substring(0, 2)} •• •• ${digits.substring(6)}';
 }
 
-/// Initials from a display name: « Nour A. » → « NA »; [short] keeps one letter.
+/// Initials from a display name, first and last word: « Nour A. » → « NA », « Tunis Padel
+/// Series » → « TS »; [short] keeps one letter.
 String initialsOf(String name, {bool short = false}) {
   final parts = name.trim().split(RegExp(r'\s+')).where((p) => p.isNotEmpty).toList();
   if (parts.isEmpty) return '';
   final letters = parts.map((p) => String.fromCharCode(p.runes.first).toUpperCase()).toList();
   if (short || letters.length == 1) return letters.first;
-  return '${letters.first}${letters[1]}';
+  return '${letters.first}${letters.last}';
 }
 
 const _weekdays = ['lun.', 'mar.', 'mer.', 'jeu.', 'ven.', 'sam.', 'dim.'];
@@ -98,3 +99,28 @@ String formatClock(Duration d) {
   final s = d.inSeconds < 0 ? 0 : d.inSeconds;
   return '${s ~/ 60}:${(s % 60).toString().padLeft(2, '0')}';
 }
+
+/// « 08h00 » — a time of day given in minutes after midnight (« 00h00 » for midnight, also when
+/// a range closes after it).
+String formatHour(int minutes) {
+  final m = minutes % (24 * 60);
+  return '${(m ~/ 60).toString().padLeft(2, '0')}h${(m % 60).toString().padLeft(2, '0')}';
+}
+
+/// « à l’instant », « il y a 1 min », « il y a 3 h », « il y a 2 j ».
+String formatSince(DateTime time, DateTime now) {
+  final d = now.difference(time);
+  if (d.inMinutes < 1) return 'à l’instant';
+  if (d.inHours < 1) return 'il y a ${d.inMinutes} min';
+  if (d.inDays < 1) return 'il y a ${d.inHours} h';
+  return 'il y a ${d.inDays} j';
+}
+
+/// « d’Arena Five », « de Smash Padel » — « de » elided before a vowel or a mute h.
+String elideDe(String name) =>
+    RegExp(r'^[aeiouyàâäéèêëîïôöùûüh]', caseSensitive: false).hasMatch(name)
+    ? 'd’$name'
+    : 'de $name';
+
+/// Ends [text] with a full stop unless it already has one (« … jusqu’au mer. 28 oct. »).
+String withFullStop(String text) => text.endsWith('.') ? text : '$text.';
