@@ -67,7 +67,11 @@ class LevelMatchIllustration extends StatelessWidget {
           ),
         ),
         const SizedBox(height: MuSpace.s3),
-        MuGameCard(game: WelcomeSamples.game, surfaceColor: c.surfaceElevated),
+        MuGameCard(
+          game: WelcomeSamples.game,
+          variant: MuGameCardVariant.compact,
+          surfaceColor: c.surfaceElevated,
+        ),
       ],
     );
   }

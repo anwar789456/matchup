@@ -88,9 +88,9 @@ class MuButton extends StatelessWidget {
     this.size = MuButtonSize.m,
     this.inline = false,
     this.linkStyle,
+    this.trailing,
   })  : variant = MuButtonVariant.link,
         leading = null,
-        trailing = null,
         price = null,
         countdown = null,
         loading = false,
@@ -159,6 +159,7 @@ class MuButton extends StatelessWidget {
         onPressed: onPressed,
         style: linkStyle ?? _labelStyle,
         inline: inline,
+        trailing: trailing,
       );
     }
 
@@ -311,12 +312,14 @@ class _LinkButton extends StatelessWidget {
     required this.onPressed,
     required this.style,
     required this.inline,
+    this.trailing,
   });
 
   final String label;
   final VoidCallback? onPressed;
   final TextStyle style;
   final bool inline;
+  final IconData? trailing;
 
   @override
   Widget build(BuildContext context) {
@@ -333,13 +336,22 @@ class _LinkButton extends StatelessWidget {
             constraints: BoxConstraints(minHeight: inline ? 0 : MuSize.touchTarget),
             child: Align(
               widthFactor: 1,
-              child: Text(
-                label,
-                style: style.copyWith(
-                  color: color,
-                  decoration: TextDecoration.underline,
-                  decorationColor: color,
-                ),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    label,
+                    style: style.copyWith(
+                      color: color,
+                      decoration: TextDecoration.underline,
+                      decorationColor: color,
+                    ),
+                  ),
+                  if (trailing != null) ...[
+                    const SizedBox(width: MuSpace.s1),
+                    Icon(trailing, size: MuSize.iconXs, color: color),
+                  ],
+                ],
               ),
             ),
           ),

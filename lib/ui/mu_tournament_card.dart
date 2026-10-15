@@ -100,7 +100,7 @@ class MuTournamentCard extends StatelessWidget {
                 ),
                 child: ClipRRect(
                   borderRadius: MuRadius.smAll,
-                  child: MuCourtArt(sport: t.sport),
+                  child: MuCourtArt(sport: t.sport, variant: MuCourtArtVariant.poster),
                 ),
               ),
               const SizedBox(width: MuSpace.s3),

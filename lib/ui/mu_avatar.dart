@@ -12,6 +12,7 @@ class MuAvatar extends StatelessWidget {
     super.key,
     required this.name,
     this.imageUrl,
+    this.image,
     this.size = MuAvatarSize.m,
     this.level,
     this.online = false,
@@ -21,6 +22,9 @@ class MuAvatar extends StatelessWidget {
 
   final String name;
   final String? imageUrl;
+
+  /// A local photo (picked from the gallery); used before [imageUrl].
+  final ImageProvider? image;
   final MuAvatarSize size;
   final double? level;
   final bool online;
@@ -68,8 +72,8 @@ class MuAvatar extends StatelessWidget {
     Widget circle = CircleAvatar(
       radius: d / 2,
       backgroundColor: c.avatarBg,
-      foregroundImage: imageUrl != null ? NetworkImage(imageUrl!) : null,
-      onForegroundImageError: imageUrl != null ? (_, _) {} : null,
+      foregroundImage: image ?? (imageUrl != null ? NetworkImage(imageUrl!) : null),
+      onForegroundImageError: image != null || imageUrl != null ? (_, _) {} : null,
       child: initials,
     );
     if (ring) {

@@ -244,6 +244,7 @@ class _SlidePage extends StatelessWidget {
           height: artHeight,
           child: MuCourtArt(
             sport: slide.sport,
+            variant: MuCourtArtVariant.poster,
             child: DecoratedBox(
               decoration: BoxDecoration(
                 gradient: LinearGradient(
