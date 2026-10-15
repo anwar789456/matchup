@@ -18,10 +18,14 @@ class FlowScaffold extends StatelessWidget {
     this.bottomBar = const [],
     this.centerBody = false,
     this.gap = MuSpace.s6,
+    this.backLabel = 'Retour',
   });
 
   final List<Widget> body;
   final VoidCallback? onBack;
+
+  /// Name of the back button (« Question précédente » inside the questionnaire).
+  final String backLabel;
   final Widget? topAction;
   final Widget? header;
   final List<Widget> bottomBar;
@@ -46,7 +50,7 @@ class FlowScaffold extends StatelessWidget {
               if (onBack != null)
                 MuIconButton(
                   icon: PhosphorIcons.arrowLeft(),
-                  label: 'Retour',
+                  label: backLabel,
                   size: MuIconButtonSize.l,
                   onPressed: onBack,
                 )

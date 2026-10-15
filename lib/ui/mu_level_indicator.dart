@@ -134,11 +134,28 @@ class MuLevelIndicator extends StatelessWidget {
               );
             }),
           ),
-          const SizedBox(height: MuSpace.s2),
+          // Ticks at the band limits 2,5 · 4,0 · 5,5 (25 %, 50 %, 75 %).
+          SizedBox(
+            height: _tick + MuSpace.s1,
+            child: Row(
+              children: [
+                for (var i = 0; i < 4; i++) ...[
+                  if (i > 0)
+                    Container(
+                      width: 1,
+                      height: _tick,
+                      margin: const EdgeInsets.only(top: MuSpace.s1),
+                      color: c.borderStrong,
+                    ),
+                  const Expanded(child: SizedBox()),
+                ],
+              ],
+            ),
+          ),
+          const SizedBox(height: MuSpace.s1),
           Row(
             children: [
-              for (final (i, name) in muLevelBands.indexed) ...[
-                if (i > 0) Container(width: 1, height: _tick, color: c.borderStrong),
+              for (final name in muLevelBands)
                 Expanded(
                   child: Text(
                     name,
@@ -151,7 +168,6 @@ class MuLevelIndicator extends StatelessWidget {
                         : MuType.caption.copyWith(color: c.textSecondary),
                   ),
                 ),
-              ],
             ],
           ),
         ],

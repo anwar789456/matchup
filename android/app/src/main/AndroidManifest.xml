@@ -1,6 +1,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- PLY-06: position, to show games and courts nearby (while the app is in use only). -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <!-- PLY-09: freed spots, invitations and match reminders (Android 13+). -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <application
-        android:label="matchup"
+        android:label="MatchUp"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

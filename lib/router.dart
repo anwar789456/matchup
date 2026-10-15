@@ -16,8 +16,20 @@ import 'features/auth/screens/sms_code_screen.dart';
 import 'features/auth/screens/verify_email_screen.dart';
 import 'features/dev/gallery_screen.dart';
 import 'features/dev/pending_screen.dart';
+import 'features/home/screens/home_screen.dart';
 import 'features/onboarding/screens/splash_screen.dart';
 import 'features/onboarding/screens/welcome_screen.dart';
+import 'features/player_onboarding/screens/availability_screen.dart';
+import 'features/player_onboarding/screens/level_result_screen.dart';
+import 'features/player_onboarding/screens/location_denied_screen.dart';
+import 'features/player_onboarding/screens/location_screen.dart';
+import 'features/player_onboarding/screens/notifications_screen.dart';
+import 'features/player_onboarding/screens/position_screen.dart';
+import 'features/player_onboarding/screens/profile_screen.dart';
+import 'features/player_onboarding/screens/questionnaire_screen.dart';
+import 'features/player_onboarding/screens/sports_screen.dart';
+import 'features/player_onboarding/screens/zones_screen.dart';
+import 'theme/theme.dart';
 
 /// Route paths, one per screen code (design/screens/SCREENS.md). Error variants (AUTH-01b,
 /// 03b, 05b) are states of their screen, not routes.
@@ -38,8 +50,20 @@ abstract final class Routes {
   static const accountLocked = '/auth/account-locked'; // AUTH-10
   static const roles = '/auth/roles'; // AUTH-11
 
-  // Role onboardings (phases 3 and 4).
+  // Player onboarding (phase 3).
   static const playerSports = '/ply/sports'; // PLY-01
+  static String playerQuestions(MuSport sport) => '/ply/level/${sport.name}/questions'; // PLY-02
+  static String playerLevel(MuSport sport) => '/ply/level/${sport.name}'; // PLY-03
+  static const playerPosition = '/ply/position'; // PLY-04
+  static const playerAvailability = '/ply/availability'; // PLY-05
+  static const playerLocation = '/ply/location'; // PLY-06
+  static const playerZones = '/ply/zones'; // PLY-07
+  static const playerLocationDenied = '/ply/location-denied'; // PLY-08
+  static const playerNotifications = '/ply/notifications'; // PLY-09
+  static const playerProfile = '/ply/profile'; // PLY-10
+  static const home = '/home'; // PLY-11
+
+  // Pro onboardings (phase 4).
   static const ownerCompany = '/own/company'; // OWN-01
   static const coachProfile = '/coa/profile'; // COA-01
   static const organizerOrganisation = '/org/organisation'; // ORG-01
@@ -58,6 +82,10 @@ void goBack(BuildContext context, String fallback) {
     context.go(fallback);
   }
 }
+
+MuSport _sport(GoRouterState state) =>
+    MuSport.values.where((s) => s.name == state.pathParameters['sport']).firstOrNull ??
+    MuSport.football;
 
 GoRoute _route(String path, Widget Function(GoRouterState state) build) =>
     GoRoute(path: path, builder: (context, state) => build(state));
@@ -87,8 +115,18 @@ final routerProvider = Provider<GoRouter>((ref) {
       _route(Routes.passwordChanged, (_) => const PasswordChangedScreen()),
       _route(Routes.accountLocked, (_) => const AccountLockedScreen()),
       _route(Routes.roles, (_) => const RoleChoiceScreen()),
+      _route(Routes.playerSports, (_) => const SportsScreen()),
+      _route('/ply/level/:sport/questions', (s) => QuestionnaireScreen(sport: _sport(s))),
+      _route('/ply/level/:sport', (s) => LevelResultScreen(sport: _sport(s))),
+      _route(Routes.playerPosition, (_) => const PositionScreen()),
+      _route(Routes.playerAvailability, (_) => const AvailabilityScreen()),
+      _route(Routes.playerLocation, (_) => const LocationScreen()),
+      _route(Routes.playerZones, (_) => const ZonesScreen()),
+      _route(Routes.playerLocationDenied, (_) => const LocationDeniedScreen()),
+      _route(Routes.playerNotifications, (_) => const NotificationsScreen()),
+      _route(Routes.playerProfile, (_) => const ProfileScreen()),
+      _route(Routes.home, (_) => const HomeScreen()),
       for (final (path, code) in [
-        (Routes.playerSports, 'PLY-01 · Sports'),
         (Routes.ownerCompany, 'OWN-01 · Entreprise'),
         (Routes.coachProfile, 'COA-01 · Profil coach'),
         (Routes.organizerOrganisation, 'ORG-01 · Organisation'),

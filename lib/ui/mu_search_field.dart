@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 
+import '../core/search.dart';
 import '../theme/theme.dart';
 import 'mu_icon_button.dart';
 import 'src/interaction.dart';
@@ -156,6 +157,7 @@ class _MuSearchFieldState<T> extends State<MuSearchField<T>> {
                 groupId: _focus,
                 enabled: widget.enabled,
                 textInputAction: TextInputAction.search,
+                textAlignVertical: TextAlignVertical.center,
                 style: valueStyle.copyWith(color: c.text),
                 cursorColor: c.focus,
                 onSubmitted: (v) {
@@ -166,7 +168,7 @@ class _MuSearchFieldState<T> extends State<MuSearchField<T>> {
                   }
                 },
                 decoration: InputDecoration(
-                  isDense: true,
+                  isCollapsed: true,
                   filled: false,
                   hintText: widget.placeholder,
                   hintStyle: valueStyle.copyWith(color: c.textSecondary),
@@ -294,18 +296,4 @@ class _MuSearchFieldState<T> extends State<MuSearchField<T>> {
       TextSpan(text: text.substring(end)),
     ]);
   }
-}
-
-/// Lower-case without French diacritics, for search matching (« ennasr » finds « Ennasr »,
-/// « sidi bou said » finds « Sidi Bou Saïd »). Keeps the string length.
-String foldAccents(String s) {
-  const from = 'àâäáãåçéèêëíìîïñóòôöõúùûüýÿ';
-  const to = 'aaaaaaceeeeiiiinooooouuuuyy';
-  final lower = s.toLowerCase();
-  final b = StringBuffer();
-  for (final ch in lower.split('')) {
-    final i = from.indexOf(ch);
-    b.write(i < 0 ? ch : to[i]);
-  }
-  return b.toString();
 }

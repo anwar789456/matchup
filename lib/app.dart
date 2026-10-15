@@ -3,6 +3,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'core/app_settings.dart';
+import 'features/player_onboarding/controllers/onboarding_controller.dart';
 import 'router.dart';
 import 'theme/theme.dart';
 
@@ -23,6 +24,13 @@ class MatchUpApp extends ConsumerWidget {
       supportedLocales: supportedLocales,
       localizationsDelegates: GlobalMaterialLocalizations.delegates,
       routerConfig: router,
+      // Screens read the saved onboarding progress synchronously: wait until it is loaded
+      // (a few milliseconds) so a resumed or deep-linked screen never sees an empty state.
+      builder: (context, child) => Consumer(
+        builder: (context, ref, _) => ref.watch(onboardingProvider).hasValue
+            ? child!
+            : ColoredBox(color: context.mu.bg),
+      ),
     );
   }
 }

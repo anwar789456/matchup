@@ -7,7 +7,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
-	<string>Matchup</string>
+	<string>MatchUp</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -66,5 +66,11 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>MatchUp utilise ta position pour te proposer des parties et des terrains près de toi.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>MatchUp utilise tes photos pour ta photo de profil.</string>
+	<key>NSCameraUsageDescription</key>
+	<string>MatchUp utilise l’appareil photo pour ta photo de profil.</string>
 </dict>
 </plist>

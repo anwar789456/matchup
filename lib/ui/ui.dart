@@ -35,4 +35,4 @@ export 'mu_text_field.dart';
 export 'mu_toast.dart';
 export 'mu_top_app_bar.dart';
 export 'mu_tournament_card.dart';
-export 'src/interaction.dart' show MuDirectionalIcon;
+export 'src/interaction.dart' show MuDirectionalIcon, MuFocusRing, MuPressScale;

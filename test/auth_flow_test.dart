@@ -12,8 +12,10 @@ import 'package:matchup/features/auth/screens/phone_screen.dart';
 import 'package:matchup/features/auth/screens/role_choice_screen.dart';
 import 'package:matchup/features/auth/screens/signup_screen.dart';
 import 'package:matchup/features/auth/screens/verify_email_screen.dart';
-import 'package:matchup/features/dev/pending_screen.dart';
 import 'package:matchup/features/onboarding/screens/welcome_screen.dart';
+import 'package:matchup/features/player_onboarding/controllers/onboarding_controller.dart';
+import 'package:matchup/features/player_onboarding/data/onboarding_store.dart';
+import 'package:matchup/features/player_onboarding/screens/sports_screen.dart';
 import 'package:matchup/router.dart';
 
 /// Walks the welcome and auth flows on a phone-sized screen with the fake repository.
@@ -33,6 +35,7 @@ void main() {
     repo = FakeAuthRepository(latency: Duration.zero);
     final container = ProviderContainer(overrides: [
       authRepositoryProvider.overrideWithValue(repo),
+      onboardingStoreProvider.overrideWithValue(MemoryOnboardingStore()),
     ]);
     addTearDown(container.dispose);
     if (at != null) container.read(routerProvider).go(at);
@@ -130,7 +133,8 @@ void main() {
     await tapText(tester, 'Joueur');
     expect(find.text('Continuer · Joueur d’abord'), findsOneWidget);
     await tapText(tester, 'Continuer · Joueur d’abord');
-    expect(find.byType(PendingScreen), findsOneWidget);
+    // Joueur comes first: the player onboarding opens.
+    expect(find.byType(SportsScreen), findsOneWidget);
     expect(repo.roles.length, 2);
   });
 

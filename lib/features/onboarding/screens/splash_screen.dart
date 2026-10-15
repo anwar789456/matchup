@@ -1,22 +1,26 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../router.dart';
 import '../../../theme/theme.dart';
 import '../../../ui/ui.dart';
+import '../../player_onboarding/controllers/onboarding_controller.dart';
 
-/// ONB-01 · Splash: the logo and tagline on ink for 1,5 s, then the welcome slides.
+/// ONB-01 · Splash: the logo and tagline on ink for 1,5 s, then the welcome slides — or, when a
+/// player onboarding is in progress, the screen where it stopped (the Home once it is done).
 /// Tapping anywhere continues at once. Always Night match.
-class SplashScreen extends StatefulWidget {
+class SplashScreen extends ConsumerStatefulWidget {
   const SplashScreen({super.key});
 
   @override
-  State<SplashScreen> createState() => _SplashScreenState();
+  ConsumerState<SplashScreen> createState() => _SplashScreenState();
 }
 
-class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderStateMixin {
+class _SplashScreenState extends ConsumerState<SplashScreen>
+    with SingleTickerProviderStateMixin {
   // SCREENS.md: the splash shows for 1,5 s.
   static const _hold = Duration(milliseconds: 1500);
   // ONB-01: logo 44 high; loading bar 80 × 4, 72 from the bottom, slider 40 % wide.
@@ -47,10 +51,18 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
     }
   }
 
-  void _continue() {
+  Future<void> _continue() async {
     if (_left || !mounted) return;
     _left = true;
-    context.go(Routes.welcome1);
+    final progress = await ref.read(onboardingProvider.future);
+    if (!mounted) return;
+    if (progress.completed) {
+      context.go(Routes.home);
+    } else if (progress.lastRoute != null) {
+      context.go(progress.lastRoute!);
+    } else {
+      context.go(Routes.welcome1);
+    }
   }
 
   @override

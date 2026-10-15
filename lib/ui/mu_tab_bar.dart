@@ -34,11 +34,20 @@ class MuTabItem {
 /// active icon. Tab widths start from their content and share the rest equally, so « Entraînement »
 /// and « Communauté » never touch. Includes the bottom safe area.
 class MuTabBar extends StatelessWidget {
-  const MuTabBar({super.key, required this.items, required this.index, required this.onChanged});
+  const MuTabBar({
+    super.key,
+    required this.items,
+    required this.index,
+    required this.onChanged,
+    this.itemKeys,
+  });
 
   final List<MuTabItem> items;
   final int index;
   final ValueChanged<int> onChanged;
+
+  /// Optional keys on each tab, to locate one (the guided tour points at « Mes matchs »).
+  final List<GlobalKey>? itemKeys;
 
   // TabBar.md: pill 56 × 32; badge 18 with a 2 px surface ring; the pill grows from 40 % width.
   static const double _pillW = 56;
@@ -122,6 +131,7 @@ class MuTabBar extends StatelessWidget {
                         width: total > available
                             ? available / items.length
                             : widths[i] + extra,
+                        key: itemKeys?[i],
                         child: _Tab(
                           item: items[i],
                           active: i == index,

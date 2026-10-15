@@ -27,6 +27,7 @@ class MuChip extends StatelessWidget {
     this.onRemove,
     this.removeLabel,
     this.size = MuChipSize.m,
+    this.expand = false,
   });
 
   /// Sport tag (or sport filter when [onSelected] is set). Label defaults to the sport name.
@@ -43,7 +44,8 @@ class MuChip extends StatelessWidget {
         trailingIcon = null,
         count = null,
         onRemove = null,
-        removeLabel = null;
+        removeLabel = null,
+        expand = false;
 
   /// « 3,5 · Intermédiaire ».
   const MuChip.level(
@@ -59,7 +61,8 @@ class MuChip extends StatelessWidget {
         trailingIcon = null,
         count = null,
         onRemove = null,
-        removeLabel = null;
+        removeLabel = null,
+        expand = false;
 
   final String? label;
   final MuChipKind kind;
@@ -73,6 +76,9 @@ class MuChip extends StatelessWidget {
   final VoidCallback? onRemove;
   final String? removeLabel;
   final MuChipSize size;
+
+  /// Fill the available width, content centred (chip grids).
+  final bool expand;
 
   // Chip.md: S chip is 24 high; icons 18 (M) / 16 (S); count 18 high; pressed scale 0.96;
   // remove button 24 with a 14 px x.
@@ -170,7 +176,11 @@ class MuChip extends StatelessWidget {
         end: hasRemove ? MuSpace.s1 : (small ? MuSpace.s2 : MuSpace.s3),
       ),
       decoration: ShapeDecoration(color: fill, shape: StadiumBorder(side: side)),
-      child: Row(mainAxisSize: MainAxisSize.min, children: children),
+      child: Row(
+        mainAxisSize: expand ? MainAxisSize.max : MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: children,
+      ),
     );
 
     if (!_interactive) {

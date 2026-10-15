@@ -1,6 +1,6 @@
 {
-    "name": "matchup",
-    "short_name": "matchup",
+    "name": "MatchUp",
+    "short_name": "MatchUp",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

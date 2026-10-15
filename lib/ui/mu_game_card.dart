@@ -147,10 +147,12 @@ class MuGameCard extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(height: MuSpace.s3),
-                Text(g.title,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: MuType.labelL.copyWith(color: c.text)),
+                Text(
+                  g.title,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: MuType.labelL.copyWith(color: c.text),
+                ),
                 const SizedBox(height: MuSpace.s1),
                 Wrap(
                   spacing: MuSpace.s2,
@@ -177,26 +179,34 @@ class MuGameCard extends StatelessWidget {
                 if (g.organiser != null) ...[
                   const SizedBox(height: MuSpace.s1),
                   Text.rich(
-                    TextSpan(children: [
-                      const TextSpan(text: 'Par '),
-                      TextSpan(text: g.organiser, style: MuType.labelS.copyWith(color: c.text)),
-                      if (g.organiserReliability != null) ...[
-                        const TextSpan(text: '  '),
-                        WidgetSpan(
-                          alignment: PlaceholderAlignment.middle,
-                          child: Icon(PhosphorIcons.shieldCheck(PhosphorIconsStyle.fill),
-                              size: MuSize.iconXs, color: c.successText),
-                        ),
+                    TextSpan(
+                      children: [
+                        const TextSpan(text: 'Par '),
                         TextSpan(
-                          text: ' Fiable ',
-                          style: MuType.labelS.copyWith(color: c.successText),
+                          text: g.organiser,
+                          style: MuType.labelS.copyWith(color: c.text),
                         ),
-                        TextSpan(
-                          text: '${g.organiserReliability} %',
-                          style: MuType.numXs.copyWith(color: c.successText),
-                        ),
+                        if (g.organiserReliability != null) ...[
+                          const TextSpan(text: '  '),
+                          WidgetSpan(
+                            alignment: PlaceholderAlignment.middle,
+                            child: Icon(
+                              PhosphorIcons.shieldCheck(PhosphorIconsStyle.fill),
+                              size: MuSize.iconXs,
+                              color: c.successText,
+                            ),
+                          ),
+                          TextSpan(
+                            text: ' Fiable ',
+                            style: MuType.labelS.copyWith(color: c.successText),
+                          ),
+                          TextSpan(
+                            text: '${g.organiserReliability} %',
+                            style: MuType.numXs.copyWith(color: c.successText),
+                          ),
+                        ],
                       ],
-                    ]),
+                    ),
                     style: MuType.caption.copyWith(color: c.textSecondary),
                   ),
                 ],
@@ -206,27 +216,31 @@ class MuGameCard extends StatelessWidget {
           _Strip(game: g),
           Padding(
             padding: const EdgeInsets.all(MuSpace.s4),
-            child: LayoutBuilder(builder: (context, constraints) {
-              final showCaption = constraints.maxWidth > _captionMinFooter;
-              return Row(
-                children: [
-                  if (g.players.isNotEmpty) ...[
-                    MuAvatarStack(
-                      people: g.players,
-                      size: MuAvatarSize.xs,
-                      semanticLabel: '${g.players.length} inscrits',
-                    ),
-                    if (showCaption) ...[
-                      const SizedBox(width: MuSpace.s2),
-                      Text('${g.players.length} inscrits',
-                          style: MuType.caption.copyWith(color: c.textSecondary)),
+            child: LayoutBuilder(
+              builder: (context, constraints) {
+                final showCaption = constraints.maxWidth > _captionMinFooter;
+                return Row(
+                  children: [
+                    if (g.players.isNotEmpty) ...[
+                      MuAvatarStack(
+                        people: g.players,
+                        size: MuAvatarSize.xs,
+                        semanticLabel: '${g.players.length} inscrits',
+                      ),
+                      if (showCaption) ...[
+                        const SizedBox(width: MuSpace.s2),
+                        Text(
+                          '${g.players.length} inscrits',
+                          style: MuType.caption.copyWith(color: c.textSecondary),
+                        ),
+                      ],
                     ],
+                    const Spacer(),
+                    MuButton.primary(label: 'Rejoindre', onPressed: onJoin),
                   ],
-                  const Spacer(),
-                  MuButton.primary(label: 'Rejoindre', onPressed: onJoin),
-                ],
-              );
-            }),
+                );
+              },
+            ),
           ),
         ],
       ),
@@ -360,17 +374,23 @@ class _Strip extends StatelessWidget {
             last ? MuSpace.s4 : MuSpace.s3,
             MuSpace.s3,
           ),
-          decoration: BoxDecoration(
-            border: last ? null : BorderDirectional(end: hairline),
-          ),
+          decoration: BoxDecoration(border: last ? null : BorderDirectional(end: hairline)),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(label.toUpperCase(), style: MuType.overline.copyWith(color: c.textSecondary)),
               const SizedBox(height: MuSpace.s1),
-              FittedBox(fit: BoxFit.scaleDown, alignment: AlignmentDirectional.centerStart, child: value),
+              FittedBox(
+                fit: BoxFit.scaleDown,
+                alignment: AlignmentDirectional.centerStart,
+                child: value,
+              ),
               const SizedBox(height: MuSpace.s1),
-              sub,
+              // A fixed caption line, so the three cells match without intrinsic sizing.
+              SizedBox(
+                height: MuType.caption.fontSize! * MuType.caption.height!,
+                child: Align(alignment: AlignmentDirectional.centerStart, child: sub),
+              ),
             ],
           ),
         ),
@@ -378,20 +398,23 @@ class _Strip extends StatelessWidget {
     }
 
     Widget value(String main, [String? unit]) => Directionality(
-          textDirection: TextDirection.ltr,
-          child: Text.rich(
-            TextSpan(children: [
-              TextSpan(text: main, style: MuType.numL),
-              if (unit != null) TextSpan(text: ' $unit', style: MuType.numM),
-            ]),
-            style: TextStyle(color: c.text),
-          ),
-        );
+      textDirection: TextDirection.ltr,
+      child: Text.rich(
+        TextSpan(
+          children: [
+            TextSpan(text: main, style: MuType.numL),
+            if (unit != null) TextSpan(text: ' $unit', style: MuType.numM),
+          ],
+        ),
+        style: TextStyle(color: c.text),
+      ),
+    );
 
     Text sub(String text) => Text(text, style: MuType.caption.copyWith(color: c.textSecondary));
 
     return Semantics(
-      label: 'Heure ${formatTime(g.start)}, ${g.spotsLeft} libres sur ${g.spotsTotal}, '
+      label:
+          'Heure ${formatTime(g.start)}, ${g.spotsLeft} libres sur ${g.spotsTotal}, '
           '${formatDT(g.pricePerPlayer)} par joueur',
       excludeSemantics: true,
       child: DecoratedBox(
@@ -399,29 +422,37 @@ class _Strip extends StatelessWidget {
           color: c.surfaceMuted,
           border: Border.symmetric(horizontal: hairline),
         ),
-        child: IntrinsicHeight(
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              cell('Heure', value(formatTime(g.start)), sub(g.dateLabel ?? formatDay(g.start)),
-                  first: true, last: false),
-              cell(
-                'Places',
-                value('${g.spotsLeft}', g.spotsLeft == 1 ? 'libre' : 'libres'),
-                g.spotsTotal <= _DotsMeter.maxDots
-                    ? _DotsMeter(
-                        total: g.spotsTotal,
-                        taken: g.spotsTotal - g.spotsLeft,
-                        color: g.sport.color(c),
-                      )
-                    : sub('sur ${g.spotsTotal}'),
-                first: false,
-                last: false,
-              ),
-              cell('Prix', value(formatAmount(g.pricePerPlayer), 'DT'), sub('par joueur'),
-                  first: false, last: true),
-            ],
-          ),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            cell(
+              'Heure',
+              value(formatTime(g.start)),
+              sub(g.dateLabel ?? formatDay(g.start)),
+              first: true,
+              last: false,
+            ),
+            cell(
+              'Places',
+              value('${g.spotsLeft}', g.spotsLeft == 1 ? 'libre' : 'libres'),
+              g.spotsTotal <= _DotsMeter.maxDots
+                  ? _DotsMeter(
+                      total: g.spotsTotal,
+                      taken: g.spotsTotal - g.spotsLeft,
+                      color: g.sport.color(c),
+                    )
+                  : sub('sur ${g.spotsTotal}'),
+              first: false,
+              last: false,
+            ),
+            cell(
+              'Prix',
+              value(formatAmount(g.pricePerPlayer), 'DT'),
+              sub('par joueur'),
+              first: false,
+              last: true,
+            ),
+          ],
         ),
       ),
     );
@@ -429,6 +460,7 @@ class _Strip extends StatelessWidget {
 }
 
 /// One dot per player: taken in the sport colour, free hollow with a `border-strong` ring.
+/// Dots shrink from 7 to 4 px (gaps from 3 to 2) to fit a narrow cell.
 class _DotsMeter extends StatelessWidget {
   const _DotsMeter({required this.total, required this.taken, required this.color});
 
@@ -436,31 +468,48 @@ class _DotsMeter extends StatelessWidget {
   final int taken;
   final Color color;
 
-  // GameCard.md: ≤ 12 dots, 7 px, 3 px gap, 1.5 px ring.
+  // GameCard.md: ≤ 12 dots, 7 px (shrinks to 4 px), 3 px gap, 1.5 px ring.
   static const int maxDots = 12;
   static const double _dot = 7;
+  static const double _dotMin = 4;
   static const double _gap = 3;
+  static const double _gapMin = 2;
   static const double _ring = 1.5;
 
   @override
   Widget build(BuildContext context) {
     final c = context.mu;
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        for (var i = 0; i < total; i++) ...[
-          if (i > 0) const SizedBox(width: _gap),
-          Container(
-            width: _dot,
-            height: _dot,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: i < taken ? color : null,
-              border: i < taken ? null : Border.all(color: c.borderStrong, width: _ring),
-            ),
-          ),
-        ],
-      ],
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        var dot = _dot;
+        var gap = _gap;
+        final available = constraints.maxWidth;
+        if (available.isFinite && total > 1) {
+          final needed = total * _dot + (total - 1) * _gap;
+          if (needed > available) {
+            gap = _gapMin;
+            dot = ((available - (total - 1) * gap) / total).clamp(_dotMin, _dot);
+          }
+        }
+        final ring = dot < _dot ? _ring * dot / _dot : _ring;
+        return Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            for (var i = 0; i < total; i++) ...[
+              if (i > 0) SizedBox(width: gap),
+              Container(
+                width: dot,
+                height: dot,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: i < taken ? color : null,
+                  border: i < taken ? null : Border.all(color: c.borderStrong, width: ring),
+                ),
+              ),
+            ],
+          ],
+        );
+      },
     );
   }
 }

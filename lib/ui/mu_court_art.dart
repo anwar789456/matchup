@@ -234,7 +234,7 @@ class _PhotoPainter extends CustomPainter {
 
   // CourtArt.md: photo canvas 400 × 240. Art-direction values of the drawing below.
   static const _canvas = Size(400, 240);
-  static const double _horizon = 0.46;
+  static const double _horizon = 0.36;
   static const double _beamAlpha = 0.16;
   static const double _glowAlpha = 0.55;
   static const double _lineAlpha = 0.85;
@@ -244,10 +244,10 @@ class _PhotoPainter extends CustomPainter {
   static const double _glow = 18;
 
   /// Court corners in canvas units: the far edge, then the near edge (below the frame).
-  static const _farLeft = Offset(122, 128);
-  static const _farRight = Offset(278, 128);
-  static const _nearLeft = Offset(-10, 262);
-  static const _nearRight = Offset(410, 262);
+  static const _farLeft = Offset(120, 92);
+  static const _farRight = Offset(280, 92);
+  static const _nearLeft = Offset(-40, 272);
+  static const _nearRight = Offset(440, 272);
 
   /// A point of the court plane (u across, v from far to near) in canvas units.
   Offset _at(double u, double v) {
@@ -376,7 +376,7 @@ class _PhotoPainter extends CustomPainter {
 
     // Two floodlights: beams onto the court, glow around the lamps.
     for (final x in [w * 0.1, w * 0.9]) {
-      final lamp = Offset(x, h * 0.1);
+      final lamp = Offset(x, h * 0.06);
       final target = x < w / 2 ? _at(0.3, 0.6) : _at(0.7, 0.6);
       final beam = Path()
         ..moveTo(lamp.dx - 6, lamp.dy)
