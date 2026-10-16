@@ -1,15 +1,15 @@
 #!/usr/bin/env bash
-# Stores the Brevo SMTP login in the server's backend/.env (never in git) and restarts the
-# utilisateur module. Run it yourself so the key stays with you:
+# Stores the Resend API key (used as the SMTP password) in the server's backend/.env (never in
+# git) and restarts the utilisateur module. Run it yourself so the key stays with you:
 #
 #   ssh -t ubuntu@92.222.36.107 sudo bash /opt/matchup/backend/deploy/set-smtp.sh
 set -euo pipefail
 
 ENV_FILE=/opt/matchup/backend/.env
 
-read -r -p "Brevo SMTP login (looks like 1234567@smtp-brevo.com): " SMTP_USER
-read -r -s -p "Brevo SMTP key (hidden while you type): " SMTP_PASS
+read -r -s -p "Resend API key (starts with re_, hidden while you type): " SMTP_PASS
 echo
+[[ "$SMTP_PASS" == re_* ]] || { echo "That doesn't look like a Resend key (re_...). Nothing changed."; exit 1; }
 
 set_var() {
   local key="$1" value="$2"
@@ -18,9 +18,10 @@ set_var() {
   printf '%s=%s\n' "$key" "$value" >>"$ENV_FILE"
 }
 
-set_var SMTP_HOST smtp-relay.brevo.com
-set_var SMTP_PORT 587
-set_var SMTP_USER "$SMTP_USER"
+# Resend SMTP: user "resend", password = the API key.
+set_var SMTP_HOST smtp.resend.com
+set_var SMTP_PORT 465
+set_var SMTP_USER resend
 set_var SMTP_PASS "$SMTP_PASS"
 set_var MAIL_FROM "MatchUp <noreply@minolingo.online>"
 set_var PUBLIC_URL https://minolingo.online
