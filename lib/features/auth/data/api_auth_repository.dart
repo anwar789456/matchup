@@ -2,9 +2,9 @@ import '../../../core/api/api_client.dart';
 import 'auth_repository.dart';
 import 'fake_auth_repository.dart';
 
-/// [AuthRepository] on the team's backend (module utilisateur): accounts, sign-in, password
-/// change and roles are real. SMS / email codes and Google/Apple sign-in stay simulated by
-/// [FakeAuthRepository] (code `123456`) until the backend sends them.
+/// [AuthRepository] on the team's backend (module utilisateur): accounts, sign-in, roles, the
+/// confirmation email (AUTH-04) and the emailed reset code (AUTH-06 to 08) are real. SMS codes
+/// and Google/Apple sign-in stay simulated by [FakeAuthRepository] (code `123456`).
 ///
 /// The temporary lock after 5 wrong passwords (AUTH-10) is counted on the device.
 class ApiAuthRepository implements AuthRepository {
@@ -22,10 +22,12 @@ class ApiAuthRepository implements AuthRepository {
   int? _userId;
   String? _email;
   String? _resetEmail;
+  String? _resetCode;
   int _signInFailures = 0;
   DateTime? _lockedUntil;
 
   static const _users = 'utilisateur/utilisateurs';
+  static const _account = 'utilisateur/compte';
 
   static String roleName(UserRole role) => switch (role) {
         UserRole.player => 'joueur',
@@ -102,31 +104,53 @@ class ApiAuthRepository implements AuthRepository {
   Future<void> verifyPhoneCode(String code) => _codes.verifyPhoneCode(code);
 
   @override
-  Future<void> resendVerificationEmail() => _codes.resendVerificationEmail();
-
-  @override
-  Future<void> sendPasswordResetCode(String email) {
-    _resetEmail = email.trim();
-    return _codes.sendPasswordResetCode(email);
+  Future<void> resendVerificationEmail() async {
+    final email = _email;
+    if (email == null) return;
+    await _api.post('$_account/verification/envoyer', {'email': email});
   }
 
   @override
-  Future<void> verifyPasswordResetCode(String code) => _codes.verifyPasswordResetCode(code);
+  Future<void> sendPasswordResetCode(String email) async {
+    _resetEmail = email.trim();
+    _resetCode = null;
+    await _api.post('$_account/mot-de-passe/oublie', {'email': _resetEmail});
+  }
+
+  /// Maps the backend's code errors to the screens' failures (AUTH-07).
+  Never _codeFailure(ApiException e) {
+    final data = e.data is Map<String, dynamic> ? e.data! as Map<String, dynamic> : const {};
+    if (e.statusCode == 429) {
+      final retry = DateTime.tryParse('${data['reessayerA']}') ??
+          _now().add(FakeAuthRepository.codeBlockDuration);
+      throw TooManyCodeAttempts(retry);
+    }
+    if (e.statusCode == 400) throw InvalidCode((data['essaisRestants'] as num?)?.toInt() ?? 0);
+    throw e;
+  }
+
+  @override
+  Future<void> verifyPasswordResetCode(String code) async {
+    try {
+      await _api.post('$_account/mot-de-passe/verifier', {'email': _resetEmail, 'code': code});
+      _resetCode = code;
+    } on ApiException catch (e) {
+      _codeFailure(e);
+    }
+  }
 
   @override
   Future<void> resetPassword(String newPassword) async {
-    final email = _resetEmail ?? _email;
-    if (email == null) return;
-    final found = await _api.get(_users, query: {'email': email}) as List<dynamic>;
-    if (found.isEmpty) return;
-    final id = (found.first as Map<String, dynamic>)['id'] as int;
     try {
-      await _api.post('$_users/login', {'email': email, 'motDePasse': newPassword});
-      throw const SamePassword();
-    } on ApiException {
-      // The new password differs from the current one.
+      await _api.post('$_account/mot-de-passe/reinitialiser', {
+        'email': _resetEmail,
+        'code': _resetCode,
+        'motDePasse': newPassword,
+      });
+    } on ApiException catch (e) {
+      if (e.statusCode == 409) throw const SamePassword();
+      _codeFailure(e);
     }
-    await _api.patch('$_users/$id', {'motDePasse': newPassword});
     _signInFailures = 0;
     _lockedUntil = null;
   }

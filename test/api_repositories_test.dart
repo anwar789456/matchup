@@ -17,6 +17,11 @@ class _FakeBackend {
   final terrains = <Map<String, dynamic>>[];
   final requests = <String>[];
 
+  /// The emailed reset code, per address, and wrong tries left.
+  final resetCodes = <String, String>{};
+  var triesLeft = 3;
+  final verificationEmails = <String>[];
+
   late final client = MockClient((req) async {
     requests.add('${req.method} ${req.url.path}');
     final body = req.body.isEmpty ? null : jsonDecode(req.body) as Map<String, dynamic>;
@@ -53,6 +58,35 @@ class _FakeBackend {
       if (body!.containsKey('motDePasse')) passwords[id] = body['motDePasse'] as String;
       user.addAll({...body}..remove('motDePasse'));
       return json(user);
+    }
+    if (path == 'utilisateur/compte/verification/envoyer') {
+      verificationEmails.add(body!['email'] as String);
+      return json({'envoye': true}, 202);
+    }
+    if (path == 'utilisateur/compte/mot-de-passe/oublie') {
+      resetCodes[body!['email'] as String] = '482913';
+      triesLeft = 3;
+      return json({'envoye': true}, 202);
+    }
+    if (path == 'utilisateur/compte/mot-de-passe/verifier' ||
+        path == 'utilisateur/compte/mot-de-passe/reinitialiser') {
+      if (triesLeft == 0) {
+        return json({'message': 'Trop d’essais.', 'reessayerA': '2026-10-14T10:10:00.000Z'}, 429);
+      }
+      if (resetCodes[body!['email']] != body['code']) {
+        triesLeft--;
+        if (triesLeft == 0) {
+          return json({'message': 'Trop d’essais.', 'reessayerA': '2026-10-14T10:10:00.000Z'}, 429);
+        }
+        return json({'message': 'Code incorrect.', 'essaisRestants': triesLeft}, 400);
+      }
+      if (path.endsWith('verifier')) return json({'valide': true});
+      final user = users.firstWhere((u) => u['email'] == body['email']);
+      if (passwords[user['id']] == body['motDePasse']) {
+        return json({'message': 'Il doit être différent de l’ancien.'}, 409);
+      }
+      passwords[user['id'] as int] = body['motDePasse'] as String;
+      return json({'modifie': true});
     }
     if (path == 'reservation/terrains' && req.method == 'POST') {
       terrains.add({'id': terrains.length + 1, ...body!});
@@ -99,18 +133,41 @@ void main() {
     );
   });
 
-  test('roles, phone and password reset reach the account', () async {
+  test('roles, phone and the confirmation email reach the account', () async {
     await auth.signUp(email: 'yassine.b@email.tn', password: 'Marsa2026');
     await auth.sendPhoneCode('20123456');
     await auth.saveRoles({UserRole.coach, UserRole.owner});
     expect(backend.users.single['telephone'], '20123456');
     expect(backend.users.single['role'], 'proprietaire');
 
+    await auth.resendVerificationEmail();
+    expect(backend.verificationEmails, ['yassine.b@email.tn']);
+  });
+
+  test('password reset with the emailed code (AUTH-06 to 08)', () async {
+    await auth.signUp(email: 'yassine.b@email.tn', password: 'Marsa2026');
     await auth.sendPasswordResetCode('yassine.b@email.tn');
+    await expectLater(
+      auth.verifyPasswordResetCode('000000'),
+      throwsA(isA<InvalidCode>().having((e) => e.attemptsLeft, 'left', 2)),
+    );
+    await auth.verifyPasswordResetCode('482913');
     await expectLater(auth.resetPassword('Marsa2026'), throwsA(isA<SamePassword>()));
     await auth.resetPassword('Lac2-2026');
     await auth.signIn(email: 'yassine.b@email.tn', password: 'Lac2-2026');
     expect(session, 1);
+  });
+
+  test('three wrong reset codes block the code', () async {
+    await auth.signUp(email: 'yassine.b@email.tn', password: 'Marsa2026');
+    await auth.sendPasswordResetCode('yassine.b@email.tn');
+    await expectLater(auth.verifyPasswordResetCode('000001'), throwsA(isA<InvalidCode>()));
+    await expectLater(auth.verifyPasswordResetCode('000002'), throwsA(isA<InvalidCode>()));
+    await expectLater(
+      auth.verifyPasswordResetCode('000003'),
+      throwsA(isA<TooManyCodeAttempts>()
+          .having((e) => e.retryAt, 'retryAt', DateTime.utc(2026, 10, 14, 10, 10))),
+    );
   });
 
   test('pseudo availability and profile save', () async {

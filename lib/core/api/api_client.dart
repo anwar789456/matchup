@@ -5,14 +5,17 @@ import 'package:http/http.dart' as http;
 
 /// The team's backend (backend/ in this repo, served by the OVH server). Override with
 /// `flutter run --dart-define=API_URL=http://localhost:3001/api` to try a module you run locally.
-const apiBaseUrl = String.fromEnvironment('API_URL', defaultValue: 'http://92.222.36.107/api');
+const apiBaseUrl = String.fromEnvironment('API_URL', defaultValue: 'https://minolingo.online/api');
 
 /// An error answer from the API (status code + the message of the NestJS error body).
 class ApiException implements Exception {
-  const ApiException(this.statusCode, this.message);
+  const ApiException(this.statusCode, this.message, [this.data]);
 
   final int statusCode;
   final String message;
+
+  /// The decoded error body (extra fields such as `essaisRestants`).
+  final Object? data;
 
   @override
   String toString() => 'ApiException($statusCode): $message';
@@ -51,7 +54,7 @@ class ApiClient {
       {'message': final String text} => text,
       _ => res.reasonPhrase ?? 'Erreur ${res.statusCode}',
     };
-    throw ApiException(res.statusCode, message);
+    throw ApiException(res.statusCode, message, body);
   }
 }
 
