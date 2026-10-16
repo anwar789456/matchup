@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # One-time setup of the MatchUp server (Ubuntu, run with sudo). Safe to run again.
 #
-#   sudo DB_PASSWORD='...' bash setup-server.sh
+#   sudo DB_PASSWORD='...' DOMAIN=minolingo.online bash setup-server.sh
 #
 # Installs PostgreSQL (open to the team's laptops on port 5432), Node 22, pm2 and Nginx, clones
 # the repo to /opt/matchup, builds the 6 modules and starts them, the GitHub webhook and a
@@ -67,12 +67,8 @@ sudo -u "$APP_USER" bash -c "cd $REPO_DIR/backend && npm ci --no-audit --no-fund
 sudo -u "$APP_USER" bash -c "cd $REPO_DIR/backend && pm2 startOrReload deploy/ecosystem.config.js && pm2 save"
 env PATH="$PATH:/usr/bin" pm2 startup systemd -u "$APP_USER" --hp "/home/$APP_USER" >/dev/null
 
-echo "== nginx"
-cp "$REPO_DIR/backend/deploy/matchup_proxy.conf" /etc/nginx/matchup_proxy.conf
-cp "$REPO_DIR/backend/deploy/nginx.conf" /etc/nginx/sites-available/matchup
-ln -sf /etc/nginx/sites-available/matchup /etc/nginx/sites-enabled/matchup
-rm -f /etc/nginx/sites-enabled/default
-nginx -t && systemctl reload nginx
+echo "== nginx (+ https when DOMAIN is set)"
+DOMAIN="${DOMAIN:-}" bash "$REPO_DIR/backend/deploy/nginx-install.sh"
 
 echo "== git poll every minute (in case a webhook is missed)"
 cat >/etc/cron.d/matchup-deploy <<EOF

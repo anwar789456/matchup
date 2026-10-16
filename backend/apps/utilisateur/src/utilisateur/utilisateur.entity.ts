@@ -28,6 +28,10 @@ export class Utilisateur {
   @Column({ type: 'varchar', length: 255, select: false })
   motDePasse: string;
 
+  /** Set when the link of the confirmation email is opened (AUTH-04). */
+  @Column({ type: 'boolean', default: false })
+  emailVerifie: boolean;
+
   @Column({ type: 'varchar', length: 255, nullable: true })
   telephone?: string | null;
 
