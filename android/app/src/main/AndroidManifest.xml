@@ -4,7 +4,10 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <!-- PLY-09: freed spots, invitations and match reminders (Android 13+). -->
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <!-- The team's API (http://92.222.36.107, no HTTPS yet). -->
+    <uses-permission android:name="android.permission.INTERNET" />
     <application
+        android:usesCleartextTraffic="true"
         android:label="MatchUp"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">

@@ -3,6 +3,9 @@ import 'dart:typed_data';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../theme/theme.dart';
+import '../../../core/api/api_client.dart';
+import '../../../core/api/session.dart';
+import '../data/api_profile_repository.dart';
 import '../data/level_estimator.dart';
 import '../data/location_services.dart';
 import '../data/onboarding_state.dart';
@@ -15,7 +18,9 @@ final levelEstimatorProvider = Provider<LevelEstimator>((ref) => const FakeLevel
 final devicePermissionsProvider =
     Provider<DevicePermissions>((ref) => const SystemPermissions());
 final zoneDirectoryProvider = Provider<ZoneDirectory>((ref) => const FakeZoneDirectory());
-final profileRepositoryProvider = Provider<ProfileRepository>((ref) => FakeProfileRepository());
+final profileRepositoryProvider = Provider<ProfileRepository>(
+  (ref) => ApiProfileRepository(ref.read(apiClientProvider), userId: () => ref.read(sessionProvider)),
+);
 
 /// The onboarding answers, loaded from the device and saved after every change.
 class OnboardingController extends AsyncNotifier<PlayerOnboardingState> {

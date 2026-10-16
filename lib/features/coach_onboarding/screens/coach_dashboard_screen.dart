@@ -141,6 +141,7 @@ class CoachDashboardScreen extends ConsumerWidget {
           primary: MuAction('Proposer un plan', () => showComingSoon(context)),
           primaryIcon: PhosphorIcons.sparkle(),
           secondary: MuAction('Plus tard', () {}),
+          secondaryDismisses: true,
           onDismiss: () {},
         ),
         const SizedBox(height: MuSpace.s6),

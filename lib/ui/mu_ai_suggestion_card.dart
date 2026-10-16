@@ -25,6 +25,7 @@ class MuAiSuggestionCard extends StatefulWidget {
     this.primaryIcon,
     this.onFeedback,
     this.onDismiss,
+    this.secondaryDismisses = false,
   });
 
   /// Header line (« Assistant programme »).
@@ -40,6 +41,9 @@ class MuAiSuggestionCard extends StatefulWidget {
   /// true = useful, false = not useful, null = vote withdrawn.
   final ValueChanged<bool?>? onFeedback;
   final VoidCallback? onDismiss;
+
+  /// « Plus tard » also hides the card (with « Annuler » to bring it back).
+  final bool secondaryDismisses;
 
   @override
   State<MuAiSuggestionCard> createState() => _MuAiSuggestionCardState();
@@ -213,7 +217,10 @@ class _MuAiSuggestionCardState extends State<MuAiSuggestionCard> {
                     if (widget.secondary != null)
                       MuButton.tertiary(
                         label: widget.secondary!.label,
-                        onPressed: widget.secondary!.onPressed,
+                        onPressed: () {
+                          widget.secondary!.onPressed();
+                          if (widget.secondaryDismisses) setState(() => _dismissed = true);
+                        },
                       ),
                     if (widget.primary != null) ...[
                       const SizedBox(width: MuSpace.s2),

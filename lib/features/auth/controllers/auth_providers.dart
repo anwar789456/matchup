@@ -1,11 +1,18 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/api/api_client.dart';
+import '../../../core/api/session.dart';
+import '../data/api_auth_repository.dart';
 import '../data/auth_repository.dart';
-import '../data/fake_auth_repository.dart';
 
-/// The auth backend. Swap the fake for the API implementation here.
-final authRepositoryProvider = Provider<AuthRepository>((ref) => FakeAuthRepository());
+/// The auth backend: the team's API (module utilisateur). Tests override it with the fake.
+final authRepositoryProvider = Provider<AuthRepository>(
+  (ref) => ApiAuthRepository(
+    ref.read(apiClientProvider),
+    onSignedIn: (id) => ref.read(sessionProvider.notifier).signIn(id),
+  ),
+);
 
 /// What the sign-up and reset flows carry from one screen to the next.
 @immutable

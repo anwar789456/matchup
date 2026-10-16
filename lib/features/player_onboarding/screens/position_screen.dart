@@ -83,7 +83,10 @@ class PositionScreen extends ConsumerWidget {
       route: Routes.playerPosition,
       step: 3,
       stepTitle: 'Ton poste',
-      onBack: () => goBack(context, Routes.playerSports),
+      onBack: () => goBack(
+        context,
+        state.sports.isEmpty ? Routes.playerSports : Routes.playerLevel(state.sports.last),
+      ),
       onSkip: next,
       gap: MuSpace.s5,
       body: [

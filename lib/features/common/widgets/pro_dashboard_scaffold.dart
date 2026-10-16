@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 
+import '../../../core/api/session.dart';
+import '../../../router.dart';
 import '../../../theme/theme.dart';
 import '../../../ui/ui.dart';
 import 'pro_wizard_scaffold.dart' show showComingSoon;
@@ -104,13 +107,16 @@ class ProDashboardScaffold extends ConsumerWidget {
               MuMenuEntry(
                 label: 'Changer de rôle',
                 icon: PhosphorIcons.arrowsLeftRight(),
-                onPressed: () => showComingSoon(context),
+                onPressed: () => context.go(Routes.roles),
               ),
               MuMenuEntry(
                 label: 'Se déconnecter',
                 icon: PhosphorIcons.signOut(),
                 separated: true,
-                onPressed: () => showComingSoon(context),
+                onPressed: () async {
+                  await ref.read(sessionProvider.notifier).signOut();
+                  if (context.mounted) context.go(Routes.login);
+                },
               ),
             ],
           ),

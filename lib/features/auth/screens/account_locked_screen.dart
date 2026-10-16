@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
@@ -70,12 +71,17 @@ class AccountLockedScreen extends ConsumerWidget {
           label: 'Contacter le support',
           size: MuButtonSize.xl,
           fullWidth: true,
-          // The support channel is designed in a later milestone.
-          onPressed: () => MuToast.show(
-            context,
-            title: 'Le support arrive bientôt',
-            description: 'En attendant, réinitialise ton mot de passe.',
-          ),
+          // The support line of the design (help card of the pro onboarding).
+          onPressed: () async {
+            final opened = await launchUrl(Uri(scheme: 'tel', path: '+21671234567'));
+            if (!opened && context.mounted) {
+              MuToast.show(
+                context,
+                title: 'Appelle-nous au +216 71 234 567',
+                description: 'Du lundi au samedi, de 9h00 à 18h00.',
+              );
+            }
+          },
         ),
       ],
     );
