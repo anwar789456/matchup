@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Type de réservation</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/matchup/tokens.css">
+<link rel="stylesheet" href="ds/matchup/components/bundle.css">
+<script src="ds/matchup/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0}
+a{color:var(--link)}
+.bkg-ctx{display:flex; align-items:center; gap:var(--space-3); padding:var(--space-3); border-radius:var(--radius-md); background:var(--surface-muted)}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; box-sizing: border-box; display: flex; flex-direction: column; background: var(--surface); color: var(--text); font-family: var(--font-sans)">
+<div style="display: flex; align-items: center; gap: 8px; padding: 52px 16px 0 8px">
+<a href="VEN-02-Creneau.dc.html" class="mu-iconbtn mu-iconbtn--l mu-iconbtn--ghost" aria-label="Retour" style="color: var(--text)"><x-import component-from-global-scope="MatchUp.Icon" name="arrow-left" size="{{i24}}"></x-import></a>
+<div style="flex: 1; min-width: 0"><x-import component-from-global-scope="MatchUp.StepIndicator" step="{{one}}" total="{{three}}" title="Type de partie"></x-import></div>
+</div>
+<div style="flex: 1; min-height: 0; overflow: auto; display: flex; flex-direction: column; gap: 24px; padding: 16px 16px 24px 16px">
+<div class="bkg-ctx">
+<x-import component-from-global-scope="MatchUp.CourtArt" sport="football" variant="pattern" dc-props="{{thumb}}"></x-import>
+<div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px">
+<span class="label">Arena Five · Terrain 1</span>
+<span class="caption" style="color: var(--text-secondary)">mer. 21 oct. · 21h00 – 22h00</span>
+</div>
+<div style="display: flex; flex-direction: column; align-items: flex-end; gap: 2px">
+<span class="num-m">150 DT</span>
+<span class="caption" style="color: var(--text-secondary)">15 DT /pers.</span>
+</div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 8px">
+<h1 class="h1" style="margin: 0">Qui joue avec toi ?</h1>
+<p class="body-l" style="margin: 0; color: var(--text-secondary)">Choisis qui peut rejoindre ton terrain. Tu pourras inviter tes amis dans les deux cas.</p>
+</div>
+<x-import component-from-global-scope="MatchUp.ChoiceCard.Group" aria-label="Type de réservation" name="type" value="{{type}}" on-change="{{setType}}">
+<x-import component-from-global-scope="MatchUp.ChoiceCard" value="privee" icon="lock-key" title="Privée" description="J’invite mes amis. Personne d’autre ne peut rejoindre."></x-import>
+<x-import component-from-global-scope="MatchUp.ChoiceCard" value="publique" icon="users-three" title="Publique" description="Je complète avec des joueurs. Tes places libres s’affichent dans Explorer pour des joueurs à ton niveau."></x-import>
+</x-import>
+<div style="display: flex; gap: 10px; align-items: flex-start; padding: 12px; border-radius: var(--radius-md); background: var(--info-soft); color: var(--text)">
+<span style="display: flex; flex: none; color: var(--info-text); padding-top: 2px"><x-import component-from-global-scope="MatchUp.Icon" name="hand-coins" size="{{i20}}"></x-import></span>
+<div style="display: flex; flex-direction: column; gap: 2px">
+<span class="label">Chacun paie sa part</span>
+<span class="body" style="color: var(--text-secondary)">15 DT par personne à 10. Tu choisis comment partager à l’étape suivante.</span>
+</div>
+</div>
+</div>
+<div style="padding: 12px 16px 34px 16px; background: var(--surface); box-shadow: var(--elevation-2-up)">
+<a href="{{nextHref}}" class="mu-btn mu-btn--primary mu-btn--xl mu-btn--block"><span class="mu-btn__content"><span class="mu-btn__label label-l">{{nextLabel}}</span></span></a>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  state = { type: 'publique' };
+  renderVals() {
+    const t = this.state.type;
+    return {
+      yes: true, i20: 20, i24: 24, one: 1, three: 3, type: t,
+      setType: (v) => this.setState({ type: v }),
+      thumb: { style: { width: 48, height: 48, borderRadius: 'var(--radius-sm)', flex: 'none' } },
+      nextHref: t === 'privee' ? 'BKG-03-Inviter-des-amis.dc.html' : 'BKG-02-Partie-publique.dc.html',
+      nextLabel: t === 'privee' ? 'Continuer · inviter mes amis' : 'Continuer'
+    };
+  }
+}
+</script>
+</body>
+</html>

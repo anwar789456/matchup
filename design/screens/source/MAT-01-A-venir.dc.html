@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Mes matchs · À venir</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/matchup/tokens.css">
+<link rel="stylesheet" href="ds/matchup/components/bundle.css">
+<script src="ds/matchup/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0}
+a{color:var(--link)}
+</style>
+</helmet>
+<div style="position: relative; width: 390px; height: 844px; box-sizing: border-box; overflow: hidden; display: flex; flex-direction: column; background: var(--bg); color: var(--text); font-family: var(--font-sans)">
+<x-import component-from-global-scope="MatchUp.TopAppBar" variant="large" title="Mes matchs" collapsed="{{yes}}" scrolled="{{no}}" inset="{{inset}}" actions="{{barActions}}"></x-import>
+<div style="padding: 0 16px; background: var(--bg)">
+<x-import component-from-global-scope="MatchUp.Tabs" label="Mes matchs" items="{{tabs}}" value="avenir" full-width="{{yes}}" id-base="mat-tab"></x-import>
+</div>
+<div id="mat-panel-avenir" role="tabpanel" aria-labelledby="mat-tab-avenir" style="flex: 1; min-height: 0; overflow: auto; display: flex; flex-direction: column; gap: 20px; padding: 16px 16px 120px 16px">
+
+<section aria-labelledby="mat-inv-t" style="display: flex; flex-direction: column; gap: 8px">
+<h2 id="mat-inv-t" class="overline" style="margin: 0; color: var(--text-secondary)">À répondre</h2>
+<article class="mu-card" style="display: flex; flex-direction: column; gap: 12px; padding: 16px">
+<div style="display: flex; align-items: flex-start; gap: 12px">
+<x-import component-from-global-scope="MatchUp.Avatar" name="Mariem K." size="m" level="{{lvMariem}}"></x-import>
+<div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px">
+<span class="label-l">Mariem K. t’invite au padel</span>
+<span class="body" style="display: flex; align-items: center; gap: 4px; color: var(--text-secondary)"><span style="display: flex; color: var(--padel-text)"><x-import component-from-global-scope="MatchUp.Icon" name="sport-padel" size="{{i16}}"></x-import></span>Smash Padel Club · Lac 2</span>
+<span class="caption" style="color: var(--text-secondary)">ven. 23 oct. · 19h30 · 2/4 joueurs</span>
+</div>
+<div style="flex: none; text-align: end; display: flex; flex-direction: column">
+<span><span class="num-m">25</span><span class="num-s"> DT</span></span>
+<span class="caption" style="color: var(--text-secondary)">ta part</span>
+</div>
+</div>
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px">
+<button type="button" class="mu-btn mu-btn--secondary mu-btn--m mu-btn--block"><span class="mu-btn__content"><span class="mu-btn__label label">Refuser</span></span></button>
+<button type="button" class="mu-btn mu-btn--primary mu-btn--m mu-btn--block"><span class="mu-btn__content"><span class="mu-btn__label label">Accepter</span></span></button>
+</div>
+</article>
+</section>
+
+<section aria-labelledby="mat-g1-t" style="display: flex; flex-direction: column; gap: 8px">
+<div style="display: flex; align-items: center; justify-content: space-between; min-height: 24px">
+<h2 id="mat-g1-t" class="overline" style="margin: 0; color: var(--text-secondary)">Dim. 18 oct. · Tu joues</h2>
+<a href="MAT-07-Quitter-la-partie.dc.html" class="mu-btn mu-btn--tertiary mu-btn--s" style="margin-right: -8px"><span class="mu-btn__content"><x-import component-from-global-scope="MatchUp.Icon" name="sign-out" size="{{i16}}"></x-import><span class="mu-btn__label label">Quitter</span></span></a>
+</div>
+<x-import component-from-global-scope="MatchUp.GameCard" dc-props="{{g1}}"></x-import>
+</section>
+
+<section aria-labelledby="mat-mine-t" style="display: flex; flex-direction: column; gap: 8px">
+<div style="display: flex; align-items: center; justify-content: space-between; min-height: 24px">
+<h2 id="mat-mine-t" class="overline" style="margin: 0; color: var(--text-secondary)">Mer. 21 oct. · Tu organises</h2>
+</div>
+<x-import component-from-global-scope="MatchUp.BookingCard" dc-props="{{mine}}"></x-import>
+<div class="mu-card" style="display: flex; align-items: center; gap: 16px; padding: 12px 12px 12px 16px">
+<div style="flex: 1; min-width: 0">
+<x-import component-from-global-scope="MatchUp.ProgressBar" variant="spots" value="{{six}}" max="{{ten}}" label="En attente de 4 joueurs" unit="joueurs" size="s"></x-import>
+</div>
+<a href="BKG-03-Inviter-des-amis.dc.html" class="mu-btn mu-btn--secondary mu-btn--s"><span class="mu-btn__content"><x-import component-from-global-scope="MatchUp.Icon" name="user-plus" size="{{i16}}"></x-import><span class="mu-btn__label label">Inviter</span></span></a>
+</div>
+</section>
+
+</div>
+<a href="EXP-03-Explorer-terrains.dc.html" aria-label="Réserver un terrain" style="position: absolute; left: 338px; top: 48px; width: 48px; height: 48px; border-radius: var(--radius-full)"></a>
+<a href="MAT-02-Passes.dc.html" aria-label="Passés" style="position: absolute; left: 136px; top: 100px; width: 118px; height: 48px"></a>
+<a href="MAT-03-Annules.dc.html" aria-label="Annulés" style="position: absolute; left: 256px; top: 100px; width: 118px; height: 48px"></a>
+<x-import component-from-global-scope="MatchUp.TabBar" items="{{tabBar}}" value="matchs" safe-area="{{sa}}" fab="{{yes}}" dc-props="{{tabStyle}}"></x-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const people = ['Skander T.', 'Hamza R.', 'Nour A.', 'Aziz H.', 'Omar D.', 'Salma G.', 'Lina F.', 'Ines M.', 'Yassine B.'].map((name) => ({ name }));
+    return {
+      yes: true, no: false, i16: 16, i20: 20, i24: 24, six: 6, ten: 10, inset: 44, sa: 34, lvMariem: 4,
+      barActions: [{ icon: 'calendar-plus', label: 'Réserver un terrain' }],
+      tabs: [
+        { value: 'avenir', label: 'À venir', count: 3, panelId: 'mat-panel-avenir' },
+        { value: 'passes', label: 'Passés' },
+        { value: 'annules', label: 'Annulés' }
+      ],
+      g1: {
+        variant: 'compact', status: 'joined', sport: 'football', gameType: 'mixte', venue: 'Arena Five', court: 'Terrain 2', place: 'La Marsa', distance: 1.4,
+        start: new Date(2026, 9, 18, 20, 0), spotsTotal: 10, spotsLeft: 1, price: 15, levelMin: 3, levelMax: 4.5, players: people,
+        organiser: { name: 'Skander T.', reliability: 96 }, href: 'GAM-01-Partie-ouverte.dc.html'
+      },
+      mine: {
+        variant: 'compact', status: 'upcoming', sport: 'football', venue: 'Arena Five', court: 'Terrain 1', place: 'La Marsa',
+        start: new Date(2026, 9, 21, 21, 0), end: new Date(2026, 9, 21, 22, 0), share: 15,
+        players: [{ name: 'Yassine B.' }, { name: 'Skander T.' }, { name: 'Hamza R.' }, { name: 'Aziz H.' }, { name: 'Omar D.' }, { name: 'Nour A.' }],
+        href: 'MAT-05-Detail-reservation.dc.html'
+      },
+      tabBar: [
+        { value: 'accueil', label: 'Accueil', icon: 'house', href: 'HOM-01-Accueil.dc.html' },
+        { value: 'explorer', label: 'Explorer', icon: 'compass', href: 'EXP-01-Explorer-parties.dc.html' },
+        { value: 'matchs', label: 'Mes matchs', icon: 'calendar-check', badge: 1, badgeLabel: '1 invitation', href: 'MAT-01-A-venir.dc.html' },
+        { value: 'entrainement', label: 'Entraînement', icon: 'barbell' },
+        { value: 'communaute', label: 'Communauté', icon: 'users-three' }
+      ],
+      tabStyle: { style: { position: 'absolute', left: 0, right: 0, bottom: 0 } }
+    };
+  }
+}
+</script>
+</body>
+</html>

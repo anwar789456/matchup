@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Recherche</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/matchup/tokens.css">
+<link rel="stylesheet" href="ds/matchup/components/bundle.css">
+<script src="ds/matchup/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0}
+a{color:var(--link)}
+.exp-search .mu-searchfield__panel{position:static; max-height:none; overflow:visible; margin:12px -8px 0 -52px; padding:0 0 0 0; background:transparent; box-shadow:none; animation:none}
+.exp-hot{position:absolute; display:block; border-radius:var(--radius-sm)}
+.exp-hot:focus-visible{box-shadow:var(--focus-ring); outline:none}
+</style>
+</helmet>
+<div style="position: relative; width: 390px; height: 844px; box-sizing: border-box; overflow: hidden; display: flex; flex-direction: column; background: var(--surface); color: var(--text); font-family: var(--font-sans)">
+<div style="flex: 1; min-height: 0; overflow: auto; padding: 52px 16px 34px 8px">
+<div style="display: flex; align-items: flex-start; gap: 4px">
+<a href="EXP-01-Explorer-parties.dc.html" class="mu-iconbtn mu-iconbtn--l mu-iconbtn--ghost" aria-label="Retour" style="color: var(--text); flex: none"><x-import component-from-global-scope="MatchUp.Icon" name="arrow-left" size="{{i24}}"></x-import></a>
+<div class="exp-search" style="flex: 1; min-width: 0">
+<x-import component-from-global-scope="MatchUp.SearchField" placeholder="Terrain, partie, quartier…" default-value="mar" state="focus" open="{{yes}}" recent="{{recent}}" groups="{{groups}}" on-remove-recent="{{noop}}" on-clear-recent="{{noop}}" max-per-group="{{n2}}"></x-import>
+</div>
+</div>
+</div>
+<a href="VEN-01-Terrain.dc.html" class="exp-hot" aria-label="Ouvrir Arena Five" style="left: 8px; top: 438px; width: 374px; height: 56px"></a>
+<a href="GAM-01-Partie-ouverte.dc.html" class="exp-hot" aria-label="Ouvrir la partie Foot 5v5 à Arena Five, dim. 18 oct. à 20h00" style="left: 8px; top: 539px; width: 374px; height: 56px"></a>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      yes: true, i24: 24, n2: 2, noop: () => {},
+      recent: ['padel la marsa', 'foot 5 ce soir', 'Smash Padel Club', 'Mariem K.'],
+      groups: [
+        { id: 'zones', label: 'Zones', items: [
+          { type: 'venue', id: 'z1', title: 'La Marsa', icon: 'map-pin', place: '12 parties · 4 terrains' },
+          { type: 'venue', id: 'z2', title: 'Marsa Corniche', icon: 'map-pin', place: '3 parties · 1 terrain' }
+        ] },
+        { id: 'venues', label: 'Terrains', items: [
+          { type: 'venue', id: 'v1', title: 'Arena Five', sport: 'football', place: 'La Marsa' },
+          { type: 'venue', id: 'v2', title: 'Smash Padel Club', sport: 'padel', place: 'Lac 2' },
+          { type: 'venue', id: 'v3', title: 'Hoop Zone', sport: 'basketball', place: 'Ennasr' }
+        ] },
+        { id: 'games', label: 'Parties', items: [
+          { type: 'game', id: 'g1', title: 'Foot 5v5 · Arena Five', sport: 'football', place: 'La Marsa', date: 'dim. 18 oct.', time: '20h00', spots: 2, price: '15 DT/pers.' },
+          { type: 'game', id: 'g4', title: 'Foot 5v5 femmes · Arena Five', sport: 'football', place: 'La Marsa', date: 'sam. 17 oct. · complet', time: '19h00', price: '12 DT/pers.' },
+          { type: 'game', id: 'g2', title: 'Padel · Smash Padel Club', sport: 'padel', place: 'Lac 2', date: 'ce soir', time: '20h00', spots: 2, price: '25 DT/pers.' }
+        ] },
+        { id: 'players', label: 'Joueurs', items: [
+          { type: 'player', id: 'p1', title: 'Mariem K.', level: 4, place: 'La Marsa' },
+          { type: 'player', id: 'p2', title: 'Omar D.', level: 3.5, place: 'La Marsa' }
+        ] }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

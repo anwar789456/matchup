@@ -39,7 +39,7 @@ The mobile bottom navigation — Accueil, Explorer, Mes matchs, Entraînement, C
 - Don’t hide labels on inactive tabs.
 
 ## Props (web preview)
-`items` · `value` · `defaultValue` · `onChange` · `label` · `safeArea` · `fab` · `states`. See `index.d.ts`.
+`items` (each may carry an `href`: the bar then renders route links with `aria-current="page"`) · `value` · `defaultValue` · `onChange` · `label` · `safeArea` · `fab` · `states`. See `index.d.ts`.
 
 ## Flutter
 `MuTabBar(items: [MuTabItem(icon: PhosphorIcons.house, label: 'Accueil', badge: 2)], index:, onChanged:)`. Build on `NavigationBar` with `indicatorColor: accent`, `indicatorShape: StadiumBorder()`, height 64, labels `label-s`; or a `Row` whose `Expanded` flex weights come from `TextPainter` widths so leftover space is split equally. Wrap in `SafeArea(top: false)`. The Fab is the Scaffold’s `floatingActionButton` (`endFloat`), 16 above the bar.

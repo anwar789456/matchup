@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Créneau choisi</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/matchup/tokens.css">
+<link rel="stylesheet" href="ds/matchup/components/bundle.css">
+<script src="ds/matchup/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0}
+a{color:var(--link)}
+.ven2-price{display:grid; grid-template-columns:minmax(0, 1fr) minmax(0, 1fr); border-radius:var(--radius-md); background:var(--surface-muted)}
+.ven2-price > div{display:flex; flex-direction:column; gap:2px; padding:var(--space-3) var(--space-4)}
+.ven2-price > div + div{border-inline-start:1px solid var(--border)}
+</style>
+</helmet>
+<div style="position: relative; width: 390px; height: 844px; box-sizing: border-box; overflow: hidden; display: flex; flex-direction: column; background: var(--surface); color: var(--text); font-family: var(--font-sans)">
+<div style="display: flex; align-items: center; gap: 4px; padding: 52px 16px 4px 8px">
+<a href="VEN-01-Terrain.dc.html" class="mu-iconbtn mu-iconbtn--l mu-iconbtn--ghost" aria-label="Retour" style="color: var(--text)"><x-import component-from-global-scope="MatchUp.Icon" name="arrow-left" size="{{i24}}"></x-import></a>
+<div style="flex: 1; min-width: 0; display: flex; flex-direction: column">
+<span class="label-l">Arena Five</span>
+<span class="caption" style="color: var(--text-secondary)">La Marsa · 3 terrains</span>
+</div>
+<x-import component-from-global-scope="MatchUp.StatusBadge" status="verified" size="s"></x-import>
+</div>
+<div style="padding: 8px 16px 12px 16px">
+<x-import component-from-global-scope="MatchUp.DatePicker" variant="strip" label="Jour de réservation" today="{{today}}" default-value="{{day}}" start-date="{{today}}" days="{{d14}}" bleed="{{b16}}" availability="{{avail}}"></x-import>
+</div>
+<div style="display: flex; align-items: center; justify-content: space-between; padding: 0 16px 8px 16px">
+<span class="label">Mer. 21 oct. · 20h00 – 00h00</span>
+<span class="caption" style="color: var(--text-secondary)">Prix du terrain / h</span>
+</div>
+<x-import component-from-global-scope="MatchUp.SlotGrid" flush="{{yes}}" legend="{{no}}" summary="{{no}}" courts="{{courts}}" start="20:00" end="24:00" step="{{s60}}" players="{{p10}}" default-value="{{sel}}" price-note="Terrains" label="Créneaux Arena Five, mercredi 21 octobre"></x-import>
+
+<x-import component-from-global-scope="MatchUp.BottomSheet" inline="{{yes}}" open="{{yes}}" height="auto" modal="{{no}}" scrim="{{no}}" safe-area="{{safe}}" title="Mer. 21 oct. · 21h00">
+<div style="display: flex; flex-direction: column; gap: 16px">
+<div style="display: flex; flex-direction: column; gap: 10px">
+<p class="body" style="margin: 0; color: var(--text-secondary)">Terrain 1 · 21h00 – 22h00 · 1 h · 5 contre 5</p>
+<div style="display: flex; gap: 8px; flex-wrap: wrap">
+<x-import component-from-global-scope="MatchUp.Chip" size="s" icon="lightbulb">Éclairé</x-import>
+<x-import component-from-global-scope="MatchUp.Chip" size="s" icon="sun">Extérieur</x-import>
+<x-import component-from-global-scope="MatchUp.Chip" size="s" icon="coat-hanger">Vestiaires</x-import>
+</div>
+</div>
+<div class="ven2-price">
+<div><span class="overline" style="color: var(--text-secondary)">Terrain · 1 h</span><span class="num-l">150 DT</span><span class="caption" style="color: var(--text-secondary); display: flex; align-items: center; gap: 4px"><span style="display: flex; color: var(--warning-text)"><x-import component-from-global-scope="MatchUp.Icon" name="lightning" weight="fill" size="{{i14}}"></x-import></span>Heure de pointe</span></div>
+<div><span class="overline" style="color: var(--text-secondary)">Par personne</span><span class="num-l">15 DT</span><span class="caption" style="color: var(--text-secondary)">à 10 joueurs</span></div>
+</div>
+<p class="caption" style="margin: 0; display: flex; align-items: flex-start; gap: 8px; color: var(--text-secondary)"><span style="display: flex; color: var(--success-text)"><x-import component-from-global-scope="MatchUp.Icon" name="check-circle" size="{{i16}}"></x-import></span><span>Annulation gratuite jusqu’au <span class="label-s" style="color: var(--text)">mar. 20 oct. · 21h00</span>. Ensuite 50 % remboursés jusqu’à 6 h avant.</span></p>
+<a href="BKG-01-Type-de-reservation.dc.html" class="mu-btn mu-btn--primary mu-btn--xl mu-btn--block"><span class="mu-btn__content"><span class="mu-btn__label label-l">Continuer</span><span class="mu-btn__dot" aria-hidden="true">·</span><span class="mu-btn__price num-m">15 DT /pers.</span></span></a>
+</div>
+</x-import>
+<a href="VEN-01-Terrain.dc.html" aria-label="Fermer le détail du créneau" style="position: absolute; right: 6px; top: 470px; width: 44px; height: 44px; border-radius: var(--radius-full); z-index: calc(var(--z-sheet) + 1)"></a>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const A = (x) => Object.assign({ status: 'available' }, x || {});
+    const peak = { peak: true, price: 150 };
+    return {
+      yes: true, no: false, i14: 14, i16: 16, i24: 24, s60: 60, p10: 10, d14: 14, b16: 16,
+      safe: { bottom: 10 },
+      today: new Date(2026, 9, 16), day: new Date(2026, 9, 21),
+      avail: (d) => (d.getMonth() === 9 && (d.getDate() === 17 || d.getDate() === 24) ? 'soldout' : 'available'),
+      sel: { court: 't1', from: '21:00', to: '22:00' },
+      courts: [
+        { id: 't1', name: 'Terrain 1', detail: 'Éclairé', price: 150, slots: [A(peak), A(Object.assign({ span: 2 }, peak)), A({ price: 120 })] },
+        { id: 't2', name: 'Terrain 2', detail: 'Éclairé', price: 150, slots: [{ status: 'booked', span: 2 }, A(peak), A({ price: 120 })] },
+        { id: 't3', name: 'Terrain 3', detail: 'Indoor', icon: 'umbrella', price: 150, slots: [{ status: 'booked' }, A(Object.assign({ span: 2 }, peak)), { status: 'booked' }] }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

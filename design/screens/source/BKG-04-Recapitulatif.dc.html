@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Récapitulatif</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/matchup/tokens.css">
+<link rel="stylesheet" href="ds/matchup/components/bundle.css">
+<script src="ds/matchup/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0}
+a{color:var(--link)}
+.rec-card{display:flex; flex-direction:column; border-radius:var(--radius-md); background:var(--surface); box-shadow:var(--elevation-1), inset 0 0 0 1px var(--border); overflow:hidden}
+.rec-dl{margin:0; display:flex; flex-direction:column; padding:var(--space-1) var(--space-4) var(--space-2)}
+.rec-dl > div{display:flex; align-items:center; justify-content:space-between; gap:var(--space-3); min-height:44px}
+.rec-dl > div + div{border-top:1px solid var(--border)}
+.rec-dl dt{color:var(--text-secondary)}
+.rec-dl dd{margin:0; text-align:end}
+.rec-sec{display:flex; flex-direction:column; gap:var(--space-3)}
+.rec-line{display:flex; align-items:baseline; justify-content:space-between; gap:var(--space-3)}
+.rec-tier{display:flex; gap:var(--space-3); align-items:flex-start}
+.rec-tier__ico{flex:none; width:28px; height:28px; border-radius:var(--radius-full); display:flex; align-items:center; justify-content:center}
+.rec-tag{display:inline-flex; align-self:flex-start; width:max-content; align-items:center; gap:4px; padding:2px 8px; border-radius:var(--radius-full); background:var(--success-soft); color:var(--success-text)}
+</style>
+</helmet>
+<div style="width: 390px; height: 1600px; box-sizing: border-box; display: flex; flex-direction: column; background: var(--surface); color: var(--text); font-family: var(--font-sans)">
+<div style="display: flex; align-items: center; gap: 8px; padding: 52px 16px 0 8px">
+<a href="BKG-02-Partie-publique.dc.html" class="mu-iconbtn mu-iconbtn--l mu-iconbtn--ghost" aria-label="Retour" style="color: var(--text)"><x-import component-from-global-scope="MatchUp.Icon" name="arrow-left" size="{{i24}}"></x-import></a>
+<div style="flex: 1; min-width: 0"><x-import component-from-global-scope="MatchUp.StepIndicator" step="{{three}}" total="{{three}}" title="Récapitulatif"></x-import></div>
+</div>
+<div style="flex: 1; min-height: 0; overflow: auto; display: flex; flex-direction: column; gap: 28px; padding: 16px 16px 24px 16px">
+<h1 class="h2" style="margin: 0">Vérifie et paie ta part</h1>
+
+<div class="rec-card">
+<div style="display: flex; align-items: center; gap: 12px; padding: 16px 16px 8px 16px">
+<x-import component-from-global-scope="MatchUp.CourtArt" sport="football" variant="pattern" dc-props="{{thumb}}"></x-import>
+<div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px">
+<span class="label-l">Arena Five · Terrain 1</span>
+<span class="caption" style="color: var(--text-secondary)">Route de la Corniche, La Marsa</span>
+</div>
+<x-import component-from-global-scope="MatchUp.StatusBadge" status="verified" size="s"></x-import>
+</div>
+<dl class="rec-dl">
+<div><dt class="body">Quand</dt><dd class="label">mer. 21 oct. · 21h00 – 22h00</dd></div>
+<div><dt class="body">Partie</dt><dd class="label">Publique · mixte · 2,5 – 4,0</dd></div>
+<div><dt class="body">Joueurs</dt><dd style="display: flex; align-items: center; gap: 8px"><x-import component-from-global-scope="MatchUp.AvatarStack" people="{{team}}" max="{{three}}" size="xs" label="6 joueurs inscrits"></x-import><span class="label">6/10 · 4 places</span></dd></div>
+</dl>
+<a href="BKG-02-Partie-publique.dc.html" class="mu-btn mu-btn--tertiary mu-btn--m" style="align-self: flex-start; margin: 0 4px 8px 4px"><span class="mu-btn__content"><x-import component-from-global-scope="MatchUp.Icon" name="pencil-simple" size="{{i16}}"></x-import><span class="mu-btn__label label">Modifier la partie</span></span></a>
+</div>
+
+<section class="rec-sec">
+<h2 class="h3" style="margin: 0">Qui paie quoi ?</h2>
+<x-import component-from-global-scope="MatchUp.ChoiceCard.Group" aria-label="Partage du paiement" name="split" value="{{split}}" on-change="{{setSplit}}">
+<x-import component-from-global-scope="MatchUp.ChoiceCard" value="part" icon="users-three" title="Chacun paie sa part · 15 DT" description="Tu paies ta part maintenant. Tes 5 amis et les 4 joueurs paient la leur en rejoignant.">
+<span class="rec-tag label-s" style="margin-top: 8px"><x-import component-from-global-scope="MatchUp.Icon" name="thumbs-up" size="{{i14}}"></x-import>Recommandé</span>
+</x-import>
+<x-import component-from-global-scope="MatchUp.ChoiceCard" value="tout" icon="hand-coins" title="Je paie tout · 150 DT" description="Tu avances le terrain. Chaque part payée ensuite t’est remboursée sur ton solde."></x-import>
+</x-import>
+<sc-if value="{{isPart}}">
+<x-import component-from-global-scope="MatchUp.Banner" tone="info" icon="hourglass-medium" title="Tout doit être payé avant mer. 21 oct. · 18h00">Sinon la réservation est annulée et chacun est remboursé. Tu pourras payer le reste toi-même.</x-import>
+</sc-if>
+</section>
+
+<section class="rec-sec">
+<x-import component-from-global-scope="MatchUp.Switch" label-position="start" icon="wallet" label="Utiliser mon solde MatchUp" description="30 DT disponibles" checked="{{wallet}}" on-change="{{setWallet}}"></x-import>
+</section>
+
+<section class="rec-sec" style="gap: 10px; padding: 16px; border-radius: var(--radius-md); background: var(--surface-muted)">
+<div class="rec-line"><span class="body" style="color: var(--text-secondary)">Terrain 1 · 1 h · heure de pointe</span><span class="num-s">150 DT</span></div>
+<div class="rec-line"><span class="body" style="color: var(--text-secondary)">{{shareLabel}}</span><span class="num-s">{{shareAmt}}</span></div>
+<div class="rec-line"><span class="body" style="color: var(--text-secondary)">Frais de service</span><span class="label" style="color: var(--success-text)">Offerts</span></div>
+<sc-if value="{{wallet}}">
+<div class="rec-line"><span class="body" style="color: var(--text-secondary)">Solde MatchUp</span><span class="num-s">{{walletAmt}}</span></div>
+</sc-if>
+<div style="height: 1px; background: var(--border); margin: 4px 0"></div>
+<div class="rec-line" style="align-items: center"><span class="label-l">À payer maintenant</span><span class="num-l">{{dueAmt}}</span></div>
+</section>
+
+<section class="rec-sec">
+<div style="display: flex; flex-direction: column; gap: 4px">
+<h2 class="h3" style="margin: 0">Si tu annules</h2>
+<p class="body" style="margin: 0; color: var(--text-secondary)">Politique d’Arena Five, appliquée à chaque joueur.</p>
+</div>
+<div class="rec-tier">
+<span class="rec-tier__ico" style="background: var(--success-soft); color: var(--success-text)"><x-import component-from-global-scope="MatchUp.Icon" name="check-circle" size="{{i16}}"></x-import></span>
+<div style="display: flex; flex-direction: column; gap: 2px"><span class="label">Gratuit jusqu’au mar. 20 oct. · 21h00</span><span class="caption" style="color: var(--text-secondary)">100 % remboursé sur ton solde MatchUp</span></div>
+</div>
+<div class="rec-tier">
+<span class="rec-tier__ico" style="background: var(--warning-soft); color: var(--warning-text)"><x-import component-from-global-scope="MatchUp.Icon" name="circle-half" size="{{i16}}"></x-import></span>
+<div style="display: flex; flex-direction: column; gap: 2px"><span class="label">50 % jusqu’au mer. 21 oct. · 15h00</span><span class="caption" style="color: var(--text-secondary)">Entre 24 h et 6 h avant le match</span></div>
+</div>
+<div class="rec-tier">
+<span class="rec-tier__ico" style="background: var(--error-soft); color: var(--error-text)"><x-import component-from-global-scope="MatchUp.Icon" name="prohibit" size="{{i16}}"></x-import></span>
+<div style="display: flex; flex-direction: column; gap: 2px"><span class="label">Non remboursable ensuite</span><span class="caption" style="color: var(--text-secondary)">Sauf si Arena Five annule : tout est remboursé</span></div>
+</div>
+</section>
+<p class="caption" style="margin: 0; color: var(--text-secondary)">En payant, tu acceptes les <span class="label-s" style="color: var(--text)">conditions de réservation</span> d’Arena Five et la politique d’annulation ci-dessus.</p>
+</div>
+<div style="padding: 12px 16px 34px 16px; background: var(--surface); box-shadow: var(--elevation-2-up); display: flex; flex-direction: column; gap: 8px">
+<a href="BKG-05-Reservation-confirmee.dc.html" class="mu-btn mu-btn--primary mu-btn--xl mu-btn--block"><span class="mu-btn__content"><x-import component-from-global-scope="MatchUp.Icon" name="lock-simple" size="{{i20}}"></x-import><span class="mu-btn__label label-l">{{ctaLabel}}</span><span class="mu-btn__dot" aria-hidden="true">·</span><span class="mu-btn__price num-m">{{ctaPrice}}</span></span></a>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":1600}}'>
+class Component extends DCLogic {
+  state = { split: 'part', wallet: false };
+  renderVals() {
+    const s = this.state;
+    const part = s.split === 'part';
+    const amount = part ? 15 : 150;
+    const used = s.wallet ? Math.min(30, amount) : 0;
+    const due = amount - used;
+    return {
+      yes: true, i14: 14, i16: 16, i20: 20, i24: 24, three: 3,
+      split: s.split, wallet: s.wallet, isPart: part,
+      setSplit: (v) => this.setState({ split: v }),
+      setWallet: (v) => this.setState({ wallet: v }),
+      thumb: { style: { width: 48, height: 48, borderRadius: 'var(--radius-sm)', flex: 'none' } },
+      team: [{ name: 'Yassine B.' }, { name: 'Skander T.' }, { name: 'Hamza R.' }, { name: 'Aziz H.' }, { name: 'Omar D.' }, { name: 'Nour A.' }],
+      shareLabel: part ? 'Ta part · 1 joueur sur 10' : 'Tu avances le terrain',
+      shareAmt: amount + ' DT',
+      walletAmt: '−' + used + ' DT',
+      dueAmt: due + ' DT',
+      ctaLabel: due === 0 ? 'Payer avec mon solde' : (part ? 'Payer ma part' : 'Payer le terrain'),
+      ctaPrice: (due === 0 ? amount : due) + ' DT'
+    };
+  }
+}
+</script>
+</body>
+</html>

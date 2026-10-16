@@ -129,9 +129,9 @@ class Component extends DCLogic {
       closeTour: () => this.setState({ tour: 3 }),
       me: { name: 'Yassine B.' },
       tabs: [
-        { value: 'accueil', label: 'Accueil', icon: 'house' },
-        { value: 'explorer', label: 'Explorer', icon: 'compass' },
-        { value: 'matchs', label: 'Mes matchs', icon: 'calendar-check', badge: 1, badgeLabel: '1 invitation' },
+        { value: 'accueil', label: 'Accueil', icon: 'house', href: 'HOM-01-Accueil.dc.html' },
+        { value: 'explorer', label: 'Explorer', icon: 'compass', href: 'EXP-01-Explorer-parties.dc.html' },
+        { value: 'matchs', label: 'Mes matchs', icon: 'calendar-check', badge: 1, badgeLabel: '1 invitation', href: 'MAT-01-A-venir.dc.html' },
         { value: 'entrainement', label: 'Entraînement', icon: 'barbell' },
         { value: 'communaute', label: 'Communauté', icon: 'users-three' }
       ],
@@ -146,7 +146,7 @@ class Component extends DCLogic {
         sport: 'football', gameType: 'mixte', venue: 'Arena Five', court: 'Terrain 2', place: 'La Marsa', distance: 1.4,
         start: today, spotsTotal: 10, spotsLeft: 2, price: 15, levelMin: 3, levelMax: 4.5,
         players: [{ name: 'Skander T.' }, { name: 'Hamza R.' }, { name: 'Nour A.' }, { name: 'Aziz H.' }, { name: 'Omar D.' }, { name: 'Salma G.' }, { name: 'Lina F.' }, { name: 'Ines M.' }],
-        organiser: { name: 'Skander T.', reliability: 96 }, matchFit: 85, matchFitReason: 'Milieu recherché et terrain à 1,4 km', href: '#'
+        organiser: { name: 'Skander T.', reliability: 96 }, matchFit: 85, matchFitReason: 'Milieu recherché et terrain à 1,4 km', href: 'GAM-01-Partie-ouverte.dc.html'
       }
     };
   }

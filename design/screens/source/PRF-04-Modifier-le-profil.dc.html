@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Modifier le profil</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/matchup/tokens.css">
+<link rel="stylesheet" href="ds/matchup/components/bundle.css">
+<script src="ds/matchup/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0}
+a{color:var(--link)}
+.prf-form{display:flex; flex-direction:column; gap:16px; padding:0 16px}
+.prf-form + .prf-form{padding-top:24px; border-top:1px solid var(--border)}
+.prf-pos{display:flex; flex-direction:column; gap:8px; padding:12px; border-radius:var(--radius-md); background:var(--surface-muted)}
+</style>
+</helmet>
+<div style="position: relative; width: 390px; height: 2020px; box-sizing: border-box; overflow: hidden; display: flex; flex-direction: column; gap: 24px; background: var(--surface); color: var(--text); font-family: var(--font-sans)">
+
+<div style="display: flex; align-items: center; gap: 4px; padding: 52px 8px 0 8px">
+<a href="PRF-01-Mon-profil.dc.html" class="mu-iconbtn mu-iconbtn--l mu-iconbtn--ghost" aria-label="Retour au profil sans enregistrer" style="color: var(--text)"><x-import component-from-global-scope="MatchUp.Icon" name="arrow-left" size="{{i24}}"></x-import></a>
+<h1 class="h3" style="margin: 0; flex: 1">Modifier le profil</h1>
+</div>
+
+<section class="prf-form" aria-labelledby="prf-look">
+<h2 id="prf-look" class="label-l" style="margin: 0">Photo et couverture</h2>
+<div style="display: flex; flex-direction: column; gap: 8px">
+<span class="label">Couverture</span>
+<x-import component-from-global-scope="MatchUp.CourtArt" sport="padel" label="Couverture actuelle : court de padel éclairé" dc-props="{{coverStyle}}">
+<div style="position: absolute; right: 8px; bottom: 8px; display: flex; gap: 8px">
+<button type="button" class="mu-btn mu-btn--secondary mu-btn--s"><span class="mu-btn__content"><x-import component-from-global-scope="MatchUp.Icon" name="image" size="{{i16}}"></x-import><span class="mu-btn__label label">Changer</span></span></button>
+</div>
+</x-import>
+<span class="caption" style="color: var(--text-secondary)">Ton terrain préféré, ou une des 6 couvertures MatchUp.</span>
+</div>
+<x-import component-from-global-scope="MatchUp.FileUpload" variant="avatar" label="Photo de profil" name="Yassine B." hint="JPG, PNG · 10 Mo max"></x-import>
+</section>
+
+<section class="prf-form" aria-labelledby="prf-id">
+<h2 id="prf-id" class="label-l" style="margin: 0">Infos</h2>
+<x-import component-from-global-scope="MatchUp.TextField" label="Pseudo" prefix="@" default-value="yassine.b" autocomplete="username" helper="Ton lien de profil : matchup.tn/@yassine.b"></x-import>
+<x-import component-from-global-scope="MatchUp.TextField" label="Bio" optional="{{yes}}" multiline="{{yes}}" rows="{{r3}}" max-length="{{bioMax}}" counter="{{yes}}" default-value="Padel le soir à Lac 2, foot le week-end à La Marsa. Toujours partant pour compléter une équipe."></x-import>
+</section>
+
+<section class="prf-form" aria-labelledby="prf-sports">
+<div style="display: flex; flex-direction: column; gap: 4px">
+<h2 id="prf-sports" class="label-l" style="margin: 0">Sports et postes</h2>
+<p class="caption" style="margin: 0; color: var(--text-secondary)">Les organisateurs cherchent souvent un poste précis.</p>
+</div>
+<div role="group" aria-label="Tes sports" style="display: flex; flex-wrap: wrap; gap: 8px">
+<x-import component-from-global-scope="MatchUp.Chip" kind="sport" sport="padel" selected="{{yes}}"></x-import>
+<x-import component-from-global-scope="MatchUp.Chip" kind="sport" sport="football" selected="{{yes}}"></x-import>
+<x-import component-from-global-scope="MatchUp.Chip" kind="sport" sport="basketball"></x-import>
+</div>
+<div class="prf-pos">
+<span class="label" style="display: inline-flex; align-items: center; gap: 6px"><x-import component-from-global-scope="MatchUp.Icon" name="sport-padel" size="{{i16}}"></x-import>Padel · ton côté</span>
+<div style="display: flex; flex-wrap: wrap; gap: 8px">
+<x-import component-from-global-scope="MatchUp.Chip" kind="choice" size="s" selected="{{yes}}">Côté gauche</x-import>
+<x-import component-from-global-scope="MatchUp.Chip" kind="choice" size="s">Côté droit</x-import>
+<x-import component-from-global-scope="MatchUp.Chip" kind="choice" size="s">Peu importe</x-import>
+</div>
+</div>
+<div class="prf-pos">
+<span class="label" style="display: inline-flex; align-items: center; gap: 6px"><x-import component-from-global-scope="MatchUp.Icon" name="sport-football" size="{{i16}}"></x-import>Football · ton poste</span>
+<div style="display: flex; flex-wrap: wrap; gap: 8px">
+<x-import component-from-global-scope="MatchUp.Chip" kind="choice" size="s">Gardien</x-import>
+<x-import component-from-global-scope="MatchUp.Chip" kind="choice" size="s">Défenseur</x-import>
+<x-import component-from-global-scope="MatchUp.Chip" kind="choice" size="s" selected="{{yes}}">Milieu</x-import>
+<x-import component-from-global-scope="MatchUp.Chip" kind="choice" size="s">Attaquant</x-import>
+</div>
+</div>
+<div style="display: flex; align-items: center; gap: 12px; padding: 12px; border-radius: var(--radius-md); background: var(--ai-soft)">
+<x-import component-from-global-scope="MatchUp.AiLabel" size="s"></x-import>
+<p class="caption" style="margin: 0; flex: 1">Ton niveau n’est pas un champ : l’IA l’estime après tes matchs. <a href="PRF-03-Pourquoi-ce-niveau.dc.html" class="label-s">Voir ou ajuster</a></p>
+</div>
+</section>
+
+<section class="prf-form" aria-labelledby="prf-zones">
+<h2 id="prf-zones" class="label-l" style="margin: 0">Où tu joues</h2>
+<x-import component-from-global-scope="MatchUp.TagInput" label="Tes zones" default-value="{{zones}}" suggestions="{{zoneSuggest}}" max="{{z5}}" placeholder="Ajoute une zone" helper="On te propose des parties dans ces zones en priorité."></x-import>
+</section>
+
+<section class="prf-form" aria-labelledby="prf-vis">
+<h2 id="prf-vis" class="label-l" style="margin: 0">Visibilité</h2>
+<x-import component-from-global-scope="MatchUp.Radio.Group" label="Qui peut voir ton profil ?" default-value="tous">
+<x-import component-from-global-scope="MatchUp.Radio" value="tous" label="Tout le monde" description="Visible dans Explorer et dans les parties."></x-import>
+<x-import component-from-global-scope="MatchUp.Radio" value="abonnes" label="Mes abonnés" description="Les autres voient ton pseudo et ta photo."></x-import>
+</x-import>
+<div style="display: flex; flex-direction: column; gap: 16px">
+<x-import component-from-global-scope="MatchUp.Switch" label-position="start" icon="gauge" label="Afficher mon niveau" description="Pour être invité au bon niveau." default-checked="{{yes}}"></x-import>
+<x-import component-from-global-scope="MatchUp.Switch" label-position="start" icon="shield-check" label="Afficher ma fiabilité" description="Rassure les organisateurs de parties." default-checked="{{yes}}"></x-import>
+<x-import component-from-global-scope="MatchUp.Switch" label-position="start" icon="sparkle" label="Me proposer comme partenaire" description="Suggéré par l’IA aux joueurs de ton niveau." default-checked="{{yes}}"></x-import>
+</div>
+<a href="SET-05-Confidentialite.dc.html" class="mu-btn mu-btn--tertiary mu-btn--s" style="align-self: flex-start; margin-left: -12px"><span class="mu-btn__content"><span class="mu-btn__label label">Plus de réglages de confidentialité</span><x-import component-from-global-scope="MatchUp.Icon" name="caret-right" size="{{i16}}"></x-import></span></a>
+</section>
+
+<div style="position: absolute; left: 0; right: 0; bottom: 0; padding: 12px 16px 34px 16px; background: var(--surface); box-shadow: var(--elevation-2-up)">
+<a href="PRF-01-Mon-profil.dc.html" class="mu-btn mu-btn--primary mu-btn--xl mu-btn--block"><span class="mu-btn__content"><span class="mu-btn__label label-l">Enregistrer</span></span></a>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":2020}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      yes: true, i16: 16, i20: 20, i24: 24, r3: 3, bioMax: 160, z5: 5,
+      coverStyle: { style: { position: 'relative', height: 132, width: '100%', borderRadius: 'var(--radius-md)', overflow: 'hidden' } },
+      zones: ['La Marsa', 'Lac 2'],
+      zoneSuggest: ['Ennasr', 'Menzah 6', 'Ariana', 'Sousse', 'Sfax']
+    };
+  }
+}
+</script>
+</body>
+</html>

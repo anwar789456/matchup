@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Place disponible</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/matchup/tokens.css">
+<link rel="stylesheet" href="ds/matchup/components/bundle.css">
+<script src="ds/matchup/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0}
+a{color:var(--link)}
+.claim-hot{position:absolute; display:block; z-index:calc(var(--z-takeover) + 1); border-radius:var(--radius-md)}
+.claim-hot:focus-visible{outline:2px solid var(--focus); outline-offset:2px}
+</style>
+</helmet>
+<div style="position: relative; width: 390px; height: 844px; box-sizing: border-box; overflow: hidden; background: var(--bg); color: var(--text); font-family: var(--font-sans)">
+<x-import component-from-global-scope="MatchUp.Takeover.Claim" inline="{{yes}}" open="{{yes}}" safe-area="{{safe}}" seconds="{{left}}" total="{{total}}" game="{{game}}" title="Une place s’est libérée !" note="Sans réponse, la place passe au suivant de la liste. Annulation gratuite jusqu’à sam. 17 oct. · 20h00." on-claim="{{noop}}" on-pass="{{noop}}" on-close="{{noop}}"></x-import>
+<a href="GAM-03-Liste-d-attente.dc.html" class="claim-hot" aria-label="Décider plus tard" style="left: 340px; top: 50px; width: 44px; height: 44px; border-radius: var(--radius-full)"></a>
+<a href="GAM-03-Liste-d-attente.dc.html" class="claim-hot" aria-label="Laisser passer" style="left: 16px; top: 678px; width: 358px; height: 48px"></a>
+<a href="GAM-05-Tu-es-inscrit.dc.html" class="claim-hot" aria-label="Réclamer la place et payer 15 DT" style="left: 16px; top: 738px; width: 358px; height: 56px"></a>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      yes: true, left: 899, total: 900,
+      noop: () => {},
+      safe: { top: 44, bottom: 34 },
+      game: { sport: 'football', venue: 'Arena Five · Terrain 2', when: 'dim. 18 oct. · 20h00–21h00', players: '9/10 joueurs', price: '15 DT' }
+    };
+  }
+}
+</script>
+</body>
+</html>

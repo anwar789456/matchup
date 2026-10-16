@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Supprimer le compte</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/matchup/tokens.css">
+<link rel="stylesheet" href="ds/matchup/components/bundle.css">
+<script src="ds/matchup/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+/* set:shared — identical in SET-01…07 */
+body{margin:0}
+a{color:var(--link)}
+.set-body{flex:1; min-height:0; overflow:auto; display:flex; flex-direction:column; gap:var(--space-5); padding:var(--space-2) var(--space-4) 34px var(--space-4); box-sizing:border-box}
+.set-section{display:flex; flex-direction:column; gap:var(--space-2); margin:0}
+.set-section__title{margin:0; padding-inline:var(--space-4); color:var(--text-secondary)}
+.set-group{margin:0; padding:0; list-style:none; background:var(--surface); border-radius:var(--radius-md); box-shadow:var(--elevation-1); overflow:hidden}
+.set-group > li{position:relative}
+.set-group > li + li::before{content:""; position:absolute; top:0; inset-inline-start:64px; inset-inline-end:0; height:1px; background:var(--border); z-index:1}
+.set-row{position:relative; display:flex; align-items:center; gap:var(--space-3); min-height:56px; padding:var(--space-2) var(--space-4); box-sizing:border-box; color:var(--text); text-decoration:none; -webkit-tap-highlight-color:transparent; transition:background var(--duration-fast) var(--ease-enter)}
+a.set-row[href]{cursor:pointer}
+a.set-row[href]:hover{background:var(--surface-muted)}
+a.set-row[href]:active{background:var(--surface-muted)}
+a.set-row:focus-visible{outline:none; box-shadow:inset 0 0 0 2px var(--focus)}
+.set-row__icon{flex:none; width:36px; height:36px; border-radius:var(--radius-sm); background:var(--surface-muted); color:var(--text); display:grid; place-items:center}
+.set-row__text{flex:1 1 auto; min-width:0; display:flex; flex-direction:column; gap:2px}
+.set-row__desc{color:var(--text-secondary)}
+.set-row__value{flex:none; max-width:46%; color:var(--text-secondary); text-align:end; white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+.set-row__chev{flex:none; display:flex; color:var(--text-secondary); margin-inline-end:calc(-1 * var(--space-1))}
+.set-row--danger{color:var(--error-text)}
+.set-row--danger .set-row__icon{background:var(--error-soft); color:var(--error-text)}
+.set-row--control > .mu-switch{flex:1 1 auto; min-width:0}
+.set-card{background:var(--surface); border-radius:var(--radius-md); box-shadow:var(--elevation-1); padding:var(--space-4); display:flex; flex-direction:column; gap:var(--space-5)}
+.set-note{margin:0; padding-inline:var(--space-4); color:var(--text-secondary)}
+.set-body--bar{padding-bottom:var(--space-6)}
+.set-bar{position:relative; z-index:2; display:flex; flex-direction:column; gap:var(--space-3); padding:12px var(--space-4) 34px var(--space-4); background:var(--surface); box-shadow:var(--elevation-2-up)}
+.set-back{position:absolute; left:4px; top:48px; width:48px; height:48px; border-radius:var(--radius-full); z-index:2}
+.set-back:focus-visible{outline:none; box-shadow:var(--focus-ring)}
+/* /set:shared */
+.set-row--fact{align-items:flex-start; padding-block:var(--space-3)}
+</style>
+</helmet>
+<div style="position: relative; width: 390px; height: 984px; box-sizing: border-box; overflow: hidden; display: flex; flex-direction: column; background: var(--bg); color: var(--text); font-family: var(--font-sans)">
+<x-import component-from-global-scope="MatchUp.TopAppBar" title="Supprimer le compte" on-back="{{noop}}" inset="{{inset}}"></x-import>
+<a href="SET-01-Parametres.dc.html" class="set-back" aria-label="Retour aux paramètres"></a>
+<div class="set-body set-body--bar">
+
+<section class="set-section" aria-labelledby="set-s-conseq">
+<h2 id="set-s-conseq" class="set-section__title overline">Ce qui va se passer</h2>
+<ul class="set-group">
+<li><div class="set-row set-row--fact">
+<span class="set-row__icon"><x-import component-from-global-scope="MatchUp.Icon" name="calendar-x" size="{{i20}}"></x-import></span>
+<span class="set-row__text"><span class="label">Tes 2 matchs à venir sont annulés</span><span class="set-row__desc body">dim. 18 oct. et mer. 21 oct. Chaque joueur est remboursé, toi compris.</span></span>
+</div></li>
+<li><div class="set-row set-row--fact">
+<span class="set-row__icon"><x-import component-from-global-scope="MatchUp.Icon" name="wallet" size="{{i20}}"></x-import></span>
+<span class="set-row__text"><span class="label">Retire d’abord ton solde de 30 DT</span><span class="set-row__desc body">Une fois le compte supprimé, on ne pourra plus te le verser.</span><a class="mu-btn mu-btn--link mu-btn--s" style="align-self: flex-start; margin-top: var(--space-1)"><span class="mu-btn__content"><span class="mu-btn__label label">Retirer mon solde</span></span></a></span>
+</div></li>
+<li><div class="set-row set-row--fact">
+<span class="set-row__icon"><x-import component-from-global-scope="MatchUp.Icon" name="hourglass" size="{{i20}}"></x-import></span>
+<span class="set-row__text"><span class="label">Ton profil est effacé dans 30 jours</span><span class="set-row__desc body">Niveau, matchs et avis. Reconnecte-toi avant le 15 nov. pour tout garder.</span></span>
+</div></li>
+<li><div class="set-row set-row--fact set-row--danger">
+<span class="set-row__icon"><x-import component-from-global-scope="MatchUp.Icon" name="warning" size="{{i20}}"></x-import></span>
+<span class="set-row__text"><span class="label">Après le 15 nov., c’est définitif</span><span class="set-row__desc body">Personne ne pourra récupérer ton compte, même en nous écrivant.</span></span>
+</div></li>
+</ul>
+</section>
+
+<section class="set-section" aria-labelledby="set-s-confirm">
+<h2 id="set-s-confirm" class="set-section__title overline">Confirmer</h2>
+<div class="set-card">
+<x-import component-from-global-scope="MatchUp.Select" label="Pourquoi pars-tu ?" optional="{{yes}}" placeholder="Choisis une raison" options="{{reasons}}" helper="Ça nous aide à améliorer MatchUp."></x-import>
+<x-import component-from-global-scope="MatchUp.TextField" label="Tape SUPPRIMER pour confirmer" placeholder="SUPPRIMER" autocapitalize="characters" autocomplete="off" spellcheck="false" on-change="{{setConfirm}}" helper="{{confirmHelper}}" success="{{okMsg}}"></x-import>
+</div>
+</section>
+
+</div>
+<div class="set-bar">
+<a href="SET-01-Parametres.dc.html" class="mu-btn mu-btn--primary mu-btn--xl mu-btn--block"><span class="mu-btn__content"><span class="mu-btn__label label-l">Garder mon compte</span></span></a>
+<sc-if value="{{locked}}">
+<button type="button" class="mu-btn mu-btn--destructive mu-btn--xl mu-btn--block" disabled><span class="mu-btn__content"><span class="mu-btn__label label-l">Supprimer mon compte</span></span></button>
+</sc-if>
+<sc-if value="{{ok}}">
+<a href="ONB-01-Splash.dc.html" class="mu-btn mu-btn--destructive mu-btn--xl mu-btn--block"><span class="mu-btn__content"><span class="mu-btn__label label-l">Supprimer mon compte</span></span></a>
+</sc-if>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":984}}'>
+class Component extends DCLogic {
+  state = { ok: false };
+  renderVals() {
+    const ok = this.state.ok;
+    return {
+      yes: true, i20: 20, i24: 24, inset: 44, noop: () => {},
+      ok, locked: !ok,
+      confirmHelper: ok ? undefined : 'Le bouton s’active quand le mot est tapé.',
+      okMsg: ok ? 'C’est bon, tu peux supprimer ton compte.' : undefined,
+      setConfirm: (v) => { const next = String(v || '').trim().toUpperCase() === 'SUPPRIMER'; if (next !== this.state.ok) this.setState({ ok: next }); },
+      reasons: [
+        { value: 'stop', label: 'Je ne joue plus' },
+        { value: 'parties', label: 'Pas assez de parties près de chez moi' },
+        { value: 'paiement', label: 'Un problème de paiement' },
+        { value: 'doublon', label: 'J’ai un autre compte' },
+        { value: 'autre', label: 'Autre raison' }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Explorer · carte</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/matchup/tokens.css">
+<link rel="stylesheet" href="ds/matchup/components/bundle.css">
+<script src="ds/matchup/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0}
+a{color:var(--link)}
+.exp-chips{display:flex; gap:8px; overflow-x:auto; padding:6px 16px 6px 16px; margin:-6px 0; scrollbar-width:none}
+.exp-chips::-webkit-scrollbar{display:none}
+.exp-chips > *{flex:none}
+.exp-toggle .mu-seg{background:var(--surface)}
+.exp-hot{position:absolute; display:block; border-radius:var(--radius-sm)}
+.exp-hot:focus-visible{box-shadow:var(--focus-ring); outline:none}
+</style>
+</helmet>
+<div style="position: relative; width: 390px; height: 844px; box-sizing: border-box; overflow: hidden; display: flex; flex-direction: column; background: var(--bg); color: var(--text); font-family: var(--font-sans)">
+<header style="position: relative; z-index: 2; flex: none; display: flex; flex-direction: column; gap: 12px; padding: 52px 0 12px 0; background: var(--surface); box-shadow: inset 0 -1px 0 var(--border)">
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 0 16px; min-height: 40px">
+<h1 class="h2" style="margin: 0">Explorer</h1>
+<x-import component-from-global-scope="MatchUp.Chip" icon="map-pin" trailing-icon="caret-down" aria-label="Zone : La Marsa, 10 km. Changer">La Marsa · 10 km</x-import>
+</div>
+<div style="padding: 0 16px">
+<x-import component-from-global-scope="MatchUp.SearchField" placeholder="Terrain, partie, quartier…"></x-import>
+</div>
+<div style="padding: 0 16px">
+<x-import component-from-global-scope="MatchUp.SegmentedControl" label="Explorer" options="{{segs}}" value="parties" full-width="{{yes}}"></x-import>
+</div>
+<div class="exp-chips" role="group" aria-label="Filtres rapides">
+<x-import component-from-global-scope="MatchUp.Chip" icon="sliders-horizontal" count="{{n2}}">Filtres</x-import>
+<x-import component-from-global-scope="MatchUp.Chip" selected="{{yes}}">Mon niveau</x-import>
+<x-import component-from-global-scope="MatchUp.Chip">Ce soir</x-import>
+<x-import component-from-global-scope="MatchUp.Chip">Ce week-end</x-import>
+<x-import component-from-global-scope="MatchUp.Chip" kind="sport" sport="football" on-click="{{noop}}"></x-import>
+<x-import component-from-global-scope="MatchUp.Chip" kind="sport" sport="padel" on-click="{{noop}}"></x-import>
+<x-import component-from-global-scope="MatchUp.Chip" kind="sport" sport="basketball" on-click="{{noop}}"></x-import>
+</div>
+<a href="EXP-05-Recherche.dc.html" class="exp-hot" aria-label="Rechercher un terrain, une partie, un quartier" style="left: 16px; top: 104px; width: 358px; height: 48px; border-radius: var(--radius-full)"></a>
+<a href="EXP-03-Explorer-terrains.dc.html" class="exp-hot" aria-label="Voir les terrains" style="left: 137px; top: 164px; width: 117px; height: 40px"></a>
+<a href="EXP-04-Filtres.dc.html" class="exp-hot" aria-label="Filtres, 2 actifs" style="left: 16px; top: 216px; width: 112px; height: 32px; border-radius: var(--radius-full)"></a>
+</header>
+
+<main style="position: relative; flex: 1; min-height: 0; margin-bottom: 98px">
+<x-import component-from-global-scope="MatchUp.MapView" venues="{{pins}}" clusters="{{clusters}}" user="{{mePos}}" default-selected-id="arena" center="{{center}}" zoom="{{zoom}}" height="100%" label="Carte des parties autour de La Marsa" dc-props="{{mapStyle}}"></x-import>
+<a href="GAM-01-Partie-ouverte.dc.html" class="exp-hot" aria-label="Voir la partie Arena Five, Terrain 2, dim. 18 oct. à 20h00" style="left: 235px; top: 216px; width: 77px; height: 44px"></a>
+<a href="EXP-01-Explorer-parties.dc.html" class="exp-hot" aria-label="Afficher la liste" style="left: 196px; top: 438px; width: 84px; height: 32px"></a>
+</main>
+
+<x-import component-from-global-scope="MatchUp.TabBar" items="{{tabs}}" value="explorer" safe-area="{{sa}}" fab="{{yes}}" dc-props="{{tabStyle}}"></x-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const at = (d, h, m) => new Date(2026, 9, d, h, m || 0);
+    const G1P = [{ name: 'Skander T.', level: 4 }, { name: 'Hamza R.', level: 3.5 }, { name: 'Nour A.', level: 3 }, { name: 'Aziz H.', level: 4.5 }, { name: 'Omar D.', level: 3.5 }, { name: 'Salma G.', level: 3 }, { name: 'Lina F.', level: 3.5 }, { name: 'Ines M.', level: 4 }];
+    return {
+      yes: true, i16: 16, n2: 2, sa: 34, noop: () => {},
+      center: [863, 170], zoom: 0.65, mePos: { lat: 36.872, lng: 10.312 },
+      mapStyle: { style: { borderRadius: 0, boxShadow: 'none' } },
+      pins: [
+        { id: 'arena', name: 'Arena Five · Terrain 2', sport: 'football', lat: 36.8805, lng: 10.3215, area: 'dim. 18 oct.', rating: 4.7, reviews: 128, priceFrom: 15, slots: ['20h00'] },
+        { id: 'smash', name: 'Smash Padel Club · Court 3', sport: 'padel', lat: 36.8455, lng: 10.2705, area: 'Ce soir · 2 places', distance: '3,1 km', rating: 4.8, reviews: 86, priceFrom: 25, slots: ['20h00'] },
+                { id: 'carthage', name: 'Padel House Carthage', sport: 'padel', lat: 36.8600, lng: 10.3330, area: 'Carthage', distance: '2,2 km', priceFrom: 20, slots: ['19h30'] },
+        { id: 'hoop', name: 'Hoop Zone', sport: 'basketball', lat: 36.8615, lng: 10.1625, area: 'Ennasr', distance: '6,2 km', priceFrom: 9, slots: ['18h00'] }
+      ],
+      clusters: [
+        { id: 'berges', label: 'Lac 1 et Les Berges', lat: 36.8666, lng: 10.264, count: 4, mix: { football: 2, padel: 2 } }
+      ],
+      segs: [{ value: 'parties', label: 'Parties' }, { value: 'terrains', label: 'Terrains' }, { value: 'tournois', label: 'Tournois' }],
+      views: [{ value: 'map', icon: 'map-trifold', label: 'Carte' }, { value: 'list', icon: 'list', label: 'Liste' }],
+      tabs: [
+        { value: 'accueil', label: 'Accueil', icon: 'house', href: 'HOM-01-Accueil.dc.html' },
+        { value: 'explorer', label: 'Explorer', icon: 'compass', href: 'EXP-01-Explorer-parties.dc.html' },
+        { value: 'matchs', label: 'Mes matchs', icon: 'calendar-check', badge: 1, badgeLabel: '1 invitation', href: 'MAT-01-A-venir.dc.html' },
+        { value: 'entrainement', label: 'Entraînement', icon: 'barbell' },
+        { value: 'communaute', label: 'Communauté', icon: 'users-three' }
+      ],
+      tabStyle: { style: { position: 'absolute', left: 0, right: 0, bottom: 0 } },
+      g1: {
+        sport: 'football', gameType: 'mixte', venue: 'Arena Five', court: 'Terrain 2', place: 'La Marsa', distance: 1.4,
+        start: at(18, 20), spotsTotal: 10, spotsLeft: 2, price: 15, levelMin: 3, levelMax: 4.5, players: G1P,
+        organiser: { name: 'Skander T.', reliability: 96 }, matchFit: 85, matchFitReason: 'Milieu recherché et terrain à 1,4 km',
+        href: 'GAM-01-Partie-ouverte.dc.html'
+      },
+      g2: {
+        sport: 'padel', gameType: 'mixte', venue: 'Smash Padel Club', court: 'Court 3', place: 'Lac 2', distance: 3.1,
+        start: at(16, 20), dateLabel: 'Ce soir', spotsTotal: 4, spotsLeft: 2, price: 25, levelMin: 3, levelMax: 4,
+        players: [{ name: 'Mariem K.', level: 4 }, { name: 'Ines M.', level: 3.5 }],
+        organiser: { name: 'Mariem K.', reliability: 98 }, matchFit: 92, matchFitReason: 'Côté gauche recherché et ton niveau (3,5)'
+      },
+      g4: {
+        sport: 'football', gameType: 'femmes', venue: 'Arena Five', court: 'Terrain 1', place: 'La Marsa', distance: 1.4,
+        start: at(17, 19), spotsTotal: 10, spotsLeft: 0, price: 12, levelMin: 2.5, levelMax: 4,
+        players: [{ name: 'Nour A.' }, { name: 'Salma G.' }, { name: 'Lina F.' }, { name: 'Ines M.' }, { name: 'Mariem K.' }, { name: 'Sarra B.' }, { name: 'Amel T.' }, { name: 'Rim H.' }, { name: 'Yosra M.' }, { name: 'Dorra K.' }],
+        organiser: { name: 'Nour A.', reliability: 94 }, href: 'GAM-02-Partie-complete.dc.html'
+      },
+      g3: {
+        sport: 'basketball', gameType: 'hommes', venue: 'Hoop Zone', place: 'Ennasr', distance: 6.2,
+        start: at(17, 18), spotsTotal: 6, spotsLeft: 2, price: 9, levelMin: 2.5, levelMax: 4,
+        players: [{ name: 'Hamza R.' }, { name: 'Omar D.' }, { name: 'Aziz H.' }, { name: 'Skander T.' }],
+        organiser: { name: 'Hamza R.', reliability: 93 }
+      }
+    };
+  }
+}
+</script>
+</body>
+</html>

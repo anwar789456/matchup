@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Mes matchs · Annulés</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/matchup/tokens.css">
+<link rel="stylesheet" href="ds/matchup/components/bundle.css">
+<script src="ds/matchup/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0}
+a{color:var(--link)}
+</style>
+</helmet>
+<div style="position: relative; width: 390px; height: 844px; box-sizing: border-box; overflow: hidden; display: flex; flex-direction: column; background: var(--bg); color: var(--text); font-family: var(--font-sans)">
+<x-import component-from-global-scope="MatchUp.TopAppBar" variant="large" title="Mes matchs" collapsed="{{yes}}" scrolled="{{no}}" inset="{{inset}}" actions="{{barActions}}"></x-import>
+<div style="padding: 0 16px; background: var(--bg)">
+<x-import component-from-global-scope="MatchUp.Tabs" label="Mes matchs" items="{{tabs}}" value="annules" full-width="{{yes}}" id-base="mat-tab"></x-import>
+</div>
+<div id="mat-panel-annules" role="tabpanel" aria-labelledby="mat-tab-annules" style="flex: 1; min-height: 0; overflow: auto; display: flex; flex-direction: column; gap: 20px; padding: 16px 16px 120px 16px">
+
+<section aria-labelledby="mat-oct-t" style="display: flex; flex-direction: column; gap: 8px">
+<h2 id="mat-oct-t" class="overline" style="margin: 0; color: var(--text-secondary)">Octobre</h2>
+<x-import component-from-global-scope="MatchUp.BookingCard" dc-props="{{cancelled}}"></x-import>
+<div class="mu-card" style="display: flex; flex-direction: column; gap: 12px; padding: 16px">
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 12px">
+<span class="label-l">Remboursement</span>
+<x-import component-from-global-scope="MatchUp.StatusBadge" status="refunded" size="s"></x-import>
+</div>
+<div style="display: flex; align-items: flex-start; gap: 12px">
+<x-import component-from-global-scope="MatchUp.Avatar" name="Skander T." size="s"></x-import>
+<p class="body" style="margin: 0; flex: 1; min-width: 0; color: var(--text-secondary)"><span style="color: var(--text)">Annulée par l’organisateur, Skander T.</span> « Pas assez de joueurs confirmés, désolé ! »</p>
+</div>
+<dl style="margin: 0; display: flex; flex-direction: column; border-top: 1px solid var(--border)">
+<div style="display: flex; align-items: center; justify-content: space-between; padding: 10px 0 0 0">
+<dt class="body" style="color: var(--text-secondary)">Crédité le ven. 9 oct. · 14h12</dt>
+<dd class="num-s" style="margin: 0">+15 DT</dd>
+</div>
+<div style="display: flex; align-items: center; justify-content: space-between; padding: 6px 0 0 0">
+<dt class="body" style="color: var(--text-secondary)">Ton solde MatchUp</dt>
+<dd class="num-s" style="margin: 0">30 DT</dd>
+</div>
+</dl>
+<div style="display: flex; align-items: flex-start; gap: 8px; padding: 10px 12px; border-radius: var(--radius-sm); background: var(--bg)">
+<span style="flex: none; display: flex; color: var(--text-secondary); padding-top: 1px"><x-import component-from-global-scope="MatchUp.Icon" name="info" size="{{i16}}"></x-import></span>
+<p class="caption" style="margin: 0; color: var(--text-secondary)">Quand l’organisateur ou le terrain annule, ta part est remboursée en entier, sans démarche.</p>
+</div>
+</div>
+</section>
+
+
+</div>
+<a href="VEN-01-Terrain.dc.html" aria-label="Réserver à nouveau à Arena Five" style="position: absolute; left: 178px; top: 388px; width: 182px; height: 44px; border-radius: var(--radius-md)"></a>
+<a href="EXP-03-Explorer-terrains.dc.html" aria-label="Réserver un terrain" style="position: absolute; left: 338px; top: 48px; width: 48px; height: 48px; border-radius: var(--radius-full)"></a>
+<a href="MAT-01-A-venir.dc.html" aria-label="À venir" style="position: absolute; left: 16px; top: 100px; width: 118px; height: 48px"></a>
+<a href="MAT-02-Passes.dc.html" aria-label="Passés" style="position: absolute; left: 136px; top: 100px; width: 118px; height: 48px"></a>
+<x-import component-from-global-scope="MatchUp.TabBar" items="{{tabBar}}" value="matchs" safe-area="{{sa}}" fab="{{yes}}" dc-props="{{tabStyle}}"></x-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      yes: true, no: false, i16: 16, i20: 20, i24: 24, inset: 44, sa: 34,
+      barActions: [{ icon: 'calendar-plus', label: 'Réserver un terrain' }],
+      tabs: [
+        { value: 'avenir', label: 'À venir', count: 3 },
+        { value: 'passes', label: 'Passés' },
+        { value: 'annules', label: 'Annulés', panelId: 'mat-panel-annules' }
+      ],
+      cancelled: {
+        status: 'cancelled', sport: 'football', venue: 'Arena Five', court: 'Terrain 2', place: 'La Marsa',
+        start: new Date(2026, 9, 10, 20, 0), end: new Date(2026, 9, 10, 21, 0), share: 15, refund: 15
+      },
+      tabBar: [
+        { value: 'accueil', label: 'Accueil', icon: 'house', href: 'HOM-01-Accueil.dc.html' },
+        { value: 'explorer', label: 'Explorer', icon: 'compass', href: 'EXP-01-Explorer-parties.dc.html' },
+        { value: 'matchs', label: 'Mes matchs', icon: 'calendar-check', badge: 1, badgeLabel: '1 invitation', href: 'MAT-01-A-venir.dc.html' },
+        { value: 'entrainement', label: 'Entraînement', icon: 'barbell' },
+        { value: 'communaute', label: 'Communauté', icon: 'users-three' }
+      ],
+      tabStyle: { style: { position: 'absolute', left: 0, right: 0, bottom: 0 } }
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Accueil · chargement</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/matchup/tokens.css">
+<link rel="stylesheet" href="ds/matchup/components/bundle.css">
+<script src="ds/matchup/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0}
+a{color:var(--link)}
+.hom-rail{display:flex; gap:12px; overflow:hidden; padding:4px 16px 8px 16px}
+</style>
+</helmet>
+<div style="position: relative; width: 390px; height: 2252px; box-sizing: border-box; overflow: hidden; background: var(--bg); color: var(--text); font-family: var(--font-sans)">
+<div>
+<x-import component-from-global-scope="MatchUp.TopAppBar" variant="home" greeting="Salut Yassine" location="La Marsa" notifications="{{n3}}" user="{{me}}" inset="{{inset}}"></x-import>
+<a href="PRF-05-Menu-du-compte.dc.html" aria-label="Ouvrir le menu du compte" style="position: absolute; left: 338px; top: 48px; width: 48px; height: 48px; border-radius: var(--radius-full)"></a>
+<div style="display: flex; flex-direction: column; gap: 28px; padding: 4px 0 136px 0">
+<div style="padding: 0 16px">
+<button type="button" aria-label="Demande à MatchUp, l’assistant IA" style="appearance: none; border: 0; margin: 0; width: 100%; font: inherit; text-align: start; cursor: pointer; display: flex; align-items: center; gap: 10px; min-height: 48px; padding: 0 16px; border-radius: var(--radius-full); background: var(--surface); box-shadow: inset 0 0 0 1.5px var(--ai-500), var(--elevation-1); color: var(--text-secondary)">
+<span style="display: flex; color: var(--ai-500)"><x-import component-from-global-scope="MatchUp.Icon" name="sparkle" weight="fill" size="{{i20}}"></x-import></span>
+<span class="body-l" style="flex: 1">Demande à MatchUp…</span>
+</button>
+</div>
+
+<section aria-labelledby="hom-foryou" aria-busy="true" style="display: flex; flex-direction: column; gap: 8px">
+<div style="display: flex; align-items: center; gap: 8px; padding: 0 16px; min-height: 32px">
+<h2 id="hom-foryou" class="h3" style="margin: 0">Parties pour toi</h2>
+<x-import component-from-global-scope="MatchUp.AiLabel" size="s"></x-import>
+</div>
+<p class="caption" style="margin: -4px 16px 0 16px; color: var(--text-secondary)">On cherche les parties à ton niveau autour de La Marsa…</p>
+<div class="hom-rail">
+<div style="flex: none; width: 318px; display: flex"><x-import component-from-global-scope="MatchUp.GameCard" dc-props="{{skelFeat}}"></x-import></div>
+<div style="flex: none; width: 318px; display: flex"><x-import component-from-global-scope="MatchUp.GameCard" dc-props="{{skelFeat}}"></x-import></div>
+</div>
+</section>
+
+<section aria-label="Actions rapides" style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; padding: 0 16px">
+<a href="EXP-03-Explorer-terrains.dc.html" class="mu-card mu-card--interactive" style="display: flex; flex-direction: column; align-items: flex-start; gap: 12px; padding: 14px; box-sizing: border-box; text-decoration: none; color: var(--text)">
+<span style="flex: none; width: 40px; height: 40px; border-radius: var(--radius-sm); background: var(--surface-muted); display: flex; align-items: center; justify-content: center"><x-import component-from-global-scope="MatchUp.Icon" name="sport-court" size="{{i24}}"></x-import></span>
+<span style="display: flex; flex-direction: column; gap: 2px">
+<span class="label">Réserver un terrain</span>
+<span class="caption" style="color: var(--text-secondary)">Paie ta part, pas tout le terrain</span>
+</span>
+</a>
+<a href="EXP-03-Explorer-terrains.dc.html" class="mu-card mu-card--interactive" style="display: flex; flex-direction: column; align-items: flex-start; gap: 12px; padding: 14px; box-sizing: border-box; text-decoration: none; color: var(--text)">
+<span style="flex: none; width: 40px; height: 40px; border-radius: var(--radius-sm); background: var(--accent); color: var(--on-accent); display: flex; align-items: center; justify-content: center"><x-import component-from-global-scope="MatchUp.Icon" name="plus" size="{{i24}}"></x-import></span>
+<span style="display: flex; flex-direction: column; gap: 2px">
+<span class="label">Créer une partie</span>
+<span class="caption" style="color: var(--text-secondary)">On complète avec des joueurs à ton niveau</span>
+</span>
+</a>
+</section>
+
+<section aria-labelledby="hom-next" aria-busy="true" style="display: flex; flex-direction: column; gap: 12px; padding: 0 16px">
+<div style="display: flex; align-items: center; justify-content: space-between; margin-right: -12px">
+<h2 id="hom-next" class="h3" style="margin: 0">Tes prochains matchs</h2>
+<a href="MAT-01-A-venir.dc.html" class="mu-btn mu-btn--tertiary mu-btn--s"><span class="mu-btn__content"><span class="mu-btn__label label">Mes matchs</span></span></a>
+</div>
+<div class="mu-card" aria-hidden="true" style="display: flex; align-items: center; gap: 12px; padding: 12px 12px 12px 14px">
+<x-import component-from-global-scope="MatchUp.Skeleton" shape="circle" width="{{s40}}" height="{{s40}}"></x-import>
+<div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 8px">
+<x-import component-from-global-scope="MatchUp.Skeleton" shape="text" width="70%"></x-import>
+<x-import component-from-global-scope="MatchUp.Skeleton" shape="text" width="90%"></x-import>
+</div>
+<x-import component-from-global-scope="MatchUp.Skeleton" shape="pill" width="{{s72}}" height="{{s24}}"></x-import>
+</div>
+<x-import component-from-global-scope="MatchUp.BookingCard" skeleton="{{yes}}"></x-import>
+<x-import component-from-global-scope="MatchUp.BookingCard" skeleton="{{yes}}" variant="compact"></x-import>
+</section>
+
+<section aria-labelledby="hom-venues" aria-busy="true" style="display: flex; flex-direction: column; gap: 12px; padding: 0 16px">
+<div style="display: flex; align-items: center; justify-content: space-between; margin-right: -12px">
+<h2 id="hom-venues" class="h3" style="margin: 0">Terrains près de toi</h2>
+<a href="EXP-03-Explorer-terrains.dc.html" class="mu-btn mu-btn--tertiary mu-btn--s"><span class="mu-btn__content"><span class="mu-btn__label label">Voir tout</span></span></a>
+</div>
+<x-import component-from-global-scope="MatchUp.VenueCard" skeleton="{{yes}}" variant="compact"></x-import>
+<x-import component-from-global-scope="MatchUp.VenueCard" skeleton="{{yes}}" variant="compact"></x-import>
+</section>
+
+<section aria-labelledby="hom-tour" aria-busy="true" style="display: flex; flex-direction: column; gap: 12px; padding: 0 16px">
+<div style="display: flex; flex-direction: column; gap: 2px">
+<h2 id="hom-tour" class="h3" style="margin: 0">Tournois près de chez toi</h2>
+<p class="caption" style="margin: 0; color: var(--text-secondary)">Inscris ton équipe avant qu’il soit complet.</p>
+</div>
+<x-import component-from-global-scope="MatchUp.TournamentCard" skeleton="{{yes}}"></x-import>
+</section>
+</div>
+</div>
+<x-import component-from-global-scope="MatchUp.TabBar" items="{{tabs}}" value="accueil" safe-area="{{sa}}" fab="{{yes}}" dc-props="{{tabStyle}}"></x-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":2252}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      yes: true, s24: 24, s40: 40, s72: 72, i20: 20, i24: 24, n3: 3, inset: 44, sa: 34,
+      me: { name: 'Yassine B.' },
+      skelFeat: { skeleton: true, variant: 'featured', style: { width: '100%' } },
+      tabs: [
+        { value: 'accueil', label: 'Accueil', icon: 'house', href: 'HOM-01-Accueil.dc.html' },
+        { value: 'explorer', label: 'Explorer', icon: 'compass', href: 'EXP-01-Explorer-parties.dc.html' },
+        { value: 'matchs', label: 'Mes matchs', icon: 'calendar-check', badge: 1, badgeLabel: '1 invitation', href: 'MAT-01-A-venir.dc.html' },
+        { value: 'entrainement', label: 'Entraînement', icon: 'barbell' },
+        { value: 'communaute', label: 'Communauté', icon: 'users-three' }
+      ],
+      tabStyle: { style: { position: 'absolute', left: 0, right: 0, bottom: 0 } }
+    };
+  }
+}
+</script>
+</body>
+</html>

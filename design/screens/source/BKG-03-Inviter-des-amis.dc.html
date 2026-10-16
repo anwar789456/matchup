@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Inviter des amis</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/matchup/tokens.css">
+<link rel="stylesheet" href="ds/matchup/components/bundle.css">
+<script src="ds/matchup/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0}
+a{color:var(--link)}
+.inv-row{display:flex; align-items:center; gap:var(--space-3); min-height:64px; padding:var(--space-2) 0}
+.inv-row + .inv-row{border-top:1px solid var(--border)}
+.inv-share{display:flex; flex-direction:column; gap:var(--space-3); padding:var(--space-4); border-radius:var(--radius-md); background:var(--surface-muted)}
+.inv-link{display:flex; align-items:center; gap:var(--space-2); min-height:44px; padding:0 var(--space-3); border-radius:var(--radius-sm); background:var(--surface); box-shadow:inset 0 0 0 1px var(--border); color:var(--text-secondary)}
+</style>
+</helmet>
+<div style="width: 390px; height: 1360px; box-sizing: border-box; display: flex; flex-direction: column; background: var(--surface); color: var(--text); font-family: var(--font-sans)">
+<div style="display: flex; align-items: center; gap: 8px; padding: 52px 16px 0 8px">
+<a href="BKG-01-Type-de-reservation.dc.html" class="mu-iconbtn mu-iconbtn--l mu-iconbtn--ghost" aria-label="Retour" style="color: var(--text)"><x-import component-from-global-scope="MatchUp.Icon" name="arrow-left" size="{{i24}}"></x-import></a>
+<div style="flex: 1; min-width: 0"><x-import component-from-global-scope="MatchUp.StepIndicator" step="{{two}}" total="{{three}}" title="Tes invités"></x-import></div>
+</div>
+<div style="flex: 1; min-height: 0; overflow: auto; display: flex; flex-direction: column; gap: 20px; padding: 16px 16px 24px 16px">
+<div style="display: flex; flex-direction: column; gap: 4px">
+<h1 class="h2" style="margin: 0">Invite tes amis</h1>
+<p class="body" style="margin: 0; color: var(--text-secondary)">Partie privée · Terrain 1 · mer. 21 oct. · 21h00. Chacun paie 15 DT en acceptant.</p>
+</div>
+<x-import component-from-global-scope="MatchUp.SearchField" size="l" label="Rechercher un ami" placeholder="Nom, pseudo ou numéro"></x-import>
+
+<div style="display: flex; flex-direction: column; gap: 12px">
+<div style="display: flex; align-items: baseline; justify-content: space-between">
+<h2 class="label-l" style="margin: 0">{{countLabel}}</h2>
+<span class="caption" style="color: var(--text-secondary)">{{placesLabel}}</span>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 8px">
+<sc-for list="{{chosen}}" as="f">
+<x-import component-from-global-scope="MatchUp.Chip" kind="input" size="m" on-remove="{{f.toggle}}" remove-label="Retirer {{f.name}}">{{f.name}}</x-import>
+</sc-for>
+</div>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 4px">
+<div style="display: flex; flex-direction: column; gap: 2px; padding-bottom: 4px">
+<h2 class="label-l" style="margin: 0">Coéquipiers suggérés</h2>
+<span class="caption" style="color: var(--text-secondary)">Ils ont déjà joué avec toi à Arena Five ou près de La Marsa.</span>
+</div>
+<div style="display: flex; flex-direction: column">
+<sc-for list="{{friends}}" as="f">
+<div class="inv-row">
+<x-import component-from-global-scope="MatchUp.Avatar" name="{{f.name}}" size="m" level="{{f.level}}"></x-import>
+<div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px">
+<span class="label">{{f.name}}</span>
+<span class="caption" style="color: var(--text-secondary)">{{f.meta}}</span>
+</div>
+<x-import component-from-global-scope="MatchUp.Checkbox" checked="{{f.on}}" on-change="{{f.toggle}}" aria-label="Inviter {{f.name}}"></x-import>
+</div>
+</sc-for>
+</div>
+</div>
+
+<div class="inv-share">
+<div style="display: flex; flex-direction: column; gap: 2px">
+<h2 class="label-l" style="margin: 0">Ou partage le lien</h2>
+<span class="caption" style="color: var(--text-secondary)">Seules les personnes qui ont le lien peuvent rejoindre.</span>
+</div>
+<div class="inv-link"><x-import component-from-global-scope="MatchUp.Icon" name="link" size="{{i16}}"></x-import><span class="body" style="flex: 1; min-width: 0; color: var(--text)">matchup.tn/r/MU-48213</span></div>
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px">
+<button type="button" class="mu-btn mu-btn--secondary mu-btn--m mu-btn--block" style="min-height: 44px"><span class="mu-btn__content"><x-import component-from-global-scope="MatchUp.Icon" name="copy" size="{{i20}}"></x-import><span class="mu-btn__label label">Copier le lien</span></span></button>
+<button type="button" class="mu-btn mu-btn--secondary mu-btn--m mu-btn--block" style="min-height: 44px"><span class="mu-btn__content"><x-import component-from-global-scope="MatchUp.Icon" name="whatsapp-logo" size="{{i20}}"></x-import><span class="mu-btn__label label">WhatsApp</span></span></button>
+</div>
+</div>
+</div>
+<div style="padding: 12px 16px 34px 16px; background: var(--surface); box-shadow: var(--elevation-2-up)">
+<a href="BKG-04-Recapitulatif.dc.html" class="mu-btn mu-btn--primary mu-btn--xl mu-btn--block"><span class="mu-btn__content"><span class="mu-btn__label label-l">{{ctaLabel}}</span></span></a>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":1360}}'>
+class Component extends DCLogic {
+  state = { on: { skander: true, hamza: true, aziz: true, omar: true, nour: true } };
+  renderVals() {
+    const on = this.state.on;
+    const people = [
+      ['skander', 'Skander T.', 4.0, 'Attaquant · 6 matchs ensemble'],
+      ['hamza', 'Hamza R.', 3.5, 'Gardien · 4 matchs ensemble'],
+      ['aziz', 'Aziz H.', 4.5, 'Milieu · 3 matchs ensemble'],
+      ['omar', 'Omar D.', 3.5, 'Défenseur · 3 matchs ensemble'],
+      ['nour', 'Nour A.', 3.0, 'Défenseuse · 2 matchs ensemble'],
+      ['ines', 'Ines M.', 4.0, 'Milieu · joue à La Marsa'],
+      ['salma', 'Salma G.', 3.0, 'Attaquante · joue à La Marsa']
+    ];
+    const friends = people.map(([id, name, level, meta]) => ({
+      id, name, level, meta, on: !!on[id],
+      toggle: () => this.setState({ on: Object.assign({}, on, { [id]: !on[id] }) })
+    }));
+    const chosen = friends.filter((f) => f.on);
+    const n = chosen.length;
+    return {
+      i16: 16, i20: 20, i24: 24, two: 2, three: 3, friends, chosen,
+      countLabel: n === 0 ? 'Aucun ami invité' : (n === 1 ? '1 ami invité' : n + ' amis invités'),
+      placesLabel: 'Il reste ' + (9 - n) + ' places sur 10',
+      ctaLabel: n === 0 ? 'Continuer sans inviter' : 'Inviter ' + n + (n === 1 ? ' ami' : ' amis') + ' et continuer'
+    };
+  }
+}
+</script>
+</body>
+</html>

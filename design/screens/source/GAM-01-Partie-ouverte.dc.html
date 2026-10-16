@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Partie ouverte</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/matchup/tokens.css">
+<link rel="stylesheet" href="ds/matchup/components/bundle.css">
+<script src="ds/matchup/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0}
+a{color:var(--link)}
+.gam-sec{display:flex; flex-direction:column; gap:12px}
+.gam-sec__head{display:flex; align-items:center; justify-content:space-between; gap:8px; min-height:32px}
+.gam-fact{display:flex; flex-direction:column; gap:2px; padding:12px 12px 14px 12px; min-width:0}
+.gam-fact + .gam-fact{border-inline-start:1px solid var(--border)}
+.gam-row{display:flex; align-items:center; gap:12px}
+.gam-rule{display:flex; align-items:flex-start; gap:12px}
+.gam-rule__icon{flex:none; width:20px; height:20px; color:var(--text-secondary); display:flex; align-items:center; justify-content:center}
+.gam-step{display:grid; grid-template-columns:20px 1fr auto; column-gap:12px; align-items:start}
+.gam-step__dot{width:12px; height:12px; margin:4px; border-radius:var(--radius-full); box-sizing:border-box}
+.gam-bubble{padding:8px 12px; border-radius:4px 16px 16px 16px; background:var(--surface-muted); max-width:262px}
+.gam-fit .mu-fit-ring{flex-wrap:nowrap; gap:var(--space-4)}
+.gam-pill{white-space:nowrap}
+.gam-hot{position:absolute; display:block; border-radius:var(--radius-full)}
+.gam-hot:focus-visible{outline:2px solid var(--focus); outline-offset:2px}
+</style>
+</helmet>
+<div style="position: relative; width: 390px; height: 2400px; box-sizing: border-box; overflow: hidden; background: var(--bg); color: var(--text); font-family: var(--font-sans)">
+
+<x-import component-from-global-scope="MatchUp.CourtArt" sport="football" label="Arena Five, terrain 2 éclairé le soir" dc-props="{{heroArt}}"></x-import>
+<div style="position: absolute; left: 16px; right: 16px; top: 108px; display: flex; align-items: center; justify-content: space-between">
+<div data-theme="dark" class="gam-pill" style="display: flex; align-items: center; height: 32px; padding: 0 12px; border-radius: var(--radius-full); background: var(--surface-elevated); color: var(--text); box-shadow: var(--elevation-2)">
+<x-import component-from-global-scope="MatchUp.Countdown" format="relative" size="s" label="Coup d’envoi" seconds="{{kickoff}}" running="{{no}}"></x-import>
+</div>
+<x-import component-from-global-scope="MatchUp.StatusBadge" status="confirmed" label="Terrain réservé" size="m"></x-import>
+</div>
+<x-import component-from-global-scope="MatchUp.TopAppBar" variant="media" title="Football 5 vs 5" inset="{{inset}}" on-back="{{noop}}" actions="{{barActions}}" dc-props="{{barStyle}}"></x-import>
+<a href="EXP-01-Explorer-parties.dc.html" class="gam-hot" aria-label="Retour aux parties" style="left: 6px; top: 50px; width: 44px; height: 44px"></a>
+
+<main style="position: absolute; left: 0; right: 0; top: 156px; bottom: 0; border-radius: var(--radius-lg) var(--radius-lg) 0 0; background: var(--bg); padding: 20px 16px 0 16px; display: flex; flex-direction: column; gap: 24px">
+
+<section aria-labelledby="gam-title" style="display: flex; flex-direction: column; gap: 16px">
+<div style="display: flex; flex-direction: column; gap: 8px">
+<div style="display: flex; flex-wrap: wrap; align-items: center; gap: 8px">
+<x-import component-from-global-scope="MatchUp.Chip" kind="sport" sport="football" size="s">Football · 5 vs 5</x-import>
+<x-import component-from-global-scope="MatchUp.Chip" kind="level" size="s" icon="users-three">Mixte</x-import>
+<x-import component-from-global-scope="MatchUp.Chip" kind="level" size="s" icon="gauge">Niveau 3,0 – 4,5</x-import>
+</div>
+<h1 id="gam-title" class="h1" style="margin: 0">Arena Five · Terrain 2</h1>
+</div>
+
+<div class="mu-card" role="group" aria-label="L’essentiel de la partie" style="display: grid; grid-template-columns: 1.15fr 1fr 0.85fr; padding: 0">
+<div class="gam-fact">
+<span class="overline" style="color: var(--text-secondary)">dim. 18 oct.</span>
+<span class="num-xl">20h00</span>
+<span class="caption" style="color: var(--text-secondary)">jusqu’à 21h00</span>
+</div>
+<div class="gam-fact">
+<span class="overline" style="color: var(--text-secondary)">Ta part</span>
+<span class="num-xl">15 DT</span>
+<span class="caption" style="color: var(--text-secondary)">150 DT le terrain</span>
+</div>
+<div class="gam-fact">
+<span class="overline" style="color: var(--text-secondary)">Places</span>
+<span class="num-xl">2</span>
+<span class="caption" style="color: var(--text-secondary)">8/10 joueurs</span>
+</div>
+</div>
+
+<div class="mu-card" style="padding: 0; overflow: hidden">
+<div style="display: flex; gap: 12px; padding: 12px">
+<div style="flex: none; width: 96px; height: 96px; border-radius: var(--radius-sm); overflow: hidden">
+<x-import component-from-global-scope="MatchUp.MapView" interactive="{{no}}" venues="{{venues}}" default-selected-id="arena" center="{{mapCenter}}" zoom="{{mapZoom}}" height="{{mapH}}" view-toggle="{{no}}" user="{{nobody}}" label="Arena Five sur la carte, La Marsa" dc-props="{{mapStyle}}"></x-import>
+</div>
+<div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 4px">
+<span style="display: flex; align-items: center; gap: 8px"><span class="label-l">Arena Five</span><x-import component-from-global-scope="MatchUp.StatusBadge" status="verified" size="s"></x-import></span>
+<span class="caption" style="color: var(--text-secondary)">Route de la Corniche, La Marsa · <span class="num-xs" style="color: var(--text)">1,4 km</span></span>
+<span class="caption" style="display: flex; align-items: center; gap: 4px; color: var(--text-secondary)"><span style="display: flex; color: var(--warning)"><x-import component-from-global-scope="MatchUp.Icon" name="star" weight="fill" size="{{i14}}"></x-import></span><span class="num-xs" style="color: var(--text)">4,7</span> (128 avis)</span>
+<span style="display: flex; align-items: center; gap: 4px; margin-top: 4px; margin-inline-start: -4px">
+<button type="button" class="mu-btn mu-btn--secondary mu-btn--s"><span class="mu-btn__content"><x-import component-from-global-scope="MatchUp.Icon" name="navigation-arrow" size="{{i16}}"></x-import><span class="mu-btn__label label">Itinéraire</span></span></button>
+<a href="VEN-01-Terrain.dc.html" class="mu-btn mu-btn--tertiary mu-btn--s"><span class="mu-btn__content"><span class="mu-btn__label label">Voir le terrain</span></span></a>
+</span>
+</div>
+</div>
+<div style="height: 1px; margin: 0 12px; background: var(--border)"></div>
+<a href="PRF-02-Profil-public.dc.html" aria-label="Organisée par Skander T., fiable 96 %. Voir son profil" style="display: flex; align-items: center; gap: 12px; padding: 12px; text-decoration: none; color: inherit">
+<x-import component-from-global-scope="MatchUp.Avatar" name="Skander T." size="m" level="{{l40}}"></x-import>
+<span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 4px">
+<span class="caption" style="color: var(--text-secondary)">Organisée par</span>
+<span style="display: flex; align-items: center; gap: 8px"><span class="label-l">Skander T.</span><x-import component-from-global-scope="MatchUp.ReliabilityBadge" score="{{r96}}" size="s"></x-import></span>
+</span>
+<span style="display: flex; color: var(--text-secondary)"><x-import component-from-global-scope="MatchUp.Icon" name="caret-right" size="{{i20}}"></x-import></span>
+</a>
+</div>
+</section>
+
+<section class="mu-card gam-fit" aria-labelledby="gam-fit" style="display: flex; flex-direction: column; gap: 12px; padding: 16px 12px; box-shadow: inset 0 0 0 1px var(--ai-soft), var(--elevation-1)">
+<div class="gam-sec__head" style="padding: 0 4px">
+<div style="display: flex; align-items: center; gap: 8px">
+<h2 id="gam-fit" class="h3" style="margin: 0">Pourquoi pour toi</h2>
+<x-import component-from-global-scope="MatchUp.AiLabel" size="s"></x-import>
+</div>
+<button type="button" class="mu-btn mu-btn--tertiary mu-btn--s" style="margin-inline-end: -8px"><span class="mu-btn__content"><span class="mu-btn__label label">Pas pour moi</span></span></button>
+</div>
+<x-import component-from-global-scope="MatchUp.MatchFitScore" variant="ring" size="m" value="{{fit}}" factors="{{fitFactors}}" note="Recommandé car Skander cherche un milieu près de chez toi. L’IA peut se tromper."></x-import>
+</section>
+
+<section class="gam-sec" aria-label="Composition des équipes">
+<x-import component-from-global-scope="MatchUp.Lineup" sport="football" teams="{{teams}}" title="Composition" on-join="{{noop}}"></x-import>
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 10px 12px; border-radius: var(--radius-md); background: var(--surface-muted)">
+<span class="caption" style="display: flex; align-items: center; gap: 8px; color: var(--text-secondary)"><x-import component-from-global-scope="MatchUp.Icon" name="hand-pointing" size="{{i16}}"></x-import>Touche un « + » pour choisir ton poste</span>
+<span style="display: flex; align-items: center; gap: 6px"><span class="caption" style="color: var(--text-secondary)">Moy.</span><x-import component-from-global-scope="MatchUp.LevelIndicator" level="{{avg}}" size="s" show-band="{{no}}"></x-import></span>
+</div>
+</section>
+
+<section class="gam-sec" aria-labelledby="gam-chat">
+<div class="gam-sec__head">
+<h2 id="gam-chat" class="h3" style="margin: 0">Discussion</h2>
+<span class="caption" style="color: var(--text-secondary)"><span class="num-xs">14</span> messages</span>
+</div>
+<div class="mu-card" style="display: flex; flex-direction: column; gap: 12px; padding: 16px">
+<div style="display: flex; gap: 8px; align-items: flex-start">
+<x-import component-from-global-scope="MatchUp.Avatar" name="Skander T." size="s"></x-import>
+<div style="display: flex; flex-direction: column; gap: 4px">
+<span class="label-s" style="color: var(--text-secondary)">Skander T. · <span class="num-xs">17h42</span></span>
+<p class="gam-bubble body" style="margin: 0">Chasubles fournies : Blancs contre Bleus. Il nous manque un milieu !</p>
+</div>
+</div>
+<div style="display: flex; gap: 8px; align-items: flex-start">
+<x-import component-from-global-scope="MatchUp.Avatar" name="Hamza R." size="s"></x-import>
+<div style="display: flex; flex-direction: column; gap: 4px">
+<span class="label-s" style="color: var(--text-secondary)">Hamza R. · <span class="num-xs">17h55</span></span>
+<p class="gam-bubble body" style="margin: 0">Je serai dans les cages.</p>
+</div>
+</div>
+<div style="display: flex; align-items: center; gap: 8px; padding: 10px 12px; border-radius: var(--radius-sm); border: 1px dashed var(--border-strong); color: var(--text-secondary)">
+<x-import component-from-global-scope="MatchUp.Icon" name="lock-simple" size="{{i16}}"></x-import>
+<span class="caption">Rejoins la partie pour écrire aux joueurs.</span>
+</div>
+</div>
+</section>
+
+<section class="gam-sec" aria-labelledby="gam-rules">
+<h2 id="gam-rules" class="h3" style="margin: 0">Règles et annulation</h2>
+<div class="mu-card" style="display: flex; flex-direction: column; gap: 16px; padding: 16px">
+<div class="gam-rule">
+<span class="gam-rule__icon"><x-import component-from-global-scope="MatchUp.Icon" name="clock" size="{{i20}}"></x-import></span>
+<span style="display: flex; flex-direction: column; gap: 2px"><span class="label">Arrive 10 min avant le coup d’envoi</span><span class="caption" style="color: var(--text-secondary)">Chasubles fournies, vestiaires et douches.</span></span>
+</div>
+<div style="height: 1px; background: var(--border)"></div>
+<div style="display: flex; flex-direction: column; gap: 12px" role="list" aria-label="Remboursement selon la date d’annulation">
+<div class="gam-step" role="listitem">
+<span class="gam-step__dot" style="background: var(--success)"></span>
+<span style="display: flex; flex-direction: column; gap: 2px"><span class="label">Jusqu’à sam. 17 oct. · <span class="num-s">20h00</span></span><span class="caption" style="color: var(--text-secondary)">Annulation gratuite</span></span>
+<span class="num-s" style="color: var(--success-text)">15 DT</span>
+</div>
+<div class="gam-step" role="listitem">
+<span class="gam-step__dot" style="background: var(--warning)"></span>
+<span style="display: flex; flex-direction: column; gap: 2px"><span class="label">Jusqu’à dim. 18 oct. · <span class="num-s">14h00</span></span><span class="caption" style="color: var(--text-secondary)">50 % remboursés</span></span>
+<span class="num-s" style="color: var(--warning-text)">7,500 DT</span>
+</div>
+<div class="gam-step" role="listitem">
+<span class="gam-step__dot" style="border: 2px solid var(--border-strong)"></span>
+<span style="display: flex; flex-direction: column; gap: 2px"><span class="label">Moins de 6 h avant</span><span class="caption" style="color: var(--text-secondary)">Non remboursable</span></span>
+<span class="num-s" style="color: var(--text-secondary)">0 DT</span>
+</div>
+</div>
+<p class="caption" style="margin: 0; color: var(--text-secondary)">Remboursé sur ton solde MatchUp, en entier si Skander annule.</p>
+</div>
+</section>
+
+</main>
+
+<a href="GAM-05-Tu-es-inscrit.dc.html" class="gam-hot" aria-label="Rejoindre ce poste — Attaquant, Bleus · 15 DT" style="left: 100px; top: 1155px; width: 74px; height: 80px; border-radius: var(--radius-md)"></a>
+<a href="GAM-05-Tu-es-inscrit.dc.html" class="gam-hot" aria-label="Rejoindre ce poste — Défenseur, Blancs · 15 DT" style="left: 243px; top: 1367px; width: 76px; height: 80px; border-radius: var(--radius-md)"></a>
+<div style="position: absolute; left: 0; right: 0; bottom: 0; z-index: var(--z-sticky); padding: 12px 16px 34px 16px; background: var(--surface); box-shadow: var(--elevation-2-up); display: flex; flex-direction: column; gap: 10px">
+<p class="caption" style="margin: 0; display: flex; align-items: center; justify-content: center; gap: 6px; color: var(--text-secondary)"><span style="display: flex; color: var(--success-text)"><x-import component-from-global-scope="MatchUp.Icon" name="shield-check" weight="fill" size="{{i16}}"></x-import></span>Annulation gratuite jusqu’à sam. 17 oct. · <span class="num-xs" style="color: var(--text)">20h00</span></p>
+<a href="GAM-05-Tu-es-inscrit.dc.html" class="mu-btn mu-btn--primary mu-btn--xl mu-btn--block"><span class="mu-btn__content"><span class="mu-btn__label label-l">Rejoindre et payer</span><span class="mu-btn__dot" aria-hidden="true">·</span><span class="mu-btn__price num-m">15 DT</span></span></a>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":2400}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const P = (name, level, extra) => Object.assign({ name, level }, extra || {});
+    return {
+      yes: true, no: false, i14: 14, i16: 16, i20: 20, i24: 24, inset: 44,
+      l40: 4.0, r96: 96, fit: 85, avg: 3.6, kickoff: 50 * 3600, mapZoom: 1.4, mapH: 96, nobody: null,
+      noop: () => {},
+      heroArt: { style: { position: 'absolute', top: 0, left: 0, right: 0, height: '188px' } },
+      barStyle: { style: { position: 'absolute', top: 0, left: 0, right: 0, zIndex: 2 } },
+      barActions: [{ icon: 'share-network', label: 'Partager la partie' }, { icon: 'dots-three-vertical', label: 'Plus d’actions' }],
+      fitFactors: [
+        { icon: 'gauge', label: 'Niveau dans la fourchette', detail: 'Toi 3,0 · partie 3,0–4,5' },
+        { icon: 'users-three', label: 'Milieu recherché', detail: 'Ton poste habituel' },
+        { icon: 'map-pin', label: 'À 1,4 km', detail: 'Arena Five · La Marsa' }
+      ],
+      teams: [
+        { name: 'Blancs', players: [P('Hamza R.', 3.5), P('Nour A.', 3.0), null, P('Skander T.', 4.0, { role: 'organizer' }), P('Salma G.', 3.0)] },
+        { name: 'Bleus', players: [P('Omar D.', 3.5), P('Lina F.', 3.5), P('Ines M.', 4.0), P('Aziz H.', 4.5), null] }
+      ],
+      venues: [{ id: 'arena', name: 'Arena Five', sport: 'football', lat: 36.8805, lng: 10.3215, area: 'La Marsa', distance: '1,4 km', rating: 4.7, reviews: 128, priceFrom: 15 }],
+      mapCenter: [846, 268],
+      mapStyle: { style: { borderRadius: 0, boxShadow: 'none' } }
+    };
+  }
+}
+</script>
+</body>
+</html>

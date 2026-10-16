@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Confidentialité</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/matchup/tokens.css">
+<link rel="stylesheet" href="ds/matchup/components/bundle.css">
+<script src="ds/matchup/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+/* set:shared — identical in SET-01…07 */
+body{margin:0}
+a{color:var(--link)}
+.set-body{flex:1; min-height:0; overflow:auto; display:flex; flex-direction:column; gap:var(--space-5); padding:var(--space-2) var(--space-4) 34px var(--space-4); box-sizing:border-box}
+.set-section{display:flex; flex-direction:column; gap:var(--space-2); margin:0}
+.set-section__title{margin:0; padding-inline:var(--space-4); color:var(--text-secondary)}
+.set-group{margin:0; padding:0; list-style:none; background:var(--surface); border-radius:var(--radius-md); box-shadow:var(--elevation-1); overflow:hidden}
+.set-group > li{position:relative}
+.set-group > li + li::before{content:""; position:absolute; top:0; inset-inline-start:64px; inset-inline-end:0; height:1px; background:var(--border); z-index:1}
+.set-row{position:relative; display:flex; align-items:center; gap:var(--space-3); min-height:56px; padding:var(--space-2) var(--space-4); box-sizing:border-box; color:var(--text); text-decoration:none; -webkit-tap-highlight-color:transparent; transition:background var(--duration-fast) var(--ease-enter)}
+a.set-row[href]{cursor:pointer}
+a.set-row[href]:hover{background:var(--surface-muted)}
+a.set-row[href]:active{background:var(--surface-muted)}
+a.set-row:focus-visible{outline:none; box-shadow:inset 0 0 0 2px var(--focus)}
+.set-row__icon{flex:none; width:36px; height:36px; border-radius:var(--radius-sm); background:var(--surface-muted); color:var(--text); display:grid; place-items:center}
+.set-row__text{flex:1 1 auto; min-width:0; display:flex; flex-direction:column; gap:2px}
+.set-row__desc{color:var(--text-secondary)}
+.set-row__value{flex:none; max-width:46%; color:var(--text-secondary); text-align:end; white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+.set-row__chev{flex:none; display:flex; color:var(--text-secondary); margin-inline-end:calc(-1 * var(--space-1))}
+.set-row--danger{color:var(--error-text)}
+.set-row--danger .set-row__icon{background:var(--error-soft); color:var(--error-text)}
+.set-row--control > .mu-switch{flex:1 1 auto; min-width:0}
+.set-card{background:var(--surface); border-radius:var(--radius-md); box-shadow:var(--elevation-1); padding:var(--space-4); display:flex; flex-direction:column; gap:var(--space-5)}
+.set-note{margin:0; padding-inline:var(--space-4); color:var(--text-secondary)}
+.set-body--bar{padding-bottom:var(--space-6)}
+.set-bar{position:relative; z-index:2; display:flex; flex-direction:column; gap:var(--space-3); padding:12px var(--space-4) 34px var(--space-4); background:var(--surface); box-shadow:var(--elevation-2-up)}
+.set-back{position:absolute; left:4px; top:48px; width:48px; height:48px; border-radius:var(--radius-full); z-index:2}
+.set-back:focus-visible{outline:none; box-shadow:var(--focus-ring)}
+/* /set:shared */
+</style>
+</helmet>
+<div style="position: relative; width: 390px; height: 844px; box-sizing: border-box; overflow: hidden; display: flex; flex-direction: column; background: var(--bg); color: var(--text); font-family: var(--font-sans)">
+<x-import component-from-global-scope="MatchUp.TopAppBar" title="Confidentialité" on-back="{{noop}}" inset="{{inset}}"></x-import>
+<a href="SET-01-Parametres.dc.html" class="set-back" aria-label="Retour aux paramètres"></a>
+<div class="set-body">
+
+<section class="set-section" aria-labelledby="set-s-profil">
+<h2 id="set-s-profil" class="set-section__title overline">Profil</h2>
+<ul class="set-group">
+<li><a class="set-row">
+<span class="set-row__icon"><x-import component-from-global-scope="MatchUp.Icon" name="eye" size="{{i20}}"></x-import></span>
+<span class="set-row__text"><span class="label">Qui voit mon profil</span></span>
+<span class="set-row__value body">Tout le monde</span>
+<span class="set-row__chev"><x-import component-from-global-scope="MatchUp.Icon" name="caret-right" size="{{i20}}"></x-import></span>
+</a></li>
+<li><a class="set-row">
+<span class="set-row__icon"><x-import component-from-global-scope="MatchUp.Icon" name="user-plus" size="{{i20}}"></x-import></span>
+<span class="set-row__text"><span class="label">Qui peut m’inviter</span></span>
+<span class="set-row__value body">Mes coéquipiers</span>
+<span class="set-row__chev"><x-import component-from-global-scope="MatchUp.Icon" name="caret-right" size="{{i20}}"></x-import></span>
+</a></li>
+<li><div class="set-row set-row--control">
+<span class="set-row__icon"><x-import component-from-global-scope="MatchUp.Icon" name="chart-bar" size="{{i20}}"></x-import></span>
+<x-import component-from-global-scope="MatchUp.Switch" label-position="start" label="Afficher mon niveau" description="3,5 en padel et 3,0 en foot, sur ton profil et dans les parties." default-checked="{{yes}}"></x-import>
+</div></li>
+<li><div class="set-row set-row--control">
+<span class="set-row__icon"><x-import component-from-global-scope="MatchUp.Icon" name="seal-check" size="{{i20}}"></x-import></span>
+<x-import component-from-global-scope="MatchUp.Switch" label-position="start" label="Afficher ma fiabilité" description="Masquée, les organisateurs lisent « Fiabilité masquée »." default-checked="{{yes}}"></x-import>
+</div></li>
+</ul>
+</section>
+
+<section class="set-section" aria-labelledby="set-s-loc">
+<h2 id="set-s-loc" class="set-section__title overline">Localisation</h2>
+<ul class="set-group">
+<li><div class="set-row set-row--control">
+<span class="set-row__icon"><x-import component-from-global-scope="MatchUp.Icon" name="map-pin" size="{{i20}}"></x-import></span>
+<x-import component-from-global-scope="MatchUp.Switch" label-position="start" label="Position précise" description="Pour des distances exactes. Les autres voient « La Marsa »."></x-import>
+</div></li>
+</ul>
+</section>
+
+<section class="set-section" aria-labelledby="set-s-data">
+<h2 id="set-s-data" class="set-section__title overline">Tes données</h2>
+<ul class="set-group">
+<li><a class="set-row">
+<span class="set-row__icon"><x-import component-from-global-scope="MatchUp.Icon" name="download-simple" size="{{i20}}"></x-import></span>
+<span class="set-row__text"><span class="label">Télécharger mes données</span><span class="set-row__desc body">Profil, matchs et paiements, par email sous 48 h</span></span>
+<span class="set-row__chev"><x-import component-from-global-scope="MatchUp.Icon" name="caret-right" size="{{i20}}"></x-import></span>
+</a></li>
+<li><a class="set-row">
+<span class="set-row__icon"><x-import component-from-global-scope="MatchUp.Icon" name="prohibit" size="{{i20}}"></x-import></span>
+<span class="set-row__text"><span class="label">Joueurs bloqués</span></span>
+<span class="set-row__value body">2</span>
+<span class="set-row__chev"><x-import component-from-global-scope="MatchUp.Icon" name="caret-right" size="{{i20}}"></x-import></span>
+</a></li>
+</ul>
+</section>
+
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() { return { yes: true, i20: 20, i24: 24, inset: 44, noop: () => {} }; }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Score du match</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/matchup/tokens.css">
+<link rel="stylesheet" href="ds/matchup/components/bundle.css">
+<script src="ds/matchup/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0}
+a{color:var(--link)}
+.mat-set{display:grid; grid-template-columns:56px 1fr 16px 1fr; align-items:center; gap:8px; padding:12px 0; border-top:1px solid var(--border)}
+.mat-set > :nth-child(2), .mat-set > :nth-child(4){justify-self:center; text-align:center}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; box-sizing: border-box; display: flex; flex-direction: column; background: var(--surface); color: var(--text); font-family: var(--font-sans)">
+<div style="display: flex; align-items: center; justify-content: space-between; padding: 52px 8px 0 8px">
+<a href="MAT-08-Evaluer-les-joueurs.dc.html" class="mu-iconbtn mu-iconbtn--l mu-iconbtn--ghost" aria-label="Retour" style="color: var(--text)"><x-import component-from-global-scope="MatchUp.Icon" name="arrow-left" size="{{i24}}"></x-import></a>
+<a href="MAT-02-Passes.dc.html" class="mu-btn mu-btn--tertiary mu-btn--m"><span class="mu-btn__content"><span class="mu-btn__label label">Passer</span></span></a>
+</div>
+<div style="flex: 1; min-height: 0; overflow: auto; display: flex; flex-direction: column; gap: 20px; padding: 8px 16px 24px 16px">
+<div style="display: flex; flex-direction: column; gap: 8px">
+<h1 class="h1" style="margin: 0">Le score du match</h1>
+<p class="body" style="margin: 0; color: var(--text-secondary)">Facultatif. Ça aide l’IA à affiner les niveaux de chacun.</p>
+</div>
+
+<div style="flex: none"><x-import component-from-global-scope="MatchUp.Scoreboard" sport="padel" status="final" date="ven. 9 oct." venue="Smash Padel Club · Court 3" teams="{{teams}}" sets="{{sets}}"></x-import></div>
+
+<section aria-labelledby="mat-sets" style="flex: none; display: flex; flex-direction: column">
+<div class="mat-set" style="border-top: 0; padding-top: 0">
+<h2 id="mat-sets" class="label" style="margin: 0">Sets</h2>
+<span class="label-s" style="color: var(--text-secondary)">Toi / Mariem</span>
+<span></span>
+<span class="label-s" style="color: var(--text-secondary)">Ines / Nour</span>
+</div>
+<div class="mat-set">
+<span class="label" style="color: var(--text-secondary)">Set 1</span>
+<div style="display: flex; justify-content: center"><x-import component-from-global-scope="MatchUp.Stepper" size="s" min="{{zero}}" max="{{seven}}" value="{{a1}}" on-change="{{setA1}}" value-text="{{games}}" decrement-label="Retirer un jeu à Toi et Mariem" increment-label="Ajouter un jeu à Toi et Mariem"></x-import></div>
+<span class="num-m" style="text-align: center; color: var(--text-secondary)">–</span>
+<div style="display: flex; justify-content: center"><x-import component-from-global-scope="MatchUp.Stepper" size="s" min="{{zero}}" max="{{seven}}" value="{{b1}}" on-change="{{setB1}}" value-text="{{games}}" decrement-label="Retirer un jeu à Ines et Nour" increment-label="Ajouter un jeu à Ines et Nour"></x-import></div>
+</div>
+<div class="mat-set">
+<span class="label" style="color: var(--text-secondary)">Set 2</span>
+<div style="display: flex; justify-content: center"><x-import component-from-global-scope="MatchUp.Stepper" size="s" min="{{zero}}" max="{{seven}}" value="{{a2}}" on-change="{{setA2}}" value-text="{{games}}" decrement-label="Retirer un jeu à Toi et Mariem" increment-label="Ajouter un jeu à Toi et Mariem"></x-import></div>
+<span class="num-m" style="text-align: center; color: var(--text-secondary)">–</span>
+<div style="display: flex; justify-content: center"><x-import component-from-global-scope="MatchUp.Stepper" size="s" min="{{zero}}" max="{{seven}}" value="{{b2}}" on-change="{{setB2}}" value-text="{{games}}" decrement-label="Retirer un jeu à Ines et Nour" increment-label="Ajouter un jeu à Ines et Nour"></x-import></div>
+</div>
+<div style="padding-top: 4px; border-top: 1px solid var(--border)">
+<button type="button" class="mu-btn mu-btn--tertiary mu-btn--s" style="margin-left: -8px"><span class="mu-btn__content"><x-import component-from-global-scope="MatchUp.Icon" name="plus" size="{{i16}}"></x-import><span class="mu-btn__label label">Ajouter un 3e set</span></span></button>
+</div>
+</section>
+
+<p class="caption" style="flex: none; margin: -8px 0 0 0; display: flex; align-items: flex-start; gap: 6px; color: var(--text-secondary)"><span style="flex: none; display: flex; color: var(--info-text)"><x-import component-from-global-scope="MatchUp.Icon" name="info" size="{{i16}}"></x-import></span>Ines et Nour confirmeront le score. Sans réponse sous 48&#160;h, il est validé.</p>
+</div>
+<div style="padding: 12px 16px 34px 16px; background: var(--surface); box-shadow: var(--elevation-2-up); display: flex; flex-direction: column; gap: 12px">
+<a href="MAT-02-Passes.dc.html" class="mu-btn mu-btn--primary mu-btn--xl mu-btn--block"><span class="mu-btn__content"><span class="mu-btn__label label-l">Enregistrer le score</span></span></a>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  state = { a1: 6, b1: 4, a2: 6, b2: 3 };
+  renderVals() {
+    const s = this.state;
+    return {
+      yes: true, i16: 16, i20: 20, i24: 24, zero: 0, seven: 7,
+      a1: s.a1, b1: s.b1, a2: s.a2, b2: s.b2,
+      setA1: (v) => this.setState({ a1: v }), setB1: (v) => this.setState({ b1: v }),
+      setA2: (v) => this.setState({ a2: v }), setB2: (v) => this.setState({ b2: v }),
+      games: (v) => v + (v > 1 ? ' jeux' : ' jeu'),
+      sets: [[s.a1, s.b1], [s.a2, s.b2]],
+      teams: [
+        { name: 'Toi / Mariem K.', players: [{ name: 'Yassine B.' }, { name: 'Mariem K.' }], you: true },
+        { name: 'Ines M. / Nour A.', players: [{ name: 'Ines M.' }, { name: 'Nour A.' }] }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

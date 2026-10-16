@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Changer de rôle</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/matchup/tokens.css">
+<link rel="stylesheet" href="ds/matchup/components/bundle.css">
+<script src="ds/matchup/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0}
+a{color:var(--link)}
+.prf-hot{position:absolute; left:16px; right:16px; z-index:400; border-radius:var(--radius-md)}
+.prf-hot:focus-visible{outline:none; box-shadow:var(--focus-ring)}
+</style>
+</helmet>
+<div style="position: relative; width: 390px; height: 844px; box-sizing: border-box; overflow: hidden; background: var(--bg); color: var(--text); font-family: var(--font-sans)">
+
+<div aria-hidden="true">
+<x-import component-from-global-scope="MatchUp.TopAppBar" variant="home" greeting="Salut Yassine" location="La Marsa" notifications="{{n3}}" user="{{me}}" inset="{{inset}}" avatar-expanded="{{yes}}"></x-import>
+<div style="display: flex; flex-direction: column; gap: 8px; padding: 4px 16px 0 16px">
+<div style="display: flex; align-items: center; gap: 8px"><span class="h3">Parties pour toi</span><x-import component-from-global-scope="MatchUp.AiLabel" size="s"></x-import></div>
+<x-import component-from-global-scope="MatchUp.GameCard" dc-props="{{foot}}"></x-import>
+</div>
+<x-import component-from-global-scope="MatchUp.TabBar" items="{{tabs}}" value="accueil" safe-area="{{sa}}" fab="{{yes}}" dc-props="{{tabStyle}}"></x-import>
+</div>
+
+<a href="PRF-05-Menu-du-compte.dc.html" aria-label="Fermer et revenir au menu du compte" style="position: absolute; inset: 0; z-index: var(--z-sheet); background: var(--scrim)"></a>
+<x-import component-from-global-scope="MatchUp.RoleSwitcher" variant="sheet" roles="{{roles}}" value="joueur" on-add-role="{{noop}}" on-close="{{noop}}" add-hint="Coach ou organisateur de tournois" dc-props="{{sheetStyle}}"></x-import>
+
+<a href="PRF-05-Menu-du-compte.dc.html" aria-label="Fermer" style="position: absolute; left: 332px; top: 531px; width: 44px; height: 44px; border-radius: var(--radius-full); z-index: 400"></a>
+<a href="OWN-09-Tableau-de-bord.dc.html" class="prf-hot" aria-label="Passer en Propriétaire de terrain et terminer la configuration" style="top: 647px; height: 64px"></a>
+<a href="AUTH-11-Choix-du-role.dc.html" class="prf-hot" aria-label="Ajouter un rôle" style="top: 730px; height: 64px"></a>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      yes: true, n3: 3, inset: 44, sa: 34,
+      noop: () => {},
+      me: { name: 'Yassine B.' },
+      roles: [
+        { id: 'joueur', role: 'player', label: 'Joueur', context: 'Padel 3,5 · La Marsa' },
+        { id: 'proprietaire', role: 'owner', label: 'Propriétaire de terrain', context: 'Configuration à terminer · 3 étapes', count: 1 }
+      ],
+      sheetStyle: { style: { position: 'absolute', left: 0, right: 0, bottom: 0, paddingBottom: 50, zIndex: 'var(--z-sheet)' } },
+      tabs: [
+        { value: 'accueil', label: 'Accueil', icon: 'house', href: 'HOM-01-Accueil.dc.html' },
+        { value: 'explorer', label: 'Explorer', icon: 'compass', href: 'EXP-01-Explorer-parties.dc.html' },
+        { value: 'matchs', label: 'Mes matchs', icon: 'calendar-check', badge: 1, badgeLabel: '1 invitation', href: 'MAT-01-A-venir.dc.html' },
+        { value: 'entrainement', label: 'Entraînement', icon: 'barbell' },
+        { value: 'communaute', label: 'Communauté', icon: 'users-three' }
+      ],
+      tabStyle: { style: { position: 'absolute', left: 0, right: 0, bottom: 0 } },
+      foot: {
+        sport: 'football', gameType: 'mixte', venue: 'Arena Five', court: 'Terrain 2', place: 'La Marsa', distance: 1.4,
+        start: new Date(2026, 9, 18, 20, 0), spotsTotal: 10, spotsLeft: 2, price: 15, levelMin: 3, levelMax: 4.5,
+        players: [{ name: 'Skander T.' }, { name: 'Hamza R.' }, { name: 'Nour A.' }, { name: 'Aziz H.' }, { name: 'Omar D.' }, { name: 'Salma G.' }, { name: 'Lina F.' }, { name: 'Ines M.' }],
+        organiser: { name: 'Skander T.', reliability: 96 }, matchFit: 85, matchFitReason: 'Milieu recherché et terrain à 1,4 km'
+      }
+    };
+  }
+}
+</script>
+</body>
+</html>

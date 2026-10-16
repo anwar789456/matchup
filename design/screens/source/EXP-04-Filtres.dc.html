@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Filtres</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/matchup/tokens.css">
+<link rel="stylesheet" href="ds/matchup/components/bundle.css">
+<script src="ds/matchup/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0}
+a{color:var(--link)}
+.exp-chips{display:flex; gap:8px; overflow-x:auto; padding:6px 16px 6px 16px; margin:-6px 0; scrollbar-width:none}
+.exp-chips::-webkit-scrollbar{display:none}
+.exp-chips > *{flex:none}
+.exp-toggle .mu-seg{background:var(--surface)}
+.exp-hot{position:absolute; display:block; border-radius:var(--radius-sm)}
+.exp-group{display:flex; flex-direction:column; gap:12px; padding:16px 0; border-bottom:1px solid var(--border)}
+.exp-group:last-child{border-bottom:0}
+.exp-wrap{display:flex; flex-wrap:wrap; gap:8px}
+.exp-hot:focus-visible{box-shadow:var(--focus-ring); outline:none}
+</style>
+</helmet>
+<div style="position: relative; width: 390px; height: 844px; box-sizing: border-box; overflow: hidden; display: flex; flex-direction: column; background: var(--bg); color: var(--text); font-family: var(--font-sans)">
+<header style="position: relative; z-index: 2; flex: none; display: flex; flex-direction: column; gap: 12px; padding: 52px 0 12px 0; background: var(--surface); box-shadow: inset 0 -1px 0 var(--border)">
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 0 16px; min-height: 40px">
+<h1 class="h2" style="margin: 0">Explorer</h1>
+<x-import component-from-global-scope="MatchUp.Chip" icon="map-pin" trailing-icon="caret-down" aria-label="Zone : La Marsa, 10 km. Changer">La Marsa · 10 km</x-import>
+</div>
+<div style="padding: 0 16px">
+<x-import component-from-global-scope="MatchUp.SearchField" placeholder="Terrain, partie, quartier…"></x-import>
+</div>
+<div style="padding: 0 16px">
+<x-import component-from-global-scope="MatchUp.SegmentedControl" label="Explorer" options="{{segs}}" value="parties" full-width="{{yes}}"></x-import>
+</div>
+<div class="exp-chips" role="group" aria-label="Filtres rapides">
+<x-import component-from-global-scope="MatchUp.Chip" icon="sliders-horizontal" count="{{n2}}">Filtres</x-import>
+<x-import component-from-global-scope="MatchUp.Chip" selected="{{yes}}">Mon niveau</x-import>
+<x-import component-from-global-scope="MatchUp.Chip">Ce soir</x-import>
+<x-import component-from-global-scope="MatchUp.Chip">Ce week-end</x-import>
+<x-import component-from-global-scope="MatchUp.Chip" kind="sport" sport="football" on-click="{{noop}}"></x-import>
+<x-import component-from-global-scope="MatchUp.Chip" kind="sport" sport="padel" on-click="{{noop}}"></x-import>
+<x-import component-from-global-scope="MatchUp.Chip" kind="sport" sport="basketball" on-click="{{noop}}"></x-import>
+</div>
+<a href="EXP-05-Recherche.dc.html" class="exp-hot" aria-label="Rechercher un terrain, une partie, un quartier" style="left: 16px; top: 104px; width: 358px; height: 48px; border-radius: var(--radius-full)"></a>
+<a href="EXP-03-Explorer-terrains.dc.html" class="exp-hot" aria-label="Voir les terrains" style="left: 137px; top: 164px; width: 117px; height: 40px"></a>
+<a href="EXP-04-Filtres.dc.html" class="exp-hot" aria-label="Filtres, 2 actifs" style="left: 16px; top: 216px; width: 112px; height: 32px; border-radius: var(--radius-full)"></a>
+</header>
+
+<main style="flex: 1; min-height: 0; overflow: auto; display: flex; flex-direction: column; gap: 12px; padding: 12px 16px 180px 16px">
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-right: -8px">
+<p class="label" style="margin: 0"><span class="num-s">12</span> parties <span style="color: var(--text-secondary); font-weight: inherit">· près de La Marsa</span></p>
+<button type="button" class="mu-btn mu-btn--tertiary mu-btn--s" aria-label="Trier par : recommandées"><span class="mu-btn__content"><x-import component-from-global-scope="MatchUp.Icon" name="arrows-down-up" size="{{i16}}"></x-import><span class="mu-btn__label label">Recommandées</span></span></button>
+</div>
+<x-import component-from-global-scope="MatchUp.GameCard" dc-props="{{g1}}"></x-import>
+<x-import component-from-global-scope="MatchUp.GameCard" dc-props="{{g2}}"></x-import>
+<x-import component-from-global-scope="MatchUp.GameCard" dc-props="{{g4}}"></x-import>
+<x-import component-from-global-scope="MatchUp.GameCard" dc-props="{{g3}}"></x-import>
+</main>
+
+<div class="exp-toggle" style="position: absolute; z-index: 3; left: 50%; bottom: 114px; transform: translateX(-50%); border-radius: var(--radius-md); background: var(--surface); box-shadow: var(--elevation-2)">
+<x-import component-from-global-scope="MatchUp.SegmentedControl" size="s" label="Affichage" options="{{views}}" value="list"></x-import>
+<a href="EXP-02-Explorer-carte.dc.html" class="exp-hot" aria-label="Afficher la carte" style="left: 0; top: 0; width: 90px; height: 100%"></a>
+</div>
+
+<x-import component-from-global-scope="MatchUp.TabBar" items="{{tabs}}" value="explorer" safe-area="{{sa}}" fab="{{yes}}" dc-props="{{tabStyle}}"></x-import>
+
+<x-import component-from-global-scope="MatchUp.BottomSheet" inline="{{yes}}" open="{{yes}}" height="full" title="Filtres" safe-area="{{safe}}">
+<div style="display: flex; flex-direction: column; padding-bottom: 96px">
+<section class="exp-group" aria-labelledby="f-sport" style="padding-top: 4px">
+<h3 id="f-sport" class="label" style="margin: 0">Sport</h3>
+<div class="exp-wrap">
+<x-import component-from-global-scope="MatchUp.Chip" kind="sport" sport="football" selected="{{yes}}" on-click="{{noop}}"></x-import>
+<x-import component-from-global-scope="MatchUp.Chip" kind="sport" sport="padel" selected="{{yes}}" on-click="{{noop}}"></x-import>
+<x-import component-from-global-scope="MatchUp.Chip" kind="sport" sport="basketball" on-click="{{noop}}"></x-import>
+</div>
+</section>
+<section class="exp-group" aria-labelledby="f-date">
+<h3 id="f-date" class="label" style="margin: 0">Date et heure</h3>
+<div class="exp-wrap" role="radiogroup" aria-labelledby="f-date">
+<x-import component-from-global-scope="MatchUp.Chip" kind="choice">Ce soir</x-import>
+<x-import component-from-global-scope="MatchUp.Chip" kind="choice" selected="{{yes}}">Ce week-end</x-import>
+<x-import component-from-global-scope="MatchUp.Chip" icon="calendar-blank">Choisir</x-import>
+</div>
+<div class="exp-wrap">
+<x-import component-from-global-scope="MatchUp.Chip">Matin</x-import>
+<x-import component-from-global-scope="MatchUp.Chip">Après-midi</x-import>
+<x-import component-from-global-scope="MatchUp.Chip" selected="{{yes}}">Soir · après 18h</x-import>
+</div>
+</section>
+<section class="exp-group">
+<x-import component-from-global-scope="MatchUp.RangeSlider" label="Niveau des joueurs" min="{{lvMin}}" max="{{lvMax}}" step="{{half}}" default-value="{{lv}}" format="{{fmtLevel}}" bands="{{bands}}" min-label="Niveau minimum" max-label="Niveau maximum"></x-import>
+<p class="caption" style="margin: -4px 0 0 0; color: var(--text-secondary)">Autour de ton niveau : 3,5 en padel, 3,0 en football.</p>
+</section>
+<section class="exp-group">
+<x-import component-from-global-scope="MatchUp.RangeSlider" label="Prix par personne" min="{{zero}}" max="{{p50}}" default-value="{{price}}" format="{{fmtDT}}" min-label="Prix minimum" max-label="Prix maximum"></x-import>
+</section>
+<section class="exp-group">
+<x-import component-from-global-scope="MatchUp.RangeSlider" label="Distance" min="{{zero}}" max="{{d20}}" default-value="{{dist}}" format="{{fmtKm}}" format-range="{{fmtKmRange}}" min-label="Distance minimum" max-label="Distance maximum"></x-import>
+</section>
+<section class="exp-group" aria-labelledby="f-type">
+<h3 id="f-type" class="label" style="margin: 0">Type de partie</h3>
+<x-import component-from-global-scope="MatchUp.SegmentedControl" label="Type de partie" options="{{types}}" value="all" full-width="{{yes}}"></x-import>
+</section>
+<section class="exp-group" aria-labelledby="f-court">
+<h3 id="f-court" class="label" style="margin: 0">Terrain</h3>
+<div class="exp-wrap">
+<x-import component-from-global-scope="MatchUp.Chip" icon="sun">Extérieur</x-import>
+<x-import component-from-global-scope="MatchUp.Chip" icon="umbrella">Intérieur</x-import>
+</div>
+<x-import component-from-global-scope="MatchUp.Switch" label-position="start" icon="lightbulb" label="Éclairé le soir" default-checked="{{yes}}"></x-import>
+</section>
+<section class="exp-group" aria-labelledby="f-amen">
+<h3 id="f-amen" class="label" style="margin: 0">Équipements</h3>
+<div class="exp-wrap">
+<x-import component-from-global-scope="MatchUp.Chip" icon="shower">Vestiaires et douches</x-import>
+<x-import component-from-global-scope="MatchUp.Chip" icon="car-simple">Parking</x-import>
+<x-import component-from-global-scope="MatchUp.Chip" icon="coffee">Café</x-import>
+<x-import component-from-global-scope="MatchUp.Chip" icon="t-shirt">Chasubles</x-import>
+</div>
+</section>
+</div>
+</x-import>
+<a href="EXP-01-Explorer-parties.dc.html" class="exp-hot" aria-label="Fermer les filtres" style="z-index: calc(var(--z-sheet) + 1); left: 340px; top: 98px; width: 44px; height: 44px; border-radius: var(--radius-full)"></a>
+<div style="position: absolute; z-index: calc(var(--z-sheet) + 1); left: 0; right: 0; bottom: 0; display: flex; gap: 12px; padding: 12px 16px 34px 16px; background: var(--surface-elevated); box-shadow: var(--elevation-2-up)">
+<button type="button" class="mu-btn mu-btn--secondary mu-btn--xl" style="flex: none"><span class="mu-btn__content"><span class="mu-btn__label label-l">Réinitialiser</span></span></button>
+<a href="EXP-01-Explorer-parties.dc.html" class="mu-btn mu-btn--primary mu-btn--xl" style="flex: 1"><span class="mu-btn__content"><span class="mu-btn__label label-l">Afficher 12 parties</span></span></a>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const at = (d, h, m) => new Date(2026, 9, d, h, m || 0);
+    const G1P = [{ name: 'Skander T.', level: 4 }, { name: 'Hamza R.', level: 3.5 }, { name: 'Nour A.', level: 3 }, { name: 'Aziz H.', level: 4.5 }, { name: 'Omar D.', level: 3.5 }, { name: 'Salma G.', level: 3 }, { name: 'Lina F.', level: 3.5 }, { name: 'Ines M.', level: 4 }];
+    return {
+      yes: true, i16: 16, n2: 2, sa: 34, noop: () => {},
+      safe: { bottom: 34 }, zero: 0, half: 0.5, lvMin: 1, lvMax: 7, p50: 50, d20: 20,
+      lv: [3, 4.5], price: [10, 25], dist: [0, 10],
+      fmtLevel: (v) => v.toFixed(1).replace('.', ','),
+      fmtDT: (v) => v + ' DT',
+      fmtKm: (v) => v + ' km',
+      fmtKmRange: (lo, hi) => (lo === 0 ? 'Jusqu’à ' + hi + ' km' : lo + ' – ' + hi + ' km'),
+      bands: [{ from: 1, to: 2.5, label: 'Débutant' }, { from: 2.5, to: 4, label: 'Intermédiaire' }, { from: 4, to: 5.5, label: 'Avancé' }, { from: 5.5, to: 7, label: 'Expert' }],
+      types: [{ value: 'all', label: 'Toutes' }, { value: 'mixte', label: 'Mixte' }, { value: 'femmes', label: 'Femmes' }, { value: 'hommes', label: 'Hommes' }],
+      segs: [{ value: 'parties', label: 'Parties' }, { value: 'terrains', label: 'Terrains' }, { value: 'tournois', label: 'Tournois' }],
+      views: [{ value: 'map', icon: 'map-trifold', label: 'Carte' }, { value: 'list', icon: 'list', label: 'Liste' }],
+      tabs: [
+        { value: 'accueil', label: 'Accueil', icon: 'house', href: 'HOM-01-Accueil.dc.html' },
+        { value: 'explorer', label: 'Explorer', icon: 'compass', href: 'EXP-01-Explorer-parties.dc.html' },
+        { value: 'matchs', label: 'Mes matchs', icon: 'calendar-check', badge: 1, badgeLabel: '1 invitation', href: 'MAT-01-A-venir.dc.html' },
+        { value: 'entrainement', label: 'Entraînement', icon: 'barbell' },
+        { value: 'communaute', label: 'Communauté', icon: 'users-three' }
+      ],
+      tabStyle: { style: { position: 'absolute', left: 0, right: 0, bottom: 0 } },
+      g1: {
+        sport: 'football', gameType: 'mixte', venue: 'Arena Five', court: 'Terrain 2', place: 'La Marsa', distance: 1.4,
+        start: at(18, 20), spotsTotal: 10, spotsLeft: 2, price: 15, levelMin: 3, levelMax: 4.5, players: G1P,
+        organiser: { name: 'Skander T.', reliability: 96 }, matchFit: 85, matchFitReason: 'Milieu recherché et terrain à 1,4 km',
+        href: 'GAM-01-Partie-ouverte.dc.html'
+      },
+      g2: {
+        sport: 'padel', gameType: 'mixte', venue: 'Smash Padel Club', court: 'Court 3', place: 'Lac 2', distance: 3.1,
+        start: at(16, 20), dateLabel: 'Ce soir', spotsTotal: 4, spotsLeft: 2, price: 25, levelMin: 3, levelMax: 4,
+        players: [{ name: 'Mariem K.', level: 4 }, { name: 'Ines M.', level: 3.5 }],
+        organiser: { name: 'Mariem K.', reliability: 98 }, matchFit: 92, matchFitReason: 'Côté gauche recherché et ton niveau (3,5)'
+      },
+      g4: {
+        sport: 'football', gameType: 'femmes', venue: 'Arena Five', court: 'Terrain 1', place: 'La Marsa', distance: 1.4,
+        start: at(17, 19), spotsTotal: 10, spotsLeft: 0, price: 12, levelMin: 2.5, levelMax: 4,
+        players: [{ name: 'Nour A.' }, { name: 'Salma G.' }, { name: 'Lina F.' }, { name: 'Ines M.' }, { name: 'Mariem K.' }, { name: 'Sarra B.' }, { name: 'Amel T.' }, { name: 'Rim H.' }, { name: 'Yosra M.' }, { name: 'Dorra K.' }],
+        organiser: { name: 'Nour A.', reliability: 94 }, href: 'GAM-02-Partie-complete.dc.html'
+      },
+      g3: {
+        sport: 'basketball', gameType: 'hommes', venue: 'Hoop Zone', place: 'Ennasr', distance: 6.2,
+        start: at(17, 18), spotsTotal: 6, spotsLeft: 2, price: 9, levelMin: 2.5, levelMax: 4,
+        players: [{ name: 'Hamza R.' }, { name: 'Omar D.' }, { name: 'Aziz H.' }, { name: 'Skander T.' }],
+        organiser: { name: 'Hamza R.', reliability: 93 }
+      }
+    };
+  }
+}
+</script>
+</body>
+</html>

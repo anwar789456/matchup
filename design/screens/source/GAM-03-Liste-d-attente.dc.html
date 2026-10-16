@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Liste d’attente</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/matchup/tokens.css">
+<link rel="stylesheet" href="ds/matchup/components/bundle.css">
+<script src="ds/matchup/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0}
+a{color:var(--link)}
+.wl-body > *{flex:none}
+.wl-q{display:flex; flex-direction:column; align-items:center; gap:6px; width:64px; white-space:nowrap}
+.wl-q__dot{width:40px; height:40px; border-radius:var(--radius-full); display:flex; align-items:center; justify-content:center; box-sizing:border-box}
+.wl-step{display:flex; gap:12px; align-items:flex-start}
+.wl-step__icon{flex:none; width:36px; height:36px; border-radius:var(--radius-sm); background:var(--surface); box-shadow:var(--elevation-1); color:var(--text); display:flex; align-items:center; justify-content:center}
+.wl-step__text{display:flex; flex-direction:column; gap:2px; padding-top:2px}
+</style>
+</helmet>
+<div style="position: relative; width: 390px; height: 844px; box-sizing: border-box; display: flex; flex-direction: column; background: var(--bg); color: var(--text); font-family: var(--font-sans)">
+<div style="display: flex; align-items: center; gap: 4px; padding: 52px 8px 0 8px">
+<a href="GAM-02-Partie-complete.dc.html" class="mu-iconbtn mu-iconbtn--l mu-iconbtn--ghost" aria-label="Retour à la partie" style="color: var(--text)"><x-import component-from-global-scope="MatchUp.Icon" name="arrow-left" size="{{i24}}"></x-import></a>
+<h1 class="h3" style="margin: 0">Liste d’attente</h1>
+</div>
+
+<div class="wl-body" style="flex: 1; min-height: 0; overflow: auto; display: flex; flex-direction: column; gap: 16px; padding: 8px 16px 12px 16px">
+
+<a href="GAM-04-Place-disponible.dc.html" data-theme="dark" aria-label="Tu es 3e sur la liste d’attente. Prototype : simuler une place qui se libère" style="position: relative; overflow: hidden; display: flex; flex-direction: column; gap: 12px; padding: 16px 16px 14px 16px; border-radius: var(--radius-lg); background: var(--bg); color: var(--text); text-decoration: none; box-shadow: var(--elevation-2)">
+<div style="display: flex; align-items: center; gap: 16px">
+<span aria-hidden="true" style="flex: none; display: flex; align-items: baseline; gap: 2px; color: var(--accent)"><span class="num-hero">3</span><span class="num-xl">e</span></span>
+<div style="display: flex; flex-direction: column; align-items: flex-start; gap: 8px">
+<x-import component-from-global-scope="MatchUp.StatusBadge" status="pending" label="En attente" size="s"></x-import>
+<p class="h3" style="margin: 0">Tu es 3e sur la liste d’attente</p>
+</div>
+</div>
+<p class="body" style="margin: 0; color: var(--text-secondary)">Plus que 2 joueurs avant toi.</p>
+<div role="img" aria-label="File d’attente : la prochaine place libre ira au 1er, puis au 2e, puis à toi" style="position: relative; display: flex; align-items: flex-start; justify-content: space-between; padding: 4px 8px 0 8px">
+<div aria-hidden="true" style="position: absolute; left: 36px; right: 36px; top: 24px; height: 2px; background: var(--border)"></div>
+<div class="wl-q" style="position: relative">
+<span class="wl-q__dot" style="border: 2px dashed var(--border-strong); color: var(--text-secondary)"><x-import component-from-global-scope="MatchUp.Icon" name="arrow-left" size="{{i16}}"></x-import></span>
+<span class="label-s" style="color: var(--text-secondary)">Place libre</span>
+</div>
+<div class="wl-q" style="position: relative">
+<span class="wl-q__dot" style="background: var(--surface-muted); box-shadow: inset 0 0 0 1px var(--border)"><span class="num-s">1</span></span>
+<span class="label-s" style="color: var(--text-secondary)">1er</span>
+</div>
+<div class="wl-q" style="position: relative">
+<span class="wl-q__dot" style="background: var(--surface-muted); box-shadow: inset 0 0 0 1px var(--border)"><span class="num-s">2</span></span>
+<span class="label-s" style="color: var(--text-secondary)">2e</span>
+</div>
+<div class="wl-q" style="position: relative">
+<span class="wl-q__dot" style="background: var(--accent); color: var(--on-accent)"><span class="label-s">YB</span></span>
+<span class="label-s">Toi</span>
+</div>
+</div>
+</a>
+
+<a href="GAM-02-Partie-complete.dc.html" class="mu-card mu-card--interactive" aria-label="Voir la partie : Arena Five, dimanche 18 octobre à 20h00, 15 DT par personne, complet" style="display: flex; align-items: center; gap: 12px; padding: 12px; text-decoration: none; color: inherit">
+<x-import component-from-global-scope="MatchUp.CourtArt" sport="football" variant="pattern" dc-props="{{thumb}}"></x-import>
+<span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px">
+<span class="label">Arena Five · Terrain 2</span>
+<span class="caption" style="color: var(--text-secondary)">dim. 18 oct. · <span class="num-xs" style="color: var(--text)">20h00</span> · Foot 5 vs 5 mixte</span>
+<span class="caption" style="display: flex; align-items: center; gap: 4px; color: var(--text-secondary)"><x-import component-from-global-scope="MatchUp.Icon" name="users-three" size="{{i14}}"></x-import><span class="num-xs" style="color: var(--text)">10/10</span> · complet</span>
+</span>
+<span style="flex: none; display: flex; flex-direction: column; align-items: flex-end">
+<span class="num-m">15 DT</span>
+<span class="caption" style="color: var(--text-secondary)">/ pers.</span>
+</span>
+</a>
+
+<section aria-labelledby="wl-how" style="display: flex; flex-direction: column; gap: 12px">
+<h2 id="wl-how" class="h3" style="margin: 0">Comment ça marche</h2>
+<div class="wl-step">
+<span class="wl-step__icon"><x-import component-from-global-scope="MatchUp.Icon" name="bell-ringing" size="{{i20}}"></x-import></span>
+<span class="wl-step__text"><span class="label">On te prévient tout de suite</span><span class="caption" style="color: var(--text-secondary)">Dès qu’un joueur se désiste, c’est ton tour.</span></span>
+</div>
+<div class="wl-step">
+<span class="wl-step__icon"><x-import component-from-global-scope="MatchUp.Icon" name="timer" size="{{i20}}"></x-import></span>
+<span class="wl-step__text"><span class="label">15 min pour réclamer la place</span><span class="caption" style="color: var(--text-secondary)">Sans réponse, elle passe au suivant de la liste.</span></span>
+</div>
+<div class="wl-step">
+<span class="wl-step__icon"><x-import component-from-global-scope="MatchUp.Icon" name="wallet" size="{{i20}}"></x-import></span>
+<span class="wl-step__text"><span class="label">Rien à payer d’ici là</span><span class="caption" style="color: var(--text-secondary)">Tu paies <span class="num-xs" style="color: var(--text)">15 DT</span> seulement si tu réclames la place.</span></span>
+</div>
+</section>
+
+<div class="mu-card" style="padding: 8px 16px">
+<x-import component-from-global-scope="MatchUp.Switch" label-position="start" icon="chat-centered-text" label="Me prévenir aussi par SMS" description="+216 20 123 456" default-checked="{{yes}}" style="width: 100%"></x-import>
+</div>
+</div>
+
+<div style="padding: 12px 16px 34px 16px; background: var(--surface); box-shadow: var(--elevation-2-up); display: flex; gap: 12px">
+<a href="GAM-02-Partie-complete.dc.html" class="mu-btn mu-btn--destructive-outline mu-btn--xl" style="flex: 1; padding-inline: 12px"><span class="mu-btn__content"><span class="mu-btn__label label-l">Quitter la liste</span></span></a>
+<a href="EXP-01-Explorer-parties.dc.html" class="mu-btn mu-btn--primary mu-btn--xl" style="flex: 1; padding-inline: 12px"><span class="mu-btn__content"><span class="mu-btn__label label-l">Parties similaires</span></span></a>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      yes: true, no: false, i14: 14, i16: 16, i20: 20, i24: 24,
+      thumb: { style: { flex: 'none', width: '56px', height: '56px', borderRadius: 'var(--radius-sm)' } }
+    };
+  }
+}
+</script>
+</body>
+</html>

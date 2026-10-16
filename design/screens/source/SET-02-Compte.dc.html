@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Compte</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/matchup/tokens.css">
+<link rel="stylesheet" href="ds/matchup/components/bundle.css">
+<script src="ds/matchup/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+/* set:shared — identical in SET-01…07 */
+body{margin:0}
+a{color:var(--link)}
+.set-body{flex:1; min-height:0; overflow:auto; display:flex; flex-direction:column; gap:var(--space-5); padding:var(--space-2) var(--space-4) 34px var(--space-4); box-sizing:border-box}
+.set-section{display:flex; flex-direction:column; gap:var(--space-2); margin:0}
+.set-section__title{margin:0; padding-inline:var(--space-4); color:var(--text-secondary)}
+.set-group{margin:0; padding:0; list-style:none; background:var(--surface); border-radius:var(--radius-md); box-shadow:var(--elevation-1); overflow:hidden}
+.set-group > li{position:relative}
+.set-group > li + li::before{content:""; position:absolute; top:0; inset-inline-start:64px; inset-inline-end:0; height:1px; background:var(--border); z-index:1}
+.set-row{position:relative; display:flex; align-items:center; gap:var(--space-3); min-height:56px; padding:var(--space-2) var(--space-4); box-sizing:border-box; color:var(--text); text-decoration:none; -webkit-tap-highlight-color:transparent; transition:background var(--duration-fast) var(--ease-enter)}
+a.set-row[href]{cursor:pointer}
+a.set-row[href]:hover{background:var(--surface-muted)}
+a.set-row[href]:active{background:var(--surface-muted)}
+a.set-row:focus-visible{outline:none; box-shadow:inset 0 0 0 2px var(--focus)}
+.set-row__icon{flex:none; width:36px; height:36px; border-radius:var(--radius-sm); background:var(--surface-muted); color:var(--text); display:grid; place-items:center}
+.set-row__text{flex:1 1 auto; min-width:0; display:flex; flex-direction:column; gap:2px}
+.set-row__desc{color:var(--text-secondary)}
+.set-row__value{flex:none; max-width:46%; color:var(--text-secondary); text-align:end; white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+.set-row__chev{flex:none; display:flex; color:var(--text-secondary); margin-inline-end:calc(-1 * var(--space-1))}
+.set-row--danger{color:var(--error-text)}
+.set-row--danger .set-row__icon{background:var(--error-soft); color:var(--error-text)}
+.set-row--control > .mu-switch{flex:1 1 auto; min-width:0}
+.set-card{background:var(--surface); border-radius:var(--radius-md); box-shadow:var(--elevation-1); padding:var(--space-4); display:flex; flex-direction:column; gap:var(--space-5)}
+.set-note{margin:0; padding-inline:var(--space-4); color:var(--text-secondary)}
+.set-body--bar{padding-bottom:var(--space-6)}
+.set-bar{position:relative; z-index:2; display:flex; flex-direction:column; gap:var(--space-3); padding:12px var(--space-4) 34px var(--space-4); background:var(--surface); box-shadow:var(--elevation-2-up)}
+.set-back{position:absolute; left:4px; top:48px; width:48px; height:48px; border-radius:var(--radius-full); z-index:2}
+.set-back:focus-visible{outline:none; box-shadow:var(--focus-ring)}
+/* /set:shared */
+</style>
+</helmet>
+<div style="position: relative; width: 390px; height: 984px; box-sizing: border-box; overflow: hidden; display: flex; flex-direction: column; background: var(--bg); color: var(--text); font-family: var(--font-sans)">
+<x-import component-from-global-scope="MatchUp.TopAppBar" title="Compte" on-back="{{noop}}" inset="{{inset}}"></x-import>
+<a href="SET-01-Parametres.dc.html" class="set-back" aria-label="Retour aux paramètres"></a>
+<div class="set-body set-body--bar">
+
+<section class="set-section" aria-labelledby="set-s-contact">
+<h2 id="set-s-contact" class="set-section__title overline">Contact</h2>
+<div class="set-card">
+<x-import component-from-global-scope="MatchUp.TextField" label="Email" type="email" leading-icon="envelope-simple" default-value="yassine.b@email.tn" autocomplete="email" success="Email vérifié"></x-import>
+<x-import component-from-global-scope="MatchUp.PhoneField" label="Téléphone" default-value="+216 20 123 456" success="Numéro vérifié"></x-import>
+</div>
+<p class="set-note caption">Si tu changes l’un des deux, on t’envoie un code pour le vérifier à nouveau.</p>
+</section>
+
+<section class="set-section" aria-labelledby="set-s-infos">
+<h2 id="set-s-infos" class="set-section__title overline">Infos personnelles</h2>
+<div class="set-card">
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-3)">
+<x-import component-from-global-scope="MatchUp.TextField" label="Prénom" default-value="Yassine" autocomplete="given-name"></x-import>
+<x-import component-from-global-scope="MatchUp.TextField" label="Nom" default-value="Belhaj" autocomplete="family-name"></x-import>
+</div>
+<x-import component-from-global-scope="MatchUp.TextField" label="Date de naissance" leading-icon="calendar-blank" default-value="12/03/1998" placeholder="JJ/MM/AAAA" inputmode="numeric" autocomplete="bday" helper="Jamais affichée sur ton profil."></x-import>
+<x-import component-from-global-scope="MatchUp.Select" label="Genre" optional="{{yes}}" options="{{genres}}" default-value="homme" helper="Sert seulement à te proposer les parties femmes ou hommes."></x-import>
+</div>
+<p class="set-note caption">Les autres joueurs voient « Yassine B. » : ton prénom et l’initiale de ton nom.</p>
+</section>
+
+</div>
+<div class="set-bar">
+<a href="SET-01-Parametres.dc.html" class="mu-btn mu-btn--primary mu-btn--xl mu-btn--block"><span class="mu-btn__content"><span class="mu-btn__label label-l">Enregistrer</span></span></a>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":984}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      yes: true, i20: 20, i24: 24, inset: 44, noop: () => {},
+      genres: [
+        { value: 'femme', label: 'Femme' },
+        { value: 'homme', label: 'Homme' },
+        { value: 'nr', label: 'Je préfère ne pas répondre' }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

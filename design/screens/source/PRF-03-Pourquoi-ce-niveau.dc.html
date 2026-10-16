@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Pourquoi ce niveau ?</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/matchup/tokens.css">
+<link rel="stylesheet" href="ds/matchup/components/bundle.css">
+<script src="ds/matchup/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0}
+a{color:var(--link)}
+.prf-why{display:flex; flex-direction:column; gap:8px}
+.prf-why__row{display:flex; align-items:center; gap:12px}
+.prf-why__row + .prf-why__row{padding-top:8px; border-top:1px solid var(--border)}
+.prf-ico{flex:none; width:32px; height:32px; border-radius:var(--radius-sm); display:flex; align-items:center; justify-content:center; background:var(--surface-muted); color:var(--text)}
+.prf-adjust > summary{list-style:none; cursor:pointer}
+.prf-adjust[open]{flex-basis:100%}
+.prf-adjust > summary::-webkit-details-marker{display:none}
+.prf-adjust__caret{display:flex; transition:transform var(--duration-base) var(--ease-move)}
+.prf-adjust[open] .prf-adjust__caret{transform:rotate(180deg)}
+</style>
+</helmet>
+<div style="position: relative; width: 390px; height: 844px; box-sizing: border-box; overflow: hidden; background: var(--bg); color: var(--text); font-family: var(--font-sans)">
+
+<div aria-hidden="true">
+<x-import component-from-global-scope="MatchUp.CourtArt" sport="padel" dc-props="{{coverStyle}}"></x-import>
+<div style="display: flex; align-items: flex-end; justify-content: space-between; margin-top: -48px; padding: 0 16px; position: relative">
+<div style="border-radius: var(--radius-full); box-shadow: 0 0 0 4px var(--bg); background: var(--bg)"><x-import component-from-global-scope="MatchUp.Avatar" name="Yassine B." size="xl"></x-import></div>
+</div>
+<div style="padding: 12px 16px 0 16px"><p class="h1" style="margin: 0">Yassine B.</p><p class="body" style="margin: 0; color: var(--text-secondary)">@yassine.b · La Marsa</p></div>
+</div>
+
+<x-import component-from-global-scope="MatchUp.BottomSheet" inline="{{yes}}" open="{{yes}}" height="full" title="Pourquoi 3,5 en padel ?" safe-area="{{safe}}">
+<div style="display: flex; flex-direction: column; gap: 14px; padding-bottom: 88px">
+
+<div style="display: flex; flex-direction: column; gap: 10px">
+<div style="display: flex; align-items: center; gap: 8px">
+<x-import component-from-global-scope="MatchUp.AiLabel" size="s"></x-import>
+<span class="caption" style="color: var(--text-secondary)">Mise à jour ven. 9 oct., après ton dernier match</span>
+</div>
+<div style="display: flex; align-items: flex-end; justify-content: space-between; gap: 12px">
+<div style="display: flex; align-items: baseline; gap: 10px">
+<span class="num-xl">3,5</span>
+<span class="label-l">Intermédiaire</span>
+</div>
+<span class="caption" style="display: inline-flex; align-items: center; gap: 4px; padding-bottom: 6px; color: var(--success-text)"><x-import component-from-global-scope="MatchUp.Icon" name="trend-up" size="{{i16}}"></x-import><span class="num-xs">+0,2</span><span style="color: var(--text-secondary)">sur 30 jours</span></span>
+</div>
+<div style="display: flex; align-items: center; gap: 8px">
+<span aria-hidden="true" style="display: inline-flex; gap: 3px">
+<span style="width: 6px; height: 6px; border-radius: var(--radius-full); background: var(--text)"></span>
+<span style="width: 6px; height: 6px; border-radius: var(--radius-full); background: var(--text)"></span>
+<span style="width: 6px; height: 6px; border-radius: var(--radius-full); background: var(--text)"></span>
+</span>
+<span class="caption" style="color: var(--text-secondary)"><span class="label-s" style="color: var(--text)">Confiance élevée</span> · très probablement entre 3,3 et 3,7</span>
+</div>
+</div>
+
+<section class="prf-why" aria-labelledby="prf-in">
+<h3 id="prf-in" class="overline" style="margin: 0; color: var(--text-secondary)">Ce que l’IA a pris en compte</h3>
+<x-import component-from-global-scope="MatchUp.ProgressBar" value="{{w1}}" size="s" tone="ai" label="Tes 18 matchs de padel" value-label="55 %" hint="Résultats et niveau des adversaires (3,0 à 4,5)"></x-import>
+<x-import component-from-global-scope="MatchUp.ProgressBar" value="{{w2}}" size="s" tone="ai" label="9 avis de coéquipiers" value-label="30 %" hint="7 « conforme », 2 « au-dessus » de ton niveau"></x-import>
+<x-import component-from-global-scope="MatchUp.ProgressBar" value="{{w3}}" size="s" tone="ai" label="Ton questionnaire de départ" value-label="15 %"></x-import>
+</section>
+
+<section class="prf-why" aria-labelledby="prf-moves">
+<h3 id="prf-moves" class="overline" style="margin: 0; color: var(--text-secondary)">Les matchs qui l’ont fait bouger</h3>
+<div class="prf-why__row">
+<span class="prf-ico"><x-import component-from-global-scope="MatchUp.Icon" name="sport-padel" size="{{i20}}"></x-import></span>
+<span style="flex: 1; min-width: 0; display: flex; flex-direction: column">
+<span class="label">Victoire <span class="num-s">6-4 6-3</span> · ven. 9 oct.</span>
+<span class="caption" style="color: var(--text-secondary)">Contre Ines M. et Nour A., moyenne 3,5</span>
+</span>
+<span class="num-s" style="color: var(--success-text)">+0,1</span>
+</div>
+<div class="prf-why__row">
+<span class="prf-ico"><x-import component-from-global-scope="MatchUp.Icon" name="sport-padel" size="{{i20}}"></x-import></span>
+<span style="flex: 1; min-width: 0; display: flex; flex-direction: column">
+<span class="label">Victoire <span class="num-s">6-3 7-5</span> · jeu. 1 oct.</span>
+<span class="caption" style="color: var(--text-secondary)">Contre une paire à 3,7, donc plus forte</span>
+</span>
+<span class="num-s" style="color: var(--success-text)">+0,1</span>
+</div>
+<div class="prf-why__row">
+<span class="prf-ico"><x-import component-from-global-scope="MatchUp.Icon" name="sport-padel" size="{{i20}}"></x-import></span>
+<span style="flex: 1; min-width: 0; display: flex; flex-direction: column">
+<span class="label">Défaite <span class="num-s">4-6 6-7</span> · mar. 22 sept.</span>
+<span class="caption" style="color: var(--text-secondary)">Serrée contre une paire à 4,0 : pas de baisse</span>
+</span>
+<span class="num-s" style="color: var(--text-secondary)">0,0</span>
+</div>
+</section>
+
+<section style="display: flex; flex-direction: column; gap: 8px; padding-top: 12px; border-top: 1px solid var(--border)" aria-label="Pas d’accord avec ce niveau ?">
+<div style="display: flex; flex-wrap: wrap; align-items: center; gap: 8px">
+<details class="prf-adjust">
+<summary class="mu-btn mu-btn--secondary mu-btn--m" style="box-sizing: border-box"><span class="mu-btn__content"><x-import component-from-global-scope="MatchUp.Icon" name="sliders-horizontal" size="{{i20}}"></x-import><span class="mu-btn__label label">Ajuster</span></span></summary>
+<div style="display: flex; flex-direction: column; gap: 8px; margin-top: 12px; padding: 16px; border-radius: var(--radius-md); background: var(--surface-muted)">
+<x-import component-from-global-scope="MatchUp.LevelSlider" label="Ton niveau padel" ai-estimate="{{lvl}}" default-value="{{lvl}}" ai-note="d’après tes 18 matchs"></x-import>
+<p class="caption" style="margin: 0; color: var(--text-secondary)">Ton choix compte comme une auto-évaluation : tes 3 prochains matchs le confirmeront.</p>
+</div>
+</details>
+<button type="button" class="mu-btn mu-btn--tertiary mu-btn--m"><span class="mu-btn__content"><span class="mu-btn__label label">Ce niveau me semble faux</span></span></button>
+</div>
+<p class="caption" style="margin: 0; display: flex; align-items: center; gap: 6px; color: var(--text-secondary)"><x-import component-from-global-scope="MatchUp.Icon" name="info" size="{{i16}}"></x-import>L’IA peut se tromper. Un humain relit chaque contestation.</p>
+</section>
+
+</div>
+</x-import>
+<a href="PRF-01-Mon-profil.dc.html" aria-label="Fermer et revenir au profil" style="position: absolute; left: 0; right: 0; top: 0; height: 68px"></a>
+<a href="PRF-01-Mon-profil.dc.html" aria-label="Fermer" style="position: absolute; left: 340px; top: 98px; width: 44px; height: 44px; border-radius: var(--radius-full); z-index: 400"></a>
+<div style="position: absolute; left: 0; right: 0; bottom: 0; z-index: 400; padding: 12px 16px 34px 16px; background: var(--surface-elevated); box-shadow: var(--elevation-2-up)">
+<a href="PRF-01-Mon-profil.dc.html" class="mu-btn mu-btn--primary mu-btn--xl mu-btn--block"><span class="mu-btn__content"><span class="mu-btn__label label-l">J’ai compris</span></span></a>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      yes: true, i16: 16, i20: 20, i24: 24, lvl: 3.5,
+      w1: 55, w2: 30, w3: 15,
+      safe: { bottom: 34 },
+      coverStyle: { style: { height: 196, width: '100%', display: 'block' } }
+    };
+  }
+}
+</script>
+</body>
+</html>

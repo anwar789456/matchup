@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Détail de la réservation</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/matchup/tokens.css">
+<link rel="stylesheet" href="ds/matchup/components/bundle.css">
+<script src="ds/matchup/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0}
+a{color:var(--link)}
+.mat-row{display:flex; align-items:center; gap:12px; min-height:52px; border-top:1px solid var(--border)}
+.mat-row:first-child{border-top:0}
+.mat-dl{margin:0; display:flex; flex-direction:column}
+.mat-dl > div{display:flex; align-items:baseline; justify-content:space-between; gap:12px; padding:10px 0; border-top:1px solid var(--border)}
+.mat-dl > div:first-child{border-top:0; padding-top:0}
+.mat-dl dd{margin:0; white-space:nowrap}
+</style>
+</helmet>
+<div style="position: relative; width: 390px; height: 2280px; box-sizing: border-box; overflow: hidden; background: var(--bg); color: var(--text); font-family: var(--font-sans)">
+
+<x-import component-from-global-scope="MatchUp.CourtArt" sport="football" variant="photo" label="Arena Five, Terrain 1 sous les projecteurs" dc-props="{{artProps}}"></x-import>
+<x-import component-from-global-scope="MatchUp.TopAppBar" variant="media" title="Ma réservation" inset="{{inset}}" on-back="{{noop}}" actions="{{barActions}}" dc-props="{{barProps}}"></x-import>
+<a href="MAT-01-A-venir.dc.html" aria-label="Retour à Mes matchs" style="position: absolute; left: 8px; top: 52px; width: 40px; height: 40px; border-radius: var(--radius-full); z-index: 2"></a>
+
+<div style="position: relative; margin-top: -24px; border-radius: var(--radius-lg) var(--radius-lg) 0 0; background: var(--bg); display: flex; flex-direction: column; gap: 24px; padding: 20px 16px 140px 16px">
+
+<header style="display: flex; flex-direction: column; gap: 8px">
+<div style="display: flex; align-items: center; gap: 8px">
+<x-import component-from-global-scope="MatchUp.StatusBadge" status="confirmed" label="Confirmée"></x-import>
+<x-import component-from-global-scope="MatchUp.Chip" kind="sport" sport="football" size="s">Football 5 vs 5</x-import>
+<span class="caption" style="margin-left: auto; color: var(--text-secondary)">Réf. <span class="num-xs" style="color: var(--text)">MU-48213</span></span>
+</div>
+<h1 class="h2" style="margin: 0">Arena Five · Terrain 1</h1>
+<p class="body" style="margin: 0; color: var(--text-secondary)">Partie publique · mixte · niveau 2,5 – 4,0 · tu organises</p>
+</header>
+
+<section aria-label="Quand et combien" class="mu-card" style="display: flex; flex-direction: column; padding: 0; overflow: hidden">
+<div style="display: grid; grid-template-columns: 1fr 1.25fr 0.9fr">
+<div style="display: flex; flex-direction: column; gap: 2px; padding: 14px 12px 14px 16px">
+<span class="overline" style="color: var(--text-secondary)">Mercredi</span>
+<span class="num-m">21 oct.</span>
+<span class="caption" style="color: var(--text-secondary)">dans 5 jours</span>
+</div>
+<div style="display: flex; flex-direction: column; gap: 2px; padding: 14px 12px; border-left: 1px solid var(--border)">
+<span class="overline" style="color: var(--text-secondary)">Horaire</span>
+<span class="num-m">21h00 – 22h00</span>
+<span class="caption" style="color: var(--text-secondary)">1 h · éclairé</span>
+</div>
+<div style="display: flex; flex-direction: column; gap: 2px; padding: 14px 12px; border-left: 1px solid var(--border)">
+<span class="overline" style="color: var(--text-secondary)">Ta part</span>
+<span><span class="num-m">15</span><span class="num-s"> DT</span></span>
+<span class="caption" style="display: flex; align-items: center; gap: 4px; color: var(--success-text)"><x-import component-from-global-scope="MatchUp.Icon" name="check-circle" weight="fill" size="{{i14}}"></x-import>Payé</span>
+</div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 8px; padding: 12px 16px 14px 16px; border-top: 1px solid var(--border); background: var(--surface)">
+<button type="button" class="mu-btn mu-btn--secondary mu-btn--m mu-btn--block" onclick="{{openQr}}"><span class="mu-btn__content"><x-import component-from-global-scope="MatchUp.Icon" name="qr-code" size="{{i20}}"></x-import><span class="mu-btn__label label">Afficher le QR code</span></span></button>
+<span class="caption" style="text-align: center; color: var(--text-secondary)">Ton billet pour l’accueil d’Arena Five, le jour du match.</span>
+</div>
+</section>
+
+<section aria-labelledby="mat-lieu" style="display: flex; flex-direction: column; gap: 12px">
+<h2 id="mat-lieu" class="h3" style="margin: 0">Lieu</h2>
+<div class="mu-card" style="padding: 0; overflow: hidden">
+<x-import component-from-global-scope="MatchUp.MapView" interactive="{{no}}" venues="{{venues}}" default-selected-id="arena" center="{{mapCenter}}" zoom="{{mapZoom}}" height="{{mapH}}" label="Arena Five, La Marsa"></x-import>
+<div style="display: flex; align-items: center; gap: 12px; padding: 12px 12px 12px 16px">
+<a href="VEN-01-Terrain.dc.html" style="flex: 1; min-width: 0; display: flex; flex-direction: column; text-decoration: none; color: inherit">
+<span class="label-l" style="display: flex; align-items: center; gap: 6px">Arena Five <x-import component-from-global-scope="MatchUp.StatusBadge" status="verified" size="s" icon-only="{{yes}}"></x-import></span>
+<span class="caption" style="color: var(--text-secondary)">Route de la Corniche · 1,4 km</span>
+</a>
+<button type="button" class="mu-btn mu-btn--secondary mu-btn--s"><span class="mu-btn__content"><x-import component-from-global-scope="MatchUp.Icon" name="navigation-arrow" size="{{i16}}"></x-import><span class="mu-btn__label label">Itinéraire</span></span></button>
+</div>
+<p class="caption" style="margin: 0; padding: 0 16px 14px 16px; color: var(--text-secondary)">Vestiaires · douches · parking · chasubles fournies. Arrive 10 min avant.</p>
+</div>
+</section>
+
+<section aria-labelledby="mat-joueurs" style="display: flex; flex-direction: column; gap: 12px">
+<div style="display: flex; align-items: center; justify-content: space-between">
+<h2 id="mat-joueurs" class="h3" style="margin: 0">Joueurs</h2>
+<button type="button" class="mu-btn mu-btn--tertiary mu-btn--s" style="margin-right: -8px"><span class="mu-btn__content"><x-import component-from-global-scope="MatchUp.Icon" name="link" size="{{i16}}"></x-import><span class="mu-btn__label label">Copier le lien</span></span></button>
+</div>
+<div class="mu-card" style="display: flex; align-items: center; gap: 16px; padding: 16px">
+<x-import component-from-global-scope="MatchUp.Lineup" variant="compact" sport="football" teams="{{lineup}}"></x-import>
+<div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; padding-left: 12px; border-left: 1px solid var(--border)">
+<span class="overline" style="color: var(--text-secondary)">Niveau moyen</span>
+<span><span class="num-m">3,6</span> <span class="caption" style="color: var(--text-secondary)">Intermédiaire</span></span>
+<span class="caption" style="color: var(--text-secondary)">Blancs 4/5 · Bleus 2/5</span>
+</div>
+</div>
+<div class="mu-card" style="display: flex; flex-direction: column; padding: 8px 16px">
+<div style="display: flex; align-items: center; justify-content: space-between; padding: 8px 0">
+<span style="display: flex; flex-direction: column"><span class="label">Paiements</span><span class="caption" style="color: var(--text-secondary)">150 DT le terrain · 15 DT par joueur</span></span>
+<span class="caption" style="color: var(--text-secondary)"><span class="num-xs" style="color: var(--text)">90 DT</span> reçus</span>
+</div>
+<div class="mat-row"><x-import component-from-global-scope="MatchUp.Avatar" name="Yassine B." size="s"></x-import><span style="flex: 1; min-width: 0; display: flex; flex-direction: column"><span class="label">Yassine B. · toi</span><span class="caption" style="color: var(--text-secondary)">Organisateur · payé le jeu. 15 oct.</span></span><x-import component-from-global-scope="MatchUp.StatusBadge" status="paid" size="s"></x-import></div>
+<div class="mat-row"><x-import component-from-global-scope="MatchUp.Avatar" name="Skander T." size="s"></x-import><span class="label" style="flex: 1">Skander T.</span><x-import component-from-global-scope="MatchUp.StatusBadge" status="paid" size="s"></x-import></div>
+<div class="mat-row"><x-import component-from-global-scope="MatchUp.Avatar" name="Hamza R." size="s"></x-import><span class="label" style="flex: 1">Hamza R.</span><x-import component-from-global-scope="MatchUp.StatusBadge" status="paid" size="s"></x-import></div>
+<div class="mat-row"><x-import component-from-global-scope="MatchUp.Avatar" name="Aziz H." size="s"></x-import><span class="label" style="flex: 1">Aziz H.</span><x-import component-from-global-scope="MatchUp.StatusBadge" status="paid" size="s"></x-import></div>
+<div class="mat-row"><x-import component-from-global-scope="MatchUp.Avatar" name="Nour A." size="s"></x-import><span class="label" style="flex: 1">Nour A.</span><x-import component-from-global-scope="MatchUp.StatusBadge" status="paid" size="s"></x-import></div>
+<div class="mat-row"><x-import component-from-global-scope="MatchUp.Avatar" name="Omar D." size="s"></x-import><span class="label" style="flex: 1">Omar D.</span><x-import component-from-global-scope="MatchUp.StatusBadge" status="paid" size="s"></x-import></div>
+<div class="mat-row" style="padding-bottom: 4px"><span style="flex: none; width: 32px; height: 32px; border-radius: var(--radius-full); box-shadow: inset 0 0 0 1.5px var(--border-strong); color: var(--text-secondary); display: flex; align-items: center; justify-content: center"><x-import component-from-global-scope="MatchUp.Icon" name="plus" size="{{i16}}"></x-import></span><span style="flex: 1; min-width: 0; display: flex; flex-direction: column"><span class="label">4 places publiques</span><span class="caption" style="color: var(--text-secondary)">15 DT payés par chaque joueur qui rejoint</span></span></div>
+</div>
+</section>
+
+<section aria-labelledby="mat-chat" style="display: flex; flex-direction: column; gap: 12px">
+<div style="display: flex; align-items: center; justify-content: space-between">
+<h2 id="mat-chat" class="h3" style="margin: 0">Discussion</h2>
+<span class="caption" style="color: var(--text-secondary)">2 nouveaux messages</span>
+</div>
+<div class="mu-card" style="display: flex; flex-direction: column; gap: 12px; padding: 16px">
+<div style="display: flex; gap: 10px">
+<x-import component-from-global-scope="MatchUp.Avatar" name="Skander T." size="s"></x-import>
+<div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px">
+<span class="caption" style="color: var(--text-secondary)"><span class="label-s" style="color: var(--text)">Skander T.</span> · 17h42</span>
+<span class="body" style="align-self: flex-start; padding: 8px 12px; border-radius: 4px var(--radius-md) var(--radius-md) var(--radius-md); background: var(--surface-muted)">Je ramène un ballon neuf. On se retrouve au parking ?</span>
+</div>
+</div>
+<div style="display: flex; gap: 10px">
+<x-import component-from-global-scope="MatchUp.Avatar" name="Hamza R." size="s"></x-import>
+<div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px">
+<span class="caption" style="color: var(--text-secondary)"><span class="label-s" style="color: var(--text)">Hamza R.</span> · 17h50</span>
+<span class="body" style="align-self: flex-start; padding: 8px 12px; border-radius: 4px var(--radius-md) var(--radius-md) var(--radius-md); background: var(--surface-muted)">Je prends les gants, je serai gardien.</span>
+</div>
+</div>
+<button type="button" class="mu-btn mu-btn--secondary mu-btn--m mu-btn--block"><span class="mu-btn__content"><x-import component-from-global-scope="MatchUp.Icon" name="chat-circle-dots" size="{{i20}}"></x-import><span class="mu-btn__label label">Ouvrir la discussion</span></span></button>
+</div>
+</section>
+
+<section aria-labelledby="mat-policy" style="display: flex; flex-direction: column; gap: 12px">
+<h2 id="mat-policy" class="h3" style="margin: 0">Annulation</h2>
+<div class="mu-card" style="display: flex; flex-direction: column; gap: 14px; padding: 16px">
+<div style="display: grid; grid-template-columns: 1.3fr 1fr 1fr; gap: 4px">
+<span style="height: 6px; border-radius: var(--radius-full) 0 0 var(--radius-full); background: var(--success)"></span>
+<span style="height: 6px; background: var(--warning)"></span>
+<span style="height: 6px; border-radius: 0 var(--radius-full) var(--radius-full) 0; background: var(--error)"></span>
+</div>
+<div style="display: flex; flex-direction: column; gap: 10px">
+<div style="display: flex; align-items: flex-start; gap: 10px">
+<span style="flex: none; display: flex; color: var(--success-text)"><x-import component-from-global-scope="MatchUp.Icon" name="check-circle" weight="fill" size="{{i20}}"></x-import></span>
+<span style="flex: 1; display: flex; flex-direction: column"><span class="label">Gratuite jusqu’au mar. 20 oct. · 21h00</span><span class="caption" style="color: var(--text-secondary)">100 % remboursé · tu es ici</span></span>
+</div>
+<div style="display: flex; align-items: flex-start; gap: 10px">
+<span style="flex: none; display: flex; color: var(--warning-text)"><x-import component-from-global-scope="MatchUp.Icon" name="clock" weight="fill" size="{{i20}}"></x-import></span>
+<span style="flex: 1; display: flex; flex-direction: column"><span class="label">Entre 24 h et 6 h avant</span><span class="caption" style="color: var(--text-secondary)">50 % remboursé</span></span>
+</div>
+<div style="display: flex; align-items: flex-start; gap: 10px">
+<span style="flex: none; display: flex; color: var(--error-text)"><x-import component-from-global-scope="MatchUp.Icon" name="x-circle" weight="fill" size="{{i20}}"></x-import></span>
+<span style="flex: 1; display: flex; flex-direction: column"><span class="label">Moins de 6 h avant</span><span class="caption" style="color: var(--text-secondary)">Non remboursable</span></span>
+</div>
+</div>
+<p class="caption" style="margin: 0; padding-top: 12px; border-top: 1px solid var(--border); color: var(--text-secondary)">Si tu annules, les 6 joueurs sont remboursés automatiquement sur leur solde MatchUp et prévenus par notification.</p>
+</div>
+<a href="MAT-06-Annuler-la-reservation.dc.html" class="mu-btn mu-btn--destructive-outline mu-btn--l mu-btn--block"><span class="mu-btn__content"><x-import component-from-global-scope="MatchUp.Icon" name="calendar-x" size="{{i20}}"></x-import><span class="mu-btn__label label-l">Annuler la réservation</span></span></a>
+</section>
+
+</div>
+
+<div style="position: absolute; left: 0; right: 0; bottom: 0; padding: 12px 16px 34px 16px; background: var(--surface); box-shadow: var(--elevation-2-up); display: flex; flex-direction: column; gap: 12px">
+<a href="BKG-03-Inviter-des-amis.dc.html" class="mu-btn mu-btn--primary mu-btn--xl mu-btn--block"><span class="mu-btn__content"><x-import component-from-global-scope="MatchUp.Icon" name="user-plus" size="{{i20}}"></x-import><span class="mu-btn__label label-l">Inviter des joueurs · 4 places</span></span></a>
+</div>
+
+<sc-if value="{{qrOpen}}">
+<div style="position: absolute; left: 0; top: 0; width: 390px; height: 844px; z-index: var(--z-takeover, 600)">
+<x-import component-from-global-scope="MatchUp.Takeover.Ticket" inline="{{yes}}" open="{{yes}}" on-close="{{closeQr}}" safe-area="{{safe}}" reference="MU-48213" sport="football" venue="Arena Five · La Marsa" court="Terrain 1" date="mer. 21 oct." time="21h00" players="6/10" price="15 DT" note="Présente ce code à l’accueil d’Arena Five."></x-import>
+</div>
+</sc-if>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":2280}}'>
+class Component extends DCLogic {
+  state = { qr: false };
+  renderVals() {
+    return {
+      yes: true, no: false, i14: 14, i16: 16, i20: 20, i24: 24, inset: 44,
+      noop: () => {},
+      qrOpen: this.state.qr,
+      openQr: () => this.setState({ qr: true }),
+      closeQr: () => this.setState({ qr: false }),
+      safe: { top: 44, bottom: 34 },
+      artProps: { style: { display: 'block', height: 248 } },
+      barProps: { style: { position: 'absolute', top: 0, left: 0, right: 0, zIndex: 1 } },
+      barActions: [{ icon: 'share-network', label: 'Partager' }, { icon: 'dots-three', label: 'Plus d’actions' }],
+      venues: [{ id: 'arena', name: 'Arena Five', sport: 'football', lat: 36.8805, lng: 10.3215, area: 'La Marsa', distance: '1,4 km', rating: 4.7, reviews: 128 }],
+      mapCenter: [846, 262], mapZoom: 1.6, mapH: 152,
+      lineup: [
+        { name: 'Blancs', players: [{ name: 'Hamza R.', level: 3.5 }, { name: 'Nour A.', level: 3.0 }, null, { name: 'Skander T.', level: 4.0 }, { name: 'Yassine B.', level: 3.0, role: 'organizer', you: true }] },
+        { name: 'Bleus', players: [null, { name: 'Omar D.', level: 3.5 }, null, { name: 'Aziz H.', level: 4.5 }, null] }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

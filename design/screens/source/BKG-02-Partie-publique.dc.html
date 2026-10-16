@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Partie publique</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/matchup/tokens.css">
+<link rel="stylesheet" href="ds/matchup/components/bundle.css">
+<script src="ds/matchup/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0}
+a{color:var(--link)}
+.bkg-field{display:flex; flex-direction:column; gap:var(--space-3)}
+.bkg-rule{flex:none; height:1px; background:var(--border); margin:0}
+</style>
+</helmet>
+<div style="width: 390px; height: 1132px; box-sizing: border-box; display: flex; flex-direction: column; background: var(--surface); color: var(--text); font-family: var(--font-sans)">
+<div style="display: flex; align-items: center; gap: 8px; padding: 52px 16px 0 8px">
+<a href="BKG-01-Type-de-reservation.dc.html" class="mu-iconbtn mu-iconbtn--l mu-iconbtn--ghost" aria-label="Retour" style="color: var(--text)"><x-import component-from-global-scope="MatchUp.Icon" name="arrow-left" size="{{i24}}"></x-import></a>
+<div style="flex: 1; min-width: 0"><x-import component-from-global-scope="MatchUp.StepIndicator" step="{{two}}" total="{{three}}" title="Partie publique"></x-import></div>
+</div>
+<div style="flex: 1; min-height: 0; overflow: auto; display: flex; flex-direction: column; gap: 20px; padding: 16px 16px 24px 16px">
+<div style="display: flex; flex-direction: column; gap: 4px">
+<h1 class="h2" style="margin: 0">Complète ton équipe</h1>
+<p class="body" style="margin: 0; color: var(--text-secondary)">Arena Five · Terrain 1 · mer. 21 oct. · 21h00</p>
+</div>
+<div style="display: flex; align-items: center; gap: 12px; padding: 12px; border-radius: var(--radius-md); background: var(--surface-muted)">
+<x-import component-from-global-scope="MatchUp.AvatarStack" people="{{team}}" max="{{four}}" size="s" label="6 joueurs déjà dans l’équipe"></x-import>
+<div style="flex: 1; min-width: 0; display: flex; flex-direction: column">
+<span class="label">Déjà 6 joueurs</span>
+<span class="caption" style="color: var(--text-secondary)">Toi et 5 amis invités</span>
+</div>
+<a href="BKG-03-Inviter-des-amis.dc.html" class="mu-btn mu-btn--tertiary mu-btn--s" style="margin-right: -8px"><span class="mu-btn__content"><span class="mu-btn__label label">Modifier</span></span></a>
+</div>
+<x-import component-from-global-scope="MatchUp.Stepper" layout="inline" label="Places à compléter" min="{{one}}" max="{{four}}" value="{{spots}}" on-change="{{setSpots}}" helper="{{spotsHelper}}" decrement-label="Retirer une place" increment-label="Ajouter une place"></x-import>
+<div class="bkg-rule"></div>
+<div class="bkg-field">
+<x-import component-from-global-scope="MatchUp.RangeSlider" label="Niveau des joueurs" min="{{one}}" max="{{seven}}" step="{{half}}" page-step="{{bandStep}}" default-value="{{lvl}}" format="{{fmtLevel}}" bands="{{bands}}" min-label="Niveau minimum" max-label="Niveau maximum"></x-import>
+<p class="caption" style="margin: 0; color: var(--text-secondary)">Ton niveau foot : 3,0 · Intermédiaire. Seuls les joueurs dans cette fourchette peuvent rejoindre.</p>
+</div>
+<div class="bkg-rule"></div>
+<div class="bkg-field">
+<span class="label">Type de partie</span>
+<x-import component-from-global-scope="MatchUp.SegmentedControl" label="Type de partie" full-width="{{yes}}" value="{{gtype}}" on-change="{{setType}}" options="{{types}}"></x-import>
+</div>
+<div class="bkg-rule"></div>
+<x-import component-from-global-scope="MatchUp.Radio.Group" label="Qui peut la voir ?" value="{{vis}}" on-change="{{setVis}}">
+<x-import component-from-global-scope="MatchUp.Radio" value="tous" label="Tout le monde" description="Visible dans Explorer par les joueurs de ton niveau."></x-import>
+<x-import component-from-global-scope="MatchUp.Radio" value="abonnes" label="Mes abonnés" description="Seuls les joueurs qui te suivent la voient."></x-import>
+</x-import>
+<div class="bkg-rule"></div>
+<x-import component-from-global-scope="MatchUp.TextField" label="Un mot pour les joueurs" optional="{{yes}}" multiline="{{yes}}" rows="{{two}}" max-length="{{max}}" counter="{{yes}}" default-value="Ambiance détendue, on tourne au poste de gardien. Chasubles fournies par Arena Five."></x-import>
+</div>
+<div style="padding: 12px 16px 34px 16px; background: var(--surface); box-shadow: var(--elevation-2-up)">
+<a href="BKG-04-Recapitulatif.dc.html" class="mu-btn mu-btn--primary mu-btn--xl mu-btn--block"><span class="mu-btn__content"><span class="mu-btn__label label-l">Continuer</span></span></a>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":1132}}'>
+class Component extends DCLogic {
+  state = { spots: 4, gtype: 'mixte', vis: 'tous' };
+  renderVals() {
+    const s = this.state;
+    const dt = (n) => (Number.isInteger(n) ? String(n) : n.toFixed(3).replace('.', ',')) + ' DT';
+    const total = 6 + s.spots;
+    return {
+      yes: true, i24: 24, one: 1, two: 2, three: 3, four: 4, seven: 7, half: 0.5, bandStep: 1.5, max: 200,
+      spots: s.spots, gtype: s.gtype, vis: s.vis,
+      setSpots: (v) => this.setState({ spots: v }),
+      setType: (v) => this.setState({ gtype: v }),
+      setVis: (v) => this.setState({ vis: v }),
+      spotsHelper: total + ' joueurs · ' + dt(150 / total) + ' chacun',
+      lvl: [2.5, 4],
+      fmtLevel: (v) => v.toFixed(1).replace('.', ','),
+      bands: [{ from: 1, to: 2.5, label: 'Débutant' }, { from: 2.5, to: 4, label: 'Intermédiaire' }, { from: 4, to: 5.5, label: 'Avancé' }, { from: 5.5, to: 7, label: 'Expert' }],
+      types: [{ value: 'mixte', label: 'Mixte' }, { value: 'femmes', label: 'Femmes' }, { value: 'hommes', label: 'Hommes' }],
+      team: [{ name: 'Yassine B.' }, { name: 'Skander T.' }, { name: 'Hamza R.' }, { name: 'Aziz H.' }, { name: 'Omar D.' }, { name: 'Nour A.' }]
+    };
+  }
+}
+</script>
+</body>
+</html>
