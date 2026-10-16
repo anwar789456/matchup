@@ -1,0 +1,44 @@
+{
+  "name": "matchup-backend",
+  "version": "1.0.0",
+  "private": true,
+  "description": "MatchUp backend: 6 NestJS apps (one per module) sharing one PostgreSQL database",
+  "scripts": {
+    "build": "node deploy/build-all.js",
+    "build:module": "nest build",
+    "start:utilisateur": "nest start utilisateur --watch",
+    "start:reservation": "nest start reservation --watch",
+    "start:paiement": "nest start paiement --watch",
+    "start:tournois": "nest start tournois --watch",
+    "start:entrainement": "nest start entrainement --watch",
+    "start:forum": "nest start forum --watch",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "dependencies": {
+    "@nestjs/common": "^11.1.0",
+    "@nestjs/config": "^4.0.4",
+    "@nestjs/core": "^11.1.0",
+    "@nestjs/platform-express": "^11.1.0",
+    "@nestjs/swagger": "^11.2.0",
+    "@nestjs/typeorm": "^11.0.3",
+    "bcryptjs": "^3.0.3",
+    "class-transformer": "^0.5.1",
+    "class-validator": "^0.14.2",
+    "pg": "^8.16.0",
+    "reflect-metadata": "^0.2.2",
+    "rxjs": "^7.8.2",
+    "typeorm": "^0.3.25"
+  },
+  "devDependencies": {
+    "@nestjs/cli": "^11.0.10",
+    "@nestjs/schematics": "^11.0.5",
+    "@types/express": "^5.0.3",
+    "@types/node": "^22.15.0",
+    "ts-loader": "^9.5.2",
+    "tsconfig-paths": "^4.2.0",
+    "typescript": "~5.8.3"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
