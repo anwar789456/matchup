@@ -5,6 +5,7 @@ import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 import '../core/search.dart';
 import '../theme/theme.dart';
+import 'mu_button.dart';
 import 'mu_icon_button.dart';
 import 'src/interaction.dart';
 
@@ -13,19 +14,59 @@ enum MuSearchFieldSize { l, m }
 /// One row of the suggestion panel.
 @immutable
 class MuSearchSuggestion<T> {
-  const MuSearchSuggestion({required this.value, required this.title, this.subtitle, this.leading});
+  const MuSearchSuggestion({
+    required this.value,
+    required this.title,
+    this.subtitle,
+    this.leading,
+    this.trailing,
+    this.semanticLabel,
+  });
 
   final T value;
   final String title;
+
+  /// Highlighted too (« Football · La Marsa »).
   final String? subtitle;
+
+  /// A 40 tile, sport tile or Avatar S.
   final Widget? leading;
+
+  /// The game time « 20h00 » in `num-s` at the end.
+  final String? trailing;
+  final String? semanticLabel;
+}
+
+/// A group of suggestions under its plural name (« Terrains », « Joueurs », « Parties »).
+@immutable
+class MuSearchGroup<T> {
+  const MuSearchGroup({required this.label, required this.items});
+
+  final String label;
+  final List<MuSearchSuggestion<T>> items;
+}
+
+/// Volt marker on the letters of [text] matching [query], ignoring case and accents.
+TextSpan muSearchHighlight(String text, String query, MuColors c) {
+  final i = query.isEmpty ? -1 : foldAccents(text).indexOf(foldAccents(query));
+  if (i < 0) return TextSpan(text: text);
+  final end = i + query.length;
+  return TextSpan(children: [
+    TextSpan(text: text.substring(0, i)),
+    TextSpan(
+      text: text.substring(i, end),
+      style: TextStyle(color: c.onAccent, background: Paint()..color = c.accent),
+    ),
+    TextSpan(text: text.substring(end)),
+  ]);
 }
 
 /// SearchField (components/SearchField.md): the pill search bar with magnifier and clear button,
 /// opening a panel of suggestions under it; the matched letters get the Volt marker.
 ///
-/// [search] is called (debounced 250 ms) with the query and returns the rows, up to 3 per group in
-/// the full search. Recent searches, groups and the filter button come with the Explorer milestone.
+/// [search] is called (debounced 250 ms) with the query and returns the rows of the panel. The full
+/// search page shows recent searches and groups inline with [MuSearchResults] instead; [onTap]
+/// turns the field into a button that opens that page.
 class MuSearchField<T> extends StatefulWidget {
   const MuSearchField({
     super.key,
@@ -38,6 +79,9 @@ class MuSearchField<T> extends StatefulWidget {
     this.onSubmitted,
     this.emptyMessage,
     this.enabled = true,
+    this.autofocus = false,
+    this.onChanged,
+    this.onTap,
   });
 
   /// Accessible name (« Ajouter une zone »); visually carried by the magnifier and placeholder.
@@ -52,6 +96,11 @@ class MuSearchField<T> extends StatefulWidget {
   /// Shown in the panel when nothing matches (« Aucun résultat pour “…” »).
   final String Function(String query)? emptyMessage;
   final bool enabled;
+  final bool autofocus;
+  final ValueChanged<String>? onChanged;
+
+  /// Read-only: tapping the field calls this (Explorer opens the search page).
+  final VoidCallback? onTap;
 
   @override
   State<MuSearchField<T>> createState() => _MuSearchFieldState<T>();
@@ -98,6 +147,7 @@ class _MuSearchFieldState<T> extends State<MuSearchField<T>> {
     setState(() {});
     if (q == _query) return;
     _query = q;
+    widget.onChanged?.call(q);
     _debounce?.cancel();
     if (q.isEmpty || widget.search == null) {
       _close();
@@ -153,6 +203,9 @@ class _MuSearchFieldState<T> extends State<MuSearchField<T>> {
               child: TextField(
                 controller: _controller,
                 focusNode: _focus,
+                autofocus: widget.autofocus,
+                readOnly: widget.onTap != null,
+                onTap: widget.onTap,
                 // Same tap group as the panel: tapping a suggestion keeps the field focused.
                 groupId: _focus,
                 enabled: widget.enabled,
@@ -282,18 +335,231 @@ class _MuSearchFieldState<T> extends State<MuSearchField<T>> {
     );
   }
 
-  /// Volt marker on the matched letters, ignoring case and accents.
-  TextSpan _highlight(String text, MuColors c) {
-    final i = foldAccents(text).indexOf(foldAccents(_query));
-    if (_query.isEmpty || i < 0) return TextSpan(text: text);
-    final end = i + _query.length;
-    return TextSpan(children: [
-      TextSpan(text: text.substring(0, i)),
-      TextSpan(
-        text: text.substring(i, end),
-        style: TextStyle(color: c.onAccent, background: Paint()..color = c.accent),
+  TextSpan _highlight(String text, MuColors c) => muSearchHighlight(text, _query, c);
+}
+
+/// The search page's results (EXP-05), inline under the field: recent searches with « Tout
+/// effacer » (those matching the query once typing starts), then the groups — up to
+/// [maxPerGroup] rows each — with the matched letters marked; or the no-result state.
+class MuSearchResults<T> extends StatelessWidget {
+  const MuSearchResults({
+    super.key,
+    required this.query,
+    this.recent = const [],
+    this.groups = const [],
+    this.maxPerGroup = 3,
+    this.onSelected,
+    this.onRecent,
+    this.onRemoveRecent,
+    this.onClearRecent,
+    this.emptyAction,
+  });
+
+  final String query;
+  final List<String> recent;
+  final List<MuSearchGroup<T>> groups;
+  final int maxPerGroup;
+  final ValueChanged<T>? onSelected;
+  final ValueChanged<String>? onRecent;
+  final ValueChanged<String>? onRemoveRecent;
+  final VoidCallback? onClearRecent;
+
+  /// The helpful action of the no-result state (« Voir les terrains près de moi »).
+  final Widget? emptyAction;
+
+  // SearchField.md: the no-result magnifier sits in a 48 circle.
+  static const double _emptyIcon = 48;
+
+  @override
+  Widget build(BuildContext context) {
+    final c = context.mu;
+    final q = foldAccents(query);
+    final recents = [
+      for (final r in recent)
+        if (q.isEmpty || foldAccents(r).contains(q)) r,
+    ];
+    final shown = [
+      for (final g in groups)
+        if (g.items.isNotEmpty) g,
+    ];
+
+    Widget header(String label, [Widget? action]) => Padding(
+          padding: const EdgeInsetsDirectional.fromSTEB(
+            MuSpace.s3,
+            MuSpace.s3,
+            MuSpace.s1,
+            MuSpace.s1,
+          ),
+          child: Row(
+            children: [
+              Expanded(
+                child: Semantics(
+                  header: true,
+                  child: Text(
+                    label.toUpperCase(),
+                    style: MuType.overline.copyWith(color: c.textSecondary),
+                  ),
+                ),
+              ),
+              ?action,
+            ],
+          ),
+        );
+
+    if (recents.isEmpty && shown.isEmpty && query.isNotEmpty) {
+      return Padding(
+        padding: const EdgeInsets.all(MuSpace.s6),
+        child: Column(
+          children: [
+            Container(
+              width: _emptyIcon,
+              height: _emptyIcon,
+              decoration: BoxDecoration(color: c.surfaceMuted, shape: BoxShape.circle),
+              child: Icon(
+                PhosphorIcons.magnifyingGlass(),
+                size: MuSize.iconM,
+                color: c.textSecondary,
+              ),
+            ),
+            const SizedBox(height: MuSpace.s3),
+            Text(
+              'Aucun résultat pour « $query »',
+              textAlign: TextAlign.center,
+              style: MuType.label.copyWith(color: c.text),
+            ),
+            const SizedBox(height: MuSpace.s1),
+            Text(
+              'Vérifie l’orthographe ou cherche un quartier, un terrain ou un joueur.',
+              textAlign: TextAlign.center,
+              style: MuType.caption.copyWith(color: c.textSecondary),
+            ),
+            if (emptyAction != null) ...[const SizedBox(height: MuSpace.s4), emptyAction!],
+          ],
+        ),
+      );
+    }
+
+    final children = <Widget>[];
+    if (recents.isNotEmpty) {
+      children.add(header(
+        'Recherches récentes',
+        onClearRecent == null
+            ? null
+            : MuButton.link(label: 'Tout effacer', onPressed: onClearRecent),
+      ));
+      for (final r in recents) {
+        children.add(_ResultRow(
+          onTap: onRecent == null ? null : () => onRecent!(r),
+          semanticLabel: 'Recherche récente : $r',
+          leading: Icon(
+            PhosphorIcons.clockCounterClockwise(),
+            size: MuSize.iconS,
+            color: c.textSecondary,
+          ),
+          title: Text.rich(
+            muSearchHighlight(r, query, c),
+            style: MuType.body.copyWith(color: c.text),
+          ),
+          trailing: onRemoveRecent == null
+              ? null
+              : MuIconButton(
+                  icon: PhosphorIcons.x(),
+                  label: 'Retirer « $r » des recherches récentes',
+                  size: MuIconButtonSize.s,
+                  color: c.textSecondary,
+                  onPressed: () => onRemoveRecent!(r),
+                ),
+        ));
+      }
+    }
+    for (final g in shown) {
+      if (children.isNotEmpty) {
+        children.add(Padding(
+          padding: const EdgeInsets.symmetric(vertical: MuSpace.s2),
+          child: Divider(height: 1, thickness: 1, color: c.border),
+        ));
+      }
+      children.add(header(g.label));
+      for (final item in g.items.take(maxPerGroup)) {
+        children.add(_ResultRow(
+          onTap: onSelected == null ? null : () => onSelected!(item.value),
+          semanticLabel: item.semanticLabel ??
+              [item.title, item.subtitle, item.trailing].whereType<String>().join(', '),
+          leading: item.leading,
+          title: Text.rich(
+            muSearchHighlight(item.title, query, c),
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: MuType.label.copyWith(color: c.text),
+          ),
+          subtitle: item.subtitle == null
+              ? null
+              : Text.rich(
+                  muSearchHighlight(item.subtitle!, query, c),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: MuType.caption.copyWith(color: c.textSecondary),
+                ),
+          trailing: item.trailing == null
+              ? null
+              : Directionality(
+                  textDirection: TextDirection.ltr,
+                  child: Text(item.trailing!, style: MuType.numS.copyWith(color: c.text)),
+                ),
+        ));
+      }
+    }
+    return Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: children);
+  }
+}
+
+/// A result row: ≥ 44 high, `radius-sm`, padding `space-2` `space-3`, `space-3` gaps.
+class _ResultRow extends StatelessWidget {
+  const _ResultRow({
+    required this.title,
+    required this.semanticLabel,
+    this.leading,
+    this.subtitle,
+    this.trailing,
+    this.onTap,
+  });
+
+  final Widget title;
+  final String semanticLabel;
+  final Widget? leading;
+  final Widget? subtitle;
+  final Widget? trailing;
+  final VoidCallback? onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      borderRadius: MuRadius.smAll,
+      onTap: onTap,
+      child: ConstrainedBox(
+        constraints: const BoxConstraints(minHeight: MuSize.touchTarget),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: MuSpace.s3, vertical: MuSpace.s2),
+          child: Row(
+            children: [
+              if (leading != null) ...[leading!, const SizedBox(width: MuSpace.s3)],
+              Expanded(
+                child: Semantics(
+                  button: onTap != null,
+                  label: semanticLabel,
+                  excludeSemantics: true,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [title, ?subtitle],
+                  ),
+                ),
+              ),
+              if (trailing != null) ...[const SizedBox(width: MuSpace.s3), trailing!],
+            ],
+          ),
+        ),
       ),
-      TextSpan(text: text.substring(end)),
-    ]);
+    );
   }
 }

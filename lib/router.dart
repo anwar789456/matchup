@@ -19,8 +19,13 @@ import 'features/coach_onboarding/controllers/coach_controller.dart';
 import 'features/coach_onboarding/screens/certification_screen.dart';
 import 'features/coach_onboarding/screens/coach_dashboard_screen.dart';
 import 'features/coach_onboarding/screens/coach_profile_screen.dart';
+import 'features/common/widgets/coming_soon.dart';
 import 'features/common/widgets/pro_gate.dart';
+import 'features/explore/controllers/explore_controller.dart';
+import 'features/explore/screens/explore_screen.dart';
+import 'features/explore/screens/search_screen.dart';
 import 'features/home/screens/home_screen.dart';
+import 'features/home/widgets/player_shell.dart';
 import 'features/onboarding/screens/splash_screen.dart';
 import 'features/organizer_onboarding/controllers/organizer_controller.dart';
 import 'features/organizer_onboarding/screens/organisation_screen.dart';
@@ -78,7 +83,19 @@ abstract final class Routes {
   static const playerLocationDenied = '/ply/location-denied'; // PLY-08
   static const playerNotifications = '/ply/notifications'; // PLY-09
   static const playerProfile = '/ply/profile'; // PLY-10
-  static const home = '/home'; // PLY-11
+  static const home = '/home'; // PLY-11 (the tour, once), then HOM-01 / HOM-02
+
+  // Player core (Milestone 3): the five tabs, then the pages they open.
+  static const explore = '/explore'; // EXP-01, EXP-02, EXP-06, EXP-07
+  static const exploreVenues = '/explore?tab=terrains'; // EXP-03
+  static const exploreSearch = '/explore/search'; // EXP-05
+  static const matches = '/matches'; // MAT-01 (phase 7)
+  static const training = '/training'; // Milestone 6
+  static const community = '/community'; // Milestone 6
+  static String game(String id) => '/game/$id'; // GAM-01 / GAM-02 (phase 7)
+  static String venue(String id) => '/venue/$id'; // VEN-01 (phase 6)
+  static String booking(String id) => '/booking/$id'; // MAT-05 (phase 7)
+  static String player(String name) => '/player/${Uri.encodeComponent(name)}'; // PRF-02 (phase 8)
 
   // Pro onboardings (phase 4).
   static const ownerCompany = '/own/company'; // OWN-01
@@ -138,8 +155,25 @@ GoRoute _coach(String path, Widget screen) =>
 GoRoute _organizer(String path, Widget screen) =>
     _route(path, (_) => ProGate(provider: organizerProvider, child: screen));
 
+/// A page of a later phase, for now « Bientôt disponible » (CLAUDE.md rule 8).
+GoRoute _later(String path, String title, String fallback) => GoRoute(
+  path: path,
+  parentNavigatorKey: _rootKey,
+  builder: (context, state) => ComingSoonScreen(title: title, fallback: fallback),
+);
+
+final _rootKey = GlobalKey<NavigatorState>(debugLabel: 'root');
+
+ExploreTab? _exploreTab(GoRouterState state) => switch (state.uri.queryParameters['tab']) {
+  'parties' => ExploreTab.games,
+  'terrains' => ExploreTab.venues,
+  'tournois' => ExploreTab.tournaments,
+  _ => null,
+};
+
 final routerProvider = Provider<GoRouter>((ref) {
   return GoRouter(
+    navigatorKey: _rootKey,
     initialLocation: Routes.splash,
     routes: [
       _route(Routes.splash, (_) => const SplashScreen()),
@@ -173,7 +207,40 @@ final routerProvider = Provider<GoRouter>((ref) {
       _route(Routes.playerLocationDenied, (_) => const LocationDeniedScreen()),
       _route(Routes.playerNotifications, (_) => const NotificationsScreen()),
       _route(Routes.playerProfile, (_) => const ProfileScreen()),
-      _route(Routes.home, (_) => const HomeScreen()),
+      StatefulShellRoute.indexedStack(
+        builder: (context, state, shell) => PlayerShell(shell: shell),
+        branches: [
+          StatefulShellBranch(routes: [_route(Routes.home, (_) => const HomeScreen())]),
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: Routes.explore,
+                builder: (context, state) => ExploreScreen(tab: _exploreTab(state)),
+                routes: [
+                  GoRoute(
+                    path: 'search',
+                    parentNavigatorKey: _rootKey,
+                    builder: (context, state) => const SearchScreen(),
+                  ),
+                ],
+              ),
+            ],
+          ),
+          StatefulShellBranch(
+            routes: [_route(Routes.matches, (_) => const ComingSoonTab(title: 'Mes matchs'))],
+          ),
+          StatefulShellBranch(
+            routes: [_route(Routes.training, (_) => const ComingSoonTab(title: 'Entraînement'))],
+          ),
+          StatefulShellBranch(
+            routes: [_route(Routes.community, (_) => const ComingSoonTab(title: 'Communauté'))],
+          ),
+        ],
+      ),
+      _later('/game/:id', 'Partie ouverte', Routes.explore),
+      _later('/venue/:id', 'Fiche du terrain', Routes.exploreVenues),
+      _later('/booking/:id', 'Détail de la réservation', Routes.home),
+      _later('/player/:name', 'Profil public', Routes.explore),
       _owner(Routes.ownerCompany, const CompanyScreen()),
       _owner(Routes.ownerAddress, const AddressScreen()),
       _owner(Routes.ownerCourts, const CourtsScreen()),

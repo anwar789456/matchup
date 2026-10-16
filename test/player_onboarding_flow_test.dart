@@ -5,7 +5,10 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:matchup/app.dart';
 import 'package:matchup/features/auth/controllers/auth_providers.dart';
 import 'package:matchup/features/auth/data/fake_auth_repository.dart';
+import 'package:matchup/features/explore/data/tournaments_repository.dart';
+import 'package:matchup/features/games/data/games_repository.dart';
 import 'package:matchup/features/home/screens/home_screen.dart';
+import 'package:matchup/features/matches/data/bookings_repository.dart';
 import 'package:matchup/features/player_onboarding/controllers/onboarding_controller.dart';
 import 'package:matchup/features/player_onboarding/data/level_estimator.dart';
 import 'package:matchup/features/player_onboarding/data/location_services.dart';
@@ -16,6 +19,7 @@ import 'package:matchup/features/player_onboarding/screens/availability_screen.d
 import 'package:matchup/features/player_onboarding/screens/level_result_screen.dart';
 import 'package:matchup/features/player_onboarding/screens/location_denied_screen.dart';
 import 'package:matchup/features/player_onboarding/screens/zones_screen.dart';
+import 'package:matchup/features/venue/data/venues_repository.dart';
 import 'package:matchup/router.dart';
 import 'package:matchup/theme/theme.dart';
 
@@ -59,6 +63,14 @@ void main() {
       levelEstimatorProvider.overrideWithValue(const FakeLevelEstimator(latency: Duration.zero)),
       devicePermissionsProvider.overrideWithValue(_FakePermissions(location)),
       profileRepositoryProvider.overrideWithValue(FakeProfileRepository(latency: Duration.zero)),
+      gamesRepositoryProvider.overrideWithValue(FakeGamesRepository(latency: Duration.zero)),
+      venuesRepositoryProvider.overrideWithValue(FakeVenuesRepository(latency: Duration.zero)),
+      bookingsRepositoryProvider.overrideWithValue(
+        const FakeBookingsRepository(latency: Duration.zero),
+      ),
+      tournamentsRepositoryProvider.overrideWithValue(
+        FakeTournamentsRepository(latency: Duration.zero),
+      ),
     ]);
     addTearDown(container.dispose);
     if (at != null) container.read(routerProvider).go(at);
@@ -166,7 +178,7 @@ void main() {
     expect(find.byType(HomeScreen), findsOneWidget);
     expect(find.text('Salut Yassine'), findsOneWidget);
     expect(find.text('Des parties choisies pour toi'), findsOneWidget);
-    expect(find.textContaining('ton niveau (3,5)'), findsOneWidget);
+    expect(find.textContaining('Recommandé car ton niveau (3,5)'), findsOneWidget);
     await tapText(tester, 'Suivant');
     expect(find.text('Crée ta partie en 1 minute'), findsOneWidget);
     await tapText(tester, 'Suivant');

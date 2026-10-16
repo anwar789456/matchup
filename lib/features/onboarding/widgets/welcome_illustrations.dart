@@ -322,7 +322,11 @@ class ProgressIllustration extends StatelessWidget {
           ),
         ),
         const SizedBox(height: MuSpace.s3),
-        MuTournamentCard(tournament: WelcomeSamples.tournament, surfaceColor: c.surfaceElevated),
+        MuTournamentCard(
+          tournament: WelcomeSamples.tournament,
+          variant: MuTournamentCardVariant.compact,
+          surfaceColor: c.surfaceElevated,
+        ),
       ],
     );
   }

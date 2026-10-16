@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:matchup/features/dev/gallery_screen.dart';
@@ -20,9 +21,11 @@ void main() {
           tester.view.devicePixelRatio = 1;
           addTearDown(tester.view.reset);
 
-          await tester.pumpWidget(MaterialApp(
-            theme: MuTheme.light(),
-            home: const GalleryScreen(),
+          await tester.pumpWidget(ProviderScope(
+            child: MaterialApp(
+              theme: MuTheme.light(),
+              home: const GalleryScreen(),
+            ),
           ));
           await tester.pump(const Duration(milliseconds: 300));
 

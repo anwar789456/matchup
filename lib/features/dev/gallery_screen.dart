@@ -1,10 +1,16 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 
+import '../../core/connectivity.dart';
+import '../../core/format.dart';
 import '../../theme/theme.dart';
 import '../../ui/ui.dart';
+import '../common/data/story_data.dart';
+import '../explore/controllers/explore_controller.dart';
+import '../home/controllers/home_providers.dart';
 
 /// Debug-only widget gallery: every Mu* widget, in Light and Night match side by side on wide
 /// screens (a toggle on phones), with a right-to-left switch.
@@ -107,6 +113,10 @@ class _GalleryBodyState extends State<_GalleryBody> {
   String _courtType = 'Extérieur';
   String? _surface = 'Gazon synthétique';
   MuBillingPeriod _period = MuBillingPeriod.month;
+  RangeValues _price = const RangeValues(10, 25);
+  RangeValues _level = const RangeValues(3, 4.5);
+  bool _favourite = false;
+  String? _pin = Story.arenaFive.id;
 
   @override
   void dispose() {
@@ -801,6 +811,293 @@ class _GalleryBodyState extends State<_GalleryBody> {
               MuAvatar(name: 'Yassine B.', level: 3.5, online: true),
               MuAvatar(name: 'Skander T.', size: MuAvatarSize.l, level: 4.5),
               MuAvatar(name: 'Ines M.', size: MuAvatarSize.xl, level: 5.5, online: true),
+            ],
+          ),
+        ]),
+        _Section('Debug — données', [
+          Consumer(
+            builder: (context, ref, _) => MuSwitch(
+              value: ref.watch(simulatedOfflineProvider),
+              label: 'Simuler hors ligne',
+              description: 'Les listes d’Explorer et de l’Accueil échouent (EXP-07).',
+              icon: PhosphorIcons.wifiSlash(),
+              onChanged: (v) {
+                ref.read(simulatedOfflineProvider.notifier).set(v);
+                ref
+                  ..invalidate(exploreGamesProvider)
+                  ..invalidate(exploreVenuesProvider)
+                  ..invalidate(exploreTournamentsProvider)
+                  ..invalidate(recommendedGamesProvider)
+                  ..invalidate(nearbyVenuesProvider)
+                  ..invalidate(nearbyTournamentsProvider);
+              },
+            ),
+          ),
+        ]),
+        _Section('GameCard', [
+          MuGameCard(game: Story.g1, variant: MuGameCardVariant.featured, onJoin: () {}),
+          const SizedBox(height: MuSpace.s3),
+          MuGameCard(game: Story.g2, onJoin: () {}),
+          const SizedBox(height: MuSpace.s3),
+          MuGameCard(game: Story.g4, onWaitlist: () {}),
+          const SizedBox(height: MuSpace.s3),
+          MuGameCard(game: Story.more.first, onJoin: () {}),
+          const SizedBox(height: MuSpace.s3),
+          MuGameCard(
+            game: MuGame(
+              sport: MuSport.football,
+              venue: 'Arena Five',
+              court: 'Terrain 2',
+              place: 'La Marsa',
+              start: Story.at(18, 20),
+              spotsTotal: 10,
+              spotsLeft: 2,
+              pricePerPlayer: 15,
+              players: Story.g1.players,
+              status: MuGameStatus.joined,
+            ),
+            onView: () {},
+          ),
+          const SizedBox(height: MuSpace.s3),
+          MuGameCard(
+            game: MuGame(
+              sport: MuSport.football,
+              venue: 'Arena Five',
+              court: 'Terrain 2',
+              place: 'La Marsa',
+              start: Story.at(10, 20),
+              spotsTotal: 10,
+              spotsLeft: 4,
+              pricePerPlayer: 15,
+              status: MuGameStatus.cancelled,
+              refund: 15,
+            ),
+          ),
+          const SizedBox(height: MuSpace.s3),
+          MuGameCard(game: Story.g2, variant: MuGameCardVariant.compact, onTap: () {}),
+          const SizedBox(height: MuSpace.s3),
+          const MuSkeletonGroup(
+            child: MuGameCard.loading(variant: MuGameCardVariant.featured),
+          ),
+        ]),
+        _Section('BookingCard', [
+          MuBookingCard(booking: Story.g1Booking, onShowQr: () {}, onDirections: () {}),
+          const SizedBox(height: MuSpace.s3),
+          MuBookingCard(
+            booking: Story.myBooking,
+            variant: MuBookingCardVariant.compact,
+            onShowQr: () {},
+          ),
+          const SizedBox(height: MuSpace.s3),
+          MuBookingCard(
+            booking: MuBooking(
+              sport: MuSport.padel,
+              venue: 'Smash Padel Club',
+              court: 'Court 3',
+              place: 'Lac 2',
+              start: Story.at(23, 19, 30),
+              end: Story.at(23, 21),
+              share: 25,
+              status: MuBookingStatus.pendingPayment,
+              payBefore: Story.at(23, 17),
+              players: const [Story.mariem, Story.ines],
+            ),
+            onPay: () {},
+            onDirections: () {},
+          ),
+          const SizedBox(height: MuSpace.s3),
+          MuBookingCard(
+            booking: MuBooking(
+              sport: MuSport.padel,
+              venue: 'Smash Padel Club',
+              place: 'Lac 2',
+              start: Story.at(9, 19),
+              end: Story.at(9, 20, 30),
+              share: 20,
+              status: MuBookingStatus.past,
+            ),
+            onRate: () {},
+          ),
+          const SizedBox(height: MuSpace.s3),
+          MuBookingCard(
+            booking: MuBooking(
+              sport: MuSport.football,
+              venue: 'Arena Five',
+              court: 'Terrain 2',
+              place: 'La Marsa',
+              start: Story.at(10, 20),
+              end: Story.at(10, 21),
+              share: 15,
+              refund: 15,
+              status: MuBookingStatus.cancelled,
+            ),
+            onRebook: () {},
+          ),
+          const SizedBox(height: MuSpace.s3),
+          const MuSkeletonGroup(child: MuBookingCard.loading()),
+        ]),
+        _Section('VenueCard', [
+          MuVenueCard(
+            venue: Story.arenaFive,
+            favourite: _favourite,
+            onFavouriteChanged: (v) => setState(() => _favourite = v),
+            onSlotTap: (_) {},
+          ),
+          const SizedBox(height: MuSpace.s3),
+          MuVenueCard(
+            venue: Story.smashPadel,
+            variant: MuVenueCardVariant.compact,
+            favourite: _favourite,
+            onFavouriteChanged: (v) => setState(() => _favourite = v),
+          ),
+          const SizedBox(height: MuSpace.s3),
+          const MuVenueCard(
+            venue: MuVenue(
+              id: 'closed',
+              name: 'Hoop Zone',
+              sports: [MuSport.basketball],
+              place: 'Ennasr',
+              distanceKm: 6.2,
+              rating: 4.5,
+              reviews: 41,
+              slots: ['8h00', '9h30'],
+              slotsDay: 'Demain',
+              pricePerPerson: 9,
+              courtPrice: 90,
+              status: MuVenueStatus.closed,
+              opensAt: '8h00',
+            ),
+          ),
+          const SizedBox(height: MuSpace.s3),
+          const MuSkeletonGroup(
+            child: MuVenueCard.loading(variant: MuVenueCardVariant.compact),
+          ),
+        ]),
+        _Section('TournamentCard', [
+          MuTournamentCard(tournament: Story.padelMasters, onRegister: () {}),
+          const SizedBox(height: MuSpace.s3),
+          MuTournamentCard(
+            tournament: Story.padelMasters,
+            variant: MuTournamentCardVariant.compact,
+            onTap: () {},
+          ),
+          const SizedBox(height: MuSpace.s3),
+          const MuSkeletonGroup(child: MuTournamentCard.loading()),
+        ]),
+        const _Section('Skeleton', [
+          MuSkeletonGroup(
+            label: 'Chargement des parties',
+            child: Row(
+              children: [
+                MuSkeleton.circle(size: MuSize.avatarM),
+                SizedBox(width: MuSpace.s3),
+                Expanded(child: MuSkeleton.text(lines: 2)),
+                SizedBox(width: MuSpace.s3),
+                MuSkeleton.pill(width: MuSize.controlXl),
+              ],
+            ),
+          ),
+        ]),
+        _Section('RangeSlider', [
+          MuRangeSlider(
+            label: 'Prix par personne',
+            values: _price,
+            min: 0,
+            max: 50,
+            format: (v) => formatDT(v.round()),
+            minLabel: 'Prix minimum',
+            maxLabel: 'Prix maximum',
+            onChanged: (v) => setState(() => _price = v),
+          ),
+          const SizedBox(height: MuSpace.s4),
+          MuRangeSlider(
+            label: 'Niveau des joueurs',
+            values: _level,
+            min: 1,
+            max: 7,
+            step: 0.5,
+            format: formatLevel,
+            bands: const [
+              MuRangeBand(1, 2.5, 'Débutant'),
+              MuRangeBand(2.5, 4, 'Intermédiaire'),
+              MuRangeBand(4, 5.5, 'Avancé'),
+              MuRangeBand(5.5, 7, 'Expert'),
+            ],
+            minLabel: 'Niveau minimum',
+            maxLabel: 'Niveau maximum',
+            onChanged: (v) => setState(() => _level = v),
+          ),
+        ]),
+        _Section('BottomSheet', [
+          Align(
+            alignment: AlignmentDirectional.centerStart,
+            child: MuButton.secondary(
+              label: 'Ouvrir « Comment partager ? »',
+              onPressed: () => MuBottomSheet.show<void>(
+                context,
+                title: 'Comment partager ?',
+                footer: MuButton.primary(
+                  label: 'Continuer',
+                  price: '15 DT',
+                  size: MuButtonSize.xl,
+                  fullWidth: true,
+                  onPressed: () => Navigator.of(context).pop(),
+                ),
+                child: Text(
+                  'Chacun paie sa part : 15 DT par personne à 10.',
+                  style: MuType.body.copyWith(color: c.text),
+                ),
+              ),
+            ),
+          ),
+        ]),
+        _Section('MapView — Explorer', [
+          SizedBox(
+            height: MuSize.controlXl * 7,
+            child: ClipRRect(
+              borderRadius: MuRadius.mdAll,
+              child: MuMapView.explore(
+                center: Story.me,
+                user: Story.me,
+                selectedId: _pin,
+                onSelect: (id) => setState(() => _pin = id),
+                onOpen: (_, _) {},
+                onSearchArea: (_) {},
+                venues: [
+                  for (final v in Story.venues)
+                    MuMapVenue(
+                      id: v.id,
+                      name: v.name,
+                      sport: v.sport,
+                      position: v.position!,
+                      subtitle: v.placeLabel,
+                      rating: v.rating,
+                      reviews: v.reviews,
+                      priceFrom: v.pricePerPerson,
+                      slots: v.slots,
+                    ),
+                ],
+              ),
+            ),
+          ),
+        ]),
+        _Section('SearchField — résultats', [
+          MuSearchResults<String>(
+            query: 'mar',
+            recent: Story.recentSearches,
+            onRemoveRecent: (_) {},
+            onClearRecent: () {},
+            groups: [
+              MuSearchGroup(
+                label: 'Terrains',
+                items: [
+                  MuSearchSuggestion(
+                    value: Story.arenaFive.id,
+                    title: 'Arena Five',
+                    subtitle: 'Football · La Marsa',
+                  ),
+                ],
+              ),
             ],
           ),
         ]),

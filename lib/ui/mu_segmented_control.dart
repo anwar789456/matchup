@@ -76,7 +76,10 @@ class MuSegmentedControl<T> extends StatelessWidget {
             borderRadius: MuRadius.smAll,
             child: Container(
               height: segH,
-              padding: EdgeInsets.symmetric(horizontal: small ? MuSpace.s3 : MuSpace.s4),
+              // Equal-width segments (expand) keep only `space-2` so four labels fit a phone.
+              padding: EdgeInsets.symmetric(
+                horizontal: expand ? MuSpace.s2 : (small ? MuSpace.s3 : MuSpace.s4),
+              ),
               alignment: Alignment.center,
               child: Row(
                 mainAxisSize: MainAxisSize.min,
@@ -86,7 +89,17 @@ class MuSegmentedControl<T> extends StatelessWidget {
                         size: small ? MuSize.iconXs : MuSize.iconS, color: fg),
                     const SizedBox(width: MuSpace.s2),
                   ],
-                  Text(s.label, style: MuType.label.copyWith(color: fg)),
+                  if (expand)
+                    Flexible(
+                      child: Text(
+                        s.label,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: MuType.label.copyWith(color: fg),
+                      ),
+                    )
+                  else
+                    Text(s.label, style: MuType.label.copyWith(color: fg)),
                   if (s.badge != null) ...[
                     const SizedBox(width: MuSpace.s2),
                     Container(

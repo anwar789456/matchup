@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../theme/theme.dart';
 import 'mu_sport_icon.dart';
+import 'src/explore_map.dart';
 
 /// A geographic point.
 @immutable
@@ -12,7 +13,8 @@ class MuLatLng {
   final double lng;
 }
 
-/// A venue pin on the map.
+/// A venue pin on the map. The interactive map's mini card also shows [subtitle] (« dim. 18 oct. »
+/// or « Lac 2 · 1,2 km »), the rating, the lowest price per person and up to 3 [slots].
 @immutable
 class MuMapVenue {
   const MuMapVenue({
@@ -21,6 +23,11 @@ class MuMapVenue {
     required this.sport,
     required this.position,
     this.area,
+    this.subtitle,
+    this.rating,
+    this.reviews,
+    this.priceFrom,
+    this.slots = const [],
   });
 
   final String id;
@@ -28,13 +35,22 @@ class MuMapVenue {
   final MuSport sport;
   final MuLatLng position;
   final String? area;
+  final String? subtitle;
+  final double? rating;
+  final int? reviews;
+  final num? priceFrom;
+  final List<String> slots;
 }
 
-/// MapView (components/MapView.md), static mode: venues on MatchUp's muted map — sport-coloured
-/// pins with the sport glyph and your position — drawn from the `map-*` tokens, no pan or zoom.
+/// MapView (components/MapView.md): venues on MatchUp's muted map — sport-coloured pins with the
+/// sport glyph, your position, and (interactive) clusters and a mini card for the selected pin.
 ///
-/// The interactive map (Explorer « Carte », on Google Maps / Mapbox with a style generated from the
-/// same tokens, clusters, mini card, controls) comes with the Explorer milestone.
+/// - The default constructor is the **static** map: drawn from the `map-*` tokens, no pan, zoom,
+///   card or controls (onboarding previews, a venue's pin).
+/// - [MuMapView.explore] is the **interactive** Explorer map on `flutter_map` with muted CARTO
+///   tiles (no API key): pan and zoom, clusters that count and show their sport mix, the zoom pill
+///   and « Me localiser », « Rechercher dans cette zone » after a move, and the mini card with
+///   « Voir ».
 class MuMapView extends StatefulWidget {
   const MuMapView({
     super.key,
@@ -45,13 +61,39 @@ class MuMapView extends StatefulWidget {
     this.label,
     this.district,
     this.street,
-  });
+  })  : interactive = false,
+        selectedId = null,
+        onSelect = null,
+        onOpen = null,
+        onSearchArea = null,
+        onLocate = null,
+        tiles = true;
+
+  /// The interactive map. [zoom] is a web-map zoom level here (12,5 ≈ a district and its
+  /// neighbours).
+  const MuMapView.explore({
+    super.key,
+    required this.center,
+    this.venues = const [],
+    this.user,
+    this.zoom = 12.5,
+    this.label = 'Carte des terrains — glisse pour te déplacer, pince ou utilise + et − pour zoomer',
+    this.selectedId,
+    this.onSelect,
+    this.onOpen,
+    this.onSearchArea,
+    this.onLocate,
+    this.tiles = true,
+  })  : interactive = true,
+        district = null,
+        street = null;
 
   final MuLatLng center;
   final List<MuMapVenue> venues;
   final MuLatLng? user;
 
-  /// 0,6–2,4 as in the spec; 1 shows about 0,07° of longitude across 360 px.
+  /// Static: 0,6–2,4 as in the spec, 1 shows about 0,07° of longitude across 360 px.
+  /// Interactive: the web-map zoom level.
   final double zoom;
 
   /// Accessible name (« Terrains autour de La Marsa »).
@@ -60,6 +102,22 @@ class MuMapView extends StatefulWidget {
   /// District label (`overline`, « LA MARSA ») and street label (`caption`, from zoom 0,8).
   final String? district;
   final String? street;
+
+  final bool interactive;
+
+  /// The selected pin (controlled); [onSelect] gets the tapped pin's id, or null to deselect.
+  final String? selectedId;
+  final ValueChanged<String?>? onSelect;
+
+  /// « Voir », or a slot chip of the mini card.
+  final void Function(MuMapVenue venue, String? slot)? onOpen;
+
+  /// « Rechercher dans cette zone », with the visible centre.
+  final ValueChanged<MuLatLng>? onSearchArea;
+  final VoidCallback? onLocate;
+
+  /// Loads the map tiles (off in widget tests, which have no network).
+  final bool tiles;
 
   /// The static map's projection: pixels per degree at zoom 1 (to move a pin by dragging).
   static const double pixelsPerDegree = 5000;
@@ -89,7 +147,7 @@ class _MuMapViewState extends State<MuMapView> with SingleTickerProviderStateMix
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    if (MediaQuery.of(context).disableAnimations) {
+    if (MediaQuery.of(context).disableAnimations || widget.interactive) {
       _pulse
         ..stop()
         ..value = 1;
@@ -114,6 +172,7 @@ class _MuMapViewState extends State<MuMapView> with SingleTickerProviderStateMix
 
   @override
   Widget build(BuildContext context) {
+    if (widget.interactive) return MuExploreMap(map: widget);
     final c = context.mu;
     return Semantics(
       image: true,
