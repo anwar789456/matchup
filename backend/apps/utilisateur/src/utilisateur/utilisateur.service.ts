@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable, UnauthorizedException } from '@nestjs/common';
+import { ConflictException, Injectable, UnauthorizedException } from '@nestjs/common';
 import * as bcrypt from 'bcryptjs';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -17,7 +17,7 @@ export class UtilisateurService extends CrudService<Utilisateur> {
   /** Le mot de passe est haché avant d’être enregistré. */
   override async create(data: CreateUtilisateurDto): Promise<Utilisateur> {
     const exists = await this.repo.findOne({ where: { email: data.email } });
-    if (exists) throw new BadRequestException('Un compte existe déjà avec cet email.');
+    if (exists) throw new ConflictException('Un compte existe déjà avec cet email.');
     return super.create({ ...data, motDePasse: await bcrypt.hash(data.motDePasse, 10) });
   }
 

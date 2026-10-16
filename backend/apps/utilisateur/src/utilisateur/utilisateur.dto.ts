@@ -1,18 +1,23 @@
 import { ApiProperty, ApiPropertyOptional, PartialType } from '@nestjs/swagger';
-import { IsEmail, IsIn, IsNotEmpty, IsNumber, IsOptional, IsString, Max, MaxLength, Min, MinLength } from 'class-validator';
+import { IsEmail, IsIn, IsNumber, IsOptional, IsString, Matches, Max, MaxLength, Min, MinLength } from 'class-validator';
 
 export class CreateUtilisateurDto {
-  @ApiProperty({ example: 'Skander' })
+  @ApiPropertyOptional({ example: 'Skander' })
+  @IsOptional()
   @IsString()
-  @IsNotEmpty()
   @MaxLength(255)
-  prenom: string;
+  prenom?: string;
 
-  @ApiProperty({ example: 'T.' })
+  @ApiPropertyOptional({ example: 'T.' })
+  @IsOptional()
   @IsString()
-  @IsNotEmpty()
   @MaxLength(255)
-  nom: string;
+  nom?: string;
+
+  @ApiPropertyOptional({ example: 'skander.t', description: '3 à 20 caractères : lettres, chiffres, . et _' })
+  @IsOptional()
+  @Matches(/^[a-zA-Z0-9._]{3,20}$/)
+  pseudo?: string;
 
   @ApiProperty({ example: 'skander.t@email.tn' })
   @IsEmail()
@@ -59,6 +64,11 @@ export class UpdateUtilisateurDto extends PartialType(CreateUtilisateurDto) {}
 
 /** Filtres de la liste : GET /utilisateurs?email=…  */
 export class QueryUtilisateurDto {
+  @ApiPropertyOptional({ example: 'skander.t' })
+  @IsOptional()
+  @IsString()
+  pseudo?: string;
+
   @ApiPropertyOptional({ example: 'skander.t@email.tn' })
   @IsOptional()
   @IsEmail()

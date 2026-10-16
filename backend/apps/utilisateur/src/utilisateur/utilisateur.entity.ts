@@ -8,11 +8,17 @@ export class Utilisateur {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ type: 'varchar', length: 255 })
-  prenom: string;
+  /** Filled in at the end of the player onboarding (PLY-10), so empty right after sign-up. */
+  @Column({ type: 'varchar', length: 255, nullable: true })
+  prenom?: string | null;
 
-  @Column({ type: 'varchar', length: 255 })
-  nom: string;
+  @Column({ type: 'varchar', length: 255, nullable: true })
+  nom?: string | null;
+
+  /** Public handle (« @yassine.b »), unique. */
+  @Index()
+  @Column({ type: 'varchar', length: 40, nullable: true, unique: true })
+  pseudo?: string | null;
 
   @Index()
   @Column({ type: 'varchar', length: 255, unique: true })
