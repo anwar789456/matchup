@@ -30,6 +30,16 @@ import 'features/games/screens/waitlist_screen.dart';
 import 'features/matches/screens/booking_detail_screen.dart';
 import 'features/matches/screens/matches_screen.dart';
 import 'features/matches/screens/score_screen.dart';
+import 'features/profile/screens/edit_profile_screen.dart';
+import 'features/profile/screens/profile_screen.dart';
+import 'features/profile/screens/public_profile_screen.dart';
+import 'features/settings/screens/account_screen.dart';
+import 'features/settings/screens/connected_accounts_screen.dart';
+import 'features/settings/screens/delete_account_screen.dart';
+import 'features/settings/screens/language_theme_screen.dart';
+import 'features/settings/screens/privacy_screen.dart';
+import 'features/settings/screens/security_screen.dart';
+import 'features/settings/screens/settings_screen.dart';
 import 'features/common/widgets/coming_soon.dart';
 import 'features/common/widgets/pro_gate.dart';
 import 'features/explore/controllers/explore_controller.dart';
@@ -118,7 +128,19 @@ abstract final class Routes {
   static const bookingSummary = '/booking/new/summary'; // BKG-04
   static const bookingDone = '/booking/new/done'; // BKG-05
   static String booking(String id) => '/booking/$id'; // MAT-05
-  static String player(String name) => '/player/${Uri.encodeComponent(name)}'; // PRF-02 (phase 8)
+  static String player(String name) => '/player/${Uri.encodeComponent(name)}'; // PRF-02
+  static const profile = '/profile'; // PRF-01
+  static const profileEdit = '/profile/edit'; // PRF-04
+  static const settings = '/settings'; // SET-01
+  static const settingsAccount = '/settings/account'; // SET-02
+  static const settingsSecurity = '/settings/security'; // SET-03
+  static const settingsLanguage = '/settings/language'; // SET-04
+  static const settingsPrivacy = '/settings/privacy'; // SET-05
+  static const settingsAccounts = '/settings/accounts'; // SET-06
+  static const settingsDelete = '/settings/delete'; // SET-07
+  static const roleChoice = roles; // PRF-06 « Ajouter un rôle » → AUTH-11
+  static const wallet = '/wallet'; // WAL-01 (phase 9)
+  static const subscriptionOffers = '/premium'; // SUB-01 (phase 10)
 
   // Pro onboardings (phase 4).
   static const ownerCompany = '/own/company'; // OWN-01
@@ -314,7 +336,23 @@ final routerProvider = Provider<GoRouter>((ref) {
         parentNavigatorKey: _rootKey,
         builder: (context, state) => ScoreScreen(matchId: state.pathParameters['id']!),
       ),
-      _later('/player/:name', 'Profil public', Routes.explore),
+      GoRoute(
+        path: '/player/:name',
+        parentNavigatorKey: _rootKey,
+        builder: (context, state) =>
+            PublicProfileScreen(name: Uri.decodeComponent(state.pathParameters['name']!)),
+      ),
+      _root(Routes.profile, (_) => const MyProfileScreen()),
+      _root(Routes.profileEdit, (_) => const EditProfileScreen()),
+      _root(Routes.settings, (_) => const SettingsScreen()),
+      _root(Routes.settingsAccount, (_) => const AccountScreen()),
+      _root(Routes.settingsSecurity, (_) => const SecurityScreen()),
+      _root(Routes.settingsLanguage, (_) => const LanguageThemeScreen()),
+      _root(Routes.settingsPrivacy, (_) => const PrivacyScreen()),
+      _root(Routes.settingsAccounts, (_) => const ConnectedAccountsScreen()),
+      _root(Routes.settingsDelete, (_) => const DeleteAccountScreen()),
+      _later(Routes.wallet, 'Portefeuille', Routes.home),
+      _later(Routes.subscriptionOffers, 'MatchUp Premium', Routes.home),
       _owner(Routes.ownerCompany, const CompanyScreen()),
       _owner(Routes.ownerAddress, const AddressScreen()),
       _owner(Routes.ownerCourts, const CourtsScreen()),

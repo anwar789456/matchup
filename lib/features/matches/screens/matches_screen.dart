@@ -9,7 +9,6 @@ import '../../../router.dart';
 import '../../../theme/theme.dart';
 import '../../../ui/ui.dart';
 import '../../common/data/story_data.dart';
-import '../../common/widgets/coming_soon.dart';
 import '../../games/widgets/leave_dialog.dart';
 import '../controllers/matches_providers.dart';
 import '../data/bookings_repository.dart';
@@ -532,7 +531,7 @@ class _Past extends ConsumerWidget {
         Center(
           child: MuButton.link(
             label: 'Voir toutes mes stats',
-            onPressed: () => showComingSoon(context),
+            onPressed: () => context.push(Routes.profile),
           ),
         ),
       ],

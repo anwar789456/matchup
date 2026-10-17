@@ -12,6 +12,7 @@ import '../../../ui/ui.dart';
 import '../../common/widgets/coming_soon.dart';
 import '../../explore/controllers/explore_controller.dart';
 import '../../matches/data/bookings_repository.dart';
+import '../../profile/widgets/account_menu.dart';
 import '../../player_onboarding/controllers/onboarding_controller.dart';
 import '../controllers/home_providers.dart';
 import '../widgets/guided_tour.dart';
@@ -376,7 +377,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               notifications: me?.unreadNotifications ?? 0,
               onLocation: () => showComingSoon(context),
               onNotifications: () => showComingSoon(context),
-              onAccount: () => showComingSoon(context),
+              onAccount: () => showAccountMenu(context, ref),
             ),
             const SizedBox(height: MuSpace.s1),
             Padding(
