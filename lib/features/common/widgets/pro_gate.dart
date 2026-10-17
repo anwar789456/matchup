@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/misc.dart' show ProviderListenable;
 
 import '../../../theme/theme.dart';
 import '../../../ui/ui.dart';
+import '../../../l10n/l10n.dart';
 
 /// Shows a spinner until a pro draft has loaded, then [child]; screens below read the draft
 /// synchronously.
@@ -27,14 +28,14 @@ class ProGate extends ConsumerWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(
-                    'Impossible de charger ton brouillon.',
+                    l10n.impossibleDeChargerTonBrouillon,
                     style: MuType.body.copyWith(color: c.text),
                   ),
                   const SizedBox(height: MuSpace.s3),
-                  MuButton.secondary(label: 'Réessayer', onPressed: onRetry),
+                  MuButton.secondary(label: l10n.reessayer, onPressed: onRetry),
                 ],
               )
-            : MuSpinner(size: MuSize.iconM, color: c.text, semanticLabel: 'Chargement'),
+            : MuSpinner(size: MuSize.iconM, color: c.text, semanticLabel: l10n.chargement),
       ),
     );
   }

@@ -8,6 +8,7 @@ import '../../../theme/theme.dart';
 import '../../../ui/ui.dart';
 import '../../booking/controllers/booking_controller.dart';
 import '../data/venue_details.dart';
+import '../../../l10n/l10n.dart';
 
 /// « Football · 5 contre 5 »: the sport chip with the venue's format.
 class VenueSportChip extends StatelessWidget {
@@ -27,7 +28,7 @@ class VenueSportChip extends StatelessWidget {
 /// The two-cell price box of VEN-01 and VEN-02: an `overline` label, a `num-l` value with its unit,
 /// and an optional caption (with an icon).
 class VenuePriceBox extends StatelessWidget {
-  const VenuePriceBox({super.key, required this.cells, this.unit = 'DT'});
+  VenuePriceBox({super.key, required this.cells, String? unit}) : unit = unit ?? dtUnit;
 
   /// (label, value, caption, caption icon).
   final List<(String, String, String?, Widget?)> cells;
@@ -158,13 +159,13 @@ class VenueSlotPicker extends ConsumerWidget {
           ? Padding(
               padding: const EdgeInsets.all(MuSpace.s4),
               child: Text(
-                'Impossible de charger les créneaux.',
+                l10n.impossibleDeChargerLesCreneaux,
                 style: MuType.body.copyWith(color: c.textSecondary),
               ),
             )
-          : const MuSkeletonGroup(
-              label: 'Chargement des créneaux',
-              child: Padding(
+          : MuSkeletonGroup(
+              label: l10n.chargementDesCreneaux,
+              child: const Padding(
                 padding: EdgeInsets.symmetric(horizontal: MuSpace.s4),
                 child: MuSkeleton.text(lines: 4),
               ),
@@ -175,10 +176,10 @@ class VenueSlotPicker extends ConsumerWidget {
         child: MuEmptyState(
           compact: true,
           illustration: null,
-          title: 'Aucun créneau ce jour-là',
+          title: l10n.aucunCreneauCeJourLa,
           actions: [
             MuButton.secondary(
-              label: 'Voir demain',
+              label: l10n.voirDemain,
               onPressed: () => booking.setDay(draft.day.add(const Duration(days: 1))),
             ),
           ],
@@ -193,8 +194,8 @@ class VenueSlotPicker extends ConsumerWidget {
         value: draft.selection,
         onChanged: booking.select,
         legend: legend,
-        priceNote: compact ? 'Terrains' : 'Prix du terrain / ${_unit(details)}',
-        label: 'Créneaux ${details.venue.name}, ${formatDay(draft.day)}',
+        priceNote: compact ? l10n.terrains : l10n.prixDuTerrain(_unit(details)),
+        label: l10n.creneaux2(details.venue.name, formatDay(draft.day)),
       );
     }
 
@@ -210,7 +211,7 @@ class VenueSlotPicker extends ConsumerWidget {
                 padding: const EdgeInsetsDirectional.only(end: MuSpace.s4),
                 child: MuIconButton(
                   icon: PhosphorIcons.calendarBlank(),
-                  label: 'Ouvrir le calendrier',
+                  label: l10n.ouvrirLeCalendrier,
                   variant: MuIconButtonVariant.secondary,
                   size: MuIconButtonSize.s,
                   onPressed: pickDay,
@@ -225,7 +226,7 @@ class VenueSlotPicker extends ConsumerWidget {
           today: today,
           value: draft.day,
           days: _days,
-          label: 'Jour de réservation',
+          label: l10n.jourDeReservation,
           availability: (d) => repo.availability(details.venue.id, d),
           onChanged: booking.setDay,
         ),
@@ -239,12 +240,12 @@ class VenueSlotPicker extends ConsumerWidget {
               ),
               if (compact)
                 Text(
-                  'Prix du terrain / ${_unit(details)}',
+                  l10n.prixDuTerrain(_unit(details)),
                   style: MuType.caption.copyWith(color: c.textSecondary),
                 )
               else
                 MuButton.tertiary(
-                  label: draft.fullDay ? 'Ce soir' : 'Toute la journée',
+                  label: draft.fullDay ? l10n.ceSoir : l10n.touteLaJournee,
                   size: MuButtonSize.s,
                   onPressed: booking.toggleFullDay,
                 ),
@@ -302,7 +303,7 @@ class VenueCourtTile extends StatelessWidget {
                 PhosphorIcons.umbrella(),
                 size: MuSize.iconXs,
                 color: c.text,
-                semanticLabel: 'Couvert',
+                semanticLabel: l10n.couvert,
               ),
             ],
           ],
@@ -338,25 +339,25 @@ class CancellationTiers extends StatelessWidget {
         c.successSoft,
         c.successText,
         policy == null
-            ? 'Gratuite jusqu’à 24 h avant'
-            : 'Gratuit jusqu’au ${formatDateTime(policy.freeUntil)}',
-        '100 % remboursé sur ton solde MatchUp',
+            ? l10n.gratuiteJusquAHAvant
+            : l10n.gratuitJusquAu(formatDateTime(policy.freeUntil)),
+        l10n.rembourseSurTonSoldeMatchup2,
       ),
       (
         PhosphorIcons.circleHalf(),
         c.warningSoft,
         c.warningText,
         policy == null
-            ? '50 % remboursés entre 24 h et 6 h avant'
-            : '50 % jusqu’au ${formatDateTime(policy.halfUntil)}',
-        policy == null ? 'La moitié de ta part te revient' : 'Entre 24 h et 6 h avant le match',
+            ? l10n.remboursesEntreHEtH
+            : l10n.jusquAu(formatDateTime(policy.halfUntil)),
+        policy == null ? l10n.laMoitieDeTaPart : l10n.entreHEtHAvant2,
       ),
       (
         PhosphorIcons.prohibit(),
         c.errorSoft,
         c.errorText,
-        policy == null ? 'Non remboursable moins de 6 h avant' : 'Non remboursable ensuite',
-        'Sauf si $venueName annule : tout est remboursé',
+        policy == null ? l10n.nonRemboursableMoinsDeH : l10n.nonRemboursableEnsuite,
+        l10n.saufSiAnnuleToutEst(venueName),
       ),
     ];
     final disc = small ? _discS : _disc;

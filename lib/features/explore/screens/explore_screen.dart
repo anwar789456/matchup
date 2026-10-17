@@ -9,10 +9,13 @@ import '../../../core/format.dart';
 import '../../../router.dart';
 import '../../../theme/theme.dart';
 import '../../../ui/ui.dart';
+import '../../games/controllers/game_actions.dart';
+import '../../states/widgets/state_widgets.dart';
 import '../../common/widgets/coming_soon.dart';
 import '../../home/controllers/home_providers.dart';
 import '../controllers/explore_controller.dart';
 import '../widgets/filters_sheet.dart';
+import '../../../l10n/l10n.dart';
 
 /// EXP-01 to EXP-07 · Explorer: open games, venues and tournaments around the player's zone, as a
 /// list or on the map (EXP-02), with the search (EXP-05), quick filters and the filters sheet
@@ -53,6 +56,29 @@ class _ExploreScreenState extends ConsumerState<ExploreScreen> {
   }
 
   ExploreController get _explore => ref.read(exploreProvider.notifier);
+
+  /// Games joined on the waitlist from the list, shown before the server answers.
+  final _waitlisted = <String>{};
+
+  /// STA-09 · optimistic update: the card says « Sur la liste » at once; if the server refuses,
+  /// it goes back and a snackbar offers « Réessayer ».
+  Future<void> _joinWaitlist(MuGame g) async {
+    setState(() => _waitlisted.add(g.id!));
+    try {
+      if (ref.read(simulatedServerErrorProvider)) throw const ServerException();
+      await ref.read(gameActionsProvider).joinWaitlist(g.id!);
+    } catch (_) {
+      if (!mounted) return;
+      setState(() => _waitlisted.remove(g.id));
+      MuSnackbar.show(
+        context,
+        tone: MuToastTone.error,
+        icon: PhosphorIcons.warningCircle(),
+        message: l10n.impossibleDeRejoindreLaListe,
+        action: MuAction(l10n.reessayer, () => _joinWaitlist(g)),
+      );
+    }
+  }
 
   void _retry() {
     ref
@@ -108,48 +134,67 @@ class _ExploreScreenState extends ConsumerState<ExploreScreen> {
     } else if (showMap) {
       body = _ExploreMap(state: state, games: gameList, venues: venueList, venueMap: venueMap);
     } else {
-      body = ListView(
-        padding: const EdgeInsets.fromLTRB(MuSpace.s4, MuSpace.s3, MuSpace.s4, _listBottom),
-        children: [
-          _CountRow(
-            state: state,
-            count: count,
-            savedAt: offline ? current.value!.at : null,
-            onSort: _explore.cycleSort,
-          ),
-          const SizedBox(height: MuSpace.s3),
-          ...switch (state.tab) {
-            ExploreTab.games => [
-              for (final g in gameList)
-                MuGameCard(
-                  game: g,
-                  onTap: () => context.push(Routes.game(g.id!)),
-                  onJoin: () => context.push(Routes.game(g.id!)),
-                  onWaitlist: () => context.push(Routes.game(g.id!)),
-                ),
-            ],
-            ExploreTab.venues => [
-              for (final v in venueList)
-                MuVenueCard(
-                  venue: v,
-                  variant: MuVenueCardVariant.compact,
-                  favourite: ref.watch(favouriteVenuesProvider).contains(v.id),
-                  onFavouriteChanged: (_) =>
-                      ref.read(favouriteVenuesProvider.notifier).toggle(v.id),
-                  onTap: () => context.push(Routes.venue(v.id)),
-                ),
-            ],
-            ExploreTab.tournaments => [
-              for (final t in tournamentList)
-                MuTournamentCard(
-                  tournament: t,
-                  onTap: () => showComingSoon(context),
-                  onRegister: () => showComingSoon(context),
-                  onWaitlist: () => showComingSoon(context),
-                ),
-            ],
-          }.expand((card) => [card, const SizedBox(height: MuSpace.s3)]),
-        ],
+      body = MuRefresh(
+        onRefresh: () async {
+          _retry();
+          try {
+            await ref.read(exploreGamesProvider.future);
+          } catch (_) {
+            // The error state shows instead.
+          }
+        },
+        child: ListView(
+          physics: const AlwaysScrollableScrollPhysics(),
+          padding: const EdgeInsets.fromLTRB(MuSpace.s4, MuSpace.s3, MuSpace.s4, _listBottom),
+          children: [
+            _CountRow(
+              state: state,
+              count: count,
+              savedAt: offline ? current.value!.at : null,
+              onSort: _explore.cycleSort,
+            ),
+            const SizedBox(height: MuSpace.s3),
+            ...switch (state.tab) {
+              ExploreTab.games => [
+                for (final g in gameList)
+                  MuGameCard(
+                    game: g,
+                    onTap: () => context.push(Routes.game(g.id!)),
+                    onJoin: () => context.push(Routes.game(g.id!)),
+                    onWaitlist: () => _joinWaitlist(g),
+                    waitlisted: _waitlisted.contains(g.id),
+                  ),
+              ],
+              ExploreTab.venues => [
+                for (final v in venueList)
+                  MuVenueCard(
+                    venue: v,
+                    variant: MuVenueCardVariant.compact,
+                    favourite: ref.watch(favouriteVenuesProvider).contains(v.id),
+                    onFavouriteChanged: (_) =>
+                        ref.read(favouriteVenuesProvider.notifier).toggle(v.id),
+                    onTap: () => context.push(Routes.venue(v.id)),
+                  ),
+              ],
+              ExploreTab.tournaments => [
+                for (final t in tournamentList)
+                  MuTournamentCard(
+                    tournament: t,
+                    onTap: () => showComingSoon(context),
+                    onRegister: () => showComingSoon(context),
+                    onWaitlist: () => showComingSoon(context),
+                  ),
+              ],
+            }.expand((card) => [card, const SizedBox(height: MuSpace.s3)]),
+            // STA-09: the end of the list says so, with a way to see more.
+            if (state.tab == ExploreTab.games)
+              EndOfList(
+                description: l10n.tuAsVuLesParties(count, state.zone),
+                actionLabel: state.filters.when == ExploreWhen.any ? null : l10n.voirTouteLaSemaine,
+                onAction: () => _explore.setFilters(state.filters.copyWith(when: ExploreWhen.any)),
+              ),
+          ],
+        ),
       );
     }
 
@@ -163,12 +208,12 @@ class _ExploreScreenState extends ConsumerState<ExploreScreen> {
               _Header(state: state, offline: offline),
               if (offline)
                 MuBanner(
-                  title: 'Hors ligne',
-                  detail: 'Reconnecte-toi pour réserver.',
+                  title: l10n.horsLigne,
+                  detail: l10n.reconnecteToiPourReserver,
                   tone: MuBannerTone.warning,
                   variant: MuBannerVariant.strip,
                   icon: PhosphorIcons.wifiSlash(),
-                  action: MuAction('Réessayer', _retry),
+                  action: MuAction(l10n.reessayer, _retry),
                 ),
               Expanded(child: body),
             ],
@@ -203,11 +248,11 @@ class _Header extends ConsumerWidget {
     final active = f.activeCount;
 
     final filtersChip = Semantics(
-      label: active == 0 ? 'Filtres' : 'Filtres, $active actifs',
+      label: active == 0 ? l10n.filtres : l10n.filtresActifs(active),
       excludeSemantics: true,
       button: true,
       child: MuChip(
-        label: 'Filtres',
+        label: l10n.filtres,
         icon: PhosphorIcons.slidersHorizontal(),
         count: active == 0 ? null : active,
         onSelected: (_) => showExploreFilters(context, ref),
@@ -221,17 +266,17 @@ class _Header extends ConsumerWidget {
       ExploreTab.games => [
         filtersChip,
         MuChip(
-          label: 'Mon niveau',
+          label: l10n.monNiveau,
           selected: explore.myLevelOn,
           onSelected: (_) => explore.toggleMyLevel(),
         ),
         MuChip(
-          label: 'Ce soir',
+          label: l10n.ceSoir,
           selected: f.when == ExploreWhen.tonight,
           onSelected: (_) => explore.toggleWhen(ExploreWhen.tonight),
         ),
         MuChip(
-          label: 'Ce week-end',
+          label: l10n.ceWeekEnd,
           selected: f.when == ExploreWhen.weekend,
           onSelected: (_) => explore.toggleWhen(ExploreWhen.weekend),
         ),
@@ -240,12 +285,12 @@ class _Header extends ConsumerWidget {
       ExploreTab.venues => [
         filtersChip,
         MuChip(
-          label: 'Libre ce soir',
+          label: l10n.libreCeSoir,
           selected: f.freeTonight,
           onSelected: (_) => explore.toggleFreeTonight(),
         ),
         MuChip(
-          label: 'Éclairé',
+          label: l10n.eclaire,
           icon: PhosphorIcons.lightbulb(),
           selected: f.lit,
           onSelected: (_) => explore.toggleLit(),
@@ -276,15 +321,15 @@ class _Header extends ConsumerWidget {
                       Expanded(
                         child: Semantics(
                           header: true,
-                          child: Text('Explorer', style: MuType.h2.copyWith(color: c.text)),
+                          child: Text(l10n.explorer, style: MuType.h2.copyWith(color: c.text)),
                         ),
                       ),
                       Semantics(
-                        label: 'Zone : ${state.zone}, ${f.distanceKm} km. Changer',
+                        label: l10n.zoneKmChanger(state.zone, f.distanceKm),
                         excludeSemantics: true,
                         button: true,
                         child: MuChip(
-                          label: '${state.zone} · ${f.distanceKm} km',
+                          label: l10n.km(state.zone, f.distanceKm),
                           icon: PhosphorIcons.mapPin(),
                           trailingIcon: PhosphorIcons.caretDown(),
                           onSelected: (_) => showExploreFilters(context, ref),
@@ -298,10 +343,10 @@ class _Header extends ConsumerWidget {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: MuSpace.s4),
                 child: MuSearchField<void>(
-                  label: 'Rechercher un terrain, une partie, un quartier',
+                  label: l10n.rechercherUnTerrainUnePartie,
                   placeholder: offline
-                      ? 'Recherche indisponible hors ligne'
-                      : 'Terrain, partie, quartier…',
+                      ? l10n.rechercheIndisponibleHorsLigne
+                      : l10n.terrainPartieQuartier,
                   enabled: !offline,
                   onTap: () => context.push(Routes.exploreSearch),
                 ),
@@ -310,13 +355,13 @@ class _Header extends ConsumerWidget {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: MuSpace.s4),
                 child: MuSegmentedControl<ExploreTab>(
-                  semanticLabel: 'Explorer',
+                  semanticLabel: l10n.explorer,
                   expand: true,
                   value: state.tab,
-                  segments: const [
-                    MuSegment(value: ExploreTab.games, label: 'Parties'),
-                    MuSegment(value: ExploreTab.venues, label: 'Terrains'),
-                    MuSegment(value: ExploreTab.tournaments, label: 'Tournois'),
+                  segments: [
+                    MuSegment(value: ExploreTab.games, label: l10n.parties),
+                    MuSegment(value: ExploreTab.venues, label: l10n.terrains),
+                    MuSegment(value: ExploreTab.tournaments, label: l10n.tournois),
                   ],
                   onChanged: explore.setTab,
                 ),
@@ -324,7 +369,7 @@ class _Header extends ConsumerWidget {
               const SizedBox(height: MuSpace.s3),
               Semantics(
                 container: true,
-                label: 'Filtres rapides',
+                label: l10n.filtresRapides,
                 child: SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
                   padding: const EdgeInsets.symmetric(horizontal: MuSpace.s4),
@@ -364,13 +409,13 @@ class _CountRow extends StatelessWidget {
   Widget build(BuildContext context) {
     final c = context.mu;
     final (one, many, where) = switch (state.tab) {
-      ExploreTab.games => ('partie', 'parties', 'près de ${state.zone}'),
+      ExploreTab.games => ('partie', 'parties', l10n.presDe(state.zone)),
       ExploreTab.venues => (
         'terrain',
         'terrains',
-        state.filters.freeTonight ? 'libres ce soir' : 'près de ${state.zone}',
+        state.filters.freeTonight ? l10n.libresCeSoir : l10n.presDe(state.zone),
       ),
-      ExploreTab.tournaments => ('tournoi', 'tournois', 'près de ${state.zone}'),
+      ExploreTab.tournaments => ('tournoi', 'tournois', l10n.presDe(state.zone)),
     };
     return Row(
       children: [
@@ -405,7 +450,7 @@ class _CountRow extends StatelessWidget {
                 Text.rich(
                   TextSpan(
                     children: [
-                      const TextSpan(text: 'Enregistrées à '),
+                      TextSpan(text: l10n.enregistreesA),
                       TextSpan(
                         text: formatTime(savedAt!),
                         style: MuType.numXs.copyWith(color: c.text),
@@ -419,7 +464,7 @@ class _CountRow extends StatelessWidget {
           )
         else if (state.tab != ExploreTab.tournaments)
           Semantics(
-            label: 'Trier par : ${state.sort.label.toLowerCase()}',
+            label: l10n.trierPar(state.sort.label.toLowerCase()),
             excludeSemantics: true,
             button: true,
             child: MuButton.tertiary(
@@ -451,12 +496,12 @@ class _ViewSwitch extends StatelessWidget {
         boxShadow: MuElevation.of(context).level2,
       ),
       child: MuSegmentedControl<ExploreView>(
-        semanticLabel: 'Affichage',
+        semanticLabel: l10n.affichage,
         size: MuSegmentedSize.s,
         value: view,
         segments: [
-          MuSegment(value: ExploreView.map, label: 'Carte', icon: PhosphorIcons.mapTrifold()),
-          MuSegment(value: ExploreView.list, label: 'Liste', icon: PhosphorIcons.list()),
+          MuSegment(value: ExploreView.map, label: l10n.carte, icon: PhosphorIcons.mapTrifold()),
+          MuSegment(value: ExploreView.list, label: l10n.liste, icon: PhosphorIcons.list()),
         ],
         onChanged: onChanged,
       ),
@@ -533,8 +578,8 @@ class _ExploreMap extends ConsumerWidget {
       user: me?.position,
       venues: pins,
       label: state.tab == ExploreTab.games
-          ? 'Carte des parties autour de ${state.zone}'
-          : 'Carte des terrains autour de ${state.zone}',
+          ? l10n.carteDesPartiesAutourDe(state.zone)
+          : l10n.carteDesTerrainsAutourDe(state.zone),
       selectedId: state.selectedPin,
       onSelect: explore.select,
       onSearchArea: (_) => ref
@@ -571,9 +616,9 @@ class _LoadingList extends StatelessWidget {
     };
     return MuSkeletonGroup(
       label: switch (tab) {
-        ExploreTab.games => 'Chargement des parties',
-        ExploreTab.venues => 'Chargement des terrains',
-        ExploreTab.tournaments => 'Chargement des tournois',
+        ExploreTab.games => l10n.chargementDesParties,
+        ExploreTab.venues => l10n.chargementDesTerrains,
+        ExploreTab.tournaments => l10n.chargementDesTournois,
       },
       child: ListView(
         physics: const NeverScrollableScrollPhysics(),
@@ -599,11 +644,9 @@ class _LoadError extends StatelessWidget {
       child: SingleChildScrollView(
         padding: const EdgeInsets.all(MuSpace.s4),
         child: MuEmptyState(
-          title: offline ? 'Pas de connexion' : 'Impossible de charger',
-          description: offline
-              ? 'Reconnecte-toi pour voir les parties et les terrains près de toi.'
-              : 'Un souci de notre côté. Réessaie dans un instant.',
-          actions: [MuButton.primary(label: 'Réessayer', onPressed: onRetry)],
+          title: offline ? l10n.pasDeConnexion : l10n.impossibleDeCharger,
+          description: offline ? l10n.reconnecteToiPourVoirLes : l10n.unSouciDeNotreCote,
+          actions: [MuButton.primary(label: l10n.reessayer, onPressed: onRetry)],
         ),
       ),
     );
@@ -630,16 +673,16 @@ class _NoResults extends ConsumerWidget {
     final sport = f.sports.length == 1 ? f.sports.first : null;
     final sportName = sport?.label.toLowerCase();
     final what = switch (state.tab) {
-      ExploreTab.games => sport == null ? 'partie' : 'partie de $sportName',
-      ExploreTab.venues => sport == null ? 'terrain' : 'terrain de $sportName',
-      ExploreTab.tournaments => sport == null ? 'tournoi' : 'tournoi de $sportName',
+      ExploreTab.games => sport == null ? 'partie' : l10n.partieDe('$sportName'),
+      ExploreTab.venues => sport == null ? 'terrain' : l10n.terrainDe('$sportName'),
+      ExploreTab.tournaments => sport == null ? 'tournoi' : l10n.tournoiDe('$sportName'),
     };
     final feminine = state.tab == ExploreTab.games;
-    final noun = feminine ? 'Aucune' : 'Aucun';
+    final noun = feminine ? l10n.aucune : l10n.aucun;
     final article = feminine ? 'une' : 'un';
     final when = switch (f.when) {
-      ExploreWhen.tonight => ' ce soir',
-      ExploreWhen.weekend => ' ce week-end',
+      ExploreWhen.tonight => l10n.ceSoir2,
+      ExploreWhen.weekend => l10n.ceWeekEnd2,
       ExploreWhen.day => f.day == null ? '' : ' le ${formatDay(f.day!)}',
       ExploreWhen.any => '',
     };
@@ -673,19 +716,19 @@ class _NoResults extends ConsumerWidget {
       }
     }
     final whenLabel = switch (f.when) {
-      ExploreWhen.tonight => 'Ce soir',
-      ExploreWhen.weekend => 'Ce week-end',
-      _ => f.day == null ? 'la date' : formatDay(f.day!),
+      ExploreWhen.tonight => l10n.ceSoir,
+      ExploreWhen.weekend => l10n.ceWeekEnd,
+      _ => f.day == null ? l10n.laDate : formatDay(f.day!),
     };
 
     String gameLine(List<MuGame> games) {
       final n = games.length;
-      final kind = sport == null ? 'partie' : 'partie de $sportName';
+      final kind = sport == null ? 'partie' : l10n.partieDe('$sportName');
       if (n == 1) {
         final g = games.first;
         return '1 $kind ${formatDateTime(g.start)}';
       }
-      return '$n ${sport == null ? 'parties' : 'parties de $sportName'}';
+      return '$n ${sport == null ? 'parties' : l10n.partiesDe('$sportName')}';
     }
 
     final alertOn = sport != null && state.alertTypes.contains(sport);
@@ -693,11 +736,11 @@ class _NoResults extends ConsumerWidget {
       _LeadRow(
         icon: PhosphorIcons.bellRinging(),
         accent: true,
-        title: 'Préviens-moi',
-        detail: 'Dès qu’$article $what s’ouvre',
+        title: l10n.previensMoi,
+        detail: l10n.desQuSOuvre(article, what),
         trailing: MuSwitch(
           value: alertOn,
-          semanticLabel: 'Préviens-moi dès qu’$article $what s’ouvre près de ${state.zone}',
+          semanticLabel: l10n.previensMoiDesQuS(article, what, state.zone),
           onChanged: sport == null
               ? (_) => showComingSoon(context)
               : (_) => explore.toggleAlert(sport),
@@ -706,25 +749,24 @@ class _NoResults extends ConsumerWidget {
       if (widen != null && widenTo != null)
         _LeadRow(
           icon: PhosphorIcons.mapPinArea(),
-          title: 'Élargir à $widenTo km',
-          detail:
-              '${widen.name}, ${elideA(widen.place)}, est à ${formatLevel(widen.distanceKm!)} km',
-          semanticLabel: 'Élargir la distance à $widenTo km',
+          title: l10n.elargirAKm(widenTo),
+          detail: l10n.estAKm(widen.name, elideA(widen.place), formatLevel(widen.distanceKm!)),
+          semanticLabel: l10n.elargirLaDistanceAKm(widenTo),
           onTap: () => explore.setFilters(f.copyWith(distanceKm: widenTo)),
         ),
       if (relaxed != null && relaxedGames.isNotEmpty)
         _LeadRow(
           icon: PhosphorIcons.calendarBlank(),
-          title: 'Retirer « $whenLabel »',
+          title: l10n.retirer2(whenLabel),
           detail: gameLine(relaxedGames),
-          semanticLabel: 'Retirer le filtre $whenLabel',
+          semanticLabel: l10n.retirerLeFiltre(whenLabel),
           onTap: () => explore.setFilters(relaxed!),
         ),
       if (state.tab == ExploreTab.games)
         _LeadRow(
           icon: PhosphorIcons.plus(),
-          title: sport == null ? 'Créer une partie' : 'Créer une partie de $sportName',
-          detail: 'Réserve un terrain, on complète l’équipe',
+          title: sport == null ? l10n.creerUnePartie : l10n.creerUnePartieDe('$sportName'),
+          detail: l10n.reserveUnTerrainOnComplete,
           onTap: onCreate,
         ),
     ];
@@ -736,9 +778,7 @@ class _NoResults extends ConsumerWidget {
           compact: true,
           illustration: MuEmptyIllustration.results,
           title: '$noun $what$when',
-          description:
-              'Rien à moins de ${f.distanceKm} km de ${state.zone} pour l’instant. Essaie une de '
-              'ces pistes :',
+          description: l10n.rienAMoinsDeKm(f.distanceKm, state.zone),
         ),
         const SizedBox(height: MuSpace.s4),
         MuCardSurface(

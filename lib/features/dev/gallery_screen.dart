@@ -363,7 +363,7 @@ class _GalleryBodyState extends State<_GalleryBody> {
             ),
           ),
         ]),
-        const _Section('PhoneField', [
+        _Section('PhoneField', [
           MuPhoneField(helper: 'On t’envoie un code à 6 chiffres par SMS.'),
         ]),
         _Section('OtpInput', [
@@ -572,13 +572,13 @@ class _GalleryBodyState extends State<_GalleryBody> {
             runSpacing: MuSpace.s3,
             crossAxisAlignment: WrapCrossAlignment.center,
             children: [
-              const MuAiLabel(),
-              const MuAiLabel(size: MuAiLabelSize.s),
-              const MuAiLabel(variant: MuAiLabelVariant.inline, text: 'Résumé généré par l’IA'),
+              MuAiLabel(),
+              MuAiLabel(size: MuAiLabelSize.s),
+              MuAiLabel(variant: MuAiLabelVariant.inline, text: 'Résumé généré par l’IA'),
               Container(
                 padding: const EdgeInsets.all(MuSpace.s3),
                 color: c.navBg,
-                child: const MuAiLabel(variant: MuAiLabelVariant.media, size: MuAiLabelSize.s),
+                child: MuAiLabel(variant: MuAiLabelVariant.media, size: MuAiLabelSize.s),
               ),
             ],
           ),
@@ -605,20 +605,20 @@ class _GalleryBodyState extends State<_GalleryBody> {
             action: MuAction('Mettre à jour la carte', () {}),
           ),
           const SizedBox(height: MuSpace.s3),
-          const MuBanner(
+          MuBanner(
             tone: MuBannerTone.success,
             title: 'Paiement reçu',
             detail: '15 DT · Arena Five, sam. 18 oct. · 20h00',
           ),
           const SizedBox(height: MuSpace.s3),
-          const MuBanner(
+          MuBanner(
             tone: MuBannerTone.warning,
             variant: MuBannerVariant.strip,
             title: 'Tu es hors ligne',
             detail: 'Données en cache du 18 oct. à 20h00',
           ),
           const SizedBox(height: MuSpace.s3),
-          const MuBanner(
+          MuBanner(
             tone: MuBannerTone.neutral,
             title: 'Ta progression est enregistrée',
             detail: 'Tu peux reprendre plus tard.',
@@ -914,8 +914,8 @@ class _GalleryBodyState extends State<_GalleryBody> {
           const SizedBox(height: MuSpace.s3),
           MuGameCard(game: Story.g2, variant: MuGameCardVariant.compact, onTap: () {}),
           const SizedBox(height: MuSpace.s3),
-          const MuSkeletonGroup(
-            child: MuGameCard.loading(variant: MuGameCardVariant.featured),
+          MuSkeletonGroup(
+            child: const MuGameCard.loading(variant: MuGameCardVariant.featured),
           ),
         ]),
         _Section('BookingCard', [
@@ -972,7 +972,7 @@ class _GalleryBodyState extends State<_GalleryBody> {
             onRebook: () {},
           ),
           const SizedBox(height: MuSpace.s3),
-          const MuSkeletonGroup(child: MuBookingCard.loading()),
+          MuSkeletonGroup(child: const MuBookingCard.loading()),
         ]),
         _Section('VenueCard', [
           MuVenueCard(
@@ -1007,8 +1007,8 @@ class _GalleryBodyState extends State<_GalleryBody> {
             ),
           ),
           const SizedBox(height: MuSpace.s3),
-          const MuSkeletonGroup(
-            child: MuVenueCard.loading(variant: MuVenueCardVariant.compact),
+          MuSkeletonGroup(
+            child: const MuVenueCard.loading(variant: MuVenueCardVariant.compact),
           ),
         ]),
         _Section('TournamentCard', [
@@ -1020,12 +1020,12 @@ class _GalleryBodyState extends State<_GalleryBody> {
             onTap: () {},
           ),
           const SizedBox(height: MuSpace.s3),
-          const MuSkeletonGroup(child: MuTournamentCard.loading()),
+          MuSkeletonGroup(child: const MuTournamentCard.loading()),
         ]),
-        const _Section('Skeleton', [
+        _Section('Skeleton', [
           MuSkeletonGroup(
             label: 'Chargement des parties',
-            child: Row(
+            child: const Row(
               children: [
                 MuSkeleton.circle(size: MuSize.avatarM),
                 SizedBox(width: MuSpace.s3),
@@ -1224,7 +1224,7 @@ class _GalleryBodyState extends State<_GalleryBody> {
             legend: true,
           ),
         ]),
-        const _Section('Takeover — billet', [
+        _Section('Takeover — billet', [
           MuTicket(
             reference: 'MU-48213',
             sport: MuSport.football,
@@ -1293,15 +1293,15 @@ class _GalleryBodyState extends State<_GalleryBody> {
             MuStatusBadge(status: MuStatus.cancelled, label: 'Annulée', iconOnly: true),
           ]),
         ]),
-        const _Section('ReliabilityBadge', [
+        _Section('ReliabilityBadge', [
           Row(children: [
             MuReliabilityBadge(score: 96),
-            SizedBox(width: MuSpace.s2),
+            const SizedBox(width: MuSpace.s2),
             MuReliabilityBadge(score: 82, size: MuBadgeSize.s),
-            SizedBox(width: MuSpace.s2),
+            const SizedBox(width: MuSpace.s2),
             MuReliabilityBadge(score: 61, size: MuBadgeSize.s),
           ]),
-          SizedBox(height: MuSpace.s3),
+          const SizedBox(height: MuSpace.s3),
           MuReliabilityBadge(score: 96, detail: true, honored: 47, total: 49, period: '12 mois'),
         ]),
         _Section('MatchFitScore — ring', [
@@ -1358,16 +1358,16 @@ class _GalleryBodyState extends State<_GalleryBody> {
             ),
           ),
           const SizedBox(height: MuSpace.s3),
-          const MuLineup(
+          MuLineup(
             sport: MuSport.padel,
             variant: MuLineupVariant.compact,
             header: false,
             teams: [
-              MuLineupTeam(
+              const MuLineupTeam(
                 name: 'Toi / Mariem',
                 players: [MuLineupPlayer('Yassine B.', you: true), MuLineupPlayer('Mariem K.')],
               ),
-              MuLineupTeam(name: 'Ines / Nour', players: [MuLineupPlayer('Ines M.'), null]),
+              const MuLineupTeam(name: 'Ines / Nour', players: [MuLineupPlayer('Ines M.'), null]),
             ],
           ),
         ]),
@@ -1556,6 +1556,20 @@ class _GalleryBodyState extends State<_GalleryBody> {
                 o.close();
               },
             ),
+          ),
+        ]),
+        const _Section('ProgressRing', [
+          Wrap(
+            spacing: MuSpace.s4,
+            crossAxisAlignment: WrapCrossAlignment.center,
+            children: [
+              MuProgressRing(value: 25, size: 32),
+              MuProgressRing(value: 70),
+              MuProgressRing(value: 3, max: 12, size: 72),
+              MuProgressRing(value: 3, max: 12, size: 120, unit: 'séances'),
+              MuProgressRing(value: 12, max: 12, size: 72),
+              MuProgressRing(value: 60, size: 72, tone: MuTone.ai),
+            ],
           ),
         ]),
         _Section('TransactionRow', [

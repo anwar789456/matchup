@@ -8,6 +8,7 @@ import '../../../router.dart';
 import '../../../theme/theme.dart';
 import '../../../ui/ui.dart';
 import '../../player_onboarding/controllers/onboarding_controller.dart';
+import '../../../l10n/l10n.dart';
 
 /// ONB-01 · Splash: the logo and tagline on ink for 1,5 s, then the welcome slides — or, when a
 /// player onboarding is in progress, the screen where it stopped (the Home once it is done).
@@ -82,7 +83,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
           backgroundColor: MuPalette.ink900,
           body: Semantics(
             button: true,
-            label: 'Ouvrir MatchUp',
+            label: l10n.ouvrirMatchup,
             child: GestureDetector(
               behavior: HitTestBehavior.opaque,
               onTap: _continue,
@@ -95,7 +96,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
                         const MuLogo(tone: MuLogoTone.dark, height: _logoHeight),
                         const SizedBox(height: MuSpace.s4),
                         Text(
-                          'Joue. Réserve. Progresse.',
+                          l10n.joueReserveProgresse,
                           style: MuType.bodyL.copyWith(color: MuPalette.ink300),
                         ),
                       ],

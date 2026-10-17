@@ -9,6 +9,7 @@ import '../../../theme/theme.dart';
 import '../../../ui/ui.dart';
 import '../../common/data/story_data.dart';
 import '../data/settings_repository.dart';
+import '../../../l10n/l10n.dart';
 
 /// SET-03 · Sécurité: password, two-factor, active sessions.
 class SecurityScreen extends ConsumerWidget {
@@ -26,8 +27,8 @@ class SecurityScreen extends ConsumerWidget {
       body: Column(
         children: [
           MuTopAppBar.compact(
-            title: 'Sécurité',
-            backLabel: 'Retour aux paramètres',
+            title: l10n.securite,
+            backLabel: l10n.retourAuxParametres,
             onBack: () => context.pop(),
           ),
           Expanded(
@@ -35,19 +36,19 @@ class SecurityScreen extends ConsumerWidget {
               padding: const EdgeInsets.fromLTRB(MuSpace.s4, MuSpace.s2, MuSpace.s4, 34),
               children: [
                 MuSettingsGroup(
-                  title: 'Mot de passe',
+                  title: l10n.motDePasse,
                   children: [
                     MuSettingsRow(
                       icon: PhosphorIcons.key(),
-                      title: 'Changer le mot de passe',
-                      description: 'Modifié ${s.passwordChanged}',
+                      title: l10n.changerLeMotDePasse,
+                      description: l10n.modifie(s.passwordChanged),
                       onTap: () => context.push(Routes.forgotPassword),
                     ),
                   ],
                 ),
                 const SizedBox(height: MuSpace.s5),
                 MuSettingsGroup(
-                  title: 'Double authentification',
+                  title: l10n.doubleAuthentification,
                   children: [
                     Padding(
                       padding: const EdgeInsets.symmetric(
@@ -57,16 +58,16 @@ class SecurityScreen extends ConsumerWidget {
                       child: MuSwitch(
                         value: s.twoFactor,
                         icon: PhosphorIcons.shieldCheck(),
-                        label: 'Code à chaque nouvel appareil',
-                        description: 'Un code par SMS en plus de ton mot de passe.',
+                        label: l10n.codeAChaqueNouvelAppareil,
+                        description: l10n.unCodeParSmsEn,
                         onChanged: (v) => ctrl.update((s) => s.copyWith(twoFactor: v)),
                       ),
                     ),
                     if (s.twoFactor)
                       MuSettingsRow(
                         icon: PhosphorIcons.chatText(),
-                        title: 'Méthode',
-                        value: 'SMS · ${s.maskedPhone}',
+                        title: l10n.methode,
+                        value: l10n.sms(s.maskedPhone),
                         onTap: () => context.push(Routes.settingsAccount),
                       )
                     else
@@ -75,15 +76,14 @@ class SecurityScreen extends ConsumerWidget {
                         child: MuBanner(
                           tone: MuBannerTone.warning,
                           title:
-                              'Sans code, seul ton mot de passe protège ton compte et ton solde de '
-                              '${formatDT(Story.myBalance)}.',
+                              l10n.sansCodeSeulTonMot(formatDT(Story.myBalance)),
                         ),
                       ),
                   ],
                 ),
                 const SizedBox(height: MuSpace.s5),
                 MuSettingsGroup(
-                  title: 'Sessions actives',
+                  title: l10n.sessionsActives,
                   children: [
                     for (final d in s.sessions)
                       MuSettingsRow(
@@ -91,17 +91,17 @@ class SecurityScreen extends ConsumerWidget {
                         title: d.name,
                         description: d.where,
                         trailing: d.current
-                            ? const MuStatusBadge(
+                            ? MuStatusBadge(
                                 status: MuStatus.confirmed,
-                                label: 'Cet appareil',
+                                label: l10n.cetAppareil,
                                 size: MuBadgeSize.s,
                               )
                             : MuButton.tertiary(
-                                label: 'Déconnecter',
+                                label: l10n.deconnecter,
                                 size: MuButtonSize.s,
                                 onPressed: () {
                                   ctrl.signOutSession(d.id);
-                                  MuToast.show(context, title: '${d.name} déconnecté');
+                                  MuToast.show(context, title: l10n.deconnecte(d.name));
                                 },
                               ),
                       ),
@@ -112,20 +112,20 @@ class SecurityScreen extends ConsumerWidget {
                   padding: const EdgeInsets.symmetric(horizontal: MuSpace.s4),
                   child: Text(
                     others.isEmpty
-                        ? 'Aucune autre session ouverte. Seul cet ${s.sessions.first.name} est connecté.'
-                        : 'Tu ne reconnais pas un appareil ? Déconnecte-le, puis change ton mot de passe.',
+                        ? l10n.aucuneAutreSessionOuverteSeul(s.sessions.first.name)
+                        : l10n.tuNeReconnaisPasUn,
                     style: caption,
                   ),
                 ),
                 if (others.isNotEmpty) ...[
                   const SizedBox(height: MuSpace.s4),
                   MuButton.destructiveOutline(
-                    label: 'Déconnecter toutes les autres sessions',
+                    label: l10n.deconnecterToutesLesAutresSessions,
                     size: MuButtonSize.l,
                     fullWidth: true,
                     onPressed: () {
                       ctrl.signOutOthers();
-                      MuToast.show(context, title: 'Autres sessions déconnectées');
+                      MuToast.show(context, title: l10n.autresSessionsDeconnectees);
                     },
                   ),
                 ],

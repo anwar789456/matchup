@@ -6,6 +6,7 @@ import 'mu_skeleton.dart';
 import 'mu_sport_icon.dart';
 import 'mu_status_badge.dart';
 import 'src/card_surface.dart';
+import '../l10n/l10n.dart';
 
 enum MuMatchStatus { upcoming, live, finished }
 
@@ -128,12 +129,11 @@ class MuMatchCard extends StatelessWidget {
     final score = m.padel
         ? [for (var i = 0; i < a.sets!.length; i++) '${a.sets![i]} ${b.sets![i]}'].join(', ')
         : '${a.score ?? ''} ${b.score ?? ''}';
-    return '${a.name} contre ${b.name}${m.round == null ? '' : ', ${m.round}'}, '
-        '${switch (m.status) {
-          MuMatchStatus.upcoming => 'à venir${m.kickoff == null ? '' : ' à ${m.kickoff}'}',
-          MuMatchStatus.live => 'en direct${m.minute == null ? '' : ', ${m.minute}'}',
-          MuMatchStatus.finished => 'terminé, $score',
-        }}';
+    return l10n.contre(a.name, b.name, m.round == null ? '' : ', ${m.round}', switch (m.status) {
+          MuMatchStatus.upcoming => l10n.aVenir4(m.kickoff == null ? '' : l10n.atTime(m.kickoff!)),
+          MuMatchStatus.live => l10n.enDirect4(m.minute == null ? '' : ', ${m.minute}'),
+          MuMatchStatus.finished => l10n.termine5(score),
+        });
   }
 
   Widget _monogramBox(
@@ -176,7 +176,7 @@ class MuMatchCard extends StatelessWidget {
           MuMatchStatus.live => Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              const MuStatusBadge(status: MuStatus.live, label: 'En direct', size: MuBadgeSize.s),
+              MuStatusBadge(status: MuStatus.live, label: l10n.enDirect, size: MuBadgeSize.s),
               if (m.minute != null) ...[
                 const SizedBox(width: MuSpace.s2),
                 Text(m.minute!, style: MuType.numS.copyWith(color: c.errorText)),
@@ -184,11 +184,11 @@ class MuMatchCard extends StatelessWidget {
             ],
           ),
           MuMatchStatus.finished => Text(
-            'TERMINÉ',
+            l10n.termine3,
             style: MuType.overline.copyWith(color: c.textSecondary),
           ),
           MuMatchStatus.upcoming => Text(
-            m.kickoff ?? 'À venir',
+            m.kickoff ?? l10n.aVenir,
             style: MuType.labelS.copyWith(color: c.textSecondary),
           ),
         },
@@ -274,7 +274,7 @@ class MuMatchCard extends StatelessWidget {
                       PhosphorIcons.trophy(),
                       size: MuSize.iconXs,
                       color: c.text,
-                      semanticLabel: 'Vainqueur',
+                      semanticLabel: l10n.vainqueur,
                     ),
                   ],
                 ],
@@ -325,7 +325,7 @@ class MuMatchCard extends StatelessWidget {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Text(m.kickoff!, style: MuType.numL.copyWith(color: c.text)),
-                      Text('Coup d’envoi', style: MuType.caption.copyWith(color: c.textSecondary)),
+                      Text(l10n.coupDEnvoi, style: MuType.caption.copyWith(color: c.textSecondary)),
                     ],
                   ),
                 ),
@@ -354,7 +354,7 @@ class MuMatchCard extends StatelessWidget {
                   Icon(PhosphorIcons.target(), size: MuSize.iconXs, color: c.textSecondary),
                   const SizedBox(width: MuSpace.s1),
                   Text(
-                    'Premier à ${m.target} points',
+                    l10n.premierAPoints('${m.target}'),
                     style: MuType.caption.copyWith(color: c.textSecondary),
                   ),
                 ],

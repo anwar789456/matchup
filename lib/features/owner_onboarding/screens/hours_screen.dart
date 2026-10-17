@@ -9,6 +9,7 @@ import '../../common/widgets/pro_wizard_scaffold.dart';
 import '../controllers/owner_controller.dart';
 import '../data/owner_draft.dart';
 import '../widgets/owner_wizard.dart';
+import '../../../l10n/l10n.dart';
 
 /// OWN-04 — opening hours per weekday (a switch, opening and closing selects, the length), « Appliquer
 /// à tous les jours », and exceptional closures.
@@ -19,7 +20,7 @@ class HoursScreen extends ConsumerStatefulWidget {
   ConsumerState<HoursScreen> createState() => _HoursScreenState();
 }
 
-const _days = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'];
+final _days = [l10n.lundi, l10n.mardi, l10n.mercredi, l10n.jeudi, l10n.vendredi, l10n.samedi, l10n.dimanche];
 
 /// 06h00 to 02h00 the next day, every half hour (OWN-04 source).
 final _times = [for (var m = 6 * 60; m <= 26 * 60; m += 30) m];
@@ -57,7 +58,7 @@ class _HoursScreenState extends ConsumerState<HoursScreen> {
     MuToast.show(
       context,
       tone: MuToastTone.success,
-      title: 'Horaires du ${_days[source].toLowerCase()} appliqués à tous les jours ouverts',
+      title: l10n.horairesDuAppliquesATous(_days[source].toLowerCase()),
     );
   }
 
@@ -72,7 +73,7 @@ class _HoursScreenState extends ConsumerState<HoursScreen> {
         ]);
     });
     if (hours.every((h) => !h.open)) {
-      MuToast.show(context, tone: MuToastTone.error, title: 'Ouvre au moins un jour.');
+      MuToast.show(context, tone: MuToastTone.error, title: l10n.ouvreAuMoinsUnJour);
       return false;
     }
     return _errors.isEmpty;
@@ -85,16 +86,16 @@ class _HoursScreenState extends ConsumerState<HoursScreen> {
 
     return OwnerWizard(
       step: 3,
-      title: 'Tes horaires d’ouverture',
-      lead: 'Les joueurs ne peuvent réserver que pendant ces plages.',
+      title: l10n.tesHorairesDOuverture,
+      lead: l10n.lesJoueursNePeuventReserver,
       validate: _validate,
       body: ProFormCard(
         children: [
           ProFormSection(
-            title: 'Horaires de la semaine',
-            description: 'Les créneaux sont générés toutes les heures dans ces plages.',
+            title: l10n.horairesDeLaSemaine,
+            description: l10n.lesCreneauxSontGeneresToutes,
             trailing: MuButton.tertiary(
-              label: 'Appliquer à tous les jours',
+              label: l10n.appliquerATousLesJours,
               leading: PhosphorIcons.copy(),
               size: MuButtonSize.s,
               onPressed: _applyToAll,
@@ -115,14 +116,14 @@ class _HoursScreenState extends ConsumerState<HoursScreen> {
                             ),
                             child: Row(
                               children: [
-                                Expanded(child: _head(c, 'Jour')),
-                                SizedBox(width: _DayRow.select, child: _head(c, 'Ouverture')),
+                                Expanded(child: _head(c, l10n.jour)),
+                                SizedBox(width: _DayRow.select, child: _head(c, l10n.ouverture)),
                                 const SizedBox(width: MuSpace.s3 * 2 + _DayRow.to),
-                                SizedBox(width: _DayRow.select, child: _head(c, 'Fermeture')),
+                                SizedBox(width: _DayRow.select, child: _head(c, l10n.fermeture)),
                                 const SizedBox(width: MuSpace.s3),
                                 SizedBox(
                                   width: _DayRow.length,
-                                  child: _head(c, 'Durée', end: true),
+                                  child: _head(c, l10n.duree, end: true),
                                 ),
                               ],
                             ),
@@ -145,9 +146,9 @@ class _HoursScreenState extends ConsumerState<HoursScreen> {
           ),
           ProExtraRow(
             icon: PhosphorIcons.calendarX(),
-            title: 'Fermetures exceptionnelles',
-            caption: 'Aïd, jours fériés, travaux : les créneaux de ces dates disparaissent.',
-            action: 'Ajouter une fermeture',
+            title: l10n.fermeturesExceptionnelles,
+            caption: l10n.aidJoursFeriesTravauxLes,
+            action: l10n.ajouterUneFermeture,
             onAction: () => showComingSoon(context),
           ),
         ],
@@ -205,7 +206,7 @@ class _DayRow extends StatelessWidget {
             children: [
               slot(
                 MuSelect<int>(
-                  label: 'Ouverture le $lower',
+                  label: l10n.ouvertureLe(lower),
                   hideLabel: true,
                   size: MuFieldSize.m,
                   value: hours.from,
@@ -225,7 +226,7 @@ class _DayRow extends StatelessWidget {
               const SizedBox(width: MuSpace.s3),
               slot(
                 MuSelect<int>(
-                  label: 'Fermeture le $lower',
+                  label: l10n.fermetureLe(lower),
                   hideLabel: true,
                   size: MuFieldSize.m,
                   value: hours.close,
@@ -249,7 +250,7 @@ class _DayRow extends StatelessWidget {
             children: [
               Icon(PhosphorIcons.moon(), size: MuSize.iconXs, color: c.textSecondary),
               const SizedBox(width: MuSpace.s2),
-              Text('Fermé toute la journée', style: MuType.body.copyWith(color: c.textSecondary)),
+              Text(l10n.fermeTouteLaJournee, style: MuType.body.copyWith(color: c.textSecondary)),
             ],
           );
 
@@ -287,9 +288,9 @@ class _DayRow extends StatelessWidget {
               ],
             ),
           if (error)
-            const Padding(
-              padding: EdgeInsets.symmetric(vertical: MuSpace.s1),
-              child: MuFieldMessage.error('La fermeture doit venir après l’ouverture.'),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: MuSpace.s1),
+              child: MuFieldMessage.error(l10n.laFermetureDoitVenirApres),
             ),
         ],
       ),

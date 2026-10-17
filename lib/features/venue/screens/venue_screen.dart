@@ -15,6 +15,7 @@ import '../../common/widgets/coming_soon.dart';
 import '../../home/controllers/home_providers.dart';
 import '../data/venue_details.dart';
 import '../widgets/venue_widgets.dart';
+import '../../../l10n/l10n.dart';
 
 /// VEN-01 · Fiche du terrain: the photo, « Vérifié », rating, opening hours and prices, the slot
 /// grid of the chosen day, equipment, courts, the map, the cancellation policy and a review; the
@@ -54,20 +55,20 @@ class _VenueScreenState extends ConsumerState<VenueScreen> {
           child: Padding(
             padding: const EdgeInsets.all(MuSpace.s4),
             child: MuEmptyState(
-              title: 'Terrain introuvable',
-              description: 'Il n’existe plus ou le lien est incomplet.',
+              title: l10n.terrainIntrouvable,
+              description: l10n.ilNExistePlusOu,
               actions: [
                 MuButton.primary(
-                  label: 'Voir les terrains',
+                  label: l10n.voirLesTerrains,
                   onPressed: () => context.go(Routes.explore),
                 ),
               ],
             ),
           ),
         ),
-        _ => const MuSkeletonGroup(
-          label: 'Chargement du terrain',
-          child: Column(
+        _ => MuSkeletonGroup(
+          label: l10n.chargementDuTerrain,
+          child: const Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               MuSkeleton(height: _photo, radius: BorderRadius.zero),
@@ -130,7 +131,7 @@ class _Body extends ConsumerWidget {
       ],
     );
 
-    final hours = '${formatHour(details.opens)} – ${formatHour(details.closes)} tous les jours';
+    final hours = l10n.tousLesJours(formatHour(details.opens), formatHour(details.closes));
 
     return ListView(
       padding: EdgeInsets.zero,
@@ -141,7 +142,7 @@ class _Body extends ConsumerWidget {
           child: Stack(
             fit: StackFit.expand,
             children: [
-              MuCourtArt(sport: v.sport, semanticLabel: 'Photo de ${v.name}'),
+              MuCourtArt(sport: v.sport, semanticLabel: l10n.photoDe(v.name)),
               const DecoratedBox(decoration: BoxDecoration(gradient: MuGradients.photoScrim)),
               SafeArea(
                 bottom: false,
@@ -153,7 +154,7 @@ class _Body extends ConsumerWidget {
                       children: [
                         MuIconButton(
                           icon: PhosphorIcons.arrowLeft(),
-                          label: 'Retour',
+                          label: l10n.retour,
                           variant: MuIconButtonVariant.onMedia,
                           onPressed: () =>
                               context.canPop() ? context.pop() : context.go(Routes.explore),
@@ -161,11 +162,11 @@ class _Body extends ConsumerWidget {
                         const Spacer(),
                         MuIconButton(
                           icon: PhosphorIcons.shareNetwork(),
-                          label: 'Partager le terrain',
+                          label: l10n.partagerLeTerrain,
                           variant: MuIconButtonVariant.onMedia,
                           onPressed: () => SharePlus.instance.share(
                             ShareParams(
-                              text: '${v.name} sur MatchUp : https://matchup.tn/t/${v.id}',
+                              text: l10n.surMatchupHttpsMatchupTn(v.name, v.id),
                             ),
                           ),
                         ),
@@ -174,7 +175,7 @@ class _Body extends ConsumerWidget {
                           icon: PhosphorIcons.heart(),
                           selectedIcon: PhosphorIcons.heart(PhosphorIconsStyle.fill),
                           pressed: favourite,
-                          label: 'Ajouter aux favoris',
+                          label: l10n.ajouterAuxFavoris,
                           variant: MuIconButtonVariant.onMedia,
                           onPressed: () => ref.read(favouriteVenuesProvider.notifier).toggle(v.id),
                         ),
@@ -196,7 +197,7 @@ class _Body extends ConsumerWidget {
                       const SizedBox(width: MuSpace.s1),
                       Text(
                         '1/${details.photos}',
-                        semanticsLabel: 'Photo 1 sur ${details.photos}',
+                        semanticsLabel: l10n.photoSur(details.photos),
                         style: MuType.numXs.copyWith(color: MuPalette.white),
                       ),
                     ],
@@ -215,7 +216,7 @@ class _Body extends ConsumerWidget {
             children: [
               VenueSportChip(details: details),
               if (v.verified)
-                const MuStatusBadge(status: MuStatus.verified, label: 'Terrain vérifié'),
+                MuStatusBadge(status: MuStatus.verified, label: l10n.terrainVerifie),
             ],
           ),
           Column(
@@ -236,7 +237,7 @@ class _Body extends ConsumerWidget {
               line(
                 PhosphorIcons.mapPin(),
                 Text(
-                  '${details.street}${v.distanceKm == null ? '' : ' · ${formatLevel(v.distanceKm!)} km'}',
+                  '${details.street}${v.distanceKm == null ? '' : l10n.km3(formatLevel(v.distanceKm!))}',
                   style: MuType.body.copyWith(color: c.textSecondary),
                 ),
               ),
@@ -247,7 +248,7 @@ class _Body extends ConsumerWidget {
                   TextSpan(
                     children: [
                       TextSpan(
-                        text: open ? 'Ouvert' : 'Fermé',
+                        text: open ? l10n.ouvert : l10n.ferme2,
                         style: MuType.label.copyWith(color: open ? c.successText : c.errorText),
                       ),
                       TextSpan(text: ' · $hours'),
@@ -261,7 +262,7 @@ class _Body extends ConsumerWidget {
           VenuePriceBox(
             cells: [
               (
-                'Par joueur',
+                l10n.parJoueur,
                 details.minShare == details.maxShare
                     ? formatAmount(details.minShare)
                     : '${formatAmount(details.minShare)}–${formatAmount(details.maxShare)}',
@@ -269,7 +270,7 @@ class _Body extends ConsumerWidget {
                 null,
               ),
               (
-                'Terrain · ${_slotLength(details)}',
+                l10n.terrain(_slotLength(details)),
                 details.offPeakPrice == details.peakPrice
                     ? formatAmount(details.peakPrice)
                     : '${formatAmount(details.offPeakPrice)}–${formatAmount(details.peakPrice)}',
@@ -289,14 +290,14 @@ class _Body extends ConsumerWidget {
             legend: true,
             header: Padding(
               padding: const EdgeInsets.symmetric(horizontal: MuSpace.s4),
-              child: head('Choisis ton créneau'),
+              child: head(l10n.choisisTonCreneau),
             ),
             footer: Padding(
               padding: const EdgeInsets.symmetric(horizontal: MuSpace.s4),
               child: Text.rich(
                 TextSpan(
                   children: [
-                    TextSpan(text: 'À ${details.players} joueurs : '),
+                    TextSpan(text: l10n.aJoueurs2(details.players)),
                     TextSpan(
                       text: '${formatDT(details.maxShare)} /pers.',
                       style: MuType.labelS.copyWith(color: c.text),
@@ -304,8 +305,7 @@ class _Body extends ConsumerWidget {
                     if (details.peakPrice != details.offPeakPrice)
                       TextSpan(
                         text:
-                            ' de ${details.peakFrom ~/ 60}h à ${details.peakTo ~/ 60}h · '
-                            '${formatDT(details.minShare)} avant.',
+                            l10n.deHAHAvant(details.peakFrom ~/ 60, details.peakTo ~/ 60, formatDT(details.minShare)),
                       ),
                   ],
                 ),
@@ -317,10 +317,10 @@ class _Body extends ConsumerWidget {
         const SizedBox(height: MuSpace.s2),
         // ── Équipements ──
         section([
-          head('Équipements'),
+          head(l10n.equipements),
           Semantics(
             container: true,
-            label: 'Équipements',
+            label: l10n.equipements,
             child: LayoutBuilder(
               builder: (context, constraints) {
                 final w = (constraints.maxWidth - MuSpace.s3 * 2) / 3;
@@ -351,7 +351,7 @@ class _Body extends ConsumerWidget {
         // ── Terrains ──
         section([
           head(
-            'Terrains',
+            l10n.terrains,
             trailing: Text(
               '${details.format} · ${details.surface}',
               style: MuType.caption.copyWith(color: c.textSecondary),
@@ -374,7 +374,7 @@ class _Body extends ConsumerWidget {
           ),
           if (details.courts.length > 3)
             Text(
-              '+ ${details.courts.length - 3} autres terrains',
+              l10n.autresTerrains(details.courts.length - 3),
               style: MuType.caption.copyWith(color: c.textSecondary),
             ),
         ]),
@@ -382,11 +382,11 @@ class _Body extends ConsumerWidget {
         // ── Adresse ──
         section([
           head(
-            'Adresse',
+            l10n.adresse,
             trailing: v.distanceKm == null
                 ? null
                 : Text(
-                    '${formatLevel(v.distanceKm!)} km de toi',
+                    l10n.kmDeToi(formatLevel(v.distanceKm!)),
                     style: MuType.caption.copyWith(color: c.textSecondary),
                   ),
           ),
@@ -414,7 +414,7 @@ class _Body extends ConsumerWidget {
                       boxShadow: MuElevation.of(context).level2,
                     ),
                     child: MuButton.secondary(
-                      label: 'Itinéraire',
+                      label: l10n.itineraire,
                       leading: PhosphorIcons.navigationArrow(),
                       size: MuButtonSize.s,
                       onPressed: v.position == null ? null : () => openDirections(v.position!),
@@ -428,7 +428,7 @@ class _Body extends ConsumerWidget {
         ]),
         const SizedBox(height: MuSpace.s2),
         // ── Annulation ──
-        section([head('Annulation et remboursement'), CancellationTiers(venueName: v.name)]),
+        section([head(l10n.annulationEtRemboursement), CancellationTiers(venueName: v.name)]),
         const SizedBox(height: MuSpace.s2),
         // ── Avis ──
         section(gap: MuSpace.s3, [
@@ -438,18 +438,18 @@ class _Body extends ConsumerWidget {
             children: [
               Semantics(
                 header: true,
-                child: Text('Avis', style: MuType.h3.copyWith(color: c.text)),
+                child: Text(l10n.avis, style: MuType.h3.copyWith(color: c.text)),
               ),
               if (v.rating != null) ...[
                 const SizedBox(width: MuSpace.s2),
                 Text(formatLevel(v.rating!), style: MuType.numM.copyWith(color: c.text)),
                 const SizedBox(width: MuSpace.s1),
-                Text('sur 5', style: MuType.caption.copyWith(color: c.textSecondary)),
+                Text(l10n.sur2, style: MuType.caption.copyWith(color: c.textSecondary)),
               ],
               const Spacer(),
               if (v.reviews > 0)
                 MuButton.tertiary(
-                  label: 'Voir les ${v.reviews} avis',
+                  label: l10n.voirLesAvis(v.reviews),
                   size: MuButtonSize.s,
                   onPressed: () => showComingSoon(context),
                 ),
@@ -498,7 +498,7 @@ class _Bar extends ConsumerWidget {
                     TextSpan(
                       children: [
                         TextSpan(
-                          text: 'dès ',
+                          text: l10n.des,
                           style: MuType.caption.copyWith(color: c.textSecondary),
                         ),
                         TextSpan(
@@ -515,7 +515,7 @@ class _Bar extends ConsumerWidget {
                   const SizedBox(width: MuSpace.s3),
                   Expanded(
                     child: Text(
-                      '$court DT le terrain · ${_Body._slotLength(d)} · à ${d.players}',
+                      l10n.dtLeTerrainA(court, _Body._slotLength(d), d.players),
                       textAlign: TextAlign.end,
                       style: MuType.caption.copyWith(color: c.textSecondary),
                     ),
@@ -524,7 +524,7 @@ class _Bar extends ConsumerWidget {
               ),
               const SizedBox(height: MuSpace.s2),
               MuButton.primary(
-                label: 'Réserver',
+                label: l10n.reserver,
                 size: MuButtonSize.xl,
                 fullWidth: true,
                 onPressed: () => context.push(Routes.venueSlots(d.venue.id)),

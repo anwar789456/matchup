@@ -5,6 +5,7 @@ import 'package:phosphor_flutter/phosphor_flutter.dart';
 import '../../../theme/theme.dart';
 import '../../../ui/ui.dart';
 import '../controllers/onboarding_controller.dart';
+import '../../../l10n/l10n.dart';
 
 /// « Ajouter une zone : quartier, ville… » — searches the zone directory and adds the pick.
 class ZoneSearchField extends ConsumerWidget {
@@ -15,9 +16,9 @@ class ZoneSearchField extends ConsumerWidget {
     final c = context.mu;
     final directory = ref.read(zoneDirectoryProvider);
     return MuSearchField<String>(
-      label: 'Ajouter une zone',
-      placeholder: 'Ajouter une zone : quartier, ville…',
-      emptyMessage: (q) => 'Aucune zone trouvée pour « $q ». Essaie un quartier ou une ville.',
+      label: l10n.ajouterUneZone,
+      placeholder: l10n.ajouterUneZoneQuartierVille,
+      emptyMessage: (q) => l10n.aucuneZoneTrouveePourEssaie(q),
       search: (q) async => [
         for (final zone in await directory.search(q))
           MuSearchSuggestion(

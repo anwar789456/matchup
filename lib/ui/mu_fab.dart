@@ -3,18 +3,19 @@ import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 import '../theme/theme.dart';
 import 'src/interaction.dart';
+import '../l10n/l10n.dart';
 
 /// Fab (components/Fab.md): the AI assistant button — a 56 px circle in the AI gradient with a
 /// filled sparkle, or [extended] with « Demande à MatchUp ». Put it in
 /// `Scaffold.floatingActionButton` (`endFloat`) above the TabBar; not from 840 px up.
 class MuFab extends StatelessWidget {
-  const MuFab({
+  MuFab({
     super.key,
     required this.onPressed,
-    this.label = 'Assistant MatchUp',
+    String? label,
     this.extended = false,
-    this.extendedLabel = 'Demande à MatchUp',
-  });
+    String? extendedLabel,
+  }) : extendedLabel = extendedLabel ?? l10n.demandeAMatchup2, label = label ?? l10n.assistantMatchup;
 
   final VoidCallback onPressed;
 

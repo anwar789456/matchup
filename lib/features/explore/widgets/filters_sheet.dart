@@ -8,6 +8,7 @@ import '../../../theme/theme.dart';
 import '../../../ui/ui.dart';
 import '../../home/controllers/home_providers.dart';
 import '../controllers/explore_controller.dart';
+import '../../../l10n/l10n.dart';
 
 /// EXP-04 · Filtres: the full-height sheet over Explorer. Changes stay in a draft until « Afficher
 /// 12 parties », whose count follows the draft; « Réinitialiser » clears it; closing drops it.
@@ -15,7 +16,7 @@ Future<void> showExploreFilters(BuildContext context, WidgetRef ref) async {
   final draft = ValueNotifier(ref.read(exploreProvider).filters);
   await MuBottomSheet.show<void>(
     context,
-    title: 'Filtres',
+    title: l10n.filtres,
     height: MuSheetHeight.full,
     snapPoints: const [MuSheetHeight.full],
     child: _FiltersBody(draft: draft),
@@ -65,14 +66,14 @@ class _FiltersFooter extends ConsumerWidget {
         return Row(
           children: [
             MuButton.secondary(
-              label: 'Réinitialiser',
+              label: l10n.reinitialiser,
               size: MuButtonSize.xl,
               onPressed: () => draft.value = ref.read(exploreProvider.notifier).cleared,
             ),
             const SizedBox(width: MuSpace.s3),
             Expanded(
               child: MuButton.primary(
-                label: 'Afficher $label',
+                label: l10n.afficher(label),
                 size: MuButtonSize.xl,
                 fullWidth: true,
                 onPressed: () {
@@ -93,11 +94,11 @@ class _FiltersBody extends ConsumerWidget {
 
   final ValueNotifier<ExploreFilters> draft;
 
-  static const _levelBands = [
-    MuRangeBand(1, 2.5, 'Débutant'),
-    MuRangeBand(2.5, 4, 'Intermédiaire'),
-    MuRangeBand(4, 5.5, 'Avancé'),
-    MuRangeBand(5.5, 7, 'Expert'),
+  static final _levelBands = [
+    MuRangeBand(1, 2.5, l10n.debutant),
+    MuRangeBand(2.5, 4, l10n.intermediaire),
+    MuRangeBand(4, 5.5, l10n.avance),
+    MuRangeBand(5.5, 7, l10n.expert),
   ];
 
   @override
@@ -155,7 +156,7 @@ class _FiltersBody extends ConsumerWidget {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            group('Sport', [
+            group(l10n.sport, [
               wrap([
                 for (final s in MuSport.values)
                   MuChip.sport(
@@ -169,13 +170,13 @@ class _FiltersBody extends ConsumerWidget {
                   ),
               ]),
             ]),
-            group('Date et heure', [
+            group(l10n.dateEtHeure, [
               Semantics(
                 container: true,
-                label: 'Date',
+                label: l10n.date,
                 child: wrap([
                   MuChip(
-                    label: 'Ce soir',
+                    label: l10n.ceSoir,
                     kind: MuChipKind.choice,
                     selected: f.when == ExploreWhen.tonight,
                     onSelected: (_) => set(
@@ -185,7 +186,7 @@ class _FiltersBody extends ConsumerWidget {
                     ),
                   ),
                   MuChip(
-                    label: 'Ce week-end',
+                    label: l10n.ceWeekEnd,
                     kind: MuChipKind.choice,
                     selected: f.when == ExploreWhen.weekend,
                     onSelected: (_) => set(
@@ -197,7 +198,7 @@ class _FiltersBody extends ConsumerWidget {
                   MuChip(
                     label: f.when == ExploreWhen.day && f.day != null
                         ? formatDay(f.day!)
-                        : 'Choisir',
+                        : l10n.choisir,
                     icon: PhosphorIcons.calendarBlank(),
                     selected: f.when == ExploreWhen.day,
                     onSelected: (_) => f.when == ExploreWhen.day
@@ -221,7 +222,7 @@ class _FiltersBody extends ConsumerWidget {
             ]),
             group(null, [
               MuRangeSlider(
-                label: 'Niveau des joueurs',
+                label: l10n.niveauDesJoueurs,
                 values:
                     f.level ?? const RangeValues(ExploreFilters.levelMin, ExploreFilters.levelMax),
                 min: ExploreFilters.levelMin,
@@ -229,8 +230,8 @@ class _FiltersBody extends ConsumerWidget {
                 step: 0.5,
                 format: formatLevel,
                 bands: _levelBands,
-                minLabel: 'Niveau minimum',
-                maxLabel: 'Niveau maximum',
+                minLabel: l10n.niveauMinimum,
+                maxLabel: l10n.niveauMaximum,
                 onChanged: (r) => set(
                   f.copyWith(
                     level: () =>
@@ -242,19 +243,19 @@ class _FiltersBody extends ConsumerWidget {
               ),
               if (levelText.isNotEmpty)
                 Text(
-                  'Autour de ton niveau : $levelText.',
+                  l10n.autourDeTonNiveau(levelText),
                   style: MuType.caption.copyWith(color: c.textSecondary),
                 ),
             ]),
             group(null, [
               MuRangeSlider(
-                label: 'Prix par personne',
+                label: l10n.prixParPersonne,
                 values: f.price ?? const RangeValues(0, ExploreFilters.priceMax),
                 min: 0,
                 max: ExploreFilters.priceMax,
                 format: (v) => formatDT(v.round()),
-                minLabel: 'Prix minimum',
-                maxLabel: 'Prix maximum',
+                minLabel: l10n.prixMinimum,
+                maxLabel: l10n.prixMaximum,
                 onChanged: (r) => set(
                   f.copyWith(
                     price: () => r.start == 0 && r.end == ExploreFilters.priceMax ? null : r,
@@ -264,22 +265,22 @@ class _FiltersBody extends ConsumerWidget {
             ]),
             group(null, [
               MuRangeSlider(
-                label: 'Distance',
+                label: l10n.distance,
                 values: RangeValues(f.distanceMinKm.toDouble(), f.distanceKm.toDouble()),
                 min: 0,
                 max: ExploreFilters.distanceMax.toDouble(),
                 format: (v) => '${v.round()} km',
                 formatRange: (lo, hi) =>
-                    lo == 0 ? 'Jusqu’à ${hi.round()} km' : '${lo.round()} – ${hi.round()} km',
-                minLabel: 'Distance minimum',
-                maxLabel: 'Distance maximum',
+                    lo == 0 ? l10n.jusquAKm(hi.round()) : l10n.km2(lo.round(), hi.round()),
+                minLabel: l10n.distanceMinimum,
+                maxLabel: l10n.distanceMaximum,
                 onChanged: (r) =>
                     set(f.copyWith(distanceMinKm: r.start.round(), distanceKm: r.end.round())),
               ),
             ]),
-            group('Type de partie', [
+            group(l10n.typeDePartie, [
               MuSegmentedControl<ExploreGameType>(
-                semanticLabel: 'Type de partie',
+                semanticLabel: l10n.typeDePartie,
                 expand: true,
                 value: f.type,
                 segments: [
@@ -288,16 +289,16 @@ class _FiltersBody extends ConsumerWidget {
                 onChanged: (t) => set(f.copyWith(type: t)),
               ),
             ]),
-            group('Terrain', [
+            group(l10n.terrain2, [
               wrap([
                 MuChip(
-                  label: 'Extérieur',
+                  label: l10n.exterieur,
                   icon: PhosphorIcons.sun(),
                   selected: f.outdoor,
                   onSelected: (v) => set(f.copyWith(outdoor: v)),
                 ),
                 MuChip(
-                  label: 'Intérieur',
+                  label: l10n.interieur,
                   icon: PhosphorIcons.umbrella(),
                   selected: f.indoor,
                   onSelected: (v) => set(f.copyWith(indoor: v)),
@@ -305,13 +306,13 @@ class _FiltersBody extends ConsumerWidget {
               ]),
               MuSwitch(
                 value: f.lit,
-                label: 'Éclairé le soir',
+                label: l10n.eclaireLeSoir,
                 icon: PhosphorIcons.lightbulb(),
                 labelAtStart: true,
                 onChanged: (v) => set(f.copyWith(lit: v)),
               ),
             ]),
-            group('Équipements', last: true, [
+            group(l10n.equipements, last: true, [
               wrap([
                 for (final a in ExploreAmenity.values)
                   MuChip(

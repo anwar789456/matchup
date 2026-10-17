@@ -7,6 +7,7 @@ import '../../../ui/ui.dart';
 import '../../common/widgets/coming_soon.dart';
 import '../../games/widgets/game_widgets.dart';
 import '../data/profile_repository.dart';
+import '../../../l10n/l10n.dart';
 
 /// The cover (CourtArt photo) with the media bar over it and the 96 avatar overlapping its
 /// bottom edge, then the action at the end (« Modifier le profil » / « Suivre »).
@@ -42,7 +43,7 @@ class ProfileHeader extends StatelessWidget {
               MuCourtArt(
                 sport: profile.coverSport,
                 variant: MuCourtArtVariant.photo,
-                semanticLabel: 'Couverture du profil',
+                semanticLabel: l10n.couvertureDuProfil,
               ),
               Align(
                 alignment: Alignment.topCenter,
@@ -126,7 +127,7 @@ class ProfileIdentity extends StatelessWidget {
                 text: '${profile.followers}',
                 style: MuType.numS.copyWith(color: c.text),
               ),
-              const TextSpan(text: ' abonnés    '),
+              TextSpan(text: l10n.abonnes),
               TextSpan(
                 text: '${profile.following}',
                 style: MuType.numS.copyWith(color: c.text),
@@ -164,8 +165,7 @@ class ProfileStats extends StatelessWidget {
     );
     return Semantics(
       label:
-          'Statistiques : depuis ${profile.since}, ${profile.winRate} % de victoires, '
-          '${profile.matches} matchs, ${profile.wins} victoires, ${profile.tournaments} tournois',
+          l10n.statistiquesDepuisDeVictoiresMatchs(profile.since, profile.winRate, profile.matches, profile.wins, profile.tournaments),
       excludeSemantics: true,
       child: Container(
         padding: const EdgeInsets.all(MuSpace.s4),
@@ -181,7 +181,7 @@ class ProfileStats extends StatelessWidget {
               children: [
                 Expanded(
                   child: Text(
-                    'DEPUIS ${profile.since.toUpperCase()}',
+                    l10n.depuis(profile.since.toUpperCase()),
                     style: MuType.overline.copyWith(color: muted),
                   ),
                 ),
@@ -189,7 +189,7 @@ class ProfileStats extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(horizontal: MuSpace.s2, vertical: 2),
                   decoration: BoxDecoration(color: c.accent, borderRadius: MuRadius.fullAll),
                   child: Text(
-                    '${profile.winRate} % de victoires',
+                    l10n.deVictoires(profile.winRate),
                     style: MuType.labelS.copyWith(color: c.onAccent),
                   ),
                 ),
@@ -199,11 +199,11 @@ class ProfileStats extends StatelessWidget {
             IntrinsicHeight(
               child: Row(
                 children: [
-                  cell('${profile.matches}', 'Matchs'),
+                  cell('${profile.matches}', l10n.matchs),
                   VerticalDivider(width: MuSpace.s4, color: muted.withValues(alpha: 0.3)),
-                  cell('${profile.wins}', 'Victoires'),
+                  cell('${profile.wins}', l10n.victoires),
                   VerticalDivider(width: MuSpace.s4, color: muted.withValues(alpha: 0.3)),
-                  cell('${profile.tournaments}', 'Tournois'),
+                  cell('${profile.tournaments}', l10n.tournois),
                 ],
               ),
             ),
@@ -239,25 +239,25 @@ class LevelCard extends StatelessWidget {
               MuChip.sport(l.sport, size: MuChipSize.s),
               const Spacer(),
               Text(
-                '${l.matches} matchs · ${l.position}',
+                l10n.matchs2(l.matches, l.position),
                 style: MuType.caption.copyWith(color: c.textSecondary),
               ),
             ],
           ),
           const SizedBox(height: MuSpace.s4),
           Text(
-            'NIVEAU ${l.sport.label.toUpperCase()}',
+            l10n.niveau4(l.sport.label.toUpperCase()),
             style: MuType.overline.copyWith(color: c.textSecondary),
           ),
           const SizedBox(height: MuSpace.s1),
           MuLevelIndicator(
             level: l.level,
             variant: MuLevelVariant.bar,
-            label: 'Niveau ${l.sport.label}',
+            label: l10n.niveau2(l.sport.label),
             ai: true,
             showValue: true,
             trend: l.trend,
-            trendLabel: 'sur 30 jours',
+            trendLabel: l10n.surJours2,
             confidence: l.confidence,
             reason: l.reason,
           ),
@@ -271,7 +271,7 @@ class LevelCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    '10 derniers matchs',
+                    l10n.derniersMatchs2,
                     style: MuType.caption.copyWith(color: c.textSecondary),
                   ),
                   const SizedBox(height: MuSpace.s1),
@@ -283,8 +283,7 @@ class LevelCard extends StatelessWidget {
                     max: 7,
                     size: const Size(120, 40),
                     semanticLabel:
-                        'Niveau ${l.sport.label} sur les 10 derniers matchs : de '
-                        '${formatLevel(l.history.first)} à ${formatLevel(l.history.last)}',
+                        l10n.niveauSurLesDerniersMatchs(l.sport.label, formatLevel(l.history.first), formatLevel(l.history.last)),
                   ),
                 ],
               ),
@@ -296,7 +295,7 @@ class LevelCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     Text(
-                      'Ton niveau ${l.sport.label.toLowerCase()}',
+                      l10n.tonNiveau2(l.sport.label.toLowerCase()),
                       style: MuType.caption.copyWith(color: c.textSecondary),
                     ),
                     Text.rich(
@@ -306,7 +305,7 @@ class LevelCard extends StatelessWidget {
                             text: formatLevel(yours!.$1),
                             style: MuType.numS.copyWith(color: c.text),
                           ),
-                          const TextSpan(text: ' · écart '),
+                          TextSpan(text: l10n.ecart),
                           TextSpan(
                             text: formatLevel(yours!.$2),
                             style: MuType.numS.copyWith(color: c.text),
@@ -319,7 +318,7 @@ class LevelCard extends StatelessWidget {
                 )
               else if (onWhy != null)
                 MuButton.tertiary(
-                  label: 'Pourquoi ce niveau ?',
+                  label: l10n.pourquoiCeNiveau,
                   leading: PhosphorIcons.info(),
                   size: MuButtonSize.s,
                   onPressed: onWhy,
@@ -349,7 +348,7 @@ class ReliabilityCard extends StatelessWidget {
             children: [
               MuReliabilityBadge(score: r.score),
               const Spacer(),
-              Text('12 derniers mois', style: MuType.caption.copyWith(color: c.textSecondary)),
+              Text(l10n.derniersMois, style: MuType.caption.copyWith(color: c.textSecondary)),
             ],
           ),
           const SizedBox(height: MuSpace.s3),
@@ -368,7 +367,7 @@ class ReliabilityCard extends StatelessWidget {
                   text: '${r.honored}/${r.total}',
                   style: MuType.numS.copyWith(color: c.text),
                 ),
-                const TextSpan(text: ' matchs honorés'),
+                TextSpan(text: l10n.matchsHonores),
               ],
             ),
             style: MuType.body.copyWith(color: c.text),
@@ -398,7 +397,7 @@ class BadgesRow extends StatelessWidget {
           if (i > 0) const SizedBox(width: MuSpace.s2),
           Expanded(
             child: Semantics(
-              label: 'Badge ${b.name} : ${b.detail}${b.progress == null ? '' : ', en cours'}',
+              label: l10n.badge(b.name, b.detail, b.progress == null ? '' : l10n.enCours),
               excludeSemantics: true,
               child: Container(
                 padding: const EdgeInsets.fromLTRB(6, 14, 6, 12),
@@ -561,7 +560,7 @@ class ReviewsCard extends StatelessWidget {
                   children: [
                     MuStarRating.display(value: r.average, showValue: false),
                     Text(
-                      '${r.count} avis · ${r.note}',
+                      l10n.avis2(r.count, r.note),
                       style: MuType.caption.copyWith(color: c.textSecondary),
                     ),
                   ],

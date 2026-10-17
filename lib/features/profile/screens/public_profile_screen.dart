@@ -15,6 +15,7 @@ import '../../games/widgets/game_widgets.dart';
 import '../../home/controllers/home_providers.dart';
 import '../data/profile_repository.dart';
 import '../widgets/profile_widgets.dart';
+import '../../../l10n/l10n.dart';
 
 /// PRF-02 · Profil public: another player's profile — « Suivre », the AI fit with their games,
 /// their next game, stats, levels, reliability, badges, matches, reviews; « Inviter à une partie ».
@@ -35,13 +36,13 @@ class PublicProfileScreen extends ConsumerWidget {
         AsyncData(:final value) => _body(context, ref, value),
         AsyncError() => Center(
           child: MuEmptyState(
-            title: 'Profil introuvable',
-            actions: [MuButton.primary(label: 'Retour', onPressed: () => context.pop())],
+            title: l10n.profilIntrouvable,
+            actions: [MuButton.primary(label: l10n.retour, onPressed: () => context.pop())],
           ),
         ),
-        _ => const MuSkeletonGroup(
-          label: 'Chargement du profil',
-          child: Column(
+        _ => MuSkeletonGroup(
+          label: l10n.chargementDuProfil,
+          child: const Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               MuSkeleton(height: 188, radius: BorderRadius.zero),
@@ -55,7 +56,7 @@ class PublicProfileScreen extends ConsumerWidget {
           : StickyActionBar(
               children: [
                 MuButton.primary(
-                  label: 'Inviter à une partie',
+                  label: l10n.inviterAUnePartie,
                   leading: PhosphorIcons.calendarPlus(),
                   size: MuButtonSize.xl,
                   fullWidth: true,
@@ -70,7 +71,7 @@ class PublicProfileScreen extends ConsumerWidget {
     await ref.read(playerProfileRepositoryProvider).follow(p.name, follow: !p.followed);
     ref.invalidate(playerProfileProvider(name));
     if (context.mounted) {
-      MuToast.show(context, title: p.followed ? 'Tu ne suis plus ${p.name}' : 'Tu suis ${p.name}');
+      MuToast.show(context, title: p.followed ? l10n.tuNeSuisPlus(p.name) : l10n.tuSuis(p.name));
     }
   }
 
@@ -87,29 +88,29 @@ class PublicProfileScreen extends ConsumerWidget {
           actions: [
             MuBarAction(
               icon: PhosphorIcons.shareNetwork(),
-              label: 'Partager le profil',
+              label: l10n.partagerLeProfil,
               onPressed: () =>
                   SharePlus.instance.share(ShareParams(text: 'https://matchup.tn/@${p.handle}')),
             ),
             MuBarAction(
               icon: PhosphorIcons.dotsThree(),
-              label: 'Plus d’actions',
+              label: l10n.plusDActions,
               onPressed: () => MuBottomSheet.show<void>(
                 context,
-                title: 'Actions sur le profil de ${p.name}',
+                title: l10n.actionsSurLeProfilDe(p.name),
                 height: MuSheetHeight.auto,
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     MuSettingsRow(
                       icon: PhosphorIcons.prohibit(),
-                      title: 'Bloquer ${p.name}',
+                      title: l10n.bloquer(p.name),
                       chevron: false,
                       onTap: () => showComingSoon(context),
                     ),
                     MuSettingsRow(
                       icon: PhosphorIcons.flag(),
-                      title: 'Signaler ce profil',
+                      title: l10n.signalerCeProfil,
                       destructive: true,
                       chevron: false,
                       onTap: () => showComingSoon(context),
@@ -121,13 +122,13 @@ class PublicProfileScreen extends ConsumerWidget {
           ],
           action: p.followed
               ? MuButton.secondary(
-                  label: 'Suivi',
+                  label: l10n.suivi,
                   leading: PhosphorIcons.check(),
                   size: MuButtonSize.s,
                   onPressed: () => _follow(context, ref, p),
                 )
               : MuButton.primary(
-                  label: 'Suivre',
+                  label: l10n.suivre,
                   leading: PhosphorIcons.userPlus(),
                   size: MuButtonSize.s,
                   onPressed: () => _follow(context, ref, p),
@@ -152,11 +153,11 @@ class PublicProfileScreen extends ConsumerWidget {
                     children: [
                       Row(
                         children: [
-                          const MuAiLabel(size: MuAiLabelSize.s, onAiSurface: true),
+                          MuAiLabel(size: MuAiLabelSize.s, onAiSurface: true),
                           const SizedBox(width: MuSpace.s2),
                           Expanded(
                             child: Text(
-                              'Ses parties te correspondent',
+                              l10n.sesPartiesTeCorrespondent,
                               style: MuType.h3.copyWith(color: c.text),
                             ),
                           ),
@@ -174,9 +175,7 @@ class PublicProfileScreen extends ConsumerWidget {
                         padding: const EdgeInsets.all(MuSpace.s3),
                         onTap: () => context.push(Routes.game(next.id!)),
                         semanticLabel:
-                            'Voir sa prochaine partie : ${formatDateTime(next.start)}, '
-                            '${next.venue}, ${next.spotsLeft} places, '
-                            '${formatDT(next.pricePerPlayer)} par personne',
+                            l10n.voirSaProchainePartiePlaces(formatDateTime(next.start), next.venue, next.spotsLeft, formatDT(next.pricePerPlayer)),
                         child: Row(
                           children: [
                             MuSportIcon(next.sport, size: MuSize.iconM),
@@ -192,12 +191,12 @@ class PublicProfileScreen extends ConsumerWidget {
                                   Text.rich(
                                     TextSpan(
                                       children: [
-                                        const TextSpan(text: 'Il organise · '),
+                                        TextSpan(text: l10n.ilOrganise),
                                         TextSpan(
                                           text: '${next.spotsLeft}',
                                           style: MuType.labelS.copyWith(color: c.text),
                                         ),
-                                        const TextSpan(text: ' places · '),
+                                        TextSpan(text: l10n.places2),
                                         TextSpan(
                                           text: formatDT(next.pricePerPlayer),
                                           style: MuType.labelS.copyWith(color: c.text),
@@ -247,10 +246,10 @@ class PublicProfileScreen extends ConsumerWidget {
                 children: [
                   Semantics(
                     header: true,
-                    child: Text('Niveaux', style: MuType.h2.copyWith(color: c.text)),
+                    child: Text(l10n.niveaux, style: MuType.h2.copyWith(color: c.text)),
                   ),
                   const SizedBox(width: MuSpace.s2),
-                  const MuAiLabel(size: MuAiLabelSize.s),
+                  MuAiLabel(size: MuAiLabelSize.s),
                 ],
               ),
               for (final l in p.levels) ...[
@@ -287,19 +286,19 @@ class PublicProfileScreen extends ConsumerWidget {
                 ),
               ],
               const SizedBox(height: MuSpace.s6),
-              const SectionHead('Fiabilité'),
+              SectionHead(l10n.fiabilite),
               const SizedBox(height: MuSpace.s3),
               ReliabilityCard(reliability: p.reliability),
               const SizedBox(height: MuSpace.s6),
-              SeeAllHead('Badges', action: 'Voir les ${p.badgeCount}'),
+              SeeAllHead(l10n.badges, action: l10n.voirLes(p.badgeCount)),
               const SizedBox(height: MuSpace.s3),
               BadgesRow(badges: p.badges),
               const SizedBox(height: MuSpace.s6),
-              const SectionHead('Derniers matchs'),
+              SectionHead(l10n.derniersMatchs),
               const SizedBox(height: MuSpace.s3),
               RecentMatches(matches: p.recentMatches),
               const SizedBox(height: MuSpace.s6),
-              SeeAllHead('Avis des coéquipiers', action: 'Voir les ${p.reviews.count}'),
+              SeeAllHead(l10n.avisDesCoequipiers, action: l10n.voirLes(p.reviews.count)),
               const SizedBox(height: MuSpace.s3),
               ReviewsCard(reviews: p.reviews),
             ],

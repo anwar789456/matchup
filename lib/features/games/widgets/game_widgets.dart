@@ -4,6 +4,7 @@ import 'package:phosphor_flutter/phosphor_flutter.dart';
 import '../../../core/format.dart';
 import '../../../theme/theme.dart';
 import '../../../ui/ui.dart';
+import '../../../l10n/l10n.dart';
 
 /// A section head of the game and booking pages: `h2` and, at the end, a count or an action.
 class SectionHead extends StatelessWidget {
@@ -321,11 +322,11 @@ class CancellationSteps extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        step(c.success, null, 'Jusqu’à ${formatDateTime(freeUntil)}', 'Annulation gratuite', share),
+        step(c.success, null, l10n.jusquA2(formatDateTime(freeUntil)), l10n.annulationGratuite, share),
         const SizedBox(height: MuSpace.s3),
-        step(c.warning, null, 'Jusqu’à ${formatDateTime(halfUntil)}', '50 % remboursés', share / 2),
+        step(c.warning, null, l10n.jusquA2(formatDateTime(halfUntil)), l10n.rembourses, share / 2),
         const SizedBox(height: MuSpace.s3),
-        step(null, c.borderStrong, 'Moins de 6 h avant', 'Non remboursable', 0),
+        step(null, c.borderStrong, l10n.moinsDeHAvant, l10n.nonRemboursable, 0),
       ],
     );
   }
@@ -359,7 +360,7 @@ class KickoffPill extends StatelessWidget {
               endsAt: start,
               format: MuCountdownFormat.relative,
               size: MuCountdownSize.s,
-              label: 'Coup d’envoi',
+              label: l10n.coupDEnvoi,
               urgentAfter: Duration.zero,
             ),
           ),
@@ -435,9 +436,9 @@ class VenueRow extends StatelessWidget {
                   ),
                   if (venue.verified) ...[
                     const SizedBox(width: MuSpace.s2),
-                    const MuStatusBadge(
+                    MuStatusBadge(
                       status: MuStatus.verified,
-                      label: 'Vérifié',
+                      label: l10n.verifie,
                       size: MuBadgeSize.s,
                     ),
                   ],
@@ -477,14 +478,14 @@ class VenueRow extends StatelessWidget {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       MuButton.secondary(
-                        label: 'Itinéraire',
+                        label: l10n.itineraire,
                         leading: PhosphorIcons.navigationArrow(),
                         size: MuButtonSize.s,
                         onPressed: onDirections,
                       ),
                       const SizedBox(width: MuSpace.s1),
                       MuButton.tertiary(
-                        label: 'Voir le terrain',
+                        label: l10n.voirLeTerrain,
                         size: MuButtonSize.s,
                         onPressed: onOpen,
                       ),

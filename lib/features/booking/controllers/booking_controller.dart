@@ -14,6 +14,7 @@ import '../../venue/data/venue_details.dart';
 import '../data/payment_repository.dart';
 import '../data/teammates_repository.dart';
 import '../../wallet/data/wallet_repository.dart';
+import '../../../l10n/l10n.dart';
 
 /// Privée (friends only) or publique (open to players at the right level in Explorer).
 enum BookingType { private, public }
@@ -26,13 +27,15 @@ enum GameVisibility { everyone, followers }
 
 /// « Mixte · Femmes · Hommes ».
 enum GameGender {
-  mixte('Mixte'),
-  femmes('Femmes'),
-  hommes('Hommes');
+  mixte,
+  femmes,
+  hommes;
 
-  const GameGender(this.label);
-
-  final String label;
+  String get label => switch (this) {
+    GameGender.mixte => l10n.mixte,
+    GameGender.femmes => l10n.femmes,
+    GameGender.hommes => l10n.hommes,
+  };
 }
 
 /// The chosen slot, once « Continuer » leaves VEN-02.
@@ -201,7 +204,7 @@ DayGrid dayGrid(VenueDetails venue, DaySchedule schedule, {required bool fullDay
         name: court.name,
         detail: court.gridDetail,
         icon: court.indoor ? PhosphorIcons.umbrella() : null,
-        iconLabel: court.indoor ? 'Couvert' : null,
+        iconLabel: court.indoor ? l10n.couvert : null,
         slots: [
           for (final t in times)
             () {
@@ -361,8 +364,8 @@ class BookingController extends Notifier<BookingDraft> {
         .paid(
           receipt: receipt,
           label: d.split == PaymentSplit.share
-              ? 'Part · ${slot.venue.venue.name}'
-              : 'Terrain · ${slot.venue.venue.name}',
+              ? l10n.partText(slot.venue.venue.name)
+              : l10n.terrain(slot.venue.venue.name),
           sport: slot.venue.venue.sport,
           fromBalance: fromBalance,
         );

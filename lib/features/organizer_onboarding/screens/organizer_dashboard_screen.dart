@@ -10,25 +10,26 @@ import '../../common/data/pro_providers.dart';
 import '../../common/widgets/pro_dashboard_scaffold.dart';
 import '../../common/widgets/pro_wizard_scaffold.dart' show showComingSoon;
 import '../controllers/organizer_controller.dart';
+import '../../../l10n/l10n.dart';
 
 List<MuNavSection> organizerNav() => [
       MuNavSection(items: [
         MuNavItem(
           id: 'dashboard',
-          label: 'Tableau de bord',
+          label: l10n.tableauDeBord,
           icon: PhosphorIcons.squaresFour(),
           activeIcon: PhosphorIcons.squaresFour(PhosphorIconsStyle.fill),
         ),
       ]),
-      MuNavSection(heading: 'Compétitions', items: [
-        MuNavItem(id: 'tournois', label: 'Tournois & événements', icon: PhosphorIcons.trophy()),
-        MuNavItem(id: 'equipes', label: 'Équipes', icon: PhosphorIcons.usersThree()),
-        MuNavItem(id: 'calendrier', label: 'Calendrier', icon: PhosphorIcons.calendarDots()),
-        MuNavItem(id: 'scores', label: 'Scores en direct', icon: PhosphorIcons.broadcast()),
+      MuNavSection(heading: l10n.competitions, items: [
+        MuNavItem(id: 'tournois', label: l10n.tournoisEvenements, icon: PhosphorIcons.trophy()),
+        MuNavItem(id: 'equipes', label: l10n.equipes, icon: PhosphorIcons.usersThree()),
+        MuNavItem(id: 'calendrier', label: l10n.calendrier, icon: PhosphorIcons.calendarDots()),
+        MuNavItem(id: 'scores', label: l10n.scoresEnDirect, icon: PhosphorIcons.broadcast()),
       ]),
-      MuNavSection(heading: 'Gestion', items: [
-        MuNavItem(id: 'annonces', label: 'Annonces', icon: PhosphorIcons.megaphone()),
-        MuNavItem(id: 'revenus', label: 'Revenus', icon: PhosphorIcons.coins()),
+      MuNavSection(heading: l10n.gestion, items: [
+        MuNavItem(id: 'annonces', label: l10n.annonces, icon: PhosphorIcons.megaphone()),
+        MuNavItem(id: 'revenus', label: l10n.revenus, icon: PhosphorIcons.coins()),
       ]),
     ];
 
@@ -52,7 +53,7 @@ class OrganizerDashboardScreen extends ConsumerWidget {
     final width = MediaQuery.sizeOf(context).width;
     final narrow = width < ProSplit.stackBelow;
     final firstName = d.manager.split(' ').first;
-    final org = d.name.trim().isEmpty ? 'Ton organisation' : d.name.trim();
+    final org = d.name.trim().isEmpty ? l10n.tonOrganisation : d.name.trim();
     final logo = d.logo == null ? null : ref.read(uploadedBytesProvider)[d.logo!.id];
     final last = d.events.firstOrNull;
 
@@ -62,16 +63,15 @@ class OrganizerDashboardScreen extends ConsumerWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text('PREMIER PAS', style: MuType.overline.copyWith(color: c.textSecondary)),
+          Text(l10n.premierPas, style: MuType.overline.copyWith(color: c.textSecondary)),
           const SizedBox(height: MuSpace.s4),
           Semantics(
             header: true,
-            child: Text('Crée ton premier tournoi', style: MuType.h2.copyWith(color: c.text)),
+            child: Text(l10n.creeTonPremierTournoi, style: MuType.h2.copyWith(color: c.text)),
           ),
           const SizedBox(height: MuSpace.s4),
           Text(
-            'Format, terrains, dates, frais d’inscription : on te guide étape par étape. Ton '
-            'brouillon est enregistré à chaque étape.',
+            l10n.formatTerrainsDatesFraisD,
             style: MuType.bodyL.copyWith(color: c.textSecondary),
           ),
           const SizedBox(height: MuSpace.s6),
@@ -80,14 +80,14 @@ class OrganizerDashboardScreen extends ConsumerWidget {
             runSpacing: MuSpace.s3,
             children: [
               MuButton.primary(
-                label: 'Créer un tournoi',
+                label: l10n.creerUnTournoi,
                 leading: PhosphorIcons.plus(),
                 size: MuButtonSize.l,
                 onPressed: () => showComingSoon(context),
               ),
               if (last != null)
                 MuButton.secondary(
-                  label: 'Reprendre ${last.name}',
+                  label: l10n.reprendre(last.name),
                   leading: PhosphorIcons.copy(),
                   size: MuButtonSize.l,
                   onPressed: () => showComingSoon(context),
@@ -100,9 +100,9 @@ class OrganizerDashboardScreen extends ConsumerWidget {
 
     final art = ConstrainedBox(
       constraints: const BoxConstraints(minHeight: _heroArtMin),
-      child: const MuCourtArt(
+      child: MuCourtArt(
         sport: MuSport.padel,
-        semanticLabel: 'Court de padel éclairé le soir',
+        semanticLabel: l10n.courtDePadelEclaireLe,
       ),
     );
 
@@ -131,7 +131,7 @@ class OrganizerDashboardScreen extends ConsumerWidget {
 
     Widget stepCard(int n, IconData icon, String title, String body) => Semantics(
           container: true,
-          label: 'Étape $n',
+          label: l10n.etape(n),
           child: ProCard(
             padding: const EdgeInsets.all(MuSpace.s5),
             child: Column(
@@ -165,7 +165,7 @@ class OrganizerDashboardScreen extends ConsumerWidget {
     return ProDashboardScaffold(
       sections: organizerNav(),
       role: MuSidebarRole(
-        role: 'Organisateur',
+        role: l10n.organisateur,
         name: org,
         image: logo == null ? null : MemoryImage(logo),
       ),
@@ -186,17 +186,17 @@ class OrganizerDashboardScreen extends ConsumerWidget {
                 children: [
                   Semantics(
                     header: true,
-                    child: Text('Bienvenue, $firstName', style: MuType.h1.copyWith(color: c.text)),
+                    child: Text(l10n.bienvenue(firstName), style: MuType.h1.copyWith(color: c.text)),
                   ),
                   const SizedBox(height: MuSpace.s1),
                   Text(
-                    '$org est prête. Lance ton premier tournoi en quelques minutes.',
+                    l10n.estPreteLanceTonPremier(org),
                     style: MuType.bodyL.copyWith(color: c.textSecondary),
                   ),
                 ],
               ),
               MuButton.tertiary(
-                label: 'Modifier l’organisation',
+                label: l10n.modifierLOrganisation,
                 leading: PhosphorIcons.pencilSimple(),
                 onPressed: () => context.go(Routes.organizerOrganisation),
               ),
@@ -207,18 +207,18 @@ class OrganizerDashboardScreen extends ConsumerWidget {
           const SizedBox(height: MuSpace.s6),
           Semantics(
             header: true,
-            child: Text('Comment ça marche', style: MuType.h3.copyWith(color: c.text)),
+            child: Text(l10n.commentCaMarche, style: MuType.h3.copyWith(color: c.text)),
           ),
           const SizedBox(height: MuSpace.s4),
           ProCardRow(
             columns: narrow ? 1 : 3,
             children: [
-              stepCard(1, PhosphorIcons.trophy(), 'Crée',
-                  'Choisis le format, les terrains, les dates et les frais d’inscription.'),
-              stepCard(2, PhosphorIcons.usersThree(), 'Ouvre les inscriptions',
-                  'Partage le lien : les équipes s’inscrivent et paient leur place en ligne.'),
-              stepCard(3, PhosphorIcons.listNumbers(), 'Publie le tableau',
-                  'Poules et tableau final, puis les scores en direct le jour J.'),
+              stepCard(1, PhosphorIcons.trophy(), l10n.cree,
+                  l10n.choisisLeFormatLesTerrains),
+              stepCard(2, PhosphorIcons.usersThree(), l10n.ouvreLesInscriptions,
+                  l10n.partageLeLienLesEquipes),
+              stepCard(3, PhosphorIcons.listNumbers(), l10n.publieLeTableau,
+                  l10n.poulesEtTableauFinalPuis),
             ],
           ),
           const SizedBox(height: MuSpace.s6),
@@ -227,18 +227,17 @@ class OrganizerDashboardScreen extends ConsumerWidget {
             decoration: BoxDecoration(color: c.aiSoft, borderRadius: MuRadius.mdAll),
             child: Row(
               children: [
-                const MuAiLabel(),
+                MuAiLabel(),
                 const SizedBox(width: MuSpace.s4),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text('Bientôt : l’IA prépare ton tableau et ton planning',
+                      Text(l10n.bientotLIaPrepareTon,
                           style: MuType.label.copyWith(color: c.text)),
                       const SizedBox(height: _lineGap),
                       Text(
-                        'À partir de tes terrains, de tes créneaux et du repos entre deux matchs. '
-                        'Tu modifies et valides tout avant de publier.',
+                        l10n.aPartirDeTesTerrains,
                         style: MuType.body.copyWith(color: c.textSecondary),
                       ),
                     ],

@@ -7,6 +7,7 @@ import '../../../theme/theme.dart';
 import '../../../ui/ui.dart';
 import '../controllers/game_actions.dart';
 import '../data/games_repository.dart';
+import '../../../l10n/l10n.dart';
 
 /// MAT-07 · Quitter la partie ?: the warning dialog, then the place is given back and the
 /// snackbar « Partie quittée · Annuler » takes it back on « Annuler ».
@@ -17,25 +18,22 @@ Future<bool> confirmLeaveGame(BuildContext context, WidgetRef ref, MuGame game) 
     context,
     tone: MuDialogTone.warning,
     icon: PhosphorIcons.signOut(),
-    title: 'Quitter la partie ?',
+    title: l10n.quitterLaPartie2,
     description:
-        '${game.sport.label} ${game.sport == MuSport.football ? '5 vs 5' : ''} · ${game.title} · '
-                '${formatDateTime(game.start)}. ${game.organiser ?? 'L’organisateur'} sera prévenu '
-                'et ta place ira à la liste d’attente.'
+        l10n.seraPrevenuEtTaPlace(game.sport.label, game.sport == MuSport.football ? l10n.vs3 : '', game.title, formatDateTime(game.start), game.organiser ?? l10n.lOrganisateur2)
             .replaceAll('  ', ' '),
     consequence:
-        'Tes ${formatDT(game.pricePerPlayer)} seront remboursés sur ton solde MatchUp. '
-        'Annulation gratuite jusqu’à ${formatDateTime(freeUntil)}.',
+        l10n.tesSerontRemboursesSurTon(formatDT(game.pricePerPlayer), formatDateTime(freeUntil)),
     consequenceIcon: PhosphorIcons.wallet(),
     actions: [
       MuButton.secondary(
-        label: 'Rester dans la partie',
+        label: l10n.resterDansLaPartie,
         size: MuButtonSize.l,
         fullWidth: true,
         onPressed: () => nav.pop(false),
       ),
       MuButton.destructive(
-        label: 'Quitter la partie',
+        label: l10n.quitterLaPartie,
         size: MuButtonSize.l,
         fullWidth: true,
         onPressed: () => nav.pop(true),
@@ -57,8 +55,8 @@ Future<bool> confirmLeaveGame(BuildContext context, WidgetRef ref, MuGame game) 
   MuSnackbar.show(
     overlay.context,
     overlay: overlay,
-    message: 'Partie quittée',
-    action: MuAction('Annuler', () => actions.rejoin(game, team: team, slot: slot)),
+    message: l10n.partieQuittee,
+    action: MuAction(l10n.annuler, () => actions.rejoin(game, team: team, slot: slot)),
   );
   return true;
 }

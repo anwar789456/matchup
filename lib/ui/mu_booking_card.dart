@@ -13,6 +13,7 @@ import 'mu_status_badge.dart';
 import 'src/card_surface.dart';
 import 'src/scoreboard_strip.dart';
 import 'src/tone_badge.dart';
+import '../l10n/l10n.dart';
 
 enum MuBookingStatus { upcoming, pendingPayment, past, cancelled }
 
@@ -64,7 +65,7 @@ class MuBooking {
     final m = end.difference(start).inMinutes;
     final h = m ~/ 60;
     final rest = m % 60;
-    if (h == 0) return '$rest min';
+    if (h == 0) return l10n.durationMinutes(rest);
     return rest == 0 ? '$h h' : '$h h ${rest.toString().padLeft(2, '0')}';
   }
 }
@@ -127,13 +128,12 @@ class MuBookingCard extends StatelessWidget {
 
   String _semantics(MuBooking b) {
     final status = switch (b.status) {
-      MuBookingStatus.upcoming => 'confirmé, payé',
-      MuBookingStatus.pendingPayment => 'en attente de paiement',
-      MuBookingStatus.past => 'terminé',
-      MuBookingStatus.cancelled => 'annulé',
+      MuBookingStatus.upcoming => l10n.confirmePaye,
+      MuBookingStatus.pendingPayment => l10n.enAttenteDePaiement,
+      MuBookingStatus.past => l10n.termine2,
+      MuBookingStatus.cancelled => l10n.annule,
     };
-    return '${b.title}, ${formatDay(b.start)}, ${b.timeRange}, ${b.sport.label}, ${b.place}, '
-        '$status, ta part ${formatDT(b.share)}';
+    return l10n.taPart6(b.title, formatDay(b.start), b.timeRange, b.sport.label, b.place, status, formatDT(b.share));
   }
 
   Widget _badge(MuBooking b, {bool small = false}) {
@@ -143,7 +143,7 @@ class MuBookingCard extends StatelessWidget {
       MuBookingStatus.pendingPayment => MuStatusBadge(status: MuStatus.pending, size: size),
       MuBookingStatus.cancelled => MuStatusBadge(status: MuStatus.cancelled, size: size),
       MuBookingStatus.past => MuToneBadge(
-        label: 'Terminé',
+        label: l10n.termine,
         tone: MuBadgeTone.neutral,
         icon: PhosphorIcons.flag(PhosphorIconsStyle.fill),
       ),
@@ -169,31 +169,31 @@ class MuBookingCard extends StatelessWidget {
 
     final MuStripCell second = switch (b.status) {
       MuBookingStatus.cancelled => MuStripCell(
-        label: 'Remboursé',
-        value: MuScoreboardStrip.valueM(context, formatAmount(b.refund ?? b.share), 'DT'),
+        label: l10n.rembourse2,
+        value: MuScoreboardStrip.valueM(context, formatAmount(b.refund ?? b.share), dtUnit),
         sub: MuScoreboardStrip.sub(
           context,
-          'sur ton solde',
+          l10n.surTonSolde,
           color: c.infoText,
           icon: PhosphorIcons.arrowUUpLeft(),
         ),
       ),
       MuBookingStatus.pendingPayment => MuStripCell(
-        label: 'Ta part',
-        value: MuScoreboardStrip.valueM(context, formatAmount(b.share), 'DT'),
+        label: l10n.taPart,
+        value: MuScoreboardStrip.valueM(context, formatAmount(b.share), dtUnit),
         sub: MuScoreboardStrip.sub(
           context,
-          b.payBefore == null ? 'À payer' : 'À payer avant ${formatTime(b.payBefore!)}',
+          b.payBefore == null ? l10n.aPayer2 : l10n.aPayerAvant(formatTime(b.payBefore!)),
           color: c.warningText,
           icon: PhosphorIcons.warning(PhosphorIconsStyle.fill),
         ),
       ),
       _ => MuStripCell(
-        label: 'Ta part',
-        value: MuScoreboardStrip.valueM(context, formatAmount(b.share), 'DT'),
+        label: l10n.taPart,
+        value: MuScoreboardStrip.valueM(context, formatAmount(b.share), dtUnit),
         sub: MuScoreboardStrip.sub(
           context,
-          'Payé',
+          l10n.paye,
           color: c.successText,
           icon: PhosphorIcons.checkCircle(PhosphorIconsStyle.fill),
         ),
@@ -203,24 +203,27 @@ class MuBookingCard extends StatelessWidget {
     final Widget action = switch (b.status) {
       MuBookingStatus.upcoming => MuIconButton(
         icon: PhosphorIcons.qrCode(),
-        label: 'Afficher le QR code',
-        variant: MuIconButtonVariant.inverse,
+        label: l10n.afficherLeQrCode,
+        // Rule 13: the booking QR button is Volt in Night match (ink in Light).
+        variant: Theme.of(context).brightness == Brightness.dark
+            ? MuIconButtonVariant.primary
+            : MuIconButtonVariant.inverse,
         onPressed: onShowQr,
       ),
       MuBookingStatus.pendingPayment => MuButton.primary(
-        label: 'Payer ma part',
+        label: l10n.payerMaPart,
         price: formatDT(b.share),
         size: MuButtonSize.s,
         onPressed: onPay,
       ),
       MuBookingStatus.past => MuButton.secondary(
-        label: 'Noter les joueurs',
+        label: l10n.noterLesJoueurs,
         leading: PhosphorIcons.star(),
         size: MuButtonSize.s,
         onPressed: onRate,
       ),
       MuBookingStatus.cancelled => MuButton.tertiary(
-        label: 'Réserver à nouveau',
+        label: l10n.reserverANouveau,
         size: MuButtonSize.s,
         onPressed: onRebook,
       ),
@@ -280,7 +283,7 @@ class MuBookingCard extends StatelessWidget {
             semanticLabel: '${formatDay(b.start)}, ${b.timeRange}, ${b.duration}',
             cells: [
               MuStripCell(
-                label: 'Horaire',
+                label: l10n.horaire,
                 value: _struck(
                   b,
                   MuScoreboardStrip.valueM(
@@ -308,14 +311,14 @@ class MuBookingCard extends StatelessWidget {
                 const Spacer(),
                 if (showsDirections)
                   MuButton.secondary(
-                    label: 'Itinéraire',
+                    label: l10n.itineraire,
                     leading: PhosphorIcons.navigationArrow(),
                     size: MuButtonSize.s,
                     onPressed: onDirections,
                   ),
                 MuIconButton(
                   icon: PhosphorIcons.dotsThree(),
-                  label: 'Plus d’actions',
+                  label: l10n.plusDActions,
                   onPressed: onMore,
                 ),
                 action,
@@ -330,21 +333,24 @@ class MuBookingCard extends StatelessWidget {
   Widget _buildCompact(BuildContext context, MuBooking b) {
     final c = context.mu;
     final String? statusLine = switch (b.status) {
-      MuBookingStatus.upcoming => '${formatDT(b.share)} payés',
+      MuBookingStatus.upcoming => l10n.payes(formatDT(b.share)),
       MuBookingStatus.pendingPayment =>
-        b.payBefore == null ? null : 'Avant ${formatTime(b.payBefore!)}',
-      MuBookingStatus.cancelled when b.refund != null => '+${formatDT(b.refund!)} sur ton solde',
+        b.payBefore == null ? null : l10n.avant(formatTime(b.payBefore!)),
+      MuBookingStatus.cancelled when b.refund != null => l10n.surTonSolde2(formatDT(b.refund!)),
       _ => null,
     };
     final Widget? end = switch (b.status) {
       MuBookingStatus.upcoming => MuIconButton(
         icon: PhosphorIcons.qrCode(),
-        label: 'Afficher le QR code',
-        variant: MuIconButtonVariant.inverse,
+        label: l10n.afficherLeQrCode,
+        // Rule 13: the booking QR button is Volt in Night match (ink in Light).
+        variant: Theme.of(context).brightness == Brightness.dark
+            ? MuIconButtonVariant.primary
+            : MuIconButtonVariant.inverse,
         onPressed: onShowQr,
       ),
       MuBookingStatus.pendingPayment => MuButton.primary(
-        label: 'Payer',
+        label: l10n.payer,
         price: formatDT(b.share),
         size: MuButtonSize.s,
         onPressed: onPay,

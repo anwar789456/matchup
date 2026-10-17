@@ -6,6 +6,7 @@ import 'mu_ai_label.dart';
 import 'mu_banner.dart' show MuAction;
 import 'mu_button.dart';
 import 'mu_icon_button.dart';
+import '../l10n/l10n.dart';
 
 /// AiSuggestionCard (components/AiSuggestionCard.md): an AI suggestion with its « IA » mark,
 /// a reason (« Basé sur … »), thumbs feedback and up to two actions. Dismissing collapses it to a
@@ -13,12 +14,12 @@ import 'mu_icon_button.dart';
 ///
 /// The compact (media) variant comes with the Home feed.
 class MuAiSuggestionCard extends StatefulWidget {
-  const MuAiSuggestionCard({
+  MuAiSuggestionCard({
     super.key,
     required this.context,
     required this.title,
     required this.reason,
-    this.reasonLead = 'Recommandé car',
+    String? reasonLead,
     this.content,
     this.body,
     this.primary,
@@ -27,7 +28,7 @@ class MuAiSuggestionCard extends StatefulWidget {
     this.onFeedback,
     this.onDismiss,
     this.secondaryDismisses = false,
-  });
+  }) : reasonLead = reasonLead ?? l10n.recommandeCar;
 
   /// Header line (« Assistant programme »).
   final String context;
@@ -90,10 +91,10 @@ class _MuAiSuggestionCardState extends State<MuAiSuggestionCard> {
           Icon(PhosphorIcons.eyeSlash(), size: MuSize.iconS, color: c.textSecondary),
           const SizedBox(width: MuSpace.s2),
           Expanded(
-            child: Text('Suggestion masquée', style: MuType.body.copyWith(color: c.textSecondary)),
+            child: Text(l10n.suggestionMasquee, style: MuType.body.copyWith(color: c.textSecondary)),
           ),
           MuButton.tertiary(
-            label: 'Annuler',
+            label: l10n.annuler,
             size: MuButtonSize.s,
             onPressed: () => setState(() => _dismissed = false),
           ),
@@ -107,14 +108,14 @@ class _MuAiSuggestionCardState extends State<MuAiSuggestionCard> {
         ? [
             MuIconButton(
               icon: PhosphorIcons.thumbsUp(),
-              label: 'Suggestion utile',
+              label: l10n.suggestionUtile,
               size: MuIconButtonSize.s,
               onPressed: () => _setVote(true),
             ),
             const SizedBox(width: MuSpace.s3),
             MuIconButton(
               icon: PhosphorIcons.thumbsDown(),
-              label: 'Suggestion pas utile',
+              label: l10n.suggestionPasUtile,
               size: MuIconButtonSize.s,
               onPressed: () => _setVote(false),
             ),
@@ -125,14 +126,14 @@ class _MuAiSuggestionCardState extends State<MuAiSuggestionCard> {
               selectedIcon: _vote!
                   ? PhosphorIcons.thumbsUp(PhosphorIconsStyle.fill)
                   : PhosphorIcons.thumbsDown(PhosphorIconsStyle.fill),
-              label: _vote! ? 'Suggestion utile' : 'Suggestion pas utile',
+              label: _vote! ? l10n.suggestionUtile : l10n.suggestionPasUtile,
               size: MuIconButtonSize.s,
               pressed: true,
               onPressed: () => _setVote(_vote!),
             ),
             const SizedBox(width: MuSpace.s2),
             Flexible(
-              child: Text('Merci pour ton retour',
+              child: Text(l10n.merciPourTonRetour,
                   style: MuType.caption.copyWith(color: c.textSecondary)),
             ),
           ];
@@ -157,7 +158,7 @@ class _MuAiSuggestionCardState extends State<MuAiSuggestionCard> {
           children: [
             Row(
               children: [
-                const MuAiLabel(size: MuAiLabelSize.s),
+                MuAiLabel(size: MuAiLabelSize.s),
                 const SizedBox(width: MuSpace.s2),
                 Expanded(
                   child: Text(widget.context,
@@ -168,7 +169,7 @@ class _MuAiSuggestionCardState extends State<MuAiSuggestionCard> {
                 if (widget.onDismiss != null)
                   MuIconButton(
                     icon: PhosphorIcons.x(),
-                    label: 'Masquer la suggestion',
+                    label: l10n.masquerLaSuggestion,
                     size: MuIconButtonSize.s,
                     onPressed: () {
                       setState(() => _dismissed = true);

@@ -4,6 +4,7 @@ import 'package:phosphor_flutter/phosphor_flutter.dart';
 import '../theme/theme.dart';
 import 'mu_icon_button.dart';
 import 'mu_text_field.dart';
+import '../l10n/l10n.dart';
 
 /// A requirement shown in the PasswordField checklist.
 @immutable
@@ -17,9 +18,9 @@ class MuPasswordRule {
 abstract final class MuPasswordRules {
   /// The sign-up rules (AUTH-01): « 8 caractères minimum », « Une majuscule », « Un chiffre ».
   static final List<MuPasswordRule> standard = [
-    MuPasswordRule('8 caractères minimum', (v) => v.length >= 8),
-    MuPasswordRule('Une majuscule', (v) => v.contains(RegExp(r'[A-ZÀ-Ý]'))),
-    MuPasswordRule('Un chiffre', (v) => v.contains(RegExp(r'\d'))),
+    MuPasswordRule(l10n.caracteresMinimum, (v) => v.length >= 8),
+    MuPasswordRule(l10n.uneMajuscule, (v) => v.contains(RegExp(r'[A-ZÀ-Ý]'))),
+    MuPasswordRule(l10n.unChiffre, (v) => v.contains(RegExp(r'\d'))),
   ];
 
   static bool allMet(String value, [List<MuPasswordRule>? rules]) =>
@@ -44,9 +45,9 @@ int passwordScore(String value) {
 ///
 /// Set [showRuleErrors] after a failed submit: unmet rules turn into errors.
 class MuPasswordField extends StatefulWidget {
-  const MuPasswordField({
+  MuPasswordField({
     super.key,
-    this.label = 'Mot de passe',
+    String? label,
     this.controller,
     this.focusNode,
     this.size = MuFieldSize.l,
@@ -63,7 +64,7 @@ class MuPasswordField extends StatefulWidget {
     this.textInputAction,
     this.onChanged,
     this.onSubmitted,
-  });
+  }) : label = label ?? l10n.motDePasse;
 
   final String label;
   final TextEditingController? controller;
@@ -150,7 +151,7 @@ class _MuPasswordFieldState extends State<MuPasswordField> {
           onSubmitted: widget.onSubmitted,
           trailing: MuIconButton(
             icon: _visible ? PhosphorIcons.eyeSlash() : PhosphorIcons.eye(),
-            label: _visible ? 'Masquer le mot de passe' : 'Afficher le mot de passe',
+            label: _visible ? l10n.masquerLeMotDePasse : l10n.afficherLeMotDePasse,
             size: MuIconButtonSize.s,
             onPressed: widget.enabled ? () => setState(() => _visible = !_visible) : null,
           ),
@@ -188,16 +189,16 @@ class _StrengthMeter extends StatelessWidget {
   Widget build(BuildContext context) {
     final c = context.mu;
     final (String label, MuTone? tone) = switch (score) {
-      1 => ('Faible', MuTone.error),
-      2 => ('Moyen', MuTone.warning),
-      3 => ('Bon', MuTone.info),
-      4 => ('Excellent', MuTone.success),
-      _ => ('Sécurité', null),
+      1 => (l10n.faible, MuTone.error),
+      2 => (l10n.moyen, MuTone.warning),
+      3 => (l10n.bon, MuTone.info),
+      4 => (l10n.excellent, MuTone.success),
+      _ => (l10n.securite, null),
     };
     final duration = MuMotion.durationOf(context, MuMotion.base);
     return Semantics(
       liveRegion: true,
-      label: 'Sécurité du mot de passe : $label',
+      label: l10n.securiteDuMotDePasse(label),
       excludeSemantics: true,
       child: Row(
         children: [
@@ -245,7 +246,7 @@ class _RuleRow extends StatelessWidget {
             ? (PhosphorIcons.xCircle(PhosphorIconsStyle.fill), c.errorText, c.errorText)
             : (PhosphorIcons.circle(), c.textSecondary, c.textSecondary);
     return Semantics(
-      label: '$label, ${met ? 'fait' : 'à faire'}',
+      label: '$label, ${met ? 'fait' : l10n.aFaire2}',
       excludeSemantics: true,
       child: Row(
         children: [

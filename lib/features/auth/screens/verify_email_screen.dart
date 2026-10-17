@@ -11,6 +11,7 @@ import '../../../ui/ui.dart';
 import '../../common/widgets/flow_scaffold.dart';
 import '../controllers/auth_providers.dart';
 import '../widgets/auth_widgets.dart';
+import '../../../l10n/l10n.dart';
 
 /// AUTH-04 · Vérifie ton email: open the mailbox, resend after 0:45, or continue and verify later.
 class VerifyEmailScreen extends ConsumerStatefulWidget {
@@ -38,8 +39,8 @@ class _VerifyEmailScreenState extends ConsumerState<VerifyEmailScreen> {
     MuToast.show(
       context,
       tone: MuToastTone.success,
-      title: 'Email renvoyé',
-      description: 'Lien envoyé à $email',
+      title: l10n.emailRenvoye,
+      description: l10n.lienEnvoyeA(email),
     );
   }
 
@@ -64,10 +65,10 @@ class _VerifyEmailScreenState extends ConsumerState<VerifyEmailScreen> {
             ),
             const SizedBox(height: MuSpace.s6),
             FlowTitle(
-              'Vérifie ta boîte mail',
+              l10n.verifieTaBoiteMail,
               centered: true,
               leadSpan: TextSpan(children: [
-                const TextSpan(text: 'On a envoyé un lien de confirmation à '),
+                TextSpan(text: l10n.onAEnvoyeUnLien),
                 TextSpan(text: email, style: MuType.labelL.copyWith(color: c.text)),
                 const TextSpan(text: '. Ouvre‑le pour activer ton compte.'),
               ]),
@@ -78,7 +79,7 @@ class _VerifyEmailScreenState extends ConsumerState<VerifyEmailScreen> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             MuButton.secondary(
-              label: 'Ouvrir ma messagerie',
+              label: l10n.ouvrirMaMessagerie,
               leading: PhosphorIcons.envelopeSimpleOpen(),
               size: MuButtonSize.l,
               fullWidth: true,
@@ -88,8 +89,8 @@ class _VerifyEmailScreenState extends ConsumerState<VerifyEmailScreen> {
                 if (!opened && context.mounted) {
                   MuToast.show(
                     context,
-                    title: 'Ouvre ta messagerie',
-                    description: 'Le lien de confirmation t’attend dans ta boîte.',
+                    title: l10n.ouvreTaMessagerie,
+                    description: l10n.leLienDeConfirmationT,
                   );
                 }
               },
@@ -103,13 +104,13 @@ class _VerifyEmailScreenState extends ConsumerState<VerifyEmailScreen> {
             const SizedBox(height: MuSpace.s1),
             Center(
               child: MuButton.tertiary(
-                label: 'Modifier l’adresse',
+                label: l10n.modifierLAdresse,
                 onPressed: () => context.go(Routes.signup),
               ),
             ),
             const SizedBox(height: MuSpace.s3),
             Text(
-              'Rien reçu ? Regarde dans tes spams ou l’onglet Promotions.',
+              l10n.rienRecuRegardeDansTes,
               textAlign: TextAlign.center,
               style: MuType.caption.copyWith(color: c.textSecondary),
             ),
@@ -118,13 +119,13 @@ class _VerifyEmailScreenState extends ConsumerState<VerifyEmailScreen> {
       ],
       bottomBar: [
         MuButton.primary(
-          label: 'Continuer',
+          label: l10n.continuer,
           size: MuButtonSize.xl,
           fullWidth: true,
           onPressed: () => context.push(Routes.roles),
         ),
         Text(
-          'Tu pourras vérifier plus tard. En attendant, un rappel s’affichera en haut de l’app.',
+          l10n.tuPourrasVerifierPlusTard,
           textAlign: TextAlign.center,
           style: MuType.caption.copyWith(color: c.textSecondary),
         ),
@@ -156,7 +157,7 @@ class _ResendButtonState extends State<_ResendButton> {
         final left = widget.resendAt.difference(DateTime.now());
         final waiting = left > Duration.zero;
         return MuButton.tertiary(
-          label: 'Renvoyer l’email',
+          label: l10n.renvoyerLEmail,
           countdown: waiting ? formatClock(left + const Duration(milliseconds: 999)) : null,
           loading: widget.loading,
           onPressed: waiting ? null : widget.onPressed,

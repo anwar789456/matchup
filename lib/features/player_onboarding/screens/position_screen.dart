@@ -9,6 +9,7 @@ import '../../common/widgets/flow_scaffold.dart';
 import '../controllers/onboarding_controller.dart';
 import '../data/question_bank.dart';
 import '../widgets/onboarding_step_scaffold.dart';
+import '../../../l10n/l10n.dart';
 
 /// A position a player can prefer, with the hint shown once picked.
 class PositionOption {
@@ -25,46 +26,46 @@ class PositionOption {
 /// Positions per sport. Football and padel are designed (PLY-04); basketball is a draft.
 abstract final class Positions {
   static String subtitle(MuSport sport) => switch (sport) {
-        MuSport.football => 'Le poste où tu joues le plus souvent',
-        MuSport.padel => 'Le côté où tu reçois le service',
-        MuSport.basketball => 'Le rôle que tu prends le plus souvent',
+        MuSport.football => l10n.lePosteOuTuJoues,
+        MuSport.padel => l10n.leCoteOuTuRecois,
+        MuSport.basketball => l10n.leRoleQueTuPrends,
       };
 
   static String groupLabel(MuSport sport) => switch (sport) {
-        MuSport.football => 'Poste au football',
-        MuSport.padel => 'Côté au padel',
-        MuSport.basketball => 'Rôle au basket',
+        MuSport.football => l10n.posteAuFootball,
+        MuSport.padel => l10n.coteAuPadel,
+        MuSport.basketball => l10n.roleAuBasket,
       };
 
   static List<PositionOption> of(MuSport sport) => switch (sport) {
-        MuSport.football => const [
-            PositionOption('gardien', 'Gardien',
-                'Gardien : tu tiens la cage et tu relances le jeu.'),
-            PositionOption('defenseur', 'Défenseur',
-                'Défenseur : tu couvres l’arrière et tu bloques les contres.'),
-            PositionOption('milieu', 'Milieu',
-                'Milieu : tu fais le lien entre la défense et l’attaque.'),
-            PositionOption('attaquant', 'Attaquant',
-                'Attaquant : tu joues haut et tu finis les actions.'),
+        MuSport.football => [
+            PositionOption('gardien', l10n.gardien,
+                l10n.gardienTuTiensLaCage),
+            PositionOption('defenseur', l10n.defenseur,
+                l10n.defenseurTuCouvresLArriere),
+            PositionOption('milieu', l10n.milieu,
+                l10n.milieuTuFaisLeLien),
+            PositionOption('attaquant', l10n.attaquant,
+                l10n.attaquantTuJouesHautEt),
           ],
-        MuSport.padel => const [
-            PositionOption('droit', 'Côté droit',
-                'Côté droit : coup droit au centre, tu construis le point.'),
-            PositionOption('gauche', 'Côté gauche',
-                'Côté gauche : revers côté vitre, souvent celui qui finit au smash.'),
-            PositionOption('deux', 'Les deux', 'Les deux : tu t’adaptes au côté de ton partenaire.',
+        MuSport.padel => [
+            PositionOption('droit', l10n.coteDroit,
+                l10n.coteDroitCoupDroitAu),
+            PositionOption('gauche', l10n.coteGauche,
+                l10n.coteGaucheReversCoteVitre),
+            PositionOption('deux', l10n.lesDeux, l10n.lesDeuxTuTAdaptes,
                 wide: true),
           ],
         // Draft copy, to validate with design.
-        MuSport.basketball => const [
-            PositionOption('meneur', 'Meneur',
-                'Meneur : tu montes la balle et tu lances le jeu.'),
-            PositionOption('ailier', 'Ailier',
-                'Ailier : tu attaques le cercle et tu tires de loin.'),
-            PositionOption('interieur', 'Intérieur',
-                'Intérieur : tu prends les rebonds et tu joues près du panier.'),
-            PositionOption('polyvalent', 'Polyvalent',
-                'Polyvalent : tu t’adaptes à ce dont l’équipe a besoin.'),
+        MuSport.basketball => [
+            PositionOption('meneur', l10n.meneur,
+                l10n.meneurTuMontesLaBalle),
+            PositionOption('ailier', l10n.ailier,
+                l10n.ailierTuAttaquesLeCercle),
+            PositionOption('interieur', l10n.interieur,
+                l10n.interieurTuPrendsLesRebonds),
+            PositionOption('polyvalent', l10n.polyvalent,
+                l10n.polyvalentTuTAdaptesA),
           ],
       };
 }
@@ -82,7 +83,7 @@ class PositionScreen extends ConsumerWidget {
     return OnboardingStepScaffold(
       route: Routes.playerPosition,
       step: 3,
-      stepTitle: 'Ton poste',
+      stepTitle: l10n.tonPoste,
       onBack: () => goBack(
         context,
         state.sports.isEmpty ? Routes.playerSports : Routes.playerLevel(state.sports.last),
@@ -90,9 +91,9 @@ class PositionScreen extends ConsumerWidget {
       onSkip: next,
       gap: MuSpace.s5,
       body: [
-        const FlowTitle(
-          'Où préfères-tu jouer ?',
-          lead: 'On s’en sert pour équilibrer les équipes. Tu pourras en changer depuis ton profil.',
+        FlowTitle(
+          l10n.ouPreferesTuJouer,
+          lead: l10n.onSEnSertPour,
         ),
         for (final sport in state.sports)
           _SportPositions(
@@ -104,7 +105,7 @@ class PositionScreen extends ConsumerWidget {
       ],
       bottomBar: [
         MuButton.primary(
-          label: 'Continuer',
+          label: l10n.continuer,
           size: MuButtonSize.xl,
           fullWidth: true,
           onPressed: next,

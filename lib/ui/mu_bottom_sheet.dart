@@ -3,6 +3,7 @@ import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 import '../theme/theme.dart';
 import 'mu_icon_button.dart';
+import '../l10n/l10n.dart';
 
 /// The sheet heights: shares of the screen (`sheet-peek` 30 %, `sheet-half` 55 %, `sheet-full`
 /// 92 %), or `auto` (the content, up to 92 %, no snap points).
@@ -23,7 +24,7 @@ enum MuSheetHeight {
 /// Open it with [MuBottomSheet.show]; the widget itself is the panel (also shown inline in the
 /// gallery). [child] and [footer] are rebuilt by the caller: pass a `Consumer` to keep them live.
 class MuBottomSheet extends StatefulWidget {
-  const MuBottomSheet({
+  MuBottomSheet({
     super.key,
     required this.child,
     this.title,
@@ -31,12 +32,12 @@ class MuBottomSheet extends StatefulWidget {
     this.headerAction,
     this.footer,
     this.showClose = true,
-    this.closeLabel = 'Fermer',
+    String? closeLabel,
     this.onClose,
     this.scrollController,
     this.onHandle,
     this.handleExpands = true,
-  });
+  }) : closeLabel = closeLabel ?? l10n.fermer;
 
   final Widget child;
 
@@ -169,7 +170,7 @@ class _MuBottomSheetState extends State<MuBottomSheet> {
 
     final handle = Semantics(
       button: true,
-      label: widget.handleExpands ? 'Agrandir le panneau' : 'Réduire le panneau',
+      label: widget.handleExpands ? l10n.agrandirLePanneau : l10n.reduireLePanneau,
       excludeSemantics: true,
       child: GestureDetector(
         behavior: HitTestBehavior.opaque,

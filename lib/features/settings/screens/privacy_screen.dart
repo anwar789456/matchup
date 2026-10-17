@@ -7,6 +7,7 @@ import '../../../theme/theme.dart';
 import '../../../ui/ui.dart';
 import '../../common/widgets/coming_soon.dart';
 import '../data/settings_repository.dart';
+import '../../../l10n/l10n.dart';
 
 /// SET-05 · Confidentialité: profile visibility, invitations, level and reliability display,
 /// precise location, data download, blocked players.
@@ -39,8 +40,8 @@ class PrivacyScreen extends ConsumerWidget {
       body: Column(
         children: [
           MuTopAppBar.compact(
-            title: 'Confidentialité',
-            backLabel: 'Retour aux paramètres',
+            title: l10n.confidentialite,
+            backLabel: l10n.retourAuxParametres,
             onBack: () => context.pop(),
           ),
           Expanded(
@@ -48,35 +49,35 @@ class PrivacyScreen extends ConsumerWidget {
               padding: const EdgeInsets.fromLTRB(MuSpace.s4, MuSpace.s2, MuSpace.s4, 34),
               children: [
                 MuSettingsGroup(
-                  title: 'Profil',
+                  title: l10n.profil,
                   children: [
                     MuSettingsRow(
                       icon: PhosphorIcons.eye(),
-                      title: 'Qui voit mon profil',
-                      value: s.profilePublic ? 'Tout le monde' : 'Mes abonnés',
+                      title: l10n.quiVoitMonProfil,
+                      value: s.profilePublic ? l10n.toutLeMonde : l10n.mesAbonnes,
                       onTap: () => _pick(
                         context,
-                        'Qui voit mon profil',
-                        const [('Tout le monde', true), ('Mes abonnés', false)],
+                        l10n.quiVoitMonProfil,
+                        [(l10n.toutLeMonde, true), (l10n.mesAbonnes, false)],
                         s.profilePublic,
                         (v) => ctrl.update((s) => s.copyWith(profilePublic: v)),
                       ),
                     ),
                     MuSettingsRow(
                       icon: PhosphorIcons.userPlus(),
-                      title: 'Qui peut m’inviter',
+                      title: l10n.quiPeutMInviter,
                       value: switch (s.invites) {
-                        InvitePolicy.everyone => 'Tout le monde',
-                        InvitePolicy.teammates => 'Mes coéquipiers',
-                        InvitePolicy.nobody => 'Personne',
+                        InvitePolicy.everyone => l10n.toutLeMonde,
+                        InvitePolicy.teammates => l10n.mesCoequipiers,
+                        InvitePolicy.nobody => l10n.personne,
                       },
                       onTap: () => _pick(
                         context,
-                        'Qui peut m’inviter',
-                        const [
-                          ('Tout le monde', InvitePolicy.everyone),
-                          ('Mes coéquipiers', InvitePolicy.teammates),
-                          ('Personne', InvitePolicy.nobody),
+                        l10n.quiPeutMInviter,
+                        [
+                          (l10n.toutLeMonde, InvitePolicy.everyone),
+                          (l10n.mesCoequipiers, InvitePolicy.teammates),
+                          (l10n.personne, InvitePolicy.nobody),
                         ],
                         s.invites,
                         (v) => ctrl.update((s) => s.copyWith(invites: v)),
@@ -84,15 +85,15 @@ class PrivacyScreen extends ConsumerWidget {
                     ),
                     toggle(
                       PhosphorIcons.chartBar(),
-                      'Afficher mon niveau',
-                      '3,5 en padel et 3,0 en foot, sur ton profil et dans les parties.',
+                      l10n.afficherMonNiveau,
+                      l10n.enPadelEtEnFoot,
                       s.showLevel,
                       (v) => ctrl.update((s) => s.copyWith(showLevel: v)),
                     ),
                     toggle(
                       PhosphorIcons.sealCheck(),
-                      'Afficher ma fiabilité',
-                      'Masquée, les organisateurs lisent « Fiabilité masquée ».',
+                      l10n.afficherMaFiabilite,
+                      l10n.masqueeLesOrganisateursLisentFiabilite,
                       s.showReliability,
                       (v) => ctrl.update((s) => s.copyWith(showReliability: v)),
                     ),
@@ -100,12 +101,12 @@ class PrivacyScreen extends ConsumerWidget {
                 ),
                 const SizedBox(height: MuSpace.s5),
                 MuSettingsGroup(
-                  title: 'Localisation',
+                  title: l10n.localisation,
                   children: [
                     toggle(
                       PhosphorIcons.mapPin(),
-                      'Position précise',
-                      'Pour des distances exactes. Les autres voient « La Marsa ».',
+                      l10n.positionPrecise,
+                      l10n.pourDesDistancesExactesLes,
                       s.preciseLocation,
                       (v) => ctrl.update((s) => s.copyWith(preciseLocation: v)),
                     ),
@@ -113,22 +114,22 @@ class PrivacyScreen extends ConsumerWidget {
                 ),
                 const SizedBox(height: MuSpace.s5),
                 MuSettingsGroup(
-                  title: 'Tes données',
+                  title: l10n.tesDonnees,
                   children: [
                     MuSettingsRow(
                       icon: PhosphorIcons.downloadSimple(),
-                      title: 'Télécharger mes données',
-                      description: 'Profil, matchs et paiements, par email sous 48 h',
+                      title: l10n.telechargerMesDonnees,
+                      description: l10n.profilMatchsEtPaiementsPar,
                       onTap: () => MuToast.show(
                         context,
                         tone: MuToastTone.success,
-                        title: 'Demande envoyée',
-                        description: 'Tu recevras tes données par email sous 48 h.',
+                        title: l10n.demandeEnvoyee,
+                        description: l10n.tuRecevrasTesDonneesPar,
                       ),
                     ),
                     MuSettingsRow(
                       icon: PhosphorIcons.prohibit(),
-                      title: 'Joueurs bloqués',
+                      title: l10n.joueursBloques,
                       value: '${s.blocked}',
                       onTap: () => showComingSoon(context),
                     ),

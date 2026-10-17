@@ -13,6 +13,7 @@ import '../../common/widgets/flow_scaffold.dart';
 import '../controllers/game_actions.dart';
 import '../data/games_repository.dart';
 import '../widgets/claim_takeover.dart';
+import '../../../l10n/l10n.dart';
 
 /// GAM-03 · Liste d’attente: « Tu es 3e sur la liste d’attente », the queue, the game, how it
 /// works, the SMS switch, then « Quitter la liste » and « Parties similaires ». Tapping the queue
@@ -37,7 +38,7 @@ class _WaitlistScreenState extends ConsumerState<WaitlistScreen> {
   Future<void> _leave() async {
     await ref.read(gameActionsProvider).leaveWaitlist(widget.gameId);
     if (!mounted) return;
-    MuToast.show(context, title: 'Tu as quitté la liste d’attente');
+    MuToast.show(context, title: l10n.tuAsQuitteLaListe);
     context.pop();
   }
 
@@ -49,19 +50,19 @@ class _WaitlistScreenState extends ConsumerState<WaitlistScreen> {
       backgroundColor: c.bg,
       body: Column(
         children: [
-          MuTopAppBar.compact(title: 'Liste d’attente', onBack: () => context.pop()),
+          MuTopAppBar.compact(title: l10n.listeDAttente, onBack: () => context.pop()),
           Expanded(
             child: switch (details) {
               AsyncData(:final value) => _body(context, value),
               AsyncError() => Center(
                 child: MuEmptyState(
-                  title: 'Partie introuvable',
-                  actions: [MuButton.primary(label: 'Retour', onPressed: () => context.pop())],
+                  title: l10n.partieIntrouvable,
+                  actions: [MuButton.primary(label: l10n.retour, onPressed: () => context.pop())],
                 ),
               ),
-              _ => const MuSkeletonGroup(
-                label: 'Chargement',
-                child: Padding(
+              _ => MuSkeletonGroup(
+                label: l10n.chargement,
+                child: const Padding(
                   padding: EdgeInsets.all(MuSpace.s4),
                   child: MuSkeleton.text(lines: 5),
                 ),
@@ -78,7 +79,7 @@ class _WaitlistScreenState extends ConsumerState<WaitlistScreen> {
                   children: [
                     Expanded(
                       child: MuButton.destructiveOutline(
-                        label: 'Quitter la liste',
+                        label: l10n.quitterLaListe,
                         size: MuButtonSize.xl,
                         fullWidth: true,
                         onPressed: _leave,
@@ -87,7 +88,7 @@ class _WaitlistScreenState extends ConsumerState<WaitlistScreen> {
                     const SizedBox(width: MuSpace.s3),
                     Expanded(
                       child: MuButton.primary(
-                        label: 'Parties similaires',
+                        label: l10n.partiesSimilaires,
                         size: MuButtonSize.xl,
                         fullWidth: true,
                         onPressed: () => context.go(Routes.explore),
@@ -147,18 +148,18 @@ class _WaitlistScreenState extends ConsumerState<WaitlistScreen> {
             ),
             child: Semantics(
               button: true,
-              hint: 'Simuler une place libérée',
+              hint: l10n.simulerUnePlaceLiberee,
               child: InkWell(
                 borderRadius: MuRadius.lgAll,
                 onTap: () => showClaimTakeover(context, ref, widget.gameId),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    const Align(
+                    Align(
                       alignment: AlignmentDirectional.centerEnd,
                       child: MuStatusBadge(
                         status: MuStatus.pending,
-                        label: 'En attente',
+                        label: l10n.enAttente,
                         size: MuBadgeSize.s,
                       ),
                     ),
@@ -184,7 +185,7 @@ class _WaitlistScreenState extends ConsumerState<WaitlistScreen> {
                           child: Semantics(
                             header: true,
                             child: Text(
-                              'Tu es ${position}e sur la liste d’attente',
+                              l10n.tuEsESurLa(position),
                               style: MuType.h2.copyWith(color: dc.text),
                             ),
                           ),
@@ -194,8 +195,8 @@ class _WaitlistScreenState extends ConsumerState<WaitlistScreen> {
                     const SizedBox(height: MuSpace.s2),
                     Text(
                       ahead == 0
-                          ? 'C’est toi le prochain.'
-                          : 'Plus que $ahead joueur${ahead > 1 ? 's' : ''} avant toi.',
+                          ? l10n.cEstToiLeProchain
+                          : l10n.plusQueJoueurAvantToi(ahead, ahead > 1 ? 's' : ''),
                       style: MuType.body.copyWith(color: dc.textSecondary),
                     ),
                     const SizedBox(height: MuSpace.s5),
@@ -207,7 +208,7 @@ class _WaitlistScreenState extends ConsumerState<WaitlistScreen> {
                             size: MuSize.iconXs,
                             color: dc.textSecondary,
                           ),
-                          'Place libre',
+                          l10n.placeLibre,
                           dashed: true,
                         ),
                         Expanded(child: Divider(color: dc.border, thickness: 1)),
@@ -225,7 +226,7 @@ class _WaitlistScreenState extends ConsumerState<WaitlistScreen> {
                             initialsOf(Story.myName),
                             style: MuType.labelL.copyWith(color: dc.onAccent),
                           ),
-                          'Toi',
+                          l10n.toi,
                           fill: dc.accent,
                         ),
                       ],
@@ -242,7 +243,7 @@ class _WaitlistScreenState extends ConsumerState<WaitlistScreen> {
     final gameCard = MuCardSurface(
       padding: const EdgeInsets.all(MuSpace.s3),
       onTap: () => context.pop(),
-      semanticLabel: '${g.title}, ${formatDateTime(g.start)}, complet, voir la partie',
+      semanticLabel: l10n.completVoirLaPartie(g.title, formatDateTime(g.start)),
       child: Row(
         children: [
           SizedBox.square(
@@ -268,7 +269,7 @@ class _WaitlistScreenState extends ConsumerState<WaitlistScreen> {
                       ),
                       TextSpan(
                         text:
-                            ' · ${sportShort(g.sport) == 'foot' ? 'Foot 5 vs 5' : g.sport.label} '
+                            ' · ${sportShort(g.sport) == 'foot' ? l10n.footVs : g.sport.label} '
                             '${g.gameType.toLowerCase()}',
                       ),
                     ],
@@ -287,7 +288,7 @@ class _WaitlistScreenState extends ConsumerState<WaitlistScreen> {
                       '${g.spotsTotal - g.spotsLeft}/${g.spotsTotal}',
                       style: MuType.labelS.copyWith(color: c.text),
                     ),
-                    Text(' · complet', style: MuType.caption.copyWith(color: c.textSecondary)),
+                    Text(l10n.complet2, style: MuType.caption.copyWith(color: c.textSecondary)),
                   ],
                 ),
               ],
@@ -341,33 +342,33 @@ class _WaitlistScreenState extends ConsumerState<WaitlistScreen> {
         const SizedBox(height: MuSpace.s6),
         Semantics(
           header: true,
-          child: Text('Comment ça marche', style: MuType.h2.copyWith(color: c.text)),
+          child: Text(l10n.commentCaMarche, style: MuType.h2.copyWith(color: c.text)),
         ),
         const SizedBox(height: MuSpace.s4),
         step(
           PhosphorIcons.bellRinging(),
-          'On te prévient tout de suite',
-          Text('Dès qu’un joueur se désiste, c’est ton tour.', style: caption),
+          l10n.onTePrevientToutDe,
+          Text(l10n.desQuUnJoueurSe, style: caption),
         ),
         const SizedBox(height: MuSpace.s4),
         step(
           PhosphorIcons.timer(),
-          '15 min pour réclamer la place',
-          Text('Sans réponse, elle passe au suivant de la liste.', style: caption),
+          l10n.minPourReclamerLaPlace,
+          Text(l10n.sansReponseEllePasseAu, style: caption),
         ),
         const SizedBox(height: MuSpace.s4),
         step(
           PhosphorIcons.wallet(),
-          'Rien à payer d’ici là',
+          l10n.rienAPayerDIci,
           Text.rich(
             TextSpan(
               children: [
-                const TextSpan(text: 'Tu paies '),
+                TextSpan(text: l10n.tuPaies),
                 TextSpan(
                   text: formatDT(g.pricePerPlayer),
                   style: MuType.labelS.copyWith(color: c.text),
                 ),
-                const TextSpan(text: ' seulement si tu réclames la place.'),
+                TextSpan(text: l10n.seulementSiTuReclamesLa),
               ],
             ),
             style: caption,
@@ -379,7 +380,7 @@ class _WaitlistScreenState extends ConsumerState<WaitlistScreen> {
           child: MuSwitch(
             value: _sms,
             icon: PhosphorIcons.chatText(),
-            label: 'Me prévenir aussi par SMS',
+            label: l10n.mePrevenirAussiParSms,
             description: '+216 20 123 456',
             onChanged: (v) => setState(() => _sms = v),
           ),

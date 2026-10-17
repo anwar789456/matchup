@@ -4,6 +4,7 @@ import 'package:phosphor_flutter/phosphor_flutter.dart';
 import '../theme/theme.dart';
 import 'mu_bottom_sheet.dart';
 import 'src/interaction.dart';
+import '../l10n/l10n.dart';
 
 /// A role the account holds (or can add): « Joueur · Padel 3,5 · La Marsa », « Propriétaire de
 /// terrain · Configuration à terminer · 3 étapes ».
@@ -31,15 +32,15 @@ class MuRole {
 /// RoleSwitcher (components/RoleSwitcher.md), sheet variant (PRF-06): one row per role, a check
 /// on the current one, then « Ajouter un rôle ».
 class MuRoleSwitcher extends StatelessWidget {
-  const MuRoleSwitcher({
+  MuRoleSwitcher({
     super.key,
     required this.roles,
     required this.current,
     required this.onChanged,
     this.onAddRole,
-    this.addRoleLabel = 'Ajouter un rôle',
-    this.addRoleDetail = 'Coach ou organisateur de tournois',
-  });
+    String? addRoleLabel,
+    String? addRoleDetail,
+  }) : addRoleDetail = addRoleDetail ?? l10n.coachOuOrganisateurDeTournois, addRoleLabel = addRoleLabel ?? l10n.ajouterUnRole;
 
   final List<MuRole> roles;
   final String current;
@@ -60,7 +61,7 @@ class MuRoleSwitcher extends StatelessWidget {
     VoidCallback? onAddRole,
   }) => MuBottomSheet.show<void>(
     context,
-    title: 'Changer de rôle',
+    title: l10n.changerDeRole,
     height: MuSheetHeight.auto,
     child: Padding(
       padding: const EdgeInsets.fromLTRB(MuSpace.s4, 0, MuSpace.s4, MuSpace.s4),
@@ -95,7 +96,7 @@ class MuRoleSwitcher extends StatelessWidget {
     }) => Semantics(
       button: true,
       selected: selected,
-      label: semanticLabel ?? '$title${selected ? ', rôle actuel' : ''}',
+      label: semanticLabel ?? '$title${selected ? l10n.roleActuel : ''}',
       excludeSemantics: true,
       child: MuFocusRing(
         borderRadius: MuRadius.mdAll,

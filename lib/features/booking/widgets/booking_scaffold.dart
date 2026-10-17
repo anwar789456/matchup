@@ -9,6 +9,7 @@ import '../../../theme/theme.dart';
 import '../../../ui/ui.dart';
 import '../../common/widgets/flow_scaffold.dart';
 import '../controllers/booking_controller.dart';
+import '../../../l10n/l10n.dart';
 
 /// The booking flow's steps (BKG-01 to BKG-04).
 const int bookingSteps = 3;
@@ -50,7 +51,7 @@ class BookingStepScaffold extends ConsumerWidget {
                 children: [
                   MuIconButton(
                     icon: PhosphorIcons.arrowLeft(),
-                    label: 'Retour',
+                    label: l10n.retour,
                     size: MuIconButtonSize.l,
                     onPressed: () => context.canPop()
                         ? context.pop()
@@ -95,11 +96,11 @@ class BookingLost extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(MuSpace.s4),
           child: MuEmptyState(
-            title: 'Aucune réservation en cours',
-            description: 'Choisis un terrain et un créneau pour commencer.',
+            title: l10n.aucuneReservationEnCours,
+            description: l10n.choisisUnTerrainEtUn,
             actions: [
               MuButton.primary(
-                label: 'Voir les terrains',
+                label: l10n.voirLesTerrains,
                 onPressed: () => context.go(Routes.exploreVenues),
               ),
             ],

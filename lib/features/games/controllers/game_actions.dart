@@ -7,6 +7,7 @@ import '../../home/controllers/home_providers.dart';
 import '../../profile/data/me_repository.dart';
 import '../../wallet/data/wallet_repository.dart';
 import '../data/games_repository.dart';
+import '../../../l10n/l10n.dart';
 
 /// What a player does with an open game: join (after paying the share), leave, the waitlist. Each
 /// action refreshes the game page, « Mes matchs », the Home and Explorer.
@@ -38,7 +39,7 @@ class GameActions {
         .read(walletActionsProvider)
         .paid(
           receipt: receipt,
-          label: 'Part · ${game.venue}',
+          label: l10n.partText(game.venue),
           sport: game.sport,
           fromBalance: fromBalance,
         );

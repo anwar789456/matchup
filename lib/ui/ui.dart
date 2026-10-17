@@ -37,6 +37,7 @@ export 'mu_password_field.dart';
 export 'mu_phone_field.dart';
 export 'mu_pricing_card.dart';
 export 'mu_progress_bar.dart';
+export 'mu_progress_ring.dart';
 export 'mu_radio.dart';
 export 'mu_range_slider.dart';
 export 'mu_reliability_badge.dart';

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import '../core/format.dart';
 import '../theme/theme.dart';
 import 'src/interaction.dart';
+import '../l10n/l10n.dart';
 
 /// StarRating (components/StarRating.md): five stars with the exact value and the count, or five
 /// 44 px stars to give a note with its word.
@@ -22,7 +23,7 @@ class MuStarRating extends StatelessWidget {
     this.showValue = true,
   }) : onChanged = null,
        label = null,
-       words = _defaultWords,
+       words = null,
        input = false;
 
   /// Five 44 px targets; the word of the note follows the stars.
@@ -31,7 +32,7 @@ class MuStarRating extends StatelessWidget {
     required this.value,
     required this.onChanged,
     this.label,
-    this.words = _defaultWords,
+    this.words,
     this.size = 28,
   }) : count = null,
        showValue = false,
@@ -47,10 +48,10 @@ class MuStarRating extends StatelessWidget {
   final String? label;
 
   /// The five words, from 1 to 5.
-  final List<String> words;
+  final List<String>? words;
   final bool input;
 
-  static const _defaultWords = ['Décevant', 'Moyen', 'Correct', 'Bien', 'Excellent'];
+  static List<String> get _defaultWords => [l10n.decevant, l10n.moyen, l10n.correct, l10n.bien, l10n.excellent];
 
   // StarRating.md: gaps 1 (16), 2 (20); input targets 44; label column 88.
   static const double _labelColumn = 88;
@@ -66,7 +67,7 @@ class MuStarRating extends StatelessWidget {
     final small = size <= 20;
     return Semantics(
       image: true,
-      label: 'Note ${formatLevel(value)} sur 5${count == null ? '' : ', $count avis'}',
+      label: l10n.noteSur(formatLevel(value), count == null ? '' : l10n.avis5('$count')),
       excludeSemantics: true,
       child: Row(
         mainAxisSize: MainAxisSize.min,
@@ -85,7 +86,7 @@ class MuStarRating extends StatelessWidget {
           if (count != null) ...[
             const SizedBox(width: MuSpace.s1),
             Text(
-              '(${formatInt(count!)} avis)',
+              l10n.avis3(formatInt(count!)),
               style: MuType.caption.copyWith(color: c.textSecondary),
             ),
           ],
@@ -97,6 +98,7 @@ class MuStarRating extends StatelessWidget {
   Widget _input(BuildContext context) {
     final c = context.mu;
     final note = value.round();
+    final words = this.words ?? _defaultWords;
     final word = note == 0 ? null : words[note - 1];
     final stars = Row(
       mainAxisSize: MainAxisSize.min,
@@ -106,7 +108,7 @@ class MuStarRating extends StatelessWidget {
             inMutuallyExclusiveGroup: true,
             selected: note == i,
             button: true,
-            label: '$i sur 5 · ${words[i - 1]}',
+            label: l10n.sur4(i, (this.words ?? _defaultWords)[i - 1]),
             excludeSemantics: true,
             child: MuFocusRing(
               borderRadius: MuRadius.smAll,
@@ -136,7 +138,7 @@ class MuStarRating extends StatelessWidget {
               children: [
                 Text(label!, style: MuType.label.copyWith(color: c.text)),
                 Text(
-                  word ?? 'À noter',
+                  word ?? l10n.aNoter,
                   style: word == null
                       ? MuType.caption.copyWith(color: c.textSecondary)
                       : MuType.labelS.copyWith(color: c.text),
@@ -144,11 +146,11 @@ class MuStarRating extends StatelessWidget {
               ],
             ),
           ),
-        Semantics(container: true, label: label ?? 'Note', child: stars),
+        Semantics(container: true, label: label ?? l10n.note, child: stars),
         if (label == null) ...[
           const SizedBox(width: MuSpace.s2),
           Text(
-            word ?? 'Touche pour noter',
+            word ?? l10n.touchePourNoter,
             style: word == null
                 ? MuType.body.copyWith(color: c.textSecondary)
                 : MuType.label.copyWith(color: c.text),

@@ -1,5 +1,20 @@
-/// French formatting rules from design/design-system/s09-content.md, used in every language.
+/// Formatting rules from design/design-system/s09-content.md: French by default; Arabic
+/// (CLAUDE.md rule 12, RTL-01…03) keeps Western digits and the decimal comma, uses 24 h « 20:00 »,
+/// Arabic day and month names and « 15 د.ت ».
 library;
+
+import 'dart:ui' show Locale;
+
+bool _arabic = false;
+
+/// Follows the app language (set by MatchUpApp).
+void setFormatLocale(Locale locale) => _arabic = locale.languageCode == 'ar';
+
+/// « DT », « د.ت » in Arabic.
+String get dtUnit => _arabic ? 'د.ت' : 'DT';
+
+/// Left-to-right isolate for ranges, codes and card numbers inside Arabic text (U+2066…U+2069).
+String ltr(String s) => _arabic ? '\u2066$s\u2069' : s;
 
 const _nbsp = ' ';
 const _narrowNbsp = ' ';
@@ -9,10 +24,10 @@ String formatLevel(double level) => level.toStringAsFixed(1).replaceAll('.', ','
 
 /// The band of a level: Débutant < 2,5 ≤ Intermédiaire < 4,0 ≤ Avancé < 5,5 ≤ Expert.
 String levelBand(double level) {
-  if (level < 2.5) return 'Débutant';
-  if (level < 4.0) return 'Intermédiaire';
-  if (level < 5.5) return 'Avancé';
-  return 'Expert';
+  if (level < 2.5) return _arabic ? 'مبتدئ' : 'Débutant';
+  if (level < 4.0) return _arabic ? 'متوسط' : 'Intermédiaire';
+  if (level < 5.5) return _arabic ? 'متقدم' : 'Avancé';
+  return _arabic ? 'خبير' : 'Expert';
 }
 
 /// « 20 123 456 » — 8 Tunisian digits grouped 2-3-3 (fewer digits are grouped as far as they go).
@@ -45,19 +60,45 @@ String initialsOf(String name, {bool short = false}) {
 }
 
 const _weekdays = ['lun.', 'mar.', 'mer.', 'jeu.', 'ven.', 'sam.', 'dim.'];
+const _weekdaysAr = ['الاثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت', 'الأحد'];
+const _monthsAr = [
+  'يناير',
+  'فبراير',
+  'مارس',
+  'أبريل',
+  'مايو',
+  'يونيو',
+  'يوليو',
+  'أغسطس',
+  'سبتمبر',
+  'أكتوبر',
+  'نوفمبر',
+  'ديسمبر',
+];
 const _months = [
-  'janv.', 'févr.', 'mars', 'avr.', 'mai', 'juin',
-  'juil.', 'août', 'sept.', 'oct.', 'nov.', 'déc.',
+  'janv.',
+  'févr.',
+  'mars',
+  'avr.',
+  'mai',
+  'juin',
+  'juil.',
+  'août',
+  'sept.',
+  'oct.',
+  'nov.',
+  'déc.',
 ];
 
 /// « sam. » — short weekday.
-String formatWeekday(DateTime d) => _weekdays[d.weekday - 1];
+String formatWeekday(DateTime d) => (_arabic ? _weekdaysAr : _weekdays)[d.weekday - 1];
 
 /// « oct. » — short month.
-String formatMonth(DateTime d) => _months[d.month - 1];
+String formatMonth(DateTime d) => (_arabic ? _monthsAr : _months)[d.month - 1];
 
 /// « 20h00 ».
-String formatTime(DateTime d) => '${d.hour}h${d.minute.toString().padLeft(2, '0')}';
+String formatTime(DateTime d) =>
+    '${d.hour}${_arabic ? ':' : 'h'}${d.minute.toString().padLeft(2, '0')}';
 
 /// « sam. 18 oct. ».
 String formatDay(DateTime d) => '${formatWeekday(d)} ${d.day} ${formatMonth(d)}';
@@ -68,7 +109,7 @@ String formatDateTime(DateTime d) => '${formatDay(d)} · ${formatTime(d)}';
 /// « 24–26 oct. », or « 30 oct. – 2 nov. » across months.
 String formatDateRange(DateTime start, DateTime end) {
   if (start.month == end.month && start.year == end.year) {
-    return '${start.day}–${end.day} ${formatMonth(end)}';
+    return '${ltr('${start.day}–${end.day}')} ${formatMonth(end)}';
   }
   return '${start.day} ${formatMonth(start)} – ${end.day} ${formatMonth(end)}';
 }
@@ -92,7 +133,7 @@ String formatAmount(num amount) {
 }
 
 /// « 15 DT », « 1 500 DT », « 12,500 DT » (three decimals after a comma when not whole).
-String formatDT(num amount) => '${formatAmount(amount)}${_nbsp}DT';
+String formatDT(num amount) => '${formatAmount(amount)}$_nbsp$dtUnit';
 
 /// « 14:59 » — minutes and seconds of a short hold.
 String formatClock(Duration d) {
@@ -104,6 +145,7 @@ String formatClock(Duration d) {
 /// a range closes after it).
 String formatHour(int minutes) {
   final m = minutes % (24 * 60);
+  if (_arabic) return '${m ~/ 60}:${(m % 60).toString().padLeft(2, '0')}';
   return '${(m ~/ 60).toString().padLeft(2, '0')}h${(m % 60).toString().padLeft(2, '0')}';
 }
 
@@ -117,8 +159,9 @@ String formatSince(DateTime time, DateTime now) {
 }
 
 /// « d’Arena Five », « de Smash Padel » — « de » elided before a vowel or a mute h.
-String elideDe(String name) =>
-    RegExp(r'^[aeiouyàâäéèêëîïôöùûüh]', caseSensitive: false).hasMatch(name)
+String elideDe(String name) => _arabic
+    ? name
+    : RegExp(r'^[aeiouyàâäéèêëîïôöùûüh]', caseSensitive: false).hasMatch(name)
     ? 'd’$name'
     : 'de $name';
 

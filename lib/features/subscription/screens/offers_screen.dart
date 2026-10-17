@@ -12,6 +12,7 @@ import '../../payments/widgets/checkout_widgets.dart';
 import '../controllers/subscription_controller.dart';
 import '../data/subscription_repository.dart';
 import '../widgets/subscription_widgets.dart';
+import '../../../l10n/l10n.dart';
 
 /// The billing period picked on SUB-01, carried to SUB-02.
 class PremiumPeriodController extends Notifier<MuBillingPeriod> {
@@ -28,79 +29,79 @@ final premiumPeriodProvider = NotifierProvider<PremiumPeriodController, MuBillin
 /// The plans of SUB-01 (STORY-DATA « Plans »).
 abstract final class Plans {
   static MuPlan premium = MuPlan(
-    name: 'Premium',
-    audience: 'Joueur',
+    name: l10n.premium,
+    audience: l10n.joueur,
     icon: PhosphorIcons.user(),
-    pitch: 'Passe avant les autres et progresse avec l’IA.',
+    pitch: l10n.passeAvantLesAutresEt,
     monthly: Subscription.monthly,
     yearly: Subscription.yearly,
-    features: const [
-      ('Priorité sur les listes d’attente', true),
-      ('Plans d’entraînement IA', true),
-      ('Programmes des coachs inclus', true),
-      ('Statistiques avancées', true),
-      ('Pas de frais de service', true),
+    features: [
+      (l10n.prioriteSurLesListesD, true),
+      (l10n.plansDEntrainementIa, true),
+      (l10n.programmesDesCoachsInclus, true),
+      (l10n.statistiquesAvancees, true),
+      (l10n.pasDeFraisDeService, true),
     ],
   );
   static MuPlan free = MuPlan(
-    name: 'Gratuit',
-    audience: 'Joueur',
+    name: l10n.gratuit,
+    audience: l10n.joueur,
     icon: PhosphorIcons.user(),
-    pitch: 'Parties, réservations et niveau IA, sans engagement.',
+    pitch: l10n.partiesReservationsEtNiveauIa,
     monthly: 0,
     yearly: 0,
-    features: const [
-      ('Parties ouvertes à ton niveau', true),
-      ('Réservation et paiement de ta part', true),
-      ('Niveau IA et fiabilité', true),
-      ('Priorité sur les listes d’attente', false),
-      ('Plans d’entraînement IA', false),
+    features: [
+      (l10n.partiesOuvertesATonNiveau, true),
+      (l10n.reservationEtPaiementDeTa, true),
+      (l10n.niveauIaEtFiabilite, true),
+      (l10n.prioriteSurLesListesD, false),
+      (l10n.plansDEntrainementIa, false),
     ],
   );
   static MuPlan pro = MuPlan(
-    name: 'Pro',
-    audience: 'Propriétaire',
+    name: l10n.pro,
+    audience: l10n.proprietaire,
     icon: PhosphorIcons.storefront(),
-    pitch: 'Remplis tes créneaux creux et gère plusieurs sites.',
+    pitch: l10n.remplisTesCreneauxCreuxEt,
     monthly: 149,
     yearly: 1490,
-    features: const [
-      ('Terrains illimités', true),
-      ('Réservations en ligne', true),
-      ('Paiements des joueurs', true),
-      ('Tarifs dynamiques', true),
-      ('Insights IA', true),
-      ('Plusieurs sites', true),
+    features: [
+      (l10n.terrainsIllimites, true),
+      (l10n.reservationsEnLigne, true),
+      (l10n.paiementsDesJoueurs, true),
+      (l10n.tarifsDynamiques, true),
+      (l10n.insightsIa, true),
+      (l10n.plusieursSites, true),
     ],
   );
   static MuPlan starter = MuPlan(
-    name: 'Starter',
-    audience: 'Propriétaire',
+    name: l10n.starter,
+    audience: l10n.proprietaire,
     icon: PhosphorIcons.storefront(),
-    pitch: 'Ton terrain réservable en ligne en 10 minutes.',
+    pitch: l10n.tonTerrainReservableEnLigne,
     monthly: 79,
     yearly: 790,
-    features: const [
-      ('1 site · jusqu’à 3 terrains', true),
-      ('Réservations en ligne', true),
-      ('Paiements des joueurs', true),
-      ('Tarifs dynamiques', false),
-      ('Insights IA', false),
-      ('Plusieurs sites', false),
+    features: [
+      (l10n.siteJusquATerrains, true),
+      (l10n.reservationsEnLigne, true),
+      (l10n.paiementsDesJoueurs, true),
+      (l10n.tarifsDynamiques, false),
+      (l10n.insightsIa, false),
+      (l10n.plusieursSites, false),
     ],
   );
   static MuPlan coach = MuPlan(
-    name: 'Coach',
-    audience: 'Entraîneurs',
+    name: l10n.coach,
+    audience: l10n.entraineurs,
     icon: PhosphorIcons.chalkboardTeacher(),
-    pitch: 'Publie tes programmes et suis tes élèves.',
+    pitch: l10n.publieTesProgrammesEtSuis2,
     monthly: 39,
     yearly: 390,
-    features: const [
-      ('Programmes illimités', true),
-      ('Paiements des élèves', true),
-      ('Statistiques de tes élèves', true),
-      ('Commission de 10 % sur les ventes', true),
+    features: [
+      (l10n.programmesIllimites, true),
+      (l10n.paiementsDesEleves, true),
+      (l10n.statistiquesDeTesEleves, true),
+      (l10n.commissionDeSurLesVentes, true),
     ],
   );
 }
@@ -111,8 +112,7 @@ String perPeriod(num amount, MuBillingPeriod p) =>
 
 /// « 14 jours gratuits, puis 19 DT/mois · Résiliable à tout moment ».
 String trialNote(MuPlan plan, MuBillingPeriod p) =>
-    '14 jours gratuits, puis ${perPeriod(p == MuBillingPeriod.year ? plan.yearly : plan.monthly, p)}'
-    ' · Résiliable à tout moment';
+    l10n.joursGratuitsPuisResiliableA(perPeriod(p == MuBillingPeriod.year ? plan.yearly : plan.monthly, p));
 
 /// SUB-01 · Offres et abonnements: Joueur · Propriétaire · Coach tabs, Mensuel / Annuel, the
 /// pricing cards, the Gratuit / Premium comparison and the FAQ, with the sticky « Essayer Premium
@@ -134,39 +134,39 @@ class _OffersScreenState extends ConsumerState<OffersScreen> {
   static const double _premTint = 0.14;
   static const double _premHeadTint = 0.34;
 
-  static const _intro = [
-    'Essaie Premium 14 jours gratuitement. Aucun prélèvement avant le ven. 30 oct., résiliable en 2 étapes.',
-    'Mets ton terrain en ligne et encaisse les parts des joueurs. 14 jours d’essai sur les deux offres.',
-    'Vends tes programmes et suis tes élèves. 14 jours d’essai, puis une commission de 10 % sur tes ventes.',
+  static final _intro = [
+    l10n.essaiePremiumJoursGratuitementAucun,
+    l10n.metsTonTerrainEnLigne,
+    l10n.vendsTesProgrammesEtSuis,
   ];
 
-  static const _rows = <(String, Object, Object)>[
-    ('Parties ouvertes et réservations', true, true),
-    ('Paiement de ta part en ligne', true, true),
-    ('Niveau IA et fiabilité', true, true),
-    ('Priorité sur les listes d’attente', false, true),
-    ('Plans d’entraînement IA', false, true),
-    ('Programmes des coachs', false, true),
-    ('Statistiques', 'De base', 'Avancées'),
-    ('Frais de service', 'Offerts au lancement', '0 DT'),
+  static final _rows = <(String, Object, Object)>[
+    (l10n.partiesOuvertesEtReservations, true, true),
+    (l10n.paiementDeTaPartEn, true, true),
+    (l10n.niveauIaEtFiabilite, true, true),
+    (l10n.prioriteSurLesListesD, false, true),
+    (l10n.plansDEntrainementIa, false, true),
+    (l10n.programmesDesCoachs, false, true),
+    (l10n.statistiques, l10n.deBase, l10n.avancees),
+    (l10n.fraisDeService, l10n.offertsAuLancement, l10n.dt),
   ];
 
-  static const _faq = [
+  static final _faq = [
     (
-      'Est-ce que je paie pendant l’essai ?',
-      'Non : 0 DT aujourd’hui. On te prévient le mar. 27 oct., 3 jours avant le premier prélèvement de 19 DT le ven. 30 oct.',
+      l10n.estCeQueJePaie,
+      l10n.nonDtAujourdHuiOn,
     ),
     (
-      'Comment je résilie ?',
-      'Dans Mon compte › Abonnement › « Résilier l’abonnement », en 2 étapes, sans appel ni frais. Premium reste actif jusqu’à la fin de la période déjà payée.',
+      l10n.commentJeResilie,
+      l10n.dansMonCompteAbonnementResilier,
     ),
     (
-      'Je peux passer à l’annuel plus tard ?',
-      'Oui, à tout moment. Tu vois le montant exact avant de confirmer, et ce que tu as déjà payé est déduit au prorata.',
+      l10n.jePeuxPasserAL,
+      l10n.ouiAToutMomentTu,
     ),
     (
-      'Que se passe-t-il si je repasse en Gratuit ?',
-      'Tu gardes tes matchs, ton niveau, ta fiabilité et ton solde. Tu perds la priorité sur les listes d’attente, les plans IA et les statistiques avancées.',
+      l10n.queSePasseTIl,
+      l10n.tuGardesTesMatchsTon,
     ),
   ];
 
@@ -192,7 +192,7 @@ class _OffersScreenState extends ConsumerState<OffersScreen> {
       }
       return v == true
           ? Semantics(
-              label: 'Inclus',
+              label: l10n.inclus,
               child: Icon(
                 PhosphorIcons.checkCircle(PhosphorIconsStyle.fill),
                 size: MuSize.iconS,
@@ -200,7 +200,7 @@ class _OffersScreenState extends ConsumerState<OffersScreen> {
               ),
             )
           : Semantics(
-              label: 'Non inclus',
+              label: l10n.nonInclus,
               child: Icon(PhosphorIcons.minus(), size: MuSize.iconS, color: c.textDisabled),
             );
     }
@@ -245,8 +245,8 @@ class _OffersScreenState extends ConsumerState<OffersScreen> {
           period: period,
           recommended: true,
           current: premium,
-          savings: '2 mois offerts',
-          cta: 'Essayer 14 jours gratuits',
+          savings: l10n.moisOfferts,
+          cta: l10n.essayerJoursGratuits,
           trialNote: trialNote(Plans.premium, period),
           onCta: _tryPremium,
         ),
@@ -263,16 +263,16 @@ class _OffersScreenState extends ConsumerState<OffersScreen> {
           plan: Plans.pro,
           period: period,
           recommended: true,
-          savings: '2 mois offerts',
-          cta: 'Choisir Pro',
+          savings: l10n.moisOfferts,
+          cta: l10n.choisirPro,
           trialNote: trialNote(Plans.pro, period),
           onCta: () => context.push(Routes.ownerCompany),
         ),
         MuPricingCard(
           plan: Plans.starter,
           period: period,
-          savings: '2 mois offerts',
-          cta: 'Choisir Starter',
+          savings: l10n.moisOfferts,
+          cta: l10n.choisirStarter,
           trialNote: trialNote(Plans.starter, period),
           onCta: () => context.push(Routes.ownerCompany),
         ),
@@ -281,8 +281,8 @@ class _OffersScreenState extends ConsumerState<OffersScreen> {
         MuPricingCard(
           plan: Plans.coach,
           period: period,
-          savings: '2 mois offerts',
-          cta: 'Devenir coach',
+          savings: l10n.moisOfferts,
+          cta: l10n.devenirCoach,
           trialNote: trialNote(Plans.coach, period),
           onCta: () => context.push(Routes.coachProfile),
         ),
@@ -291,20 +291,20 @@ class _OffersScreenState extends ConsumerState<OffersScreen> {
 
     final caption = MuType.caption.copyWith(color: c.textSecondary);
     final (barLabel, barNote, barAction) = switch (_tab) {
-      0 when premium => ('Gérer mon abonnement', null, () => context.push(Routes.subscription)),
+      0 when premium => (l10n.gererMonAbonnement, null, () => context.push(Routes.subscription)),
       0 => (
-        'Essayer Premium gratuitement',
-        '0 DT aujourd’hui, puis ${perPeriod(yearly ? Subscription.yearly : Subscription.monthly, period)} dès le ven. 30 oct. · Résiliable à tout moment',
+        l10n.essayerPremiumGratuitement,
+        l10n.dtAujourdHuiPuisDes(perPeriod(yearly ? Subscription.yearly : Subscription.monthly, period)),
         _tryPremium,
       ),
       1 => (
-        'Terminer mon espace propriétaire',
-        'Tu choisis ton offre à la dernière étape · 14 jours gratuits',
+        l10n.terminerMonEspaceProprietaire,
+        l10n.tuChoisisTonOffreA,
         () => context.push(Routes.ownerCompany),
       ),
       _ => (
-        'Devenir coach',
-        'Profil vérifié avant ta première vente · 14 jours gratuits',
+        l10n.devenirCoach,
+        l10n.profilVerifieAvantTaPremiere,
         () => context.push(Routes.coachProfile),
       ),
     };
@@ -314,7 +314,7 @@ class _OffersScreenState extends ConsumerState<OffersScreen> {
       body: Column(
         children: [
           MuTopAppBar.compact(
-            title: 'Offres et abonnements',
+            title: l10n.offresEtAbonnements,
             onBack: () => goBack(context, Routes.home),
           ),
           Expanded(
@@ -324,7 +324,7 @@ class _OffersScreenState extends ConsumerState<OffersScreen> {
                 Semantics(
                   header: true,
                   child: Text(
-                    'Joue plus. Progresse plus vite.',
+                    l10n.jouePlusProgressePlusVite,
                     style: MuType.h1.copyWith(color: c.text),
                   ),
                 ),
@@ -332,19 +332,19 @@ class _OffersScreenState extends ConsumerState<OffersScreen> {
                 Text(_intro[_tab], style: MuType.bodyL.copyWith(color: c.textSecondary)),
                 const SizedBox(height: MuSpace.s5),
                 MuTabs(
-                  label: 'Offres par profil',
-                  tabs: const [MuTab('Joueur'), MuTab('Propriétaire'), MuTab('Coach')],
+                  label: l10n.offresParProfil,
+                  tabs: [MuTab(l10n.joueur), MuTab(l10n.proprietaire), MuTab(l10n.coach)],
                   index: _tab,
                   fullWidth: true,
                   onChanged: (i) => setState(() => _tab = i),
                 ),
                 const SizedBox(height: MuSpace.s6),
                 MuSegmentedControl<MuBillingPeriod>(
-                  semanticLabel: 'Période de facturation',
+                  semanticLabel: l10n.periodeDeFacturation,
                   expand: true,
-                  segments: const [
-                    MuSegment(value: MuBillingPeriod.month, label: 'Mensuel'),
-                    MuSegment(value: MuBillingPeriod.year, label: 'Annuel', badge: '−17 %'),
+                  segments: [
+                    MuSegment(value: MuBillingPeriod.month, label: l10n.mensuel),
+                    MuSegment(value: MuBillingPeriod.year, label: l10n.annuel, badge: '−17 %'),
                   ],
                   value: period,
                   onChanged: (p) => ref.read(premiumPeriodProvider.notifier).set(p),
@@ -359,13 +359,13 @@ class _OffersScreenState extends ConsumerState<OffersScreen> {
                   Semantics(
                     header: true,
                     child: Text(
-                      'Compare Gratuit et Premium',
+                      l10n.compareGratuitEtPremium,
                       style: MuType.h3.copyWith(color: c.text),
                     ),
                   ),
                   const SizedBox(height: MuSpace.s1),
                   Text(
-                    'Tes réservations, ton niveau et ton historique restent dans les deux offres.',
+                    l10n.tesReservationsTonNiveauEt,
                     style: MuType.body.copyWith(color: c.textSecondary),
                   ),
                   const SizedBox(height: MuSpace.s3),
@@ -382,18 +382,18 @@ class _OffersScreenState extends ConsumerState<OffersScreen> {
                         ColoredBox(
                           color: c.surfaceMuted,
                           child: compareRow(
-                            Text('INCLUS', style: MuType.overline.copyWith(color: c.textSecondary)),
+                            Text(l10n.inclus2, style: MuType.overline.copyWith(color: c.textSecondary)),
                             Column(
                               mainAxisSize: MainAxisSize.min,
                               children: [
-                                Text('Gratuit', style: MuType.label.copyWith(color: c.text)),
+                                Text(l10n.gratuit, style: MuType.label.copyWith(color: c.text)),
                                 Text(formatDT(0), style: caption),
                               ],
                             ),
                             Column(
                               mainAxisSize: MainAxisSize.min,
                               children: [
-                                Text('Premium', style: MuType.label.copyWith(color: c.text)),
+                                Text(l10n.premium, style: MuType.label.copyWith(color: c.text)),
                                 Text(
                                   perPeriod(
                                     yearly ? Subscription.yearly : Subscription.monthly,
@@ -421,13 +421,13 @@ class _OffersScreenState extends ConsumerState<OffersScreen> {
                   const SizedBox(height: MuSpace.s6),
                   Semantics(
                     header: true,
-                    child: Text('Questions fréquentes', style: MuType.h3.copyWith(color: c.text)),
+                    child: Text(l10n.questionsFrequentes, style: MuType.h3.copyWith(color: c.text)),
                   ),
                   const SizedBox(height: MuSpace.s3),
-                  const FaqAccordion(items: _faq),
+                  FaqAccordion(items: _faq),
                 ],
                 const SizedBox(height: MuSpace.s5),
-                const SecureNote(text: 'Prix TTC en dinars · Paiement sécurisé par Stripe'),
+                SecureNote(text: l10n.prixTtcEnDinarsPaiement),
               ],
             ),
           ),

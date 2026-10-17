@@ -5,6 +5,7 @@ import '../theme/theme.dart';
 import 'mu_avatar.dart';
 import 'mu_avatar_stack.dart';
 import 'mu_sport_icon.dart';
+import '../l10n/l10n.dart';
 
 enum MuNotificationPriority { normal, important, urgent }
 
@@ -298,9 +299,9 @@ class _MuNotificationItemState extends State<MuNotificationItem> {
     );
 
     final label = [
-      if (w.unread) 'Non lu',
-      if (urgent) 'Urgent',
-      if (important) 'Important',
+      if (w.unread) l10n.nonLu,
+      if (urgent) l10n.urgent,
+      if (important) l10n.important,
     ].join(' · ');
     if (!_swipeable) return Semantics(container: true, label: label, child: content);
 
@@ -348,14 +349,14 @@ class _MuNotificationItemState extends State<MuNotificationItem> {
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
                       swipeAction(
-                        'Lu',
+                        l10n.lu,
                         PhosphorIcons.envelopeOpen(),
                         c.primary,
                         c.onPrimary,
                         w.onMarkRead,
                       ),
                       swipeAction(
-                        'Supprimer',
+                        l10n.supprimer,
                         PhosphorIcons.trash(),
                         c.destructive,
                         c.onDestructive,

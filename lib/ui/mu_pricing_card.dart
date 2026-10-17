@@ -4,6 +4,7 @@ import 'package:phosphor_flutter/phosphor_flutter.dart';
 import '../core/format.dart';
 import '../theme/theme.dart';
 import 'mu_button.dart';
+import '../l10n/l10n.dart';
 
 enum MuBillingPeriod { month, year }
 
@@ -87,7 +88,7 @@ class MuPricingCard extends StatelessWidget {
     final c = context.mu;
     final yearly = period == MuBillingPeriod.year;
     final amount = yearly ? plan.yearly : plan.monthly;
-    final unit = yearly ? '/ an' : '/ mois';
+    final unit = yearly ? l10n.perYear : l10n.perMonth;
     final after = yearly ? '${formatDT(plan.yearly)}/an' : '${formatDT(plan.monthly)}/mois';
 
     if (compact) return _compact(context, c, yearly, amount);
@@ -96,30 +97,30 @@ class MuPricingCard extends StatelessWidget {
         ? _currentBlock(c)
         : chosen
         ? MuButton.primary(
-            label: 'Offre choisie',
+            label: l10n.offreChoisie,
             size: MuButtonSize.l,
             fullWidth: true,
             onPressed: onCta,
           )
         : recommended
         ? MuButton.primary(
-            label: this.cta ?? 'Choisir ${plan.name}',
+            label: this.cta ?? l10n.choisir2(plan.name),
             size: MuButtonSize.l,
             fullWidth: true,
             onPressed: onCta,
           )
         : MuButton.secondary(
-            label: this.cta ?? 'Choisir ${plan.name}',
+            label: this.cta ?? l10n.choisir2(plan.name),
             size: MuButtonSize.l,
             fullWidth: true,
             onPressed: onCta,
           );
-    final unitText = free ? 'pour toujours' : unit;
+    final unitText = free ? l10n.pourToujours : unit;
 
     return Semantics(
       container: true,
       selected: chosen,
-      label: '${plan.name}, ${formatDT(amount)} $unit${recommended ? ', populaire' : ''}',
+      label: '${plan.name}, ${formatDT(amount)} $unit${recommended ? l10n.populaire : ''}',
       child: Stack(
         // Passes a stretched height on to the card (two plans side by side stay level).
         fit: StackFit.passthrough,
@@ -196,7 +197,7 @@ class MuPricingCard extends StatelessWidget {
                         color: c.onAccent,
                       ),
                       const SizedBox(width: MuSpace.s1),
-                      Text('Populaire', style: MuType.labelS.copyWith(color: c.onAccent)),
+                      Text(l10n.populaire2, style: MuType.labelS.copyWith(color: c.onAccent)),
                     ],
                   ),
                 ),
@@ -234,7 +235,7 @@ class MuPricingCard extends StatelessWidget {
                 ),
                 const SizedBox(width: MuSpace.s2),
                 Text(
-                  'soit ${formatDT((plan.yearly / 12 * 1000).round() / 1000)}/mois',
+                  l10n.soitMois(formatDT((plan.yearly / 12 * 1000).round() / 1000)),
                   style: MuType.caption.copyWith(color: c.textSecondary),
                 ),
               ],
@@ -245,7 +246,7 @@ class MuPricingCard extends StatelessWidget {
           if (!current) ...[
             const SizedBox(height: MuSpace.s3),
             Text(
-              trialNote ?? '$trialDays jours gratuits, puis $after · Résiliable à tout moment',
+              trialNote ?? l10n.joursGratuitsPuisResiliableA2(trialDays, after),
               textAlign: TextAlign.center,
               style: MuType.caption.copyWith(color: c.textSecondary),
             ),
@@ -256,7 +257,7 @@ class MuPricingCard extends StatelessWidget {
           for (final (i, (label, included)) in plan.features.indexed) ...[
             if (i > 0) const SizedBox(height: MuSpace.s3),
             Semantics(
-              label: included ? label : '$label, non inclus',
+              label: included ? label : l10n.nonInclus2(label),
               excludeSemantics: true,
               child: Row(
                 children: [
@@ -298,17 +299,17 @@ class MuPricingCard extends StatelessWidget {
           color: c.successText,
         ),
         const SizedBox(width: MuSpace.s2),
-        Text('Ton offre actuelle', style: MuType.label.copyWith(color: c.textSecondary)),
+        Text(l10n.tonOffreActuelle, style: MuType.label.copyWith(color: c.textSecondary)),
       ],
     ),
   );
 
   Widget _compact(BuildContext context, MuColors c, bool yearly, num amount) {
     final free = amount == 0;
-    final unit = free ? 'pour toujours' : (yearly ? '/ an' : '/ mois');
+    final unit = free ? l10n.forever : (yearly ? l10n.perYear : l10n.perMonth);
     return Semantics(
       container: true,
-      label: '${plan.name}, ${formatDT(amount)} $unit${current ? ', ton offre actuelle' : ''}',
+      label: '${plan.name}, ${formatDT(amount)} $unit${current ? l10n.tonOffreActuelle2 : ''}',
       child: Container(
         padding: const EdgeInsets.all(MuSpace.s4),
         decoration: BoxDecoration(
@@ -351,7 +352,7 @@ class MuPricingCard extends StatelessWidget {
                                 ),
                                 const SizedBox(width: MuSpace.s1),
                                 Text(
-                                  'Ton offre actuelle',
+                                  l10n.tonOffreActuelle,
                                   style: MuType.labelS.copyWith(color: c.textSecondary),
                                 ),
                               ],

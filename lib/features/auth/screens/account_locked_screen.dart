@@ -10,6 +10,7 @@ import '../../../ui/ui.dart';
 import '../../common/widgets/flow_scaffold.dart';
 import '../controllers/auth_providers.dart';
 import '../widgets/auth_widgets.dart';
+import '../../../l10n/l10n.dart';
 
 /// AUTH-10 · Compte bloqué: 15 minutes after 5 failed sign-ins, with the time left.
 class AccountLockedScreen extends ConsumerWidget {
@@ -31,10 +32,10 @@ class AccountLockedScreen extends ConsumerWidget {
               ink: c.warningText,
             ),
             const SizedBox(height: MuSpace.s6),
-            const FlowTitle(
-              'Compte bloqué pendant 15 min',
+            FlowTitle(
+              l10n.compteBloquePendantMin,
               centered: true,
-              lead: 'Après 5 tentatives incorrectes, on bloque la connexion pour protéger ton compte.',
+              lead: l10n.apresTentativesIncorrectesOnBloque,
             ),
           ],
         ),
@@ -46,29 +47,28 @@ class AccountLockedScreen extends ConsumerWidget {
               endsAt: until,
               size: MuCountdownSize.l,
               centered: true,
-              label: 'Tu pourras réessayer dans',
+              label: l10n.tuPourrasReessayerDans,
               urgentAfter: const Duration(minutes: 1),
-              expiredLabel: 'Tu peux te reconnecter',
+              expiredLabel: l10n.tuPeuxTeReconnecter,
             ),
           ),
         ),
         MuBanner(
           tone: MuBannerTone.info,
           icon: PhosphorIcons.shieldWarning(PhosphorIconsStyle.fill),
-          title: 'Ce n’était pas toi ?',
-          detail: 'Réinitialise ton mot de passe maintenant : toutes tes sessions seront fermées. '
-              'On t’a aussi prévenu par email.',
+          title: l10n.ceNEtaitPasToi,
+          detail: l10n.reinitialiseTonMotDePasse,
         ),
       ],
       bottomBar: [
         MuButton.primary(
-          label: 'Réinitialiser mon mot de passe',
+          label: l10n.reinitialiserMonMotDePasse,
           size: MuButtonSize.xl,
           fullWidth: true,
           onPressed: () => context.push(Routes.forgotPassword),
         ),
         MuButton.secondary(
-          label: 'Contacter le support',
+          label: l10n.contacterLeSupport,
           size: MuButtonSize.xl,
           fullWidth: true,
           // The support line of the design (help card of the pro onboarding).
@@ -77,8 +77,8 @@ class AccountLockedScreen extends ConsumerWidget {
             if (!opened && context.mounted) {
               MuToast.show(
                 context,
-                title: 'Appelle-nous au +216 71 234 567',
-                description: 'Du lundi au samedi, de 9h00 à 18h00.',
+                title: l10n.appelleNousAu,
+                description: l10n.duLundiAuSamediDe,
               );
             }
           },

@@ -5,6 +5,7 @@ import '../core/format.dart';
 import '../theme/theme.dart';
 import 'mu_avatar.dart';
 import 'mu_status_badge.dart';
+import '../l10n/l10n.dart';
 
 enum MuLineupRole { organizer, captain }
 
@@ -39,16 +40,16 @@ enum MuLineupVariant { full, compact }
 /// Team A sits on the bottom half, team B on the top, turned 180° (basketball: left and right of
 /// the key). The court never mirrors in RTL.
 class MuLineup extends StatelessWidget {
-  const MuLineup({
+  MuLineup({
     super.key,
     required this.sport,
     required this.teams,
     this.variant = MuLineupVariant.full,
-    this.title = 'Composition',
+    String? title,
     this.onJoin,
     this.disabled = false,
     this.header = true,
-  });
+  }) : title = title ?? l10n.composition;
 
   final MuSport sport;
   final List<MuLineupTeam> teams;
@@ -88,9 +89,9 @@ class MuLineup extends StatelessWidget {
 
   /// Positions per team, in order.
   static List<String> positions(MuSport sport) => switch (sport) {
-    MuSport.football => const ['Gardien', 'Défenseur', 'Défenseur', 'Attaquant', 'Attaquant'],
-    MuSport.padel => const ['Côté gauche', 'Côté droit'],
-    MuSport.basketball => const ['Meneur', 'Ailier', 'Pivot'],
+    MuSport.football => [l10n.gardien, l10n.defenseur, l10n.defenseur, l10n.attaquant, l10n.attaquant],
+    MuSport.padel => [l10n.coteGauche, l10n.coteDroit],
+    MuSport.basketball => [l10n.meneur, l10n.ailier, l10n.pivot],
   };
 
   /// Where team A's positions sit, as fractions of the court; team B is the 180° turn
@@ -128,13 +129,13 @@ class MuLineup extends StatelessWidget {
   int get _free => _total - _taken;
 
   String get _sportLabel => switch (sport) {
-    MuSport.football => 'Football 5 contre 5',
-    MuSport.padel => 'Padel 2 contre 2',
-    MuSport.basketball => 'Basket 3 contre 3',
+    MuSport.football => l10n.footballContre,
+    MuSport.padel => l10n.padelContre,
+    MuSport.basketball => l10n.basketContre,
   };
 
   String get _freeLabel =>
-      _free == 0 ? 'Complet' : '$_free ${_free == 1 ? 'place libre' : 'places libres'}';
+      _free == 0 ? l10n.complet : '$_free ${_free == 1 ? l10n.placeLibre3 : l10n.placesLibres2}';
 
   @override
   Widget build(BuildContext context) =>
@@ -171,7 +172,7 @@ class MuLineup extends StatelessWidget {
         ],
         Semantics(
           container: true,
-          label: '$_sportLabel — $_taken joueurs sur $_total',
+          label: l10n.joueursSur(_sportLabel, _taken, _total),
           child: Directionality(
             textDirection: TextDirection.ltr,
             child: _SportScope(
@@ -332,10 +333,10 @@ class MuLineup extends StatelessWidget {
         ],
       );
       body = disabled || onJoin == null
-          ? Semantics(label: '$position, libre', child: free)
+          ? Semantics(label: l10n.libre(position), child: free)
           : Semantics(
               button: true,
-              label: 'Rejoindre ce poste — $position, $teamName',
+              label: l10n.rejoindreCePoste(position, teamName),
               excludeSemantics: true,
               child: Material(
                 type: MaterialType.transparency,
@@ -348,14 +349,14 @@ class MuLineup extends StatelessWidget {
             );
     } else {
       final role = switch (p.role) {
-        MuLineupRole.organizer => ', organisateur',
-        MuLineupRole.captain => ', capitaine',
+        MuLineupRole.organizer => l10n.organisateur2,
+        MuLineupRole.captain => l10n.capitaine,
         null => '',
       };
       body = Semantics(
         label:
-            '$position : ${p.you ? 'Toi' : p.name}'
-            '${p.level == null ? '' : ', niveau ${formatLevel(p.level!)}'}$role',
+            '$position : ${p.you ? l10n.toi : p.name}'
+            '${p.level == null ? '' : l10n.niveau7(formatLevel(p.level!))}$role',
         excludeSemantics: true,
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -402,7 +403,7 @@ class MuLineup extends StatelessWidget {
               ),
             ),
             const SizedBox(height: MuSpace.s1),
-            pill(p.you ? 'Toi' : p.name, you: p.you),
+            pill(p.you ? l10n.toi : p.name, you: p.you),
           ],
         ),
       );
@@ -423,7 +424,7 @@ class MuLineup extends StatelessWidget {
     final ratio = landscape ? size.height / size.width : size.width / size.height;
     return Semantics(
       image: true,
-      label: '$_sportLabel : $_taken joueurs sur $_total, ${_freeLabel.toLowerCase()}',
+      label: l10n.joueursSur2(_sportLabel, _taken, _total, _freeLabel.toLowerCase()),
       excludeSemantics: true,
       child: Row(
         mainAxisSize: MainAxisSize.min,
@@ -496,7 +497,7 @@ class MuLineup extends StatelessWidget {
             children: [
               Text('$_taken/$_total', style: MuType.numM.copyWith(color: c.text)),
               Text(
-                _free == 0 ? 'Complet' : '$_free ${_free == 1 ? 'place' : 'places'}',
+                _free == 0 ? l10n.complet : '$_free ${_free == 1 ? 'place' : 'places'}',
                 style: MuType.labelS.copyWith(color: c.textSecondary),
               ),
             ],

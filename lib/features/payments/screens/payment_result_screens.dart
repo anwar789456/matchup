@@ -14,6 +14,7 @@ import '../../home/controllers/home_providers.dart';
 import '../controllers/checkout_controller.dart';
 import '../widgets/checkout_widgets.dart';
 import 'receipt_screen.dart';
+import '../../../l10n/l10n.dart';
 
 /// PAY-09 · Paiement réussi: the receipt, the ticket with its QR code, calendar and share, the
 /// invite card, then « Terminé ».
@@ -30,7 +31,7 @@ class PaymentSuccessScreen extends ConsumerWidget {
     if (last == null) {
       return Scaffold(
         backgroundColor: c.bg,
-        body: Center(child: MuButton.primary(label: 'Accueil', onPressed: () => context.go(Routes.home))),
+        body: Center(child: MuButton.primary(label: l10n.accueil, onPressed: () => context.go(Routes.home))),
       );
     }
     final (req, receipt) = last;
@@ -68,12 +69,12 @@ class PaymentSuccessScreen extends ConsumerWidget {
                 padding: const EdgeInsets.fromLTRB(MuSpace.s2, MuSpace.s2, MuSpace.s4, 0),
                 child: Row(
                   children: [
-                    MuIconButton(icon: PhosphorIcons.x(), label: 'Fermer et voir ma réservation', size: MuIconButtonSize.l, onPressed: done),
+                    MuIconButton(icon: PhosphorIcons.x(), label: l10n.fermerEtVoirMaReservation, size: MuIconButtonSize.l, onPressed: done),
                     const Spacer(),
                     if (req.reference != null)
                       Text.rich(
                         TextSpan(children: [
-                          const TextSpan(text: 'Réf. '),
+                          TextSpan(text: l10n.ref2),
                           TextSpan(text: req.reference, style: MuType.numXs.copyWith(color: c.text)),
                         ]),
                         style: caption,
@@ -97,9 +98,9 @@ class PaymentSuccessScreen extends ConsumerWidget {
                   ),
                   const SizedBox(height: MuSpace.s3),
                   FlowTitle(
-                    'Paiement réussi',
+                    l10n.paiementReussi,
                     centered: true,
-                    lead: 'Ta part de ${formatDT(receipt.amount)} est payée. Reçu envoyé à ${me?.email ?? 'ton adresse'}.',
+                    lead: l10n.taPartDeEstPayee2(formatDT(receipt.amount), me?.email ?? l10n.tonAdresse),
                   ),
                   const SizedBox(height: MuSpace.s6),
                   MuCardSurface(
@@ -108,19 +109,19 @@ class PaymentSuccessScreen extends ConsumerWidget {
                       children: [
                         Row(
                           children: [
-                            Expanded(child: Text('Reçu', style: MuType.h3.copyWith(color: c.text))),
-                            const MuStatusBadge(status: MuStatus.paid, label: 'Payé', size: MuBadgeSize.s),
+                            Expanded(child: Text(l10n.recu, style: MuType.h3.copyWith(color: c.text))),
+                            MuStatusBadge(status: MuStatus.paid, label: l10n.paye, size: MuBadgeSize.s),
                           ],
                         ),
                         const SizedBox(height: MuSpace.s2),
                         line('N°', receipt.number),
-                        line('Payé le', '${formatDay(receipt.paidAt)} ${receipt.paidAt.year} · ${formatTime(receipt.paidAt)}'),
-                        line('Avec', receipt.methodLabel),
-                        line('Pour', '${req.eyebrow.split(' · ').first} · ${req.title}', sub: req.subtitle),
+                        line(l10n.payeLe, '${formatDay(receipt.paidAt)} ${receipt.paidAt.year} · ${formatTime(receipt.paidAt)}'),
+                        line(l10n.avec, receipt.methodLabel),
+                        line(l10n.pour, '${req.eyebrow.split(' · ').first} · ${req.title}', sub: req.subtitle),
                         Divider(height: MuSpace.s4, thickness: 1, color: c.border),
-                        line('Total payé', formatDT(receipt.amount), strong: true),
+                        line(l10n.totalPaye, formatDT(receipt.amount), strong: true),
                         const SizedBox(height: MuSpace.s3),
-                        MuButton.secondary(label: 'Voir le reçu', leading: PhosphorIcons.fileText(), fullWidth: true, onPressed: () => context.push(Routes.receipt, extra: receiptFromPayment(req, receipt))),
+                        MuButton.secondary(label: l10n.voirLeRecu, leading: PhosphorIcons.fileText(), fullWidth: true, onPressed: () => context.push(Routes.receipt, extra: receiptFromPayment(req, receipt))),
                       ],
                     ),
                   ),
@@ -138,16 +139,16 @@ class PaymentSuccessScreen extends ConsumerWidget {
                       data: 'https://matchup.tn/r/${req.reference}',
                     ),
                     const SizedBox(height: MuSpace.s3),
-                    Text('Présente ce code à l’accueil ${elideDe(req.policyVenue ?? req.title)}. Il est aussi dans Mes matchs.', textAlign: TextAlign.center, style: caption),
+                    Text(l10n.presenteCeCodeAL(elideDe(req.policyVenue ?? req.title)), textAlign: TextAlign.center, style: caption),
                     const SizedBox(height: MuSpace.s4),
                     Row(
                       children: [
-                        Expanded(child: _Tile(icon: PhosphorIcons.calendarPlus(), label: 'Ajouter au calendrier', onTap: () => showComingSoon(context))),
+                        Expanded(child: _Tile(icon: PhosphorIcons.calendarPlus(), label: l10n.ajouterAuCalendrier, onTap: () => showComingSoon(context))),
                         const SizedBox(width: MuSpace.s3),
                         Expanded(
                           child: _Tile(
                             icon: PhosphorIcons.shareNetwork(),
-                            label: 'Partager',
+                            label: l10n.partager,
                             onTap: () => SharePlus.instance.share(ShareParams(text: 'https://matchup.tn/r/${req.reference}')),
                           ),
                         ),
@@ -161,14 +162,14 @@ class PaymentSuccessScreen extends ConsumerWidget {
                         children: [
                           Row(
                             children: [
-                              Expanded(child: Text('Encore ${req.lineup!.$2 - req.lineup!.$1} places', style: MuType.labelL.copyWith(color: c.text))),
+                              Expanded(child: Text(l10n.encorePlaces(req.lineup!.$2 - req.lineup!.$1), style: MuType.labelL.copyWith(color: c.text))),
                               MuStatusBadge(status: MuStatus.pending, label: '${req.lineup!.$1}/${req.lineup!.$2}', size: MuBadgeSize.s),
                             ],
                           ),
-                          Text(req.publicGame ? 'Ta partie publique est visible dans Explorer.' : 'Invite tes amis pour compléter l’équipe.', style: caption),
+                          Text(req.publicGame ? l10n.taPartiePubliqueEstVisible : l10n.inviteTesAmisPourCompleter, style: caption),
                           const SizedBox(height: MuSpace.s3),
                           MuButton.secondary(
-                            label: 'Inviter des joueurs',
+                            label: l10n.inviterDesJoueurs,
                             leading: PhosphorIcons.userPlus(),
                             fullWidth: true,
                             onPressed: () => context.push(Routes.bookingInvitesAfter),
@@ -185,8 +186,8 @@ class PaymentSuccessScreen extends ConsumerWidget {
         ),
         bottomNavigationBar: StickyActionBar(
           children: [
-            MuButton.primary(label: 'Terminé', size: MuButtonSize.xl, fullWidth: true, onPressed: done),
-            Text('Ta réservation est dans Mes matchs.', textAlign: TextAlign.center, style: caption),
+            MuButton.primary(label: l10n.termine, size: MuButtonSize.xl, fullWidth: true, onPressed: done),
+            Text(l10n.taReservationEstDansMes, textAlign: TextAlign.center, style: caption),
           ],
         ),
       ),
@@ -267,9 +268,9 @@ class PaymentFailedScreen extends ConsumerWidget {
               padding: const EdgeInsets.fromLTRB(MuSpace.s2, MuSpace.s2, MuSpace.s4, 0),
               child: Row(
                 children: [
-                  MuIconButton(icon: PhosphorIcons.x(), label: 'Fermer et revenir au récapitulatif', size: MuIconButtonSize.l, onPressed: () => context.pop()),
+                  MuIconButton(icon: PhosphorIcons.x(), label: l10n.fermerEtRevenirAuRecapitulatif, size: MuIconButtonSize.l, onPressed: () => context.pop()),
                   const Spacer(),
-                  if (req?.reference != null) Text('Réf. ${req!.reference}', style: caption),
+                  if (req?.reference != null) Text(l10n.ref('${req!.reference}'), style: caption),
                 ],
               ),
             ),
@@ -289,9 +290,9 @@ class PaymentFailedScreen extends ConsumerWidget {
                 ),
                 const SizedBox(height: MuSpace.s3),
                 FlowTitle(
-                  'Le paiement a échoué',
+                  l10n.lePaiementAEchoue,
                   centered: true,
-                  lead: 'Après 3 essais, ta banque refuse toujours ta $cardLabel : ${reason ?? 'refus de la banque'}. Rien n’a été débité.',
+                  lead: l10n.apresEssaisTaBanqueRefuse(cardLabel, reason ?? l10n.refusDeLaBanque),
                 ),
                 if (req != null) ...[
                   const SizedBox(height: MuSpace.s5),
@@ -306,7 +307,7 @@ class PaymentFailedScreen extends ConsumerWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(req.title, style: MuType.label.copyWith(color: c.text)),
-                              Text('${req.subtitle} · ta part ${formatDT(req.amount)}', style: caption),
+                              Text(l10n.taPart5(req.subtitle, formatDT(req.amount)), style: caption),
                             ],
                           ),
                         ),
@@ -318,17 +319,17 @@ class PaymentFailedScreen extends ConsumerWidget {
                 MuBanner(
                   tone: MuBannerTone.warning,
                   icon: PhosphorIcons.hourglassMedium(),
-                  title: 'Ta place est gardée 15 min',
-                  detail: 'Passé ce délai, la réservation est annulée et tes 5 amis sont remboursés sur leur solde MatchUp.',
+                  title: l10n.taPlaceEstGardeeMin,
+                  detail: l10n.passeCeDelaiLaReservation,
                 ),
                 const SizedBox(height: MuSpace.s6),
-                Semantics(header: true, child: Text('Que faire ?', style: MuType.h3.copyWith(color: c.text))),
+                Semantics(header: true, child: Text(l10n.queFaire, style: MuType.h3.copyWith(color: c.text))),
                 const SizedBox(height: MuSpace.s2),
-                tip(PhosphorIcons.wallet(), 'Paie avec ton solde.', 'Tes ${formatDT(balance)} couvrent ta part, sans passer par ta banque.'),
-                tip(PhosphorIcons.creditCard(), 'Essaie une autre carte.', 'Ta Mastercard •••• 5454 est valable jusqu’à fin novembre.'),
-                tip(PhosphorIcons.bank(), 'Appelle ta banque.', 'Le paiement en ligne est peut-être bloqué ou plafonné.'),
+                tip(PhosphorIcons.wallet(), l10n.paieAvecTonSolde, l10n.tesCouvrentTaPartSans(formatDT(balance))),
+                tip(PhosphorIcons.creditCard(), l10n.essaieUneAutreCarte, l10n.taMastercardEstValableJusqu),
+                tip(PhosphorIcons.bank(), l10n.appelleTaBanque, l10n.lePaiementEnLigneEst),
                 const SizedBox(height: MuSpace.s3),
-                Center(child: MuButton.link(label: 'Contacter le support', onPressed: () => showComingSoon(context))),
+                Center(child: MuButton.link(label: l10n.contacterLeSupport, onPressed: () => showComingSoon(context))),
               ],
             ),
           ),
@@ -336,9 +337,9 @@ class PaymentFailedScreen extends ConsumerWidget {
       ),
       bottomNavigationBar: StickyActionBar(
         children: [
-          MuButton.secondary(label: 'Changer de moyen de paiement', leading: PhosphorIcons.swap(), size: MuButtonSize.l, fullWidth: true, onPressed: () => context.pop()),
-          MuButton.primary(label: 'Réessayer', price: req == null ? null : formatDT(req.amount), size: MuButtonSize.xl, fullWidth: true, onPressed: () => context.pop()),
-          Text('Rien ne sera débité deux fois.', textAlign: TextAlign.center, style: caption),
+          MuButton.secondary(label: l10n.changerDeMoyenDePaiement, leading: PhosphorIcons.swap(), size: MuButtonSize.l, fullWidth: true, onPressed: () => context.pop()),
+          MuButton.primary(label: l10n.reessayer, price: req == null ? null : formatDT(req.amount), size: MuButtonSize.xl, fullWidth: true, onPressed: () => context.pop()),
+          Text(l10n.rienNeSeraDebiteDeux, textAlign: TextAlign.center, style: caption),
         ],
       ),
     );

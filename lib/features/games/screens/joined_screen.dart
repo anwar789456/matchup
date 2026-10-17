@@ -15,6 +15,7 @@ import '../../common/widgets/coming_soon.dart';
 import '../../common/widgets/flow_scaffold.dart';
 import '../data/games_repository.dart';
 import '../widgets/game_widgets.dart';
+import '../../../l10n/l10n.dart';
 
 /// GAM-05 · Tu es inscrit: the dark header with the check mark and the kickoff, the summary card,
 /// « Ta place » on the pitch, the invite card, then « Voir mes matchs ».
@@ -34,10 +35,10 @@ class JoinedScreen extends ConsumerWidget {
         '${d.year}${d.month.toString().padLeft(2, '0')}${d.day.toString().padLeft(2, '0')}'
         'T${d.hour.toString().padLeft(2, '0')}${d.minute.toString().padLeft(2, '0')}00';
     return Uri.https('calendar.google.com', '/calendar/render', {
-      'action': 'TEMPLATE',
+      'action': l10n.template,
       'text': '${g.sport.label} · ${g.title}',
       'dates': '${stamp(g.start)}/${stamp(g.start.add(const Duration(hours: 1)))}',
-      'ctz': 'Africa/Tunis',
+      'ctz': l10n.africaTunis,
       'location': '${g.venue}, ${g.place}',
     });
   }
@@ -57,16 +58,16 @@ class JoinedScreen extends ConsumerWidget {
         body: switch (details) {
           AsyncData(:final value) => _body(context, value, home),
           AsyncError() => Center(
-            child: MuButton.primary(label: 'Retour à l’accueil', onPressed: home),
+            child: MuButton.primary(label: l10n.retourALAccueil, onPressed: home),
           ),
-          _ => const Center(child: MuSpinner(semanticLabel: 'Chargement')),
+          _ => Center(child: MuSpinner(semanticLabel: l10n.chargement)),
         },
         bottomNavigationBar: details.value == null
             ? null
             : StickyActionBar(
                 children: [
                   MuButton.primary(
-                    label: 'Voir mes matchs',
+                    label: l10n.voirMesMatchs,
                     trailing: PhosphorIcons.arrowRight(),
                     size: MuButtonSize.xl,
                     fullWidth: true,
@@ -83,7 +84,7 @@ class JoinedScreen extends ConsumerWidget {
     final g = d.game;
     final link = 'https://matchup.tn/g/${g.id}';
     final others = g.players.where((p) => p.name != Story.myName).length - 1;
-    final organiserFirst = (g.organiser ?? 'L’organisateur').split(' ').first;
+    final organiserFirst = (g.organiser ?? l10n.lOrganisateur2).split(' ').first;
     final end = g.start.add(const Duration(hours: 1));
     final weekday = switch (g.start.weekday) {
       DateTime.monday => 'lundi',
@@ -111,7 +112,7 @@ class JoinedScreen extends ConsumerWidget {
                     alignment: AlignmentDirectional.centerEnd,
                     child: MuIconButton(
                       icon: PhosphorIcons.x(),
-                      label: 'Fermer et revenir à l’accueil',
+                      label: l10n.fermerEtRevenirAL,
                       size: MuIconButtonSize.l,
                       onPressed: home,
                     ),
@@ -146,7 +147,7 @@ class JoinedScreen extends ConsumerWidget {
                             PhosphorIcons.check(PhosphorIconsStyle.bold),
                             size: _check,
                             color: dc.onAccent,
-                            semanticLabel: 'Inscription confirmée',
+                            semanticLabel: l10n.inscriptionConfirmee,
                           ),
                         ),
                       ],
@@ -156,15 +157,14 @@ class JoinedScreen extends ConsumerWidget {
                   Semantics(
                     header: true,
                     child: Text(
-                      'Tu es dans la partie !',
+                      l10n.tuEsDansLaPartie,
                       textAlign: TextAlign.center,
                       style: MuType.h1.copyWith(color: dc.text),
                     ),
                   ),
                   const SizedBox(height: MuSpace.s2),
                   Text(
-                    '$organiserFirst et $others joueurs t’attendent $weekday à ${g.venue}. '
-                    'Ta part est payée.',
+                    l10n.etJoueursTAttendentA(organiserFirst, others, weekday, g.venue),
                     textAlign: TextAlign.center,
                     style: MuType.bodyL.copyWith(color: dc.textSecondary),
                   ),
@@ -201,7 +201,7 @@ class JoinedScreen extends ConsumerWidget {
           row(
             PhosphorIcons.calendarCheck(),
             Text('${formatDay(g.start)} · ${formatTime(g.start)}–${formatTime(end)}', style: label),
-            Text('Arrive 10 min avant', style: caption),
+            Text(l10n.arriveMinAvant, style: caption),
           ),
           const SizedBox(height: MuSpace.s2),
           row(
@@ -228,19 +228,19 @@ class JoinedScreen extends ConsumerWidget {
             PhosphorIcons.receipt(),
             Row(
               children: [
-                Text('Ta part · ${formatDT(g.pricePerPlayer)}', style: label),
+                Text(l10n.taPart2(formatDT(g.pricePerPlayer)), style: label),
                 const SizedBox(width: MuSpace.s2),
-                const MuStatusBadge(status: MuStatus.paid, label: 'Payé', size: MuBadgeSize.s),
+                MuStatusBadge(status: MuStatus.paid, label: l10n.paye, size: MuBadgeSize.s),
               ],
             ),
-            Text('Annulation gratuite jusqu’à ${formatDateTime(d.freeUntil)}', style: caption),
+            Text(l10n.annulationGratuiteJusquA(formatDateTime(d.freeUntil)), style: caption),
           ),
           const SizedBox(height: MuSpace.s4),
           Row(
             children: [
               Expanded(
                 child: MuButton.secondary(
-                  label: 'Calendrier',
+                  label: l10n.calendrier,
                   leading: PhosphorIcons.calendarPlus(),
                   fullWidth: true,
                   onPressed: () => launchUrl(_calendar(g), mode: LaunchMode.externalApplication),
@@ -249,7 +249,7 @@ class JoinedScreen extends ConsumerWidget {
               const SizedBox(width: MuSpace.s3),
               Expanded(
                 child: MuButton.secondary(
-                  label: 'Discussion',
+                  label: l10n.discussion,
                   leading: PhosphorIcons.chatCircle(),
                   fullWidth: true,
                   onPressed: () => showComingSoon(context),
@@ -280,12 +280,11 @@ class JoinedScreen extends ConsumerWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      g.spotsLeft == 1 ? 'Plus qu’une place' : 'Encore ${g.spotsLeft} places',
+                      g.spotsLeft == 1 ? l10n.plusQuUnePlace : l10n.encorePlaces(g.spotsLeft),
                       style: MuType.labelL.copyWith(color: c.text),
                     ),
                     Text(
-                      'Invite un ami pour compléter la partie. Il paiera sa part de '
-                      '${formatDT(g.pricePerPlayer)}.',
+                      l10n.inviteUnAmiPourCompleter(formatDT(g.pricePerPlayer)),
                       style: caption,
                     ),
                   ],
@@ -298,14 +297,13 @@ class JoinedScreen extends ConsumerWidget {
             children: [
               Expanded(
                 child: MuButton.secondary(
-                  label: 'WhatsApp',
+                  label: l10n.whatsapp,
                   leading: PhosphorIcons.whatsappLogo(),
                   fullWidth: true,
                   onPressed: () => SharePlus.instance.share(
                     ShareParams(
                       text:
-                          'Rejoins-moi : ${g.sport.label} · ${g.title} · '
-                          '${formatDateTime(g.start)} · $link',
+                          l10n.rejoinsMoi2(g.sport.label, g.title, formatDateTime(g.start), link),
                     ),
                   ),
                 ),
@@ -313,12 +311,12 @@ class JoinedScreen extends ConsumerWidget {
               const SizedBox(width: MuSpace.s3),
               Expanded(
                 child: MuButton.secondary(
-                  label: 'Copier le lien',
+                  label: l10n.copierLeLien,
                   leading: PhosphorIcons.link(),
                   fullWidth: true,
                   onPressed: () async {
                     await Clipboard.setData(ClipboardData(text: link));
-                    if (context.mounted) MuToast.show(context, title: 'Lien copié');
+                    if (context.mounted) MuToast.show(context, title: l10n.lienCopie);
                   },
                 ),
               ),
@@ -345,7 +343,7 @@ class JoinedScreen extends ConsumerWidget {
               children: [
                 summary,
                 const SizedBox(height: MuSpace.s6),
-                MuLineup(sport: g.sport, teams: d.teams, title: 'Ta place', disabled: true),
+                MuLineup(sport: g.sport, teams: d.teams, title: l10n.taPlace, disabled: true),
                 const SizedBox(height: MuSpace.s4),
                 if (g.spotsLeft > 0) invite,
               ],

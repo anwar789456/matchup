@@ -7,12 +7,13 @@ import 'package:go_router/go_router.dart';
 import '../../../router.dart';
 import '../../common/widgets/pro_wizard_scaffold.dart';
 import '../controllers/owner_controller.dart';
+import '../../../l10n/l10n.dart';
 
 /// [ProWizardScaffold] set up for step [step] of the owner wizard: rail summaries from the draft,
 /// « Retour » to the previous step (the role choice from the first), « Enregistrer et quitter »
 /// to the dashboard, « Continuer » after [validate] passes.
 class OwnerWizard extends ConsumerStatefulWidget {
-  const OwnerWizard({
+  OwnerWizard({
     super.key,
     required this.step,
     required this.title,
@@ -20,9 +21,9 @@ class OwnerWizard extends ConsumerStatefulWidget {
     required this.body,
     this.validate,
     this.onContinue,
-    this.continueLabel = 'Continuer',
+    String? continueLabel,
     this.draftNote = true,
-  });
+  }) : continueLabel = continueLabel ?? l10n.continuer;
 
   final int step;
   final String title;
@@ -62,11 +63,11 @@ class _OwnerWizardState extends ConsumerState<OwnerWizard> {
   @override
   Widget build(BuildContext context) {
     final d = ref.watch(ownerProvider).requireValue;
-    final venue = d.venueName.trim().isEmpty ? 'ton terrain' : d.venueName.trim();
+    final venue = d.venueName.trim().isEmpty ? l10n.tonTerrain : d.venueName.trim();
     return ProWizardScaffold(
       space: ProSpace.owner,
-      railTitle: 'Mets $venue en ligne',
-      railMeta: '${OwnerSteps.all.length} étapes · environ 10 min',
+      railTitle: l10n.metsEnLigne(venue),
+      railMeta: l10n.etapesEnvironMin3(OwnerSteps.all.length),
       steps: OwnerSteps.of(d, widget.step),
       current: widget.step,
       onStepTap: (i) => context.go(Routes.owner[i]),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../theme/theme.dart';
+import '../l10n/l10n.dart';
 
 enum MuSkeletonShape { rect, text, circle, pill }
 
@@ -116,7 +117,7 @@ class MuSkeleton extends StatelessWidget {
 /// sweeps a `skeleton-highlight` band over `duration-shimmer`, in step, repeating. The sweep stops
 /// under reduced motion; the blocks stay.
 class MuSkeletonGroup extends StatefulWidget {
-  const MuSkeletonGroup({super.key, this.label = 'Chargement…', required this.child});
+  MuSkeletonGroup({super.key, String? label, required this.child}) : label = label ?? l10n.chargement2;
 
   final String label;
   final Widget child;

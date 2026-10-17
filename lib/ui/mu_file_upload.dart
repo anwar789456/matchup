@@ -12,6 +12,7 @@ import 'mu_court_art.dart';
 import 'mu_icon_button.dart';
 import 'mu_text_field.dart';
 import 'src/interaction.dart';
+import '../l10n/l10n.dart';
 
 enum MuUploadStatus { uploading, done, error }
 
@@ -68,9 +69,9 @@ String formatFileSize(int bytes) {
   if (bytes >= mb) {
     final v = (bytes / mb * 10).round() / 10;
     final text = v == v.roundToDouble() ? v.round().toString() : v.toStringAsFixed(1);
-    return '${text.replaceAll('.', ',')} Mo';
+    return l10n.mo(text.replaceAll('.', ','));
   }
-  return '${(bytes / kb).round()} Ko';
+  return l10n.ko((bytes / kb).round());
 }
 
 /// FileUpload (components/FileUpload.md).
@@ -84,18 +85,18 @@ String formatFileSize(int bytes) {
 /// Drag and drop from the desktop (drag-over state) comes with the web dashboards; the zone opens
 /// the picker on tap.
 class MuFileUpload extends StatelessWidget {
-  const MuFileUpload.dropzone({
+  MuFileUpload.dropzone({
     super.key,
     required this.label,
     required this.onAdd,
-    this.title = 'Glisse tes photos ici ou parcours tes fichiers',
-    this.linkPart = 'parcours tes fichiers',
+    String? title,
+    String? linkPart,
     this.hint,
     this.files = const [],
     this.onRemove,
     this.onRetry,
     this.error,
-  }) : _variant = _Variant.dropzone,
+  }) : linkPart = linkPart ?? l10n.parcoursTesFichiers, title = title ?? l10n.glisseTesPhotosIciOu, _variant = _Variant.dropzone,
        onReorder = null,
        maxFiles = null,
        helper = null,
@@ -374,7 +375,7 @@ class MuFileUpload extends StatelessWidget {
                 ),
                 child: MuIconButton(
                   icon: PhosphorIcons.camera(),
-                  label: 'Changer la photo',
+                  label: l10n.changerLaPhoto,
                   size: MuIconButtonSize.s,
                   onPressed: onAdd,
                 ),
@@ -396,14 +397,14 @@ class MuFileUpload extends StatelessWidget {
                 crossAxisAlignment: WrapCrossAlignment.center,
                 children: [
                   MuButton.secondary(
-                    label: image == null ? 'Choisir une photo' : 'Changer',
+                    label: image == null ? l10n.choisirUnePhoto : l10n.changer,
                     leading: PhosphorIcons.uploadSimple(),
                     size: MuButtonSize.s,
                     onPressed: onAdd,
                   ),
                   if (onRemove != null && image != null)
                     MuButton.tertiary(
-                      label: 'Retirer',
+                      label: l10n.retirer3,
                       size: MuButtonSize.s,
                       onPressed: () =>
                           onRemove!(const MuUploadFile(id: 'avatar', name: '', sizeBytes: 0)),
@@ -483,7 +484,7 @@ class _FileRow extends StatelessWidget {
                         color: c.successText,
                       ),
                       const SizedBox(width: MuSpace.s1),
-                      Text('Envoyé', style: MuType.caption.copyWith(color: c.successText)),
+                      Text(l10n.envoye, style: MuType.caption.copyWith(color: c.successText)),
                     ],
                     if (file.status == MuUploadStatus.uploading)
                       Text(
@@ -510,7 +511,7 @@ class _FileRow extends StatelessWidget {
           const SizedBox(width: MuSpace.s2),
           if (error && onRetry != null)
             MuButton.tertiary(
-              label: 'Remplacer',
+              label: l10n.remplacer,
               size: MuButtonSize.s,
               onPressed: () => onRetry!(file),
             )
@@ -520,8 +521,8 @@ class _FileRow extends StatelessWidget {
                   ? PhosphorIcons.x()
                   : PhosphorIcons.trash(),
               label: file.status == MuUploadStatus.uploading
-                  ? 'Annuler l’envoi'
-                  : 'Supprimer ${file.name}',
+                  ? l10n.annulerLEnvoi
+                  : l10n.supprimer3(file.name),
               size: MuIconButtonSize.s,
               color: c.textSecondary,
               onPressed: () => onRemove!(file),
@@ -577,7 +578,7 @@ class _PhotoTile extends StatelessWidget {
                     Icon(PhosphorIcons.imageBroken(), size: MuSize.iconS, color: c.errorText),
                     const SizedBox(height: MuSpace.s1),
                     Text(
-                      file.shortError ?? 'Erreur',
+                      file.shortError ?? l10n.erreur,
                       textAlign: TextAlign.center,
                       style: MuType.labelS.copyWith(color: c.errorText),
                     ),
@@ -633,7 +634,7 @@ class _PhotoTile extends StatelessWidget {
                       color: c.surfaceInverse,
                       borderRadius: MuRadius.fullAll,
                     ),
-                    child: Text('Couverture', style: MuType.labelS.copyWith(color: c.textInverse)),
+                    child: Text(l10n.couverture, style: MuType.labelS.copyWith(color: c.textInverse)),
                   ),
                 ),
             ],
@@ -641,19 +642,19 @@ class _PhotoTile extends StatelessWidget {
 
     return Semantics(
       label:
-          '${file.name}${cover ? ', couverture' : ''}'
-          '${uploading ? ', envoi ${(file.progress * 100).round()} %' : ''}'
+          '${file.name}${cover ? l10n.couverture2 : ''}'
+          '${uploading ? l10n.envoi((file.progress * 100).round()) : ''}'
           '${error ? ', ${file.error ?? 'erreur'}' : ''}',
       container: true,
       customSemanticsActions: onMove == null
           ? null
           : {
               if (index > 0) ...{
-                const CustomSemanticsAction(label: 'Utiliser comme couverture'): () => onMove!(0),
-                const CustomSemanticsAction(label: 'Déplacer avant'): () => onMove!(index - 1),
+                CustomSemanticsAction(label: l10n.utiliserCommeCouverture): () => onMove!(0),
+                CustomSemanticsAction(label: l10n.deplacerAvant): () => onMove!(index - 1),
               },
               if (index < count - 1)
-                const CustomSemanticsAction(label: 'Déplacer après'): () => onMove!(index + 1),
+                CustomSemanticsAction(label: l10n.deplacerApres): () => onMove!(index + 1),
             },
       child: Container(
         clipBehavior: Clip.antiAlias,
@@ -673,7 +674,7 @@ class _PhotoTile extends StatelessWidget {
                   dimension: _remove + MuSpace.s2,
                   child: MuIconButton(
                     icon: PhosphorIcons.x(),
-                    label: 'Retirer ${file.name}',
+                    label: l10n.retirer(file.name),
                     size: MuIconButtonSize.s,
                     variant: MuIconButtonVariant.onMedia,
                     onPressed: () => onRemove!(file),
@@ -697,7 +698,7 @@ class _AddTile extends StatelessWidget {
     final c = context.mu;
     return Semantics(
       button: true,
-      label: 'Ajouter des photos',
+      label: l10n.ajouterDesPhotos,
       excludeSemantics: true,
       child: Material(
         type: MaterialType.transparency,
@@ -712,7 +713,7 @@ class _AddTile extends StatelessWidget {
                 children: [
                   Icon(PhosphorIcons.plus(), size: MuSize.iconM, color: c.text),
                   const SizedBox(height: MuSpace.s1),
-                  Text('Ajouter', style: MuType.labelS.copyWith(color: c.text)),
+                  Text(l10n.ajouter, style: MuType.labelS.copyWith(color: c.text)),
                 ],
               ),
             ),

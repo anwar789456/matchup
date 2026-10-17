@@ -8,6 +8,7 @@ import '../../../router.dart';
 import '../../../theme/theme.dart';
 import '../../../ui/ui.dart';
 import 'pro_wizard_scaffold.dart' show showComingSoon;
+import '../../../l10n/l10n.dart';
 
 /// The person's sidebar choice; null follows the window (collapsed below 1200).
 class SidebarCollapsed extends Notifier<bool?> {
@@ -90,27 +91,27 @@ class ProDashboardScaffold extends ConsumerWidget {
                 ? null
                 : MuIconButton(
                     icon: PhosphorIcons.list(),
-                    label: 'Ouvrir le menu',
+                    label: l10n.ouvrirLeMenu,
                     onPressed: () => Scaffold.of(context).openDrawer(),
                   ),
             menuItems: [
               MuMenuEntry(
-                label: 'Mon profil',
+                label: l10n.monProfil,
                 icon: PhosphorIcons.user(),
                 onPressed: () => showComingSoon(context),
               ),
               MuMenuEntry(
-                label: 'Paramètres',
+                label: l10n.parametres,
                 icon: PhosphorIcons.gearSix(),
                 onPressed: () => showComingSoon(context),
               ),
               MuMenuEntry(
-                label: 'Changer de rôle',
+                label: l10n.changerDeRole,
                 icon: PhosphorIcons.arrowsLeftRight(),
                 onPressed: () => context.go(Routes.roles),
               ),
               MuMenuEntry(
-                label: 'Se déconnecter',
+                label: l10n.seDeconnecter,
                 icon: PhosphorIcons.signOut(),
                 separated: true,
                 onPressed: () async {

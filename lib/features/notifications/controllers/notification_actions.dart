@@ -15,6 +15,7 @@ import '../../venue/data/venue_details.dart';
 import '../../wallet/data/wallet_repository.dart';
 import '../data/notification_models.dart';
 import '../data/notification_repository.dart';
+import '../../../l10n/l10n.dart';
 
 /// Whether [target]'s screen exists yet (later phases hide their actions).
 bool targetAvailable(NotificationTarget? target) => switch (target) {
@@ -51,7 +52,7 @@ Future<void> openNotification(
         MuToast.show(
           context,
           tone: action.accept! ? MuToastTone.success : MuToastTone.neutral,
-          title: action.accept! ? 'Invitation acceptée' : 'Invitation refusée',
+          title: action.accept! ? l10n.invitationAcceptee : l10n.invitationRefusee,
         );
       }
       ref.read(matchesTabProvider.notifier).select(0);
@@ -96,16 +97,16 @@ void _startShareCheckout(WidgetRef ref, String reference) {
       .start(
         CheckoutRequest(
           kind: CheckoutKind.share,
-          eyebrow: 'Ta part · réservation $reference',
-          title: 'Arena Five · Terrain 1',
-          subtitle: 'mer. 21 oct. · 21h00 – 22h00 · Foot 5 vs 5',
+          eyebrow: l10n.taPartReservation(reference),
+          title: l10n.arenaFiveTerrain,
+          subtitle: l10n.merOct21h0022h00Foot,
           amount: 15,
-          lineLabel: 'Ta part · 1 joueur sur 10',
+          lineLabel: l10n.taPartJoueurSur2,
           sport: MuSport.football,
           reference: reference,
           policy: (start.subtract(VenueDetails.freeUntil), start.subtract(VenueDetails.halfUntil)),
-          policyVenue: 'Arena Five',
-          spotsLine: 'Ta part : 15 DT sur 150 DT',
+          policyVenue: l10n.arenaFive,
+          spotsLine: l10n.taPartDtSurDt,
           lineup: (6, 10),
           publicGame: true,
           successRoute: Routes.booking(reference),
@@ -113,7 +114,7 @@ void _startShareCheckout(WidgetRef ref, String reference) {
               .read(walletActionsProvider)
               .paid(
                 receipt: receipt,
-                label: 'Part · Arena Five',
+                label: l10n.partArenaFive,
                 sport: MuSport.football,
                 fromBalance: fromBalance,
               ),

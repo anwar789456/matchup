@@ -3,6 +3,7 @@ import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 import '../theme/theme.dart';
 import 'mu_spinner.dart';
+import '../l10n/l10n.dart';
 
 /// LoadingOverlay (components/LoadingOverlay.md): the blocking card shown only while a payment
 /// is processed — « Paiement en cours… », the amount, « Ne ferme pas cette page » — that turns
@@ -24,7 +25,7 @@ class MuLoadingOverlay {
       useRootNavigator: true,
       barrierDismissible: false,
       barrierColor: c.scrim,
-      barrierLabel: 'Paiement en cours',
+      barrierLabel: l10n.paiementEnCours,
       transitionDuration: reduce ? Duration.zero : MuMotion.slow,
       pageBuilder: (context, _, _) => PopScope(
         canPop: false,
@@ -98,7 +99,7 @@ class _OverlayCard extends StatelessWidget {
                 valueListenable: state,
                 builder: (context, s, _) => Semantics(
                   liveRegion: true,
-                  label: s.success ? 'Paiement confirmé' : 'Paiement en cours, ${s.amount}',
+                  label: s.success ? l10n.paiementConfirme : l10n.paiementEnCours2(s.amount),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
@@ -127,7 +128,7 @@ class _OverlayCard extends StatelessWidget {
                       ),
                       const SizedBox(height: MuSpace.s4),
                       Text(
-                        s.success ? 'Paiement confirmé' : 'Paiement en cours…',
+                        s.success ? l10n.paiementConfirme : l10n.paiementEnCours3,
                         style: MuType.labelL.copyWith(color: c.text),
                       ),
                       const SizedBox(height: MuSpace.s1),
@@ -158,7 +159,7 @@ class _OverlayCard extends StatelessWidget {
                               Icon(PhosphorIcons.lockSimple(), size: MuSize.iconXs, color: c.textSecondary),
                               const SizedBox(width: MuSpace.s1),
                               Text(
-                                'Ne ferme pas cette page',
+                                l10n.neFermePasCettePage2,
                                 style: MuType.labelS.copyWith(color: c.textSecondary),
                               ),
                             ],

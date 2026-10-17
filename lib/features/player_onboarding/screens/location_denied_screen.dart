@@ -9,12 +9,13 @@ import '../../../ui/ui.dart';
 import '../controllers/onboarding_controller.dart';
 import '../widgets/onboarding_step_scaffold.dart';
 import '../widgets/zone_search_field.dart';
+import '../../../l10n/l10n.dart';
 
 /// PLY-08 · Localisation refusée: how to turn it on in Réglages, or pick zones by hand.
 class LocationDeniedScreen extends ConsumerWidget {
   const LocationDeniedScreen({super.key});
 
-  static const _steps = ['Réglages', 'MatchUp', 'Position', '« Lorsque l’app est active »'];
+  static final _steps = [l10n.reglages, l10n.matchup, l10n.position, l10n.lorsqueLAppEstActive];
 
   // PLY-08: numbered steps in 20 px circles.
   static const double _stepDot = 20;
@@ -30,7 +31,7 @@ class LocationDeniedScreen extends ConsumerWidget {
     return OnboardingStepScaffold(
       route: Routes.playerLocationDenied,
       step: 5,
-      stepTitle: 'Localisation',
+      stepTitle: l10n.localisation,
       onBack: () => goBack(context, Routes.playerLocation),
       onSkip: next,
       gap: MuSpace.s5,
@@ -41,8 +42,8 @@ class LocationDeniedScreen extends ConsumerWidget {
             MuBanner(
               tone: MuBannerTone.warning,
               icon: PhosphorIcons.mapPinArea(PhosphorIconsStyle.fill),
-              title: 'Localisation désactivée',
-              detail: 'Choisis tes zones à la main, ou active ta position dans Réglages.',
+              title: l10n.localisationDesactivee,
+              detail: l10n.choisisTesZonesALa,
             ),
             const SizedBox(height: MuSpace.s3),
             Container(
@@ -56,11 +57,11 @@ class LocationDeniedScreen extends ConsumerWidget {
                       Expanded(
                         child: Semantics(
                           header: true,
-                          child: Text('Pour l’activer', style: MuType.label.copyWith(color: c.text)),
+                          child: Text(l10n.pourLActiver, style: MuType.label.copyWith(color: c.text)),
                         ),
                       ),
                       MuButton.link(
-                        label: 'Ouvrir Réglages',
+                        label: l10n.ouvrirReglages,
                         trailing: PhosphorIcons.arrowSquareOut(),
                         inline: true,
                         linkStyle: MuType.label,
@@ -112,17 +113,17 @@ class LocationDeniedScreen extends ConsumerWidget {
           children: [
             Semantics(
               header: true,
-              child: Text('Choisis tes zones de jeu', style: MuType.h2.copyWith(color: c.text)),
+              child: Text(l10n.choisisTesZonesDeJeu, style: MuType.h2.copyWith(color: c.text)),
             ),
             const SizedBox(height: MuSpace.s1),
-            Text('On te proposera des parties dans ces quartiers.',
+            Text(l10n.onTeProposeraDesParties,
                 style: MuType.body.copyWith(color: c.textSecondary)),
             const SizedBox(height: MuSpace.s3),
             const ZoneSearchField(),
             const SizedBox(height: MuSpace.s2),
             Semantics(
               container: true,
-              label: 'Zones proposées',
+              label: l10n.zonesProposees,
               child: Wrap(
                 spacing: MuSpace.s2,
                 children: [
@@ -140,7 +141,7 @@ class LocationDeniedScreen extends ConsumerWidget {
       ],
       bottomBar: [
         MuButton.primary(
-          label: 'Continuer avec mes zones',
+          label: l10n.continuerAvecMesZones,
           size: MuButtonSize.xl,
           fullWidth: true,
           onPressed: next,

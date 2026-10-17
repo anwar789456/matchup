@@ -12,31 +12,32 @@ import '../../common/widgets/pro_dashboard_scaffold.dart';
 import '../../common/widgets/pro_wizard_scaffold.dart' show showComingSoon;
 import '../controllers/coach_controller.dart';
 import '../data/coach_draft.dart';
+import '../../../l10n/l10n.dart';
 
 List<MuNavSection> coachNav() => [
   MuNavSection(
     items: [
       MuNavItem(
         id: 'dashboard',
-        label: 'Tableau de bord',
+        label: l10n.tableauDeBord,
         icon: PhosphorIcons.squaresFour(),
         activeIcon: PhosphorIcons.squaresFour(PhosphorIconsStyle.fill),
       ),
     ],
   ),
   MuNavSection(
-    heading: 'Coaching',
+    heading: l10n.coaching,
     items: [
-      MuNavItem(id: 'programmes', label: 'Programmes', icon: PhosphorIcons.barbell()),
-      MuNavItem(id: 'eleves', label: 'Élèves', icon: PhosphorIcons.users()),
-      MuNavItem(id: 'retours', label: 'Retours', icon: PhosphorIcons.chatCircleDots()),
+      MuNavItem(id: 'programmes', label: l10n.programmes, icon: PhosphorIcons.barbell()),
+      MuNavItem(id: 'eleves', label: l10n.eleves, icon: PhosphorIcons.users()),
+      MuNavItem(id: 'retours', label: l10n.retours, icon: PhosphorIcons.chatCircleDots()),
     ],
   ),
   MuNavSection(
-    heading: 'Gestion',
+    heading: l10n.gestion,
     items: [
-      MuNavItem(id: 'revenus', label: 'Revenus', icon: PhosphorIcons.coins()),
-      MuNavItem(id: 'abonnement', label: 'Abonnement', icon: PhosphorIcons.crownSimple()),
+      MuNavItem(id: 'revenus', label: l10n.revenus, icon: PhosphorIcons.coins()),
+      MuNavItem(id: 'abonnement', label: l10n.abonnement, icon: PhosphorIcons.crownSimple()),
     ],
   ),
 ];
@@ -65,16 +66,16 @@ class CoachDashboardScreen extends ConsumerWidget {
         ? MuBanner(
             variant: MuBannerVariant.strip,
             tone: MuBannerTone.warning,
-            title: 'Ajoute ton diplôme pour devenir « Coach vérifié »',
-            detail: 'Tes programmes seront publiés dès la validation.',
-            action: MuAction('Ajouter', () => context.go(Routes.coachCertification)),
+            title: l10n.ajouteTonDiplomePourDevenir,
+            detail: l10n.tesProgrammesSerontPubliesDes,
+            action: MuAction(l10n.ajouter, () => context.go(Routes.coachCertification)),
           )
         : MuBanner(
             variant: MuBannerVariant.strip,
             tone: MuBannerTone.info,
             icon: PhosphorIcons.hourglassMedium(),
-            title: 'Diplôme en vérification · réponse sous 48 h',
-            detail: 'Prépare tes programmes : ils seront publiés dès la validation.',
+            title: l10n.diplomeEnVerificationReponseSous,
+            detail: l10n.prepareTesProgrammesIlsSeront,
           );
 
     final programmes = ProCard(
@@ -84,19 +85,18 @@ class CoachDashboardScreen extends ConsumerWidget {
         children: [
           MuEmptyState(
             illustration: MuEmptyIllustration.programs,
-            title: 'Crée ton premier programme',
+            title: l10n.creeTonPremierProgramme,
             description:
-                'Des semaines de séances que tes élèves suivent à leur rythme, avec '
-                'tes vidéos et tes conseils.',
+                l10n.desSemainesDeSeancesQue,
             actions: [
               MuButton.primary(
-                label: 'Créer mon premier programme',
+                label: l10n.creerMonPremierProgramme,
                 leading: PhosphorIcons.plus(),
                 size: MuButtonSize.l,
                 onPressed: () => showComingSoon(context),
               ),
               MuButton.tertiary(
-                label: 'Voir un exemple',
+                label: l10n.voirUnExemple,
                 leading: PhosphorIcons.playCircle(),
                 size: MuButtonSize.l,
                 onPressed: () => showComingSoon(context),
@@ -110,9 +110,9 @@ class CoachDashboardScreen extends ConsumerWidget {
             runSpacing: MuSpace.s2,
             children: [
               for (final (icon, text) in [
-                (PhosphorIcons.calendarDots(), '4 à 12 semaines'),
-                (PhosphorIcons.videoCamera(), 'Vidéos et exercices'),
-                (PhosphorIcons.coins(), 'Ton prix, ou inclus dans Premium'),
+                (PhosphorIcons.calendarDots(), l10n.aSemaines),
+                (PhosphorIcons.videoCamera(), l10n.videosEtExercices),
+                (PhosphorIcons.coins(), l10n.tonPrixOuInclusDans),
               ])
                 Row(
                   mainAxisSize: MainAxisSize.min,
@@ -133,14 +133,14 @@ class CoachDashboardScreen extends ConsumerWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         MuAiSuggestionCard(
-          context: 'Assistant programme',
-          title: 'L’IA peut proposer un plan de 4 semaines à partir de ta bio',
-          content: 'Rien n’est publié sans toi : tu relis et modifies chaque séance.',
-          reasonLead: 'Basé sur',
-          reason: focus.isEmpty ? 'ta bio.' : 'ta bio et tes spécialités : ${focus.join(', ')}.',
-          primary: MuAction('Proposer un plan', () => showComingSoon(context)),
+          context: l10n.assistantProgramme,
+          title: l10n.lIaPeutProposerUn,
+          content: l10n.rienNEstPublieSans,
+          reasonLead: l10n.baseSur,
+          reason: focus.isEmpty ? l10n.taBio : l10n.taBioEtTesSpecialites(focus.join(', ')),
+          primary: MuAction(l10n.proposerUnPlan, () => showComingSoon(context)),
           primaryIcon: PhosphorIcons.sparkle(),
-          secondary: MuAction('Plus tard', () {}),
+          secondary: MuAction(l10n.plusTard, () {}),
           secondaryDismisses: true,
           onDismiss: () {},
         ),
@@ -158,14 +158,14 @@ class CoachDashboardScreen extends ConsumerWidget {
                     Text(d.name, style: MuType.label.copyWith(color: c.text)),
                     const SizedBox(height: _lineGap),
                     Text(
-                      'Coach${sport == null ? '' : ' ${sport.toLowerCase()}'} · ${d.district}',
+                      l10n.coach2(sport == null ? '' : ' ${sport.toLowerCase()}', d.district),
                       style: MuType.caption.copyWith(color: c.textSecondary),
                     ),
                   ],
                 ),
               ),
               MuButton.link(
-                label: 'Modifier mon profil',
+                label: l10n.modifierMonProfil,
                 onPressed: () => context.go(Routes.coachProfile),
               ),
             ],
@@ -177,24 +177,24 @@ class CoachDashboardScreen extends ConsumerWidget {
     return ProDashboardScaffold(
       sections: coachNav(),
       role: MuSidebarRole(
-        role: 'Coach',
+        role: l10n.coach,
         name: [?sport, d.district].join(' · '),
         initials: initialsOf(d.name),
         image: image,
       ),
       user: MuSidebarUser(name: d.name, email: d.email, image: image),
-      userRole: 'Coach',
+      userRole: l10n.coach,
       banner: banner,
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Semantics(
             header: true,
-            child: Text('Bienvenue, $firstName', style: MuType.h1.copyWith(color: c.text)),
+            child: Text(l10n.bienvenue(firstName), style: MuType.h1.copyWith(color: c.text)),
           ),
           const SizedBox(height: MuSpace.s1),
           Text(
-            'Ton profil coach est prêt. Crée ton premier programme pour accueillir tes élèves.',
+            l10n.tonProfilCoachEstPret,
             style: MuType.bodyL.copyWith(color: c.textSecondary),
           ),
           const SizedBox(height: MuSpace.s6),
@@ -202,20 +202,20 @@ class CoachDashboardScreen extends ConsumerWidget {
           const SizedBox(height: MuSpace.s6),
           ProCardRow(
             columns: width < ProSplit.stackBelow ? 2 : 4,
-            children: const [
-              MuKpiCard(label: 'Élèves', value: '0', note: 'Tes élèves apparaîtront ici'),
+            children: [
+              MuKpiCard(label: l10n.eleves, value: '0', note: l10n.tesElevesApparaitrontIci),
               MuKpiCard(
-                label: 'Inscriptions actives',
+                label: l10n.inscriptionsActives,
                 value: '0',
-                note: 'Dès ton premier programme publié',
+                note: l10n.desTonPremierProgrammePublie,
               ),
               MuKpiCard(
-                label: 'Revenus du mois',
+                label: l10n.revenusDuMois,
                 value: '0',
                 unit: 'DT',
-                note: 'Versés chaque lundi',
+                note: l10n.versesChaqueLundi,
               ),
-              MuKpiCard(label: 'Note moyenne', value: '—', note: 'Après les premiers retours'),
+              MuKpiCard(label: l10n.noteMoyenne, value: '—', note: l10n.apresLesPremiersRetours),
             ],
           ),
         ],

@@ -9,6 +9,7 @@ import '../../../ui/ui.dart';
 import '../../home/controllers/home_providers.dart';
 import '../controllers/booking_controller.dart';
 import '../widgets/booking_scaffold.dart';
+import '../../../l10n/l10n.dart';
 
 /// BKG-02 · Réservation 2/3, partie publique: who is in already, places to fill (the share per
 /// person follows), the level range, the game type, who can see it and a word for the players.
@@ -22,11 +23,11 @@ class BookingPublicScreen extends ConsumerStatefulWidget {
 class _BookingPublicScreenState extends ConsumerState<BookingPublicScreen> {
   late final _note = TextEditingController(text: ref.read(bookingProvider).note);
 
-  static const _bands = [
-    MuRangeBand(1, 2.5, 'Débutant'),
-    MuRangeBand(2.5, 4, 'Intermédiaire'),
-    MuRangeBand(4, 5.5, 'Avancé'),
-    MuRangeBand(5.5, 7, 'Expert'),
+  static final _bands = [
+    MuRangeBand(1, 2.5, l10n.debutant),
+    MuRangeBand(2.5, 4, l10n.intermediaire),
+    MuRangeBand(4, 5.5, l10n.avance),
+    MuRangeBand(5.5, 7, l10n.expert),
   ];
   static const int _noteMax = 200;
 
@@ -44,10 +45,10 @@ class _BookingPublicScreenState extends ConsumerState<BookingPublicScreen> {
 
     return BookingStepScaffold(
       step: 2,
-      title: 'Partie publique',
+      title: l10n.partiePublique,
       bottomBar: [
         MuButton.primary(
-          label: 'Continuer',
+          label: l10n.continuer,
           size: MuButtonSize.xl,
           fullWidth: true,
           onPressed: () => context.push(Routes.bookingSummary),
@@ -57,14 +58,14 @@ class _BookingPublicScreenState extends ConsumerState<BookingPublicScreen> {
         final sport = slot.venue.venue.sport;
         final myLevel = me?.levels[sport];
         final friends = d.invited.length;
-        final team = [MuPerson(me?.displayName ?? 'Moi'), for (final n in d.invited) MuPerson(n)];
+        final team = [MuPerson(me?.displayName ?? l10n.moi), for (final n in d.invited) MuPerson(n)];
         return [
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Semantics(
                 header: true,
-                child: Text('Complète ton équipe', style: MuType.h2.copyWith(color: c.text)),
+                child: Text(l10n.completeTonEquipe, style: MuType.h2.copyWith(color: c.text)),
               ),
               const SizedBox(height: MuSpace.s1),
               Text(
@@ -81,7 +82,7 @@ class _BookingPublicScreenState extends ConsumerState<BookingPublicScreen> {
                 MuAvatarStack(
                   people: team,
                   size: MuAvatarSize.s,
-                  semanticLabel: '${d.team} joueurs déjà dans l’équipe',
+                  semanticLabel: l10n.joueursDejaDansLEquipe(d.team),
                 ),
                 const SizedBox(width: MuSpace.s3),
                 Expanded(
@@ -89,20 +90,20 @@ class _BookingPublicScreenState extends ConsumerState<BookingPublicScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        d.team == 1 ? 'Toi seul pour l’instant' : 'Déjà ${d.team} joueurs',
+                        d.team == 1 ? l10n.toiSeulPourLInstant : l10n.dejaJoueurs(d.team),
                         style: MuType.label.copyWith(color: c.text),
                       ),
                       Text(
                         friends == 0
-                            ? 'Invite des amis ou laisse les joueurs te rejoindre'
-                            : 'Toi et $friends ${friends == 1 ? 'ami invité' : 'amis invités'}',
+                            ? l10n.inviteDesAmisOuLaisse
+                            : l10n.toiEt(friends, friends == 1 ? l10n.amiInvite : l10n.amisInvites),
                         style: MuType.caption.copyWith(color: c.textSecondary),
                       ),
                     ],
                   ),
                 ),
                 MuButton.tertiary(
-                  label: 'Modifier',
+                  label: l10n.modifier,
                   size: MuButtonSize.s,
                   onPressed: () => context.push(Routes.bookingInvites),
                 ),
@@ -110,17 +111,17 @@ class _BookingPublicScreenState extends ConsumerState<BookingPublicScreen> {
             ),
           ),
           MuStepper(
-            label: 'Places à compléter',
+            label: l10n.placesACompleter,
             value: d.spots,
             min: 1,
             max: (d.capacity - d.team).clamp(1, d.capacity),
             unit: d.spots == 1 ? 'place' : 'places',
             helper: (n) {
               final players = (d.team + n).clamp(1, d.capacity);
-              return '$players joueurs · ${formatDT(slot.price / players)} chacun';
+              return l10n.joueursChacun(players, formatDT(slot.price / players));
             },
-            decrementLabel: 'Retirer une place',
-            incrementLabel: 'Ajouter une place',
+            decrementLabel: l10n.retirerUnePlace,
+            incrementLabel: l10n.ajouterUnePlace,
             onChanged: booking.setSpots,
           ),
           const BookingRule(),
@@ -128,7 +129,7 @@ class _BookingPublicScreenState extends ConsumerState<BookingPublicScreen> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               MuRangeSlider(
-                label: 'Niveau des joueurs',
+                label: l10n.niveauDesJoueurs,
                 values: d.level,
                 min: 1,
                 max: 7,
@@ -136,16 +137,14 @@ class _BookingPublicScreenState extends ConsumerState<BookingPublicScreen> {
                 format: formatLevel,
                 formatRange: (lo, hi) => '${formatLevel(lo)} – ${formatLevel(hi)}',
                 bands: _bands,
-                minLabel: 'Niveau minimum',
-                maxLabel: 'Niveau maximum',
+                minLabel: l10n.niveauMinimum,
+                maxLabel: l10n.niveauMaximum,
                 onChanged: booking.setLevel,
               ),
               if (myLevel != null) ...[
                 const SizedBox(height: MuSpace.s2),
                 Text(
-                  'Ton niveau ${sportShort(sport)} : ${formatLevel(myLevel)} · '
-                  '${levelBand(myLevel)}. Seuls les joueurs dans cette fourchette peuvent '
-                  'rejoindre.',
+                  l10n.tonNiveauSeulsLesJoueurs(sportShort(sport), formatLevel(myLevel), levelBand(myLevel)),
                   style: MuType.caption.copyWith(color: c.textSecondary),
                 ),
               ],
@@ -155,10 +154,10 @@ class _BookingPublicScreenState extends ConsumerState<BookingPublicScreen> {
           Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Text('Type de partie', style: MuType.label.copyWith(color: c.text)),
+              Text(l10n.typeDePartie, style: MuType.label.copyWith(color: c.text)),
               const SizedBox(height: MuSpace.s3),
               MuSegmentedControl<GameGender>(
-                semanticLabel: 'Type de partie',
+                semanticLabel: l10n.typeDePartie,
                 expand: true,
                 value: d.gender,
                 segments: [for (final g in GameGender.values) MuSegment(value: g, label: g.label)],
@@ -168,32 +167,32 @@ class _BookingPublicScreenState extends ConsumerState<BookingPublicScreen> {
           ),
           const BookingRule(),
           MuRadioGroup<GameVisibility>(
-            label: 'Qui peut la voir ?',
+            label: l10n.quiPeutLaVoir,
             value: d.visibility,
             onChanged: booking.setVisibility,
-            options: const [
+            options: [
               MuRadioOption(
                 value: GameVisibility.everyone,
-                label: 'Tout le monde',
-                description: 'Visible dans Explorer par les joueurs de ton niveau.',
+                label: l10n.toutLeMonde,
+                description: l10n.visibleDansExplorerParLes,
               ),
               MuRadioOption(
                 value: GameVisibility.followers,
-                label: 'Mes abonnés',
-                description: 'Seuls les joueurs qui te suivent la voient.',
+                label: l10n.mesAbonnes,
+                description: l10n.seulsLesJoueursQuiTe,
               ),
             ],
           ),
           const BookingRule(),
           MuTextField(
-            label: 'Un mot pour les joueurs',
+            label: l10n.unMotPourLesJoueurs,
             controller: _note,
             optional: true,
             multiline: true,
             minLines: 2,
             maxLines: 4,
             maxLength: _noteMax,
-            placeholder: 'Ambiance, poste à prendre, matériel fourni…',
+            placeholder: l10n.ambiancePosteAPrendreMateriel,
             onChanged: booking.setNote,
           ),
         ];

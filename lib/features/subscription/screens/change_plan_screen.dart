@@ -10,6 +10,7 @@ import '../../common/widgets/flow_scaffold.dart';
 import '../controllers/subscription_controller.dart';
 import '../data/subscription_repository.dart';
 import '../widgets/subscription_widgets.dart';
+import '../../../l10n/l10n.dart';
 
 /// SUB-05 · Changer d’offre: Mensuel or Annuel, the preview of what will be charged, then
 /// « Passer à l’annuel » (or « Garder le mensuel » when nothing changes).
@@ -35,8 +36,8 @@ class _ChangePlanScreenState extends ConsumerState<ChangePlanScreen> {
     MuToast.show(
       context,
       tone: MuToastTone.success,
-      title: plan == MuBillingPeriod.year ? 'Tu passes à l’annuel' : 'Tu restes au mensuel',
-      description: 'Le changement compte à partir du ${formatDay(sub.trialEnds)}.',
+      title: plan == MuBillingPeriod.year ? l10n.tuPassesALAnnuel : l10n.tuRestesAuMensuel,
+      description: l10n.leChangementCompteAPartir(formatDay(sub.trialEnds)),
     );
     goBack(context, Routes.subscription);
   }
@@ -58,7 +59,7 @@ class _ChangePlanScreenState extends ConsumerState<ChangePlanScreen> {
         borderRadius: MuRadius.fullAll,
         border: Border.all(color: c.border),
       ),
-      child: Text('Ton offre actuelle', style: MuType.labelS.copyWith(color: c.textSecondary)),
+      child: Text(l10n.tonOffreActuelle, style: MuType.labelS.copyWith(color: c.textSecondary)),
     );
 
     Widget savingPill() => Container(
@@ -91,7 +92,7 @@ class _ChangePlanScreenState extends ConsumerState<ChangePlanScreen> {
       body: Column(
         children: [
           MuTopAppBar.compact(
-            title: 'Changer d’offre',
+            title: l10n.changerDOffre,
             onBack: _busy ? null : () => goBack(context, Routes.subscription),
           ),
           Expanded(
@@ -99,14 +100,14 @@ class _ChangePlanScreenState extends ConsumerState<ChangePlanScreen> {
               padding: const EdgeInsets.fromLTRB(MuSpace.s4, MuSpace.s2, MuSpace.s4, MuSpace.s6),
               children: [
                 FlowTitle(
-                  'Mensuel ou annuel ?',
+                  l10n.mensuelOuAnnuel,
                   lead:
-                      'Ton essai continue jusqu’au ${formatDay(sub.trialEnds)}. Le changement compte à partir de là.',
+                      l10n.tonEssaiContinueJusquAu(formatDay(sub.trialEnds)),
                 ),
                 const SizedBox(height: MuSpace.s5),
                 MuChoiceCard(
-                  title: 'Mensuel · ${formatDT(Subscription.monthly)}/mois',
-                  description: 'Sans engagement, résiliable chaque mois.',
+                  title: l10n.mensuelMois(formatDT(Subscription.monthly)),
+                  description: l10n.sansEngagementResiliableChaqueMois,
                   leading: Icon(PhosphorIcons.calendarBlank(), size: MuSize.iconM, color: c.text),
                   selected: plan == MuBillingPeriod.month,
                   extra: sub.yearlyPlan ? null : currentPill(),
@@ -114,9 +115,9 @@ class _ChangePlanScreenState extends ConsumerState<ChangePlanScreen> {
                 ),
                 const SizedBox(height: MuSpace.s3),
                 MuChoiceCard(
-                  title: 'Annuel · ${formatDT(Subscription.yearly)}/an',
+                  title: l10n.annuelAn(formatDT(Subscription.yearly)),
                   description:
-                      'Soit ${formatDT((Subscription.yearly / 12 * 1000).round() / 1000)}/mois : 2 mois offerts.',
+                      l10n.soitMoisMoisOfferts(formatDT((Subscription.yearly / 12 * 1000).round() / 1000)),
                   leading: Icon(PhosphorIcons.calendarCheck(), size: MuSize.iconM, color: c.text),
                   selected: year,
                   extra: sub.yearlyPlan ? currentPill() : savingPill(),
@@ -128,9 +129,9 @@ class _ChangePlanScreenState extends ConsumerState<ChangePlanScreen> {
                   child: Text(
                     changes
                         ? (year
-                              ? 'Ce que tu paieras avec l’annuel'
-                              : 'Ce que tu paieras avec le mensuel')
-                        : 'Rien ne change',
+                              ? l10n.ceQueTuPaierasAvec
+                              : l10n.ceQueTuPaierasAvec2)
+                        : l10n.rienNeChange,
                     style: MuType.labelL.copyWith(color: c.text),
                   ),
                 ),
@@ -146,12 +147,12 @@ class _ChangePlanScreenState extends ConsumerState<ChangePlanScreen> {
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
                       line(
-                        'Aujourd’hui',
+                        l10n.aujourdHui2,
                         Text(formatDT(0), style: MuType.numS.copyWith(color: c.text)),
                       ),
                       Divider(height: 1, thickness: 1, color: c.border),
                       line(
-                        'Le ${formatDay(sub.trialEnds)}',
+                        l10n.le(formatDay(sub.trialEnds)),
                         Row(
                           mainAxisSize: MainAxisSize.min,
                           crossAxisAlignment: CrossAxisAlignment.baseline,
@@ -163,18 +164,18 @@ class _ChangePlanScreenState extends ConsumerState<ChangePlanScreen> {
                             ),
                             if (year) ...[
                               const SizedBox(width: MuSpace.s2),
-                              Text('au lieu de ${formatDT(Subscription.monthly)}', style: caption),
+                              Text(l10n.auLieuDe(formatDT(Subscription.monthly)), style: caption),
                             ],
                           ],
                         ),
                       ),
                       Divider(height: 1, thickness: 1, color: c.border),
                       line(
-                        'Ensuite',
+                        l10n.ensuite,
                         Text(
                           year
-                              ? '${formatDT(Subscription.yearly)} chaque 30 oct.'
-                              : '${formatDT(Subscription.monthly)} chaque mois, le 30',
+                              ? l10n.chaqueOct(formatDT(Subscription.yearly))
+                              : l10n.chaqueMoisLe(formatDT(Subscription.monthly)),
                           style: MuType.label.copyWith(color: c.text),
                         ),
                       ),
@@ -195,12 +196,12 @@ class _ChangePlanScreenState extends ConsumerState<ChangePlanScreen> {
                               const SizedBox(width: MuSpace.s2),
                               Expanded(
                                 child: Text(
-                                  'Tu économises ${formatDT(Subscription.monthly * 12 - Subscription.yearly)} par an',
+                                  l10n.tuEconomisesParAn(formatDT(Subscription.monthly * 12 - Subscription.yearly)),
                                   style: MuType.label.copyWith(color: c.successText),
                                 ),
                               ),
                               Text(
-                                'vs 12 × ${formatDT(Subscription.monthly)}',
+                                l10n.vs2(formatDT(Subscription.monthly)),
                                 style: MuType.caption.copyWith(color: c.successText),
                               ),
                             ],
@@ -213,8 +214,8 @@ class _ChangePlanScreenState extends ConsumerState<ChangePlanScreen> {
                 CheckLine(
                   icon: PhosphorIcons.info(),
                   text: year
-                      ? 'Sur ta ${sub.cardLabel}. Tu peux revenir au mensuel jusqu’au 30 oct., sans frais.'
-                      : 'Sur ta ${sub.cardLabel}. Tu peux passer à l’annuel à tout moment.',
+                      ? l10n.surTaTuPeuxRevenir(sub.cardLabel)
+                      : l10n.surTaTuPeuxPasser(sub.cardLabel),
                 ),
               ],
             ),
@@ -225,8 +226,8 @@ class _ChangePlanScreenState extends ConsumerState<ChangePlanScreen> {
         children: [
           MuButton.primary(
             label: year
-                ? (changes ? 'Passer à l’annuel' : 'Garder l’annuel')
-                : (changes ? 'Passer au mensuel' : 'Garder le mensuel'),
+                ? (changes ? l10n.passerALAnnuel : l10n.garderLAnnuel)
+                : (changes ? l10n.passerAuMensuel : l10n.garderLeMensuel),
             size: MuButtonSize.xl,
             fullWidth: true,
             loading: _busy,

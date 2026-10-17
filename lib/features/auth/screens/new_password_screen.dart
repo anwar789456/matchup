@@ -9,6 +9,7 @@ import '../../common/widgets/flow_scaffold.dart';
 import '../controllers/auth_providers.dart';
 import '../data/auth_repository.dart';
 import '../widgets/auth_messages.dart';
+import '../../../l10n/l10n.dart';
 
 /// AUTH-08 · Mot de passe oublié 3/3: choose and confirm the new password.
 class NewPasswordScreen extends ConsumerStatefulWidget {
@@ -67,17 +68,17 @@ class _NewPasswordScreenState extends ConsumerState<NewPasswordScreen> {
         _submitted && _rulesOk && !_matches ? AuthMessages.passwordsDiffer : null;
     return FlowScaffold(
       onBack: () => goBack(context, Routes.resetCode),
-      header: const MuStepIndicator(step: 3, total: 3, title: 'Nouveau mot de passe'),
+      header: MuStepIndicator(step: 3, total: 3, title: l10n.nouveauMotDePasse),
       body: [
-        const FlowTitle(
-          'Choisis un nouveau mot de passe',
-          lead: 'Il doit être différent de l’ancien.',
+        FlowTitle(
+          l10n.choisisUnNouveauMotDe,
+          lead: l10n.ilDoitEtreDifferentDe,
         ),
         Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             MuPasswordField(
-              label: 'Nouveau mot de passe',
+              label: l10n.nouveauMotDePasse,
               controller: _password,
               strength: true,
               rules: MuPasswordRules.standard,
@@ -87,7 +88,7 @@ class _NewPasswordScreenState extends ConsumerState<NewPasswordScreen> {
             ),
             const SizedBox(height: MuSpace.s5),
             MuPasswordField(
-              label: 'Confirme le mot de passe',
+              label: l10n.confirmeLeMotDePasse,
               controller: _confirm,
               newPassword: true,
               error: confirmError,
@@ -100,7 +101,7 @@ class _NewPasswordScreenState extends ConsumerState<NewPasswordScreen> {
       ],
       bottomBar: [
         MuButton.primary(
-          label: 'Enregistrer',
+          label: l10n.enregistrer,
           size: MuButtonSize.xl,
           fullWidth: true,
           loading: _loading,

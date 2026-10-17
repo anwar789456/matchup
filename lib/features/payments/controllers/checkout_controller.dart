@@ -28,7 +28,7 @@ class CheckoutRequest {
     this.balanceAllowed = true,
     this.promoAllowed = true,
     this.extraInfo = const [],
-    this.termsLabel = 'conditions de réservation',
+    this.termsLabel,
     this.termsSuffix,
     this.lineup,
     this.publicGame = false,
@@ -68,7 +68,7 @@ class CheckoutRequest {
 
   /// (icon label, title, text) « Bon à savoir » rows of a top-up.
   final List<(String, String)> extraInfo;
-  final String termsLabel;
+  final String? termsLabel;
   final String? termsSuffix;
 
   /// (players in, players total) of the booking, for PAY-09's ticket and « Encore 4 places ».

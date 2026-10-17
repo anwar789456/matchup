@@ -15,6 +15,7 @@ import '../controllers/checkout_controller.dart';
 import '../data/payment_repository.dart';
 import '../data/receipt.dart';
 import '../data/receipt_pdf.dart';
+import '../../../l10n/l10n.dart';
 
 /// The receipt of a checkout payment (PAY-09 « Voir le reçu »).
 ReceiptEntry receiptFromPayment(CheckoutRequest req, PaymentReceipt receipt) => ReceiptEntry(
@@ -26,16 +27,15 @@ ReceiptEntry receiptFromPayment(CheckoutRequest req, PaymentReceipt receipt) => 
   reference: req.reference,
   lines: [
     ReceiptLine(
-      req.reference == null ? req.lineLabel : 'Part de réservation ${req.reference}',
+      req.reference == null ? req.lineLabel : l10n.partDeReservation2('${req.reference}'),
       receipt.amount,
       details: [req.title, req.subtitle, if (req.reference != null) req.lineLabel],
     ),
-    const ReceiptLine('Frais de service', 0, details: ['Offerts']),
+    ReceiptLine(l10n.fraisDeService, 0, details: [l10n.offerts]),
   ],
   policy: req.policy == null
       ? null
-      : 'Gratuite jusqu’au ${formatDateTime(req.policy!.$1)}, puis 50 % jusqu’au '
-            '${formatDateTime(req.policy!.$2)}. Remboursement sur le solde MatchUp.',
+      : l10n.gratuiteJusquAuPuisJusqu(formatDateTime(req.policy!.$1), formatDateTime(req.policy!.$2)),
 );
 
 /// SUB-09 · Reçu PDF: the A4 receipt rendered from [buildReceiptPdf], with « Partager » and
@@ -51,7 +51,7 @@ class ReceiptScreen extends ConsumerWidget {
     final account = ref.watch(accountSettingsProvider);
     final client = ReceiptClient(
       name: '${account.firstName} ${account.lastName}',
-      city: 'La Marsa, Tunisie',
+      city: l10n.laMarsaTunisie,
       email: account.email,
       phone: formatPhone(account.phone),
     );
@@ -63,7 +63,7 @@ class ReceiptScreen extends ConsumerWidget {
       body: Column(
         children: [
           MuTopAppBar.compact(
-            title: 'Reçu ${entry.number}',
+            title: l10n.recu2(entry.number),
             onBack: () => goBack(context, Routes.wallet),
           ),
           Expanded(
@@ -89,7 +89,7 @@ class ReceiptScreen extends ConsumerWidget {
             children: [
               Expanded(
                 child: MuButton.secondary(
-                  label: 'Partager',
+                  label: l10n.partager,
                   leading: PhosphorIcons.shareNetwork(),
                   size: MuButtonSize.l,
                   fullWidth: true,
@@ -99,7 +99,7 @@ class ReceiptScreen extends ConsumerWidget {
               const SizedBox(width: MuSpace.s3),
               Expanded(
                 child: MuButton.primary(
-                  label: 'Imprimer ou enregistrer',
+                  label: l10n.imprimerOuEnregistrer,
                   leading: PhosphorIcons.downloadSimple(),
                   size: MuButtonSize.l,
                   fullWidth: true,

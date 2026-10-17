@@ -7,6 +7,7 @@ import '../../../core/clock.dart';
 import '../../games/data/games_repository.dart';
 import '../data/notification_models.dart';
 import '../data/notification_repository.dart';
+import '../../../l10n/l10n.dart';
 
 /// Someone joined the game on screen (NOT-07).
 @immutable
@@ -33,7 +34,7 @@ class LiveEvents {
   Stream<GameLiveEvent> get stream => _events.stream;
 
   // 5-a-side positions, keeper first (Lineup.md).
-  static const _positions = ['Gardien', 'Défenseur', 'Milieu', 'Milieu', 'Attaquant'];
+  static final _positions = [l10n.gardien, l10n.defenseur, l10n.milieu, l10n.milieu, l10n.attaquant];
 
   /// [name] takes the next place of [gameId]: the lineup refreshes, the toast shows on GAM-01 and
   /// the centre gets the notification.
@@ -48,7 +49,7 @@ class LiveEvents {
     for (var t = 0; t < after.teams.length && where.isEmpty; t++) {
       for (var s = 0; s < after.teams[t].players.length; s++) {
         if (before.teams[t].players[s] == null && after.teams[t].players[s] != null) {
-          where = '${_positions[s % _positions.length]} chez les ${after.teams[t].name}';
+          where = l10n.chezLes(_positions[s % _positions.length], after.teams[t].name);
           break;
         }
       }
@@ -58,11 +59,11 @@ class LiveEvents {
     final left = g.spotsLeft == 0
         ? 'complet'
         : g.spotsLeft == 1
-        ? 'plus qu’1 place'
-        : 'encore ${g.spotsLeft} places';
+        ? l10n.plusQuPlace
+        : l10n.encorePlaces2(g.spotsLeft);
     final event = GameLiveEvent(
       gameId: gameId,
-      title: '$name a rejoint la partie · $filled/${g.spotsTotal}',
+      title: l10n.aRejointLaPartie(name, filled, g.spotsTotal),
       description: [if (where.isNotEmpty) where, left].join(' · '),
     );
     _events.add(event);

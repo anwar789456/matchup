@@ -6,21 +6,22 @@ import '../theme/theme.dart';
 import 'mu_chip.dart';
 import 'mu_icon_button.dart';
 import 'mu_logo.dart';
+import '../l10n/l10n.dart';
 
 /// Takeover (components/Takeover.md): a full screen over everything — bars, sheets, toasts — with
 /// a bar (close, centred title), a scrolling body and a stacked footer. No scrim: it replaces the
 /// view. Open it with [MuTakeover.show]; compositions such as [MuTicket] fill its body.
 class MuTakeover extends StatelessWidget {
-  const MuTakeover({
+  MuTakeover({
     super.key,
     required this.body,
     this.title,
     this.footer,
     this.closable = true,
-    this.closeLabel = 'Fermer',
+    String? closeLabel,
     this.onClose,
     this.barEnd,
-  });
+  }) : closeLabel = closeLabel ?? l10n.fermer;
 
   final Widget body;
   final String? title;
@@ -125,7 +126,7 @@ class MuTakeover extends StatelessWidget {
 /// 208 QR code in `ink-900` on `white` in both themes with the logo, the reference tracked out, a
 /// perforation, then Joueurs · Payé · Statut.
 class MuTicket extends StatelessWidget {
-  const MuTicket({
+  MuTicket({
     super.key,
     required this.reference,
     required this.sport,
@@ -136,8 +137,8 @@ class MuTicket extends StatelessWidget {
     required this.players,
     required this.paid,
     this.data,
-    this.status = 'Confirmé',
-  });
+    String? status,
+  }) : status = status ?? l10n.confirme2;
 
   final String reference;
   final MuSport sport;
@@ -183,7 +184,7 @@ class MuTicket extends StatelessWidget {
 
     return Semantics(
       container: true,
-      label: 'Billet de la réservation $reference',
+      label: l10n.billetDeLaReservation(reference),
       child: Container(
         decoration: BoxDecoration(
           color: c.surface,
@@ -219,7 +220,7 @@ class MuTicket extends StatelessWidget {
                   const SizedBox(height: MuSpace.s4),
                   Semantics(
                     image: true,
-                    label: 'QR code de la réservation $reference',
+                    label: l10n.qrCodeDeLaReservation(reference),
                     excludeSemantics: true,
                     child: Container(
                       color: MuPalette.white,
@@ -275,10 +276,10 @@ class MuTicket extends StatelessWidget {
               padding: const EdgeInsets.fromLTRB(MuSpace.s3, MuSpace.s3, MuSpace.s3, MuSpace.s4),
               child: Row(
                 children: [
-                  fact('Joueurs', Text(players, style: MuType.numM.copyWith(color: c.text))),
-                  fact('Payé', Text(paid, style: MuType.numM.copyWith(color: c.text))),
+                  fact(l10n.joueurs, Text(players, style: MuType.numM.copyWith(color: c.text))),
+                  fact(l10n.paye, Text(paid, style: MuType.numM.copyWith(color: c.text))),
                   fact(
-                    'Statut',
+                    l10n.statut,
                     Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [

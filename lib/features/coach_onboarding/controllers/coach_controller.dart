@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../ui/ui.dart';
 import '../../common/data/pro_providers.dart';
 import '../data/coach_draft.dart';
+import '../../../l10n/l10n.dart';
 
 final coachRepositoryProvider = Provider<CoachRepository>(
   (ref) => FakeCoachRepository(now: ref.read(clockProvider)),
@@ -44,7 +45,7 @@ final coachProvider = AsyncNotifierProvider<CoachController, CoachDraft>(CoachCo
 
 /// The three steps of the coach onboarding; the third is the dashboard (COA-03).
 abstract final class CoachSteps {
-  static const all = ['Profil', 'Certification', 'Premier programme'];
+  static final all = [l10n.profil, l10n.certification, l10n.premierProgramme];
 
   static List<MuWizardStep> of(CoachDraft d, int current) => [
     for (final (i, label) in all.indexed)
@@ -53,7 +54,7 @@ abstract final class CoachSteps {
 
   static String? summary(CoachDraft d, int step) => switch (step) {
     0 => [if (d.sports.isNotEmpty) CoachCatalog.sportName(d.sports.first), d.city].join(' · '),
-    1 => d.diploma == null ? null : 'Diplôme envoyé',
+    1 => d.diploma == null ? null : l10n.diplomeEnvoye,
     _ => null,
   };
 }

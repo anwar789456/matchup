@@ -11,6 +11,7 @@ import '../controllers/auth_providers.dart';
 import '../data/auth_repository.dart';
 import '../widgets/auth_messages.dart';
 import '../widgets/auth_widgets.dart';
+import '../../../l10n/l10n.dart';
 
 /// AUTH-05 · Connexion, with the AUTH-05b error banner (wrong credentials, tries left before the
 /// temporary lock). The 5th failure opens AUTH-10.
@@ -97,22 +98,22 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     return FlowScaffold(
       onBack: () => goBack(context, Routes.welcome3),
       body: [
-        const FlowTitle(
-          'Content de te revoir',
-          lead: 'Connecte-toi pour retrouver tes parties et tes réservations.',
+        FlowTitle(
+          l10n.contentDeTeRevoir,
+          lead: l10n.connecteToiPourRetrouverTes,
         ),
         SocialButtons(
           onGoogle: () => _social(SocialProvider.google),
           onApple: () => _social(SocialProvider.apple),
         ),
-        const OrDivider(),
+        OrDivider(),
         if (_attemptsLeft != null)
           MuBanner(
             tone: MuBannerTone.error,
             title: AuthMessages.wrongCredentials,
             detail: AuthMessages.beforeLock(_attemptsLeft!),
             footer: MuButton.link(
-              label: 'Réinitialiser mon mot de passe',
+              label: l10n.reinitialiserMonMotDePasse,
               inline: true,
               linkStyle: MuType.label,
               onPressed: _forgot,
@@ -122,11 +123,11 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             MuTextField(
-              label: 'Email',
+              label: l10n.email,
               controller: _email,
               focusNode: _emailFocus,
               leadingIcon: PhosphorIcons.envelopeSimple(),
-              placeholder: 'yassine.b@email.tn',
+              placeholder: l10n.yassineBEmailTn,
               keyboardType: TextInputType.emailAddress,
               textInputAction: TextInputAction.next,
               autofillHints: const [AutofillHints.email],
@@ -143,7 +144,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
               error: _passwordError,
               textInputAction: TextInputAction.done,
               labelAside: MuButton.link(
-                label: 'Mot de passe oublié ?',
+                label: l10n.motDePasseOublie,
                 inline: true,
                 linkStyle: MuType.label,
                 onPressed: _forgot,
@@ -158,7 +159,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
       ],
       bottomBar: [
         MuButton.primary(
-          label: 'Se connecter',
+          label: l10n.seConnecter,
           size: MuButtonSize.xl,
           fullWidth: true,
           loading: _loading,
@@ -166,8 +167,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
         ),
         Text.rich(
           TextSpan(children: [
-            const TextSpan(text: 'Pas encore de compte ? '),
-            inlineLink('Créer un compte', () => context.pushReplacement(Routes.signup), MuType.label),
+            TextSpan(text: l10n.pasEncoreDeCompte),
+            inlineLink(l10n.creerUnCompte, () => context.pushReplacement(Routes.signup), MuType.label),
           ]),
           textAlign: TextAlign.center,
           style: MuType.body.copyWith(color: c.textSecondary),

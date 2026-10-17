@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 import '../theme/theme.dart';
+import '../l10n/l10n.dart';
 
 enum MuStatus { confirmed, paid, pending, failed, live, refunded, full, verified, cancelled, draft, neutral }
 
@@ -36,16 +37,16 @@ class MuStatusBadge extends StatelessWidget {
   static const double _padEndM = 10;
 
   String get _defaultLabel => switch (status) {
-        MuStatus.confirmed => 'Confirmé',
-        MuStatus.paid => 'Payé',
-        MuStatus.pending => 'En attente',
-        MuStatus.failed => 'Échec',
-        MuStatus.live => 'EN DIRECT',
-        MuStatus.refunded => 'Remboursé',
-        MuStatus.full => 'Complet',
-        MuStatus.verified => 'Vérifié',
-        MuStatus.cancelled => 'Annulé',
-        MuStatus.draft => 'Brouillon',
+        MuStatus.confirmed => l10n.confirme2,
+        MuStatus.paid => l10n.paye,
+        MuStatus.pending => l10n.enAttente,
+        MuStatus.failed => l10n.echec,
+        MuStatus.live => l10n.enDirect3,
+        MuStatus.refunded => l10n.rembourse2,
+        MuStatus.full => l10n.complet,
+        MuStatus.verified => l10n.verifie,
+        MuStatus.cancelled => l10n.annule2,
+        MuStatus.draft => l10n.brouillon,
         MuStatus.neutral => '',
       };
 

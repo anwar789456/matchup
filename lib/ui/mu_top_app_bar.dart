@@ -6,6 +6,7 @@ import 'mu_avatar.dart';
 import 'mu_chip.dart';
 import 'mu_icon_button.dart';
 import 'src/interaction.dart';
+import '../l10n/l10n.dart';
 
 /// An action at the end of the bar: an icon with its name.
 @immutable
@@ -26,7 +27,7 @@ enum _Variant { home, large, media, compact }
 /// - `.media`: over a photo — on-media back and actions, a flipped scrim under the status bar.
 /// - `.compact`: back + `h3` title (+ subtitle) + actions on detail and flow screens.
 class MuTopAppBar extends StatelessWidget {
-  const MuTopAppBar.home({
+  MuTopAppBar.home({
     super.key,
     required this.greeting,
     required this.location,
@@ -40,10 +41,10 @@ class MuTopAppBar extends StatelessWidget {
        title = null,
        subtitle = null,
        onBack = null,
-       backLabel = 'Retour',
+       backLabel = l10n.retour,
        actions = const [];
 
-  const MuTopAppBar.large({super.key, required String this.title, this.actions = const []})
+  MuTopAppBar.large({super.key, required String this.title, this.actions = const []})
     : _variant = _Variant.large,
       greeting = '',
       location = '',
@@ -55,15 +56,15 @@ class MuTopAppBar extends StatelessWidget {
       onAccount = null,
       subtitle = null,
       onBack = null,
-      backLabel = 'Retour';
+      backLabel = l10n.retour;
 
-  const MuTopAppBar.media({
+  MuTopAppBar.media({
     super.key,
     this.title,
     required this.onBack,
-    this.backLabel = 'Retour',
+    String? backLabel,
     this.actions = const [],
-  }) : _variant = _Variant.media,
+  }) : backLabel = backLabel ?? l10n.retour, _variant = _Variant.media,
        greeting = '',
        location = '',
        userName = '',
@@ -74,14 +75,14 @@ class MuTopAppBar extends StatelessWidget {
        onAccount = null,
        subtitle = null;
 
-  const MuTopAppBar.compact({
+  MuTopAppBar.compact({
     super.key,
     required String this.title,
     this.subtitle,
     this.onBack,
-    this.backLabel = 'Retour',
+    String? backLabel,
     this.actions = const [],
-  }) : _variant = _Variant.compact,
+  }) : backLabel = backLabel ?? l10n.retour, _variant = _Variant.compact,
        greeting = '',
        location = '',
        userName = '',
@@ -266,7 +267,7 @@ class MuTopAppBar extends StatelessWidget {
               child: Row(
                 children: [
                   Semantics(
-                    hint: 'Choisir le quartier',
+                    hint: l10n.choisirLeQuartier,
                     child: MuChip(
                       label: location,
                       icon: PhosphorIcons.mapPin(),
@@ -278,15 +279,15 @@ class MuTopAppBar extends StatelessWidget {
                   MuIconButton(
                     icon: PhosphorIcons.bell(),
                     label: notifications > 0
-                        ? 'Notifications, $notifications non lues'
-                        : 'Notifications',
+                        ? l10n.notificationsNonLues(notifications)
+                        : l10n.notifications,
                     size: MuIconButtonSize.l,
                     badge: notifications,
                     onPressed: onNotifications,
                   ),
                   Semantics(
                     button: true,
-                    label: 'Mon compte, $userName',
+                    label: l10n.monCompte2(userName),
                     excludeSemantics: true,
                     child: MuFocusRing(
                       shape: BoxShape.circle,

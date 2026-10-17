@@ -7,6 +7,7 @@ import '../../../core/format.dart';
 import '../../../theme/theme.dart';
 import '../../../ui/ui.dart';
 import '../data/welcome_samples.dart';
+import '../../../l10n/l10n.dart';
 
 /// The decorative cards of the three welcome slides (hidden from screen readers: the title and
 /// text below say the same thing).
@@ -36,7 +37,7 @@ class LevelMatchIllustration extends StatelessWidget {
                   children: [
                     Expanded(
                       child: Text(
-                        'À TON NIVEAU',
+                        l10n.aTonNiveau,
                         style: MuType.overline.copyWith(color: c.textSecondary),
                       ),
                     ),
@@ -141,7 +142,7 @@ class SplitPaymentIllustration extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'TA PART',
+                              l10n.taPart4,
                               style: MuType.overline.copyWith(color: c.textSecondary),
                             ),
                             Row(
@@ -169,12 +170,12 @@ class SplitPaymentIllustration extends StatelessWidget {
                               textAlign: TextAlign.end,
                               TextSpan(
                                 children: [
-                                  const TextSpan(text: 'Terrain '),
+                                  TextSpan(text: l10n.terrain3),
                                   TextSpan(
                                     text: formatDT(b.courtPrice),
                                     style: MuType.numXs.copyWith(color: c.text),
                                   ),
-                                  TextSpan(text: ' ÷ ${b.players} joueurs'),
+                                  TextSpan(text: l10n.joueurs3(b.players)),
                                 ],
                               ),
                               style: MuType.caption.copyWith(color: c.textSecondary),
@@ -199,7 +200,7 @@ class SplitPaymentIllustration extends StatelessWidget {
                                 text: '${b.paid} sur ${b.players}',
                                 style: MuType.labelS.copyWith(color: c.text),
                               ),
-                              const TextSpan(text: ' ont payé leur part'),
+                              TextSpan(text: l10n.ontPayeLeurPart),
                             ],
                           ),
                           style: MuType.caption.copyWith(color: c.textSecondary),
@@ -220,7 +221,7 @@ class SplitPaymentIllustration extends StatelessWidget {
               width: _toastWidth,
               child: MuToast(
                 tone: MuToastTone.success,
-                title: 'Ta part est payée',
+                title: l10n.taPartEstPayee,
                 description: '${formatDT(b.share)} · ${b.venue}',
               ),
             ),
@@ -256,11 +257,11 @@ class ProgressIllustration extends StatelessWidget {
                   children: [
                     Expanded(
                       child: Text(
-                        'NIVEAU BASKET',
+                        l10n.niveauBasket,
                         style: MuType.overline.copyWith(color: c.textSecondary),
                       ),
                     ),
-                    const MuAiLabel(size: MuAiLabelSize.s),
+                    MuAiLabel(size: MuAiLabelSize.s),
                   ],
                 ),
                 Row(
@@ -297,7 +298,7 @@ class ProgressIllustration extends StatelessWidget {
                                 style: MuType.numXs.copyWith(color: c.successText),
                               ),
                               Text(
-                                ' sur 30 jours',
+                                l10n.surJours,
                                 style: MuType.caption.copyWith(color: c.textSecondary),
                               ),
                             ],
@@ -310,11 +311,11 @@ class ProgressIllustration extends StatelessWidget {
                 MuProgressBar(
                   value: WelcomeSamples.towardsNextBand,
                   size: MuProgressSize.s,
-                  label: 'Vers Avancé',
+                  label: l10n.versAvance,
                   valueLabel: formatLevel(4.0),
                 ),
                 Text(
-                  'Estimé d’après tes 12 derniers matchs.',
+                  l10n.estimeDApresTesDerniers,
                   style: MuType.caption.copyWith(color: c.textSecondary),
                 ),
               ],

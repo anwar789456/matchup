@@ -6,6 +6,7 @@ import 'package:phosphor_flutter/phosphor_flutter.dart';
 import '../theme/theme.dart';
 import 'mu_toast.dart';
 import 'src/interaction.dart';
+import '../l10n/l10n.dart';
 
 /// One destination of the [MuTabBar].
 @immutable
@@ -62,29 +63,29 @@ class MuTabBar extends StatelessWidget {
         MuTabItem(
           icon: PhosphorIcons.house(),
           selectedIcon: PhosphorIcons.house(PhosphorIconsStyle.fill),
-          label: 'Accueil',
+          label: l10n.accueil,
         ),
         MuTabItem(
           icon: PhosphorIcons.compass(),
           selectedIcon: PhosphorIcons.compass(PhosphorIconsStyle.fill),
-          label: 'Explorer',
+          label: l10n.explorer,
         ),
         MuTabItem(
           icon: PhosphorIcons.calendarCheck(),
           selectedIcon: PhosphorIcons.calendarCheck(PhosphorIconsStyle.fill),
-          label: 'Mes matchs',
+          label: l10n.mesMatchs,
           badge: matchesBadge,
           badgeLabel: '$matchesBadge ${matchesBadge == 1 ? 'invitation' : 'invitations'}',
         ),
         MuTabItem(
           icon: PhosphorIcons.barbell(),
           selectedIcon: PhosphorIcons.barbell(PhosphorIconsStyle.fill),
-          label: 'Entraînement',
+          label: l10n.entrainement,
         ),
         MuTabItem(
           icon: PhosphorIcons.usersThree(),
           selectedIcon: PhosphorIcons.usersThree(PhosphorIconsStyle.fill),
-          label: 'Communauté',
+          label: l10n.communaute,
         ),
       ];
 
@@ -118,7 +119,7 @@ class MuTabBar extends StatelessWidget {
           top: false,
           child: Semantics(
             container: true,
-            label: 'Navigation principale',
+            label: l10n.navigationPrincipale,
             child: SizedBox(
               height: MuSize.tabBar,
               child: LayoutBuilder(builder: (context, constraints) {

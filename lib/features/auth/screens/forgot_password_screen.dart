@@ -8,6 +8,7 @@ import '../../../ui/ui.dart';
 import '../../common/widgets/flow_scaffold.dart';
 import '../controllers/auth_providers.dart';
 import '../widgets/auth_messages.dart';
+import '../../../l10n/l10n.dart';
 
 /// AUTH-06 · Mot de passe oublié 1/3: the account email, to receive a 6-digit code.
 class ForgotPasswordScreen extends ConsumerStatefulWidget {
@@ -48,18 +49,17 @@ class _ForgotPasswordScreenState extends ConsumerState<ForgotPasswordScreen> {
   Widget build(BuildContext context) {
     return FlowScaffold(
       onBack: () => goBack(context, Routes.login),
-      header: const MuStepIndicator(step: 1, total: 3, title: 'Ton email'),
+      header: MuStepIndicator(step: 1, total: 3, title: l10n.tonEmail),
       body: [
-        const FlowTitle(
-          'Mot de passe oublié ?',
-          lead: 'Entre l’email de ton compte. On t’envoie un code à 6 chiffres pour choisir un '
-              'nouveau mot de passe.',
+        FlowTitle(
+          l10n.motDePasseOublie,
+          lead: l10n.entreLEmailDeTon,
         ),
         MuTextField(
-          label: 'Email',
+          label: l10n.email,
           controller: _email,
           leadingIcon: PhosphorIcons.envelopeSimple(),
-          placeholder: 'yassine.b@email.tn',
+          placeholder: l10n.yassineBEmailTn,
           keyboardType: TextInputType.emailAddress,
           autofillHints: const [AutofillHints.email],
           autocorrect: false,
@@ -72,7 +72,7 @@ class _ForgotPasswordScreenState extends ConsumerState<ForgotPasswordScreen> {
       ],
       bottomBar: [
         MuButton.primary(
-          label: 'Envoyer le code',
+          label: l10n.envoyerLeCode,
           size: MuButtonSize.xl,
           fullWidth: true,
           loading: _loading,

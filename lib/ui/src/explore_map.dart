@@ -13,6 +13,7 @@ import '../mu_court_art.dart';
 import '../mu_icon_button.dart';
 import '../mu_map_view.dart';
 import '../mu_sport_icon.dart';
+import '../../l10n/l10n.dart';
 
 /// The interactive body of [MuMapView.explore] (MapView.md): muted tiles, pins, clusters, your
 /// position, controls and the mini card.
@@ -79,7 +80,7 @@ class _MuExploreMapState extends State<MuExploreMap> with TickerProviderStateMix
   static const double _clusterRadius = 48;
   static const double _controlsRoom = MuSpace.s3 * 2 + MuSize.touchTarget;
 
-  static const _attribution = '© OpenStreetMap · © CARTO';
+  static final _attribution = l10n.openstreetmapCarto;
   static const _userAgent = 'tn.matchup.app';
 
   MuMapView get _map => widget.map;
@@ -328,12 +329,12 @@ class _MuExploreMapState extends State<MuExploreMap> with TickerProviderStateMix
                   children: [
                     MuIconButton(
                       icon: PhosphorIcons.plus(),
-                      label: 'Zoomer',
+                      label: l10n.zoomer,
                       onPressed: () => _zoomBy(_zoomStep),
                     ),
                     MuIconButton(
                       icon: PhosphorIcons.minus(),
-                      label: 'Dézoomer',
+                      label: l10n.dezoomer,
                       onPressed: () => _zoomBy(-_zoomStep),
                     ),
                   ],
@@ -348,7 +349,7 @@ class _MuExploreMapState extends State<MuExploreMap> with TickerProviderStateMix
                 ),
                 child: MuIconButton(
                   icon: PhosphorIcons.gpsFix(),
-                  label: 'Me localiser',
+                  label: l10n.meLocaliser,
                   onPressed: _locate,
                 ),
               ),
@@ -372,7 +373,7 @@ class _MuExploreMapState extends State<MuExploreMap> with TickerProviderStateMix
                         boxShadow: e.level2,
                       ),
                       child: MuButton.secondary(
-                        label: 'Rechercher dans cette zone',
+                        label: l10n.rechercherDansCetteZone,
                         size: MuButtonSize.s,
                         onPressed: () {
                           final centre = _controller.camera.center;
@@ -391,7 +392,7 @@ class _MuExploreMapState extends State<MuExploreMap> with TickerProviderStateMix
   Widget _youMarker(MuColors c) {
     return Semantics(
       image: true,
-      label: 'Ta position',
+      label: l10n.taPosition,
       child: Stack(
         alignment: Alignment.center,
         children: [
@@ -430,7 +431,7 @@ class _MuExploreMapState extends State<MuExploreMap> with TickerProviderStateMix
       label:
           '${v.name}, ${v.sport.label}'
           '${v.area == null ? '' : ', ${v.area}'}'
-          '${v.priceFrom == null ? '' : ', dès ${formatDT(v.priceFrom!)} par personne'}',
+          '${v.priceFrom == null ? '' : l10n.desParPersonne2(formatDT(v.priceFrom!))}',
       excludeSemantics: true,
       child: GestureDetector(
         behavior: HitTestBehavior.opaque,
@@ -475,7 +476,7 @@ class _MuExploreMapState extends State<MuExploreMap> with TickerProviderStateMix
         .join(', ');
     return Semantics(
       button: true,
-      label: '${g.members.length} terrains : $mixText — zoomer',
+      label: l10n.terrainsZoomer(g.members.length, mixText),
       excludeSemantics: true,
       child: GestureDetector(
         onTap: () => _flyTo(g.centre, camera.zoom + _clusterZoom),
@@ -630,7 +631,7 @@ class _MiniCard extends StatelessWidget {
                               text: ' ${formatLevel(v.rating!)}',
                               style: MuType.numXs.copyWith(color: c.text),
                             ),
-                            if (v.reviews != null) TextSpan(text: ' (${v.reviews} avis)'),
+                            if (v.reviews != null) TextSpan(text: l10n.avis4('${v.reviews}')),
                           ],
                         ),
                         style: MuType.caption.copyWith(color: c.textSecondary),
@@ -649,7 +650,7 @@ class _MiniCard extends StatelessWidget {
               TextSpan(
                 children: [
                   TextSpan(
-                    text: 'dès ',
+                    text: l10n.des,
                     style: MuType.caption.copyWith(color: c.textSecondary),
                   ),
                   TextSpan(text: formatAmount(v.priceFrom!), style: MuType.numM),
@@ -669,7 +670,7 @@ class _MiniCard extends StatelessWidget {
               Expanded(
                 child: Semantics(
                   container: true,
-                  label: 'Prochains créneaux',
+                  label: l10n.prochainsCreneaux,
                   child: Wrap(
                     spacing: MuSpace.s2,
                     runSpacing: MuSpace.s2,
@@ -681,7 +682,7 @@ class _MiniCard extends StatelessWidget {
                 ),
               ),
               MuButton.primary(
-                label: 'Voir',
+                label: l10n.voir,
                 trailing: PhosphorIcons.arrowRight(),
                 size: MuButtonSize.s,
                 onPressed: () => onOpen(null),
@@ -707,7 +708,7 @@ class _MiniCard extends StatelessWidget {
                 end: MuSpace.s1,
                 child: MuIconButton(
                   icon: PhosphorIcons.x(),
-                  label: 'Fermer',
+                  label: l10n.fermer,
                   size: MuIconButtonSize.s,
                   onPressed: onClose,
                 ),

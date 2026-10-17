@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 import '../theme/theme.dart';
+import '../l10n/l10n.dart';
 
 /// KpiCard (components/KpiCard.md): label, big tabular value (with its unit), then the change
 /// over a period — or a [note] when there is nothing to compare yet. A rise is good unless
@@ -68,7 +69,7 @@ class MuKpiCard extends StatelessWidget {
 
     return Semantics(
       container: true,
-      label: [label, empty ? 'pas encore de valeur' : '$value${unit == null ? '' : ' $unit'}',
+      label: [label, empty ? l10n.pasEncoreDeValeur : '$value${unit == null ? '' : ' $unit'}',
               ?deltaText, ?period, ?note]
           .join(', '),
       excludeSemantics: true,

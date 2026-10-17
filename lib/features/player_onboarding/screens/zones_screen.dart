@@ -10,6 +10,7 @@ import '../../common/widgets/flow_scaffold.dart';
 import '../controllers/onboarding_controller.dart';
 import '../widgets/onboarding_step_scaffold.dart';
 import '../widgets/zone_search_field.dart';
+import '../../../l10n/l10n.dart';
 
 /// PLY-07 · Zones préférées: districts where the player plays and the maximum distance.
 class ZonesScreen extends ConsumerWidget {
@@ -47,14 +48,14 @@ class ZonesScreen extends ConsumerWidget {
     return OnboardingStepScaffold(
       route: Routes.playerZones,
       step: 5,
-      stepTitle: 'Localisation',
+      stepTitle: l10n.localisation,
       onBack: () => goBack(context, Routes.playerLocation),
       onSkip: next,
       gap: MuSpace.s5,
       body: [
-        const FlowTitle(
-          'Tes zones de jeu',
-          lead: 'Ajoute les quartiers où tu joues souvent, même loin de chez toi.',
+        FlowTitle(
+          l10n.tesZonesDeJeu,
+          lead: l10n.ajouteLesQuartiersOuTu,
         ),
         if (state.locationGranted == true)
           Semantics(
@@ -69,7 +70,7 @@ class ZonesScreen extends ConsumerWidget {
                   Expanded(
                     child: Text.rich(
                       TextSpan(children: [
-                        TextSpan(text: 'Position activée', style: MuType.label),
+                        TextSpan(text: l10n.positionActivee, style: MuType.label),
                         if (state.area != null) TextSpan(text: ' · ${state.area}'),
                       ]),
                       style: MuType.body.copyWith(color: c.text),
@@ -84,7 +85,7 @@ class ZonesScreen extends ConsumerWidget {
         Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            sectionTitle('Tes zones', n == 0 ? 'Aucune zone' : (n == 1 ? '1 zone' : '$n zones')),
+            sectionTitle(l10n.tesZones, n == 0 ? 'Aucune zone' : (n == 1 ? l10n.zone : '$n zones')),
             const SizedBox(height: MuSpace.s2),
             Wrap(
               spacing: MuSpace.s2,
@@ -94,7 +95,7 @@ class ZonesScreen extends ConsumerWidget {
                     label: z,
                     kind: MuChipKind.input,
                     icon: PhosphorIcons.mapPin(),
-                    removeLabel: 'Retirer $z',
+                    removeLabel: l10n.retirer(z),
                     onRemove: () => ref.onboarding.removeZone(z),
                   ),
               ],
@@ -105,7 +106,7 @@ class ZonesScreen extends ConsumerWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              sectionTitle('Suggestions autour de toi'),
+              sectionTitle(l10n.suggestionsAutourDeToi),
               const SizedBox(height: MuSpace.s1),
               Wrap(
                 spacing: MuSpace.s2,
@@ -124,13 +125,13 @@ class ZonesScreen extends ConsumerWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             sectionTitle(
-              'Distance maximale',
-              'Jusqu’à ${state.radiusKm} km',
+              l10n.distanceMaximale,
+              l10n.jusquAKm2(state.radiusKm),
               MuType.label.copyWith(color: c.textSecondary),
             ),
             const SizedBox(height: MuSpace.s3),
             MuSegmentedControl<int>(
-              semanticLabel: 'Distance maximale',
+              semanticLabel: l10n.distanceMaximale,
               expand: true,
               value: state.radiusKm,
               onChanged: ref.onboarding.setRadius,
@@ -143,7 +144,7 @@ class ZonesScreen extends ConsumerWidget {
       ],
       bottomBar: [
         MuButton.primary(
-          label: 'Continuer',
+          label: l10n.continuer,
           size: MuButtonSize.xl,
           fullWidth: true,
           onPressed: next,

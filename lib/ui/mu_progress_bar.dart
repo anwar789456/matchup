@@ -4,6 +4,7 @@ import 'package:phosphor_flutter/phosphor_flutter.dart';
 import '../theme/theme.dart';
 import 'mu_avatar.dart';
 import 'mu_avatar_stack.dart';
+import '../l10n/l10n.dart';
 
 enum MuProgressVariant { bar, segmented, spots }
 
@@ -102,9 +103,9 @@ class MuProgressBar extends StatelessWidget {
               );
 
     final semantics = indeterminate
-        ? (label ?? 'Chargement')
+        ? (label ?? l10n.chargement)
         : unit != null
-            ? '${_num(value)} sur ${_num(max)} $unit${pending > 0 ? ', dont ${_num(pending)} en attente' : ''}'
+            ? '${_num(value)} sur ${_num(max)} $unit${pending > 0 ? l10n.dontEnAttente(_num(pending)) : ''}'
             : _valueText;
 
     if (variant == MuProgressVariant.spots && people != null) {
@@ -187,7 +188,7 @@ class MuProgressBar extends StatelessWidget {
     final fill = tone.color(c);
     return Semantics(
       label: label,
-      value: '$taken joueurs sur $total, $confirmed confirmés, $waiting en attente, $free libres',
+      value: l10n.joueursSurConfirmesEnAttente(taken, total, confirmed, waiting, free),
       excludeSemantics: true,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -210,7 +211,7 @@ class MuProgressBar extends StatelessWidget {
               ),
               const Spacer(),
               Text(
-                '$free ${free == 1 ? 'place libre' : 'places libres'}',
+                '$free ${free == 1 ? l10n.placeLibre3 : l10n.placesLibres2}',
                 style: MuType.caption.copyWith(color: c.textSecondary),
               ),
             ],
@@ -225,9 +226,9 @@ class MuProgressBar extends StatelessWidget {
               children: [
                 key(
                   DecoratedBox(decoration: BoxDecoration(color: fill, borderRadius: MuRadius.xsAll)),
-                  '$confirmed ${confirmed == 1 ? 'confirmé' : 'confirmés'}',
+                  '$confirmed ${confirmed == 1 ? l10n.confirme : l10n.confirmes}',
                 ),
-                key(CustomPaint(painter: _HatchPainter(fill)), '$waiting en attente'),
+                key(CustomPaint(painter: _HatchPainter(fill)), l10n.enAttente2(waiting)),
                 key(
                   DecoratedBox(
                     decoration: BoxDecoration(color: c.border, borderRadius: MuRadius.xsAll),

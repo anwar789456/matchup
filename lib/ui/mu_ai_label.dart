@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 import '../theme/theme.dart';
+import '../l10n/l10n.dart';
 
 enum MuAiLabelVariant { surface, media, inline }
 
@@ -12,14 +13,14 @@ enum MuAiLabelSize { s, m }
 /// AiLabel (components/AiLabel.md): the « IA » mark on every AI output. Read as « Généré par
 /// l'IA ». [onAiSurface] turns the pill `surface` inside an already `ai-soft` block.
 class MuAiLabel extends StatelessWidget {
-  const MuAiLabel({
+  MuAiLabel({
     super.key,
     this.variant = MuAiLabelVariant.surface,
     this.size = MuAiLabelSize.m,
     this.text,
-    this.srLabel = 'Généré par l’IA',
+    String? srLabel,
     this.onAiSurface = false,
-  });
+  }) : srLabel = srLabel ?? l10n.genereParLIa;
 
   /// Visible text: « IA » for pills, provenance (« Généré par l’IA ») for inline.
   final String? text;
@@ -62,7 +63,7 @@ class MuAiLabel extends StatelessWidget {
               Icon(PhosphorIcons.sparkle(PhosphorIconsStyle.fill),
                   size: small ? _sparkleM : MuSize.iconXs, color: c.aiText),
               const SizedBox(width: _inlineGap),
-              Text(text ?? 'Généré par l’IA', style: style.copyWith(color: c.aiText)),
+              Text(text ?? l10n.genereParLIa, style: style.copyWith(color: c.aiText)),
             ],
           ),
         ),

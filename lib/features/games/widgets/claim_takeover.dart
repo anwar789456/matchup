@@ -8,6 +8,7 @@ import '../../../ui/ui.dart';
 import '../../payments/data/payment_repository.dart';
 import '../controllers/game_actions.dart';
 import '../data/games_repository.dart';
+import '../../../l10n/l10n.dart';
 
 /// GAM-04 · Place disponible: a player left a full game, the takeover counts 15:00 to claim it.
 /// « Réclamer la place » pays the share (fake payment) and opens GAM-05; « Laisser passer » or
@@ -27,7 +28,7 @@ Future<void> showClaimTakeover(BuildContext context, WidgetRef ref, String gameI
     final spot = firstFreeSlot(d.teams) ?? (0, 0);
     final receipt = await ref
         .read(paymentRepositoryProvider)
-        .pay(g.pricePerPlayer, reason: 'Partie ${g.id} · ${g.title}');
+        .pay(g.pricePerPlayer, reason: l10n.partie2('${g.id}', g.title));
     await actions.completeJoin(g, team: spot.$1, slot: spot.$2, receipt: receipt);
     if (!context.mounted) return;
     context.go(Routes.matches);
@@ -61,8 +62,7 @@ class _ClaimState extends State<_Claim> {
       players: '${g.spotsTotal - g.spotsLeft}/${g.spotsTotal} joueurs',
       price: formatDT(g.pricePerPlayer),
       note:
-          'Sans réponse, la place passe au suivant de la liste. Annulation gratuite jusqu’à '
-          '${formatDateTime(widget.details.freeUntil)}.',
+          l10n.sansReponseLaPlacePasse(formatDateTime(widget.details.freeUntil)),
       onClose: () => Navigator.of(context).pop(false),
       onPass: () => Navigator.of(context).pop(false),
       onClaim: _busy

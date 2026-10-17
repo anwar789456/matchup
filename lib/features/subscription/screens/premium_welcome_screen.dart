@@ -12,6 +12,7 @@ import '../../home/controllers/home_providers.dart';
 import '../controllers/subscription_controller.dart';
 import '../widgets/subscription_widgets.dart';
 import 'offers_screen.dart';
+import '../../../l10n/l10n.dart';
 
 /// SUB-03 · Bienvenue dans Premium: the hero, what is unlocked now, the trial recap, then
 /// « Découvrir Premium » (Home) or « Gérer mon abonnement » (SUB-04).
@@ -45,14 +46,14 @@ class PremiumWelcomeScreen extends ConsumerWidget {
                 children: [
                   MuIconButton(
                     icon: PhosphorIcons.x(),
-                    label: 'Fermer',
+                    label: l10n.fermer,
                     size: MuIconButtonSize.l,
                     onPressed: () => context.go(Routes.home),
                   ),
                   const Spacer(),
-                  const MuStatusBadge(
+                  MuStatusBadge(
                     status: MuStatus.confirmed,
-                    label: 'Essai activé',
+                    label: l10n.essaiActive,
                     size: MuBadgeSize.s,
                   ),
                   const Spacer(),
@@ -99,12 +100,12 @@ class PremiumWelcomeScreen extends ConsumerWidget {
                         ),
                       ),
                       const SizedBox(height: MuSpace.s4),
-                      Text('MATCHUP PREMIUM', style: MuType.overline.copyWith(color: c.accent)),
+                      Text(l10n.matchupPremium2, style: MuType.overline.copyWith(color: c.accent)),
                       const SizedBox(height: MuSpace.s2),
                       Semantics(
                         header: true,
                         child: Text(
-                          'Bienvenue dans Premium, ${me?.firstName ?? 'Yassine'} !',
+                          l10n.bienvenueDansPremium(me?.firstName ?? l10n.yassine),
                           textAlign: TextAlign.center,
                           style: MuType.h1.copyWith(color: inverse),
                         ),
@@ -113,7 +114,7 @@ class PremiumWelcomeScreen extends ConsumerWidget {
                       Text.rich(
                         TextSpan(
                           children: [
-                            const TextSpan(text: 'Tout est débloqué jusqu’au '),
+                            TextSpan(text: l10n.toutEstDebloqueJusquAu),
                             TextSpan(
                               text: formatDay(sub?.trialEnds ?? DateTime(2026, 10, 30)),
                               style: MuType.label.copyWith(color: inverse),
@@ -131,7 +132,7 @@ class PremiumWelcomeScreen extends ConsumerWidget {
                 Semantics(
                   header: true,
                   child: Text(
-                    'Ce qui change dès maintenant',
+                    l10n.ceQuiChangeDesMaintenant,
                     style: MuType.h3.copyWith(color: c.text),
                   ),
                 ),
@@ -143,30 +144,30 @@ class PremiumWelcomeScreen extends ConsumerWidget {
                       for (final (i, row) in [
                         BenefitRow(
                           icon: PhosphorIcons.hourglass(),
-                          title: 'Priorité sur les listes d’attente',
-                          text: 'Quand une place se libère, tu es prévenu avant les autres.',
+                          title: l10n.prioriteSurLesListesD,
+                          text: l10n.quandUnePlaceSeLibere,
                         ),
                         BenefitRow(
                           icon: PhosphorIcons.barbell(),
-                          title: 'Plans d’entraînement',
-                          trailing: const MuAiLabel(size: MuAiLabelSize.s),
+                          title: l10n.plansDEntrainement,
+                          trailing: MuAiLabel(size: MuAiLabelSize.s),
                           text:
-                              'Un plan par semaine selon ton niveau padel ${formatLevel(padel ?? 3.5)} et tes dispos. Tu l’ajustes quand tu veux.',
+                              l10n.unPlanParSemaineSelon(formatLevel(padel ?? 3.5)),
                         ),
                         BenefitRow(
                           icon: PhosphorIcons.listChecks(),
-                          title: 'Programmes des coachs inclus',
-                          text: 'Plus besoin de les acheter un par un.',
+                          title: l10n.programmesDesCoachsInclus,
+                          text: l10n.plusBesoinDeLesAcheter,
                         ),
                         BenefitRow(
                           icon: PhosphorIcons.chartLineUp(),
-                          title: 'Statistiques avancées',
-                          text: 'Tendances, meilleurs coéquipiers, historique complet de tes 50 matchs.',
+                          title: l10n.statistiquesAvancees,
+                          text: l10n.tendancesMeilleursCoequipiersHistoriqueC,
                         ),
                         BenefitRow(
                           icon: PhosphorIcons.tag(),
-                          title: 'Pas de frais de service',
-                          text: 'Sur toutes tes réservations et tes parts.',
+                          title: l10n.pasDeFraisDeService,
+                          text: l10n.surToutesTesReservationsEt,
                         ),
                       ].indexed) ...[
                         if (i > 0) Divider(height: 1, thickness: 1, color: c.border),
@@ -178,7 +179,7 @@ class PremiumWelcomeScreen extends ConsumerWidget {
                 const SizedBox(height: MuSpace.s6),
                 Semantics(
                   header: true,
-                  child: Text('Ton abonnement', style: MuType.h3.copyWith(color: c.text)),
+                  child: Text(l10n.tonAbonnement, style: MuType.h3.copyWith(color: c.text)),
                 ),
                 const SizedBox(height: MuSpace.s2),
                 Padding(
@@ -186,15 +187,15 @@ class PremiumWelcomeScreen extends ConsumerWidget {
                   child: Column(
                     children: [
                       SubLine(
-                        'Essai gratuit',
-                        'jusqu’au ${formatDay(sub?.trialEnds ?? DateTime(2026, 10, 30))}',
+                        l10n.essaiGratuit,
+                        l10n.jusquAu2(formatDay(sub?.trialEnds ?? DateTime(2026, 10, 30))),
                       ),
                       Divider(height: 1, thickness: 1, color: c.border),
-                      SubLine('Rappel', formatDay(sub?.reminder ?? DateTime(2026, 10, 27))),
+                      SubLine(l10n.rappel, formatDay(sub?.reminder ?? DateTime(2026, 10, 27))),
                       Divider(height: 1, thickness: 1, color: c.border),
                       SubLine(
-                        'Ensuite',
-                        '${perPeriod(sub?.price ?? 19, sub?.period ?? MuBillingPeriod.month)} · ${sub?.cardLabel ?? 'Visa •••• 4242'}',
+                        l10n.ensuite,
+                        '${perPeriod(sub?.price ?? 19, sub?.period ?? MuBillingPeriod.month)} · ${sub?.cardLabel ?? l10n.visa}',
                       ),
                     ],
                   ),
@@ -210,7 +211,7 @@ class PremiumWelcomeScreen extends ConsumerWidget {
                     const SizedBox(width: MuSpace.s2),
                     Expanded(
                       child: Text(
-                        'Confirmation envoyée à ${me?.email ?? 'ton adresse'}',
+                        l10n.confirmationEnvoyeeA(me?.email ?? l10n.tonAdresse),
                         style: caption,
                       ),
                     ),
@@ -224,14 +225,14 @@ class PremiumWelcomeScreen extends ConsumerWidget {
       bottomNavigationBar: StickyActionBar(
         children: [
           MuButton.primary(
-            label: 'Découvrir Premium',
+            label: l10n.decouvrirPremium,
             trailing: PhosphorIcons.arrowRight(),
             size: MuButtonSize.xl,
             fullWidth: true,
             onPressed: () => context.go(Routes.home),
           ),
           MuButton.tertiary(
-            label: 'Gérer mon abonnement',
+            label: l10n.gererMonAbonnement,
             size: MuButtonSize.l,
             fullWidth: true,
             onPressed: () => context.push(Routes.subscription),

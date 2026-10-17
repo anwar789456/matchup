@@ -6,6 +6,7 @@ import '../../../theme/theme.dart';
 import '../../../ui/ui.dart';
 import '../../common/widgets/flow_scaffold.dart';
 import '../data/settings_repository.dart';
+import '../../../l10n/l10n.dart';
 
 /// SET-02 · Compte: contact (email, phone) and personal information.
 class AccountScreen extends ConsumerStatefulWidget {
@@ -49,8 +50,8 @@ class _AccountScreenState extends ConsumerState<AccountScreen> {
     MuToast.show(
       context,
       tone: MuToastTone.success,
-      title: 'Compte enregistré',
-      description: contactChanged ? 'Un code de vérification t’a été envoyé.' : null,
+      title: l10n.compteEnregistre,
+      description: contactChanged ? l10n.unCodeDeVerificationT : null,
     );
     context.pop();
   }
@@ -84,8 +85,8 @@ class _AccountScreenState extends ConsumerState<AccountScreen> {
       body: Column(
         children: [
           MuTopAppBar.compact(
-            title: 'Compte',
-            backLabel: 'Retour aux paramètres',
+            title: l10n.compte,
+            backLabel: l10n.retourAuxParametres,
             onBack: () => context.pop(),
           ),
           Expanded(
@@ -93,43 +94,43 @@ class _AccountScreenState extends ConsumerState<AccountScreen> {
               padding: const EdgeInsets.fromLTRB(MuSpace.s4, MuSpace.s2, MuSpace.s4, MuSpace.s6),
               children: [
                 card(
-                  'Contact',
-                  'Si tu changes l’un des deux, on t’envoie un code pour le vérifier à nouveau.',
+                  l10n.contact,
+                  l10n.siTuChangesLUn,
                   [
                     MuTextField(
-                      label: 'Email',
+                      label: l10n.email,
                       controller: _email,
                       keyboardType: TextInputType.emailAddress,
                     ),
-                    MuPhoneField(label: 'Téléphone', controller: _phone),
+                    MuPhoneField(label: l10n.telephone, controller: _phone),
                   ],
                 ),
                 const SizedBox(height: MuSpace.s5),
                 card(
-                  'Infos personnelles',
-                  'Les autres joueurs voient « ${_first.text} ${_last.text.isEmpty ? '' : '${_last.text[0]}.'} » : ton prénom et l’initiale de ton nom.',
+                  l10n.infosPersonnelles,
+                  l10n.lesAutresJoueursVoientTon2(_first.text, _last.text.isEmpty ? '' : '${_last.text[0]}.'),
                   [
                     MuTextField(
-                      label: 'Prénom',
+                      label: l10n.prenom,
                       controller: _first,
                       onChanged: (_) => setState(() {}),
                     ),
-                    MuTextField(label: 'Nom', controller: _last, onChanged: (_) => setState(() {})),
+                    MuTextField(label: l10n.nom, controller: _last, onChanged: (_) => setState(() {})),
                     MuTextField(
-                      label: 'Date de naissance',
+                      label: l10n.dateDeNaissance,
                       controller: _birth,
-                      placeholder: 'JJ/MM/AAAA',
-                      helper: 'Jamais affichée sur ton profil.',
+                      placeholder: l10n.jjMmAaaa,
+                      helper: l10n.jamaisAfficheeSurTonProfil,
                       keyboardType: TextInputType.datetime,
                     ),
                     MuSelect<Gender>(
-                      label: 'Genre',
+                      label: l10n.genre,
                       value: _gender,
-                      helper: 'Sert seulement à te proposer les parties femmes ou hommes.',
-                      options: const [
-                        MuSelectOption(value: Gender.male, label: 'Homme'),
-                        MuSelectOption(value: Gender.female, label: 'Femme'),
-                        MuSelectOption(value: Gender.unspecified, label: 'Je préfère ne pas dire'),
+                      helper: l10n.sertSeulementATeProposer,
+                      options: [
+                        MuSelectOption(value: Gender.male, label: l10n.homme),
+                        MuSelectOption(value: Gender.female, label: l10n.femme),
+                        MuSelectOption(value: Gender.unspecified, label: l10n.jePrefereNePasDire),
                       ],
                       onChanged: (v) => setState(() => _gender = v),
                     ),
@@ -143,7 +144,7 @@ class _AccountScreenState extends ConsumerState<AccountScreen> {
       bottomNavigationBar: StickyActionBar(
         children: [
           MuButton.primary(
-            label: 'Enregistrer',
+            label: l10n.enregistrer,
             size: MuButtonSize.xl,
             fullWidth: true,
             onPressed: _save,

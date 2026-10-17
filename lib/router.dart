@@ -91,6 +91,7 @@ import 'features/player_onboarding/screens/zones_screen.dart';
 import 'features/venue/screens/slot_screen.dart';
 import 'features/venue/screens/venue_screen.dart';
 import 'theme/theme.dart';
+import 'l10n/l10n.dart';
 
 /// Route paths, one per screen code (design/screens/SCREENS.md). Error variants (AUTH-01b,
 /// 03b, 05b) are states of their screen, not routes.
@@ -316,10 +317,10 @@ final routerProvider = Provider<GoRouter>((ref) {
             routes: [_route(Routes.matches, (_) => const MatchesScreen())],
           ),
           StatefulShellBranch(
-            routes: [_route(Routes.training, (_) => const ComingSoonTab(title: 'Entraînement'))],
+            routes: [_route(Routes.training, (_) => ComingSoonTab(title: l10n.entrainement))],
           ),
           StatefulShellBranch(
-            routes: [_route(Routes.community, (_) => const ComingSoonTab(title: 'Communauté'))],
+            routes: [_route(Routes.community, (_) => ComingSoonTab(title: l10n.communaute))],
           ),
         ],
       ),
@@ -403,7 +404,7 @@ final routerProvider = Provider<GoRouter>((ref) {
       _root(Routes.checkout, (_) => const CheckoutScreen()),
       _root(Routes.paymentSuccess, (_) => const PaymentSuccessScreen()),
       _root(Routes.paymentFailed, (s) {
-        final (card, reason) = s.extra as (String, String?)? ?? ('ta carte', null);
+        final (card, reason) = s.extra as (String, String?)? ?? (l10n.taCarte, null);
         return PaymentFailedScreen(cardLabel: card, reason: reason);
       }),
       _root(Routes.subscriptionOffers, (_) => const OffersScreen()),

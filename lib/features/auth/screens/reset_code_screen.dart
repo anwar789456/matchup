@@ -8,6 +8,7 @@ import '../../../ui/ui.dart';
 import '../controllers/auth_providers.dart';
 import '../widgets/auth_widgets.dart';
 import '../widgets/code_entry.dart';
+import '../../../l10n/l10n.dart';
 
 /// AUTH-07 · Mot de passe oublié 2/3: the code received by email.
 class ResetCodeScreen extends ConsumerWidget {
@@ -20,16 +21,16 @@ class ResetCodeScreen extends ConsumerWidget {
     final repo = ref.read(authRepositoryProvider);
     return CodeEntry(
       onBack: () => goBack(context, Routes.forgotPassword),
-      header: const MuStepIndicator(step: 2, total: 3, title: 'Code'),
+      header: MuStepIndicator(step: 2, total: 3, title: l10n.code),
       lead: TextSpan(children: [
-        const TextSpan(text: 'Code envoyé à '),
+        TextSpan(text: l10n.codeEnvoyeA),
         TextSpan(text: email, style: MuType.labelL.copyWith(color: c.text)),
         const TextSpan(text: ' · '),
-        inlineLink('Modifier', () => goBack(context, Routes.forgotPassword), MuType.labelL),
+        inlineLink(l10n.modifier, () => goBack(context, Routes.forgotPassword), MuType.labelL),
       ]),
-      label: 'Code reçu par email',
-      helper: 'Expire dans 10 minutes. Regarde aussi dans tes spams.',
-      buttonLabel: 'Vérifier le code',
+      label: l10n.codeRecuParEmail,
+      helper: l10n.expireDansMinutesRegardeAussi,
+      buttonLabel: l10n.verifierLeCode,
       verify: repo.verifyPasswordResetCode,
       onResend: () => repo.sendPasswordResetCode(email),
       onVerified: () => context.push(Routes.newPassword),

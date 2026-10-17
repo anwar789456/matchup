@@ -10,6 +10,7 @@ import '../../common/widgets/flow_scaffold.dart';
 import '../controllers/onboarding_controller.dart';
 import '../data/question_bank.dart';
 import '../widgets/onboarding_step_scaffold.dart';
+import '../../../l10n/l10n.dart';
 
 /// PLY-01 · Sports: pick one or more sports (multi-select photo cards).
 class SportsScreen extends ConsumerWidget {
@@ -26,17 +27,16 @@ class SportsScreen extends ConsumerWidget {
     return OnboardingStepScaffold(
       route: Routes.playerSports,
       step: 1,
-      stepTitle: 'Tes sports',
+      stepTitle: l10n.tesSports,
       onBack: () => goBack(context, Routes.roles),
       body: [
-        const FlowTitle(
-          'Quels sports tu joues ?',
-          lead: 'Choisis-en un ou plusieurs. On te proposera des parties et des joueurs à ton '
-              'niveau.',
+        FlowTitle(
+          l10n.quelsSportsTuJoues,
+          lead: l10n.choisisEnUnOuPlusieurs,
         ),
         Semantics(
           container: true,
-          label: 'Tes sports',
+          label: l10n.tesSports,
           child: Column(
             children: [
               for (final (i, sport) in MuSport.values.indexed) ...[
@@ -54,10 +54,10 @@ class SportsScreen extends ConsumerWidget {
       bottomBar: [
         ProgressSavedNote(
           icon: PhosphorIcons.cloudCheck(),
-          text: 'Ta progression est enregistrée, tu peux reprendre plus tard.',
+          text: l10n.taProgressionEstEnregistreeTu,
         ),
         MuButton.primary(
-          label: 'Continuer',
+          label: l10n.continuer,
           size: MuButtonSize.xl,
           fullWidth: true,
           onPressed: state.sports.isEmpty ? null : next,

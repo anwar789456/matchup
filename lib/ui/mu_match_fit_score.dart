@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 import '../theme/theme.dart';
+import '../l10n/l10n.dart';
 
 enum MuFitSize { s, m, l }
 
@@ -99,14 +100,19 @@ class MuMatchFitScore extends StatelessWidget {
               color: _low ? c.textSecondary : c.aiText,
             ),
             const SizedBox(width: MuSpace.s1),
-            Text('$value %', style: (small ? MuType.numXs : MuType.numS).copyWith(color: ink)),
-            Text(' compatible', style: MuType.labelS.copyWith(color: ink)),
+            // Arabic reads « متوافقة بنسبة 85% »: the word comes first.
+            if (l10n.localeName == 'ar')
+              Text(l10n.compatible(value), style: MuType.labelS.copyWith(color: ink))
+            else ...[
+              Text('$value %', style: (small ? MuType.numXs : MuType.numS).copyWith(color: ink)),
+              Text(' ${l10n.compatibleWord}', style: MuType.labelS.copyWith(color: ink)),
+            ],
           ],
         ),
       ),
     );
-    final named = Semantics(label: 'IA : $value % compatible', excludeSemantics: true, child: pill);
-    return reason == null ? named : Tooltip(message: 'Recommandé car $reason', child: named);
+    final named = Semantics(label: l10n.iaCompatible(value), excludeSemantics: true, child: pill);
+    return reason == null ? named : Tooltip(message: l10n.recommandeCar2('$reason'), child: named);
   }
 
   Widget _ring(BuildContext context) {
@@ -118,7 +124,7 @@ class MuMatchFitScore extends StatelessWidget {
 
     final dial = Semantics(
       image: true,
-      label: '$value % compatible',
+      label: l10n.compatible(value),
       excludeSemantics: true,
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -169,7 +175,7 @@ class MuMatchFitScore extends StatelessWidget {
               ),
               const SizedBox(width: MuSpace.s1),
               Text(
-                'compatible',
+                l10n.compatibleWord,
                 style: MuType.labelS.copyWith(color: _low ? c.textSecondary : c.aiText),
               ),
             ],
@@ -195,7 +201,7 @@ class MuMatchFitScore extends StatelessWidget {
         Expanded(
           child: Semantics(
             label:
-                '${f.against ? 'En défaveur' : 'En faveur'} : ${f.label}'
+                '${f.against ? l10n.enDefaveur : l10n.enFaveur} : ${f.label}'
                 '${f.detail == null ? '' : ', ${f.detail}'}',
             excludeSemantics: true,
             child: Column(

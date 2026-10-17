@@ -88,7 +88,7 @@ class _NotificationTileState extends ConsumerState<NotificationTile> {
       icon: n.icon ?? (n.sport == null && n.avatar == null ? n.category.icon : null),
       status: n.status,
       avatarName: n.avatar,
-      titleTrailing: n.ai ? const MuAiLabel(size: MuAiLabelSize.s) : null,
+      titleTrailing: n.ai ? MuAiLabel(size: MuAiLabelSize.s) : null,
       people: [for (final p in n.people) MuPerson(p)],
       thumbnail: n.thumbnail == null
           ? null

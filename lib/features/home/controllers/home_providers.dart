@@ -1,5 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../../core/connectivity.dart';
 
 import '../../../ui/ui.dart';
 import '../../explore/data/tournaments_repository.dart';
@@ -18,6 +19,8 @@ final recommendedGamesProvider = FutureProvider<List<MuGame>>(
 
 /// « Tes prochains matchs » and the « Mes matchs » tab badge.
 final upcomingMatchesProvider = FutureProvider<UpcomingMatches>((ref) async {
+  // STA-02 from the debug menu: the server answers 503.
+  if (ref.watch(simulatedServerErrorProvider)) throw const ServerException();
   final (base, joined) = await (
     ref.watch(bookingsRepositoryProvider).upcoming(),
     ref.watch(gamesRepositoryProvider).joined(),

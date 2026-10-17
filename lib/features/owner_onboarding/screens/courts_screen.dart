@@ -9,6 +9,7 @@ import '../controllers/owner_controller.dart';
 import '../data/owner_draft.dart';
 import '../data/owner_repository.dart';
 import '../widgets/owner_wizard.dart';
+import '../../../l10n/l10n.dart';
 
 /// OWN-03 — the bookable courts: one row each (lighting switch, edit, more), edited in place one
 /// at a time.
@@ -57,7 +58,7 @@ class _CourtsScreenState extends ConsumerState<CourtsScreen> {
     }
     final court = Court(
       id: 'c${DateTime.now().microsecondsSinceEpoch}',
-      name: 'Terrain $n',
+      name: l10n.terrain4(n),
       sport: courts.lastOrNull?.sport ?? MuSport.football,
       surface: courts.lastOrNull?.surface ?? OwnerCatalog.surfaces.first,
     );
@@ -73,7 +74,7 @@ class _CourtsScreenState extends ConsumerState<CourtsScreen> {
     if (w == null) return true;
     final name = _name.text.trim();
     if (name.isEmpty) {
-      setState(() => _nameError = 'Donne un nom au terrain.');
+      setState(() => _nameError = l10n.donneUnNomAuTerrain);
       return false;
     }
     final saved = w.copyWith(name: name);
@@ -103,7 +104,7 @@ class _CourtsScreenState extends ConsumerState<CourtsScreen> {
   void _duplicate(Court court) {
     final copy = Court(
       id: 'c${DateTime.now().microsecondsSinceEpoch}',
-      name: '${court.name} (copie)',
+      name: l10n.copie(court.name),
       sport: court.sport,
       surface: court.surface,
       indoor: court.indoor,
@@ -119,8 +120,8 @@ class _CourtsScreenState extends ConsumerState<CourtsScreen> {
     _owner.edit((d) => d.copyWith(courts: d.courts.where((c) => c.id != court.id).toList()));
     MuToast.show(
       context,
-      title: '${court.name} supprimé',
-      action: MuAction('Annuler', () {
+      title: l10n.supprime(court.name),
+      action: MuAction(l10n.annuler, () {
         _owner.edit((d) {
           final courts = [...d.courts];
           courts.add(court);
@@ -133,7 +134,7 @@ class _CourtsScreenState extends ConsumerState<CourtsScreen> {
   bool _validate() {
     if (!_save()) return false;
     final empty = ref.read(ownerProvider).requireValue.courts.isEmpty;
-    setState(() => _listError = empty ? 'Ajoute au moins un terrain.' : null);
+    setState(() => _listError = empty ? l10n.ajouteAuMoinsUnTerrain : null);
     return !empty;
   }
 
@@ -145,9 +146,9 @@ class _CourtsScreenState extends ConsumerState<CourtsScreen> {
 
     return OwnerWizard(
       step: 2,
-      title: 'Tes terrains',
+      title: l10n.tesTerrains,
       lead:
-          'Ajoute chaque terrain réservable. Les joueurs filtrent par sport, surface et éclairage.',
+          l10n.ajouteChaqueTerrainReservableLes,
       validate: _validate,
       body: ProFormCard(
         children: [
@@ -172,13 +173,13 @@ class _CourtsScreenState extends ConsumerState<CourtsScreen> {
                       ),
                       const SizedBox(height: MuSpace.s1),
                       Text(
-                        'Chaque terrain a son planning et ses créneaux.',
+                        l10n.chaqueTerrainASonPlanning,
                         style: MuType.body.copyWith(color: c.textSecondary),
                       ),
                     ],
                   ),
                   MuButton.secondary(
-                    label: 'Ajouter un terrain',
+                    label: l10n.ajouterUnTerrain,
                     leading: PhosphorIcons.plus(),
                     onPressed: _add,
                   ),
@@ -244,16 +245,16 @@ class _CourtsScreenState extends ConsumerState<CourtsScreen> {
                     ),
                     const SizedBox(height: MuSpace.s1),
                     Text(
-                      _isNew ? 'Nouveau terrain' : 'Modification en cours',
+                      _isNew ? l10n.nouveauTerrain : l10n.modificationEnCours,
                       style: MuType.caption.copyWith(color: c.textSecondary),
                     ),
                   ],
                 ),
               ),
-              MuButton.tertiary(label: 'Annuler', onPressed: _cancel),
+              MuButton.tertiary(label: l10n.annuler, onPressed: _cancel),
               const SizedBox(width: MuSpace.s2),
               MuButton.secondary(
-                label: 'Enregistrer',
+                label: l10n.enregistrer,
                 leading: PhosphorIcons.check(),
                 onPressed: _save,
               ),
@@ -268,7 +269,7 @@ class _CourtsScreenState extends ConsumerState<CourtsScreen> {
                 _ThreeColumns(
                   children: [
                     MuTextField(
-                      label: 'Nom',
+                      label: l10n.nom,
                       controller: _name,
                       size: MuFieldSize.m,
                       error: _nameError,
@@ -277,7 +278,7 @@ class _CourtsScreenState extends ConsumerState<CourtsScreen> {
                       onSubmitted: (_) => _save(),
                     ),
                     MuSelect<MuSport>(
-                      label: 'Sport',
+                      label: l10n.sport,
                       size: MuFieldSize.m,
                       value: w.sport,
                       options: [
@@ -292,7 +293,7 @@ class _CourtsScreenState extends ConsumerState<CourtsScreen> {
                       onChanged: (v) => setState(() => _working = w.copyWith(sport: v)),
                     ),
                     MuSelect<String>(
-                      label: 'Surface',
+                      label: l10n.surface,
                       size: MuFieldSize.m,
                       value: w.surface,
                       options: [
@@ -309,19 +310,19 @@ class _CourtsScreenState extends ConsumerState<CourtsScreen> {
                   runSpacing: MuSpace.s5,
                   children: [
                     MuRadioGroup<bool>(
-                      label: 'Type',
+                      label: l10n.type,
                       horizontal: true,
                       value: w.indoor,
-                      options: const [
-                        MuRadioOption(value: false, label: 'Extérieur'),
-                        MuRadioOption(value: true, label: 'Intérieur'),
+                      options: [
+                        MuRadioOption(value: false, label: l10n.exterieur),
+                        MuRadioOption(value: true, label: l10n.interieur),
                       ],
                       onChanged: (v) => setState(() => _working = w.copyWith(indoor: v)),
                     ),
                     MuSwitch(
                       value: w.lights,
-                      label: 'Éclairage',
-                      description: 'Projecteurs LED pour les matchs du soir',
+                      label: l10n.eclairage,
+                      description: l10n.projecteursLedPourLesMatchs,
                       onChanged: (v) => setState(() => _working = w.copyWith(lights: v)),
                     ),
                   ],
@@ -405,17 +406,17 @@ class _CourtRow extends StatelessWidget {
         MenuItemButton(
           leadingIcon: Icon(PhosphorIcons.copy(), size: MuSize.iconS, color: c.textSecondary),
           onPressed: onDuplicate,
-          child: Text('Dupliquer', style: MuType.body.copyWith(color: c.text)),
+          child: Text(l10n.dupliquer, style: MuType.body.copyWith(color: c.text)),
         ),
         MenuItemButton(
           leadingIcon: Icon(PhosphorIcons.trash(), size: MuSize.iconS, color: c.errorText),
           onPressed: onDelete,
-          child: Text('Supprimer', style: MuType.body.copyWith(color: c.errorText)),
+          child: Text(l10n.supprimer, style: MuType.body.copyWith(color: c.errorText)),
         ),
       ],
       builder: (context, controller, _) => MuIconButton(
         icon: PhosphorIcons.dotsThreeVertical(),
-        label: 'Plus d’actions pour ${court.name}',
+        label: l10n.plusDActionsPour(court.name),
         onPressed: () => controller.isOpen ? controller.close() : controller.open(),
       ),
     );
@@ -454,7 +455,7 @@ class _CourtRow extends StatelessWidget {
                         const SizedBox(width: MuSpace.s2),
                         Flexible(
                           child: Text(
-                            '${court.surface} · ${court.indoor ? 'Intérieur' : 'Extérieur'}',
+                            '${court.surface} · ${court.indoor ? l10n.interieur : l10n.exterieur}',
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: MuType.caption.copyWith(color: c.textSecondary),
@@ -469,8 +470,8 @@ class _CourtRow extends StatelessWidget {
               MuSwitch(
                 value: court.lights,
                 size: MuSwitchSize.s,
-                label: compact ? null : 'Éclairage',
-                semanticLabel: 'Éclairage, ${court.name}',
+                label: compact ? null : l10n.eclairage,
+                semanticLabel: l10n.eclairage2(court.name),
                 onChanged: onLights,
               ),
               const SizedBox(width: MuSpace.s2),
@@ -478,7 +479,7 @@ class _CourtRow extends StatelessWidget {
               const SizedBox(width: MuSpace.s1),
               MuIconButton(
                 icon: PhosphorIcons.pencilSimple(),
-                label: 'Modifier ${court.name}',
+                label: l10n.modifier2(court.name),
                 onPressed: onEdit,
               ),
               more,

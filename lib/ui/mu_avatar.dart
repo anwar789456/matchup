@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../core/format.dart';
 import '../theme/theme.dart';
+import '../l10n/l10n.dart';
 
 enum MuAvatarSize { xs, s, m, l, xl }
 
@@ -56,7 +57,7 @@ class MuAvatar extends StatelessWidget {
   String get _semantics {
     final parts = [name];
     if (level != null) parts.add('niveau ${formatLevel(level!)}');
-    if (online) parts.add('en ligne');
+    if (online) parts.add(l10n.enLigne);
     return parts.join(', ');
   }
 

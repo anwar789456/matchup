@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../../core/connectivity.dart';
+import '../../states/widgets/state_widgets.dart';
 import 'package:go_router/go_router.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 
@@ -13,6 +15,7 @@ import '../../games/widgets/leave_dialog.dart';
 import '../controllers/matches_providers.dart';
 import '../data/bookings_repository.dart';
 import '../widgets/rate_sheet.dart';
+import '../../../l10n/l10n.dart';
 
 /// MAT-01 to MAT-04 · Mes matchs: « À venir » (invitations to answer, the games the player joined,
 /// the courts they organise — or the empty state), « Passés » (results, to rate first) and
@@ -35,22 +38,22 @@ class MatchesScreen extends ConsumerWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           MuTopAppBar.large(
-            title: 'Mes matchs',
+            title: l10n.mesMatchs,
             actions: [
               MuBarAction(
                 icon: PhosphorIcons.calendarPlus(),
-                label: 'Réserver un terrain',
+                label: l10n.reserverUnTerrain,
                 onPressed: () => context.go(Routes.exploreVenues),
               ),
             ],
           ),
           MuTabs(
-            label: 'Mes matchs',
+            label: l10n.mesMatchs,
             fullWidth: true,
             tabs: [
-              MuTab('À venir', count: count == 0 ? null : count),
-              const MuTab('Passés'),
-              const MuTab('Annulés'),
+              MuTab(l10n.aVenir, count: count == 0 ? null : count),
+              MuTab(l10n.passes),
+              MuTab(l10n.annules),
             ],
             index: tab,
             onChanged: (i) => ref.read(matchesTabProvider.notifier).select(i),
@@ -77,12 +80,34 @@ class _Upcoming extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final c = context.mu;
+    if (upcoming.error is ServerException) {
+      final e = upcoming.error! as ServerException;
+      return ServerErrorState(
+        title: l10n.tesMatchsNeSeChargent,
+        status: e.status,
+        reference: e.reference,
+        kept: [
+          TextSpan(
+            children: [
+              TextSpan(text: l10n.tesReservationsEtTaPlace),
+              TextSpan(text: l10n.dimOct, style: const TextStyle(fontWeight: FontWeight.w600)),
+              TextSpan(text: l10n.sontToujoursLa),
+            ],
+          ),
+          TextSpan(text: l10n.aucunPaiementNAEte),
+        ],
+        onRetry: () {
+          ref.read(simulatedServerErrorProvider.notifier).set(false);
+          ref.invalidate(upcomingMatchesProvider);
+        },
+      );
+    }
     final value = upcoming.value;
     if (value == null) {
       if (upcoming.hasError) return _Retry(() => ref.invalidate(upcomingMatchesProvider));
-      return const MuSkeletonGroup(
-        label: 'Chargement de tes matchs',
-        child: Padding(
+      return MuSkeletonGroup(
+        label: l10n.chargementDeTesMatchs,
+        child: const Padding(
           padding: EdgeInsets.all(MuSpace.s4),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -122,7 +147,7 @@ class _Upcoming extends ConsumerWidget {
         ),
         children: [
           if (value.invitations.isNotEmpty) ...[
-            const _Overline('À répondre'),
+            _Overline(l10n.aRepondre),
             for (final inv in value.invitations) ...[
               _InvitationCard(
                 invitation: inv,
@@ -133,8 +158,8 @@ class _Upcoming extends ConsumerWidget {
                     MuToast.show(
                       context,
                       tone: MuToastTone.success,
-                      title: 'Invitation acceptée',
-                      description: '${inv.from.name.split(' ').first} est prévenue.',
+                      title: l10n.invitationAcceptee,
+                      description: l10n.estPrevenue(inv.from.name.split(' ').first),
                     );
                   }
                 },
@@ -160,9 +185,9 @@ class _GameEntry extends ConsumerWidget {
     crossAxisAlignment: CrossAxisAlignment.stretch,
     children: [
       _Overline(
-        '${_capital(formatDay(game.start))} · Tu joues',
+        l10n.tuJoues(_capital(formatDay(game.start))),
         trailing: MuButton.tertiary(
-          label: 'Quitter',
+          label: l10n.quitter,
           leading: PhosphorIcons.signOut(),
           size: MuButtonSize.s,
           onPressed: () => confirmLeaveGame(context, ref, game),
@@ -192,7 +217,7 @@ class _BookingEntry extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        _Overline('${_capital(formatDay(booking.start))} · Tu organises'),
+        _Overline(l10n.tuOrganises2(_capital(formatDay(booking.start)))),
         MuBookingCard(
           booking: booking,
           variant: MuBookingCardVariant.compact,
@@ -207,7 +232,7 @@ class _BookingEntry extends StatelessWidget {
               children: [
                 Expanded(
                   child: Semantics(
-                    label: 'En attente de $missing joueurs',
+                    label: l10n.enAttenteDeJoueurs(missing),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
@@ -229,7 +254,7 @@ class _BookingEntry extends StatelessWidget {
                             ),
                             const Spacer(),
                             Text(
-                              '$missing places libres',
+                              l10n.placesLibres(missing),
                               style: MuType.caption.copyWith(color: context.mu.textSecondary),
                             ),
                           ],
@@ -248,7 +273,7 @@ class _BookingEntry extends StatelessWidget {
                 ),
                 const SizedBox(width: MuSpace.s3),
                 MuButton.secondary(
-                  label: 'Inviter',
+                  label: l10n.inviter2,
                   leading: PhosphorIcons.userPlus(),
                   size: MuButtonSize.s,
                   onPressed: () => context.push(Routes.booking(booking.id!)),
@@ -281,8 +306,7 @@ class _InvitationCard extends StatelessWidget {
     final first = inv.from.name.split(' ').first;
     return MuCardSurface(
       semanticLabel:
-          '$first t’invite au ${inv.sport.label.toLowerCase()}, ${inv.venue}, '
-          '${formatDateTime(inv.start)}, ${formatDT(inv.share)} ta part',
+          l10n.tInviteAuTaPart(first, inv.sport.label.toLowerCase(), inv.venue, formatDateTime(inv.start), formatDT(inv.share)),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -296,7 +320,7 @@ class _InvitationCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      '${inv.from.name} t’invite au ${inv.sport.label.toLowerCase()}',
+                      l10n.tInviteAu(inv.from.name, inv.sport.label.toLowerCase()),
                       style: MuType.labelL.copyWith(color: c.text),
                     ),
                     const SizedBox(height: 2),
@@ -315,8 +339,7 @@ class _InvitationCard extends StatelessWidget {
                       ],
                     ),
                     Text(
-                      '${formatDateTime(inv.start)} · '
-                      '${inv.spotsTotal - inv.spotsLeft}/${inv.spotsTotal} joueurs',
+                      l10n.joueurs2(formatDateTime(inv.start), inv.spotsTotal - inv.spotsLeft, inv.spotsTotal),
                       style: MuType.caption.copyWith(color: c.textSecondary),
                     ),
                   ],
@@ -327,7 +350,7 @@ class _InvitationCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   Text(formatDT(inv.share), style: MuType.numM.copyWith(color: c.text)),
-                  Text('ta part', style: MuType.caption.copyWith(color: c.textSecondary)),
+                  Text(l10n.taPart3, style: MuType.caption.copyWith(color: c.textSecondary)),
                 ],
               ),
             ],
@@ -336,11 +359,11 @@ class _InvitationCard extends StatelessWidget {
           Row(
             children: [
               Expanded(
-                child: MuButton.secondary(label: 'Refuser', fullWidth: true, onPressed: onDecline),
+                child: MuButton.secondary(label: l10n.refuser, fullWidth: true, onPressed: onDecline),
               ),
               const SizedBox(width: MuSpace.s3),
               Expanded(
-                child: MuButton.primary(label: 'Accepter', fullWidth: true, onPressed: onAccept),
+                child: MuButton.primary(label: l10n.accepter, fullWidth: true, onPressed: onAccept),
               ),
             ],
           ),
@@ -363,18 +386,18 @@ class _Empty extends ConsumerWidget {
         children: [
           MuEmptyState(
             illustration: MuEmptyIllustration.bookings,
-            title: 'Aucun match à venir',
+            title: l10n.aucunMatchAVenir,
             description:
-                'Rejoins une partie à ton niveau, ou réserve un terrain et invite tes amis.',
+                l10n.rejoinsUnePartieATon,
             actions: [
               MuButton.primary(
-                label: 'Trouver une partie',
+                label: l10n.trouverUnePartie,
                 leading: PhosphorIcons.compass(),
                 size: MuButtonSize.l,
                 onPressed: () => context.go(Routes.explore),
               ),
               MuButton.secondary(
-                label: 'Réserver un terrain',
+                label: l10n.reserverUnTerrain,
                 leading: PhosphorIcons.courtBasketball(),
                 size: MuButtonSize.l,
                 onPressed: () => context.go(Routes.exploreVenues),
@@ -383,7 +406,7 @@ class _Empty extends ConsumerWidget {
           ),
           const SizedBox(height: MuSpace.s4),
           Text(
-            '${Story.openGames.length} parties ouvertes cette semaine à moins de 5 km',
+            l10n.partiesOuvertesCetteSemaineA(Story.openGames.length),
             textAlign: TextAlign.center,
             style: MuType.caption.copyWith(color: c.textSecondary),
           ),
@@ -404,9 +427,9 @@ class _Past extends ConsumerWidget {
     final matches = past.value;
     if (matches == null) {
       if (past.hasError) return _Retry(() => ref.invalidate(pastMatchesProvider));
-      return const MuSkeletonGroup(
-        label: 'Chargement de tes matchs',
-        child: Padding(
+      return MuSkeletonGroup(
+        label: l10n.chargementDeTesMatchs,
+        child: const Padding(
           padding: EdgeInsets.all(MuSpace.s4),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -420,11 +443,11 @@ class _Past extends ConsumerWidget {
       );
     }
     if (matches.isEmpty) {
-      return const Center(
+      return Center(
         child: MuEmptyState(
           illustration: MuEmptyIllustration.results,
-          title: 'Aucun match joué',
-          description: 'Tes résultats et tes évaluations apparaîtront ici.',
+          title: l10n.aucunMatchJoue,
+          description: l10n.tesResultatsEtTesEvaluations,
         ),
       );
     }
@@ -449,7 +472,7 @@ class _Past extends ConsumerWidget {
       ),
       children: [
         if (toRate.isNotEmpty) ...[
-          const _Overline('À évaluer'),
+          _Overline(l10n.aEvaluer),
           for (final m in toRate) ...[
             MuMatchCard(match: m.match, variant: MuMatchCardVariant.compact),
             const SizedBox(height: MuSpace.s3),
@@ -469,11 +492,11 @@ class _Past extends ConsumerWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'Évalue tes coéquipiers',
+                              l10n.evalueTesCoequipiers,
                               style: MuType.labelL.copyWith(color: c.text),
                             ),
                             Text(
-                              '${_names(m.mates)} · 1 min',
+                              l10n.min(_names(m.mates)),
                               style: MuType.caption.copyWith(color: c.textSecondary),
                             ),
                           ],
@@ -483,7 +506,7 @@ class _Past extends ConsumerWidget {
                   ),
                   const SizedBox(height: MuSpace.s4),
                   MuButton.primary(
-                    label: 'Évaluer les joueurs',
+                    label: l10n.evaluerLesJoueurs,
                     leading: PhosphorIcons.star(),
                     fullWidth: true,
                     onPressed: () => showRateSheet(context, ref, m),
@@ -496,7 +519,7 @@ class _Past extends ConsumerWidget {
         ],
         if (earlier.isNotEmpty) ...[
           _Overline(
-            'Plus tôt',
+            l10n.plusTot,
             trailing: Row(
               children: [
                 Icon(
@@ -505,7 +528,7 @@ class _Past extends ConsumerWidget {
                   color: c.successText,
                 ),
                 const SizedBox(width: MuSpace.s1),
-                Text('Évalués', style: MuType.caption.copyWith(color: c.successText)),
+                Text(l10n.evalues, style: MuType.caption.copyWith(color: c.successText)),
               ],
             ),
           ),
@@ -522,15 +545,14 @@ class _Past extends ConsumerWidget {
         ],
         const SizedBox(height: MuSpace.s2),
         Text(
-          '${matches.length} matchs depuis ${_monthName(since, now)} · $wins victoire'
-          '${wins > 1 ? 's' : ''}',
+          l10n.matchsDepuisVictoire(matches.length, _monthName(since, now), wins, wins > 1 ? 's' : ''),
           textAlign: TextAlign.center,
           style: MuType.caption.copyWith(color: c.textSecondary),
         ),
         const SizedBox(height: MuSpace.s1),
         Center(
           child: MuButton.link(
-            label: 'Voir toutes mes stats',
+            label: l10n.voirToutesMesStats,
             onPressed: () => context.push(Routes.profile),
           ),
         ),
@@ -546,17 +568,17 @@ class _Past extends ConsumerWidget {
 
   static String _monthName(DateTime d, DateTime now) => switch (d.month) {
     1 => 'janvier',
-    2 => 'février',
+    2 => l10n.fevrier,
     3 => 'mars',
     4 => 'avril',
     5 => 'mai',
     6 => 'juin',
     7 => 'juillet',
-    8 => 'août',
+    8 => l10n.aout,
     9 => 'septembre',
     10 => 'octobre',
     11 => 'novembre',
-    _ => 'décembre',
+    _ => l10n.decembre,
   };
 }
 
@@ -571,17 +593,17 @@ class _Cancelled extends ConsumerWidget {
     final items = cancelled.value;
     if (items == null) {
       if (cancelled.hasError) return _Retry(() => ref.invalidate(cancelledMatchesProvider));
-      return const MuSkeletonGroup(
-        label: 'Chargement',
-        child: Padding(padding: EdgeInsets.all(MuSpace.s4), child: MuBookingCard.loading()),
+      return MuSkeletonGroup(
+        label: l10n.chargement,
+        child: const Padding(padding: EdgeInsets.all(MuSpace.s4), child: MuBookingCard.loading()),
       );
     }
     if (items.isEmpty) {
-      return const Center(
+      return Center(
         child: MuEmptyState(
           illustration: MuEmptyIllustration.bookings,
-          title: 'Aucune annulation',
-          description: 'Les parties et réservations annulées, avec leur remboursement.',
+          title: l10n.aucuneAnnulation,
+          description: l10n.lesPartiesEtReservationsAnnulees,
         ),
       );
     }
@@ -613,11 +635,11 @@ class _Cancelled extends ConsumerWidget {
                 Row(
                   children: [
                     Expanded(
-                      child: Text('Remboursement', style: MuType.h3.copyWith(color: c.text)),
+                      child: Text(l10n.remboursement, style: MuType.h3.copyWith(color: c.text)),
                     ),
-                    const MuStatusBadge(
+                    MuStatusBadge(
                       status: MuStatus.refunded,
-                      label: 'Remboursé',
+                      label: l10n.rembourse2,
                       size: MuBadgeSize.s,
                     ),
                   ],
@@ -634,8 +656,8 @@ class _Cancelled extends ConsumerWidget {
                           children: [
                             TextSpan(
                               text: item.byMe
-                                  ? 'Annulée par toi, le terrain et les joueurs sont prévenus.'
-                                  : 'Annulée par l’organisateur, ${item.cancelledBy.name}.',
+                                  ? l10n.annuleeParToiLeTerrain
+                                  : l10n.annuleeParLOrganisateur(item.cancelledBy.name),
                               style: MuType.body.copyWith(color: c.text),
                             ),
                             if (item.reason != null)
@@ -651,16 +673,16 @@ class _Cancelled extends ConsumerWidget {
                 ),
                 const SizedBox(height: MuSpace.s3),
                 _Line(
-                  'Crédité le ${formatDateTime(item.refundedAt)}',
+                  l10n.crediteLe(formatDateTime(item.refundedAt)),
                   '+${formatDT(item.refund)}',
                   valueColor: c.successText,
                 ),
                 if (item.totalRefund != null && item.playersRefunded > 1)
                   _Line(
-                    'Total remboursé · ${item.playersRefunded} joueurs',
+                    l10n.totalRembourseJoueurs(item.playersRefunded),
                     formatDT(item.totalRefund!),
                   ),
-                _Line('Ton solde MatchUp', formatDT(balance)),
+                _Line(l10n.tonSoldeMatchup, formatDT(balance)),
                 const SizedBox(height: MuSpace.s3),
                 Container(
                   padding: const EdgeInsets.all(MuSpace.s3),
@@ -673,9 +695,8 @@ class _Cancelled extends ConsumerWidget {
                       Expanded(
                         child: Text(
                           item.byMe
-                              ? 'Chaque joueur est remboursé en entier sur son solde MatchUp.'
-                              : 'Quand l’organisateur ou le terrain annule, ta part est remboursée '
-                                    'en entier, sans démarche.',
+                              ? l10n.chaqueJoueurEstRembourseEn
+                              : l10n.quandLOrganisateurOuLe,
                           style: captionStyle,
                         ),
                       ),
@@ -757,10 +778,10 @@ class _Retry extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Center(
     child: MuEmptyState(
-      title: 'Impossible de charger tes matchs',
-      description: 'Vérifie ta connexion puis réessaie.',
+      title: l10n.impossibleDeChargerTesMatchs,
+      description: l10n.verifieTaConnexionPuisReessaie,
       compact: true,
-      actions: [MuButton.secondary(label: 'Réessayer', onPressed: onRetry)],
+      actions: [MuButton.secondary(label: l10n.reessayer, onPressed: onRetry)],
     ),
   );
 }

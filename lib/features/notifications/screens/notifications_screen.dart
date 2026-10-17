@@ -10,6 +10,7 @@ import '../../../ui/ui.dart';
 import '../data/notification_models.dart';
 import '../data/notification_repository.dart';
 import '../widgets/notification_tile.dart';
+import '../../../l10n/l10n.dart';
 
 /// NOT-01 · Centre de notifications, NOT-02 (a category filter) and NOT-03 (« Tout est calme »):
 /// the filter chips, the unread count with « Tout marquer comme lu », then Aujourd’hui / Cette
@@ -50,21 +51,21 @@ class _NotificationCenterScreenState extends ConsumerState<NotificationCenterScr
     final week = today.subtract(const Duration(days: 6));
     final sections = <(String, List<AppNotification>)>[
       (
-        'Aujourd’hui',
+        l10n.aujourdHui2,
         [
           for (final n in items)
             if (!n.at.isBefore(today)) n,
         ],
       ),
       (
-        'Cette semaine',
+        l10n.cetteSemaine,
         [
           for (final n in items)
             if (n.at.isBefore(today) && !n.at.isBefore(week)) n,
         ],
       ),
       (
-        'Plus ancien',
+        l10n.plusAncien,
         [
           for (final n in items)
             if (n.at.isBefore(week)) n,
@@ -83,7 +84,7 @@ class _NotificationCenterScreenState extends ConsumerState<NotificationCenterScr
             if (i > 0) const SizedBox(width: MuSpace.s2),
             Center(
               child: MuChip(
-                label: f?.label ?? 'Tout',
+                label: f?.label ?? l10n.tout,
                 selected: _filter == f,
                 onSelected: (_) => setState(() => _filter = f),
               ),
@@ -102,11 +103,11 @@ class _NotificationCenterScreenState extends ConsumerState<NotificationCenterScr
           padding: const EdgeInsets.all(MuSpace.s6),
           child: MuEmptyState(
             illustration: MuEmptyIllustration.notifications,
-            title: 'Tout est calme',
-            description: 'Tu verras ici tes invitations, rappels de match et paiements dès qu’il se passe quelque chose.',
+            title: l10n.toutEstCalme,
+            description: l10n.tuVerrasIciTesInvitations,
             actions: [
               MuButton.secondary(
-                label: 'Gérer mes notifications',
+                label: l10n.gererMesNotifications,
                 leading: PhosphorIcons.gearSix(),
                 onPressed: () => context.push(Routes.notificationSettings),
               ),
@@ -138,14 +139,14 @@ class _NotificationCenterScreenState extends ConsumerState<NotificationCenterScr
                           text: '$unread',
                           style: MuType.labelS.copyWith(color: c.text),
                         ),
-                        TextSpan(text: unread == 1 ? ' non lue' : ' non lues'),
+                        TextSpan(text: unread == 1 ? l10n.nonLue : l10n.nonLues),
                       ],
                     ),
                     style: caption,
                   ),
                 ),
                 MuButton.tertiary(
-                  label: 'Tout marquer comme lu',
+                  label: l10n.toutMarquerCommeLu,
                   leading: PhosphorIcons.checks(),
                   size: MuButtonSize.s,
                   onPressed: unread == 0
@@ -191,7 +192,7 @@ class _NotificationCenterScreenState extends ConsumerState<NotificationCenterScr
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: MuSpace.s8),
               child: Text(
-                'Tu as tout vu. Les notifications de plus de 90 jours sont effacées.',
+                l10n.tuAsToutVuLes,
                 textAlign: TextAlign.center,
                 style: caption,
               ),
@@ -206,12 +207,12 @@ class _NotificationCenterScreenState extends ConsumerState<NotificationCenterScr
       body: Column(
         children: [
           MuTopAppBar.compact(
-            title: 'Notifications',
+            title: l10n.notifications,
             onBack: () => goBack(context, Routes.home),
             actions: [
               MuBarAction(
                 icon: PhosphorIcons.gearSix(),
-                label: 'Préférences de notification',
+                label: l10n.preferencesDeNotification,
                 onPressed: () => context.push(Routes.notificationSettings),
               ),
             ],

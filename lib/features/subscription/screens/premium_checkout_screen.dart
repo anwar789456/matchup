@@ -15,6 +15,7 @@ import '../controllers/subscription_controller.dart';
 import '../data/subscription_repository.dart';
 import '../widgets/subscription_widgets.dart';
 import 'offers_screen.dart';
+import '../../../l10n/l10n.dart';
 
 /// SUB-02 · Checkout Premium: the trial at 0 DT today — the plan (Mensuel / Annuel), the
 /// timeline (today, reminder mar. 27 oct., first charge ven. 30 oct.), the card for after the
@@ -56,7 +57,7 @@ class _PremiumCheckoutScreenState extends ConsumerState<PremiumCheckoutScreen> {
     _cardId ??= cards.where((x) => x.isDefault).firstOrNull?.id ?? cards.firstOrNull?.id;
     final card = cards.where((x) => x.id == _cardId).firstOrNull;
     final amount = yearly ? Subscription.yearly : Subscription.monthly;
-    final unit = yearly ? 'par an' : 'par mois';
+    final unit = yearly ? l10n.parAn : l10n.parMois;
     final caption = MuType.caption.copyWith(color: c.textSecondary);
 
     Widget step(
@@ -108,18 +109,18 @@ class _PremiumCheckoutScreenState extends ConsumerState<PremiumCheckoutScreen> {
       body: Column(
         children: [
           MuTopAppBar.compact(
-            title: 'Paiement',
+            title: l10n.paiement,
             onBack: _busy ? null : () => goBack(context, Routes.subscriptionOffers),
-            actions: [MuBarAction(icon: PhosphorIcons.lockSimple(), label: 'Sécurisé')],
+            actions: [MuBarAction(icon: PhosphorIcons.lockSimple(), label: l10n.securise)],
           ),
           const TestRibbon(),
           Expanded(
             child: ListView(
               padding: const EdgeInsets.fromLTRB(MuSpace.s4, MuSpace.s4, MuSpace.s4, MuSpace.s6),
               children: [
-                const FlowTitle(
-                  'Démarre ton essai Premium',
-                  lead: '14 jours pour tout essayer. Tu ne paies rien aujourd’hui.',
+                FlowTitle(
+                  l10n.demarreTonEssaiPremium,
+                  lead: l10n.joursPourToutEssayerTu,
                 ),
                 const SizedBox(height: MuSpace.s5),
                 MuCardSurface(
@@ -148,15 +149,15 @@ class _PremiumCheckoutScreenState extends ConsumerState<PremiumCheckoutScreen> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  'MatchUp Premium',
+                                  l10n.matchupPremium,
                                   style: MuType.labelL.copyWith(color: c.text),
                                 ),
-                                Text('Joueur · sans engagement', style: caption),
+                                Text(l10n.joueurSansEngagement, style: caption),
                               ],
                             ),
                           ),
                           MuButton.tertiary(
-                            label: 'Modifier',
+                            label: l10n.modifier,
                             size: MuButtonSize.s,
                             onPressed: () => goBack(context, Routes.subscriptionOffers),
                           ),
@@ -164,16 +165,16 @@ class _PremiumCheckoutScreenState extends ConsumerState<PremiumCheckoutScreen> {
                       ),
                       const SizedBox(height: MuSpace.s3),
                       MuSegmentedControl<MuBillingPeriod>(
-                        semanticLabel: 'Période de facturation',
+                        semanticLabel: l10n.periodeDeFacturation,
                         expand: true,
                         segments: [
                           MuSegment(
                             value: MuBillingPeriod.month,
-                            label: 'Mensuel · ${formatDT(Subscription.monthly)}',
+                            label: l10n.mensuel2(formatDT(Subscription.monthly)),
                           ),
                           MuSegment(
                             value: MuBillingPeriod.year,
-                            label: 'Annuel · ${formatDT(Subscription.yearly)}',
+                            label: l10n.annuel2(formatDT(Subscription.yearly)),
                             badge: '−17 %',
                           ),
                         ],
@@ -185,23 +186,23 @@ class _PremiumCheckoutScreenState extends ConsumerState<PremiumCheckoutScreen> {
                       const SizedBox(height: MuSpace.s4),
                       step(
                         PhosphorIcons.check(PhosphorIconsStyle.bold),
-                        'Aujourd’hui · essai gratuit',
-                        'Tout Premium débloqué pendant 14 jours',
+                        l10n.aujourdHuiEssaiGratuit,
+                        l10n.toutPremiumDebloquePendantJours,
                         formatDT(0),
                         done: true,
                       ),
                       step(
                         PhosphorIcons.bell(),
-                        'mar. 27 oct. · rappel',
-                        'On te prévient 3 jours avant, par notification et email',
+                        l10n.marOctRappel,
+                        l10n.onTePrevientJoursAvant,
                         null,
                       ),
                       step(
                         PhosphorIcons.creditCard(),
-                        'ven. 30 oct. · 1er prélèvement',
+                        l10n.venOct1erPrelevement,
                         yearly
-                            ? 'Sur ta carte, puis chaque année le 30 oct.'
-                            : 'Sur ta carte, puis chaque mois le 30',
+                            ? l10n.surTaCartePuisChaque
+                            : l10n.surTaCartePuisChaque2,
                         formatDT(amount),
                         last: true,
                       ),
@@ -216,7 +217,7 @@ class _PremiumCheckoutScreenState extends ConsumerState<PremiumCheckoutScreen> {
                           children: [
                             Expanded(
                               child: Text(
-                                'À payer aujourd’hui',
+                                l10n.aPayerAujourdHui,
                                 style: MuType.labelL.copyWith(color: c.text),
                               ),
                             ),
@@ -230,11 +231,11 @@ class _PremiumCheckoutScreenState extends ConsumerState<PremiumCheckoutScreen> {
                 const SizedBox(height: MuSpace.s6),
                 Semantics(
                   header: true,
-                  child: Text('Carte pour après l’essai', style: MuType.h3.copyWith(color: c.text)),
+                  child: Text(l10n.cartePourApresLEssai, style: MuType.h3.copyWith(color: c.text)),
                 ),
                 const SizedBox(height: MuSpace.s1),
                 Text(
-                  'Rien n’est débité aujourd’hui : ta banque peut juste afficher une vérification à 0 DT.',
+                  l10n.rienNEstDebiteAujourd,
                   style: MuType.body.copyWith(color: c.textSecondary),
                 ),
                 const SizedBox(height: MuSpace.s3),
@@ -266,7 +267,7 @@ class _PremiumCheckoutScreenState extends ConsumerState<PremiumCheckoutScreen> {
                         endIndent: MuSpace.s4,
                       ),
                       MuSettingsRow(
-                        title: 'Ajouter une carte',
+                        title: l10n.ajouterUneCarte,
                         icon: PhosphorIcons.plus(),
                         onTap: () => showComingSoon(context),
                       ),
@@ -278,30 +279,30 @@ class _PremiumCheckoutScreenState extends ConsumerState<PremiumCheckoutScreen> {
                   MuBanner(
                     tone: MuBannerTone.warning,
                     icon: PhosphorIcons.creditCard(),
-                    title: 'Cette carte expire avant ton 2e prélèvement',
-                    detail: 'Le 30 nov., le paiement échouerait. Choisis ta Visa ou mets cette carte à jour.',
+                    title: l10n.cetteCarteExpireAvantTon,
+                    detail: l10n.leNovLePaiementEchouerait,
                   ),
                 ],
                 const SizedBox(height: MuSpace.s5),
-                const CheckLine(
+                CheckLine(
                   span: TextSpan(
                     children: [
                       TextSpan(
-                        text: 'Résiliable à tout moment',
-                        style: TextStyle(fontWeight: FontWeight.w600),
+                        text: l10n.resiliableAToutMoment,
+                        style: const TextStyle(fontWeight: FontWeight.w600),
                       ),
-                      TextSpan(text: ' en 2 étapes depuis ton compte, sans frais.'),
+                      TextSpan(text: l10n.enEtapesDepuisTonCompte),
                     ],
                   ),
                 ),
-                const CheckLine(
+                CheckLine(
                   span: TextSpan(
                     children: [
                       TextSpan(
-                        text: 'Rappel 3 jours avant',
-                        style: TextStyle(fontWeight: FontWeight.w600),
+                        text: l10n.rappelJoursAvant,
+                        style: const TextStyle(fontWeight: FontWeight.w600),
                       ),
-                      TextSpan(text: ' le premier prélèvement : tu as le temps de décider.'),
+                      TextSpan(text: l10n.lePremierPrelevementTuAs),
                     ],
                   ),
                 ),
@@ -311,10 +312,10 @@ class _PremiumCheckoutScreenState extends ConsumerState<PremiumCheckoutScreen> {
                 MuCheckbox(
                   value: _agree,
                   onChanged: (v) => setState(() => _agree = v ?? false),
-                  label: 'J’accepte les conditions d’abonnement',
+                  label: l10n.jAccepteLesConditionsD2,
                   description:
-                      'J’autorise MatchUp à prélever ${formatDT(amount)} $unit sur ma ${card?.label ?? 'carte'} à partir du ven. 30 oct. 2026, jusqu’à ce que je résilie.',
-                  error: _tried && !_agree ? 'Coche cette case pour démarrer l’essai.' : null,
+                      l10n.jAutoriseMatchupAPrelever(formatDT(amount), unit, card?.label ?? 'carte'),
+                  error: _tried && !_agree ? l10n.cocheCetteCasePourDemarrer : null,
                 ),
               ],
             ),
@@ -324,7 +325,7 @@ class _PremiumCheckoutScreenState extends ConsumerState<PremiumCheckoutScreen> {
       bottomNavigationBar: StickyActionBar(
         children: [
           MuButton.primary(
-            label: 'Commencer l’essai gratuit',
+            label: l10n.commencerLEssaiGratuit,
             price: formatDT(0),
             size: MuButtonSize.xl,
             fullWidth: true,
@@ -332,11 +333,11 @@ class _PremiumCheckoutScreenState extends ConsumerState<PremiumCheckoutScreen> {
             onPressed: card == null || _busy ? null : () => _start(card, period),
           ),
           Text(
-            'Puis ${perPeriod(amount, period)} dès le ven. 30 oct. · résiliable à tout moment',
+            l10n.puisDesLeVenOct(perPeriod(amount, period)),
             textAlign: TextAlign.center,
             style: caption,
           ),
-          const SecureNote(),
+          SecureNote(),
         ],
       ),
     );

@@ -11,6 +11,7 @@ import '../../../ui/ui.dart';
 import '../../common/widgets/coming_soon.dart';
 import '../../home/controllers/home_providers.dart';
 import '../data/wallet_repository.dart';
+import '../../../l10n/l10n.dart';
 
 enum _Filter { all, payments, refunds, topups }
 
@@ -48,7 +49,7 @@ class _WalletScreenState extends ConsumerState<WalletScreen> {
           t,
     ];
     String group(DateTime d) {
-      if (d.year == now.year && d.month == now.month && d.day == now.day) return 'Aujourd’hui';
+      if (d.year == now.year && d.month == now.month && d.day == now.day) return l10n.aujourdHui2;
       return '${_month(d.month)} ${d.year}';
     }
 
@@ -57,8 +58,8 @@ class _WalletScreenState extends ConsumerState<WalletScreen> {
       body: Column(
         children: [
           MuTopAppBar.compact(
-            title: 'Portefeuille',
-            backLabel: 'Retour au menu du compte',
+            title: l10n.portefeuille,
+            backLabel: l10n.retourAuMenuDuCompte,
             onBack: () => context.canPop() ? context.pop() : context.go(Routes.home),
           ),
           Expanded(
@@ -66,7 +67,7 @@ class _WalletScreenState extends ConsumerState<WalletScreen> {
               padding: const EdgeInsets.fromLTRB(MuSpace.s4, MuSpace.s2, MuSpace.s4, MuSpace.s8),
               children: [
                 Semantics(
-                  label: 'Solde MatchUp : ${formatDT(balance)}',
+                  label: l10n.soldeMatchup3(formatDT(balance)),
                   child: Container(
                     padding: const EdgeInsets.all(MuSpace.s5),
                     decoration: BoxDecoration(
@@ -81,7 +82,7 @@ class _WalletScreenState extends ConsumerState<WalletScreen> {
                           children: [
                             Icon(PhosphorIcons.wallet(), size: MuSize.iconXs, color: inverse.withValues(alpha: 0.7)),
                             const SizedBox(width: MuSpace.s1),
-                            Text('SOLDE MATCHUP', style: MuType.overline.copyWith(color: inverse.withValues(alpha: 0.7))),
+                            Text(l10n.soldeMatchup4, style: MuType.overline.copyWith(color: inverse.withValues(alpha: 0.7))),
                           ],
                         ),
                         const SizedBox(height: MuSpace.s2),
@@ -91,12 +92,12 @@ class _WalletScreenState extends ConsumerState<WalletScreen> {
                             TextSpan(text: ' DT', style: MuType.numL.copyWith(color: inverse)),
                           ]),
                         ),
-                        Text('Paie tes parts en un tap. Tes remboursements arrivent ici.', style: MuType.caption.copyWith(color: inverse.withValues(alpha: 0.7))),
+                        Text(l10n.paieTesPartsEnUn, style: MuType.caption.copyWith(color: inverse.withValues(alpha: 0.7))),
                         const SizedBox(height: MuSpace.s4),
                         MuNightTheme(
                         child: Builder(
                             builder: (context) => MuButton.primary(
-                              label: 'Recharger',
+                              label: l10n.recharger,
                               leading: PhosphorIcons.plus(),
                               size: MuButtonSize.l,
                               fullWidth: true,
@@ -114,11 +115,11 @@ class _WalletScreenState extends ConsumerState<WalletScreen> {
                     for (final r in refunds.where((r) => r.stage != RefundStage.refunded))
                       MuSettingsRow(
                         icon: PhosphorIcons.arrowUUpLeft(),
-                        title: 'Remboursement demandé · ${formatDT(r.amount)}',
+                        title: l10n.remboursementDemande(formatDT(r.amount)),
                         trailing: Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            const MuStatusBadge(status: MuStatus.pending, label: 'En cours d’examen', size: MuBadgeSize.s),
+                            MuStatusBadge(status: MuStatus.pending, label: l10n.enCoursDExamen, size: MuBadgeSize.s),
                             const SizedBox(width: MuSpace.s2),
                             Text(r.transaction.label.split(' · ').last, style: caption),
                             const SizedBox(width: MuSpace.s2),
@@ -129,28 +130,28 @@ class _WalletScreenState extends ConsumerState<WalletScreen> {
                       ),
                     MuSettingsRow(
                       icon: PhosphorIcons.receipt(),
-                      title: 'Demander un remboursement',
-                      description: 'Terrain fermé, match annulé…',
+                      title: l10n.demanderUnRemboursement,
+                      description: l10n.terrainFermeMatchAnnule,
                       onTap: () => context.push(Routes.walletRefund),
                     ),
                   ],
                 ),
                 const SizedBox(height: MuSpace.s6),
-                Semantics(header: true, child: Text('Historique', style: MuType.h2.copyWith(color: c.text))),
+                Semantics(header: true, child: Text(l10n.historique, style: MuType.h2.copyWith(color: c.text))),
                 const SizedBox(height: MuSpace.s1),
-                Text('Les paiements par carte sont listés pour ton suivi, sans toucher à ton solde.', style: caption),
+                Text(l10n.lesPaiementsParCarteSont, style: caption),
                 const SizedBox(height: MuSpace.s3),
                 Semantics(
-                  label: 'Filtrer l’historique',
+                  label: l10n.filtrerLHistorique,
                   child: SingleChildScrollView(
                     scrollDirection: Axis.horizontal,
                     child: Row(
                       children: [
-                        for (final (f, label) in const [
-                          (_Filter.all, 'Tout'),
-                          (_Filter.payments, 'Paiements'),
-                          (_Filter.refunds, 'Remboursements'),
-                          (_Filter.topups, 'Recharges'),
+                        for (final (f, label) in [
+                          (_Filter.all, l10n.tout),
+                          (_Filter.payments, l10n.paiements),
+                          (_Filter.refunds, l10n.remboursements),
+                          (_Filter.topups, l10n.recharges),
                         ]) ...[
                           MuChip(label: label, kind: MuChipKind.choice, size: MuChipSize.s, selected: _filter == f, onSelected: (_) => setState(() => _filter = f)),
                           const SizedBox(width: MuSpace.s2),
@@ -163,7 +164,7 @@ class _WalletScreenState extends ConsumerState<WalletScreen> {
                 if (history.value == null)
                   const MuTransactionList(children: [MuTransactionRow.loading(), MuTransactionRow.loading()])
                 else if (items.isEmpty)
-                  const MuEmptyState(compact: true, title: 'Rien dans cette catégorie')
+                  MuEmptyState(compact: true, title: l10n.rienDansCetteCategorie)
                 else
                   for (final (i, t) in items.indexed) ...[
                     if (i == 0 || group(items[i - 1].date) != group(t.date)) ...[
@@ -181,7 +182,7 @@ class _WalletScreenState extends ConsumerState<WalletScreen> {
                     ],
                   ],
                 const SizedBox(height: MuSpace.s5),
-                Center(child: Text('C’est tout ton historique.', style: caption)),
+                Center(child: Text(l10n.cEstToutTonHistorique, style: caption)),
               ],
             ),
           ),
@@ -190,5 +191,5 @@ class _WalletScreenState extends ConsumerState<WalletScreen> {
     );
   }
 
-  static String _month(int m) => const ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'][m - 1];
+  static String _month(int m) => [l10n.janvier, l10n.fevrier2, l10n.mars2, l10n.avril, l10n.mai, l10n.juin, l10n.juillet, l10n.aout2, l10n.septembre, l10n.octobre, l10n.novembre, l10n.decembre2][m - 1];
 }

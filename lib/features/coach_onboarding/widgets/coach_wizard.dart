@@ -7,6 +7,7 @@ import 'package:go_router/go_router.dart';
 import '../../../router.dart';
 import '../../common/widgets/pro_wizard_scaffold.dart';
 import '../controllers/coach_controller.dart';
+import '../../../l10n/l10n.dart';
 
 /// [ProWizardScaffold] set up for step [step] of the coach onboarding.
 class CoachWizard extends ConsumerStatefulWidget {
@@ -50,8 +51,8 @@ class _CoachWizardState extends ConsumerState<CoachWizard> {
     final d = ref.watch(coachProvider).requireValue;
     return ProWizardScaffold(
       space: ProSpace.coach,
-      railTitle: 'Deviens coach sur MatchUp',
-      railMeta: '${CoachSteps.all.length} étapes · environ 5 min',
+      railTitle: l10n.deviensCoachSurMatchup,
+      railMeta: l10n.etapesEnvironMin(CoachSteps.all.length),
       steps: CoachSteps.of(d, widget.step),
       current: widget.step,
       onStepTap: (i) => context.go(_routes[i]),

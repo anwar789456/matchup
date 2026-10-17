@@ -5,6 +5,7 @@ import 'package:phosphor_flutter/phosphor_flutter.dart';
 import '../theme/theme.dart';
 import 'mu_icon_button.dart';
 import 'src/interaction.dart';
+import '../l10n/l10n.dart';
 
 enum MuStepperSize { m, s }
 
@@ -17,7 +18,7 @@ enum MuStepperLayout { stacked, inline, bare }
 /// It reads as one adjustable control (« 4 places, 10 joueurs · 15 DT chacun »); the digits slide
 /// up on increase and down on decrease.
 class MuStepper extends StatefulWidget {
-  const MuStepper({
+  MuStepper({
     super.key,
     required this.value,
     required this.min,
@@ -28,9 +29,9 @@ class MuStepper extends StatefulWidget {
     this.unit,
     this.size = MuStepperSize.m,
     this.layout = MuStepperLayout.inline,
-    this.decrementLabel = 'Retirer',
-    this.incrementLabel = 'Ajouter',
-  });
+    String? decrementLabel,
+    String? incrementLabel,
+  }) : incrementLabel = incrementLabel ?? l10n.ajouter, decrementLabel = decrementLabel ?? l10n.retirer3;
 
   final int value;
   final int min;

@@ -15,6 +15,7 @@ import '../controllers/subscription_controller.dart';
 import '../data/subscription_repository.dart';
 import '../widgets/subscription_widgets.dart';
 import 'offers_screen.dart';
+import '../../../l10n/l10n.dart';
 
 /// SUB-04 · Abonnement: the plan card (trial days left, next charge, card), « Changer d’offre »,
 /// the reminder, the payment methods, the PDF receipts and « Résilier l’abonnement ». Cancelled,
@@ -49,7 +50,7 @@ class SubscriptionScreen extends ConsumerWidget {
     final end = formatDay(sub.trialEnds);
 
     final (String nextValue, String thenValue) = cancelled
-        ? ('Aucun', 'Offre Gratuit après le ${sub.trialEnds.day} ${formatMonth(sub.trialEnds)}')
+        ? (l10n.aucun, l10n.offreGratuitApresLe(sub.trialEnds.day, formatMonth(sub.trialEnds)))
         : sub.offerAccepted
         ? (
             '${formatDT(Subscription.offerMonthly)} · $end',
@@ -58,8 +59,8 @@ class SubscriptionScreen extends ConsumerWidget {
         : (
             '${formatDT(sub.price)} · $end',
             sub.yearlyPlan
-                ? '${perPeriod(Subscription.yearly, sub.period)}, le 30 oct.'
-                : '${perPeriod(Subscription.monthly, sub.period)}, le 30',
+                ? l10n.leOct2(perPeriod(Subscription.yearly, sub.period))
+                : l10n.le2(perPeriod(Subscription.monthly, sub.period)),
           );
 
     Widget overline(String s) => Padding(
@@ -71,7 +72,7 @@ class SubscriptionScreen extends ConsumerWidget {
       backgroundColor: c.bg,
       body: Column(
         children: [
-          MuTopAppBar.compact(title: 'Abonnement', onBack: () => goBack(context, Routes.home)),
+          MuTopAppBar.compact(title: l10n.abonnement, onBack: () => goBack(context, Routes.home)),
           Expanded(
             child: ListView(
               padding: const EdgeInsets.fromLTRB(MuSpace.s4, MuSpace.s2, MuSpace.s4, MuSpace.s8),
@@ -107,9 +108,9 @@ class SubscriptionScreen extends ConsumerWidget {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text('Premium', style: MuType.h3.copyWith(color: inverse)),
+                                Text(l10n.premium, style: MuType.h3.copyWith(color: inverse)),
                                 Text(
-                                  'Joueur · ${sub.yearlyPlan ? 'annuel' : 'mensuel'}',
+                                  l10n.joueur2(sub.yearlyPlan ? 'annuel' : 'mensuel'),
                                   style: MuType.caption.copyWith(color: soft),
                                 ),
                               ],
@@ -117,7 +118,7 @@ class SubscriptionScreen extends ConsumerWidget {
                           ),
                           MuStatusBadge(
                             status: cancelled ? MuStatus.cancelled : MuStatus.confirmed,
-                            label: cancelled ? 'Résilié' : 'Essai gratuit',
+                            label: cancelled ? l10n.resilie : l10n.essaiGratuit,
                             size: MuBadgeSize.s,
                           ),
                         ],
@@ -127,11 +128,11 @@ class SubscriptionScreen extends ConsumerWidget {
                         children: [
                           Expanded(
                             child: Text(
-                              cancelled ? 'Premium actif' : '$left jours d’essai restants',
+                              cancelled ? l10n.premiumActif : l10n.joursDEssaiRestants(left),
                               style: MuType.label.copyWith(color: inverse),
                             ),
                           ),
-                          Text('jusqu’au $end', style: MuType.caption.copyWith(color: soft)),
+                          Text(l10n.jusquAu2(end), style: MuType.caption.copyWith(color: soft)),
                         ],
                       ),
                       const SizedBox(height: MuSpace.s2),
@@ -147,11 +148,11 @@ class SubscriptionScreen extends ConsumerWidget {
                         ),
                       ),
                       const SizedBox(height: MuSpace.s2),
-                      SubLine('Prochain prélèvement', nextValue, inverse: true),
+                      SubLine(l10n.prochainPrelevement, nextValue, inverse: true),
                       Divider(height: 1, thickness: 1, color: inverse.withValues(alpha: 0.12)),
-                      SubLine('Ensuite', thenValue, inverse: true),
+                      SubLine(l10n.ensuite, thenValue, inverse: true),
                       Divider(height: 1, thickness: 1, color: inverse.withValues(alpha: 0.12)),
-                      SubLine('Carte', sub.cardLabel, inverse: true),
+                      SubLine(l10n.carte, sub.cardLabel, inverse: true),
                       const SizedBox(height: MuSpace.s3),
                       MuNightTheme(
                         child: Row(
@@ -159,14 +160,14 @@ class SubscriptionScreen extends ConsumerWidget {
                             Expanded(
                               child: cancelled
                                   ? MuButton.primary(
-                                      label: 'Réactiver Premium',
+                                      label: l10n.reactiverPremium,
                                       leading: PhosphorIcons.arrowCounterClockwise(),
                                       fullWidth: true,
                                       onPressed: () =>
                                           ref.read(subscriptionProvider.notifier).reactivate(),
                                     )
                                   : MuButton.secondary(
-                                      label: 'Changer d’offre',
+                                      label: l10n.changerDOffre,
                                       fullWidth: true,
                                       onPressed: () => context.push(Routes.subscriptionChange),
                                     ),
@@ -174,7 +175,7 @@ class SubscriptionScreen extends ConsumerWidget {
                             const SizedBox(width: MuSpace.s3),
                             Expanded(
                               child: MuButton.tertiary(
-                                label: 'Voir les avantages',
+                                label: l10n.voirLesAvantages,
                                 fullWidth: true,
                                 onPressed: () => context.push(Routes.subscriptionOffers),
                               ),
@@ -190,12 +191,12 @@ class SubscriptionScreen extends ConsumerWidget {
                   MuBanner(
                     tone: MuBannerTone.info,
                     icon: PhosphorIcons.bellRinging(PhosphorIconsStyle.fill),
-                    title: 'Rappel le ${formatDay(sub.reminder)}',
-                    detail: 'On te prévient 3 jours avant le premier prélèvement, par notification et email.',
+                    title: l10n.rappelLe(formatDay(sub.reminder)),
+                    detail: l10n.onTePrevientJoursAvant2,
                   ),
                 ],
                 const SizedBox(height: MuSpace.s6),
-                overline('Moyens de paiement'),
+                overline(l10n.moyensDePaiement),
                 MuCardSurface(
                   padding: EdgeInsets.zero,
                   child: Column(
@@ -230,9 +231,9 @@ class SubscriptionScreen extends ConsumerWidget {
                                           style: MuType.label.copyWith(color: c.text),
                                         ),
                                         if (card.isDefault)
-                                          const MuStatusBadge(
+                                          MuStatusBadge(
                                             status: MuStatus.neutral,
-                                            label: 'Par défaut',
+                                            label: l10n.parDefaut,
                                             size: MuBadgeSize.s,
                                           ),
                                       ],
@@ -247,18 +248,18 @@ class SubscriptionScreen extends ConsumerWidget {
                                           ),
                                           const SizedBox(width: MuSpace.s1),
                                           Text(
-                                            'Expire le mois prochain (${card.expiry})',
+                                            l10n.expireLeMoisProchain(card.expiry),
                                             style: MuType.caption.copyWith(color: c.warningText),
                                           ),
                                         ],
                                       ),
                                       MuButton.link(
-                                        label: 'Mettre à jour la carte',
+                                        label: l10n.mettreAJourLaCarte,
                                         onPressed: () => showComingSoon(context),
                                       ),
                                     ] else
                                       Text(
-                                        'Expire ${card.expiry}${card.label == sub.cardLabel ? ' · utilisée pour Premium' : ''}',
+                                        l10n.expire2(card.expiry, card.label == sub.cardLabel ? l10n.utiliseePourPremium : ''),
                                         style: caption,
                                       ),
                                   ],
@@ -276,7 +277,7 @@ class SubscriptionScreen extends ConsumerWidget {
                         endIndent: MuSpace.s4,
                       ),
                       MuSettingsRow(
-                        title: 'Ajouter une carte',
+                        title: l10n.ajouterUneCarte,
                         icon: PhosphorIcons.plus(),
                         onTap: () => showComingSoon(context),
                       ),
@@ -284,7 +285,7 @@ class SubscriptionScreen extends ConsumerWidget {
                   ),
                 ),
                 const SizedBox(height: MuSpace.s6),
-                overline('Factures et reçus'),
+                overline(l10n.facturesEtRecus),
                 MuCardSurface(
                   padding: EdgeInsets.zero,
                   child: Column(
@@ -323,7 +324,7 @@ class SubscriptionScreen extends ConsumerWidget {
                                   children: [
                                     Text(r.label, style: MuType.label.copyWith(color: c.text)),
                                     Text(
-                                      'Reçu · ${r.date.day} ${formatMonth(r.date)} · ${r.card}',
+                                      l10n.recu3(r.date.day, formatMonth(r.date), r.card),
                                       style: caption,
                                     ),
                                   ],
@@ -340,10 +341,10 @@ class SubscriptionScreen extends ConsumerWidget {
                                   const SizedBox(height: MuSpace.s1),
                                   Semantics(
                                     label:
-                                        'Télécharger le reçu PDF, ${r.label}, ${r.date.day} ${formatMonth(r.date)}',
+                                        l10n.telechargerLeRecuPdf(r.label, r.date.day, formatMonth(r.date)),
                                     excludeSemantics: true,
                                     child: MuButton.secondary(
-                                      label: 'PDF',
+                                      label: l10n.pdf,
                                       leading: PhosphorIcons.downloadSimple(),
                                       size: MuButtonSize.s,
                                       onPressed: () => context.push(Routes.receipt, extra: r),
@@ -362,7 +363,7 @@ class SubscriptionScreen extends ConsumerWidget {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: MuSpace.s4),
                   child: Text(
-                    'Ta première facture Premium arrivera le $end, avec le prélèvement.',
+                    l10n.taPremiereFacturePremiumArrivera(end),
                     style: caption,
                   ),
                 ),
@@ -372,16 +373,16 @@ class SubscriptionScreen extends ConsumerWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
-                        Text('Résilier Premium', style: MuType.h3.copyWith(color: c.text)),
+                        Text(l10n.resilierPremium, style: MuType.h3.copyWith(color: c.text)),
                         const SizedBox(height: MuSpace.s1),
                         Text(
-                          'En 2 étapes, sans frais. Si tu résilies pendant l’essai, tu gardes Premium jusqu’au $end et rien n’est prélevé.',
+                          l10n.enEtapesSansFraisSi(end),
                           style: MuType.body.copyWith(color: c.textSecondary),
                         ),
                         const SizedBox(height: MuSpace.s4),
                         MuButton(
                           variant: MuButtonVariant.destructiveOutline,
-                          label: 'Résilier l’abonnement',
+                          label: l10n.resilierLAbonnement,
                           leading: PhosphorIcons.xCircle(),
                           size: MuButtonSize.l,
                           fullWidth: true,

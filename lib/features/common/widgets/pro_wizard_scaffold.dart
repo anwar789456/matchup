@@ -7,16 +7,19 @@ import 'package:phosphor_flutter/phosphor_flutter.dart';
 import '../../../core/format.dart';
 import '../../../theme/theme.dart';
 import '../../../ui/ui.dart';
+import '../../../l10n/l10n.dart';
 
 /// The three pro spaces and how their onboarding introduces itself.
 enum ProSpace {
-  owner('Espace propriétaire'),
-  coach('Espace coach'),
-  organizer('Espace organisateur');
+  owner,
+  coach,
+  organizer;
 
-  const ProSpace(this.label);
-
-  final String label;
+  String get label => switch (this) {
+    ProSpace.owner => l10n.espaceProprietaire,
+    ProSpace.coach => l10n.espaceCoach,
+    ProSpace.organizer => l10n.espaceOrganisateur,
+  };
 
   Widget icon(Color color, double size) => switch (this) {
     ProSpace.owner => Icon(PhosphorIcons.storefront(), size: size, color: color),
@@ -38,7 +41,7 @@ enum ProSpace {
 /// Below 1200 the draft note hides; below 960 the rail gives way to a compact header with the
 /// compact stepper; below 720 the field grids stack (see [ProFieldGrid]).
 class ProWizardScaffold extends StatelessWidget {
-  const ProWizardScaffold({
+  ProWizardScaffold({
     super.key,
     required this.space,
     required this.railTitle,
@@ -52,10 +55,10 @@ class ProWizardScaffold extends StatelessWidget {
     required this.onSaveAndQuit,
     required this.onContinue,
     this.onStepTap,
-    this.continueLabel = 'Continuer',
+    String? continueLabel,
     this.continueLoading = false,
     this.savedAt,
-  });
+  }) : continueLabel = continueLabel ?? l10n.continuer;
 
   final ProSpace space;
 
@@ -87,7 +90,7 @@ class ProWizardScaffold extends StatelessWidget {
   static const double content = 720;
   static const double _railBreak = 960;
 
-  String get _stepsLabel => '${space.label} · étapes';
+  String get _stepsLabel => l10n.etapes(space.label);
 
   @override
   Widget build(BuildContext context) {
@@ -264,10 +267,10 @@ class _HelpCard extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('Besoin d’aide ?', style: MuType.label.copyWith(color: c.text)),
+                Text(l10n.besoinDAide, style: MuType.label.copyWith(color: c.text)),
                 const SizedBox(height: _lineGap),
                 Text(
-                  'Appelle-nous au +216 71 234 567, du lundi au samedi, de 9h00 à 18h00.',
+                  l10n.appelleNousAuDuLundi,
                   style: MuType.caption.copyWith(color: c.textSecondary),
                 ),
               ],
@@ -336,13 +339,13 @@ class _Footer extends StatelessWidget {
   Widget build(BuildContext context) {
     final c = context.mu;
     final back = MuButton.tertiary(
-      label: 'Retour',
+      label: l10n.retour,
       leading: PhosphorIcons.arrowLeft(),
       size: MuButtonSize.l,
       onPressed: scaffold.onBack,
     );
     final save = MuButton.secondary(
-      label: 'Enregistrer et quitter',
+      label: l10n.enregistrerEtQuitter,
       size: MuButtonSize.l,
       onPressed: scaffold.onSaveAndQuit,
     );
@@ -422,7 +425,7 @@ class _DraftSavedNoteState extends State<DraftSavedNote> {
   @override
   Widget build(BuildContext context) {
     final c = context.mu;
-    final text = 'Brouillon enregistré · ${formatSince(widget.savedAt, DateTime.now())}';
+    final text = l10n.brouillonEnregistre(formatSince(widget.savedAt, DateTime.now()));
     return Semantics(
       liveRegion: true,
       label: text,
@@ -666,6 +669,6 @@ class ProExtraRow extends StatelessWidget {
 /// Toast for destinations designed in a later milestone.
 void showComingSoon(BuildContext context) => MuToast.show(
   context,
-  title: 'Bientôt disponible',
-  description: 'Cet écran arrive dans une prochaine version de MatchUp.',
+  title: l10n.bientotDisponible,
+  description: l10n.cetEcranArriveDansUne,
 );

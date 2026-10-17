@@ -3,15 +3,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 
+import '../../core/connectivity.dart';
 import '../../core/platform.dart';
 import '../../router.dart';
 import '../../theme/theme.dart';
 import '../../ui/ui.dart';
 import '../common/data/story_data.dart';
 import '../games/widgets/claim_takeover.dart';
+import '../home/controllers/home_providers.dart';
 import '../notifications/controllers/live_events.dart';
 import '../notifications/data/push_service.dart';
 import '../payments/data/payment_repository.dart';
+import '../states/data/account_status.dart';
+import '../states/widgets/state_widgets.dart';
 
 /// Whether the floating debug button shows: debug builds, not in widget tests.
 final debugMenuEnabledProvider = Provider<bool>((ref) => kDebugMode && !isWidgetTest);
@@ -78,6 +82,50 @@ Future<void> showDebugMenu(BuildContext context, WidgetRef ref) => MuBottomSheet
               for (final o in PaymentOutcome.values) MuSelectOption(value: o, label: o.label),
             ],
             onChanged: (o) => ref.read(paymentOutcomeProvider.notifier).select(o),
+          ),
+          section('États (STA-01 à STA-09)'),
+          MuSwitch(
+            value: ref.watch(simulatedOfflineProvider),
+            label: 'Hors ligne (STA-01)',
+            onChanged: (v) => ref.read(simulatedOfflineProvider.notifier).set(v),
+          ),
+          MuSwitch(
+            value: ref.watch(simulatedServerErrorProvider),
+            label: 'Erreur serveur 503 (STA-02, STA-09)',
+            onChanged: (v) {
+              ref.read(simulatedServerErrorProvider.notifier).set(v);
+              ref.invalidate(upcomingMatchesProvider);
+            },
+          ),
+          MuSwitch(
+            value: !ref.watch(accountFlagsProvider).emailVerified,
+            label: 'Email non vérifié (STA-06)',
+            onChanged: (v) => ref.read(accountFlagsProvider.notifier).setEmailVerified(!v),
+          ),
+          MuButton.tertiary(
+            label: 'Session expirée (STA-04)',
+            leading: PhosphorIcons.lockKey(),
+            fullWidth: true,
+            onPressed: () {
+              final root = Navigator.of(context, rootNavigator: true).context;
+              Navigator.of(context).pop();
+              showSessionExpired(
+                root,
+                name: Story.myName,
+                email: Story.myEmail,
+                balance: Story.myBalance,
+                onReconnect: () => ref.read(routerProvider).push(Routes.login),
+              );
+            },
+          ),
+          MuButton.tertiary(
+            label: 'Partie introuvable (STA-03)',
+            leading: PhosphorIcons.linkBreak(),
+            fullWidth: true,
+            onPressed: () {
+              Navigator.of(context).pop();
+              ref.read(routerProvider).push(Routes.game('7Q2K9'));
+            },
           ),
           section('Temps réel (NOT-07)'),
           MuButton.secondary(

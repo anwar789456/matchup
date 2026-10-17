@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import '../core/format.dart';
 import '../theme/theme.dart';
 import 'src/interaction.dart';
+import '../l10n/l10n.dart';
 
 /// What a day offers: free slots, sold out (still selectable to ask for an alert) or closed.
 enum MuDayAvailability { available, soldOut, closed }
@@ -14,7 +15,7 @@ enum MuDayAvailability { available, soldOut, closed }
 ///
 /// The month grid and the date field (`MuCalendar`, `MuDateField`) come when a screen needs them.
 class MuDateStrip extends StatefulWidget {
-  const MuDateStrip({
+  MuDateStrip({
     super.key,
     required this.start,
     required this.today,
@@ -22,9 +23,9 @@ class MuDateStrip extends StatefulWidget {
     required this.onChanged,
     this.days = 14,
     this.availability,
-    this.label = 'Jour',
+    String? label,
     this.bleed = MuSpace.s4,
-  });
+  }) : label = label ?? l10n.jour;
 
   /// The first day shown.
   final DateTime start;
@@ -141,18 +142,18 @@ class _MuDateStripState extends State<MuDateStrip> {
               final soldOut = avail != MuDayAvailability.available;
               final closed = avail == MuDayAvailability.closed;
               final ink = selected ? c.onAccent : (soldOut ? c.textDisabled : c.text);
-              final name = today ? 'Auj.' : formatWeekday(d);
+              final name = today ? l10n.auj : formatWeekday(d);
               return Semantics(
                 inMutuallyExclusiveGroup: true,
                 selected: selected,
                 button: true,
                 enabled: !closed,
                 label:
-                    '${formatDay(d)}${today ? ', aujourd’hui' : ''}'
+                    '${formatDay(d)}${today ? l10n.aujourdHui3 : ''}'
                     '${switch (avail) {
-                      MuDayAvailability.available => ', créneaux disponibles',
-                      MuDayAvailability.soldOut => ', complet',
-                      MuDayAvailability.closed => ', fermé',
+                      MuDayAvailability.available => l10n.creneauxDisponibles,
+                      MuDayAvailability.soldOut => l10n.complet3,
+                      MuDayAvailability.closed => l10n.ferme3,
                     }}',
                 excludeSemantics: true,
                 child: MuFocusRing(

@@ -15,6 +15,7 @@ import '../controllers/checkout_controller.dart';
 import '../data/payment_repository.dart';
 import '../widgets/checkout_widgets.dart';
 import '../widgets/secure_payment_takeover.dart';
+import '../../../l10n/l10n.dart';
 
 enum _Mode { cards, newCard, network }
 
@@ -45,7 +46,7 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
   bool _timeout = false;
   DateTime? _attemptAt;
   final _promoCtrl = TextEditingController();
-  final _name = TextEditingController(text: 'YASSINE BELHAJ');
+  final _name = TextEditingController(text: l10n.yassineBelhaj);
   final _number = TextEditingController();
   final _expiry = TextEditingController();
   final _cvc = TextEditingController();
@@ -88,17 +89,17 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
     final errors = <String, String>{};
     final digits = _number.text.replaceAll(' ', '');
     if (digits.length < 16 || !CardInputZone.luhn(digits)) {
-      errors['number'] = 'Numéro de carte invalide';
+      errors['number'] = l10n.numeroDeCarteInvalide;
     }
     final exp = _expiry.text.replaceAll(RegExp(r'\D'), '');
     final month = exp.length >= 2 ? int.tryParse(exp.substring(0, 2)) : null;
     final year = exp.length == 4 ? int.tryParse(exp.substring(2)) : null;
     if (month == null || year == null || month < 1 || month > 12) {
-      errors['expiry'] = 'Date d’expiration invalide';
+      errors['expiry'] = l10n.dateDExpirationInvalide;
     } else if (year < 26 || (year == 26 && month < 10)) {
-      errors['expiry'] = 'Carte expirée';
+      errors['expiry'] = l10n.carteExpiree;
     }
-    if (_cvc.text.length < 3) errors['cvc'] = 'CVC incorrect';
+    if (_cvc.text.length < 3) errors['cvc'] = l10n.cvcIncorrect;
     return errors;
   }
 
@@ -112,7 +113,7 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
     if (method == PayWith.card) {
       if (_mode == _Mode.newCard) {
         final errors = _validateCard();
-        if (_promo?.valid == false) errors['promo'] = 'Code promo expiré';
+        if (_promo?.valid == false) errors['promo'] = l10n.codePromoExpire;
         if (errors.isNotEmpty) {
           setState(() => _errors = errors);
           return;
@@ -155,7 +156,7 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
       final approved = await showSecurePaymentTakeover(
         context,
         amount: _due,
-        cardLabel: card?.label ?? 'Carte',
+        cardLabel: card?.label ?? l10n.carte,
         phone: phone,
       );
       if (!mounted) return;
@@ -192,7 +193,7 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
     _attempts++;
     if (_attempts >= _maxAttempts) {
       ref.read(lastPaymentProvider.notifier);
-      context.push(Routes.paymentFailed, extra: (card?.label ?? 'ta carte', result.reason));
+      context.push(Routes.paymentFailed, extra: (card?.label ?? l10n.taCarte, result.reason));
       setState(() {
         _busy = false;
         _attempts = 0;
@@ -204,19 +205,19 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
       _mode = _Mode.cards;
       _declinedCardId = card?.id;
       _declinedNote =
-          'Refusée à ${formatTime(result.attemptAt ?? DateTime.now())} · ${result.reason ?? 'refus de la banque'}';
+          l10n.refuseeA(formatTime(result.attemptAt ?? DateTime.now()), result.reason ?? l10n.refusDeLaBanque);
       _cardId = null;
     });
     MuToast.show(
       context,
       tone: MuToastTone.error,
-      title: 'Paiement refusé',
-      description: 'Rien n’a été débité. Choisis une autre solution.',
+      title: l10n.paiementRefuse,
+      description: l10n.rienNAEteDebite,
     );
   }
 
   Future<void> _succeed(MuLoadingOverlay overlay, PaymentReceipt receipt, CheckoutRequest req) async {
-    overlay.success(detail: 'Ta place est confirmée · reçu envoyé par e-mail');
+    overlay.success(detail: l10n.taPlaceEstConfirmeeRecu);
     final pause = MuMotion.durationOf(context, MuMotion.success);
     await req.onPaid(receipt, _fromBalance);
     ref.read(lastPaymentProvider.notifier).set(req, receipt);
@@ -227,7 +228,7 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
     if (req.kind == CheckoutKind.share) {
       context.pushReplacement(Routes.paymentSuccess);
     } else {
-      MuToast.show(context, tone: MuToastTone.success, title: 'Paiement confirmé');
+      MuToast.show(context, tone: MuToastTone.success, title: l10n.paiementConfirme);
       if (req.successRoute != null) {
         context.go(req.successRoute!);
       } else {
@@ -246,8 +247,8 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
     } else {
       MuToast.show(
         context,
-        title: 'Ta part n’est pas passée',
-        description: 'Rien n’a été débité. Tu peux réessayer.',
+        title: l10n.taPartNEstPas,
+        description: l10n.rienNAEteDebite2,
       );
     }
   }
@@ -261,9 +262,9 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
         backgroundColor: c.bg,
         body: Center(
           child: MuEmptyState(
-            title: 'Rien à payer',
-            description: 'Reviens depuis une réservation ou une partie.',
-            actions: [MuButton.primary(label: 'Accueil', onPressed: () => context.go(Routes.home))],
+            title: l10n.rienAPayer,
+            description: l10n.reviensDepuisUneReservationOu,
+            actions: [MuButton.primary(label: l10n.accueil, onPressed: () => context.go(Routes.home))],
           ),
         ),
       );
@@ -291,26 +292,26 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
       children: [
         if (req.promoAllowed) ...[
           Semantics(
-            label: 'Réductions',
+            label: l10n.reductions,
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 Expanded(
                   child: MuTextField(
-                    label: 'Code promo',
+                    label: l10n.codePromo,
                     optional: true,
                     controller: _promoCtrl,
-                    placeholder: 'Ex. BIENVENUE10',
+                    placeholder: l10n.exBienvenue10,
                     leadingIcon: PhosphorIcons.tag(),
                     textCapitalization: TextCapitalization.characters,
                     error: _promo?.error ?? _errors['promo'],
-                    success: _promo?.valid == true ? 'Code ${_promo!.code} · −${_promo!.percent} %' : null,
+                    success: _promo?.valid == true ? l10n.code2(_promo!.code, '${_promo!.percent}') : null,
                     onSubmitted: (_) => _applyPromo(),
                   ),
                 ),
                 const SizedBox(width: MuSpace.s3),
                 MuButton.secondary(
-                  label: 'Appliquer',
+                  label: l10n.appliquer,
                   size: MuButtonSize.l,
                   loading: _promoBusy,
                   onPressed: _promoBusy ? null : _applyPromo,
@@ -326,7 +327,7 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
             child: MuSwitch(
               value: _useBalance,
               icon: PhosphorIcons.wallet(),
-              label: 'Utiliser mon solde',
+              label: l10n.utiliserMonSolde,
               description: '${formatDT(balance)} disponibles',
               onChanged: balance <= 0 ? (_) {} : (v) => setState(() => _useBalance = v),
             ),
@@ -343,11 +344,11 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
                   Expanded(
                     child: Semantics(
                       header: true,
-                      child: Text('Nouvelle carte', style: MuType.h2.copyWith(color: c.text)),
+                      child: Text(l10n.nouvelleCarte, style: MuType.h2.copyWith(color: c.text)),
                     ),
                   ),
                   MuButton.link(
-                    label: 'Mes cartes',
+                    label: l10n.mesCartes,
                     onPressed: () => setState(() {
                       _mode = _Mode.cards;
                       _errors = const {};
@@ -368,10 +369,9 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
               const SizedBox(height: MuSpace.s4),
               MuCheckbox(
                 value: _saveCard,
-                label: 'Enregistrer cette carte',
+                label: l10n.enregistrerCetteCarte,
                 description:
-                    'Pour payer en un geste la prochaine fois. Elle est gardée par Stripe, jamais '
-                    'par MatchUp.',
+                    l10n.pourPayerEnUnGeste,
                 onChanged: (v) => setState(() => _saveCard = v ?? true),
               ),
             ],
@@ -382,19 +382,19 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
               Semantics(
                 header: true,
                 child: Text(
-                  _declinedNote != null ? 'Paie autrement' : 'Moyen de paiement',
+                  _declinedNote != null ? l10n.paieAutrement : l10n.moyenDePaiement,
                   style: MuType.h2.copyWith(color: c.text),
                 ),
               ),
               if (_declinedNote != null) ...[
                 const SizedBox(height: MuSpace.s1),
-                Text('Ta place t’attend. Choisis une autre solution.', style: caption),
+                Text(l10n.taPlaceTAttendChoisis, style: caption),
               ],
               const SizedBox(height: MuSpace.s3),
               if (payWithBalance)
-                const MuBanner(
+                MuBanner(
                   tone: MuBannerTone.info,
-                  title: 'Ton solde couvre tout : ta carte ne sera pas débitée.',
+                  title: l10n.tonSoldeCouvreToutTa,
                 )
               else
                 MuCardSurface(
@@ -406,7 +406,7 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
                         Semantics(
                           button: true,
                           selected: _useBalance,
-                          label: 'Solde MatchUp · ${formatDT(balance)}, couvre ta part',
+                          label: l10n.soldeMatchupCouvreTaPart(formatDT(balance)),
                           excludeSemantics: true,
                           child: InkWell(
                             onTap: () => setState(() => _useBalance = true),
@@ -426,8 +426,8 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
                                     child: Column(
                                       crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
-                                        Text('Solde MatchUp · ${formatDT(balance)}', style: MuType.label.copyWith(color: c.text)),
-                                        Text('Couvre ta part de ${formatDT(_total)}', style: MuType.caption.copyWith(color: c.successText)),
+                                        Text(l10n.soldeMatchup2(formatDT(balance)), style: MuType.label.copyWith(color: c.text)),
+                                        Text(l10n.couvreTaPartDe(formatDT(_total)), style: MuType.caption.copyWith(color: c.successText)),
                                       ],
                                     ),
                                   ),
@@ -452,7 +452,7 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
                       ],
                       Divider(height: 1, thickness: 1, color: c.border, indent: MuSpace.s4, endIndent: MuSpace.s4),
                       MuSettingsRow(
-                        title: 'Ajouter une carte',
+                        title: l10n.ajouterUneCarte,
                         icon: PhosphorIcons.plus(),
                         onTap: () => setState(() => _mode = _Mode.newCard),
                       ),
@@ -461,21 +461,21 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
                 ),
               if (!payWithBalance) ...[
                 const SizedBox(height: MuSpace.s3),
-                Center(child: Text('ou en un geste', style: caption)),
+                Center(child: Text(l10n.ouEnUnGeste, style: caption)),
                 const SizedBox(height: MuSpace.s3),
                 Row(
                   children: [
                     Expanded(
                       child: Semantics(
-                        label: 'Payer ${formatDT(_due)} avec Apple Pay',
-                        child: MuButton.primary(label: 'Apple Pay', fullWidth: true, onPressed: () => showComingSoon(context)),
+                        label: l10n.payerAvecApplePay(formatDT(_due)),
+                        child: _ExpressPay(label: l10n.applePay, onPressed: () => showComingSoon(context)),
                       ),
                     ),
                     const SizedBox(width: MuSpace.s3),
                     Expanded(
                       child: Semantics(
-                        label: 'Payer ${formatDT(_due)} avec Google Pay',
-                        child: MuButton.primary(label: 'Google Pay', fullWidth: true, onPressed: () => showComingSoon(context)),
+                        label: l10n.payerAvecGooglePay(formatDT(_due)),
+                        child: _ExpressPay(label: l10n.googlePay, onPressed: () => showComingSoon(context)),
                       ),
                     ),
                   ],
@@ -489,7 +489,7 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
                       const SizedBox(width: MuSpace.s1),
                       Expanded(
                         child: Text(
-                          'Ta carte est approvisionnée ? Ta banque bloque peut-être le paiement en ligne : appelle-la.',
+                          l10n.taCarteEstApprovisionneeTa,
                           style: caption,
                         ),
                       ),
@@ -504,11 +504,11 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
       lineLabel: req.lineLabel,
       amount: req.amount,
       total: _total,
-      discountLabel: _promo?.valid == true ? 'Code ${_promo!.code} · −${_promo!.percent} %' : null,
+      discountLabel: _promo?.valid == true ? l10n.code2(_promo!.code, '${_promo!.percent}') : null,
       discount: _promo?.valid == true ? _discount : null,
-      feeLabel: req.kind == CheckoutKind.topUp ? 'Frais de recharge' : 'Frais de service',
+      feeLabel: req.kind == CheckoutKind.topUp ? l10n.fraisDeRecharge : l10n.fraisDeService,
       note: _fromBalance > 0
-          ? 'Débité de ton solde MatchUp · il te restera ${formatDT(balance - _fromBalance)}'
+          ? l10n.debiteDeTonSoldeMatchup(formatDT(balance - _fromBalance))
           : null,
     );
 
@@ -533,7 +533,7 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
               if (_errors.isNotEmpty) ...[
                 MuBanner(
                   tone: MuBannerTone.error,
-                  title: '${_errors.length} point${_errors.length > 1 ? 's' : ''} à corriger avant de payer',
+                  title: l10n.pointACorrigerAvantDe(_errors.length, _errors.length > 1 ? 's' : ''),
                   detail:
                       '${_errors.values.join(' · ')}. Rien n’a été débité. Ce que tu as saisi est gardé.',
                 ),
@@ -542,8 +542,8 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
               if (_declinedNote != null) ...[
                 MuBanner(
                   tone: MuBannerTone.error,
-                  title: 'Paiement refusé',
-                  detail: 'Ta banque a refusé le paiement (${_declinedNote!.split(' · ').last}). Rien n’a été débité.',
+                  title: l10n.paiementRefuse,
+                  detail: l10n.taBanqueARefuseLe(_declinedNote!.split(' · ').last),
                 ),
                 const SizedBox(height: MuSpace.s4),
               ],
@@ -556,7 +556,7 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
               total,
               if (req.extraInfo.isNotEmpty) ...[
                 const SizedBox(height: MuSpace.s6),
-                Semantics(header: true, child: Text('Bon à savoir', style: MuType.h3.copyWith(color: c.text))),
+                Semantics(header: true, child: Text(l10n.bonASavoir, style: MuType.h3.copyWith(color: c.text))),
                 const SizedBox(height: MuSpace.s3),
                 MuCardSurface(
                   child: Column(
@@ -595,9 +595,9 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
                 onChanged: (v) => setState(() => _accepted = v ?? false),
                 labelSpan: TextSpan(
                   children: [
-                    const TextSpan(text: 'J’accepte les '),
-                    TextSpan(text: req.termsLabel, style: const TextStyle(decoration: TextDecoration.underline)),
-                    TextSpan(text: req.termsSuffix ?? ' et la politique d’annulation ${elideDe(req.policyVenue ?? req.title)}.'),
+                    TextSpan(text: l10n.jAccepteLes),
+                    TextSpan(text: req.termsLabel ?? l10n.conditionsDeReservation, style: const TextStyle(decoration: TextDecoration.underline)),
+                    TextSpan(text: req.termsSuffix ?? l10n.etLaPolitiqueDAnnulation2(elideDe(req.policyVenue ?? req.title))),
                   ],
                 ),
               ),
@@ -609,10 +609,10 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
       body: Column(
         children: [
           MuTopAppBar.compact(
-            title: 'Paiement',
-            backLabel: 'Retour au récapitulatif',
+            title: l10n.paiement,
+            backLabel: l10n.retourAuRecapitulatif,
             onBack: _busy ? null : () => context.pop(),
-            actions: [MuBarAction(icon: PhosphorIcons.lockSimple(), label: 'Sécurisé')],
+            actions: [MuBarAction(icon: PhosphorIcons.lockSimple(), label: l10n.securise)],
           ),
           const TestRibbon(),
           Expanded(child: body),
@@ -623,14 +623,14 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
           : StickyActionBar(
               children: [
                 MuButton.primary(
-                  label: 'Payer',
+                  label: l10n.payer,
                   price: formatDT(_due == 0 ? _total : _due),
                   size: MuButtonSize.xl,
                   fullWidth: true,
                   loading: _busy,
                   onPressed: _accepted && !_busy ? _pay : null,
                 ),
-                const SecureNote(),
+                SecureNote(),
               ],
             ),
     );
@@ -661,7 +661,7 @@ class _Summary extends StatelessWidget {
     final r = request;
     final caption = MuType.caption.copyWith(color: c.textSecondary);
     return Semantics(
-      label: 'Ta commande',
+      label: l10n.taCommande,
       child: MuCardSurface(
         padding: EdgeInsets.zero,
         child: Column(
@@ -701,7 +701,7 @@ class _Summary extends StatelessWidget {
               Divider(height: 1, thickness: 1, color: c.border),
               Semantics(
                 button: true,
-                label: open ? 'Masquer le détail de la commande' : 'Voir le détail de la commande',
+                label: open ? l10n.masquerLeDetailDeLa : l10n.voirLeDetailDeLa,
                 excludeSemantics: true,
                 child: InkWell(
                   onTap: onToggle,
@@ -709,7 +709,7 @@ class _Summary extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(horizontal: MuSpace.s4, vertical: MuSpace.s3),
                     child: Row(
                       children: [
-                        Expanded(child: Text(open ? 'Masquer le détail' : 'Voir le détail', style: MuType.label.copyWith(color: c.text))),
+                        Expanded(child: Text(open ? l10n.masquerLeDetail : l10n.voirLeDetail, style: MuType.label.copyWith(color: c.text))),
                         Text(formatDT(total), style: MuType.numM.copyWith(color: c.text)),
                         const SizedBox(width: MuSpace.s2),
                         Icon(open ? PhosphorIcons.caretUp() : PhosphorIcons.caretDown(), size: MuSize.iconS, color: c.textSecondary),
@@ -751,10 +751,10 @@ class _Summary extends StatelessWidget {
                         const SizedBox(height: MuSpace.s2),
                         Row(
                           children: [
-                            Expanded(child: Text('Code ${promo!.code} · −${promo!.percent} %', style: MuType.label.copyWith(color: c.successText))),
+                            Expanded(child: Text(l10n.code2(promo!.code, '${promo!.percent}'), style: MuType.label.copyWith(color: c.successText))),
                             Text(formatDT(total), style: MuType.numS.copyWith(color: c.text)),
                             const SizedBox(width: MuSpace.s2),
-                            MuButton.tertiary(label: 'Retirer', size: MuButtonSize.s, onPressed: onRemovePromo),
+                            MuButton.tertiary(label: l10n.retirer3, size: MuButtonSize.s, onPressed: onRemovePromo),
                           ],
                         ),
                       ],
@@ -831,22 +831,21 @@ class _NetworkError extends StatelessWidget {
         MuBanner(
           tone: MuBannerTone.error,
           icon: PhosphorIcons.wifiSlash(),
-          title: timeout ? 'Ta banque met trop de temps à répondre' : 'Connexion perdue pendant le paiement',
+          title: timeout ? l10n.taBanqueMetTropDe : l10n.connexionPerduePendantLePaiement,
           detail:
-              'Rien n’a été débité deux fois. Vérifie le statut avant de réessayer : on te dit tout '
-              'de suite si ta part est passée.',
+              l10n.rienNAEteDebite3,
         ),
         const SizedBox(height: MuSpace.s4),
         Semantics(
-          label: 'Ta tentative de paiement',
+          label: l10n.taTentativeDePaiement,
           child: MuCardSurface(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                line('Montant', Text(formatDT(amount), style: MuType.numS.copyWith(color: c.text))),
-                line('Carte', Text(card?.label ?? 'Carte', style: MuType.label.copyWith(color: c.text))),
-                line('Tentative', Text(formatDateTime(attemptAt), style: MuType.label.copyWith(color: c.text))),
-                line('Statut', const MuStatusBadge(status: MuStatus.pending, label: 'À vérifier', size: MuBadgeSize.s)),
+                line(l10n.montant, Text(formatDT(amount), style: MuType.numS.copyWith(color: c.text))),
+                line(l10n.carte, Text(card?.label ?? l10n.carte, style: MuType.label.copyWith(color: c.text))),
+                line(l10n.tentative, Text(formatDateTime(attemptAt), style: MuType.label.copyWith(color: c.text))),
+                line(l10n.statut, MuStatusBadge(status: MuStatus.pending, label: l10n.aVerifier, size: MuBadgeSize.s)),
               ],
             ),
           ),
@@ -854,11 +853,11 @@ class _NetworkError extends StatelessWidget {
         const SizedBox(height: MuSpace.s4),
         summary,
         const SizedBox(height: MuSpace.s6),
-        Semantics(header: true, child: Text('Ce qui se passe maintenant', style: MuType.h3.copyWith(color: c.text))),
+        Semantics(header: true, child: Text(l10n.ceQuiSePasseMaintenant, style: MuType.h3.copyWith(color: c.text))),
         const SizedBox(height: MuSpace.s2),
-        step(1, 'Vérifie le statut.', 'On demande à Stripe si ta part de ${formatDT(amount)} est passée.'),
-        step(2, 'Si elle est passée,', 'tu reçois ta confirmation et ton QR code.'),
-        step(3, 'Sinon, réessaie.', 'Un seul paiement sera débité, jamais deux.'),
+        step(1, l10n.verifieLeStatut, l10n.onDemandeAStripeSi(formatDT(amount))),
+        step(2, l10n.siElleEstPassee, l10n.tuRecoisTaConfirmationEt),
+        step(3, l10n.sinonReessaie, l10n.unSeulPaiementSeraDebite),
         const SizedBox(height: MuSpace.s3),
         Row(
           children: [
@@ -866,7 +865,7 @@ class _NetworkError extends StatelessWidget {
             const SizedBox(width: MuSpace.s1),
             Text.rich(
               TextSpan(children: [
-                const TextSpan(text: 'Ta place est gardée jusqu’à '),
+                TextSpan(text: l10n.taPlaceEstGardeeJusqu),
                 TextSpan(text: formatTime(attemptAt.add(_CheckoutScreenState._hold)), style: MuType.labelS.copyWith(color: c.text)),
                 const TextSpan(text: '.'),
               ]),
@@ -876,7 +875,7 @@ class _NetworkError extends StatelessWidget {
         ),
         const SizedBox(height: MuSpace.s6),
         MuButton.primary(
-          label: 'Vérifier le statut',
+          label: l10n.verifierLeStatut,
           leading: PhosphorIcons.arrowsClockwise(),
           size: MuButtonSize.xl,
           fullWidth: true,
@@ -885,15 +884,44 @@ class _NetworkError extends StatelessWidget {
         ),
         const SizedBox(height: MuSpace.s3),
         MuButton.secondary(
-          label: 'Réessayer',
+          label: l10n.reessayer,
           price: formatDT(amount),
           size: MuButtonSize.xl,
           fullWidth: true,
           onPressed: busy ? null : onRetry,
         ),
         const SizedBox(height: MuSpace.s3),
-        const SecureNote(),
+        SecureNote(),
       ],
+    );
+  }
+}
+
+/// Apple Pay / Google Pay: on the inverse surface (ink in Light, white in Night match, DRK-04),
+/// never the Volt primary.
+class _ExpressPay extends StatelessWidget {
+  const _ExpressPay({required this.label, required this.onPressed});
+
+  final String label;
+  final VoidCallback onPressed;
+
+  @override
+  Widget build(BuildContext context) {
+    final c = context.mu;
+    return Semantics(
+      button: true,
+      child: Material(
+        color: c.surfaceInverse,
+        borderRadius: MuRadius.smAll,
+        child: InkWell(
+          borderRadius: MuRadius.smAll,
+          onTap: onPressed,
+          child: SizedBox(
+            height: MuSize.controlL,
+            child: Center(child: Text(label, style: MuType.label.copyWith(color: c.textInverse))),
+          ),
+        ),
+      ),
     );
   }
 }

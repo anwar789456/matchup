@@ -15,6 +15,7 @@ import '../../common/data/pro_providers.dart';
 import '../../common/widgets/pro_wizard_scaffold.dart';
 import '../controllers/organizer_controller.dart';
 import '../data/organizer_draft.dart';
+import '../../../l10n/l10n.dart';
 
 /// ORG-01 — the organisation: logo, name, contact, and up to three past events (optional).
 class OrganisationScreen extends ConsumerStatefulWidget {
@@ -25,7 +26,7 @@ class OrganisationScreen extends ConsumerStatefulWidget {
 }
 
 class _OrganisationScreenState extends ConsumerState<OrganisationScreen> {
-  static const _steps = ['Organisation', 'Premier tournoi'];
+  static final _steps = [l10n.organisation, l10n.premierTournoi];
 
   late final _d = ref.read(organizerProvider).requireValue;
   late final _name = TextEditingController(text: _d.name);
@@ -62,7 +63,7 @@ class _OrganisationScreenState extends ConsumerState<OrganisationScreen> {
     if (picked.sizeBytes > _maxLogo) {
       MuToast.show(context,
           tone: MuToastTone.error,
-          title: '${picked.name} pèse ${formatFileSize(picked.sizeBytes)} (max 5 Mo).');
+          title: l10n.peseMaxMo(picked.name, formatFileSize(picked.sizeBytes)));
       return;
     }
     final id = 'logo-${DateTime.now().microsecondsSinceEpoch}';
@@ -95,7 +96,7 @@ class _OrganisationScreenState extends ConsumerState<OrganisationScreen> {
     if (e == null) return true;
     final name = _eventName.text.trim();
     if (name.isEmpty) {
-      setState(() => _eventError = 'Donne un nom à l’événement.');
+      setState(() => _eventError = l10n.donneUnNomAL);
       return false;
     }
     final saved = PastEvent(
@@ -122,8 +123,8 @@ class _OrganisationScreenState extends ConsumerState<OrganisationScreen> {
     _org.edit((d) => d.copyWith(events: d.events.where((x) => x.id != e.id).toList()));
     MuToast.show(
       context,
-      title: '${e.name} retiré',
-      action: MuAction('Annuler', () {
+      title: l10n.retire(e.name),
+      action: MuAction(l10n.annuler, () {
         _org.edit((d) {
           final events = [...d.events]..insert(index.clamp(0, d.events.length), e);
           return d.copyWith(events: events);
@@ -134,11 +135,11 @@ class _OrganisationScreenState extends ConsumerState<OrganisationScreen> {
 
   bool _validate() {
     setState(() {
-      _nameError = _name.text.trim().isEmpty ? 'Indique le nom de ton organisation.' : null;
+      _nameError = _name.text.trim().isEmpty ? l10n.indiqueLeNomDeTon : null;
       _emailError = AuthMessages.validateEmail(_email.text);
       _phoneError = MuPhoneFormatter.digitsOf(_phone.text).length == 8
           ? null
-          : 'Le numéro doit contenir 8 chiffres.';
+          : l10n.leNumeroDoitContenirChiffres;
     });
     return _saveEvent() && _nameError == null && _emailError == null && _phoneError == null;
   }
@@ -166,12 +167,12 @@ class _OrganisationScreenState extends ConsumerState<OrganisationScreen> {
 
     return ProWizardScaffold(
       space: ProSpace.organizer,
-      railTitle: 'Organise tes tournois',
-      railMeta: '${_steps.length} étapes · environ 3 min',
+      railTitle: l10n.organiseTesTournois,
+      railMeta: l10n.etapesEnvironMin2(_steps.length),
       steps: [for (final s in _steps) MuWizardStep(s)],
       current: 0,
-      title: 'Présente ton organisation',
-      lead: 'Les équipes voient ces infos sur chaque tournoi que tu publies.',
+      title: l10n.presenteTonOrganisation,
+      lead: l10n.lesEquipesVoientCesInfos,
       onBack: () => context.go(Routes.roles),
       onSaveAndQuit: () => context.go(Routes.organizerDashboard),
       onContinue: _busy ? null : _continue,
@@ -180,22 +181,22 @@ class _OrganisationScreenState extends ConsumerState<OrganisationScreen> {
       body: ProFormCard(
         children: [
           ProFormSection(
-            title: 'Ton organisation',
+            title: l10n.tonOrganisation,
             children: [
               ProFieldGrid(children: [
                 MuFileUpload.avatar(
-                  label: 'Logo',
+                  label: l10n.logo,
                   name: d.name,
-                  helper: 'PNG ou SVG · 5 Mo max',
+                  helper: l10n.pngOuSvgMoMax,
                   image: logo == null ? null : MemoryImage(logo),
                   onAdd: _pickLogo,
                   onRemove: (_) => _org.edit((d) => d.copyWith(clearLogo: true)),
                 ),
                 MuTextField(
-                  label: 'Nom de l’organisation',
+                  label: l10n.nomDeLOrganisation,
                   controller: _name,
                   size: MuFieldSize.m,
-                  helper: 'Affiché sur tes tournois et tes annonces.',
+                  helper: l10n.afficheSurTesTournoisEt,
                   error: _nameError,
                   textCapitalization: TextCapitalization.words,
                   onChanged: (v) {
@@ -204,7 +205,7 @@ class _OrganisationScreenState extends ConsumerState<OrganisationScreen> {
                   },
                 ),
                 MuTextField(
-                  label: 'Email de contact',
+                  label: l10n.emailDeContact,
                   controller: _email,
                   size: MuFieldSize.m,
                   leadingIcon: PhosphorIcons.envelopeSimple(),
@@ -218,10 +219,10 @@ class _OrganisationScreenState extends ConsumerState<OrganisationScreen> {
                   },
                 ),
                 MuPhoneField(
-                  label: 'Téléphone',
+                  label: l10n.telephone,
                   controller: _phone,
                   size: MuFieldSize.m,
-                  helper: 'Pour les questions des équipes le jour du tournoi.',
+                  helper: l10n.pourLesQuestionsDesEquipes,
                   error: _phoneError,
                   onChanged: (digits) {
                     if (_phoneError != null) setState(() => _phoneError = null);
@@ -232,12 +233,11 @@ class _OrganisationScreenState extends ConsumerState<OrganisationScreen> {
             ],
           ),
           ProFormSection(
-            title: 'Événements passés',
-            optionalNote: '(facultatif)',
-            description: 'Jusqu’à 3 : les équipes s’inscrivent plus volontiers chez un '
-                'organisateur qui a de l’expérience.',
+            title: l10n.evenementsPasses,
+            optionalNote: l10n.facultatif,
+            description: l10n.jusquALesEquipesS,
             trailing: MuButton.tertiary(
-              label: 'Passer',
+              label: l10n.passer,
               trailing: PhosphorIcons.arrowRight(),
               onPressed: () async {
                 await _org.complete(0);
@@ -255,7 +255,7 @@ class _OrganisationScreenState extends ConsumerState<OrganisationScreen> {
                 children: [
                   if (events.length < maxPastEvents)
                     MuButton.secondary(
-                      label: 'Ajouter un événement',
+                      label: l10n.ajouterUnEvenement,
                       leading: PhosphorIcons.plus(),
                       onPressed: () => _openEvent(
                         PastEvent(id: 'e${DateTime.now().microsecondsSinceEpoch}', name: ''),
@@ -269,7 +269,7 @@ class _OrganisationScreenState extends ConsumerState<OrganisationScreen> {
                         text: '${d.events.length}/$maxPastEvents',
                         style: MuType.numXs.copyWith(color: c.textSecondary),
                       ),
-                      const TextSpan(text: ' événements'),
+                      TextSpan(text: l10n.evenements),
                     ]),
                     style: MuType.caption.copyWith(color: c.textSecondary),
                   ),
@@ -298,11 +298,11 @@ class _OrganisationScreenState extends ConsumerState<OrganisationScreen> {
           Row(
             children: [
               Expanded(
-                child: Text(_isNew ? 'Nouvel événement' : 'Modification en cours',
+                child: Text(_isNew ? l10n.nouvelEvenement : l10n.modificationEnCours,
                     style: MuType.labelL.copyWith(color: c.text)),
               ),
               MuButton.tertiary(
-                label: 'Annuler',
+                label: l10n.annuler,
                 onPressed: () => setState(() {
                   _editing = null;
                   _isNew = false;
@@ -310,7 +310,7 @@ class _OrganisationScreenState extends ConsumerState<OrganisationScreen> {
               ),
               const SizedBox(width: MuSpace.s2),
               MuButton.secondary(
-                label: 'Enregistrer',
+                label: l10n.enregistrer,
                 leading: PhosphorIcons.check(),
                 onPressed: _saveEvent,
               ),
@@ -319,7 +319,7 @@ class _OrganisationScreenState extends ConsumerState<OrganisationScreen> {
           const SizedBox(height: MuSpace.s4),
           ProFieldGrid(children: [
             MuTextField(
-              label: 'Nom de l’événement',
+              label: l10n.nomDeLEvenement,
               controller: _eventName,
               size: MuFieldSize.m,
               error: _eventError,
@@ -327,7 +327,7 @@ class _OrganisationScreenState extends ConsumerState<OrganisationScreen> {
               onChanged: (_) => setState(() => _eventError = null),
             ),
             MuSelect<MuSport>(
-              label: 'Sport',
+              label: l10n.sport,
               size: MuFieldSize.m,
               value: e.sport,
               options: [
@@ -341,13 +341,13 @@ class _OrganisationScreenState extends ConsumerState<OrganisationScreen> {
               onChanged: (v) => setState(() => _editing = e.copyWith(sport: v)),
             ),
             MuTextField(
-              label: 'Date',
+              label: l10n.date,
               controller: _eventDate,
               size: MuFieldSize.m,
-              placeholder: 'mars 2026',
+              placeholder: l10n.mars,
             ),
             MuTextField(
-              label: 'Équipes',
+              label: l10n.equipes,
               controller: _eventTeams,
               size: MuFieldSize.m,
               keyboardType: TextInputType.number,
@@ -358,7 +358,7 @@ class _OrganisationScreenState extends ConsumerState<OrganisationScreen> {
             ),
           ]),
           const SizedBox(height: MuSpace.s5),
-          MuTextField(label: 'Lieu', controller: _eventVenue, size: MuFieldSize.m),
+          MuTextField(label: l10n.lieu, controller: _eventVenue, size: MuFieldSize.m),
         ],
       ),
     );
@@ -411,12 +411,12 @@ class _EventRow extends StatelessWidget {
           ),
           MuIconButton(
             icon: PhosphorIcons.pencilSimple(),
-            label: 'Modifier ${event.name}',
+            label: l10n.modifier2(event.name),
             onPressed: onEdit,
           ),
           MuIconButton(
             icon: PhosphorIcons.trash(),
-            label: 'Retirer ${event.name}',
+            label: l10n.retirer(event.name),
             onPressed: onRemove,
           ),
         ],

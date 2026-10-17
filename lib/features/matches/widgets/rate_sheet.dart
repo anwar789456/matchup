@@ -10,6 +10,7 @@ import '../../../ui/ui.dart';
 import '../../common/widgets/coming_soon.dart';
 import '../controllers/matches_providers.dart';
 import '../data/bookings_repository.dart';
+import '../../../l10n/l10n.dart';
 
 /// MAT-08 · Évaluer les joueurs: the full sheet with, per mate, « Son niveau ce jour-là » and the
 /// fair-play stars; « Envoyer » saves the (anonymous) ratings and goes on to the score (MAT-09).
@@ -17,14 +18,14 @@ Future<void> showRateSheet(BuildContext context, WidgetRef ref, PastMatch match)
   final form = GlobalKey<_RateFormState>();
   final sent = await MuBottomSheet.show<bool>(
     context,
-    title: 'Évalue les joueurs',
+    title: l10n.evalueLesJoueurs,
     height: MuSheetHeight.full,
     snapPoints: const [MuSheetHeight.full],
     footer: _RateFooter(form: form),
     child: _RateForm(key: form, match: match),
   );
   if (sent == true && context.mounted) {
-    MuToast.show(context, tone: MuToastTone.success, title: 'Merci, évaluations envoyées');
+    MuToast.show(context, tone: MuToastTone.success, title: l10n.merciEvaluationsEnvoyees);
     if (match.sport == MuSport.padel) context.push(Routes.matchScore(match.id));
   }
 }
@@ -47,7 +48,7 @@ class _RateFooterState extends State<_RateFooter> {
     children: [
       Expanded(
         child: MuButton.secondary(
-          label: 'Plus tard',
+          label: l10n.plusTard,
           size: MuButtonSize.xl,
           fullWidth: true,
           onPressed: () => Navigator.of(context, rootNavigator: true).pop(false),
@@ -56,7 +57,7 @@ class _RateFooterState extends State<_RateFooter> {
       const SizedBox(width: MuSpace.s3),
       Expanded(
         child: MuButton.primary(
-          label: 'Envoyer',
+          label: l10n.envoyer,
           size: MuButtonSize.xl,
           fullWidth: true,
           loading: _sending,
@@ -91,7 +92,7 @@ class _RateFormState extends ConsumerState<_RateForm> {
   late final List<int> _stars = [
     for (final (i, m) in widget.match.mates.indexed) m.partner ? 5 : (i == 1 ? 4 : 0),
   ];
-  static const _words = ['Mauvais esprit', 'Limite', 'Correct', 'Sympa', 'Exemplaire'];
+  static final _words = [l10n.mauvaisEsprit, l10n.limite, l10n.correct, l10n.sympa, l10n.exemplaire];
 
   Future<void> send() async {
     final ratings = [
@@ -114,7 +115,7 @@ class _RateFormState extends ConsumerState<_RateForm> {
         mainAxisSize: MainAxisSize.min,
         children: [
           Text(
-            '${m.sport.label} · ${m.venue} · ${formatDay(m.date)} · notes anonymes',
+            l10n.notesAnonymes(m.sport.label, m.venue, formatDay(m.date)),
             style: caption,
           ),
           const SizedBox(height: MuSpace.s2),
@@ -122,9 +123,9 @@ class _RateFormState extends ConsumerState<_RateForm> {
           const SizedBox(height: MuSpace.s3),
           Row(
             children: [
-              Expanded(child: Text('Quelqu’un n’est pas venu ?', style: caption)),
+              Expanded(child: Text(l10n.quelquUnNEstPas, style: caption)),
               MuButton.tertiary(
-                label: 'Signaler une absence',
+                label: l10n.signalerUneAbsence,
                 leading: PhosphorIcons.flag(),
                 size: MuButtonSize.s,
                 onPressed: () => showComingSoon(context),
@@ -157,7 +158,7 @@ class _RateFormState extends ConsumerState<_RateForm> {
                   children: [
                     Text(mate.person.name, style: MuType.labelL.copyWith(color: c.text)),
                     Text(
-                      '${mate.role} · annoncée ${formatLevel(mate.announcedLevel)}',
+                      l10n.annoncee(mate.role, formatLevel(mate.announcedLevel)),
                       style: MuType.caption.copyWith(color: c.textSecondary),
                     ),
                   ],
@@ -166,17 +167,17 @@ class _RateFormState extends ConsumerState<_RateForm> {
             ],
           ),
           const SizedBox(height: 10),
-          Text('Son niveau ce jour-là', style: MuType.labelS.copyWith(color: c.text)),
+          Text(l10n.sonNiveauCeJourLa, style: MuType.labelS.copyWith(color: c.text)),
           const SizedBox(height: MuSpace.s2),
           Semantics(
-            label: 'Niveau de ${mate.person.name}',
+            label: l10n.niveauDe(mate.person.name),
             child: Wrap(
               spacing: MuSpace.s2,
               children: [
-                for (final (v, label) in const [
-                  (LevelVerdict.below, 'En dessous'),
-                  (LevelVerdict.asAnnounced, 'Conforme'),
-                  (LevelVerdict.above, 'Au-dessus'),
+                for (final (v, label) in [
+                  (LevelVerdict.below, l10n.enDessous),
+                  (LevelVerdict.asAnnounced, l10n.conforme),
+                  (LevelVerdict.above, l10n.auDessus),
                 ])
                   MuChip(
                     label: label,
@@ -191,7 +192,7 @@ class _RateFormState extends ConsumerState<_RateForm> {
           const SizedBox(height: 10),
           MuStarRating.input(
             value: _stars[i].toDouble(),
-            label: 'Fair-play',
+            label: l10n.fairPlay,
             words: _words,
             size: 20,
             onChanged: (v) => setState(() => _stars[i] = v),

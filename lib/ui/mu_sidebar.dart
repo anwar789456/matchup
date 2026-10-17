@@ -8,6 +8,7 @@ import 'mu_avatar.dart';
 import 'mu_icon_button.dart';
 import 'mu_logo.dart';
 import 'src/interaction.dart';
+import '../l10n/l10n.dart';
 
 /// A destination of the [MuSidebar]: a Phosphor icon (regular, Fill when active) or one of the
 /// MatchUp glyph [asset]s (`MuGlyph.court`).
@@ -166,7 +167,7 @@ class MuSidebar extends StatelessWidget {
     return Semantics(
       container: true,
       explicitChildNodes: true,
-      label: 'Navigation du tableau de bord',
+      label: l10n.navigationDuTableauDeBord,
       child: AnimatedContainer(
         duration: duration,
         curve: MuMotion.move,
@@ -212,7 +213,7 @@ class MuSidebar extends StatelessWidget {
                       item(
                         MuNavItem(
                           id: '_help',
-                          label: 'Aide et support',
+                          label: l10n.aideEtSupport,
                           icon: PhosphorIcons.lifebuoy(),
                         ),
                         muted: true,
@@ -222,7 +223,7 @@ class MuSidebar extends StatelessWidget {
                       item(
                         MuNavItem(
                           id: '_collapse',
-                          label: collapsed ? 'Agrandir le menu' : 'Réduire le menu',
+                          label: collapsed ? l10n.agrandirLeMenu : l10n.reduireLeMenu,
                           icon: collapsed
                               ? PhosphorIcons.caretDoubleRight()
                               : PhosphorIcons.caretDoubleLeft(),
@@ -278,7 +279,7 @@ class MuSidebar extends StatelessWidget {
                               ),
                               MuIconButton(
                                 icon: PhosphorIcons.dotsThreeVertical(),
-                                label: 'Options du compte',
+                                label: l10n.optionsDuCompte,
                                 size: MuIconButtonSize.s,
                                 color: c.navTextMuted,
                                 onPressed: onUserMenu ?? () {},
@@ -322,7 +323,7 @@ class _RoleTrigger extends StatelessWidget {
 
     return Semantics(
       button: true,
-      label: '${role.role}, ${role.name}. Changer de rôle',
+      label: l10n.changerDeRole2(role.role, role.name),
       excludeSemantics: true,
       child: MuFocusRing(
         borderRadius: MuRadius.mdAll,

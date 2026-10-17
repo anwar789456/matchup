@@ -10,6 +10,7 @@ import '../../../core/api/session.dart';
 import '../data/api_owner_repository.dart';
 import '../data/owner_draft.dart';
 import '../data/owner_repository.dart';
+import '../../../l10n/l10n.dart';
 
 final ownerRepositoryProvider = Provider<OwnerRepository>(
   (ref) => ApiOwnerRepository(ref.read(apiClientProvider), userId: () => ref.read(sessionProvider)),
@@ -57,15 +58,15 @@ final ownerProvider = AsyncNotifierProvider<OwnerController, OwnerDraft>(OwnerCo
 
 /// The eight steps of the owner wizard and their one-line summaries in the rail.
 abstract final class OwnerSteps {
-  static const all = [
-    'Entreprise',
-    'Adresse',
-    'Terrains',
-    'Horaires',
-    'Tarifs',
-    'Photos',
-    'Versements',
-    'Offre',
+  static final all = [
+    l10n.entreprise,
+    l10n.adresse,
+    l10n.terrains,
+    l10n.horaires,
+    l10n.tarifs,
+    l10n.photos,
+    l10n.versements,
+    l10n.offre,
   ];
 
   /// The rail steps while on [current]: done ones carry their summary.
@@ -82,7 +83,7 @@ abstract final class OwnerSteps {
     4 => priceRange(d),
     5 => '${d.photos.length} photos',
     6 => '${OwnerCatalog.bankName(d.bank)} · ${maskRib(d.rib)}',
-    _ => d.plan == OwnerPlan.pro ? 'Pro' : 'Starter',
+    _ => d.plan == OwnerPlan.pro ? l10n.pro : l10n.starter,
   };
 
   /// « 3 terrains · Football 5 ».
@@ -95,7 +96,7 @@ abstract final class OwnerSteps {
   /// The usual opening, e.g. « 08h00–00h00 » (most frequent opening and closing times).
   static String hoursRange(OwnerDraft d) {
     final open = d.hours.where((h) => h.open).toList();
-    if (open.isEmpty) return 'fermé';
+    if (open.isEmpty) return l10n.ferme;
     int mode(Iterable<int> values) {
       final counts = <int, int>{};
       for (final v in values) {
@@ -119,8 +120,8 @@ abstract final class OwnerSteps {
   /// « 120 à 170 DT /h ».
   static String priceRange(OwnerDraft d) {
     final b = priceBounds(d);
-    if (b == null) return 'à définir';
-    return b.$1 == b.$2 ? '${b.$1} DT /h' : '${b.$1} à ${b.$2} DT /h';
+    if (b == null) return l10n.aDefinir;
+    return b.$1 == b.$2 ? l10n.dtH(b.$1) : l10n.aDtH(b.$1, b.$2);
   }
 
   /// « •••• 12 34 » — only the last four digits stay visible.

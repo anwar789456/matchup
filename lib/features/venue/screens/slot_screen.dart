@@ -10,6 +10,7 @@ import '../../../ui/ui.dart';
 import '../../booking/controllers/booking_controller.dart';
 import '../data/venue_details.dart';
 import '../widgets/venue_widgets.dart';
+import '../../../l10n/l10n.dart';
 
 /// VEN-02 · Créneau choisi: the venue's days and slots; picking one raises the detail panel —
 /// court and time, the court price and the price per person, the free cancellation date — with
@@ -75,7 +76,7 @@ class _SlotScreenState extends ConsumerState<SlotScreen> {
                     children: [
                       MuIconButton(
                         icon: PhosphorIcons.arrowLeft(),
-                        label: 'Retour',
+                        label: l10n.retour,
                         size: MuIconButtonSize.l,
                         onPressed: () =>
                             context.canPop() ? context.pop() : context.go(Routes.venue(v.id)),
@@ -168,10 +169,10 @@ class _SlotSheet extends StatelessWidget {
     return MuBottomSheet(
       title: '${capitalDay(start)} · ${formatTime(start)}',
       onClose: onClose,
-      closeLabel: 'Fermer le détail du créneau',
+      closeLabel: l10n.fermerLeDetailDuCreneau,
       handleExpands: false,
       footer: MuButton.primary(
-        label: 'Continuer',
+        label: l10n.continuer,
         price: '${formatDT(share)} /pers.',
         size: MuButtonSize.xl,
         fullWidth: true,
@@ -192,23 +193,23 @@ class _SlotSheet extends StatelessWidget {
             runSpacing: MuSpace.s2,
             children: [
               if (court.lit)
-                MuChip(label: 'Éclairé', icon: PhosphorIcons.lightbulb(), size: MuChipSize.s),
+                MuChip(label: l10n.eclaire, icon: PhosphorIcons.lightbulb(), size: MuChipSize.s),
               MuChip(
-                label: court.indoor ? 'Intérieur' : 'Extérieur',
+                label: court.indoor ? l10n.interieur : l10n.exterieur,
                 icon: court.indoor ? PhosphorIcons.umbrella() : PhosphorIcons.sun(),
                 size: MuChipSize.s,
               ),
               if (v.amenities.contains(MuAmenity.changingRooms))
-                MuChip(label: 'Vestiaires', icon: PhosphorIcons.coatHanger(), size: MuChipSize.s),
+                MuChip(label: l10n.vestiaires, icon: PhosphorIcons.coatHanger(), size: MuChipSize.s),
             ],
           ),
           const SizedBox(height: MuSpace.s4),
           VenuePriceBox(
             cells: [
               (
-                'Terrain · $length',
+                l10n.terrain(length),
                 formatAmount(price),
-                peak ? 'Heure de pointe' : 'Heure creuse',
+                peak ? l10n.heureDePointe2 : l10n.heureCreuse,
                 peak
                     ? Icon(
                         PhosphorIcons.lightning(PhosphorIconsStyle.fill),
@@ -217,7 +218,7 @@ class _SlotSheet extends StatelessWidget {
                       )
                     : null,
               ),
-              ('Par personne', formatAmount(share), 'à ${details.players} joueurs', null),
+              (l10n.parPersonne, formatAmount(share), l10n.aJoueurs(details.players), null),
             ],
           ),
           const SizedBox(height: MuSpace.s4),
@@ -230,7 +231,7 @@ class _SlotSheet extends StatelessWidget {
                 child: Text.rich(
                   TextSpan(
                     children: [
-                      const TextSpan(text: 'Annulation gratuite jusqu’au '),
+                      TextSpan(text: l10n.annulationGratuiteJusquAu),
                       TextSpan(
                         text: formatDateTime(free),
                         style: MuType.labelS.copyWith(color: c.text),

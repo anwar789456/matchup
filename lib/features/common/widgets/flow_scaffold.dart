@@ -4,12 +4,13 @@ import 'package:phosphor_flutter/phosphor_flutter.dart';
 import '../../../theme/theme.dart';
 import '../../../ui/ui.dart';
 import 'balanced_text.dart';
+import '../../../l10n/l10n.dart';
 
 /// The mobile flow layout of the auth and onboarding screens: top bar (back « Retour » + an
 /// optional end action), an optional [header] under it (step indicator), the scrolling body on
 /// `surface`, and the sticky bottom action bar (`elevation-2-up`) holding the XL primary action.
 class FlowScaffold extends StatelessWidget {
-  const FlowScaffold({
+  FlowScaffold({
     super.key,
     required this.body,
     this.onBack,
@@ -18,8 +19,8 @@ class FlowScaffold extends StatelessWidget {
     this.bottomBar = const [],
     this.centerBody = false,
     this.gap = MuSpace.s6,
-    this.backLabel = 'Retour',
-  });
+    String? backLabel,
+  }) : backLabel = backLabel ?? l10n.retour;
 
   final List<Widget> body;
   final VoidCallback? onBack;

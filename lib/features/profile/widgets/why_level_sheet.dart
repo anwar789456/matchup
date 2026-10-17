@@ -6,6 +6,7 @@ import '../../../core/format.dart';
 import '../../../theme/theme.dart';
 import '../../../ui/ui.dart';
 import '../data/profile_repository.dart';
+import '../../../l10n/l10n.dart';
 
 /// PRF-03 · Pourquoi ce niveau ?: what the AI weighed, the matches that moved the level,
 /// « Ajuster » (a self-assessment) and « Ce niveau me semble faux ».
@@ -19,11 +20,11 @@ Future<void> showWhyLevelSheet(
   if (!context.mounted) return;
   await MuBottomSheet.show<void>(
     context,
-    title: 'Pourquoi ${formatLevel(level.level)} en ${level.sport.label.toLowerCase()} ?',
+    title: l10n.pourquoiEn(formatLevel(level.level), level.sport.label.toLowerCase()),
     height: MuSheetHeight.full,
     snapPoints: const [MuSheetHeight.full],
     footer: MuButton.primary(
-      label: 'J’ai compris',
+      label: l10n.jAiCompris,
       size: MuButtonSize.xl,
       fullWidth: true,
       onPressed: () => Navigator.of(context, rootNavigator: true).pop(),
@@ -52,11 +53,11 @@ class _WhyLevel extends ConsumerWidget {
         children: [
           Row(
             children: [
-              const MuAiLabel(size: MuAiLabelSize.s),
+              MuAiLabel(size: MuAiLabelSize.s),
               const SizedBox(width: MuSpace.s2),
               Expanded(
                 child: Text(
-                  'Mise à jour ${l.updatedOn ?? 'récemment'}, après ton dernier match',
+                  l10n.miseAJourApresTon(l.updatedOn ?? l10n.recemment),
                   style: caption,
                 ),
               ),
@@ -66,19 +67,18 @@ class _WhyLevel extends ConsumerWidget {
           MuLevelIndicator(
             level: l.level,
             variant: MuLevelVariant.bar,
-            label: 'Ton niveau ${l.sport.label}',
+            label: l10n.tonNiveau2(l.sport.label),
             showValue: true,
             trend: l.trend,
-            trendLabel: 'sur 30 jours',
+            trendLabel: l10n.surJours2,
             confidence: l.confidence,
             reason: l.range == null
                 ? null
-                : 'Très probablement entre ${formatLevel(l.range!.$1)} et '
-                      '${formatLevel(l.range!.$2)}.',
+                : l10n.tresProbablementEntreEt(formatLevel(l.range!.$1), formatLevel(l.range!.$2)),
           ),
           const SizedBox(height: MuSpace.s5),
           Text(
-            'CE QUE L’IA A PRIS EN COMPTE',
+            l10n.ceQueLIaA,
             style: MuType.overline.copyWith(color: c.textSecondary),
           ),
           for (final (label, weight, detail) in explanation.factors) ...[
@@ -86,7 +86,7 @@ class _WhyLevel extends ConsumerWidget {
             MuProgressBar(
               value: weight * 100,
               label: label,
-              valueLabel: '${(weight * 100).round()} %',
+              valueLabel: ltr('${(weight * 100).round()} %'),
               size: MuProgressSize.s,
               tone: MuTone.ai,
               hint: detail.isEmpty ? null : detail,
@@ -94,7 +94,7 @@ class _WhyLevel extends ConsumerWidget {
           ],
           const SizedBox(height: MuSpace.s5),
           Text(
-            'LES MATCHS QUI L’ONT FAIT BOUGER',
+            l10n.lesMatchsQuiLOnt,
             style: MuType.overline.copyWith(color: c.textSecondary),
           ),
           const SizedBox(height: MuSpace.s2),
@@ -130,26 +130,26 @@ class _WhyLevel extends ConsumerWidget {
               ),
             ),
           const SizedBox(height: MuSpace.s4),
-          Text('Pas d’accord avec ce niveau ?', style: MuType.label.copyWith(color: c.text)),
+          Text(l10n.pasDAccordAvecCe, style: MuType.label.copyWith(color: c.text)),
           const SizedBox(height: MuSpace.s2),
           Row(
             children: [
               MuButton.secondary(
-                label: 'Ajuster',
+                label: l10n.ajuster,
                 leading: PhosphorIcons.slidersHorizontal(),
                 onPressed: () => _adjust(context, ref),
               ),
               const SizedBox(width: MuSpace.s3),
               Flexible(
                 child: MuButton.tertiary(
-                  label: 'Ce niveau me semble faux',
+                  label: l10n.ceNiveauMeSembleFaux,
                   onPressed: () async {
                     await ref.read(playerProfileRepositoryProvider).contestLevel(l.sport);
                     if (context.mounted) {
                       MuToast.show(
                         context,
-                        title: 'Contestation envoyée',
-                        description: 'Un humain relit ton niveau sous 48 h.',
+                        title: l10n.contestationEnvoyee,
+                        description: l10n.unHumainRelitTonNiveau,
                       );
                     }
                   },
@@ -164,7 +164,7 @@ class _WhyLevel extends ConsumerWidget {
               const SizedBox(width: MuSpace.s1),
               Expanded(
                 child: Text(
-                  'L’IA peut se tromper. Un humain relit chaque contestation.',
+                  l10n.lIaPeutSeTromper,
                   style: caption,
                 ),
               ),
@@ -179,7 +179,7 @@ class _WhyLevel extends ConsumerWidget {
     var value = level.level;
     final saved = await MuBottomSheet.show<bool>(
       context,
-      title: 'Ajuster mon niveau',
+      title: l10n.ajusterMonNiveau,
       height: MuSheetHeight.auto,
       child: StatefulBuilder(
         builder: (context, setState) => Padding(
@@ -190,20 +190,19 @@ class _WhyLevel extends ConsumerWidget {
             children: [
               MuLevelSlider(
                 value: value,
-                label: 'Ton niveau ${level.sport.label.toLowerCase()}',
+                label: l10n.tonNiveau2(level.sport.label.toLowerCase()),
                 aiEstimate: level.level,
-                aiNote: 'd’après tes ${level.matches} matchs',
+                aiNote: l10n.dApresTesMatchs(level.matches),
                 onChanged: (v) => setState(() => value = v),
               ),
               const SizedBox(height: MuSpace.s3),
               Text(
-                'Ton choix compte comme une auto-évaluation : tes 3 prochains matchs le '
-                'confirmeront.',
+                l10n.tonChoixCompteCommeUne,
                 style: MuType.caption.copyWith(color: context.mu.textSecondary),
               ),
               const SizedBox(height: MuSpace.s4),
               MuButton.primary(
-                label: 'Enregistrer',
+                label: l10n.enregistrer,
                 size: MuButtonSize.l,
                 fullWidth: true,
                 onPressed: () => Navigator.of(context, rootNavigator: true).pop(true),
@@ -216,7 +215,7 @@ class _WhyLevel extends ConsumerWidget {
     if (saved == true) {
       await ref.read(playerProfileRepositoryProvider).adjustLevel(level.sport, value);
       if (context.mounted) {
-        MuToast.show(context, title: 'Niveau ajusté à ${formatLevel(value)}');
+        MuToast.show(context, title: l10n.niveauAjusteA(formatLevel(value)));
       }
     }
   }

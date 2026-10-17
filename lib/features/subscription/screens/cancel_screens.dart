@@ -12,6 +12,7 @@ import '../../home/controllers/home_providers.dart';
 import '../controllers/subscription_controller.dart';
 import '../data/subscription_repository.dart';
 import '../widgets/subscription_widgets.dart';
+import '../../../l10n/l10n.dart';
 
 /// The step bar of the two cancel steps (« Étape 1 sur 2 · Résilier Premium »).
 class _CancelBar extends StatelessWidget {
@@ -30,13 +31,13 @@ class _CancelBar extends StatelessWidget {
           children: [
             MuIconButton(
               icon: PhosphorIcons.arrowLeft(),
-              label: 'Retour',
+              label: l10n.retour,
               size: MuIconButtonSize.l,
               onPressed: onBack,
             ),
             const SizedBox(width: MuSpace.s2),
             Expanded(
-              child: MuStepIndicator(step: step, total: 2, title: 'Résilier Premium', showLabel: true),
+              child: MuStepIndicator(step: step, total: 2, title: l10n.resilierPremium, showLabel: true),
             ),
           ],
         ),
@@ -79,13 +80,13 @@ class _CancelReasonScreenState extends ConsumerState<CancelReasonScreen> {
             child: ListView(
               padding: const EdgeInsets.fromLTRB(MuSpace.s4, MuSpace.s5, MuSpace.s4, MuSpace.s6),
               children: [
-                const FlowTitle(
-                  'Pourquoi tu veux résilier ?',
-                  lead: 'Facultatif. Ta réponse nous aide à améliorer Premium.',
+                FlowTitle(
+                  l10n.pourquoiTuVeuxResilier,
+                  lead: l10n.facultatifTaReponseNousAide,
                 ),
                 const SizedBox(height: MuSpace.s5),
                 MuRadioGroup<CancelReason>(
-                  label: 'Raison',
+                  label: l10n.raison,
                   hideLabel: true,
                   options: [
                     for (final r in CancelReason.values) MuRadioOption(value: r, label: r.label),
@@ -95,12 +96,12 @@ class _CancelReasonScreenState extends ConsumerState<CancelReasonScreen> {
                 ),
                 const SizedBox(height: MuSpace.s4),
                 MuTextField(
-                  label: 'Tu veux en dire plus ?',
+                  label: l10n.tuVeuxEnDirePlus,
                   optional: true,
                   multiline: true,
                   minLines: 2,
                   maxLength: 280,
-                  placeholder: 'Ex. : je joue surtout l’été',
+                  placeholder: l10n.exJeJoueSurtoutL,
                   controller: _note,
                 ),
                 const SizedBox(height: MuSpace.s5),
@@ -108,19 +109,19 @@ class _CancelReasonScreenState extends ConsumerState<CancelReasonScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      Text('Si tu résilies', style: MuType.labelL.copyWith(color: c.text)),
+                      Text(l10n.siTuResilies, style: MuType.labelL.copyWith(color: c.text)),
                       const SizedBox(height: MuSpace.s2),
                       CheckLine(
                         icon: PhosphorIcons.calendarCheck(),
-                        text: 'Premium reste actif jusqu’au $end',
+                        text: l10n.premiumResteActifJusquAu(end),
                       ),
                       CheckLine(
                         icon: PhosphorIcons.creditCard(),
-                        text: 'Aucun prélèvement sur ta ${sub?.cardLabel ?? 'carte'}',
+                        text: l10n.aucunPrelevementSurTa(sub?.cardLabel ?? 'carte'),
                       ),
                       CheckLine(
                         icon: PhosphorIcons.shieldCheck(),
-                        text: 'Tes matchs, ton niveau et ton solde de ${formatDT(balance)} restent',
+                        text: l10n.tesMatchsTonNiveauEt(formatDT(balance)),
                       ),
                     ],
                   ),
@@ -133,13 +134,13 @@ class _CancelReasonScreenState extends ConsumerState<CancelReasonScreen> {
       bottomNavigationBar: StickyActionBar(
         children: [
           MuButton.primary(
-            label: 'Continuer',
+            label: l10n.continuer,
             size: MuButtonSize.xl,
             fullWidth: true,
             onPressed: () => context.push(Routes.subscriptionRetention),
           ),
           MuButton.tertiary(
-            label: 'Garder Premium',
+            label: l10n.garderPremium,
             size: MuButtonSize.l,
             fullWidth: true,
             onPressed: () => context.go(Routes.subscription),
@@ -169,7 +170,7 @@ class _RetentionOfferScreenState extends ConsumerState<RetentionOfferScreen> {
     MuToast.show(
       context,
       tone: MuToastTone.success,
-      title: 'Offre activée',
+      title: l10n.offreActivee,
       description:
           '${formatDT(Subscription.offerMonthly)}/mois les 30 oct. et 30 nov., puis ${formatDT(Subscription.monthly)}/mois.',
     );
@@ -222,16 +223,16 @@ class _RetentionOfferScreenState extends ConsumerState<RetentionOfferScreen> {
               padding: const EdgeInsets.fromLTRB(MuSpace.s4, MuSpace.s5, MuSpace.s4, MuSpace.s6),
               children: [
                 FlowTitle(
-                  'Une dernière option',
+                  l10n.uneDerniereOption,
                   lead: reason == null
-                      ? 'Si tu préfères résilier, choisis « Non merci, résilier » : rien d’autre à faire.'
-                      : 'Tu as répondu « ${reason.label} ». Si tu préfères résilier, choisis « Non merci, résilier » : rien d’autre à faire.',
+                      ? l10n.siTuPreferesResilierChoisis
+                      : l10n.tuAsReponduSiTu(reason.label),
                 ),
                 const SizedBox(height: MuSpace.s5),
                 MuAiSuggestionCard(
-                  context: 'Offre pour toi',
-                  title: '−30 % pendant 2 mois',
-                  reason: 'tu as joué 4 matchs ce mois-ci : Premium te sert encore.',
+                  context: l10n.offrePourToi,
+                  title: l10n.pendantMois,
+                  reason: l10n.tuAsJoueMatchsCe,
                   body: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -253,7 +254,7 @@ class _RetentionOfferScreenState extends ConsumerState<RetentionOfferScreen> {
                         ],
                       ),
                       Text(
-                        'Les 30 oct. et 30 nov., puis ${formatDT(Subscription.monthly)}/mois. Toujours résiliable.',
+                        l10n.lesOctEtNovPuis(formatDT(Subscription.monthly)),
                         style: caption,
                       ),
                     ],
@@ -265,16 +266,16 @@ class _RetentionOfferScreenState extends ConsumerState<RetentionOfferScreen> {
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      column(PhosphorIcons.crown(), 'Avec l’offre', [
-                        'Premium continue',
-                        '${formatDT(Subscription.offerMonthly)} le 30 oct.',
-                        '${formatDT(Subscription.monthly)} dès le 30 déc.',
+                      column(PhosphorIcons.crown(), l10n.avecLOffre, [
+                        l10n.premiumContinue,
+                        l10n.leOct(formatDT(Subscription.offerMonthly)),
+                        l10n.desLeDec(formatDT(Subscription.monthly)),
                       ]),
                       const SizedBox(width: MuSpace.s3),
-                      column(PhosphorIcons.xCircle(), 'Si tu résilies', [
-                        'Actif jusqu’au 30 oct.',
-                        'Aucun prélèvement',
-                        'Puis offre Gratuit',
+                      column(PhosphorIcons.xCircle(), l10n.siTuResilies, [
+                        l10n.actifJusquAuOct,
+                        l10n.aucunPrelevement,
+                        l10n.puisOffreGratuit,
                       ]),
                     ],
                   ),
@@ -288,14 +289,14 @@ class _RetentionOfferScreenState extends ConsumerState<RetentionOfferScreen> {
       bottomNavigationBar: StickyActionBar(
         children: [
           MuButton.secondary(
-            label: 'Accepter l’offre',
+            label: l10n.accepterLOffre,
             price: '${formatDT(Subscription.offerMonthly)}/mois',
             size: MuButtonSize.xl,
             fullWidth: true,
             onPressed: _busy ? null : _accept,
           ),
           MuButton.secondary(
-            label: 'Non merci, résilier',
+            label: l10n.nonMerciResilier,
             size: MuButtonSize.xl,
             fullWidth: true,
             onPressed: _busy ? null : _cancel,
@@ -335,7 +336,7 @@ class CancelledScreen extends ConsumerWidget {
                 padding: const EdgeInsetsDirectional.fromSTEB(MuSpace.s2, MuSpace.s2, 0, 0),
                 child: MuIconButton(
                   icon: PhosphorIcons.x(),
-                  label: 'Fermer',
+                  label: l10n.fermer,
                   size: MuIconButtonSize.l,
                   onPressed: () => context.go(Routes.profile),
                 ),
@@ -360,9 +361,9 @@ class CancelledScreen extends ConsumerWidget {
                 ),
                 const SizedBox(height: MuSpace.s4),
                 FlowTitle(
-                  'Résiliation confirmée',
+                  l10n.resiliationConfirmee,
                   centered: true,
-                  lead: 'Premium reste actif jusqu’au ${formatDay(end)}. Aucun prélèvement.',
+                  lead: l10n.premiumResteActifJusquAu2(formatDay(end)),
                 ),
                 const SizedBox(height: MuSpace.s5),
                 MuCardSurface(
@@ -391,11 +392,11 @@ class CancelledScreen extends ConsumerWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'Fin de Premium · ${formatDay(end)}',
+                              l10n.finDePremium(formatDay(end)),
                               style: MuType.label.copyWith(color: c.text),
                             ),
                             Text(
-                              'Ta ${sub?.cardLabel ?? 'carte'} ne sera pas débitée. Tu repasses ensuite en offre Gratuit.',
+                              l10n.taNeSeraPasDebitee(sub?.cardLabel ?? 'carte'),
                               style: caption,
                             ),
                           ],
@@ -410,19 +411,19 @@ class CancelledScreen extends ConsumerWidget {
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
                       Text(
-                        'Jusque-là, tu gardes tout',
+                        l10n.jusqueLaTuGardesTout,
                         style: MuType.labelL.copyWith(color: c.text),
                       ),
                       const SizedBox(height: MuSpace.s2),
-                      const CheckLine(text: 'Priorité sur les listes d’attente'),
-                      const CheckLine(text: 'Plans d’entraînement IA et programmes'),
-                      const CheckLine(text: 'Statistiques avancées'),
-                      const CheckLine(text: 'Pas de frais de service'),
+                      CheckLine(text: l10n.prioriteSurLesListesD),
+                      CheckLine(text: l10n.plansDEntrainementIaEt),
+                      CheckLine(text: l10n.statistiquesAvancees),
+                      CheckLine(text: l10n.pasDeFraisDeService),
                       const SizedBox(height: MuSpace.s2),
                       Divider(height: 1, thickness: 1, color: c.border),
                       const SizedBox(height: MuSpace.s2),
                       Text(
-                        'Après le ${end.day} ${formatMonth(end)}, tes matchs, ton niveau, ta fiabilité et ton solde de ${formatDT(me?.balance ?? 0)} restent intacts.',
+                        l10n.apresLeTesMatchsTon(end.day, formatMonth(end), formatDT(me?.balance ?? 0)),
                         style: caption,
                       ),
                     ],
@@ -440,7 +441,7 @@ class CancelledScreen extends ConsumerWidget {
                     const SizedBox(width: MuSpace.s2),
                     Flexible(
                       child: Text(
-                        'Confirmation envoyée à ${me?.email ?? 'ton adresse'}',
+                        l10n.confirmationEnvoyeeA(me?.email ?? l10n.tonAdresse),
                         style: caption,
                       ),
                     ),
@@ -454,13 +455,13 @@ class CancelledScreen extends ConsumerWidget {
       bottomNavigationBar: StickyActionBar(
         children: [
           MuButton.primary(
-            label: 'Retour au profil',
+            label: l10n.retourAuProfil,
             size: MuButtonSize.xl,
             fullWidth: true,
             onPressed: () => context.go(Routes.profile),
           ),
           MuButton.secondary(
-            label: 'Réactiver Premium',
+            label: l10n.reactiverPremium,
             leading: PhosphorIcons.arrowCounterClockwise(),
             size: MuButtonSize.l,
             fullWidth: true,

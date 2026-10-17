@@ -9,6 +9,7 @@ import '../../../theme/theme.dart';
 import '../../../ui/ui.dart';
 import '../data/notification_models.dart';
 import '../data/notification_prefs.dart';
+import '../../../l10n/l10n.dart';
 
 /// NOT-10 · Préférences de notifications: pause (1 h, 8 h, 24 h), category × channel switches
 /// (payments and security locked in the app), quiet hours and the email recap. Saved on the
@@ -16,14 +17,14 @@ import '../data/notification_prefs.dart';
 class NotificationPrefsScreen extends ConsumerWidget {
   const NotificationPrefsScreen({super.key});
 
-  static const _descriptions = {
-    NotificationCategory.matches: 'Invitations, places libérées, rappels',
-    NotificationCategory.bookings: 'Confirmations, annulations, check-in',
-    NotificationCategory.payments: 'Parts à payer, reçus, remboursements',
-    NotificationCategory.tournaments: 'Inscriptions, tableaux, résultats',
-    NotificationCategory.training: 'Plans IA, retours du coach, séances',
-    NotificationCategory.community: 'Réponses, mentions, modération',
-    NotificationCategory.security: 'Connexions, mot de passe, appareils',
+  static final _descriptions = {
+    NotificationCategory.matches: l10n.invitationsPlacesLibereesRappels,
+    NotificationCategory.bookings: l10n.confirmationsAnnulationsCheckIn,
+    NotificationCategory.payments: l10n.partsAPayerRecusRemboursements,
+    NotificationCategory.tournaments: l10n.inscriptionsTableauxResultats,
+    NotificationCategory.training: l10n.plansIaRetoursDuCoach,
+    NotificationCategory.community: l10n.reponsesMentionsModeration,
+    NotificationCategory.security: l10n.connexionsMotDePasseAppareils,
   };
 
   // NOT-10: the switch columns are 52 wide.
@@ -39,8 +40,8 @@ class NotificationPrefsScreen extends ConsumerWidget {
     final caption = MuType.caption.copyWith(color: c.textSecondary);
 
     String until(DateTime d) => d.difference(now) >= const Duration(hours: 24)
-        ? 'jusqu’à ${formatDay(d)} · ${formatHour(d.hour * 60 + d.minute)}'
-        : 'jusqu’à ${formatHour(d.hour * 60 + d.minute)}';
+        ? l10n.jusquA3(formatDay(d), formatHour(d.hour * 60 + d.minute))
+        : l10n.jusquA(formatHour(d.hour * 60 + d.minute));
 
     Widget overline(String s) => Padding(
       padding: const EdgeInsetsDirectional.fromSTEB(MuSpace.s4, MuSpace.s6, MuSpace.s4, MuSpace.s2),
@@ -110,14 +111,14 @@ class NotificationPrefsScreen extends ConsumerWidget {
       body: Column(
         children: [
           MuTopAppBar.compact(
-            title: 'Notifications',
+            title: l10n.notifications,
             onBack: () => goBack(context, Routes.settings),
           ),
           Expanded(
             child: ListView(
               padding: const EdgeInsets.fromLTRB(MuSpace.s4, 0, MuSpace.s4, MuSpace.s8),
               children: [
-                overline('Pause'),
+                overline(l10n.pause),
                 card(
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -132,11 +133,11 @@ class NotificationPrefsScreen extends ConsumerWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  'Tout mettre en pause',
+                                  l10n.toutMettreEnPause,
                                   style: MuType.label.copyWith(color: c.text),
                                 ),
                                 Text(
-                                  'Plus de push ni d’email pendant la pause. Les alertes de paiement et de sécurité restent dans l’app.',
+                                  l10n.plusDePushNiD,
                                   style: MuType.body.copyWith(color: c.textSecondary),
                                 ),
                               ],
@@ -156,7 +157,7 @@ class NotificationPrefsScreen extends ConsumerWidget {
                             const SizedBox(width: MuSpace.s2),
                             Expanded(
                               child: Text(
-                                'En pause ${until(prefs.pauseUntil!)}',
+                                l10n.enPause(until(prefs.pauseUntil!)),
                                 style: MuType.label.copyWith(color: c.text),
                               ),
                             ),
@@ -164,7 +165,7 @@ class NotificationPrefsScreen extends ConsumerWidget {
                         ),
                         const SizedBox(height: MuSpace.s3),
                         MuButton.secondary(
-                          label: 'Reprendre maintenant',
+                          label: l10n.reprendreMaintenant,
                           leading: PhosphorIcons.play(),
                           fullWidth: true,
                           onPressed: () => ctrl.pause(null),
@@ -187,7 +188,7 @@ class NotificationPrefsScreen extends ConsumerWidget {
                     ],
                   ),
                 ),
-                overline('Par catégorie'),
+                overline(l10n.parCategorie),
                 card(
                   padding: EdgeInsets.zero,
                   Column(
@@ -203,14 +204,14 @@ class NotificationPrefsScreen extends ConsumerWidget {
                           children: [
                             Expanded(
                               child: Text(
-                                'Tu choisis où chaque catégorie te prévient.',
+                                l10n.tuChoisisOuChaqueCategorie,
                                 style: MuType.labelS.copyWith(color: c.textSecondary),
                               ),
                             ),
                             for (final (icon, label) in [
-                              (PhosphorIcons.bell(), 'In-app'),
-                              (PhosphorIcons.deviceMobile(), 'Push'),
-                              (PhosphorIcons.envelopeSimple(), 'Email'),
+                              (PhosphorIcons.bell(), l10n.inApp),
+                              (PhosphorIcons.deviceMobile(), l10n.push),
+                              (PhosphorIcons.envelopeSimple(), l10n.email),
                             ])
                               SizedBox(
                                 width: _col,
@@ -245,7 +246,7 @@ class NotificationPrefsScreen extends ConsumerWidget {
                                   children: [
                                     Text(cat.label, style: MuType.label.copyWith(color: c.text)),
                                     Text(_descriptions[cat]!, style: caption),
-                                    if (cat.locked) lockLine('Toujours dans l’app'),
+                                    if (cat.locked) lockLine(l10n.toujoursDansLApp),
                                   ],
                                 ),
                               ),
@@ -258,10 +259,10 @@ class NotificationPrefsScreen extends ConsumerWidget {
                                       value: prefs.isOn(cat, ch),
                                       semanticLabel:
                                           '${cat.label} · ${switch (ch) {
-                                            NotificationChannel.app => 'In-app',
-                                            NotificationChannel.push => 'Push',
-                                            NotificationChannel.email => 'Email',
-                                          }}${cat.locked && ch == NotificationChannel.app ? ', toujours activé' : ''}',
+                                            NotificationChannel.app => l10n.inApp,
+                                            NotificationChannel.push => l10n.push,
+                                            NotificationChannel.email => l10n.email,
+                                          }}${cat.locked && ch == NotificationChannel.app ? l10n.toujoursActive : ''}',
                                       onChanged: cat.locked && ch == NotificationChannel.app
                                           ? null
                                           : (v) => ctrl.toggle(cat, ch, v),
@@ -285,14 +286,14 @@ class NotificationPrefsScreen extends ConsumerWidget {
                       const SizedBox(width: MuSpace.s2),
                       Expanded(
                         child: Text(
-                          'Toujours activé : obligatoire pour ton argent et ton compte. Tu peux quand même couper le push et l’email.',
+                          l10n.toujoursActiveObligatoirePourTon,
                           style: caption,
                         ),
                       ),
                     ],
                   ),
                 ),
-                overline('Heures calmes'),
+                overline(l10n.heuresCalmes),
                 card(
                   padding: EdgeInsets.zero,
                   Column(
@@ -309,11 +310,11 @@ class NotificationPrefsScreen extends ConsumerWidget {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    'Heures calmes',
+                                    l10n.heuresCalmes,
                                     style: MuType.label.copyWith(color: c.text),
                                   ),
                                   Text(
-                                    'Aucun push la nuit. Tout t’attend dans l’app au réveil.',
+                                    l10n.aucunPushLaNuitTout,
                                     style: MuType.body.copyWith(color: c.textSecondary),
                                   ),
                                 ],
@@ -321,7 +322,7 @@ class NotificationPrefsScreen extends ConsumerWidget {
                             ),
                             MuSwitch(
                               value: prefs.quietHours,
-                              semanticLabel: 'Heures calmes',
+                              semanticLabel: l10n.heuresCalmes,
                               onChanged: ctrl.setQuiet,
                             ),
                           ],
@@ -331,12 +332,12 @@ class NotificationPrefsScreen extends ConsumerWidget {
                         Divider(height: 1, thickness: 1, color: c.border, indent: MuSpace.s4),
                         timeRow(
                           PhosphorIcons.moonStars(),
-                          'Début',
+                          l10n.debut,
                           prefs.quietStart,
                           ctrl.setQuietStart,
                         ),
                         Divider(height: 1, thickness: 1, color: c.border, indent: MuSpace.s4),
-                        timeRow(PhosphorIcons.sun(), 'Fin', prefs.quietEnd, ctrl.setQuietEnd),
+                        timeRow(PhosphorIcons.sun(), l10n.fin, prefs.quietEnd, ctrl.setQuietEnd),
                       ],
                     ],
                   ),
@@ -345,25 +346,25 @@ class NotificationPrefsScreen extends ConsumerWidget {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: MuSpace.s4),
                   child: Text(
-                    'Tous les jours, heure de Tunis. Seul le push se tait : l’app et l’email ne changent pas.',
+                    l10n.tousLesJoursHeureDe,
                     style: caption,
                   ),
                 ),
-                overline('Récap par email'),
+                overline(l10n.recapParEmail),
                 card(
                   MuRadioGroup<EmailDigest>(
-                    label: 'Récap par email',
+                    label: l10n.recapParEmail,
                     hideLabel: true,
-                    options: const [
+                    options: [
                       MuRadioOption(
                         value: EmailDigest.weekly,
-                        label: 'Hebdo · dimanche 10h00',
-                        description: 'Tes matchs de la semaine et des parties près de chez toi.',
+                        label: l10n.hebdoDimanche10h00,
+                        description: l10n.tesMatchsDeLaSemaine,
                       ),
                       MuRadioOption(
                         value: EmailDigest.never,
-                        label: 'Jamais',
-                        description: 'Les reçus et les alertes de sécurité arrivent quand même.',
+                        label: l10n.jamais,
+                        description: l10n.lesRecusEtLesAlertes,
                       ),
                     ],
                     value: prefs.digest,

@@ -6,6 +6,7 @@ import 'package:phosphor_flutter/phosphor_flutter.dart';
 import '../theme/theme.dart';
 import 'mu_banner.dart' show MuAction;
 import 'mu_icon_button.dart';
+import '../l10n/l10n.dart';
 
 enum MuToastTone { success, error, warning, info, neutral }
 
@@ -131,7 +132,7 @@ class MuToast extends StatelessWidget {
           if (onClose != null)
             MuIconButton(
               icon: PhosphorIcons.x(),
-              label: 'Fermer',
+              label: l10n.fermer,
               size: MuIconButtonSize.s,
               color: c.toastText.withValues(alpha: _closeAlpha),
               onPressed: onClose,
@@ -405,7 +406,7 @@ class _ToastRegionState extends State<_ToastRegion> {
                 width: wide ? MuSize.toast : double.infinity,
                 child: Semantics(
                   container: true,
-                  label: 'Notifications',
+                  label: l10n.notifications,
                   explicitChildNodes: true,
                   child: stack,
                 ),

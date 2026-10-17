@@ -3,20 +3,21 @@ import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 import '../theme/theme.dart';
 import 'mu_status_badge.dart';
+import '../l10n/l10n.dart';
 
 /// ReliabilityBadge (components/ReliabilityBadge.md): « Fiable 96 % » in a pill whose tone follows
 /// the score — success from 90 %, neutral from 75 %, warning under. [detail] adds the period, a
 /// 4 px bar and « 48/50 matchs honorés ».
 class MuReliabilityBadge extends StatelessWidget {
-  const MuReliabilityBadge({
+  MuReliabilityBadge({
     super.key,
     required this.score,
     this.size = MuBadgeSize.m,
     this.detail = false,
     this.honored,
     this.total,
-    this.period = '12 derniers mois',
-  });
+    String? period,
+  }) : period = period ?? l10n.derniersMois;
 
   /// 0–100.
   final int score;
@@ -64,7 +65,7 @@ class MuReliabilityBadge extends StatelessWidget {
           );
 
     final pill = Semantics(
-      label: 'Fiable $score %',
+      label: l10n.fiable2(score),
       excludeSemantics: true,
       child: Container(
         height: small ? _heightS : _heightM,
@@ -84,7 +85,7 @@ class MuReliabilityBadge extends StatelessWidget {
             Text.rich(
               TextSpan(
                 children: [
-                  TextSpan(text: 'Fiable ', style: MuType.labelS),
+                  TextSpan(text: l10n.fiable3, style: MuType.labelS),
                   TextSpan(text: '$score %', style: MuType.numXs),
                 ],
               ),
@@ -113,7 +114,7 @@ class MuReliabilityBadge extends StatelessWidget {
           ),
           const SizedBox(height: MuSpace.s2),
           Semantics(
-            label: 'Matchs honorés',
+            label: l10n.matchsHonores2,
             value: '$h sur $t',
             child: ClipRRect(
               borderRadius: MuRadius.xsAll,
@@ -134,7 +135,7 @@ class MuReliabilityBadge extends StatelessWidget {
             TextSpan(
               children: [
                 TextSpan(text: '$h/$t', style: MuType.numS),
-                const TextSpan(text: ' matchs honorés'),
+                TextSpan(text: l10n.matchsHonores),
               ],
             ),
             style: MuType.body.copyWith(color: c.text),

@@ -9,6 +9,7 @@ import '../../common/widgets/pro_wizard_scaffold.dart';
 import '../controllers/owner_controller.dart';
 import '../data/owner_repository.dart';
 import '../widgets/owner_wizard.dart';
+import '../../../l10n/l10n.dart';
 
 /// OWN-02 — the address, and the pin moved onto the entrance.
 class AddressScreen extends ConsumerStatefulWidget {
@@ -42,11 +43,11 @@ class _AddressScreenState extends ConsumerState<AddressScreen> {
 
   bool _validate() {
     setState(() {
-      _streetError = _street.text.trim().isEmpty ? 'Indique l’adresse du terrain.' : null;
+      _streetError = _street.text.trim().isEmpty ? l10n.indiqueLAdresseDuTerrain : null;
       _postalError = RegExp(r'^\d{4}$').hasMatch(_postal.text.trim())
           ? null
-          : 'Le code postal compte 4 chiffres.';
-      _cityError = _city.text.trim().isEmpty ? 'Indique la ville.' : null;
+          : l10n.leCodePostalCompteChiffres;
+      _cityError = _city.text.trim().isEmpty ? l10n.indiqueLaVille : null;
     });
     return _streetError == null && _postalError == null && _cityError == null;
   }
@@ -54,11 +55,11 @@ class _AddressScreenState extends ConsumerState<AddressScreen> {
   @override
   Widget build(BuildContext context) {
     final d = ref.watch(ownerProvider).requireValue;
-    final venue = d.venueName.trim().isEmpty ? 'ton terrain' : d.venueName.trim();
+    final venue = d.venueName.trim().isEmpty ? l10n.tonTerrain : d.venueName.trim();
     return OwnerWizard(
       step: 1,
-      title: 'Où se trouve $venue ?',
-      lead: 'Les joueurs te trouvent sur la carte et reçoivent l’itinéraire avant le match.',
+      title: l10n.ouSeTrouve(venue),
+      lead: l10n.lesJoueursTeTrouventSur,
       validate: _validate,
       body: ProFormCard(
         divided: false,
@@ -68,7 +69,7 @@ class _AddressScreenState extends ConsumerState<AddressScreen> {
               ProFieldGrid(
                 children: [
                   MuTextField(
-                    label: 'Adresse',
+                    label: l10n.adresse,
                     controller: _street,
                     size: MuFieldSize.m,
                     leadingIcon: PhosphorIcons.mapPin(),
@@ -81,7 +82,7 @@ class _AddressScreenState extends ConsumerState<AddressScreen> {
                     },
                   ),
                   MuTextField(
-                    label: 'Code postal',
+                    label: l10n.codePostal,
                     controller: _postal,
                     size: MuFieldSize.m,
                     error: _postalError,
@@ -97,7 +98,7 @@ class _AddressScreenState extends ConsumerState<AddressScreen> {
                     },
                   ),
                   MuTextField(
-                    label: 'Ville',
+                    label: l10n.ville,
                     controller: _city,
                     size: MuFieldSize.m,
                     error: _cityError,
@@ -109,7 +110,7 @@ class _AddressScreenState extends ConsumerState<AddressScreen> {
                     },
                   ),
                   MuSelect<String>(
-                    label: 'Gouvernorat',
+                    label: l10n.gouvernorat,
                     size: MuFieldSize.m,
                     value: _governorate,
                     options: [
@@ -124,7 +125,7 @@ class _AddressScreenState extends ConsumerState<AddressScreen> {
               ),
               _PinMap(venue: venue),
               MuTextField(
-                label: 'Indications d’accès',
+                label: l10n.indicationsDAcces,
                 controller: _access,
                 size: MuFieldSize.m,
                 optional: true,
@@ -189,7 +190,7 @@ class _PinMapState extends ConsumerState<_PinMap> {
             children: [
               MuIconButton(
                 icon: PhosphorIcons.plus(),
-                label: 'Zoomer',
+                label: l10n.zoomer,
                 onPressed: _zoom >= _maxZoom
                     ? null
                     : () => setState(() => _zoom = (_zoom + _zoomStep).clamp(_minZoom, _maxZoom)),
@@ -197,7 +198,7 @@ class _PinMapState extends ConsumerState<_PinMap> {
               Container(width: MuSpace.s6, height: 1, color: c.border),
               MuIconButton(
                 icon: PhosphorIcons.minus(),
-                label: 'Dézoomer',
+                label: l10n.dezoomer,
                 onPressed: _zoom <= _minZoom
                     ? null
                     : () => setState(() => _zoom = (_zoom - _zoomStep).clamp(_minZoom, _maxZoom)),
@@ -214,7 +215,7 @@ class _PinMapState extends ConsumerState<_PinMap> {
           ),
           child: MuIconButton(
             icon: PhosphorIcons.crosshairSimple(),
-            label: 'Centrer sur l’épingle',
+            label: l10n.centrerSurLEpingle,
             onPressed: () => setState(() => _zoom = _startZoom),
           ),
         ),
@@ -247,7 +248,7 @@ class _PinMapState extends ConsumerState<_PinMap> {
                 center: MuLatLng(d.addressLat, d.addressLng),
                 zoom: _zoom,
                 district: d.city.toUpperCase(),
-                label: 'Position de ${widget.venue}, ${d.city}',
+                label: l10n.positionDe(widget.venue, d.city),
                 venues: [
                   MuMapVenue(
                     id: 'venue',
@@ -266,7 +267,7 @@ class _PinMapState extends ConsumerState<_PinMap> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Text('Position sur la carte', style: MuType.label.copyWith(color: c.text)),
+        Text(l10n.positionSurLaCarte, style: MuType.label.copyWith(color: c.text)),
         const SizedBox(height: MuSpace.s3),
         Stack(
           children: [
@@ -288,7 +289,7 @@ class _PinMapState extends ConsumerState<_PinMap> {
                       Icon(PhosphorIcons.handPointing(), size: MuSize.iconXs, color: c.textInverse),
                       const SizedBox(width: MuSpace.s2),
                       Text(
-                        'Déplace l’épingle sur l’entrée',
+                        l10n.deplaceLEpingleSurL,
                         style: MuType.labelS.copyWith(color: c.textInverse),
                       ),
                     ],
@@ -320,14 +321,14 @@ class _PinMapState extends ConsumerState<_PinMap> {
                 if (moved > 0)
                   Flexible(
                     child: Text(
-                      ' · épingle déplacée de $moved m',
+                      l10n.epingleDeplaceeDeM(moved),
                       style: MuType.caption.copyWith(color: c.textSecondary),
                     ),
                   ),
               ],
             ),
             MuButton.tertiary(
-              label: 'Recentrer sur l’adresse',
+              label: l10n.recentrerSurLAdresse,
               leading: PhosphorIcons.arrowCounterClockwise(),
               size: MuButtonSize.s,
               onPressed: moved == 0
