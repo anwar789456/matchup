@@ -20,6 +20,7 @@ class MuKpiCard extends StatelessWidget {
     this.period,
     this.upIsGood = true,
     this.note,
+    this.padding = const EdgeInsets.all(MuSpace.s5),
   });
 
   final String label;
@@ -37,6 +38,9 @@ class MuKpiCard extends StatelessWidget {
   final bool upIsGood;
   final String? note;
 
+  /// `space-5` by default; dashboards with two tiles per row use `space-4` (OWN-10, OWN-25).
+  final EdgeInsetsGeometry padding;
+
   @override
   Widget build(BuildContext context) {
     final c = context.mu;
@@ -46,23 +50,27 @@ class MuKpiCard extends StatelessWidget {
       final flat = delta == 0;
       final good = flat ? null : (delta! > 0) == upIsGood;
       final color = good == null ? c.textSecondary : (good ? c.successText : c.errorText);
-      change = Row(
+      // The period moves under the change when the tile is too narrow for both (OWN-10).
+      change = Wrap(
+        crossAxisAlignment: WrapCrossAlignment.center,
+        spacing: MuSpace.s2,
         children: [
-          Icon(
-            flat
-                ? PhosphorIcons.minus()
-                : (delta! > 0 ? PhosphorIcons.trendUp() : PhosphorIcons.trendDown()),
-            size: MuSize.iconXs,
-            color: color,
+          Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(
+                flat
+                    ? PhosphorIcons.minus()
+                    : (delta! > 0 ? PhosphorIcons.trendUp() : PhosphorIcons.trendDown()),
+                size: MuSize.iconXs,
+                color: color,
+              ),
+              const SizedBox(width: MuSpace.s1),
+              Text(deltaText!, style: MuType.numS.copyWith(color: color)),
+            ],
           ),
-          const SizedBox(width: MuSpace.s1),
-          Text(deltaText!, style: MuType.numS.copyWith(color: color)),
-          if (period != null) ...[
-            const SizedBox(width: MuSpace.s2),
-            Flexible(
-              child: Text(period!, style: MuType.caption.copyWith(color: c.textSecondary)),
-            ),
-          ],
+          if (period != null)
+            Text(period!, style: MuType.caption.copyWith(color: c.textSecondary)),
         ],
       );
     }
@@ -74,7 +82,7 @@ class MuKpiCard extends StatelessWidget {
           .join(', '),
       excludeSemantics: true,
       child: Container(
-        padding: const EdgeInsets.all(MuSpace.s5),
+        padding: padding,
         decoration: BoxDecoration(
           color: c.surface,
           borderRadius: MuRadius.mdAll,

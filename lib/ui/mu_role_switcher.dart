@@ -40,7 +40,8 @@ class MuRoleSwitcher extends StatelessWidget {
     this.onAddRole,
     String? addRoleLabel,
     String? addRoleDetail,
-  }) : addRoleDetail = addRoleDetail ?? l10n.coachOuOrganisateurDeTournois, addRoleLabel = addRoleLabel ?? l10n.ajouterUnRole;
+  }) : addRoleDetail = addRoleDetail ?? l10n.coachOuOrganisateurDeTournois,
+       addRoleLabel = addRoleLabel ?? l10n.ajouterUnRole;
 
   final List<MuRole> roles;
   final String current;
@@ -59,28 +60,32 @@ class MuRoleSwitcher extends StatelessWidget {
     required String current,
     required ValueChanged<MuRole> onChanged,
     VoidCallback? onAddRole,
-  }) => MuBottomSheet.show<void>(
-    context,
-    title: l10n.changerDeRole,
-    height: MuSheetHeight.auto,
-    child: Padding(
-      padding: const EdgeInsets.fromLTRB(MuSpace.s4, 0, MuSpace.s4, MuSpace.s4),
-      child: MuRoleSwitcher(
-        roles: roles,
-        current: current,
-        onChanged: (r) {
-          Navigator.of(context, rootNavigator: true).pop();
-          onChanged(r);
-        },
-        onAddRole: onAddRole == null
-            ? null
-            : () {
-                Navigator.of(context, rootNavigator: true).pop();
-                onAddRole();
-              },
+  }) {
+    // The caller may be a sheet that is closing: keep the root navigator now.
+    final nav = Navigator.of(context, rootNavigator: true);
+    return MuBottomSheet.show<void>(
+      context,
+      title: l10n.changerDeRole,
+      height: MuSheetHeight.auto,
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(MuSpace.s4, 0, MuSpace.s4, MuSpace.s4),
+        child: MuRoleSwitcher(
+          roles: roles,
+          current: current,
+          onChanged: (r) {
+            nav.pop();
+            onChanged(r);
+          },
+          onAddRole: onAddRole == null
+              ? null
+              : () {
+                  nav.pop();
+                  onAddRole();
+                },
+        ),
       ),
-    ),
-  );
+    );
+  }
 
   @override
   Widget build(BuildContext context) {

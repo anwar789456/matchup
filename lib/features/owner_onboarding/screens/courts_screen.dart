@@ -150,7 +150,7 @@ class _CourtsScreenState extends ConsumerState<CourtsScreen> {
       lead:
           l10n.ajouteChaqueTerrainReservableLes,
       validate: _validate,
-      body: ProFormCard(
+      body: ProFormSections(
         children: [
           Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -167,7 +167,7 @@ class _CourtsScreenState extends ConsumerState<CourtsScreen> {
                       Semantics(
                         header: true,
                         child: Text(
-                          '$n terrain${n > 1 ? 's' : ''}',
+                          l10n.proNTerrains(n, n > 1 ? 's' : ''),
                           style: MuType.h3.copyWith(color: c.text),
                         ),
                       ),
@@ -251,13 +251,6 @@ class _CourtsScreenState extends ConsumerState<CourtsScreen> {
                   ],
                 ),
               ),
-              MuButton.tertiary(label: l10n.annuler, onPressed: _cancel),
-              const SizedBox(width: MuSpace.s2),
-              MuButton.secondary(
-                label: l10n.enregistrer,
-                leading: PhosphorIcons.check(),
-                onPressed: _save,
-              ),
             ],
           ),
           const SizedBox(height: MuSpace.s5),
@@ -266,12 +259,11 @@ class _CourtsScreenState extends ConsumerState<CourtsScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                _ThreeColumns(
+                ProFieldColumn(
                   children: [
                     MuTextField(
                       label: l10n.nom,
                       controller: _name,
-                      size: MuFieldSize.m,
                       error: _nameError,
                       autofocus: _isNew,
                       onChanged: (_) => setState(() => _nameError = null),
@@ -279,7 +271,6 @@ class _CourtsScreenState extends ConsumerState<CourtsScreen> {
                     ),
                     MuSelect<MuSport>(
                       label: l10n.sport,
-                      size: MuFieldSize.m,
                       value: w.sport,
                       options: [
                         for (final (sport, label, players, _) in OwnerCatalog.sports)
@@ -294,7 +285,6 @@ class _CourtsScreenState extends ConsumerState<CourtsScreen> {
                     ),
                     MuSelect<String>(
                       label: l10n.surface,
-                      size: MuFieldSize.m,
                       value: w.surface,
                       options: [
                         for (final s in OwnerCatalog.surfaces) MuSelectOption(value: s, label: s),
@@ -304,10 +294,8 @@ class _CourtsScreenState extends ConsumerState<CourtsScreen> {
                   ],
                 ),
                 const SizedBox(height: MuSpace.s5),
-                Wrap(
-                  alignment: WrapAlignment.spaceBetween,
-                  spacing: MuSpace.s6,
-                  runSpacing: MuSpace.s5,
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     MuRadioGroup<bool>(
                       label: l10n.type,
@@ -319,6 +307,7 @@ class _CourtsScreenState extends ConsumerState<CourtsScreen> {
                       ],
                       onChanged: (v) => setState(() => _working = w.copyWith(indoor: v)),
                     ),
+                    const SizedBox(height: MuSpace.s5),
                     MuSwitch(
                       value: w.lights,
                       label: l10n.eclairage,
@@ -330,41 +319,21 @@ class _CourtsScreenState extends ConsumerState<CourtsScreen> {
               ],
             ),
           ),
+          const SizedBox(height: MuSpace.s5),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              MuButton.tertiary(label: l10n.annuler, onPressed: _cancel),
+              const SizedBox(width: MuSpace.s2),
+              MuButton.secondary(
+                label: l10n.enregistrer,
+                leading: PhosphorIcons.check(),
+                onPressed: _save,
+              ),
+            ],
+          ),
         ],
       ),
-    );
-  }
-}
-
-/// Three columns (Nom, Sport, Surface), stacked below 720.
-class _ThreeColumns extends StatelessWidget {
-  const _ThreeColumns({required this.children});
-
-  final List<Widget> children;
-
-  static const double _stackBelow = 720;
-
-  @override
-  Widget build(BuildContext context) {
-    if (MediaQuery.sizeOf(context).width < _stackBelow) {
-      return Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          for (final (i, w) in children.indexed) ...[
-            if (i > 0) const SizedBox(height: MuSpace.s5),
-            w,
-          ],
-        ],
-      );
-    }
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        for (final (i, w) in children.indexed) ...[
-          if (i > 0) const SizedBox(width: MuSpace.s4),
-          Expanded(child: w),
-        ],
-      ],
     );
   }
 }
@@ -388,7 +357,6 @@ class _CourtRow extends StatelessWidget {
   static const Size _art = Size(72, 48);
   static const double editEdge = 2;
   static const double _divider = 24;
-  static const double _compact = 560;
 
   static Widget art(MuSport sport) => ClipRRect(
     borderRadius: MuRadius.smAll,
@@ -421,72 +389,71 @@ class _CourtRow extends StatelessWidget {
       ),
     );
 
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        final compact = constraints.maxWidth < _compact;
-        return Container(
-          padding: const EdgeInsets.all(MuSpace.s3),
-          decoration: BoxDecoration(
-            borderRadius: MuRadius.mdAll,
-            border: Border.all(color: c.border),
-          ),
-          child: Row(
-            children: [
-              if (!compact) ...[art(court.sport), const SizedBox(width: MuSpace.s4)],
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+    // On phones the row keeps the name, the lighting switch and the actions; the court art
+    // shows in the open editor.
+    return Container(
+      padding: const EdgeInsets.all(MuSpace.s3),
+      decoration: BoxDecoration(
+        borderRadius: MuRadius.mdAll,
+        border: Border.all(color: c.border),
+      ),
+      child: Row(
+        children: [
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  court.name,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: MuType.labelL.copyWith(color: c.text),
+                ),
+                const SizedBox(height: MuSpace.s1),
+                Row(
                   children: [
-                    Text(
-                      court.name,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: MuType.labelL.copyWith(color: c.text),
+                    MuSportIcon(court.sport, size: MuSize.iconXs, color: court.sport.text(c)),
+                    const SizedBox(width: MuSpace.s1),
+                    Flexible(
+                      child: Text(
+                        OwnerCatalog.sportName(court.sport),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: MuType.labelS.copyWith(color: court.sport.text(c)),
+                      ),
                     ),
-                    const SizedBox(height: MuSpace.s1),
-                    Row(
-                      children: [
-                        MuSportIcon(court.sport, size: MuSize.iconXs, color: court.sport.text(c)),
-                        const SizedBox(width: MuSpace.s1),
-                        Text(
-                          OwnerCatalog.sportName(court.sport),
-                          style: MuType.labelS.copyWith(color: court.sport.text(c)),
-                        ),
-                        const SizedBox(width: MuSpace.s2),
-                        Flexible(
-                          child: Text(
-                            '${court.surface} · ${court.indoor ? l10n.interieur : l10n.exterieur}',
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: MuType.caption.copyWith(color: c.textSecondary),
-                          ),
-                        ),
-                      ],
+                    const SizedBox(width: MuSpace.s2),
+                    Flexible(
+                      child: Text(
+                        '${court.surface} · ${court.indoor ? l10n.interieur : l10n.exterieur}',
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: MuType.caption.copyWith(color: c.textSecondary),
+                      ),
                     ),
                   ],
                 ),
-              ),
-              const SizedBox(width: MuSpace.s4),
-              MuSwitch(
-                value: court.lights,
-                size: MuSwitchSize.s,
-                label: compact ? null : l10n.eclairage,
-                semanticLabel: l10n.eclairage2(court.name),
-                onChanged: onLights,
-              ),
-              const SizedBox(width: MuSpace.s2),
-              Container(width: 1, height: _divider, color: c.border),
-              const SizedBox(width: MuSpace.s1),
-              MuIconButton(
-                icon: PhosphorIcons.pencilSimple(),
-                label: l10n.modifier2(court.name),
-                onPressed: onEdit,
-              ),
-              more,
-            ],
+              ],
+            ),
           ),
-        );
-      },
+          const SizedBox(width: MuSpace.s4),
+          MuSwitch(
+            value: court.lights,
+            size: MuSwitchSize.s,
+            semanticLabel: l10n.eclairage2(court.name),
+            onChanged: onLights,
+          ),
+          const SizedBox(width: MuSpace.s2),
+          Container(width: 1, height: _divider, color: c.border),
+          const SizedBox(width: MuSpace.s1),
+          MuIconButton(
+            icon: PhosphorIcons.pencilSimple(),
+            label: l10n.modifier2(court.name),
+            onPressed: onEdit,
+          ),
+          more,
+        ],
+      ),
     );
   }
 }

@@ -4,6 +4,7 @@
 library;
 
 import 'dart:ui' show Locale;
+import '../l10n/l10n.dart';
 
 bool _arabic = false;
 
@@ -24,10 +25,10 @@ String formatLevel(double level) => level.toStringAsFixed(1).replaceAll('.', ','
 
 /// The band of a level: Débutant < 2,5 ≤ Intermédiaire < 4,0 ≤ Avancé < 5,5 ≤ Expert.
 String levelBand(double level) {
-  if (level < 2.5) return _arabic ? 'مبتدئ' : 'Débutant';
-  if (level < 4.0) return _arabic ? 'متوسط' : 'Intermédiaire';
-  if (level < 5.5) return _arabic ? 'متقدم' : 'Avancé';
-  return _arabic ? 'خبير' : 'Expert';
+  if (level < 2.5) return _arabic ? 'مبتدئ' : l10n.debutant;
+  if (level < 4.0) return _arabic ? 'متوسط' : l10n.intermediaire;
+  if (level < 5.5) return _arabic ? 'متقدم' : l10n.avance;
+  return _arabic ? 'خبير' : l10n.expert;
 }
 
 /// « 20 123 456 » — 8 Tunisian digits grouped 2-3-3 (fewer digits are grouped as far as they go).
@@ -75,23 +76,28 @@ const _monthsAr = [
   'نوفمبر',
   'ديسمبر',
 ];
-const _months = [
+final _months = [
   'janv.',
-  'févr.',
+  l10n.fevr,
   'mars',
   'avr.',
   'mai',
   'juin',
   'juil.',
-  'août',
+  l10n.aout,
   'sept.',
   'oct.',
   'nov.',
-  'déc.',
+  l10n.dec,
 ];
 
 /// « sam. » — short weekday.
 String formatWeekday(DateTime d) => (_arabic ? _weekdaysAr : _weekdays)[d.weekday - 1];
+
+/// « lundi » (« Tous les lundis »).
+String formatWeekdayLong(DateTime d) => (_arabic
+    ? _weekdaysAr
+    : const ['lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi', 'dimanche'])[d.weekday - 1];
 
 /// « oct. » — short month.
 String formatMonth(DateTime d) => (_arabic ? _monthsAr : _months)[d.month - 1];
@@ -152,10 +158,10 @@ String formatHour(int minutes) {
 /// « à l’instant », « il y a 1 min », « il y a 3 h », « il y a 2 j ».
 String formatSince(DateTime time, DateTime now) {
   final d = now.difference(time);
-  if (d.inMinutes < 1) return 'à l’instant';
-  if (d.inHours < 1) return 'il y a ${d.inMinutes} min';
-  if (d.inDays < 1) return 'il y a ${d.inHours} h';
-  return 'il y a ${d.inDays} j';
+  if (d.inMinutes < 1) return l10n.aLInstant;
+  if (d.inHours < 1) return l10n.ilYAMin(d.inMinutes);
+  if (d.inDays < 1) return l10n.ilYAH(d.inHours);
+  return l10n.ilYAJ(d.inDays);
 }
 
 /// « d’Arena Five », « de Smash Padel » — « de » elided before a vowel or a mute h.

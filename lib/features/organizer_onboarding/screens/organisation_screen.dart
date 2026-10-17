@@ -167,8 +167,8 @@ class _OrganisationScreenState extends ConsumerState<OrganisationScreen> {
 
     return ProWizardScaffold(
       space: ProSpace.organizer,
-      railTitle: l10n.organiseTesTournois,
-      railMeta: l10n.etapesEnvironMin2(_steps.length),
+      flowTitle: l10n.organiseTesTournois,
+      flowMeta: l10n.etapesEnvironMin2(_steps.length),
       steps: [for (final s in _steps) MuWizardStep(s)],
       current: 0,
       title: l10n.presenteTonOrganisation,
@@ -178,12 +178,12 @@ class _OrganisationScreenState extends ConsumerState<OrganisationScreen> {
       onContinue: _busy ? null : _continue,
       continueLoading: _busy,
       savedAt: d.savedAt,
-      body: ProFormCard(
+      body: ProFormSections(
         children: [
           ProFormSection(
             title: l10n.tonOrganisation,
             children: [
-              ProFieldGrid(children: [
+              ProFieldColumn(children: [
                 MuFileUpload.avatar(
                   label: l10n.logo,
                   name: d.name,
@@ -195,7 +195,6 @@ class _OrganisationScreenState extends ConsumerState<OrganisationScreen> {
                 MuTextField(
                   label: l10n.nomDeLOrganisation,
                   controller: _name,
-                  size: MuFieldSize.m,
                   helper: l10n.afficheSurTesTournoisEt,
                   error: _nameError,
                   textCapitalization: TextCapitalization.words,
@@ -207,7 +206,6 @@ class _OrganisationScreenState extends ConsumerState<OrganisationScreen> {
                 MuTextField(
                   label: l10n.emailDeContact,
                   controller: _email,
-                  size: MuFieldSize.m,
                   leadingIcon: PhosphorIcons.envelopeSimple(),
                   keyboardType: TextInputType.emailAddress,
                   autofillHints: const [AutofillHints.email],
@@ -221,7 +219,6 @@ class _OrganisationScreenState extends ConsumerState<OrganisationScreen> {
                 MuPhoneField(
                   label: l10n.telephone,
                   controller: _phone,
-                  size: MuFieldSize.m,
                   helper: l10n.pourLesQuestionsDesEquipes,
                   error: _phoneError,
                   onChanged: (digits) {
@@ -251,7 +248,11 @@ class _OrganisationScreenState extends ConsumerState<OrganisationScreen> {
                   onEdit: () => _openEvent(e),
                   onRemove: () => _removeEvent(e),
                 ),
-              Row(
+              Wrap(
+                alignment: WrapAlignment.spaceBetween,
+                crossAxisAlignment: WrapCrossAlignment.center,
+                spacing: MuSpace.s4,
+                runSpacing: MuSpace.s3,
                 children: [
                   if (events.length < maxPastEvents)
                     MuButton.secondary(
@@ -262,7 +263,6 @@ class _OrganisationScreenState extends ConsumerState<OrganisationScreen> {
                         isNew: true,
                       ),
                     ),
-                  const Spacer(),
                   Text.rich(
                     TextSpan(children: [
                       TextSpan(
@@ -295,12 +295,53 @@ class _OrganisationScreenState extends ConsumerState<OrganisationScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
+          Text(
+            _isNew ? l10n.nouvelEvenement : l10n.modificationEnCours,
+            style: MuType.labelL.copyWith(color: c.text),
+          ),
+          const SizedBox(height: MuSpace.s4),
+          ProFieldColumn(children: [
+            MuTextField(
+              label: l10n.nomDeLEvenement,
+              controller: _eventName,
+              error: _eventError,
+              autofocus: _isNew,
+              onChanged: (_) => setState(() => _eventError = null),
+            ),
+            MuSelect<MuSport>(
+              label: l10n.sport,
+              value: e.sport,
+              options: [
+                for (final (sport, label) in CoachCatalog.sports)
+                  MuSelectOption(
+                    value: sport,
+                    label: label,
+                    icon: MuSportIcon(sport, size: MuSize.iconS, color: sport.text(c)),
+                  ),
+              ],
+              onChanged: (v) => setState(() => _editing = e.copyWith(sport: v)),
+            ),
+            MuTextField(
+              label: l10n.date,
+              controller: _eventDate,
+              placeholder: l10n.mars,
+            ),
+            MuTextField(
+              label: l10n.equipes,
+              controller: _eventTeams,
+              keyboardType: TextInputType.number,
+              inputFormatters: [
+                FilteringTextInputFormatter.digitsOnly,
+                LengthLimitingTextInputFormatter(3),
+              ],
+            ),
+          ]),
+          const SizedBox(height: MuSpace.s5),
+          MuTextField(label: l10n.lieu, controller: _eventVenue),
+          const SizedBox(height: MuSpace.s5),
           Row(
+            mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              Expanded(
-                child: Text(_isNew ? l10n.nouvelEvenement : l10n.modificationEnCours,
-                    style: MuType.labelL.copyWith(color: c.text)),
-              ),
               MuButton.tertiary(
                 label: l10n.annuler,
                 onPressed: () => setState(() {
@@ -316,49 +357,6 @@ class _OrganisationScreenState extends ConsumerState<OrganisationScreen> {
               ),
             ],
           ),
-          const SizedBox(height: MuSpace.s4),
-          ProFieldGrid(children: [
-            MuTextField(
-              label: l10n.nomDeLEvenement,
-              controller: _eventName,
-              size: MuFieldSize.m,
-              error: _eventError,
-              autofocus: _isNew,
-              onChanged: (_) => setState(() => _eventError = null),
-            ),
-            MuSelect<MuSport>(
-              label: l10n.sport,
-              size: MuFieldSize.m,
-              value: e.sport,
-              options: [
-                for (final (sport, label) in CoachCatalog.sports)
-                  MuSelectOption(
-                    value: sport,
-                    label: label,
-                    icon: MuSportIcon(sport, size: MuSize.iconS, color: sport.text(c)),
-                  ),
-              ],
-              onChanged: (v) => setState(() => _editing = e.copyWith(sport: v)),
-            ),
-            MuTextField(
-              label: l10n.date,
-              controller: _eventDate,
-              size: MuFieldSize.m,
-              placeholder: l10n.mars,
-            ),
-            MuTextField(
-              label: l10n.equipes,
-              controller: _eventTeams,
-              size: MuFieldSize.m,
-              keyboardType: TextInputType.number,
-              inputFormatters: [
-                FilteringTextInputFormatter.digitsOnly,
-                LengthLimitingTextInputFormatter(3),
-              ],
-            ),
-          ]),
-          const SizedBox(height: MuSpace.s5),
-          MuTextField(label: l10n.lieu, controller: _eventVenue, size: MuFieldSize.m),
         ],
       ),
     );
@@ -401,7 +399,12 @@ class _EventRow extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(event.name, style: MuType.labelL.copyWith(color: c.text)),
+                Text(
+                  event.name,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: MuType.labelL.copyWith(color: c.text),
+                ),
                 if (event.summary.isNotEmpty) ...[
                   const SizedBox(height: _lineGap),
                   Text(event.summary, style: MuType.caption.copyWith(color: c.textSecondary)),

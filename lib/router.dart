@@ -68,6 +68,23 @@ import 'features/wallet/screens/wallet_screen.dart';
 import 'features/organizer_onboarding/screens/organisation_screen.dart';
 import 'features/organizer_onboarding/screens/organizer_dashboard_screen.dart';
 import 'features/onboarding/screens/welcome_screen.dart';
+import 'features/owner/data/owner_drafts.dart';
+import 'features/owner/data/owner_repository.dart';
+import 'features/owner/screens/block_slot_screen.dart';
+import 'features/owner/screens/booking_screen.dart';
+import 'features/owner/screens/bookings_screen.dart';
+import 'features/owner/screens/check_in_result_screen.dart';
+import 'features/owner/screens/clients_screen.dart';
+import 'features/owner/screens/courts_screen.dart';
+import 'features/owner/screens/more_screen.dart';
+import 'features/owner/screens/no_show_screen.dart';
+import 'features/owner/screens/planning_screen.dart';
+import 'features/owner/screens/prices_screen.dart';
+import 'features/owner/screens/revenue_screen.dart';
+import 'features/owner/screens/reviews_screen.dart';
+import 'features/owner/screens/scanner_screen.dart';
+import 'features/owner/screens/today_screen.dart';
+import 'features/owner/widgets/owner_shell.dart';
 import 'features/owner_onboarding/controllers/owner_controller.dart';
 import 'features/owner_onboarding/screens/address_screen.dart';
 import 'features/owner_onboarding/screens/company_screen.dart';
@@ -186,6 +203,21 @@ abstract final class Routes {
   static const ownerPayout = '/own/payout'; // OWN-07
   static const ownerPlan = '/own/plan'; // OWN-08
   static const ownerDashboard = '/own/dashboard'; // OWN-09
+  // Owner space (phase 13): its own shell, Aujourd’hui · Planning · Check-in · Réservations · Plus.
+  static const ownerToday = '/owner/today'; // OWN-10
+  static const ownerPlanning = '/owner/planning'; // OWN-11
+  static const ownerCheckIn = '/owner/checkin'; // OWN-20 (STA-05 when the camera is refused)
+  static const ownerBookings = '/owner/bookings'; // OWN-14
+  static const ownerMore = '/owner/more'; // OWN-15
+  static String ownerBooking(String ref) => '/owner/booking/$ref'; // OWN-12
+  static String ownerNoShow(String ref) => '/owner/booking/$ref/no-show'; // OWN-24
+  static const ownerBlock = '/owner/block'; // OWN-13 (extra: BlockPrefill?)
+  static const ownerTariffs = '/owner/tariffs'; // OWN-16 (extra: PromoDraft?)
+  static const ownerCourtList = '/owner/court-list'; // OWN-17
+  static const ownerClients = '/owner/clients'; // OWN-18
+  static const ownerReviews = '/owner/reviews'; // OWN-19
+  static const ownerCheckInResult = '/owner/checkin/result'; // OWN-21 / 22 / 23 (extra: CheckInResult)
+  static const ownerRevenue = '/owner/revenue'; // OWN-25
   static const coachProfile = '/coa/profile'; // COA-01
   static const coachCertification = '/coa/certification'; // COA-02
   static const coachDashboard = '/coa/dashboard'; // COA-03
@@ -324,6 +356,53 @@ final routerProvider = Provider<GoRouter>((ref) {
           ),
         ],
       ),
+      StatefulShellRoute.indexedStack(
+        builder: (context, state, shell) => OwnerShell(shell: shell),
+        branches: [
+          StatefulShellBranch(routes: [_route(Routes.ownerToday, (_) => const OwnerTodayScreen())]),
+          StatefulShellBranch(
+            routes: [_route(Routes.ownerPlanning, (_) => const OwnerPlanningScreen())],
+          ),
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: Routes.ownerCheckIn,
+                builder: (context, state) => const ScannerScreen(),
+                routes: [
+                  GoRoute(
+                    path: 'result',
+                    parentNavigatorKey: _rootKey,
+                    builder: (context, state) =>
+                        CheckInResultScreen(result: state.extra! as CheckInResult),
+                  ),
+                ],
+              ),
+            ],
+          ),
+          StatefulShellBranch(
+            routes: [_route(Routes.ownerBookings, (_) => const OwnerBookingsScreen())],
+          ),
+          StatefulShellBranch(routes: [_route(Routes.ownerMore, (_) => const OwnerMoreScreen())]),
+        ],
+      ),
+      GoRoute(
+        path: '/owner/booking/:ref',
+        parentNavigatorKey: _rootKey,
+        builder: (context, state) => OwnerBookingScreen(bookingRef: state.pathParameters['ref']!),
+        routes: [
+          GoRoute(
+            path: 'no-show',
+            parentNavigatorKey: _rootKey,
+            builder: (context, state) => NoShowScreen(bookingRef: state.pathParameters['ref']!),
+          ),
+        ],
+      ),
+      _root(Routes.ownerBlock, (s) => BlockSlotScreen(prefill: s.extra as BlockPrefill?)),
+      _root(Routes.ownerTariffs, (s) => OwnerPricesScreen(promo: s.extra as PromoDraft?)),
+      _root(Routes.ownerCourtList, (_) => const OwnerCourtsScreen()),
+      _root(Routes.ownerClients, (_) => const OwnerClientsScreen()),
+      _root(Routes.ownerReviews, (_) => const OwnerReviewsScreen()),
+      _root(Routes.ownerRevenue, (_) => const OwnerRevenueScreen()),
       GoRoute(
         path: '/game/:id',
         parentNavigatorKey: _rootKey,

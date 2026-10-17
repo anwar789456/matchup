@@ -61,17 +61,16 @@ class _AddressScreenState extends ConsumerState<AddressScreen> {
       title: l10n.ouSeTrouve(venue),
       lead: l10n.lesJoueursTeTrouventSur,
       validate: _validate,
-      body: ProFormCard(
+      body: ProFormSections(
         divided: false,
         children: [
           ProFormSection(
             children: [
-              ProFieldGrid(
+              ProFieldColumn(
                 children: [
                   MuTextField(
                     label: l10n.adresse,
                     controller: _street,
-                    size: MuFieldSize.m,
                     leadingIcon: PhosphorIcons.mapPin(),
                     clearable: true,
                     error: _streetError,
@@ -84,7 +83,6 @@ class _AddressScreenState extends ConsumerState<AddressScreen> {
                   MuTextField(
                     label: l10n.codePostal,
                     controller: _postal,
-                    size: MuFieldSize.m,
                     error: _postalError,
                     keyboardType: TextInputType.number,
                     inputFormatters: [
@@ -100,7 +98,6 @@ class _AddressScreenState extends ConsumerState<AddressScreen> {
                   MuTextField(
                     label: l10n.ville,
                     controller: _city,
-                    size: MuFieldSize.m,
                     error: _cityError,
                     textCapitalization: TextCapitalization.words,
                     autofillHints: const [AutofillHints.addressCity],
@@ -111,7 +108,6 @@ class _AddressScreenState extends ConsumerState<AddressScreen> {
                   ),
                   MuSelect<String>(
                     label: l10n.gouvernorat,
-                    size: MuFieldSize.m,
                     value: _governorate,
                     options: [
                       for (final g in OwnerCatalog.governorates) MuSelectOption(value: g, label: g),
@@ -127,7 +123,6 @@ class _AddressScreenState extends ConsumerState<AddressScreen> {
               MuTextField(
                 label: l10n.indicationsDAcces,
                 controller: _access,
-                size: MuFieldSize.m,
                 optional: true,
                 onChanged: (v) => _owner.edit((d) => d.copyWith(access: v)),
               ),
@@ -272,27 +267,34 @@ class _PinMapState extends ConsumerState<_PinMap> {
         Stack(
           children: [
             map,
+            // The hint keeps clear of the zoom buttons on narrow phones.
             PositionedDirectional(
               top: MuSpace.s3,
               start: MuSpace.s3,
+              end: MuSpace.s3 + MuSize.controlL + MuSpace.s2,
               child: IgnorePointer(
-                child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: MuSpace.s3, vertical: MuSpace.s2),
-                  decoration: BoxDecoration(
-                    color: c.surfaceInverse,
-                    borderRadius: MuRadius.fullAll,
-                    boxShadow: MuElevation.of(context).level2,
-                  ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Icon(PhosphorIcons.handPointing(), size: MuSize.iconXs, color: c.textInverse),
-                      const SizedBox(width: MuSpace.s2),
-                      Text(
-                        l10n.deplaceLEpingleSurL,
-                        style: MuType.labelS.copyWith(color: c.textInverse),
-                      ),
-                    ],
+                child: Align(
+                  alignment: AlignmentDirectional.centerStart,
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(horizontal: MuSpace.s3, vertical: MuSpace.s2),
+                    decoration: BoxDecoration(
+                      color: c.surfaceInverse,
+                      borderRadius: MuRadius.fullAll,
+                      boxShadow: MuElevation.of(context).level2,
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(PhosphorIcons.handPointing(), size: MuSize.iconXs, color: c.textInverse),
+                        const SizedBox(width: MuSpace.s2),
+                        Flexible(
+                          child: Text(
+                            l10n.deplaceLEpingleSurL,
+                            style: MuType.labelS.copyWith(color: c.textInverse),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),

@@ -14016,6 +14016,2536 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Mise à jour…'**
   String get miseAJour;
+
+  /// No description provided for @voirLesEtapes.
+  ///
+  /// In fr, this message translates to:
+  /// **'Voir les étapes'**
+  String get voirLesEtapes;
+
+  /// No description provided for @proNTerrains.
+  ///
+  /// In fr, this message translates to:
+  /// **'{p0} terrain{p1}'**
+  String proNTerrains(Object p0, Object p1);
+
+  /// No description provided for @indiqueTonMatriculeFiscal.
+  ///
+  /// In fr, this message translates to:
+  /// **'Indique ton matricule fiscal.'**
+  String get indiqueTonMatriculeFiscal;
+
+  /// No description provided for @attendsLaFinDeLEnvoiDeTesPhotos.
+  ///
+  /// In fr, this message translates to:
+  /// **'Attends la fin de l’envoi de tes photos.'**
+  String get attendsLaFinDeLEnvoiDeTesPhotos;
+
+  /// No description provided for @attendsLaFinDeLEnvoi.
+  ///
+  /// In fr, this message translates to:
+  /// **'Attends la fin de l’envoi.'**
+  String get attendsLaFinDeLEnvoi;
+
+  /// No description provided for @matchupNePreleveJamaisRien.
+  ///
+  /// In fr, this message translates to:
+  /// **'. MatchUp ne prélève jamais rien sur ce compte.'**
+  String get matchupNePreleveJamaisRien;
+
+  /// No description provided for @horaireA.
+  ///
+  /// In fr, this message translates to:
+  /// **'à'**
+  String get horaireA;
+
+  /// No description provided for @parPersAbrege.
+  ///
+  /// In fr, this message translates to:
+  /// **'/pers.'**
+  String get parPersAbrege;
+
+  /// No description provided for @fevr.
+  ///
+  /// In fr, this message translates to:
+  /// **'févr.'**
+  String get fevr;
+
+  /// No description provided for @dec.
+  ///
+  /// In fr, this message translates to:
+  /// **'déc.'**
+  String get dec;
+
+  /// No description provided for @aLInstant.
+  ///
+  /// In fr, this message translates to:
+  /// **'à l’instant'**
+  String get aLInstant;
+
+  /// No description provided for @ilYAMin.
+  ///
+  /// In fr, this message translates to:
+  /// **'il y a {p0} min'**
+  String ilYAMin(Object p0);
+
+  /// No description provided for @ilYAH.
+  ///
+  /// In fr, this message translates to:
+  /// **'il y a {p0} h'**
+  String ilYAH(Object p0);
+
+  /// No description provided for @ilYAJ.
+  ///
+  /// In fr, this message translates to:
+  /// **'il y a {p0} j'**
+  String ilYAJ(Object p0);
+
+  /// No description provided for @bloquerUnCreneau.
+  ///
+  /// In fr, this message translates to:
+  /// **'Bloquer un créneau'**
+  String get bloquerUnCreneau;
+
+  /// No description provided for @creneauBloque.
+  ///
+  /// In fr, this message translates to:
+  /// **'Créneau bloqué'**
+  String get creneauBloque;
+
+  /// No description provided for @reservation2.
+  ///
+  /// In fr, this message translates to:
+  /// **'Réservation'**
+  String get reservation2;
+
+  /// No description provided for @reservationAVenir.
+  ///
+  /// In fr, this message translates to:
+  /// **'réservation à venir'**
+  String get reservationAVenir;
+
+  /// No description provided for @reservationsAVenir.
+  ///
+  /// In fr, this message translates to:
+  /// **'réservations à venir'**
+  String get reservationsAVenir;
+
+  /// No description provided for @paiementEnAttente.
+  ///
+  /// In fr, this message translates to:
+  /// **'paiement en attente'**
+  String get paiementEnAttente;
+
+  /// No description provided for @paiementsEnAttente.
+  ///
+  /// In fr, this message translates to:
+  /// **'paiements en attente'**
+  String get paiementsEnAttente;
+
+  /// No description provided for @reservationTerminee.
+  ///
+  /// In fr, this message translates to:
+  /// **'réservation terminée'**
+  String get reservationTerminee;
+
+  /// No description provided for @reservationsTerminees.
+  ///
+  /// In fr, this message translates to:
+  /// **'réservations terminées'**
+  String get reservationsTerminees;
+
+  /// No description provided for @reservationAnnulee2.
+  ///
+  /// In fr, this message translates to:
+  /// **'réservation annulée'**
+  String get reservationAnnulee2;
+
+  /// No description provided for @reservationsAnnulees.
+  ///
+  /// In fr, this message translates to:
+  /// **'réservations annulées'**
+  String get reservationsAnnulees;
+
+  /// No description provided for @ceSoir3.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ce soir · {p0}'**
+  String ceSoir3(Object p0);
+
+  /// No description provided for @aujourdHui4.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aujourd’hui · {p0}'**
+  String aujourdHui4(Object p0);
+
+  /// No description provided for @demain.
+  ///
+  /// In fr, this message translates to:
+  /// **'Demain · {p0}'**
+  String demain(Object p0);
+
+  /// No description provided for @exporterLesReservationsCsv.
+  ///
+  /// In fr, this message translates to:
+  /// **'Exporter les réservations (CSV)'**
+  String get exporterLesReservationsCsv;
+
+  /// No description provided for @rechercherUneReservation.
+  ///
+  /// In fr, this message translates to:
+  /// **'Rechercher une réservation'**
+  String get rechercherUneReservation;
+
+  /// No description provided for @nomRefMuTelephone.
+  ///
+  /// In fr, this message translates to:
+  /// **'Nom, réf. MU-…, téléphone'**
+  String get nomRefMuTelephone;
+
+  /// No description provided for @filtrerLesReservations.
+  ///
+  /// In fr, this message translates to:
+  /// **'Filtrer les réservations'**
+  String get filtrerLesReservations;
+
+  /// No description provided for @paiementEnAttente2.
+  ///
+  /// In fr, this message translates to:
+  /// **'Paiement en attente'**
+  String get paiementEnAttente2;
+
+  /// No description provided for @terminees.
+  ///
+  /// In fr, this message translates to:
+  /// **'Terminées'**
+  String get terminees;
+
+  /// No description provided for @annulees.
+  ///
+  /// In fr, this message translates to:
+  /// **'Annulées'**
+  String get annulees;
+
+  /// No description provided for @noShows.
+  ///
+  /// In fr, this message translates to:
+  /// **'No-shows'**
+  String get noShows;
+
+  /// No description provided for @terrains3.
+  ///
+  /// In fr, this message translates to:
+  /// **'· {p0} terrains'**
+  String terrains3(Object p0);
+
+  /// No description provided for @trierParDateLaPlus.
+  ///
+  /// In fr, this message translates to:
+  /// **'Trier par : date, la plus proche d’abord'**
+  String get trierParDateLaPlus;
+
+  /// No description provided for @trierParDateLaPlus2.
+  ///
+  /// In fr, this message translates to:
+  /// **'Trier par : date, la plus lointaine d’abord'**
+  String get trierParDateLaPlus2;
+
+  /// No description provided for @aucuneReservationIci.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucune réservation ici'**
+  String get aucuneReservationIci;
+
+  /// No description provided for @aucuneReservationPour.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucune réservation pour « {p0} »'**
+  String aucuneReservationPour(Object p0);
+
+  /// No description provided for @essaieUnAutreFiltreOu.
+  ///
+  /// In fr, this message translates to:
+  /// **'Essaie un autre filtre ou une autre recherche.'**
+  String get essaieUnAutreFiltreOu;
+
+  /// No description provided for @aVenir5.
+  ///
+  /// In fr, this message translates to:
+  /// **'{p0} à venir'**
+  String aVenir5(Object p0);
+
+  /// No description provided for @reservation3.
+  ///
+  /// In fr, this message translates to:
+  /// **'1 réservation'**
+  String get reservation3;
+
+  /// No description provided for @reservations2.
+  ///
+  /// In fr, this message translates to:
+  /// **'{p0} réservations'**
+  String reservations2(Object p0);
+
+  /// No description provided for @voirLesAutresDeCe.
+  ///
+  /// In fr, this message translates to:
+  /// **'Voir les {p0} autres de ce soir'**
+  String voirLesAutresDeCe(Object p0);
+
+  /// No description provided for @voirLesAutres.
+  ///
+  /// In fr, this message translates to:
+  /// **'Voir les {p0} autres'**
+  String voirLesAutres(Object p0);
+
+  /// No description provided for @publique3.
+  ///
+  /// In fr, this message translates to:
+  /// **'Publique · {p0}/{p1}'**
+  String publique3(Object p0, Object p1);
+
+  /// No description provided for @noShow.
+  ///
+  /// In fr, this message translates to:
+  /// **'No-show'**
+  String get noShow;
+
+  /// No description provided for @terminee.
+  ///
+  /// In fr, this message translates to:
+  /// **'Terminée'**
+  String get terminee;
+
+  /// No description provided for @enCours2.
+  ///
+  /// In fr, this message translates to:
+  /// **'En cours'**
+  String get enCours2;
+
+  /// No description provided for @tRef.
+  ///
+  /// In fr, this message translates to:
+  /// **'{p0}, T{p1}, {p2}, {p3}, réf. {p4}'**
+  String tRef(Object p0, Object p1, Object p2, Object p3, Object p4);
+
+  /// No description provided for @checkIn.
+  ///
+  /// In fr, this message translates to:
+  /// **'Check-in'**
+  String get checkIn;
+
+  /// No description provided for @siCEstBienIl.
+  ///
+  /// In fr, this message translates to:
+  /// **'Si c’est bien {p0}, il est déjà compté. Sinon, c’est sûrement une capture d’écran : demande le billet de la personne dans son app.'**
+  String siCEstBienIl(Object p0);
+
+  /// No description provided for @scannerLeJoueurSuivant.
+  ///
+  /// In fr, this message translates to:
+  /// **'Scanner le joueur suivant'**
+  String get scannerLeJoueurSuivant;
+
+  /// No description provided for @voirLaReservation.
+  ///
+  /// In fr, this message translates to:
+  /// **'Voir la réservation'**
+  String get voirLaReservation;
+
+  /// No description provided for @scannerUnAutreBillet.
+  ///
+  /// In fr, this message translates to:
+  /// **'Scanner un autre billet'**
+  String get scannerUnAutreBillet;
+
+  /// No description provided for @voirLesJoueursDeLa.
+  ///
+  /// In fr, this message translates to:
+  /// **'Voir les joueurs de la réservation'**
+  String get voirLesJoueursDeLa;
+
+  /// No description provided for @scannerANouveau.
+  ///
+  /// In fr, this message translates to:
+  /// **'Scanner à nouveau'**
+  String get scannerANouveau;
+
+  /// No description provided for @chercherDansLePlanning.
+  ///
+  /// In fr, this message translates to:
+  /// **'Chercher dans le planning'**
+  String get chercherDansLePlanning;
+
+  /// No description provided for @valide.
+  ///
+  /// In fr, this message translates to:
+  /// **'Valide'**
+  String get valide;
+
+  /// No description provided for @bonMatchLaisseEntrerLe.
+  ///
+  /// In fr, this message translates to:
+  /// **'Bon match ! Laisse entrer le groupe.'**
+  String get bonMatchLaisseEntrerLe;
+
+  /// No description provided for @dejaUtilise.
+  ///
+  /// In fr, this message translates to:
+  /// **'Déjà utilisé'**
+  String get dejaUtilise;
+
+  /// No description provided for @ceBilletEstDejaPasse.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ce billet est déjà passé à '**
+  String get ceBilletEstDejaPasse;
+
+  /// No description provided for @invalide.
+  ///
+  /// In fr, this message translates to:
+  /// **'Invalide'**
+  String get invalide;
+
+  /// No description provided for @ceBilletNEstPas.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ce billet n’est pas pour {p0}.'**
+  String ceBilletNEstPas(Object p0);
+
+  /// No description provided for @scanneA.
+  ///
+  /// In fr, this message translates to:
+  /// **'Scanné à '**
+  String get scanneA;
+
+  /// No description provided for @football5v5.
+  ///
+  /// In fr, this message translates to:
+  /// **'{p0} · Football 5v5'**
+  String football5v5(Object p0);
+
+  /// No description provided for @reservePar.
+  ///
+  /// In fr, this message translates to:
+  /// **'Réservé par '**
+  String get reservePar;
+
+  /// No description provided for @arrives.
+  ///
+  /// In fr, this message translates to:
+  /// **'{p0} arrivés'**
+  String arrives(Object p0);
+
+  /// No description provided for @joueursArrives.
+  ///
+  /// In fr, this message translates to:
+  /// **' joueurs arrivés'**
+  String get joueursArrives;
+
+  /// No description provided for @joueursArrivesSur.
+  ///
+  /// In fr, this message translates to:
+  /// **'{p0} joueurs arrivés sur {p1}'**
+  String joueursArrivesSur(Object p0, Object p1);
+
+  /// No description provided for @encoreAttendus.
+  ///
+  /// In fr, this message translates to:
+  /// **'Encore attendus : {p0}'**
+  String encoreAttendus(Object p0);
+
+  /// No description provided for @signalerUnAbsent.
+  ///
+  /// In fr, this message translates to:
+  /// **'Signaler un absent'**
+  String get signalerUnAbsent;
+
+  /// No description provided for @billetDe.
+  ///
+  /// In fr, this message translates to:
+  /// **'Billet de {p0}'**
+  String billetDe(Object p0);
+
+  /// No description provided for @premierScan.
+  ///
+  /// In fr, this message translates to:
+  /// **'Premier scan'**
+  String get premierScan;
+
+  /// No description provided for @accueilPar.
+  ///
+  /// In fr, this message translates to:
+  /// **' · accueil, par {p0}'**
+  String accueilPar(Object p0);
+
+  /// No description provided for @ceScan.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ce scan'**
+  String get ceScan;
+
+  /// No description provided for @refuse.
+  ///
+  /// In fr, this message translates to:
+  /// **' · refusé'**
+  String get refuse;
+
+  /// No description provided for @joueursEntres.
+  ///
+  /// In fr, this message translates to:
+  /// **'Joueurs entrés'**
+  String get joueursEntres;
+
+  /// No description provided for @reserveDansUnAutreTerrain.
+  ///
+  /// In fr, this message translates to:
+  /// **'Réservé dans un autre terrain'**
+  String get reserveDansUnAutreTerrain;
+
+  /// No description provided for @leCodeEstBienUn.
+  ///
+  /// In fr, this message translates to:
+  /// **'Le code est bien un billet MatchUp, mais pour un autre lieu. Rien n’est débité ni enregistré chez toi.'**
+  String get leCodeEstBienUn;
+
+  /// No description provided for @queFaire2.
+  ///
+  /// In fr, this message translates to:
+  /// **'QUE FAIRE'**
+  String get queFaire2;
+
+  /// No description provided for @demandeAuJoueurDOuvrir.
+  ///
+  /// In fr, this message translates to:
+  /// **'1. Demande au joueur d’ouvrir sa réservation {p0} dans '**
+  String demandeAuJoueurDOuvrir(Object p0);
+
+  /// No description provided for @pasDeBilletChercheSon.
+  ///
+  /// In fr, this message translates to:
+  /// **'2. Pas de billet ? Cherche son nom dans le planning du jour.'**
+  String get pasDeBilletChercheSon;
+
+  /// No description provided for @espaceProprietaire2.
+  ///
+  /// In fr, this message translates to:
+  /// **'Espace propriétaire · {p0}'**
+  String espaceProprietaire2(Object p0);
+
+  /// No description provided for @retourAPlus.
+  ///
+  /// In fr, this message translates to:
+  /// **'Retour à Plus'**
+  String get retourAPlus;
+
+  /// No description provided for @trierLesClients.
+  ///
+  /// In fr, this message translates to:
+  /// **'Trier les clients'**
+  String get trierLesClients;
+
+  /// No description provided for @rechercherUnClient.
+  ///
+  /// In fr, this message translates to:
+  /// **'Rechercher un client'**
+  String get rechercherUnClient;
+
+  /// No description provided for @nomTelephoneOuNDe.
+  ///
+  /// In fr, this message translates to:
+  /// **'Nom, téléphone ou n° de réservation'**
+  String get nomTelephoneOuNDe;
+
+  /// No description provided for @filtrerLesClients.
+  ///
+  /// In fr, this message translates to:
+  /// **'Filtrer les clients'**
+  String get filtrerLesClients;
+
+  /// No description provided for @tous.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tous'**
+  String get tous;
+
+  /// No description provided for @habitues.
+  ///
+  /// In fr, this message translates to:
+  /// **'Habitués'**
+  String get habitues;
+
+  /// No description provided for @nouveaux.
+  ///
+  /// In fr, this message translates to:
+  /// **'Nouveaux'**
+  String get nouveaux;
+
+  /// No description provided for @avecNoShow.
+  ///
+  /// In fr, this message translates to:
+  /// **'Avec no-show'**
+  String get avecNoShow;
+
+  /// No description provided for @depuisLe.
+  ///
+  /// In fr, this message translates to:
+  /// **'depuis le {p0} {p1}'**
+  String depuisLe(Object p0, Object p1);
+
+  /// No description provided for @aucunClientDansCeFiltre.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucun client dans ce filtre'**
+  String get aucunClientDansCeFiltre;
+
+  /// No description provided for @aucunClientPour.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucun client pour « {p0} »'**
+  String aucunClientPour(Object p0);
+
+  /// No description provided for @essaieUnAutreNomNumero.
+  ///
+  /// In fr, this message translates to:
+  /// **'Essaie un autre nom, numéro ou n° de réservation.'**
+  String get essaieUnAutreNomNumero;
+
+  /// No description provided for @afficherClientsDePlus.
+  ///
+  /// In fr, this message translates to:
+  /// **'Afficher 20 clients de plus'**
+  String get afficherClientsDePlus;
+
+  /// No description provided for @tuVoisLaFiabiliteMatchup.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tu vois la fiabilité MatchUp de tes clients et ce qu’ils ont payé chez toi, rien d’autre.'**
+  String get tuVoisLaFiabiliteMatchup;
+
+  /// No description provided for @prochaine.
+  ///
+  /// In fr, this message translates to:
+  /// **'prochaine · {p0}'**
+  String prochaine(Object p0);
+
+  /// No description provided for @aujourdHui5.
+  ///
+  /// In fr, this message translates to:
+  /// **'aujourd’hui · {p0}'**
+  String aujourdHui5(Object p0);
+
+  /// No description provided for @noShow2.
+  ///
+  /// In fr, this message translates to:
+  /// **', {p0} no-show{p1}'**
+  String noShow2(Object p0, Object p1);
+
+  /// No description provided for @nouveau.
+  ///
+  /// In fr, this message translates to:
+  /// **', nouveau'**
+  String get nouveau;
+
+  /// No description provided for @noShow3.
+  ///
+  /// In fr, this message translates to:
+  /// **'1 no-show'**
+  String get noShow3;
+
+  /// No description provided for @nouveau2.
+  ///
+  /// In fr, this message translates to:
+  /// **'Nouveau'**
+  String get nouveau2;
+
+  /// No description provided for @depenses.
+  ///
+  /// In fr, this message translates to:
+  /// **'dépensés'**
+  String get depenses;
+
+  /// No description provided for @fiabiliteMatchup.
+  ///
+  /// In fr, this message translates to:
+  /// **'Fiabilité MatchUp'**
+  String get fiabiliteMatchup;
+
+  /// No description provided for @creneauPrefere.
+  ///
+  /// In fr, this message translates to:
+  /// **'Créneau préféré'**
+  String get creneauPrefere;
+
+  /// No description provided for @premierMatchIci.
+  ///
+  /// In fr, this message translates to:
+  /// **'Premier match ici'**
+  String get premierMatchIci;
+
+  /// No description provided for @message.
+  ///
+  /// In fr, this message translates to:
+  /// **'Message'**
+  String get message;
+
+  /// No description provided for @terrainVisibleLesJoueursPeuvent.
+  ///
+  /// In fr, this message translates to:
+  /// **'Terrain {p0} visible : les joueurs peuvent le réserver.'**
+  String terrainVisibleLesJoueursPeuvent(Object p0);
+
+  /// No description provided for @terrainMasquePlusReservable.
+  ///
+  /// In fr, this message translates to:
+  /// **'Terrain {p0} masqué : plus réservable.'**
+  String terrainMasquePlusReservable(Object p0);
+
+  /// No description provided for @terrainEnEntretienCreneauxFermes.
+  ///
+  /// In fr, this message translates to:
+  /// **'Terrain {p0} en entretien : créneaux fermés.'**
+  String terrainEnEntretienCreneauxFermes(Object p0);
+
+  /// No description provided for @terrainRouvertALaReservation.
+  ///
+  /// In fr, this message translates to:
+  /// **'Terrain {p0} rouvert à la réservation.'**
+  String terrainRouvertALaReservation(Object p0);
+
+  /// No description provided for @visibleEtReservable.
+  ///
+  /// In fr, this message translates to:
+  /// **'Visible et réservable'**
+  String get visibleEtReservable;
+
+  /// No description provided for @masqueIlNApparaitPlus.
+  ///
+  /// In fr, this message translates to:
+  /// **'Masqué, il n’apparaît plus aux joueurs.'**
+  String get masqueIlNApparaitPlus;
+
+  /// No description provided for @enEntretien.
+  ///
+  /// In fr, this message translates to:
+  /// **'En entretien'**
+  String get enEntretien;
+
+  /// No description provided for @fermeTousSesCreneauxJusqu.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ferme tous ses créneaux jusqu’à ce que tu le rouvres.'**
+  String get fermeTousSesCreneauxJusqu;
+
+  /// No description provided for @modifierLeSportLaSurface.
+  ///
+  /// In fr, this message translates to:
+  /// **'Modifier le sport, la surface, l’éclairage'**
+  String get modifierLeSportLaSurface;
+
+  /// No description provided for @terrainActif.
+  ///
+  /// In fr, this message translates to:
+  /// **'terrain actif'**
+  String get terrainActif;
+
+  /// No description provided for @terrainsActifs.
+  ///
+  /// In fr, this message translates to:
+  /// **'terrains actifs'**
+  String get terrainsActifs;
+
+  /// No description provided for @occupesJ.
+  ///
+  /// In fr, this message translates to:
+  /// **'occupés · 7 j'**
+  String get occupesJ;
+
+  /// No description provided for @tousLesJours2.
+  ///
+  /// In fr, this message translates to:
+  /// **'tous les jours'**
+  String get tousLesJours2;
+
+  /// No description provided for @tesTerrains2.
+  ///
+  /// In fr, this message translates to:
+  /// **'TES TERRAINS'**
+  String get tesTerrains2;
+
+  /// No description provided for @masquePlusReservable.
+  ///
+  /// In fr, this message translates to:
+  /// **'Masqué = plus réservable'**
+  String get masquePlusReservable;
+
+  /// No description provided for @tarifsEtHeuresDePointe.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tarifs et heures de pointe'**
+  String get tarifsEtHeuresDePointe;
+
+  /// No description provided for @prixParTerrainDatesSpeciales.
+  ///
+  /// In fr, this message translates to:
+  /// **'Prix par terrain, dates spéciales'**
+  String get prixParTerrainDatesSpeciales;
+
+  /// No description provided for @prixParTerrainDatesSpeciales2.
+  ///
+  /// In fr, this message translates to:
+  /// **'Prix par terrain, dates spéciales · {p0} /pers. à 10 en soirée'**
+  String prixParTerrainDatesSpeciales2(Object p0);
+
+  /// No description provided for @enEntretienTousSesCreneaux.
+  ///
+  /// In fr, this message translates to:
+  /// **'En entretien : tous ses créneaux sont fermés à la réservation.'**
+  String get enEntretienTousSesCreneaux;
+
+  /// No description provided for @hHCreneauxBloques.
+  ///
+  /// In fr, this message translates to:
+  /// **'{p0} · {p1} · {p2}h–{p3}h, créneaux bloqués'**
+  String hHCreneauxBloques(Object p0, Object p1, Object p2, Object p3);
+
+  /// No description provided for @terrainSalleCouverte.
+  ///
+  /// In fr, this message translates to:
+  /// **'Terrain {p0}, salle couverte'**
+  String terrainSalleCouverte(Object p0);
+
+  /// No description provided for @terrainGazonSynthetiqueEclaire.
+  ///
+  /// In fr, this message translates to:
+  /// **'Terrain {p0}, gazon synthétique éclairé'**
+  String terrainGazonSynthetiqueEclaire(Object p0);
+
+  /// No description provided for @football5v52.
+  ///
+  /// In fr, this message translates to:
+  /// **'Football 5v5'**
+  String get football5v52;
+
+  /// No description provided for @synthetiqueInterieur.
+  ///
+  /// In fr, this message translates to:
+  /// **'Synthétique · Intérieur'**
+  String get synthetiqueInterieur;
+
+  /// No description provided for @synthetiqueExterieurEclaire.
+  ///
+  /// In fr, this message translates to:
+  /// **'Synthétique · Extérieur · Éclairé'**
+  String get synthetiqueExterieurEclaire;
+
+  /// No description provided for @terrainVisibleEtReservable.
+  ///
+  /// In fr, this message translates to:
+  /// **'Terrain {p0} visible et réservable'**
+  String terrainVisibleEtReservable(Object p0);
+
+  /// No description provided for @visible.
+  ///
+  /// In fr, this message translates to:
+  /// **'Visible'**
+  String get visible;
+
+  /// No description provided for @masque.
+  ///
+  /// In fr, this message translates to:
+  /// **'Masqué'**
+  String get masque;
+
+  /// No description provided for @creuses.
+  ///
+  /// In fr, this message translates to:
+  /// **'Creuses'**
+  String get creuses;
+
+  /// No description provided for @pointe.
+  ///
+  /// In fr, this message translates to:
+  /// **'Pointe'**
+  String get pointe;
+
+  /// No description provided for @occupeJ.
+  ///
+  /// In fr, this message translates to:
+  /// **'Occupé · 7 j'**
+  String get occupeJ;
+
+  /// No description provided for @bloquer2.
+  ///
+  /// In fr, this message translates to:
+  /// **'Bloquer'**
+  String get bloquer2;
+
+  /// No description provided for @sportSurfaceEclairagePuisSes.
+  ///
+  /// In fr, this message translates to:
+  /// **'Sport, surface, éclairage, puis ses horaires et tarifs. Ton plan Pro n’a pas de limite de terrains.'**
+  String get sportSurfaceEclairagePuisSes;
+
+  /// No description provided for @plus.
+  ///
+  /// In fr, this message translates to:
+  /// **'Plus'**
+  String get plus;
+
+  /// No description provided for @notificationsNonLues2.
+  ///
+  /// In fr, this message translates to:
+  /// **'Notifications, 2 non lues'**
+  String get notificationsNonLues2;
+
+  /// No description provided for @monComplexe.
+  ///
+  /// In fr, this message translates to:
+  /// **'Mon complexe'**
+  String get monComplexe;
+
+  /// No description provided for @habituesNoShows.
+  ///
+  /// In fr, this message translates to:
+  /// **'Habitués, no-shows'**
+  String get habituesNoShows;
+
+  /// No description provided for @avisSansReponse.
+  ///
+  /// In fr, this message translates to:
+  /// **'1 avis sans réponse'**
+  String get avisSansReponse;
+
+  /// No description provided for @avisSansReponse2.
+  ///
+  /// In fr, this message translates to:
+  /// **'{p0} avis sans réponse'**
+  String avisSansReponse2(Object p0);
+
+  /// No description provided for @argent.
+  ///
+  /// In fr, this message translates to:
+  /// **'Argent'**
+  String get argent;
+
+  /// No description provided for @versementLunOct.
+  ///
+  /// In fr, this message translates to:
+  /// **'Versement lun. 19 oct.'**
+  String get versementLunOct;
+
+  /// No description provided for @proEssai.
+  ///
+  /// In fr, this message translates to:
+  /// **'Pro · essai'**
+  String get proEssai;
+
+  /// No description provided for @compteSecurite.
+  ///
+  /// In fr, this message translates to:
+  /// **'Compte, sécurité'**
+  String get compteSecurite;
+
+  /// No description provided for @roles.
+  ///
+  /// In fr, this message translates to:
+  /// **'2 rôles'**
+  String get roles;
+
+  /// No description provided for @avis6.
+  ///
+  /// In fr, this message translates to:
+  /// **'{p0} · {p1} avis'**
+  String avis6(Object p0, Object p1);
+
+  /// No description provided for @monCompteProprietaire.
+  ///
+  /// In fr, this message translates to:
+  /// **'Mon compte propriétaire'**
+  String get monCompteProprietaire;
+
+  /// No description provided for @planProEssaiGratuit.
+  ///
+  /// In fr, this message translates to:
+  /// **'Plan Pro · essai gratuit'**
+  String get planProEssaiGratuit;
+
+  /// No description provided for @jusquAuMerOctPuis.
+  ///
+  /// In fr, this message translates to:
+  /// **'Jusqu’au mer. 28 oct., puis 149 DT/mois. Rappel 3 jours avant.'**
+  String get jusquAuMerOctPuis;
+
+  /// No description provided for @noShowSignale.
+  ///
+  /// In fr, this message translates to:
+  /// **'No-show signalé'**
+  String get noShowSignale;
+
+  /// No description provided for @noShowsSignales.
+  ///
+  /// In fr, this message translates to:
+  /// **'{p0} no-shows signalés'**
+  String noShowsSignales(Object p0);
+
+  /// No description provided for @estPrevenu.
+  ///
+  /// In fr, this message translates to:
+  /// **'est prévenu'**
+  String get estPrevenu;
+
+  /// No description provided for @sontPrevenus.
+  ///
+  /// In fr, this message translates to:
+  /// **'sont prévenus'**
+  String get sontPrevenus;
+
+  /// No description provided for @signalerUnNoShow.
+  ///
+  /// In fr, this message translates to:
+  /// **'Signaler un no-show'**
+  String get signalerUnNoShow;
+
+  /// No description provided for @retourAuCheckIn.
+  ///
+  /// In fr, this message translates to:
+  /// **'Retour au check-in'**
+  String get retourAuCheckIn;
+
+  /// No description provided for @choisisLeJoueurAbsent.
+  ///
+  /// In fr, this message translates to:
+  /// **'Choisis le joueur absent'**
+  String get choisisLeJoueurAbsent;
+
+  /// No description provided for @marquerAbsent.
+  ///
+  /// In fr, this message translates to:
+  /// **'Marquer {p0} absent'**
+  String marquerAbsent(Object p0);
+
+  /// No description provided for @marquerJoueursAbsents.
+  ///
+  /// In fr, this message translates to:
+  /// **'Marquer {p0} joueurs absents'**
+  String marquerJoueursAbsents(Object p0);
+
+  /// No description provided for @debut2.
+  ///
+  /// In fr, this message translates to:
+  /// **'{p0} · {p1} · début {p2}'**
+  String debut2(Object p0, Object p1, Object p2);
+
+  /// No description provided for @quiNEstPasVenu.
+  ///
+  /// In fr, this message translates to:
+  /// **'QUI N’EST PAS VENU ?'**
+  String get quiNEstPasVenu;
+
+  /// No description provided for @tousLesJoueursSontArrives.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tous les joueurs sont arrivés.'**
+  String get tousLesJoueursSontArrives;
+
+  /// No description provided for @dejaSignale.
+  ///
+  /// In fr, this message translates to:
+  /// **'Déjà signalé : {p0}.'**
+  String dejaSignale(Object p0);
+
+  /// No description provided for @possibleDesMinApresLe.
+  ///
+  /// In fr, this message translates to:
+  /// **'Possible dès 15 min après le début, si personne n’a prévenu. Les {p0} autres joueurs ont été scannés.'**
+  String possibleDesMinApresLe(Object p0);
+
+  /// No description provided for @ceQuiVaSePasser2.
+  ///
+  /// In fr, this message translates to:
+  /// **'CE QUI VA SE PASSER'**
+  String get ceQuiVaSePasser2;
+
+  /// No description provided for @leurFiabiliteBaisse.
+  ///
+  /// In fr, this message translates to:
+  /// **'Leur fiabilité baisse'**
+  String get leurFiabiliteBaisse;
+
+  /// No description provided for @saFiabiliteBaisse.
+  ///
+  /// In fr, this message translates to:
+  /// **'Sa fiabilité baisse'**
+  String get saFiabiliteBaisse;
+
+  /// No description provided for @leurPartResteDue.
+  ///
+  /// In fr, this message translates to:
+  /// **'Leur part reste due'**
+  String get leurPartResteDue;
+
+  /// No description provided for @saPartResteDue.
+  ///
+  /// In fr, this message translates to:
+  /// **'Sa part reste due'**
+  String get saPartResteDue;
+
+  /// No description provided for @restentVersesASansRemboursement.
+  ///
+  /// In fr, this message translates to:
+  /// **'{p0} restent versés à {p1}, sans remboursement.'**
+  String restentVersesASansRemboursement(Object p0, Object p1);
+
+  /// No description provided for @ilsSontPrevenusEtPeuvent.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ils sont prévenus et peuvent contester'**
+  String get ilsSontPrevenusEtPeuvent;
+
+  /// No description provided for @ilEstPrevenuEtPeut.
+  ///
+  /// In fr, this message translates to:
+  /// **'Il est prévenu et peut contester'**
+  String get ilEstPrevenuEtPeut;
+
+  /// No description provided for @ilAHPourRepondre.
+  ///
+  /// In fr, this message translates to:
+  /// **'Il a 48 h pour répondre. Tu peux retirer ce signalement pendant 24 h.'**
+  String get ilAHPourRepondre;
+
+  /// No description provided for @notePourMatchup.
+  ///
+  /// In fr, this message translates to:
+  /// **'Note pour MatchUp'**
+  String get notePourMatchup;
+
+  /// No description provided for @exInjoignablePersonneNA.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ex. : injoignable, personne n’a prévenu'**
+  String get exInjoignablePersonneNA;
+
+  /// No description provided for @nEstPasVenu.
+  ///
+  /// In fr, this message translates to:
+  /// **'{p0} n’est pas venu'**
+  String nEstPasVenu(Object p0);
+
+  /// No description provided for @partPayeePasDeBillet.
+  ///
+  /// In fr, this message translates to:
+  /// **'Part payée · {p0} · pas de billet scanné'**
+  String partPayeePasDeBillet(Object p0);
+
+  /// No description provided for @pasArrive.
+  ///
+  /// In fr, this message translates to:
+  /// **'Pas arrivé'**
+  String get pasArrive;
+
+  /// No description provided for @creneauxBloques.
+  ///
+  /// In fr, this message translates to:
+  /// **'Créneaux bloqués'**
+  String get creneauxBloques;
+
+  /// No description provided for @debloquerCeCreneau.
+  ///
+  /// In fr, this message translates to:
+  /// **'Débloquer ce créneau ?'**
+  String get debloquerCeCreneau;
+
+  /// No description provided for @lesJoueursPourrontDeNouveau.
+  ///
+  /// In fr, this message translates to:
+  /// **'Les joueurs pourront de nouveau le réserver.'**
+  String get lesJoueursPourrontDeNouveau;
+
+  /// No description provided for @garderBloque.
+  ///
+  /// In fr, this message translates to:
+  /// **'Garder bloqué'**
+  String get garderBloque;
+
+  /// No description provided for @debloquer.
+  ///
+  /// In fr, this message translates to:
+  /// **'Débloquer'**
+  String get debloquer;
+
+  /// No description provided for @creneauDebloque.
+  ///
+  /// In fr, this message translates to:
+  /// **'Créneau débloqué'**
+  String get creneauDebloque;
+
+  /// No description provided for @bloque2.
+  ///
+  /// In fr, this message translates to:
+  /// **'bloqué'**
+  String get bloque2;
+
+  /// No description provided for @bloques.
+  ///
+  /// In fr, this message translates to:
+  /// **'bloqués'**
+  String get bloques;
+
+  /// No description provided for @vueDuPlanning.
+  ///
+  /// In fr, this message translates to:
+  /// **'Vue du planning'**
+  String get vueDuPlanning;
+
+  /// No description provided for @semaine.
+  ///
+  /// In fr, this message translates to:
+  /// **'Semaine'**
+  String get semaine;
+
+  /// No description provided for @jourDuPlanning.
+  ///
+  /// In fr, this message translates to:
+  /// **'Jour du planning'**
+  String get jourDuPlanning;
+
+  /// No description provided for @chargementDuPlanning.
+  ///
+  /// In fr, this message translates to:
+  /// **'Chargement du planning'**
+  String get chargementDuPlanning;
+
+  /// No description provided for @planning2.
+  ///
+  /// In fr, this message translates to:
+  /// **'Planning {p0}, {p1}'**
+  String planning2(Object p0, Object p1);
+
+  /// No description provided for @aucuneReservation.
+  ///
+  /// In fr, this message translates to:
+  /// **'{p0} – {p1} · aucune réservation'**
+  String aucuneReservation(Object p0, Object p1);
+
+  /// No description provided for @bloque3.
+  ///
+  /// In fr, this message translates to:
+  /// **'{p0}, bloqué : {p1}'**
+  String bloque3(Object p0, Object p1);
+
+  /// No description provided for @libre2.
+  ///
+  /// In fr, this message translates to:
+  /// **'Libre'**
+  String get libre2;
+
+  /// No description provided for @creneauPasseLibre.
+  ///
+  /// In fr, this message translates to:
+  /// **'{p0}, créneau passé, libre'**
+  String creneauPasseLibre(Object p0);
+
+  /// No description provided for @libreAppuiLongPourBloquer.
+  ///
+  /// In fr, this message translates to:
+  /// **'{p0}, libre, {p1}, appui long pour bloquer'**
+  String libreAppuiLongPourBloquer(Object p0, Object p1);
+
+  /// No description provided for @legende.
+  ///
+  /// In fr, this message translates to:
+  /// **'Légende'**
+  String get legende;
+
+  /// No description provided for @appuiLongSurUnCreneau.
+  ///
+  /// In fr, this message translates to:
+  /// **'Appui long sur un créneau libre pour le bloquer'**
+  String get appuiLongSurUnCreneau;
+
+  /// No description provided for @chargementDeLaSemaine.
+  ///
+  /// In fr, this message translates to:
+  /// **'Chargement de la semaine'**
+  String get chargementDeLaSemaine;
+
+  /// No description provided for @reservations3.
+  ///
+  /// In fr, this message translates to:
+  /// **'{p0}, {p1} réservations, {p2} %'**
+  String reservations3(Object p0, Object p1, Object p2);
+
+  /// No description provided for @resa.
+  ///
+  /// In fr, this message translates to:
+  /// **'{p0} résa · {p1} %'**
+  String resa(Object p0, Object p1);
+
+  /// No description provided for @tousLesLundis.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tous les lundis'**
+  String get tousLesLundis;
+
+  /// No description provided for @tousLesMardis.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tous les mardis'**
+  String get tousLesMardis;
+
+  /// No description provided for @tousLesMercredis.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tous les mercredis'**
+  String get tousLesMercredis;
+
+  /// No description provided for @tousLesJeudis.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tous les jeudis'**
+  String get tousLesJeudis;
+
+  /// No description provided for @tousLesVendredis.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tous les vendredis'**
+  String get tousLesVendredis;
+
+  /// No description provided for @tousLesSamedis.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tous les samedis'**
+  String get tousLesSamedis;
+
+  /// No description provided for @tousLesDimanches.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tous les dimanches'**
+  String get tousLesDimanches;
+
+  /// No description provided for @derniersLundis.
+  ///
+  /// In fr, this message translates to:
+  /// **'derniers lundis'**
+  String get derniersLundis;
+
+  /// No description provided for @derniersMardis.
+  ///
+  /// In fr, this message translates to:
+  /// **'derniers mardis'**
+  String get derniersMardis;
+
+  /// No description provided for @derniersMercredis.
+  ///
+  /// In fr, this message translates to:
+  /// **'derniers mercredis'**
+  String get derniersMercredis;
+
+  /// No description provided for @derniersJeudis.
+  ///
+  /// In fr, this message translates to:
+  /// **'derniers jeudis'**
+  String get derniersJeudis;
+
+  /// No description provided for @derniersVendredis.
+  ///
+  /// In fr, this message translates to:
+  /// **'derniers vendredis'**
+  String get derniersVendredis;
+
+  /// No description provided for @derniersSamedis.
+  ///
+  /// In fr, this message translates to:
+  /// **'derniers samedis'**
+  String get derniersSamedis;
+
+  /// No description provided for @derniersDimanches.
+  ///
+  /// In fr, this message translates to:
+  /// **'derniers dimanches'**
+  String get derniersDimanches;
+
+  /// No description provided for @indiqueUnPrix2.
+  ///
+  /// In fr, this message translates to:
+  /// **'Indique un prix'**
+  String get indiqueUnPrix2;
+
+  /// No description provided for @promoPubliee.
+  ///
+  /// In fr, this message translates to:
+  /// **'Promo publiée'**
+  String get promoPubliee;
+
+  /// No description provided for @le3.
+  ///
+  /// In fr, this message translates to:
+  /// **'{p0}, le {p1}.'**
+  String le3(Object p0, Object p1);
+
+  /// No description provided for @tarifsEnregistres.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tarifs enregistrés'**
+  String get tarifsEnregistres;
+
+  /// No description provided for @promoPubliee2.
+  ///
+  /// In fr, this message translates to:
+  /// **'Promo {p0} publiée.'**
+  String promoPubliee2(Object p0);
+
+  /// No description provided for @lesReservationsDejaPayeesGardent.
+  ///
+  /// In fr, this message translates to:
+  /// **'Les réservations déjà payées gardent leur prix.'**
+  String get lesReservationsDejaPayeesGardent;
+
+  /// No description provided for @terrains4.
+  ///
+  /// In fr, this message translates to:
+  /// **'{p0} · {p1} terrains'**
+  String terrains4(Object p0, Object p1);
+
+  /// No description provided for @enregistrerLesTarifs.
+  ///
+  /// In fr, this message translates to:
+  /// **'Enregistrer les tarifs'**
+  String get enregistrerLesTarifs;
+
+  /// No description provided for @plagesHoraires.
+  ///
+  /// In fr, this message translates to:
+  /// **'Plages horaires'**
+  String get plagesHoraires;
+
+  /// No description provided for @duLundiAuVendredi.
+  ///
+  /// In fr, this message translates to:
+  /// **'Du lundi au vendredi'**
+  String get duLundiAuVendredi;
+
+  /// No description provided for @heuresCreusesDeAHeures.
+  ///
+  /// In fr, this message translates to:
+  /// **'Heures creuses de {p0} à {p1}, heures de pointe de {p2} à {p3}, heures creuses de {p4} à minuit'**
+  String heuresCreusesDeAHeures(
+    Object p0,
+    Object p1,
+    Object p2,
+    Object p3,
+    Object p4,
+  );
+
+  /// No description provided for @samediEtDimancheDeA.
+  ///
+  /// In fr, this message translates to:
+  /// **'Samedi et dimanche, de {p0} à {p1}.'**
+  String samediEtDimancheDeA(Object p0, Object p1);
+
+  /// No description provided for @lesJoueursVoientLePrix.
+  ///
+  /// In fr, this message translates to:
+  /// **'Les joueurs voient le prix par personne, calculé pour {p0} joueurs.'**
+  String lesJoueursVoientLePrix(Object p0);
+
+  /// No description provided for @terrainsEt.
+  ///
+  /// In fr, this message translates to:
+  /// **'Terrains {p0} et {p1}'**
+  String terrainsEt(Object p0, Object p1);
+
+  /// No description provided for @indoorCouvert.
+  ///
+  /// In fr, this message translates to:
+  /// **'Indoor · couvert'**
+  String get indoorCouvert;
+
+  /// No description provided for @exterieurGazonSynthetiqueEclaires.
+  ///
+  /// In fr, this message translates to:
+  /// **'Extérieur · gazon synthétique · éclairés'**
+  String get exterieurGazonSynthetiqueEclaires;
+
+  /// No description provided for @promotions.
+  ///
+  /// In fr, this message translates to:
+  /// **'Promotions'**
+  String get promotions;
+
+  /// No description provided for @aucunePromotionEnCoursL.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucune promotion en cours. L’assistant t’en proposera quand des créneaux restent vides.'**
+  String get aucunePromotionEnCoursL;
+
+  /// No description provided for @dApresTaSuggestion.
+  ///
+  /// In fr, this message translates to:
+  /// **'D’après ta suggestion'**
+  String get dApresTaSuggestion;
+
+  /// No description provided for @publiee.
+  ///
+  /// In fr, this message translates to:
+  /// **'Publiée'**
+  String get publiee;
+
+  /// No description provided for @aConfirmer.
+  ///
+  /// In fr, this message translates to:
+  /// **'À confirmer'**
+  String get aConfirmer;
+
+  /// No description provided for @dureeDeLaPromo.
+  ///
+  /// In fr, this message translates to:
+  /// **'Durée de la promo'**
+  String get dureeDeLaPromo;
+
+  /// No description provided for @terrainsCreneauxRecommandeCarCreneaux.
+  ///
+  /// In fr, this message translates to:
+  /// **'{p0} terrains · {p1} créneaux {p2} Recommandé car {p3} créneaux sur {p4} sont restés vides ces {p5} {p6}.'**
+  String terrainsCreneauxRecommandeCarCreneaux(
+    Object p0,
+    Object p1,
+    Object p2,
+    Object p3,
+    Object p4,
+    Object p5,
+    Object p6,
+  );
+
+  /// No description provided for @publierLaPromo.
+  ///
+  /// In fr, this message translates to:
+  /// **'Publier la promo'**
+  String get publierLaPromo;
+
+  /// No description provided for @ceQueVoientLesJoueurs.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ce que voient les joueurs'**
+  String get ceQueVoientLesJoueurs;
+
+  /// No description provided for @hHPrixDuTerrain.
+  ///
+  /// In fr, this message translates to:
+  /// **'{p0} · {p1}h – {p2}h · prix du terrain à l’heure'**
+  String hHPrixDuTerrain(Object p0, Object p1, Object p2);
+
+  /// No description provided for @apercuJoueur.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aperçu joueur, {p0}'**
+  String apercuJoueur(Object p0);
+
+  /// No description provided for @indoor.
+  ///
+  /// In fr, this message translates to:
+  /// **'Indoor'**
+  String get indoor;
+
+  /// No description provided for @pointeTouteLaJournee.
+  ///
+  /// In fr, this message translates to:
+  /// **'Pointe toute la journée · {p0}'**
+  String pointeTouteLaJournee(Object p0);
+
+  /// No description provided for @pointe2.
+  ///
+  /// In fr, this message translates to:
+  /// **'Pointe {p0} – {p1}{p2}'**
+  String pointe2(Object p0, Object p1, Object p2);
+
+  /// No description provided for @modifier3.
+  ///
+  /// In fr, this message translates to:
+  /// **'Modifier : {p0}'**
+  String modifier3(Object p0);
+
+  /// No description provided for @exporterLesRevenus.
+  ///
+  /// In fr, this message translates to:
+  /// **'Exporter les revenus'**
+  String get exporterLesRevenus;
+
+  /// No description provided for @periode.
+  ///
+  /// In fr, this message translates to:
+  /// **'Période'**
+  String get periode;
+
+  /// No description provided for @jours.
+  ///
+  /// In fr, this message translates to:
+  /// **'7 jours'**
+  String get jours;
+
+  /// No description provided for @jours2.
+  ///
+  /// In fr, this message translates to:
+  /// **'30 jours'**
+  String get jours2;
+
+  /// No description provided for @mois.
+  ///
+  /// In fr, this message translates to:
+  /// **'12 mois'**
+  String get mois;
+
+  /// No description provided for @telechargerLeReleveDOctobre.
+  ///
+  /// In fr, this message translates to:
+  /// **'Télécharger le relevé d’octobre'**
+  String get telechargerLeReleveDOctobre;
+
+  /// No description provided for @pdfPourTaComptabiliteTva.
+  ///
+  /// In fr, this message translates to:
+  /// **'PDF pour ta comptabilité · TVA détaillée'**
+  String get pdfPourTaComptabiliteTva;
+
+  /// No description provided for @compteDeVersement.
+  ///
+  /// In fr, this message translates to:
+  /// **'Compte de versement'**
+  String get compteDeVersement;
+
+  /// No description provided for @duAu.
+  ///
+  /// In fr, this message translates to:
+  /// **'du {p0} au {p1} {p2}'**
+  String duAu(Object p0, Object p1, Object p2);
+
+  /// No description provided for @prochainVersementEstimeSurDeja.
+  ///
+  /// In fr, this message translates to:
+  /// **'Prochain versement estimé : {p0}, {p1} sur {p2}. Déjà encaissé {p3} {p4}. Encore attendu environ {p5}, {p6}.'**
+  String prochainVersementEstimeSurDeja(
+    Object p0,
+    Object p1,
+    Object p2,
+    Object p3,
+    Object p4,
+    Object p5,
+    Object p6,
+  );
+
+  /// No description provided for @dejaEncaisse.
+  ///
+  /// In fr, this message translates to:
+  /// **'Déjà encaissé'**
+  String get dejaEncaisse;
+
+  /// No description provided for @encoreAttendu.
+  ///
+  /// In fr, this message translates to:
+  /// **'Encore attendu'**
+  String get encoreAttendu;
+
+  /// No description provided for @vsJAvant.
+  ///
+  /// In fr, this message translates to:
+  /// **'vs 7 j avant'**
+  String get vsJAvant;
+
+  /// No description provided for @vsJAvant2.
+  ///
+  /// In fr, this message translates to:
+  /// **'vs 30 j avant'**
+  String get vsJAvant2;
+
+  /// No description provided for @vsMoisAvant.
+  ///
+  /// In fr, this message translates to:
+  /// **'vs 12 mois avant'**
+  String get vsMoisAvant;
+
+  /// No description provided for @revenus2.
+  ///
+  /// In fr, this message translates to:
+  /// **'Revenus · {p0}'**
+  String revenus2(Object p0);
+
+  /// No description provided for @revenusParMois.
+  ///
+  /// In fr, this message translates to:
+  /// **'Revenus par mois'**
+  String get revenusParMois;
+
+  /// No description provided for @revenusParJour.
+  ///
+  /// In fr, this message translates to:
+  /// **'Revenus par jour'**
+  String get revenusParJour;
+
+  /// No description provided for @terrainsEnLigneEtSur.
+  ///
+  /// In fr, this message translates to:
+  /// **'{p0} · 3 terrains · en ligne et sur place, en {p1}'**
+  String terrainsEnLigneEtSur(Object p0, Object p1);
+
+  /// No description provided for @mois2.
+  ///
+  /// In fr, this message translates to:
+  /// **'Mois'**
+  String get mois2;
+
+  /// No description provided for @dOuViennentLes.
+  ///
+  /// In fr, this message translates to:
+  /// **'D’où viennent les {p0}'**
+  String dOuViennentLes(Object p0);
+
+  /// No description provided for @payesEnLigne.
+  ///
+  /// In fr, this message translates to:
+  /// **'{p0} % payés en ligne'**
+  String payesEnLigne(Object p0);
+
+  /// No description provided for @payeEnLigne.
+  ///
+  /// In fr, this message translates to:
+  /// **'Payé en ligne · {p0} %'**
+  String payeEnLigne(Object p0);
+
+  /// No description provided for @verseChaqueLundi.
+  ///
+  /// In fr, this message translates to:
+  /// **'versé chaque lundi'**
+  String get verseChaqueLundi;
+
+  /// No description provided for @encaisseSurPlace.
+  ///
+  /// In fr, this message translates to:
+  /// **'Encaissé sur place · {p0} %'**
+  String encaisseSurPlace(Object p0);
+
+  /// No description provided for @noteALAccueil.
+  ///
+  /// In fr, this message translates to:
+  /// **'noté à l’accueil'**
+  String get noteALAccueil;
+
+  /// No description provided for @chaqueLundi.
+  ///
+  /// In fr, this message translates to:
+  /// **'chaque lundi'**
+  String get chaqueLundi;
+
+  /// No description provided for @prevu.
+  ///
+  /// In fr, this message translates to:
+  /// **'Prévu · {p0}'**
+  String prevu(Object p0);
+
+  /// No description provided for @paiementsDuAu.
+  ///
+  /// In fr, this message translates to:
+  /// **'Paiements du {p0} au {p1} {p2}'**
+  String paiementsDuAu(Object p0, Object p1, Object p2);
+
+  /// No description provided for @verse.
+  ///
+  /// In fr, this message translates to:
+  /// **'Versé · {p0}'**
+  String verse(Object p0);
+
+  /// No description provided for @seulsLesJoueursQuiOnt.
+  ///
+  /// In fr, this message translates to:
+  /// **'Seuls les joueurs qui ont joué chez toi peuvent laisser un avis.'**
+  String get seulsLesJoueursQuiOnt;
+
+  /// No description provided for @filtrerLesAvis.
+  ///
+  /// In fr, this message translates to:
+  /// **'Filtrer les avis'**
+  String get filtrerLesAvis;
+
+  /// No description provided for @sansReponse.
+  ///
+  /// In fr, this message translates to:
+  /// **'Sans réponse'**
+  String get sansReponse;
+
+  /// No description provided for @etoiles.
+  ///
+  /// In fr, this message translates to:
+  /// **'5 étoiles'**
+  String get etoiles;
+
+  /// No description provided for @etoilesEtMoins.
+  ///
+  /// In fr, this message translates to:
+  /// **'3 étoiles et moins'**
+  String get etoilesEtMoins;
+
+  /// No description provided for @plusRecents.
+  ///
+  /// In fr, this message translates to:
+  /// **'PLUS RÉCENTS'**
+  String get plusRecents;
+
+  /// No description provided for @tuAsReponduATous.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tu as répondu à tous les avis'**
+  String get tuAsReponduATous;
+
+  /// No description provided for @aucunAvisRecentIci.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucun avis récent ici'**
+  String get aucunAvisRecentIci;
+
+  /// No description provided for @lesPlusAnciensSontDans.
+  ///
+  /// In fr, this message translates to:
+  /// **'Les plus anciens sont dans « Voir les autres avis ».'**
+  String get lesPlusAnciensSontDans;
+
+  /// No description provided for @voirLesAutresAvis.
+  ///
+  /// In fr, this message translates to:
+  /// **'Voir les {p0} autres avis'**
+  String voirLesAutresAvis(Object p0);
+
+  /// No description provided for @unAvisInjurieuxOuFaux.
+  ///
+  /// In fr, this message translates to:
+  /// **'Un avis injurieux ou faux ? Signale-le avec « … » : l’équipe MatchUp le vérifie sous 48 h. Tu ne peux pas supprimer un avis.'**
+  String get unAvisInjurieuxOuFaux;
+
+  /// No description provided for @noteMoyenneSurAvis.
+  ///
+  /// In fr, this message translates to:
+  /// **'Note moyenne {p0} sur 5, {p1} avis'**
+  String noteMoyenneSurAvis(Object p0, Object p1);
+
+  /// No description provided for @avisVerifies.
+  ///
+  /// In fr, this message translates to:
+  /// **'{p0} avis vérifiés'**
+  String avisVerifies(Object p0);
+
+  /// No description provided for @repartitionDesNotes.
+  ///
+  /// In fr, this message translates to:
+  /// **'Répartition des notes'**
+  String get repartitionDesNotes;
+
+  /// No description provided for @etoileAvis.
+  ///
+  /// In fr, this message translates to:
+  /// **'{p0} étoile{p1} : {p2} avis'**
+  String etoileAvis(Object p0, Object p1, Object p2);
+
+  /// No description provided for @reponsePublieeSurLaPage.
+  ///
+  /// In fr, this message translates to:
+  /// **'Réponse publiée sur la page d’{p0}.'**
+  String reponsePublieeSurLaPage(Object p0);
+
+  /// No description provided for @avisDeSur.
+  ///
+  /// In fr, this message translates to:
+  /// **'Avis de {p0}, {p1} sur 5'**
+  String avisDeSur(Object p0, Object p1);
+
+  /// No description provided for @terrain6.
+  ///
+  /// In fr, this message translates to:
+  /// **'{p0} · Terrain {p1}'**
+  String terrain6(Object p0, Object p1);
+
+  /// No description provided for @repondu.
+  ///
+  /// In fr, this message translates to:
+  /// **'Répondu'**
+  String get repondu;
+
+  /// No description provided for @plusDActionsSurL.
+  ///
+  /// In fr, this message translates to:
+  /// **'Plus d’actions sur l’avis de {p0}'**
+  String plusDActionsSurL(Object p0);
+
+  /// No description provided for @taReponsePublique.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ta réponse publique'**
+  String get taReponsePublique;
+
+  /// No description provided for @visibleParTousSurLa.
+  ///
+  /// In fr, this message translates to:
+  /// **'Visible par tous sur la page d’{p0}.'**
+  String visibleParTousSurLa(Object p0);
+
+  /// No description provided for @publierLaReponse.
+  ///
+  /// In fr, this message translates to:
+  /// **'Publier la réponse'**
+  String get publierLaReponse;
+
+  /// No description provided for @ouvreLesReglagesDuTelephone.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ouvre les Réglages du téléphone'**
+  String get ouvreLesReglagesDuTelephone;
+
+  /// No description provided for @puisMatchupCamera.
+  ///
+  /// In fr, this message translates to:
+  /// **'Puis MatchUp › Caméra.'**
+  String get puisMatchupCamera;
+
+  /// No description provided for @cameraBloquee.
+  ///
+  /// In fr, this message translates to:
+  /// **'Caméra bloquée'**
+  String get cameraBloquee;
+
+  /// No description provided for @tuAsRefuseLAcces.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tu as refusé l’accès à la caméra : impossible de scanner les QR codes des joueurs.'**
+  String get tuAsRefuseLAcces;
+
+  /// No description provided for @toucheMatchup.
+  ///
+  /// In fr, this message translates to:
+  /// **'Touche MatchUp'**
+  String get toucheMatchup;
+
+  /// No description provided for @activeCameraPuisReviensIci.
+  ///
+  /// In fr, this message translates to:
+  /// **'Active Caméra, puis reviens ici'**
+  String get activeCameraPuisReviensIci;
+
+  /// No description provided for @saisirLeCodeALa.
+  ///
+  /// In fr, this message translates to:
+  /// **'Saisir le code à la main'**
+  String get saisirLeCodeALa;
+
+  /// No description provided for @leScanPartToutSeul.
+  ///
+  /// In fr, this message translates to:
+  /// **'Le scan part tout seul dès que le code est net.'**
+  String get leScanPartToutSeul;
+
+  /// No description provided for @lampeAllumee.
+  ///
+  /// In fr, this message translates to:
+  /// **'Lampe allumée'**
+  String get lampeAllumee;
+
+  /// No description provided for @lampe.
+  ///
+  /// In fr, this message translates to:
+  /// **'Lampe'**
+  String get lampe;
+
+  /// No description provided for @saisirLeCode.
+  ///
+  /// In fr, this message translates to:
+  /// **'Saisir le code'**
+  String get saisirLeCode;
+
+  /// No description provided for @laCameraNeSOuvre.
+  ///
+  /// In fr, this message translates to:
+  /// **'La caméra ne s’ouvre pas ? '**
+  String get laCameraNeSOuvre;
+
+  /// No description provided for @autoriserLAcces.
+  ///
+  /// In fr, this message translates to:
+  /// **'Autoriser l’accès'**
+  String get autoriserLAcces;
+
+  /// No description provided for @leCodeEstEcritSous.
+  ///
+  /// In fr, this message translates to:
+  /// **'Le code est écrit sous le QR, dans le billet du joueur.'**
+  String get leCodeEstEcritSous;
+
+  /// No description provided for @codeDuBillet.
+  ///
+  /// In fr, this message translates to:
+  /// **'Code du billet'**
+  String get codeDuBillet;
+
+  /// No description provided for @viseLeQrCodeDu.
+  ///
+  /// In fr, this message translates to:
+  /// **'Vise le QR code du joueur'**
+  String get viseLeQrCodeDu;
+
+  /// No description provided for @scannerLeBilletVise.
+  ///
+  /// In fr, this message translates to:
+  /// **'Scanner le billet visé'**
+  String get scannerLeBilletVise;
+
+  /// No description provided for @verification.
+  ///
+  /// In fr, this message translates to:
+  /// **'Vérification'**
+  String get verification;
+
+  /// No description provided for @prochainCreneau.
+  ///
+  /// In fr, this message translates to:
+  /// **'Prochain créneau, {p0}, {p1}, {p2}, {p3}'**
+  String prochainCreneau(Object p0, Object p1, Object p2, Object p3);
+
+  /// No description provided for @prochainCreneau2.
+  ///
+  /// In fr, this message translates to:
+  /// **'PROCHAIN CRÉNEAU'**
+  String get prochainCreneau2;
+
+  /// No description provided for @joueurs4.
+  ///
+  /// In fr, this message translates to:
+  /// **'{p0} · {p1} joueurs'**
+  String joueurs4(Object p0, Object p1);
+
+  /// No description provided for @encoreCeSoir.
+  ///
+  /// In fr, this message translates to:
+  /// **' · {p0} {p1} encore ce soir'**
+  String encoreCeSoir(Object p0, Object p1);
+
+  /// No description provided for @programmeDuJour.
+  ///
+  /// In fr, this message translates to:
+  /// **'Programme du jour'**
+  String get programmeDuJour;
+
+  /// No description provided for @dejaEncaissesEnCoursDe.
+  ///
+  /// In fr, this message translates to:
+  /// **'{p0} déjà encaissés · {p1} en cours de paiement par les joueurs (dus 3 h avant chaque match).'**
+  String dejaEncaissesEnCoursDe(Object p0, Object p1);
+
+  /// No description provided for @derniersAvis.
+  ///
+  /// In fr, this message translates to:
+  /// **'Derniers avis'**
+  String get derniersAvis;
+
+  /// No description provided for @tousLesAvis.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tous les avis'**
+  String get tousLesAvis;
+
+  /// No description provided for @chiffresDuJour.
+  ///
+  /// In fr, this message translates to:
+  /// **'Chiffres du jour'**
+  String get chiffresDuJour;
+
+  /// No description provided for @partiePubliqueJoueurs.
+  ///
+  /// In fr, this message translates to:
+  /// **'Partie publique · {p0}/{p1} joueurs'**
+  String partiePubliqueJoueurs(Object p0, Object p1);
+
+  /// No description provided for @partiePriveeJoueurs.
+  ///
+  /// In fr, this message translates to:
+  /// **'Partie privée · {p0} joueurs'**
+  String partiePriveeJoueurs(Object p0);
+
+  /// No description provided for @prochaineArrivee.
+  ///
+  /// In fr, this message translates to:
+  /// **'Prochaine arrivée · {p0}'**
+  String prochaineArrivee(Object p0);
+
+  /// No description provided for @scanner.
+  ///
+  /// In fr, this message translates to:
+  /// **'Scanner'**
+  String get scanner;
+
+  /// No description provided for @aucuneReservationAujourdHui.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucune réservation aujourd’hui'**
+  String get aucuneReservationAujourdHui;
+
+  /// No description provided for @reservation4.
+  ///
+  /// In fr, this message translates to:
+  /// **'réservation'**
+  String get reservation4;
+
+  /// No description provided for @reservations4.
+  ///
+  /// In fr, this message translates to:
+  /// **'réservations'**
+  String get reservations4;
+
+  /// No description provided for @creneauLibre.
+  ///
+  /// In fr, this message translates to:
+  /// **'créneau libre'**
+  String get creneauLibre;
+
+  /// No description provided for @creneauxLibres.
+  ///
+  /// In fr, this message translates to:
+  /// **'créneaux libres'**
+  String get creneauxLibres;
+
+  /// No description provided for @enAttente4.
+  ///
+  /// In fr, this message translates to:
+  /// **'{p0} {p1} en attente'**
+  String enAttente4(Object p0, Object p1);
+
+  /// No description provided for @maintenant.
+  ///
+  /// In fr, this message translates to:
+  /// **'Maintenant'**
+  String get maintenant;
+
+  /// No description provided for @termine6.
+  ///
+  /// In fr, this message translates to:
+  /// **'{p0} · terminé'**
+  String termine6(Object p0);
+
+  /// No description provided for @personneAuCheckIn.
+  ///
+  /// In fr, this message translates to:
+  /// **'Personne au check-in'**
+  String get personneAuCheckIn;
+
+  /// No description provided for @terrain7.
+  ///
+  /// In fr, this message translates to:
+  /// **'Terrain {p0}, {p1}, {p2}'**
+  String terrain7(Object p0, Object p1, Object p2);
+
+  /// No description provided for @terrainBloque.
+  ///
+  /// In fr, this message translates to:
+  /// **'Terrain {p0}, bloqué, {p1}'**
+  String terrainBloque(Object p0, Object p1);
+
+  /// No description provided for @pers3.
+  ///
+  /// In fr, this message translates to:
+  /// **'{p0} · {p1} /pers.'**
+  String pers3(Object p0, Object p1);
+
+  /// No description provided for @terrainLibre.
+  ///
+  /// In fr, this message translates to:
+  /// **'Terrain {p0}, libre, {p1}'**
+  String terrainLibre(Object p0, Object p1);
+
+  /// No description provided for @suggestionDeLIa.
+  ///
+  /// In fr, this message translates to:
+  /// **'Suggestion de l’IA'**
+  String get suggestionDeLIa;
+
+  /// No description provided for @tarifs2.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tarifs · {p0}'**
+  String tarifs2(Object p0);
+
+  /// No description provided for @jeudiHHDeCreneaux.
+  ///
+  /// In fr, this message translates to:
+  /// **'Jeudi {p0}h–{p1}h : 80 % de créneaux vides. Proposer −{p2} % ?'**
+  String jeudiHHDeCreneaux(Object p0, Object p1, Object p2);
+
+  /// No description provided for @surTesDerniersJeudisCreneaux.
+  ///
+  /// In fr, this message translates to:
+  /// **'sur tes 5 derniers jeudis, 36 créneaux sur 45 sont restés vides entre {p0}h et {p1}h.'**
+  String surTesDerniersJeudisCreneaux(Object p0, Object p1);
+
+  /// No description provided for @apres.
+  ///
+  /// In fr, this message translates to:
+  /// **'après {p0}'**
+  String apres(Object p0);
+
+  /// No description provided for @terrainsCreneauxLesJoueursVoient.
+  ///
+  /// In fr, this message translates to:
+  /// **'{p0} terrains · {p1} créneaux · {p2} Les joueurs voient le prix barré. Rien ne change sans ta confirmation.'**
+  String terrainsCreneauxLesJoueursVoient(Object p0, Object p1, Object p2);
+
+  /// No description provided for @ignorer.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ignorer'**
+  String get ignorer;
+
+  /// No description provided for @revenusProchainVersementVersLe.
+  ///
+  /// In fr, this message translates to:
+  /// **'Revenus : prochain versement vers le {p0}'**
+  String revenusProchainVersementVersLe(Object p0);
+
+  /// No description provided for @versementPrevuVersLe.
+  ///
+  /// In fr, this message translates to:
+  /// **'Versement prévu vers le {p0}'**
+  String versementPrevuVersLe(Object p0);
+
+  /// No description provided for @dernier.
+  ///
+  /// In fr, this message translates to:
+  /// **'Dernier : {p0} · {p1}'**
+  String dernier(Object p0, Object p1);
+
+  /// No description provided for @avisSansReponse3.
+  ///
+  /// In fr, this message translates to:
+  /// **'{p0} avis · {p1} sans réponse'**
+  String avisSansReponse3(Object p0, Object p1);
+
+  /// No description provided for @terrain8.
+  ///
+  /// In fr, this message translates to:
+  /// **'Terrain {p0} · {p1}'**
+  String terrain8(Object p0, Object p1);
+
+  /// No description provided for @tuAsReponduLe.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tu as répondu le {p0}'**
+  String tuAsReponduLe(Object p0);
+
+  /// No description provided for @jourABloquer.
+  ///
+  /// In fr, this message translates to:
+  /// **'Jour à bloquer'**
+  String get jourABloquer;
+
+  /// No description provided for @plageHoraire.
+  ///
+  /// In fr, this message translates to:
+  /// **'Plage horaire'**
+  String get plageHoraire;
+
+  /// No description provided for @de.
+  ///
+  /// In fr, this message translates to:
+  /// **'De'**
+  String get de;
+
+  /// No description provided for @noteInterne.
+  ///
+  /// In fr, this message translates to:
+  /// **'Note interne'**
+  String get noteInterne;
+
+  /// No description provided for @visibleParTonEquipeSeulement.
+  ///
+  /// In fr, this message translates to:
+  /// **'Visible par ton équipe seulement.'**
+  String get visibleParTonEquipeSeulement;
+
+  /// No description provided for @repeterChaqueSemaine.
+  ///
+  /// In fr, this message translates to:
+  /// **'Répéter chaque semaine'**
+  String get repeterChaqueSemaine;
+
+  /// No description provided for @tousLesSTouteLa.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tous les {p0}s, toute la journée'**
+  String tousLesSTouteLa(Object p0);
+
+  /// No description provided for @tousLesSDeA.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tous les {p0}s, de {p1} à {p2}'**
+  String tousLesSDeA(Object p0, Object p1, Object p2);
+
+  /// No description provided for @lesJoueursVoientIndisponibleSur.
+  ///
+  /// In fr, this message translates to:
+  /// **'Les joueurs voient « Indisponible » sur ces créneaux. Tu peux les débloquer à tout moment depuis le planning.'**
+  String get lesJoueursVoientIndisponibleSur;
+
+  /// No description provided for @hAucuneReservationTouchee.
+  ///
+  /// In fr, this message translates to:
+  /// **'{p0} h · {p1} {p2} · aucune réservation touchée'**
+  String hAucuneReservationTouchee(Object p0, Object p1, Object p2);
+
+  /// No description provided for @creneau2.
+  ///
+  /// In fr, this message translates to:
+  /// **'créneau'**
+  String get creneau2;
+
+  /// No description provided for @creneaux3.
+  ///
+  /// In fr, this message translates to:
+  /// **'créneaux'**
+  String get creneaux3;
+
+  /// No description provided for @reservationADeplacer.
+  ///
+  /// In fr, this message translates to:
+  /// **'1 réservation à déplacer'**
+  String get reservationADeplacer;
+
+  /// No description provided for @reservationsADeplacer.
+  ///
+  /// In fr, this message translates to:
+  /// **'{p0} réservations à déplacer'**
+  String reservationsADeplacer(Object p0);
+
+  /// No description provided for @bloquerCreneau.
+  ///
+  /// In fr, this message translates to:
+  /// **'Bloquer 1 créneau'**
+  String get bloquerCreneau;
+
+  /// No description provided for @bloquerCreneaux.
+  ///
+  /// In fr, this message translates to:
+  /// **'Bloquer {p0} créneaux'**
+  String bloquerCreneaux(Object p0);
+
+  /// No description provided for @organisateur3.
+  ///
+  /// In fr, this message translates to:
+  /// **' · organisateur'**
+  String get organisateur3;
+
+  /// No description provided for @fiableMatchsHonores.
+  ///
+  /// In fr, this message translates to:
+  /// **'Fiable {p0} % · {p1}/{p2} matchs honorés'**
+  String fiableMatchsHonores(Object p0, Object p1, Object p2);
+
+  /// No description provided for @ecrireA.
+  ///
+  /// In fr, this message translates to:
+  /// **'Écrire à {p0}'**
+  String ecrireA(Object p0);
+
+  /// No description provided for @placeLibre4.
+  ///
+  /// In fr, this message translates to:
+  /// **'1 place libre'**
+  String get placeLibre4;
+
+  /// No description provided for @joueursSur3.
+  ///
+  /// In fr, this message translates to:
+  /// **'{p0} joueurs sur {p1}'**
+  String joueursSur3(Object p0, Object p1);
+
+  /// No description provided for @terrainH.
+  ///
+  /// In fr, this message translates to:
+  /// **'TERRAIN · {p0} H'**
+  String terrainH(Object p0);
+
+  /// No description provided for @dejaEncaisse2.
+  ///
+  /// In fr, this message translates to:
+  /// **'DÉJÀ ENCAISSÉ'**
+  String get dejaEncaisse2;
+
+  /// No description provided for @partsDe3.
+  ///
+  /// In fr, this message translates to:
+  /// **'{p0} parts de {p1}'**
+  String partsDe3(Object p0, Object p1);
+
+  /// No description provided for @payeEnLigne2.
+  ///
+  /// In fr, this message translates to:
+  /// **'Payé en ligne'**
+  String get payeEnLigne2;
+
+  /// No description provided for @attendusDeAvant.
+  ///
+  /// In fr, this message translates to:
+  /// **'{p0} attendus de {p1} {p2} avant '**
+  String attendusDeAvant(Object p0, Object p1, Object p2);
+
+  /// No description provided for @t18h00LeJourJ.
+  ///
+  /// In fr, this message translates to:
+  /// **'18h00 le jour J'**
+  String get t18h00LeJourJ;
+
+  /// No description provided for @sinonLaPartieEstAnnulee.
+  ///
+  /// In fr, this message translates to:
+  /// **', sinon la partie est annulée et remboursée.'**
+  String get sinonLaPartieEstAnnulee;
+
+  /// No description provided for @deplacer.
+  ///
+  /// In fr, this message translates to:
+  /// **'Déplacer'**
+  String get deplacer;
+
+  /// No description provided for @noShowPossibleDesAnnuler.
+  ///
+  /// In fr, this message translates to:
+  /// **'No-show possible dès {p0} · annuler rembourse les {p1} joueurs.'**
+  String noShowPossibleDesAnnuler(Object p0, Object p1);
+
+  /// No description provided for @etLesJoueursSontPrevenus.
+  ///
+  /// In fr, this message translates to:
+  /// **'{p0} et les joueurs sont prévenus tout de suite. Le créneau redevient libre.'**
+  String etLesJoueursSontPrevenus(Object p0);
+
+  /// No description provided for @sontRemboursesAuxJoueurs.
+  ///
+  /// In fr, this message translates to:
+  /// **'{p0} sont remboursés aux {p1} joueurs.'**
+  String sontRemboursesAuxJoueurs(Object p0, Object p1);
+
+  /// No description provided for @remboursesAuxJoueurs.
+  ///
+  /// In fr, this message translates to:
+  /// **'{p0} remboursés aux joueurs.'**
+  String remboursesAuxJoueurs(Object p0);
+
+  /// No description provided for @faireLeCheckIn.
+  ///
+  /// In fr, this message translates to:
+  /// **'Faire le check-in'**
+  String get faireLeCheckIn;
+
+  /// No description provided for @des3.
+  ///
+  /// In fr, this message translates to:
+  /// **'dès {p0}'**
+  String des3(Object p0);
+
+  /// No description provided for @changerDeRoleProprietaire.
+  ///
+  /// In fr, this message translates to:
+  /// **'Changer de rôle, {p0}, propriétaire'**
+  String changerDeRoleProprietaire(Object p0);
+
+  /// No description provided for @entretien.
+  ///
+  /// In fr, this message translates to:
+  /// **'Entretien'**
+  String get entretien;
+
+  /// No description provided for @evenementPrive.
+  ///
+  /// In fr, this message translates to:
+  /// **'Événement privé'**
+  String get evenementPrive;
+
+  /// No description provided for @tournoi.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tournoi'**
+  String get tournoi;
+
+  /// No description provided for @meteo.
+  ///
+  /// In fr, this message translates to:
+  /// **'Météo'**
+  String get meteo;
+
+  /// No description provided for @autre.
+  ///
+  /// In fr, this message translates to:
+  /// **'Autre'**
+  String get autre;
+
+  /// No description provided for @suite.
+  ///
+  /// In fr, this message translates to:
+  /// **'{p0}, {p1}, suite'**
+  String suite(Object p0, Object p1);
+
+  /// No description provided for @terminePaye.
+  ///
+  /// In fr, this message translates to:
+  /// **'{p0}, {p1}, terminé, payé'**
+  String terminePaye(Object p0, Object p1);
+
+  /// No description provided for @noShow4.
+  ///
+  /// In fr, this message translates to:
+  /// **'{p0}, {p1}, no-show'**
+  String noShow4(Object p0, Object p1);
+
+  /// No description provided for @enCours3.
+  ///
+  /// In fr, this message translates to:
+  /// **'{p0}, {p1}, en cours'**
+  String enCours3(Object p0, Object p1);
+
+  /// No description provided for @taPartieSur.
+  ///
+  /// In fr, this message translates to:
+  /// **'{p0}, ta partie, {p1} sur {p2}'**
+  String taPartieSur(Object p0, Object p1, Object p2);
+
+  /// No description provided for @partiePubliqueDeSur.
+  ///
+  /// In fr, this message translates to:
+  /// **'{p0}, partie publique de {p1}, {p2} sur {p3}'**
+  String partiePubliqueDeSur(Object p0, Object p1, Object p2, Object p3);
+
+  /// No description provided for @surPaye.
+  ///
+  /// In fr, this message translates to:
+  /// **'{p0}, {p1}, {p2} sur {p3} payé'**
+  String surPaye(Object p0, Object p1, Object p2, Object p3);
+
+  /// No description provided for @priveePaye.
+  ///
+  /// In fr, this message translates to:
+  /// **'Privée · payé'**
+  String get priveePaye;
+
+  /// No description provided for @voirLeGraphique.
+  ///
+  /// In fr, this message translates to:
+  /// **'Voir le graphique'**
+  String get voirLeGraphique;
+
+  /// No description provided for @voirLeTableau.
+  ///
+  /// In fr, this message translates to:
+  /// **'Voir le tableau'**
+  String get voirLeTableau;
+
+  /// No description provided for @datesAConfirmer.
+  ///
+  /// In fr, this message translates to:
+  /// **' · dates à confirmer'**
+  String get datesAConfirmer;
 }
 
 class _AppLocalizationsDelegate

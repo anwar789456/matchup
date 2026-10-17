@@ -110,7 +110,7 @@ class _PricesScreenState extends ConsumerState<PricesScreen> {
       lead:
           l10n.lesJoueursComparentLePrix,
       validate: _validate,
-      body: ProFormCard(
+      body: ProFormSections(
         children: [
           Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -125,28 +125,22 @@ class _PricesScreenState extends ConsumerState<PricesScreen> {
                   onPressed: () => showComingSoon(context),
                 ),
                 children: [
-                  LayoutBuilder(
-                    builder: (context, constraints) {
-                      final stacked = constraints.maxWidth < _PriceRow.stackBelow;
-                      return Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
-                          if (!stacked) _header(c),
-                          for (final (i, g) in groups.indexed)
-                            _PriceRow(
-                              group: g,
-                              stacked: stacked,
-                              last: i == groups.length - 1,
-                              off: _field('${g.key}-off', d.prices[g.key]?.offPeak),
-                              peak: _field('${g.key}-peak', d.prices[g.key]?.peak),
-                              offError: _errors.contains('${g.key}-off'),
-                              peakError: _errors.contains('${g.key}-peak'),
-                              onOff: (t) => _set(g.key, peak: false, text: t),
-                              onPeak: (t) => _set(g.key, peak: true, text: t),
-                            ),
-                        ],
-                      );
-                    },
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      _header(c),
+                      for (final (i, g) in groups.indexed)
+                        _PriceRow(
+                          group: g,
+                          last: i == groups.length - 1,
+                          off: _field('${g.key}-off', d.prices[g.key]?.offPeak),
+                          peak: _field('${g.key}-peak', d.prices[g.key]?.peak),
+                          offError: _errors.contains('${g.key}-off'),
+                          peakError: _errors.contains('${g.key}-peak'),
+                          onOff: (t) => _set(g.key, peak: false, text: t),
+                          onPeak: (t) => _set(g.key, peak: true, text: t),
+                        ),
+                    ],
                   ),
                 ],
               ),
@@ -177,6 +171,7 @@ class _PricesScreenState extends ConsumerState<PricesScreen> {
     );
   }
 
+  /// The two price bands and their hours, over the two fields of each row.
   Widget _header(MuColors c) {
     Widget band(IconData icon, String title, String hours) => Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -185,7 +180,7 @@ class _PricesScreenState extends ConsumerState<PricesScreen> {
           children: [
             Icon(icon, size: MuSize.iconXs, color: c.text),
             const SizedBox(width: MuSpace.s2),
-            Text(title, style: MuType.label.copyWith(color: c.text)),
+            Flexible(child: Text(title, style: MuType.label.copyWith(color: c.text))),
           ],
         ),
         const SizedBox(height: _PriceRow.lineGap),
@@ -202,17 +197,10 @@ class _PricesScreenState extends ConsumerState<PricesScreen> {
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
             Expanded(
-              flex: _PriceRow.typeFlex,
-              child: Text(l10n.typeDeTerrain, style: MuType.labelS.copyWith(color: c.textSecondary)),
-            ),
-            const SizedBox(width: MuSpace.s4),
-            Expanded(
-              flex: _PriceRow.fieldFlex,
               child: band(PhosphorIcons.sun(), l10n.heuresCreuses, l10n.lunVen08h0017h00),
             ),
-            const SizedBox(width: MuSpace.s4),
+            const SizedBox(width: MuSpace.s3),
             Expanded(
-              flex: _PriceRow.fieldFlex,
               child: band(
                 PhosphorIcons.lightning(),
                 l10n.heuresDePointe,
@@ -229,7 +217,6 @@ class _PricesScreenState extends ConsumerState<PricesScreen> {
 class _PriceRow extends StatelessWidget {
   const _PriceRow({
     required this.group,
-    required this.stacked,
     required this.last,
     required this.off,
     required this.peak,
@@ -240,7 +227,6 @@ class _PriceRow extends StatelessWidget {
   });
 
   final _Group group;
-  final bool stacked;
   final bool last;
   final TextEditingController off;
   final TextEditingController peak;
@@ -249,12 +235,9 @@ class _PriceRow extends StatelessWidget {
   final ValueChanged<String> onOff;
   final ValueChanged<String> onPeak;
 
-  // OWN-05 source: columns 1,15fr / 1fr / 1fr; sport tile 32; 2 px between lines.
-  static const int typeFlex = 115;
-  static const int fieldFlex = 100;
+  // OWN-05 source: sport tile 32; 2 px between lines.
   static const double _tile = 32;
   static const double lineGap = 2;
-  static const double stackBelow = 520;
 
   @override
   Widget build(BuildContext context) {
@@ -273,9 +256,9 @@ class _PriceRow extends StatelessWidget {
       final v = int.tryParse(ctl.text);
       return MuTextField(
         label: '$fieldPrefix, $band',
-        hideLabel: !stacked,
+        // The bands over the rows name the two columns, as in the design.
+        hideLabel: true,
         controller: ctl,
-        size: MuFieldSize.m,
         suffixText: l10n.dtH2,
         keyboardType: TextInputType.number,
         inputFormatters: [
@@ -321,38 +304,22 @@ class _PriceRow extends StatelessWidget {
       decoration: BoxDecoration(
         border: last ? null : Border(bottom: BorderSide(color: c.border)),
       ),
-      child: stacked
-          ? Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                type,
-                const SizedBox(height: MuSpace.s3),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Expanded(child: offField),
-                    const SizedBox(width: MuSpace.s3),
-                    Expanded(child: peakField),
-                  ],
-                ),
-              ],
-            )
-          : Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Expanded(
-                  flex: typeFlex,
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: MuSpace.s1),
-                    child: type,
-                  ),
-                ),
-                const SizedBox(width: MuSpace.s4),
-                Expanded(flex: fieldFlex, child: offField),
-                const SizedBox(width: MuSpace.s4),
-                Expanded(flex: fieldFlex, child: peakField),
-              ],
-            ),
+      // The court type, then its off-peak and peak prices side by side, under the bands.
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          type,
+          const SizedBox(height: MuSpace.s3),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Expanded(child: offField),
+              const SizedBox(width: MuSpace.s3),
+              Expanded(child: peakField),
+            ],
+          ),
+        ],
+      ),
     );
   }
 }
@@ -450,7 +417,7 @@ class _Preview extends ConsumerWidget {
                             style: MuType.numXl.copyWith(color: c.text),
                           ),
                           const SizedBox(width: MuSpace.s2),
-                          Text('/pers.', style: MuType.body.copyWith(color: c.textSecondary)),
+                          Text(l10n.parPersAbrege, style: MuType.body.copyWith(color: c.textSecondary)),
                         ],
                       ),
                       const SizedBox(height: _tight),

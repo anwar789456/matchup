@@ -99,7 +99,7 @@ class _PhotosScreenState extends ConsumerState<PhotosScreen> {
     final photos = ref.read(ownerProvider).requireValue.photos;
     setState(() {
       _error = _queue.busy
-          ? 'Attends la fin de l’envoi de tes photos.'
+          ? l10n.attendsLaFinDeLEnvoiDeTesPhotos
           : (photos.isEmpty ? l10n.ajouteAuMoinsUnePhoto : null);
     });
     return _error == null;
@@ -120,7 +120,7 @@ class _PhotosScreenState extends ConsumerState<PhotosScreen> {
       title: l10n.montreTonTerrain,
       lead: l10n.montreLEclairageLesVestiaires,
       validate: _validate,
-      body: ProFormCard(
+      body: ProFormSections(
         divided: false,
         children: [
           ProFormSection(

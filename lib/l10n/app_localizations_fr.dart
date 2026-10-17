@@ -8267,4 +8267,1588 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get miseAJour => 'Mise à jour…';
+
+  @override
+  String get voirLesEtapes => 'Voir les étapes';
+
+  @override
+  String proNTerrains(Object p0, Object p1) {
+    return '$p0 terrain$p1';
+  }
+
+  @override
+  String get indiqueTonMatriculeFiscal => 'Indique ton matricule fiscal.';
+
+  @override
+  String get attendsLaFinDeLEnvoiDeTesPhotos =>
+      'Attends la fin de l’envoi de tes photos.';
+
+  @override
+  String get attendsLaFinDeLEnvoi => 'Attends la fin de l’envoi.';
+
+  @override
+  String get matchupNePreleveJamaisRien =>
+      '. MatchUp ne prélève jamais rien sur ce compte.';
+
+  @override
+  String get horaireA => 'à';
+
+  @override
+  String get parPersAbrege => '/pers.';
+
+  @override
+  String get fevr => 'févr.';
+
+  @override
+  String get dec => 'déc.';
+
+  @override
+  String get aLInstant => 'à l’instant';
+
+  @override
+  String ilYAMin(Object p0) {
+    return 'il y a $p0 min';
+  }
+
+  @override
+  String ilYAH(Object p0) {
+    return 'il y a $p0 h';
+  }
+
+  @override
+  String ilYAJ(Object p0) {
+    return 'il y a $p0 j';
+  }
+
+  @override
+  String get bloquerUnCreneau => 'Bloquer un créneau';
+
+  @override
+  String get creneauBloque => 'Créneau bloqué';
+
+  @override
+  String get reservation2 => 'Réservation';
+
+  @override
+  String get reservationAVenir => 'réservation à venir';
+
+  @override
+  String get reservationsAVenir => 'réservations à venir';
+
+  @override
+  String get paiementEnAttente => 'paiement en attente';
+
+  @override
+  String get paiementsEnAttente => 'paiements en attente';
+
+  @override
+  String get reservationTerminee => 'réservation terminée';
+
+  @override
+  String get reservationsTerminees => 'réservations terminées';
+
+  @override
+  String get reservationAnnulee2 => 'réservation annulée';
+
+  @override
+  String get reservationsAnnulees => 'réservations annulées';
+
+  @override
+  String ceSoir3(Object p0) {
+    return 'Ce soir · $p0';
+  }
+
+  @override
+  String aujourdHui4(Object p0) {
+    return 'Aujourd’hui · $p0';
+  }
+
+  @override
+  String demain(Object p0) {
+    return 'Demain · $p0';
+  }
+
+  @override
+  String get exporterLesReservationsCsv => 'Exporter les réservations (CSV)';
+
+  @override
+  String get rechercherUneReservation => 'Rechercher une réservation';
+
+  @override
+  String get nomRefMuTelephone => 'Nom, réf. MU-…, téléphone';
+
+  @override
+  String get filtrerLesReservations => 'Filtrer les réservations';
+
+  @override
+  String get paiementEnAttente2 => 'Paiement en attente';
+
+  @override
+  String get terminees => 'Terminées';
+
+  @override
+  String get annulees => 'Annulées';
+
+  @override
+  String get noShows => 'No-shows';
+
+  @override
+  String terrains3(Object p0) {
+    return '· $p0 terrains';
+  }
+
+  @override
+  String get trierParDateLaPlus => 'Trier par : date, la plus proche d’abord';
+
+  @override
+  String get trierParDateLaPlus2 =>
+      'Trier par : date, la plus lointaine d’abord';
+
+  @override
+  String get aucuneReservationIci => 'Aucune réservation ici';
+
+  @override
+  String aucuneReservationPour(Object p0) {
+    return 'Aucune réservation pour « $p0 »';
+  }
+
+  @override
+  String get essaieUnAutreFiltreOu =>
+      'Essaie un autre filtre ou une autre recherche.';
+
+  @override
+  String aVenir5(Object p0) {
+    return '$p0 à venir';
+  }
+
+  @override
+  String get reservation3 => '1 réservation';
+
+  @override
+  String reservations2(Object p0) {
+    return '$p0 réservations';
+  }
+
+  @override
+  String voirLesAutresDeCe(Object p0) {
+    return 'Voir les $p0 autres de ce soir';
+  }
+
+  @override
+  String voirLesAutres(Object p0) {
+    return 'Voir les $p0 autres';
+  }
+
+  @override
+  String publique3(Object p0, Object p1) {
+    return 'Publique · $p0/$p1';
+  }
+
+  @override
+  String get noShow => 'No-show';
+
+  @override
+  String get terminee => 'Terminée';
+
+  @override
+  String get enCours2 => 'En cours';
+
+  @override
+  String tRef(Object p0, Object p1, Object p2, Object p3, Object p4) {
+    return '$p0, T$p1, $p2, $p3, réf. $p4';
+  }
+
+  @override
+  String get checkIn => 'Check-in';
+
+  @override
+  String siCEstBienIl(Object p0) {
+    return 'Si c’est bien $p0, il est déjà compté. Sinon, c’est sûrement une capture d’écran : demande le billet de la personne dans son app.';
+  }
+
+  @override
+  String get scannerLeJoueurSuivant => 'Scanner le joueur suivant';
+
+  @override
+  String get voirLaReservation => 'Voir la réservation';
+
+  @override
+  String get scannerUnAutreBillet => 'Scanner un autre billet';
+
+  @override
+  String get voirLesJoueursDeLa => 'Voir les joueurs de la réservation';
+
+  @override
+  String get scannerANouveau => 'Scanner à nouveau';
+
+  @override
+  String get chercherDansLePlanning => 'Chercher dans le planning';
+
+  @override
+  String get valide => 'Valide';
+
+  @override
+  String get bonMatchLaisseEntrerLe => 'Bon match ! Laisse entrer le groupe.';
+
+  @override
+  String get dejaUtilise => 'Déjà utilisé';
+
+  @override
+  String get ceBilletEstDejaPasse => 'Ce billet est déjà passé à ';
+
+  @override
+  String get invalide => 'Invalide';
+
+  @override
+  String ceBilletNEstPas(Object p0) {
+    return 'Ce billet n’est pas pour $p0.';
+  }
+
+  @override
+  String get scanneA => 'Scanné à ';
+
+  @override
+  String football5v5(Object p0) {
+    return '$p0 · Football 5v5';
+  }
+
+  @override
+  String get reservePar => 'Réservé par ';
+
+  @override
+  String arrives(Object p0) {
+    return '$p0 arrivés';
+  }
+
+  @override
+  String get joueursArrives => ' joueurs arrivés';
+
+  @override
+  String joueursArrivesSur(Object p0, Object p1) {
+    return '$p0 joueurs arrivés sur $p1';
+  }
+
+  @override
+  String encoreAttendus(Object p0) {
+    return 'Encore attendus : $p0';
+  }
+
+  @override
+  String get signalerUnAbsent => 'Signaler un absent';
+
+  @override
+  String billetDe(Object p0) {
+    return 'Billet de $p0';
+  }
+
+  @override
+  String get premierScan => 'Premier scan';
+
+  @override
+  String accueilPar(Object p0) {
+    return ' · accueil, par $p0';
+  }
+
+  @override
+  String get ceScan => 'Ce scan';
+
+  @override
+  String get refuse => ' · refusé';
+
+  @override
+  String get joueursEntres => 'Joueurs entrés';
+
+  @override
+  String get reserveDansUnAutreTerrain => 'Réservé dans un autre terrain';
+
+  @override
+  String get leCodeEstBienUn =>
+      'Le code est bien un billet MatchUp, mais pour un autre lieu. Rien n’est débité ni enregistré chez toi.';
+
+  @override
+  String get queFaire2 => 'QUE FAIRE';
+
+  @override
+  String demandeAuJoueurDOuvrir(Object p0) {
+    return '1. Demande au joueur d’ouvrir sa réservation $p0 dans ';
+  }
+
+  @override
+  String get pasDeBilletChercheSon =>
+      '2. Pas de billet ? Cherche son nom dans le planning du jour.';
+
+  @override
+  String espaceProprietaire2(Object p0) {
+    return 'Espace propriétaire · $p0';
+  }
+
+  @override
+  String get retourAPlus => 'Retour à Plus';
+
+  @override
+  String get trierLesClients => 'Trier les clients';
+
+  @override
+  String get rechercherUnClient => 'Rechercher un client';
+
+  @override
+  String get nomTelephoneOuNDe => 'Nom, téléphone ou n° de réservation';
+
+  @override
+  String get filtrerLesClients => 'Filtrer les clients';
+
+  @override
+  String get tous => 'Tous';
+
+  @override
+  String get habitues => 'Habitués';
+
+  @override
+  String get nouveaux => 'Nouveaux';
+
+  @override
+  String get avecNoShow => 'Avec no-show';
+
+  @override
+  String depuisLe(Object p0, Object p1) {
+    return 'depuis le $p0 $p1';
+  }
+
+  @override
+  String get aucunClientDansCeFiltre => 'Aucun client dans ce filtre';
+
+  @override
+  String aucunClientPour(Object p0) {
+    return 'Aucun client pour « $p0 »';
+  }
+
+  @override
+  String get essaieUnAutreNomNumero =>
+      'Essaie un autre nom, numéro ou n° de réservation.';
+
+  @override
+  String get afficherClientsDePlus => 'Afficher 20 clients de plus';
+
+  @override
+  String get tuVoisLaFiabiliteMatchup =>
+      'Tu vois la fiabilité MatchUp de tes clients et ce qu’ils ont payé chez toi, rien d’autre.';
+
+  @override
+  String prochaine(Object p0) {
+    return 'prochaine · $p0';
+  }
+
+  @override
+  String aujourdHui5(Object p0) {
+    return 'aujourd’hui · $p0';
+  }
+
+  @override
+  String noShow2(Object p0, Object p1) {
+    return ', $p0 no-show$p1';
+  }
+
+  @override
+  String get nouveau => ', nouveau';
+
+  @override
+  String get noShow3 => '1 no-show';
+
+  @override
+  String get nouveau2 => 'Nouveau';
+
+  @override
+  String get depenses => 'dépensés';
+
+  @override
+  String get fiabiliteMatchup => 'Fiabilité MatchUp';
+
+  @override
+  String get creneauPrefere => 'Créneau préféré';
+
+  @override
+  String get premierMatchIci => 'Premier match ici';
+
+  @override
+  String get message => 'Message';
+
+  @override
+  String terrainVisibleLesJoueursPeuvent(Object p0) {
+    return 'Terrain $p0 visible : les joueurs peuvent le réserver.';
+  }
+
+  @override
+  String terrainMasquePlusReservable(Object p0) {
+    return 'Terrain $p0 masqué : plus réservable.';
+  }
+
+  @override
+  String terrainEnEntretienCreneauxFermes(Object p0) {
+    return 'Terrain $p0 en entretien : créneaux fermés.';
+  }
+
+  @override
+  String terrainRouvertALaReservation(Object p0) {
+    return 'Terrain $p0 rouvert à la réservation.';
+  }
+
+  @override
+  String get visibleEtReservable => 'Visible et réservable';
+
+  @override
+  String get masqueIlNApparaitPlus => 'Masqué, il n’apparaît plus aux joueurs.';
+
+  @override
+  String get enEntretien => 'En entretien';
+
+  @override
+  String get fermeTousSesCreneauxJusqu =>
+      'Ferme tous ses créneaux jusqu’à ce que tu le rouvres.';
+
+  @override
+  String get modifierLeSportLaSurface =>
+      'Modifier le sport, la surface, l’éclairage';
+
+  @override
+  String get terrainActif => 'terrain actif';
+
+  @override
+  String get terrainsActifs => 'terrains actifs';
+
+  @override
+  String get occupesJ => 'occupés · 7 j';
+
+  @override
+  String get tousLesJours2 => 'tous les jours';
+
+  @override
+  String get tesTerrains2 => 'TES TERRAINS';
+
+  @override
+  String get masquePlusReservable => 'Masqué = plus réservable';
+
+  @override
+  String get tarifsEtHeuresDePointe => 'Tarifs et heures de pointe';
+
+  @override
+  String get prixParTerrainDatesSpeciales =>
+      'Prix par terrain, dates spéciales';
+
+  @override
+  String prixParTerrainDatesSpeciales2(Object p0) {
+    return 'Prix par terrain, dates spéciales · $p0 /pers. à 10 en soirée';
+  }
+
+  @override
+  String get enEntretienTousSesCreneaux =>
+      'En entretien : tous ses créneaux sont fermés à la réservation.';
+
+  @override
+  String hHCreneauxBloques(Object p0, Object p1, Object p2, Object p3) {
+    return '$p0 · $p1 · ${p2}h–${p3}h, créneaux bloqués';
+  }
+
+  @override
+  String terrainSalleCouverte(Object p0) {
+    return 'Terrain $p0, salle couverte';
+  }
+
+  @override
+  String terrainGazonSynthetiqueEclaire(Object p0) {
+    return 'Terrain $p0, gazon synthétique éclairé';
+  }
+
+  @override
+  String get football5v52 => 'Football 5v5';
+
+  @override
+  String get synthetiqueInterieur => 'Synthétique · Intérieur';
+
+  @override
+  String get synthetiqueExterieurEclaire => 'Synthétique · Extérieur · Éclairé';
+
+  @override
+  String terrainVisibleEtReservable(Object p0) {
+    return 'Terrain $p0 visible et réservable';
+  }
+
+  @override
+  String get visible => 'Visible';
+
+  @override
+  String get masque => 'Masqué';
+
+  @override
+  String get creuses => 'Creuses';
+
+  @override
+  String get pointe => 'Pointe';
+
+  @override
+  String get occupeJ => 'Occupé · 7 j';
+
+  @override
+  String get bloquer2 => 'Bloquer';
+
+  @override
+  String get sportSurfaceEclairagePuisSes =>
+      'Sport, surface, éclairage, puis ses horaires et tarifs. Ton plan Pro n’a pas de limite de terrains.';
+
+  @override
+  String get plus => 'Plus';
+
+  @override
+  String get notificationsNonLues2 => 'Notifications, 2 non lues';
+
+  @override
+  String get monComplexe => 'Mon complexe';
+
+  @override
+  String get habituesNoShows => 'Habitués, no-shows';
+
+  @override
+  String get avisSansReponse => '1 avis sans réponse';
+
+  @override
+  String avisSansReponse2(Object p0) {
+    return '$p0 avis sans réponse';
+  }
+
+  @override
+  String get argent => 'Argent';
+
+  @override
+  String get versementLunOct => 'Versement lun. 19 oct.';
+
+  @override
+  String get proEssai => 'Pro · essai';
+
+  @override
+  String get compteSecurite => 'Compte, sécurité';
+
+  @override
+  String get roles => '2 rôles';
+
+  @override
+  String avis6(Object p0, Object p1) {
+    return '$p0 · $p1 avis';
+  }
+
+  @override
+  String get monCompteProprietaire => 'Mon compte propriétaire';
+
+  @override
+  String get planProEssaiGratuit => 'Plan Pro · essai gratuit';
+
+  @override
+  String get jusquAuMerOctPuis =>
+      'Jusqu’au mer. 28 oct., puis 149 DT/mois. Rappel 3 jours avant.';
+
+  @override
+  String get noShowSignale => 'No-show signalé';
+
+  @override
+  String noShowsSignales(Object p0) {
+    return '$p0 no-shows signalés';
+  }
+
+  @override
+  String get estPrevenu => 'est prévenu';
+
+  @override
+  String get sontPrevenus => 'sont prévenus';
+
+  @override
+  String get signalerUnNoShow => 'Signaler un no-show';
+
+  @override
+  String get retourAuCheckIn => 'Retour au check-in';
+
+  @override
+  String get choisisLeJoueurAbsent => 'Choisis le joueur absent';
+
+  @override
+  String marquerAbsent(Object p0) {
+    return 'Marquer $p0 absent';
+  }
+
+  @override
+  String marquerJoueursAbsents(Object p0) {
+    return 'Marquer $p0 joueurs absents';
+  }
+
+  @override
+  String debut2(Object p0, Object p1, Object p2) {
+    return '$p0 · $p1 · début $p2';
+  }
+
+  @override
+  String get quiNEstPasVenu => 'QUI N’EST PAS VENU ?';
+
+  @override
+  String get tousLesJoueursSontArrives => 'Tous les joueurs sont arrivés.';
+
+  @override
+  String dejaSignale(Object p0) {
+    return 'Déjà signalé : $p0.';
+  }
+
+  @override
+  String possibleDesMinApresLe(Object p0) {
+    return 'Possible dès 15 min après le début, si personne n’a prévenu. Les $p0 autres joueurs ont été scannés.';
+  }
+
+  @override
+  String get ceQuiVaSePasser2 => 'CE QUI VA SE PASSER';
+
+  @override
+  String get leurFiabiliteBaisse => 'Leur fiabilité baisse';
+
+  @override
+  String get saFiabiliteBaisse => 'Sa fiabilité baisse';
+
+  @override
+  String get leurPartResteDue => 'Leur part reste due';
+
+  @override
+  String get saPartResteDue => 'Sa part reste due';
+
+  @override
+  String restentVersesASansRemboursement(Object p0, Object p1) {
+    return '$p0 restent versés à $p1, sans remboursement.';
+  }
+
+  @override
+  String get ilsSontPrevenusEtPeuvent =>
+      'Ils sont prévenus et peuvent contester';
+
+  @override
+  String get ilEstPrevenuEtPeut => 'Il est prévenu et peut contester';
+
+  @override
+  String get ilAHPourRepondre =>
+      'Il a 48 h pour répondre. Tu peux retirer ce signalement pendant 24 h.';
+
+  @override
+  String get notePourMatchup => 'Note pour MatchUp';
+
+  @override
+  String get exInjoignablePersonneNA =>
+      'Ex. : injoignable, personne n’a prévenu';
+
+  @override
+  String nEstPasVenu(Object p0) {
+    return '$p0 n’est pas venu';
+  }
+
+  @override
+  String partPayeePasDeBillet(Object p0) {
+    return 'Part payée · $p0 · pas de billet scanné';
+  }
+
+  @override
+  String get pasArrive => 'Pas arrivé';
+
+  @override
+  String get creneauxBloques => 'Créneaux bloqués';
+
+  @override
+  String get debloquerCeCreneau => 'Débloquer ce créneau ?';
+
+  @override
+  String get lesJoueursPourrontDeNouveau =>
+      'Les joueurs pourront de nouveau le réserver.';
+
+  @override
+  String get garderBloque => 'Garder bloqué';
+
+  @override
+  String get debloquer => 'Débloquer';
+
+  @override
+  String get creneauDebloque => 'Créneau débloqué';
+
+  @override
+  String get bloque2 => 'bloqué';
+
+  @override
+  String get bloques => 'bloqués';
+
+  @override
+  String get vueDuPlanning => 'Vue du planning';
+
+  @override
+  String get semaine => 'Semaine';
+
+  @override
+  String get jourDuPlanning => 'Jour du planning';
+
+  @override
+  String get chargementDuPlanning => 'Chargement du planning';
+
+  @override
+  String planning2(Object p0, Object p1) {
+    return 'Planning $p0, $p1';
+  }
+
+  @override
+  String aucuneReservation(Object p0, Object p1) {
+    return '$p0 – $p1 · aucune réservation';
+  }
+
+  @override
+  String bloque3(Object p0, Object p1) {
+    return '$p0, bloqué : $p1';
+  }
+
+  @override
+  String get libre2 => 'Libre';
+
+  @override
+  String creneauPasseLibre(Object p0) {
+    return '$p0, créneau passé, libre';
+  }
+
+  @override
+  String libreAppuiLongPourBloquer(Object p0, Object p1) {
+    return '$p0, libre, $p1, appui long pour bloquer';
+  }
+
+  @override
+  String get legende => 'Légende';
+
+  @override
+  String get appuiLongSurUnCreneau =>
+      'Appui long sur un créneau libre pour le bloquer';
+
+  @override
+  String get chargementDeLaSemaine => 'Chargement de la semaine';
+
+  @override
+  String reservations3(Object p0, Object p1, Object p2) {
+    return '$p0, $p1 réservations, $p2 %';
+  }
+
+  @override
+  String resa(Object p0, Object p1) {
+    return '$p0 résa · $p1 %';
+  }
+
+  @override
+  String get tousLesLundis => 'Tous les lundis';
+
+  @override
+  String get tousLesMardis => 'Tous les mardis';
+
+  @override
+  String get tousLesMercredis => 'Tous les mercredis';
+
+  @override
+  String get tousLesJeudis => 'Tous les jeudis';
+
+  @override
+  String get tousLesVendredis => 'Tous les vendredis';
+
+  @override
+  String get tousLesSamedis => 'Tous les samedis';
+
+  @override
+  String get tousLesDimanches => 'Tous les dimanches';
+
+  @override
+  String get derniersLundis => 'derniers lundis';
+
+  @override
+  String get derniersMardis => 'derniers mardis';
+
+  @override
+  String get derniersMercredis => 'derniers mercredis';
+
+  @override
+  String get derniersJeudis => 'derniers jeudis';
+
+  @override
+  String get derniersVendredis => 'derniers vendredis';
+
+  @override
+  String get derniersSamedis => 'derniers samedis';
+
+  @override
+  String get derniersDimanches => 'derniers dimanches';
+
+  @override
+  String get indiqueUnPrix2 => 'Indique un prix';
+
+  @override
+  String get promoPubliee => 'Promo publiée';
+
+  @override
+  String le3(Object p0, Object p1) {
+    return '$p0, le $p1.';
+  }
+
+  @override
+  String get tarifsEnregistres => 'Tarifs enregistrés';
+
+  @override
+  String promoPubliee2(Object p0) {
+    return 'Promo $p0 publiée.';
+  }
+
+  @override
+  String get lesReservationsDejaPayeesGardent =>
+      'Les réservations déjà payées gardent leur prix.';
+
+  @override
+  String terrains4(Object p0, Object p1) {
+    return '$p0 · $p1 terrains';
+  }
+
+  @override
+  String get enregistrerLesTarifs => 'Enregistrer les tarifs';
+
+  @override
+  String get plagesHoraires => 'Plages horaires';
+
+  @override
+  String get duLundiAuVendredi => 'Du lundi au vendredi';
+
+  @override
+  String heuresCreusesDeAHeures(
+    Object p0,
+    Object p1,
+    Object p2,
+    Object p3,
+    Object p4,
+  ) {
+    return 'Heures creuses de $p0 à $p1, heures de pointe de $p2 à $p3, heures creuses de $p4 à minuit';
+  }
+
+  @override
+  String samediEtDimancheDeA(Object p0, Object p1) {
+    return 'Samedi et dimanche, de $p0 à $p1.';
+  }
+
+  @override
+  String lesJoueursVoientLePrix(Object p0) {
+    return 'Les joueurs voient le prix par personne, calculé pour $p0 joueurs.';
+  }
+
+  @override
+  String terrainsEt(Object p0, Object p1) {
+    return 'Terrains $p0 et $p1';
+  }
+
+  @override
+  String get indoorCouvert => 'Indoor · couvert';
+
+  @override
+  String get exterieurGazonSynthetiqueEclaires =>
+      'Extérieur · gazon synthétique · éclairés';
+
+  @override
+  String get promotions => 'Promotions';
+
+  @override
+  String get aucunePromotionEnCoursL =>
+      'Aucune promotion en cours. L’assistant t’en proposera quand des créneaux restent vides.';
+
+  @override
+  String get dApresTaSuggestion => 'D’après ta suggestion';
+
+  @override
+  String get publiee => 'Publiée';
+
+  @override
+  String get aConfirmer => 'À confirmer';
+
+  @override
+  String get dureeDeLaPromo => 'Durée de la promo';
+
+  @override
+  String terrainsCreneauxRecommandeCarCreneaux(
+    Object p0,
+    Object p1,
+    Object p2,
+    Object p3,
+    Object p4,
+    Object p5,
+    Object p6,
+  ) {
+    return '$p0 terrains · $p1 créneaux $p2 Recommandé car $p3 créneaux sur $p4 sont restés vides ces $p5 $p6.';
+  }
+
+  @override
+  String get publierLaPromo => 'Publier la promo';
+
+  @override
+  String get ceQueVoientLesJoueurs => 'Ce que voient les joueurs';
+
+  @override
+  String hHPrixDuTerrain(Object p0, Object p1, Object p2) {
+    return '$p0 · ${p1}h – ${p2}h · prix du terrain à l’heure';
+  }
+
+  @override
+  String apercuJoueur(Object p0) {
+    return 'Aperçu joueur, $p0';
+  }
+
+  @override
+  String get indoor => 'Indoor';
+
+  @override
+  String pointeTouteLaJournee(Object p0) {
+    return 'Pointe toute la journée · $p0';
+  }
+
+  @override
+  String pointe2(Object p0, Object p1, Object p2) {
+    return 'Pointe $p0 – $p1$p2';
+  }
+
+  @override
+  String modifier3(Object p0) {
+    return 'Modifier : $p0';
+  }
+
+  @override
+  String get exporterLesRevenus => 'Exporter les revenus';
+
+  @override
+  String get periode => 'Période';
+
+  @override
+  String get jours => '7 jours';
+
+  @override
+  String get jours2 => '30 jours';
+
+  @override
+  String get mois => '12 mois';
+
+  @override
+  String get telechargerLeReleveDOctobre => 'Télécharger le relevé d’octobre';
+
+  @override
+  String get pdfPourTaComptabiliteTva =>
+      'PDF pour ta comptabilité · TVA détaillée';
+
+  @override
+  String get compteDeVersement => 'Compte de versement';
+
+  @override
+  String duAu(Object p0, Object p1, Object p2) {
+    return 'du $p0 au $p1 $p2';
+  }
+
+  @override
+  String prochainVersementEstimeSurDeja(
+    Object p0,
+    Object p1,
+    Object p2,
+    Object p3,
+    Object p4,
+    Object p5,
+    Object p6,
+  ) {
+    return 'Prochain versement estimé : $p0, $p1 sur $p2. Déjà encaissé $p3 $p4. Encore attendu environ $p5, $p6.';
+  }
+
+  @override
+  String get dejaEncaisse => 'Déjà encaissé';
+
+  @override
+  String get encoreAttendu => 'Encore attendu';
+
+  @override
+  String get vsJAvant => 'vs 7 j avant';
+
+  @override
+  String get vsJAvant2 => 'vs 30 j avant';
+
+  @override
+  String get vsMoisAvant => 'vs 12 mois avant';
+
+  @override
+  String revenus2(Object p0) {
+    return 'Revenus · $p0';
+  }
+
+  @override
+  String get revenusParMois => 'Revenus par mois';
+
+  @override
+  String get revenusParJour => 'Revenus par jour';
+
+  @override
+  String terrainsEnLigneEtSur(Object p0, Object p1) {
+    return '$p0 · 3 terrains · en ligne et sur place, en $p1';
+  }
+
+  @override
+  String get mois2 => 'Mois';
+
+  @override
+  String dOuViennentLes(Object p0) {
+    return 'D’où viennent les $p0';
+  }
+
+  @override
+  String payesEnLigne(Object p0) {
+    return '$p0 % payés en ligne';
+  }
+
+  @override
+  String payeEnLigne(Object p0) {
+    return 'Payé en ligne · $p0 %';
+  }
+
+  @override
+  String get verseChaqueLundi => 'versé chaque lundi';
+
+  @override
+  String encaisseSurPlace(Object p0) {
+    return 'Encaissé sur place · $p0 %';
+  }
+
+  @override
+  String get noteALAccueil => 'noté à l’accueil';
+
+  @override
+  String get chaqueLundi => 'chaque lundi';
+
+  @override
+  String prevu(Object p0) {
+    return 'Prévu · $p0';
+  }
+
+  @override
+  String paiementsDuAu(Object p0, Object p1, Object p2) {
+    return 'Paiements du $p0 au $p1 $p2';
+  }
+
+  @override
+  String verse(Object p0) {
+    return 'Versé · $p0';
+  }
+
+  @override
+  String get seulsLesJoueursQuiOnt =>
+      'Seuls les joueurs qui ont joué chez toi peuvent laisser un avis.';
+
+  @override
+  String get filtrerLesAvis => 'Filtrer les avis';
+
+  @override
+  String get sansReponse => 'Sans réponse';
+
+  @override
+  String get etoiles => '5 étoiles';
+
+  @override
+  String get etoilesEtMoins => '3 étoiles et moins';
+
+  @override
+  String get plusRecents => 'PLUS RÉCENTS';
+
+  @override
+  String get tuAsReponduATous => 'Tu as répondu à tous les avis';
+
+  @override
+  String get aucunAvisRecentIci => 'Aucun avis récent ici';
+
+  @override
+  String get lesPlusAnciensSontDans =>
+      'Les plus anciens sont dans « Voir les autres avis ».';
+
+  @override
+  String voirLesAutresAvis(Object p0) {
+    return 'Voir les $p0 autres avis';
+  }
+
+  @override
+  String get unAvisInjurieuxOuFaux =>
+      'Un avis injurieux ou faux ? Signale-le avec « … » : l’équipe MatchUp le vérifie sous 48 h. Tu ne peux pas supprimer un avis.';
+
+  @override
+  String noteMoyenneSurAvis(Object p0, Object p1) {
+    return 'Note moyenne $p0 sur 5, $p1 avis';
+  }
+
+  @override
+  String avisVerifies(Object p0) {
+    return '$p0 avis vérifiés';
+  }
+
+  @override
+  String get repartitionDesNotes => 'Répartition des notes';
+
+  @override
+  String etoileAvis(Object p0, Object p1, Object p2) {
+    return '$p0 étoile$p1 : $p2 avis';
+  }
+
+  @override
+  String reponsePublieeSurLaPage(Object p0) {
+    return 'Réponse publiée sur la page d’$p0.';
+  }
+
+  @override
+  String avisDeSur(Object p0, Object p1) {
+    return 'Avis de $p0, $p1 sur 5';
+  }
+
+  @override
+  String terrain6(Object p0, Object p1) {
+    return '$p0 · Terrain $p1';
+  }
+
+  @override
+  String get repondu => 'Répondu';
+
+  @override
+  String plusDActionsSurL(Object p0) {
+    return 'Plus d’actions sur l’avis de $p0';
+  }
+
+  @override
+  String get taReponsePublique => 'Ta réponse publique';
+
+  @override
+  String visibleParTousSurLa(Object p0) {
+    return 'Visible par tous sur la page d’$p0.';
+  }
+
+  @override
+  String get publierLaReponse => 'Publier la réponse';
+
+  @override
+  String get ouvreLesReglagesDuTelephone => 'Ouvre les Réglages du téléphone';
+
+  @override
+  String get puisMatchupCamera => 'Puis MatchUp › Caméra.';
+
+  @override
+  String get cameraBloquee => 'Caméra bloquée';
+
+  @override
+  String get tuAsRefuseLAcces =>
+      'Tu as refusé l’accès à la caméra : impossible de scanner les QR codes des joueurs.';
+
+  @override
+  String get toucheMatchup => 'Touche MatchUp';
+
+  @override
+  String get activeCameraPuisReviensIci => 'Active Caméra, puis reviens ici';
+
+  @override
+  String get saisirLeCodeALa => 'Saisir le code à la main';
+
+  @override
+  String get leScanPartToutSeul =>
+      'Le scan part tout seul dès que le code est net.';
+
+  @override
+  String get lampeAllumee => 'Lampe allumée';
+
+  @override
+  String get lampe => 'Lampe';
+
+  @override
+  String get saisirLeCode => 'Saisir le code';
+
+  @override
+  String get laCameraNeSOuvre => 'La caméra ne s’ouvre pas ? ';
+
+  @override
+  String get autoriserLAcces => 'Autoriser l’accès';
+
+  @override
+  String get leCodeEstEcritSous =>
+      'Le code est écrit sous le QR, dans le billet du joueur.';
+
+  @override
+  String get codeDuBillet => 'Code du billet';
+
+  @override
+  String get viseLeQrCodeDu => 'Vise le QR code du joueur';
+
+  @override
+  String get scannerLeBilletVise => 'Scanner le billet visé';
+
+  @override
+  String get verification => 'Vérification';
+
+  @override
+  String prochainCreneau(Object p0, Object p1, Object p2, Object p3) {
+    return 'Prochain créneau, $p0, $p1, $p2, $p3';
+  }
+
+  @override
+  String get prochainCreneau2 => 'PROCHAIN CRÉNEAU';
+
+  @override
+  String joueurs4(Object p0, Object p1) {
+    return '$p0 · $p1 joueurs';
+  }
+
+  @override
+  String encoreCeSoir(Object p0, Object p1) {
+    return ' · $p0 $p1 encore ce soir';
+  }
+
+  @override
+  String get programmeDuJour => 'Programme du jour';
+
+  @override
+  String dejaEncaissesEnCoursDe(Object p0, Object p1) {
+    return '$p0 déjà encaissés · $p1 en cours de paiement par les joueurs (dus 3 h avant chaque match).';
+  }
+
+  @override
+  String get derniersAvis => 'Derniers avis';
+
+  @override
+  String get tousLesAvis => 'Tous les avis';
+
+  @override
+  String get chiffresDuJour => 'Chiffres du jour';
+
+  @override
+  String partiePubliqueJoueurs(Object p0, Object p1) {
+    return 'Partie publique · $p0/$p1 joueurs';
+  }
+
+  @override
+  String partiePriveeJoueurs(Object p0) {
+    return 'Partie privée · $p0 joueurs';
+  }
+
+  @override
+  String prochaineArrivee(Object p0) {
+    return 'Prochaine arrivée · $p0';
+  }
+
+  @override
+  String get scanner => 'Scanner';
+
+  @override
+  String get aucuneReservationAujourdHui => 'Aucune réservation aujourd’hui';
+
+  @override
+  String get reservation4 => 'réservation';
+
+  @override
+  String get reservations4 => 'réservations';
+
+  @override
+  String get creneauLibre => 'créneau libre';
+
+  @override
+  String get creneauxLibres => 'créneaux libres';
+
+  @override
+  String enAttente4(Object p0, Object p1) {
+    return '$p0 $p1 en attente';
+  }
+
+  @override
+  String get maintenant => 'Maintenant';
+
+  @override
+  String termine6(Object p0) {
+    return '$p0 · terminé';
+  }
+
+  @override
+  String get personneAuCheckIn => 'Personne au check-in';
+
+  @override
+  String terrain7(Object p0, Object p1, Object p2) {
+    return 'Terrain $p0, $p1, $p2';
+  }
+
+  @override
+  String terrainBloque(Object p0, Object p1) {
+    return 'Terrain $p0, bloqué, $p1';
+  }
+
+  @override
+  String pers3(Object p0, Object p1) {
+    return '$p0 · $p1 /pers.';
+  }
+
+  @override
+  String terrainLibre(Object p0, Object p1) {
+    return 'Terrain $p0, libre, $p1';
+  }
+
+  @override
+  String get suggestionDeLIa => 'Suggestion de l’IA';
+
+  @override
+  String tarifs2(Object p0) {
+    return 'Tarifs · $p0';
+  }
+
+  @override
+  String jeudiHHDeCreneaux(Object p0, Object p1, Object p2) {
+    return 'Jeudi ${p0}h–${p1}h : 80 % de créneaux vides. Proposer −$p2 % ?';
+  }
+
+  @override
+  String surTesDerniersJeudisCreneaux(Object p0, Object p1) {
+    return 'sur tes 5 derniers jeudis, 36 créneaux sur 45 sont restés vides entre ${p0}h et ${p1}h.';
+  }
+
+  @override
+  String apres(Object p0) {
+    return 'après $p0';
+  }
+
+  @override
+  String terrainsCreneauxLesJoueursVoient(Object p0, Object p1, Object p2) {
+    return '$p0 terrains · $p1 créneaux · $p2 Les joueurs voient le prix barré. Rien ne change sans ta confirmation.';
+  }
+
+  @override
+  String get ignorer => 'Ignorer';
+
+  @override
+  String revenusProchainVersementVersLe(Object p0) {
+    return 'Revenus : prochain versement vers le $p0';
+  }
+
+  @override
+  String versementPrevuVersLe(Object p0) {
+    return 'Versement prévu vers le $p0';
+  }
+
+  @override
+  String dernier(Object p0, Object p1) {
+    return 'Dernier : $p0 · $p1';
+  }
+
+  @override
+  String avisSansReponse3(Object p0, Object p1) {
+    return '$p0 avis · $p1 sans réponse';
+  }
+
+  @override
+  String terrain8(Object p0, Object p1) {
+    return 'Terrain $p0 · $p1';
+  }
+
+  @override
+  String tuAsReponduLe(Object p0) {
+    return 'Tu as répondu le $p0';
+  }
+
+  @override
+  String get jourABloquer => 'Jour à bloquer';
+
+  @override
+  String get plageHoraire => 'Plage horaire';
+
+  @override
+  String get de => 'De';
+
+  @override
+  String get noteInterne => 'Note interne';
+
+  @override
+  String get visibleParTonEquipeSeulement =>
+      'Visible par ton équipe seulement.';
+
+  @override
+  String get repeterChaqueSemaine => 'Répéter chaque semaine';
+
+  @override
+  String tousLesSTouteLa(Object p0) {
+    return 'Tous les ${p0}s, toute la journée';
+  }
+
+  @override
+  String tousLesSDeA(Object p0, Object p1, Object p2) {
+    return 'Tous les ${p0}s, de $p1 à $p2';
+  }
+
+  @override
+  String get lesJoueursVoientIndisponibleSur =>
+      'Les joueurs voient « Indisponible » sur ces créneaux. Tu peux les débloquer à tout moment depuis le planning.';
+
+  @override
+  String hAucuneReservationTouchee(Object p0, Object p1, Object p2) {
+    return '$p0 h · $p1 $p2 · aucune réservation touchée';
+  }
+
+  @override
+  String get creneau2 => 'créneau';
+
+  @override
+  String get creneaux3 => 'créneaux';
+
+  @override
+  String get reservationADeplacer => '1 réservation à déplacer';
+
+  @override
+  String reservationsADeplacer(Object p0) {
+    return '$p0 réservations à déplacer';
+  }
+
+  @override
+  String get bloquerCreneau => 'Bloquer 1 créneau';
+
+  @override
+  String bloquerCreneaux(Object p0) {
+    return 'Bloquer $p0 créneaux';
+  }
+
+  @override
+  String get organisateur3 => ' · organisateur';
+
+  @override
+  String fiableMatchsHonores(Object p0, Object p1, Object p2) {
+    return 'Fiable $p0 % · $p1/$p2 matchs honorés';
+  }
+
+  @override
+  String ecrireA(Object p0) {
+    return 'Écrire à $p0';
+  }
+
+  @override
+  String get placeLibre4 => '1 place libre';
+
+  @override
+  String joueursSur3(Object p0, Object p1) {
+    return '$p0 joueurs sur $p1';
+  }
+
+  @override
+  String terrainH(Object p0) {
+    return 'TERRAIN · $p0 H';
+  }
+
+  @override
+  String get dejaEncaisse2 => 'DÉJÀ ENCAISSÉ';
+
+  @override
+  String partsDe3(Object p0, Object p1) {
+    return '$p0 parts de $p1';
+  }
+
+  @override
+  String get payeEnLigne2 => 'Payé en ligne';
+
+  @override
+  String attendusDeAvant(Object p0, Object p1, Object p2) {
+    return '$p0 attendus de $p1 $p2 avant ';
+  }
+
+  @override
+  String get t18h00LeJourJ => '18h00 le jour J';
+
+  @override
+  String get sinonLaPartieEstAnnulee =>
+      ', sinon la partie est annulée et remboursée.';
+
+  @override
+  String get deplacer => 'Déplacer';
+
+  @override
+  String noShowPossibleDesAnnuler(Object p0, Object p1) {
+    return 'No-show possible dès $p0 · annuler rembourse les $p1 joueurs.';
+  }
+
+  @override
+  String etLesJoueursSontPrevenus(Object p0) {
+    return '$p0 et les joueurs sont prévenus tout de suite. Le créneau redevient libre.';
+  }
+
+  @override
+  String sontRemboursesAuxJoueurs(Object p0, Object p1) {
+    return '$p0 sont remboursés aux $p1 joueurs.';
+  }
+
+  @override
+  String remboursesAuxJoueurs(Object p0) {
+    return '$p0 remboursés aux joueurs.';
+  }
+
+  @override
+  String get faireLeCheckIn => 'Faire le check-in';
+
+  @override
+  String des3(Object p0) {
+    return 'dès $p0';
+  }
+
+  @override
+  String changerDeRoleProprietaire(Object p0) {
+    return 'Changer de rôle, $p0, propriétaire';
+  }
+
+  @override
+  String get entretien => 'Entretien';
+
+  @override
+  String get evenementPrive => 'Événement privé';
+
+  @override
+  String get tournoi => 'Tournoi';
+
+  @override
+  String get meteo => 'Météo';
+
+  @override
+  String get autre => 'Autre';
+
+  @override
+  String suite(Object p0, Object p1) {
+    return '$p0, $p1, suite';
+  }
+
+  @override
+  String terminePaye(Object p0, Object p1) {
+    return '$p0, $p1, terminé, payé';
+  }
+
+  @override
+  String noShow4(Object p0, Object p1) {
+    return '$p0, $p1, no-show';
+  }
+
+  @override
+  String enCours3(Object p0, Object p1) {
+    return '$p0, $p1, en cours';
+  }
+
+  @override
+  String taPartieSur(Object p0, Object p1, Object p2) {
+    return '$p0, ta partie, $p1 sur $p2';
+  }
+
+  @override
+  String partiePubliqueDeSur(Object p0, Object p1, Object p2, Object p3) {
+    return '$p0, partie publique de $p1, $p2 sur $p3';
+  }
+
+  @override
+  String surPaye(Object p0, Object p1, Object p2, Object p3) {
+    return '$p0, $p1, $p2 sur $p3 payé';
+  }
+
+  @override
+  String get priveePaye => 'Privée · payé';
+
+  @override
+  String get voirLeGraphique => 'Voir le graphique';
+
+  @override
+  String get voirLeTableau => 'Voir le tableau';
+
+  @override
+  String get datesAConfirmer => ' · dates à confirmer';
 }

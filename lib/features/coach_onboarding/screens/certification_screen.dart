@@ -71,7 +71,7 @@ class _CertificationScreenState extends ConsumerState<CertificationScreen> {
     final d = ref.read(coachProvider).requireValue;
     setState(() {
       _error = _queue.busy
-          ? 'Attends la fin de l’envoi.'
+          ? l10n.attendsLaFinDeLEnvoi
           : (d.diploma == null ? l10n.ajouteTonDiplomePourLancer : null);
     });
     return _error == null;
@@ -116,7 +116,7 @@ class _CertificationScreenState extends ConsumerState<CertificationScreen> {
       lead:
           l10n.unDiplomeVerifieAfficheLe,
       validate: _validate,
-      body: ProFormCard(
+      body: ProFormSections(
         children: [
           Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -136,27 +136,12 @@ class _CertificationScreenState extends ConsumerState<CertificationScreen> {
                           l10n.onVerifieTonDiplomeAupres(withFullStop(formatDay(deadline!))),
                     ),
               const SizedBox(height: MuSpace.s6),
-              if (MediaQuery.sizeOf(context).width < _stackBelow)
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    upload,
-                    const SizedBox(height: MuSpace.s5),
-                    file,
-                  ],
-                )
-              else
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Expanded(flex: 2, child: upload),
-                    const SizedBox(width: MuSpace.s5),
-                    Expanded(child: file),
-                  ],
-                ),
+              upload,
+              const SizedBox(height: MuSpace.s5),
+              file,
             ],
           ),
-          ProFieldGrid(
+          ProFieldColumn(
             children: [
               _Checklist(
                 title: l10n.enAttendantTuPeuxDeja,
@@ -184,8 +169,6 @@ class _CertificationScreenState extends ConsumerState<CertificationScreen> {
       ),
     );
   }
-
-  static const double _stackBelow = 720;
 }
 
 /// « Ton dossier »: the status and the three stages of the check.

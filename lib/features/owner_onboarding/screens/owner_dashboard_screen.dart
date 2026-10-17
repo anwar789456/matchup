@@ -9,49 +9,11 @@ import '../../../theme/theme.dart';
 import '../../../ui/ui.dart';
 import '../../common/data/pro_providers.dart';
 import '../../common/widgets/pro_dashboard_scaffold.dart';
-import '../../common/widgets/pro_wizard_scaffold.dart' show showComingSoon;
+import '../../common/widgets/pro_wizard_scaffold.dart' show ProSpace, showComingSoon;
 import '../controllers/owner_controller.dart';
 import '../data/owner_repository.dart';
 import 'plan_screen.dart' show OwnerPlans;
 import '../../../l10n/l10n.dart';
-
-/// The owner's sidebar (Sidebar.md « Content »).
-List<MuNavSection> ownerNav() => [
-  MuNavSection(
-    items: [
-      MuNavItem(
-        id: 'dashboard',
-        label: l10n.tableauDeBord,
-        icon: PhosphorIcons.squaresFour(),
-        activeIcon: PhosphorIcons.squaresFour(PhosphorIconsStyle.fill),
-      ),
-    ],
-  ),
-  MuNavSection(
-    heading: l10n.activite,
-    items: [
-      MuNavItem(id: 'planning', label: l10n.planning, icon: PhosphorIcons.calendarDots()),
-      MuNavItem(id: 'reservations', label: l10n.reservations, icon: PhosphorIcons.ticket()),
-      MuNavItem(id: 'terrains', label: l10n.terrains, asset: MuGlyph.court),
-      MuNavItem(id: 'tarifs', label: l10n.tarifs, icon: PhosphorIcons.tag()),
-    ],
-  ),
-  MuNavSection(
-    heading: l10n.clientele,
-    items: [
-      MuNavItem(id: 'clients', label: l10n.clients, icon: PhosphorIcons.users()),
-      MuNavItem(id: 'avis', label: l10n.avis, icon: PhosphorIcons.star()),
-    ],
-  ),
-  MuNavSection(
-    heading: l10n.gestion,
-    items: [
-      MuNavItem(id: 'revenus', label: l10n.revenus, icon: PhosphorIcons.coins()),
-      MuNavItem(id: 'abonnement', label: l10n.abonnement, icon: PhosphorIcons.crownSimple()),
-      MuNavItem(id: 'parametres', label: l10n.parametres, icon: PhosphorIcons.gearSix()),
-    ],
-  ),
-];
 
 /// One line of « Mise en route ».
 class _Task {
@@ -74,8 +36,8 @@ class _Task {
   final Widget? badge;
 }
 
-/// OWN-09 — the owner dashboard on its first day: what is left to set up, today's bookings (none
-/// yet) and the four KPIs, empty until the first booking.
+/// OWN-09 — the owner dashboard on its first day, as a phone page: what is left to set up,
+/// today's bookings (none yet) and the four KPIs two by two, empty until the first booking.
 class OwnerDashboardScreen extends ConsumerWidget {
   const OwnerDashboardScreen({super.key});
 
@@ -84,7 +46,6 @@ class OwnerDashboardScreen extends ConsumerWidget {
     final c = context.mu;
     final d = ref.watch(ownerProvider).requireValue;
     final now = ref.watch(clockProvider)();
-    final width = MediaQuery.sizeOf(context).width;
     final venue = d.venueName.trim().isEmpty ? l10n.tonTerrain : d.venueName.trim();
     final firstName = d.manager.split(' ').first;
     final email = d.email.isEmpty ? '' : d.email;
@@ -176,52 +137,31 @@ class OwnerDashboardScreen extends ConsumerWidget {
     final plan = OwnerPlans.of(d.plan).name;
 
     final setup = ProCard(
-      padding: const EdgeInsets.fromLTRB(MuSpace.s6, MuSpace.s6, MuSpace.s6, MuSpace.s4),
+      padding: const EdgeInsets.fromLTRB(MuSpace.s4, MuSpace.s5, MuSpace.s4, MuSpace.s2),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Wrap(
-            alignment: WrapAlignment.spaceBetween,
-            crossAxisAlignment: WrapCrossAlignment.end,
-            spacing: MuSpace.s6,
-            runSpacing: MuSpace.s3,
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(l10n.miseEnRoute, style: MuType.overline.copyWith(color: c.textSecondary)),
-                  const SizedBox(height: MuSpace.s1),
-                  Semantics(
-                    header: true,
-                    child: Text(
-                      l10n.termineLaConfiguration(elideDe(venue)),
-                      style: MuType.h2.copyWith(color: c.text),
-                    ),
-                  ),
-                  const SizedBox(height: MuSpace.s1),
-                  Text(
-                    left == 0
-                        ? l10n.toutEstPret
-                        : l10n.encoreEtapeEtLesJoueurs(left, left > 1 ? 's' : ''),
-                    style: MuType.body.copyWith(color: c.textSecondary),
-                  ),
-                ],
-              ),
-              Padding(
-                padding: const EdgeInsets.only(bottom: MuSpace.s1),
-                child: SizedBox(
-                  width: _progressWidth,
-                  child: MuProgressBar(
-                    label: l10n.configuration,
-                    value: done.toDouble(),
-                    max: tasks.length.toDouble(),
-                    size: MuProgressSize.l,
-                    valueLabel: '$done/${tasks.length} · $percent %',
-                  ),
-                ),
-              ),
-            ],
+          Text(l10n.miseEnRoute, style: MuType.overline.copyWith(color: c.textSecondary)),
+          const SizedBox(height: MuSpace.s1),
+          Semantics(
+            header: true,
+            child: Text(
+              l10n.termineLaConfiguration(elideDe(venue)),
+              style: MuType.h2.copyWith(color: c.text),
+            ),
+          ),
+          const SizedBox(height: MuSpace.s1),
+          Text(
+            left == 0 ? l10n.toutEstPret : l10n.encoreEtapeEtLesJoueurs(left, left > 1 ? 's' : ''),
+            style: MuType.body.copyWith(color: c.textSecondary),
+          ),
+          const SizedBox(height: MuSpace.s4),
+          MuProgressBar(
+            label: l10n.configuration,
+            value: done.toDouble(),
+            max: tasks.length.toDouble(),
+            size: MuProgressSize.l,
+            valueLabel: '$done/${tasks.length} · $percent %',
           ),
           const SizedBox(height: MuSpace.s3),
           for (final (i, t) in tasks.indexed)
@@ -248,24 +188,20 @@ class OwnerDashboardScreen extends ConsumerWidget {
             ],
           ),
           const SizedBox(height: MuSpace.s2),
-          // Beside the setup card the empty state centres in the stretched card.
-          _fill(
-            width >= ProSplit.stackBelow,
-            Center(
-              child: MuEmptyState(
-                compact: true,
-                illustration: MuEmptyIllustration.bookings,
-                title: l10n.aucuneReservationPourLInstant,
-                description:
-                    l10n.publieTonPremierCreneauIl(elideDe(d.city.isEmpty ? l10n.taVille : d.city)),
-                actions: [
-                  MuButton.secondary(
-                    label: l10n.ouvrirLePlanning,
-                    leading: PhosphorIcons.calendarDots(),
-                    onPressed: () => showComingSoon(context),
-                  ),
-                ],
-              ),
+          Center(
+            child: MuEmptyState(
+              compact: true,
+              illustration: MuEmptyIllustration.bookings,
+              title: l10n.aucuneReservationPourLInstant,
+              description:
+                  l10n.publieTonPremierCreneauIl(elideDe(d.city.isEmpty ? l10n.taVille : d.city)),
+              actions: [
+                MuButton.secondary(
+                  label: l10n.ouvrirLePlanning,
+                  leading: PhosphorIcons.calendarDots(),
+                  onPressed: () => showComingSoon(context),
+                ),
+              ],
             ),
           ),
         ],
@@ -273,45 +209,39 @@ class OwnerDashboardScreen extends ConsumerWidget {
     );
 
     return ProDashboardScaffold(
-      sections: ownerNav(),
-      role: MuSidebarRole(role: l10n.proprietaire, name: venue),
-      user: MuSidebarUser(name: d.manager, email: email),
+      space: ProSpace.owner,
+      userName: d.manager,
       userRole: l10n.proprietaire,
+      userEmail: email,
       notifications: 1,
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Wrap(
-            alignment: WrapAlignment.spaceBetween,
-            crossAxisAlignment: WrapCrossAlignment.end,
-            spacing: MuSpace.s6,
-            runSpacing: MuSpace.s3,
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Semantics(
-                    header: true,
-                    child: Text(l10n.bonjour(firstName), style: MuType.h1.copyWith(color: c.text)),
-                  ),
-                  const SizedBox(height: MuSpace.s1),
-                  Text(
-                    trialEnd != null
-                        ? l10n.voiciOuEnEst(withFullStop(l10n.tonEssaiCourtJusquAu(plan, formatDay(trialEnd))), venue)
-                        : l10n.termineLaConfigurationPourDemarrer(venue),
-                    style: MuType.bodyL.copyWith(color: c.textSecondary),
-                  ),
-                ],
-              ),
-              MuStatusBadge(status: MuStatus.draft, label: l10n.pasEncoreVisibleDesJoueurs),
-            ],
+          Semantics(
+            header: true,
+            child: Text(l10n.bonjour(firstName), style: MuType.h1.copyWith(color: c.text)),
           ),
-          const SizedBox(height: MuSpace.s6),
-          ProSplit(start: setup, end: bookings),
-          const SizedBox(height: MuSpace.s6),
+          const SizedBox(height: MuSpace.s1),
+          Text(
+            trialEnd != null
+                ? l10n.voiciOuEnEst(
+                    withFullStop(l10n.tonEssaiCourtJusquAu(plan, formatDay(trialEnd))),
+                    venue,
+                  )
+                : l10n.termineLaConfigurationPourDemarrer(venue),
+            style: MuType.bodyL.copyWith(color: c.textSecondary),
+          ),
+          const SizedBox(height: MuSpace.s3),
+          Align(
+            alignment: AlignmentDirectional.centerStart,
+            child: MuStatusBadge(status: MuStatus.draft, label: l10n.pasEncoreVisibleDesJoueurs),
+          ),
+          const SizedBox(height: MuSpace.s5),
+          setup,
+          const SizedBox(height: MuSpace.s4),
+          bookings,
+          const SizedBox(height: MuSpace.s4),
           ProCardRow(
-            columns: width < ProSplit.stackBelow ? 2 : 4,
             children: [
               MuKpiCard(
                 label: l10n.tauxDOccupation,
@@ -336,11 +266,6 @@ class OwnerDashboardScreen extends ConsumerWidget {
       ),
     );
   }
-
-  // OWN-09 source: the progress block is 220 wide.
-  static const double _progressWidth = 220;
-
-  static Widget _fill(bool fill, Widget child) => fill ? Expanded(child: child) : child;
 }
 
 class _TaskRow extends StatelessWidget {
@@ -368,11 +293,12 @@ class _TaskRow extends StatelessWidget {
     } else if (primary) {
       action = MuButton.primary(
         label: t.action,
-        leading: t.action == 'Ajouter' ? PhosphorIcons.plus() : null,
+        leading: t.action == l10n.ajouter ? PhosphorIcons.plus() : null,
+        size: MuButtonSize.s,
         onPressed: t.onAction,
       );
     } else {
-      action = MuButton.secondary(label: t.action, onPressed: t.onAction);
+      action = MuButton.secondary(label: t.action, size: MuButtonSize.s, onPressed: t.onAction);
     }
 
     return Semantics(
@@ -406,10 +332,10 @@ class _TaskRow extends StatelessWidget {
                   ),
                   const SizedBox(height: _lineGap),
                   Text(t.detail, style: MuType.caption.copyWith(color: c.textSecondary)),
+                  if (t.badge != null) ...[const SizedBox(height: MuSpace.s1), t.badge!],
                 ],
               ),
             ),
-            if (t.badge != null) ...[const SizedBox(width: MuSpace.s3), t.badge!],
             const SizedBox(width: MuSpace.s3),
             action,
           ],

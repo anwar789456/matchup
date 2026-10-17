@@ -9,7 +9,7 @@ import '../../common/widgets/pro_wizard_scaffold.dart';
 import '../controllers/owner_controller.dart';
 import '../../../l10n/l10n.dart';
 
-/// [ProWizardScaffold] set up for step [step] of the owner wizard: rail summaries from the draft,
+/// [ProWizardScaffold] set up for step [step] of the owner wizard: step summaries from the draft,
 /// « Retour » to the previous step (the role choice from the first), « Enregistrer et quitter »
 /// to the dashboard, « Continuer » after [validate] passes.
 class OwnerWizard extends ConsumerStatefulWidget {
@@ -66,8 +66,8 @@ class _OwnerWizardState extends ConsumerState<OwnerWizard> {
     final venue = d.venueName.trim().isEmpty ? l10n.tonTerrain : d.venueName.trim();
     return ProWizardScaffold(
       space: ProSpace.owner,
-      railTitle: l10n.metsEnLigne(venue),
-      railMeta: l10n.etapesEnvironMin3(OwnerSteps.all.length),
+      flowTitle: l10n.metsEnLigne(venue),
+      flowMeta: l10n.etapesEnvironMin3(OwnerSteps.all.length),
       steps: OwnerSteps.of(d, widget.step),
       current: widget.step,
       onStepTap: (i) => context.go(Routes.owner[i]),

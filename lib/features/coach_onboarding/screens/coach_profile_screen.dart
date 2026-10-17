@@ -145,13 +145,13 @@ class _CoachProfileScreenState extends ConsumerState<CoachProfileScreen> {
       title: l10n.presenteToiAuxJoueurs,
       lead: l10n.lesElevesChoisissentDAbord,
       validate: _validate,
-      body: ProFormCard(
+      body: ProFormSections(
         divided: false,
         children: [
           Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              ProFieldGrid(
+              ProFieldColumn(
                 children: [
                   MuFileUpload.avatar(
                     label: l10n.photoDeProfil,
@@ -163,7 +163,6 @@ class _CoachProfileScreenState extends ConsumerState<CoachProfileScreen> {
                   ),
                   MuSelect<String>(
                     label: l10n.villeOuTuCoaches,
-                    size: MuFieldSize.m,
                     value: d.city,
                     helper: l10n.lesElevesCherchentUnCoach,
                     options: [
@@ -178,7 +177,6 @@ class _CoachProfileScreenState extends ConsumerState<CoachProfileScreen> {
               MuTextField(
                 label: l10n.bio,
                 controller: _bio,
-                size: MuFieldSize.m,
                 multiline: true,
                 minLines: 3,
                 maxLength: CoachCatalog.bioMax,
@@ -222,7 +220,7 @@ class _CoachProfileScreenState extends ConsumerState<CoachProfileScreen> {
                 MuFieldMessage.error(_specialtiesError!),
               ],
               const SizedBox(height: MuSpace.s5),
-              ProFieldGrid(children: [sports, levels]),
+              ProFieldColumn(children: [sports, levels]),
             ],
           ),
         ],

@@ -6,6 +6,10 @@ import '../../../theme/theme.dart';
 abstract final class Story {
   static DateTime at(int day, int hour, [int minute = 0]) => DateTime(2026, 10, day, hour, minute);
 
+  /// Arena Five's owner, the admin (STORY-DATA « Adjustments »).
+  static const ownerName = 'Skander T.';
+  static const adminName = 'Leila M.';
+
   // ── Places ──────────────────────────────────────────────────────────────────────────────────
 
   /// Where Yassine is (La Marsa).

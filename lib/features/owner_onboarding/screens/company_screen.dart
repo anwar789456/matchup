@@ -58,7 +58,7 @@ class _CompanyScreenState extends ConsumerState<CompanyScreen> {
       _legalError = _legal.text.trim().isEmpty ? l10n.indiqueLaRaisonSociale : null;
       final tax = _tax.text.trim();
       _taxError = tax.isEmpty
-          ? 'Indique ton matricule fiscal.'
+          ? l10n.indiqueTonMatriculeFiscal
           : (_taxId.hasMatch(tax) ? null : l10n.leMatriculeFiscalRessembleA);
       _phoneError = MuPhoneFormatter.digitsOf(_phone.text).length == 8
           ? null
@@ -75,18 +75,17 @@ class _CompanyScreenState extends ConsumerState<CompanyScreen> {
       title: l10n.parleNousDeTonEntreprise,
       lead: l10n.lesJoueursNeVerrontQue,
       validate: _validate,
-      body: ProFormCard(
+      body: ProFormSections(
         children: [
           ProFormSection(
             title: l10n.tonEtablissement,
             description: l10n.cesInfosFigurentSurTes,
             children: [
-              ProFieldGrid(
+              ProFieldColumn(
                 children: [
                   MuTextField(
                     label: l10n.nomDuTerrain,
                     controller: _venue,
-                    size: MuFieldSize.m,
                     helper: l10n.leNomQueLesJoueurs,
                     error: _venueError,
                     textCapitalization: TextCapitalization.words,
@@ -98,7 +97,6 @@ class _CompanyScreenState extends ConsumerState<CompanyScreen> {
                   MuTextField(
                     label: l10n.raisonSociale,
                     controller: _legal,
-                    size: MuFieldSize.m,
                     helper: l10n.commeSurTonRegistreDe,
                     error: _legalError,
                     onChanged: (v) {
@@ -109,7 +107,6 @@ class _CompanyScreenState extends ConsumerState<CompanyScreen> {
                   MuTextField(
                     label: l10n.matriculeFiscal,
                     controller: _tax,
-                    size: MuFieldSize.m,
                     placeholder: '1234567/A/M/000',
                     helper: l10n.ilFigureSurTaCarte,
                     error: _taxError,
@@ -122,7 +119,6 @@ class _CompanyScreenState extends ConsumerState<CompanyScreen> {
                   ),
                   MuSelect<String>(
                     label: l10n.formeJuridique,
-                    size: MuFieldSize.m,
                     value: _form,
                     options: [
                       for (final (id, label) in OwnerCatalog.legalForms)
@@ -141,12 +137,11 @@ class _CompanyScreenState extends ConsumerState<CompanyScreen> {
             title: l10n.contact,
             description: l10n.responsableDuCompte(_d.manager),
             children: [
-              ProFieldGrid(
+              ProFieldColumn(
                 children: [
                   MuPhoneField(
                     label: l10n.telephoneDuTerrain,
                     controller: _phone,
-                    size: MuFieldSize.m,
                     helper: l10n.lesJoueursTAppellentA,
                     error: _phoneError,
                     onChanged: (digits) {
@@ -157,7 +152,6 @@ class _CompanyScreenState extends ConsumerState<CompanyScreen> {
                   MuTextField(
                     label: l10n.emailPro,
                     controller: _email,
-                    size: MuFieldSize.m,
                     leadingIcon: PhosphorIcons.envelopeSimple(),
                     keyboardType: TextInputType.emailAddress,
                     autofillHints: const [AutofillHints.email],

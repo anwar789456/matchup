@@ -8,6 +8,8 @@ import 'package:matchup/features/coach_onboarding/data/coach_draft.dart';
 import 'package:matchup/features/common/data/draft_store.dart';
 import 'package:matchup/features/common/data/file_services.dart';
 import 'package:matchup/features/common/data/pro_providers.dart';
+import 'package:matchup/features/common/widgets/flow_scaffold.dart';
+import 'package:matchup/features/common/widgets/pro_wizard_scaffold.dart';
 import 'package:matchup/features/owner_onboarding/controllers/owner_controller.dart';
 import 'package:matchup/features/owner_onboarding/data/owner_repository.dart';
 import 'package:matchup/features/player_onboarding/controllers/onboarding_controller.dart';
@@ -43,7 +45,7 @@ void main() {
   Future<ProviderContainer> pumpApp(
     WidgetTester tester, {
     required String at,
-    Size size = const Size(1440, 900),
+    Size size = const Size(390, 844),
   }) async {
     tester.view.physicalSize = size;
     tester.view.devicePixelRatio = 1;
@@ -79,6 +81,13 @@ void main() {
 
   Future<void> tapText(WidgetTester tester, String text) => tap(tester, find.text(text).last);
 
+  /// Opens « Voir les étapes », runs [check] on the steps sheet, then closes it.
+  Future<void> inSteps(WidgetTester tester, void Function() check) async {
+    await tap(tester, find.bySemanticsLabel('Voir les étapes'));
+    check();
+    await tap(tester, find.bySemanticsLabel('Fermer').last);
+  }
+
   Future<void> enter(WidgetTester tester, String label, String text) async {
     final field = find.descendant(
       of: find.ancestor(of: find.text(label), matching: find.byType(Column)).first,
@@ -102,7 +111,14 @@ void main() {
     await tapText(tester, 'Continuer');
 
     expect(find.text('Où se trouve Arena Five ?'), findsOneWidget);
-    expect(find.text('Arena Five SARL'), findsOneWidget); // rail summary
+    expect(
+      find.text('Étape 2 sur 8 · Adresse', findRichText: true),
+      findsOneWidget,
+    );
+    await inSteps(tester, () {
+      expect(find.text('Arena Five SARL'), findsOneWidget); // step summary
+      expect(find.text('Besoin d’aide ?'), findsOneWidget);
+    });
     expect(find.text(' · épingle déplacée de 40 m'), findsOneWidget);
     await tapText(tester, 'Recentrer sur l’adresse');
     expect(find.text(' · épingle déplacée de 40 m'), findsNothing);
@@ -166,7 +182,9 @@ void main() {
     await tapText(tester, 'Continuer');
 
     expect(find.text('Ta certification'), findsOneWidget);
-    expect(find.text('Padel · Lac 2, Tunis'), findsOneWidget); // rail summary
+    await inSteps(tester, () {
+      expect(find.text('Padel · Lac 2, Tunis'), findsOneWidget); // step summary
+    });
     expect(find.text('Vérification en cours · 48 h'), findsOneWidget);
     expect(find.textContaining('au plus tard le ven. 16 oct.'), findsOneWidget);
     await tapText(tester, 'Continuer');
@@ -198,38 +216,58 @@ void main() {
     expect(find.text('TS'), findsWidgets);
   });
 
-  testWidgets('narrow windows: compact stepper, sidebar in a drawer', (tester) async {
-    await pumpApp(tester, at: Routes.ownerCompany, size: const Size(800, 900));
-    expect(find.text('Étape 1 sur 8 · Entreprise'), findsOneWidget);
-    expect(find.text('Besoin d’aide ?'), findsNothing);
+  const proRoutes = [
+    ...Routes.owner,
+    Routes.ownerDashboard,
+    Routes.coachProfile,
+    Routes.coachCertification,
+    Routes.coachDashboard,
+    Routes.organizerOrganisation,
+    Routes.organizerDashboard,
+  ];
 
-    final container = ProviderScope.containerOf(tester.element(find.byType(MatchUpApp)));
-    container.read(routerProvider).go(Routes.ownerDashboard);
-    await tester.pumpAndSettle();
-    expect(find.text('Planning'), findsNothing);
-    await tap(tester, find.bySemanticsLabel('Ouvrir le menu'));
-    expect(find.text('Planning'), findsOneWidget);
+  group('every pro screen lays out at 360, 390 and 430 wide without overflow', () {
+    for (final size in const [Size(360, 740), Size(390, 844), Size(430, 932)]) {
+      testWidgets('${size.width.toInt()} wide', (tester) async {
+        final container = await pumpApp(tester, at: Routes.ownerCompany, size: size);
+        final failures = <String>[];
+        for (final route in proRoutes) {
+          container.read(routerProvider).go(route);
+          await tester.pumpAndSettle();
+          final e = tester.takeException();
+          if (e != null) failures.add('${size.width.toInt()} $route: $e');
+        }
+        // The editors open in place: a court, then a past event.
+        container.read(routerProvider).go(Routes.owner[2]);
+        await tester.pumpAndSettle();
+        await tap(tester, find.bySemanticsLabel('Modifier Terrain 1'));
+        container.read(routerProvider).go(Routes.organizerOrganisation);
+        await tester.pumpAndSettle();
+        await tapText(tester, 'Ajouter un événement');
+        final e = tester.takeException();
+        if (e != null) failures.add('${size.width.toInt()} editors: $e');
+        expect(failures, isEmpty);
+        });
+    }
   });
 
-  for (final size in const [Size(390, 844), Size(1024, 768), Size(1440, 900)]) {
-    testWidgets('every pro screen lays out at ${size.width.toInt()} wide', (tester) async {
-      final container = await pumpApp(tester, at: Routes.ownerCompany, size: size);
-      final failures = <String>[];
-      for (final route in [
-        ...Routes.owner,
-        Routes.ownerDashboard,
-        Routes.coachProfile,
-        Routes.coachCertification,
-        Routes.coachDashboard,
-        Routes.organizerOrganisation,
-        Routes.organizerDashboard,
-      ]) {
-        container.read(routerProvider).go(route);
-        await tester.pumpAndSettle();
-        final e = tester.takeException();
-        if (e != null) failures.add('$route: $e');
-      }
-      expect(failures, isEmpty);
-    });
-  }
+  testWidgets('on a 1024-wide tablet the form is centred at max 480', (tester) async {
+    final container = await pumpApp(tester, at: Routes.ownerCompany, size: const Size(1024, 768));
+    Rect frame() => tester.getRect(
+      find.descendant(of: find.byType(ProPhoneFrame), matching: find.byType(ConstrainedBox)).first,
+    );
+
+    expect(find.text('Étape 1 sur 8 · Entreprise', findRichText: true), findsOneWidget);
+    expect(frame().width, ProPhoneFrame.maxWidth);
+    expect(frame().center.dx, 512);
+    expect(tester.getRect(find.byType(StickyActionBar)).width, ProPhoneFrame.maxWidth);
+
+    for (final route in [Routes.ownerDashboard, Routes.coachProfile, Routes.organizerDashboard]) {
+      container.read(routerProvider).go(route);
+      await tester.pumpAndSettle();
+      expect(frame().width, ProPhoneFrame.maxWidth, reason: route);
+      expect(frame().center.dx, 512, reason: route);
+    }
+    expect(tester.takeException(), isNull);
+  });
 }

@@ -175,9 +175,12 @@ Future<void> showAccountMenu(BuildContext context, WidgetRef ref) {
 }
 
 /// PRF-06 · Changer de rôle.
-Future<void> showRoleSwitcher(BuildContext context) => MuRoleSwitcher.show(
+/// [current] is the space on screen (`player`, `owner`); picking another one opens it.
+Future<void> showRoleSwitcher(BuildContext context, {String current = 'player'}) {
+  final router = GoRouter.of(context);
+  return MuRoleSwitcher.show(
   context,
-  current: 'player',
+  current: current,
   roles: [
     MuRole(
       id: 'player',
@@ -194,9 +197,16 @@ Future<void> showRoleSwitcher(BuildContext context) => MuRoleSwitcher.show(
       semanticLabel: l10n.passerEnProprietaireDeTerrain,
     ),
   ],
-  onChanged: (r) => context.push(Routes.ownerCompany),
-  onAddRole: () => context.push(Routes.roleChoice),
+  onChanged: (r) {
+    if (r.id == current) return;
+    router.go(switch (r.id) {
+      'owner' => Routes.ownerToday,
+      _ => Routes.home,
+    });
+  },
+  onAddRole: () => router.push(Routes.roleChoice),
 );
+}
 
 /// Signs out and lands on the login (AUTH-05).
 Future<void> signOutToLogin(BuildContext context, WidgetRef ref) async {

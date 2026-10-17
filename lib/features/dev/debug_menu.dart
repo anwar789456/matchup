@@ -12,6 +12,7 @@ import '../common/data/story_data.dart';
 import '../games/widgets/claim_takeover.dart';
 import '../home/controllers/home_providers.dart';
 import '../notifications/controllers/live_events.dart';
+import '../owner/data/camera.dart';
 import '../notifications/data/push_service.dart';
 import '../payments/data/payment_repository.dart';
 import '../states/data/account_status.dart';
@@ -101,6 +102,17 @@ Future<void> showDebugMenu(BuildContext context, WidgetRef ref) => MuBottomSheet
             value: !ref.watch(accountFlagsProvider).emailVerified,
             label: 'Email non vérifié (STA-06)',
             onChanged: (v) => ref.read(accountFlagsProvider.notifier).setEmailVerified(!v),
+          ),
+          MuSwitch(
+            value: ref.watch(cameraDeniedProvider),
+            label: 'Caméra refusée (STA-05)',
+            onChanged: (v) => ref.read(cameraDeniedProvider.notifier).set(v),
+          ),
+          MuSelect<String>(
+            label: 'Code lu par le scan simulé (OWN-20)',
+            options: [for (final code in simulatedCodes) MuSelectOption(value: code, label: code)],
+            value: ref.watch(simulatedScanProvider),
+            onChanged: (v) => ref.read(simulatedScanProvider.notifier).set(v),
           ),
           MuButton.tertiary(
             label: 'Session expirée (STA-04)',

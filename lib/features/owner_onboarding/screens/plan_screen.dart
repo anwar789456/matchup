@@ -57,8 +57,6 @@ abstract final class OwnerPlans {
 class PlanScreen extends ConsumerWidget {
   const PlanScreen({super.key});
 
-  static const double _stackBelow = 720;
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final c = context.mu;
@@ -81,25 +79,15 @@ class PlanScreen extends ConsumerWidget {
       onCta: () => owner.edit((d) => d.copyWith(plan: p)),
     );
 
-    final cards = MediaQuery.sizeOf(context).width < _stackBelow
-        ? Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              card(OwnerPlan.starter),
-              const SizedBox(height: MuSpace.s6),
-              card(OwnerPlan.pro),
-            ],
-          )
-        : IntrinsicHeight(
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Expanded(child: card(OwnerPlan.starter)),
-                const SizedBox(width: MuSpace.s5),
-                Expanded(child: card(OwnerPlan.pro)),
-              ],
-            ),
-          );
+    // The two offers one under the other (side by side in the wide design).
+    final cards = Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        card(OwnerPlan.starter),
+        const SizedBox(height: MuSpace.s6),
+        card(OwnerPlan.pro),
+      ],
+    );
 
     return OwnerWizard(
       step: 7,
@@ -160,9 +148,11 @@ class PlanScreen extends ConsumerWidget {
                 children: [
                   Icon(PhosphorIcons.shieldCheck(), size: MuSize.iconXs, color: c.textSecondary),
                   const SizedBox(width: MuSpace.s2),
-                  Text(
-                    l10n.sansEngagementResiliableEnClics,
-                    style: MuType.label.copyWith(color: c.textSecondary),
+                  Flexible(
+                    child: Text(
+                      l10n.sansEngagementResiliableEnClics,
+                      style: MuType.label.copyWith(color: c.textSecondary),
+                    ),
                   ),
                 ],
               ),

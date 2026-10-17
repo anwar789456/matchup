@@ -61,8 +61,9 @@ class PayoutScreen extends ConsumerStatefulWidget {
 }
 
 class _PayoutScreenState extends ConsumerState<PayoutScreen> {
-  // OWN-07: PDF, JPG, PNG · 5 Mo max.
+  // OWN-07: PDF, JPG, PNG · 5 Mo max; 2 px between the security note's lines.
   static const _maxBytes = 5 * 1000 * 1000;
+  static const double _lineGap = 2;
 
   late final _d = ref.read(ownerProvider).requireValue;
   late final _holder = TextEditingController(text: _d.holder);
@@ -144,7 +145,7 @@ class _PayoutScreenState extends ConsumerState<PayoutScreen> {
       _bankError = _bank.isEmpty ? l10n.choisisTaBanque : null;
       _ribError = digits.length == 20 ? _ribError : l10n.leRibCompteChiffres;
       _fileError = _queue.busy
-          ? 'Attends la fin de l’envoi.'
+          ? l10n.attendsLaFinDeLEnvoi
           : (d.ribCertificate == null ? l10n.ajouteTonAttestationDeRib : null);
     });
     final ribOk = digits.length == 20 && (_ribSuccess != null || await _check(digits));
@@ -169,7 +170,6 @@ class _PayoutScreenState extends ConsumerState<PayoutScreen> {
         MuTextField(
           label: l10n.titulaireDuCompte,
           controller: _holder,
-          size: MuFieldSize.m,
           helper: l10n.commeSurTonReleveBancaire,
           error: _holderError,
           onChanged: (v) {
@@ -180,7 +180,6 @@ class _PayoutScreenState extends ConsumerState<PayoutScreen> {
         const SizedBox(height: MuSpace.s5),
         MuSelect<String>(
           label: l10n.banque,
-          size: MuFieldSize.m,
           value: _bank.isEmpty ? null : _bank,
           placeholder: l10n.choisisTaBanque2,
           error: _bankError,
@@ -200,7 +199,6 @@ class _PayoutScreenState extends ConsumerState<PayoutScreen> {
         MuTextField(
           label: l10n.rib,
           controller: _rib,
-          size: MuFieldSize.m,
           leadingIcon: PhosphorIcons.bank(),
           keyboardType: TextInputType.number,
           inputFormatters: [RibFormatter()],
@@ -245,7 +243,7 @@ class _PayoutScreenState extends ConsumerState<PayoutScreen> {
       lead:
           l10n.chaqueLundiMatchupVireSur,
       validate: _validate,
-      body: ProFormCard(
+      body: ProFormSections(
         divided: false,
         children: [
           Column(
@@ -259,7 +257,9 @@ class _PayoutScreenState extends ConsumerState<PayoutScreen> {
                     l10n.onVerifieQueLeCompte(elideDe(legal)),
               ),
               const SizedBox(height: MuSpace.s6),
-              _TwoColumns(start: fields, end: upload),
+              fields,
+              const SizedBox(height: MuSpace.s6),
+              upload,
               const SizedBox(height: MuSpace.s6),
               Container(
                 padding: const EdgeInsets.all(MuSpace.s4),
@@ -277,7 +277,7 @@ class _PayoutScreenState extends ConsumerState<PayoutScreen> {
                             l10n.tesCoordonneesBancairesSontChiffrees,
                             style: MuType.label.copyWith(color: c.text),
                           ),
-                          const SizedBox(height: _TwoColumns.lineGap),
+                          const SizedBox(height: _lineGap),
                           Text.rich(
                             TextSpan(
                               children: [
@@ -292,9 +292,7 @@ class _PayoutScreenState extends ConsumerState<PayoutScreen> {
                                           .replaceAll(' ', '\u00A0'),
                                   style: MuType.label.copyWith(color: c.text),
                                 ),
-                                const TextSpan(
-                                  text: '. MatchUp ne prélève jamais rien sur ce compte.',
-                                ),
+                                TextSpan(text: l10n.matchupNePreleveJamaisRien),
                               ],
                             ),
                             style: MuType.body.copyWith(color: c.textSecondary),
@@ -309,39 +307,6 @@ class _PayoutScreenState extends ConsumerState<PayoutScreen> {
           ),
         ],
       ),
-    );
-  }
-}
-
-/// Fields beside the upload (gap 24), stacked below 720.
-class _TwoColumns extends StatelessWidget {
-  const _TwoColumns({required this.start, required this.end});
-
-  final Widget start;
-  final Widget end;
-
-  static const double _stackBelow = 720;
-  static const double lineGap = 2;
-
-  @override
-  Widget build(BuildContext context) {
-    if (MediaQuery.sizeOf(context).width < _stackBelow) {
-      return Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          start,
-          const SizedBox(height: MuSpace.s6),
-          end,
-        ],
-      );
-    }
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Expanded(child: start),
-        const SizedBox(width: MuSpace.s6),
-        Expanded(child: end),
-      ],
     );
   }
 }

@@ -81,7 +81,6 @@ class _HoursScreenState extends ConsumerState<HoursScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final c = context.mu;
     final hours = ref.watch(ownerProvider.select((v) => v.requireValue.hours));
 
     return OwnerWizard(
@@ -89,7 +88,7 @@ class _HoursScreenState extends ConsumerState<HoursScreen> {
       title: l10n.tesHorairesDOuverture,
       lead: l10n.lesJoueursNePeuventReserver,
       validate: _validate,
-      body: ProFormCard(
+      body: ProFormSections(
         children: [
           ProFormSection(
             title: l10n.horairesDeLaSemaine,
@@ -101,46 +100,18 @@ class _HoursScreenState extends ConsumerState<HoursScreen> {
               onPressed: _applyToAll,
             ),
             children: [
-              LayoutBuilder(
-                builder: (context, constraints) {
-                  final stacked = constraints.maxWidth < _DayRow.stackBelow;
-                  return Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      if (!stacked)
-                        ExcludeSemantics(
-                          child: Container(
-                            padding: const EdgeInsets.only(bottom: MuSpace.s2),
-                            decoration: BoxDecoration(
-                              border: Border(bottom: BorderSide(color: c.border)),
-                            ),
-                            child: Row(
-                              children: [
-                                Expanded(child: _head(c, l10n.jour)),
-                                SizedBox(width: _DayRow.select, child: _head(c, l10n.ouverture)),
-                                const SizedBox(width: MuSpace.s3 * 2 + _DayRow.to),
-                                SizedBox(width: _DayRow.select, child: _head(c, l10n.fermeture)),
-                                const SizedBox(width: MuSpace.s3),
-                                SizedBox(
-                                  width: _DayRow.length,
-                                  child: _head(c, l10n.duree, end: true),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      for (final (i, h) in hours.indexed)
-                        _DayRow(
-                          day: _days[i],
-                          hours: h,
-                          stacked: stacked,
-                          last: i == hours.length - 1,
-                          error: _errors.contains(i),
-                          onChanged: (v) => _setDay(i, v),
-                        ),
-                    ],
-                  );
-                },
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  for (final (i, h) in hours.indexed)
+                    _DayRow(
+                      day: _days[i],
+                      hours: h,
+                      last: i == hours.length - 1,
+                      error: _errors.contains(i),
+                      onChanged: (v) => _setDay(i, v),
+                    ),
+                ],
               ),
             ],
           ),
@@ -155,19 +126,12 @@ class _HoursScreenState extends ConsumerState<HoursScreen> {
       ),
     );
   }
-
-  Widget _head(MuColors c, String text, {bool end = false}) => Text(
-    text,
-    textAlign: end ? TextAlign.end : TextAlign.start,
-    style: MuType.labelS.copyWith(color: c.textSecondary),
-  );
 }
 
 class _DayRow extends StatelessWidget {
   const _DayRow({
     required this.day,
     required this.hours,
-    required this.stacked,
     required this.last,
     required this.error,
     required this.onChanged,
@@ -175,17 +139,14 @@ class _DayRow extends StatelessWidget {
 
   final String day;
   final DayHours hours;
-  final bool stacked;
   final bool last;
   final bool error;
   final ValueChanged<DayHours> onChanged;
 
-  // OWN-04 source: rows ≥ 52; selects 128; « à » 14; length 40.
+  // OWN-04 source: rows ≥ 52; « à » 14; the length 40 wide.
   static const double _minHeight = 52;
-  static const double select = 128;
-  static const double to = 14;
-  static const double length = 40;
-  static const double stackBelow = 520;
+  static const double _to = 14;
+  static const double _lengthWidth = 40;
 
   @override
   Widget build(BuildContext context) {
@@ -196,19 +157,14 @@ class _DayRow extends StatelessWidget {
       for (final m in values) MuSelectOption(value: m, label: formatHour(m)),
     ];
 
-    // On phones the two selects share the row.
-    Widget slot(Widget child) =>
-        stacked ? Expanded(child: child) : SizedBox(width: select, child: child);
-
+    // The day's switch, then the two selects sharing the row under it.
     final range = hours.open
         ? Row(
-            mainAxisSize: stacked ? MainAxisSize.max : MainAxisSize.min,
             children: [
-              slot(
-                MuSelect<int>(
+              Expanded(
+                child: MuSelect<int>(
                   label: l10n.ouvertureLe(lower),
                   hideLabel: true,
-                  size: MuFieldSize.m,
                   value: hours.from,
                   options: options(_times),
                   onChanged: (v) => onChanged(hours.copyWith(from: v)),
@@ -216,19 +172,18 @@ class _DayRow extends StatelessWidget {
               ),
               const SizedBox(width: MuSpace.s3),
               SizedBox(
-                width: to,
+                width: _to,
                 child: Text(
-                  'à',
+                  l10n.horaireA,
                   textAlign: TextAlign.center,
                   style: MuType.body.copyWith(color: c.textSecondary),
                 ),
               ),
               const SizedBox(width: MuSpace.s3),
-              slot(
-                MuSelect<int>(
+              Expanded(
+                child: MuSelect<int>(
                   label: l10n.fermetureLe(lower),
                   hideLabel: true,
-                  size: MuFieldSize.m,
                   value: hours.close,
                   options: options(_times),
                   onChanged: (v) => onChanged(hours.copyWith(close: v)),
@@ -236,7 +191,7 @@ class _DayRow extends StatelessWidget {
               ),
               const SizedBox(width: MuSpace.s3),
               SizedBox(
-                width: length,
+                width: _lengthWidth,
                 child: Text(
                   hours.minutes > 0 ? _length(hours.minutes) : '—',
                   textAlign: TextAlign.end,
@@ -270,23 +225,10 @@ class _DayRow extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          if (stacked) ...[
-            toggle,
-            if (hours.open) ...[
-              const SizedBox(height: MuSpace.s2),
-              Align(alignment: AlignmentDirectional.centerStart, child: range),
-            ],
-            if (!hours.open) ...[const SizedBox(height: MuSpace.s1), range],
-          ] else
-            Row(
-              children: [
-                Expanded(
-                  child: Align(alignment: AlignmentDirectional.centerStart, child: toggle),
-                ),
-                const SizedBox(width: MuSpace.s4),
-                range,
-              ],
-            ),
+          toggle,
+          const SizedBox(height: MuSpace.s2),
+          range,
+          const SizedBox(height: MuSpace.s1),
           if (error)
             Padding(
               padding: const EdgeInsets.symmetric(vertical: MuSpace.s1),

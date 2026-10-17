@@ -8,41 +8,18 @@ import '../../../theme/theme.dart';
 import '../../../ui/ui.dart';
 import '../../common/data/pro_providers.dart';
 import '../../common/widgets/pro_dashboard_scaffold.dart';
-import '../../common/widgets/pro_wizard_scaffold.dart' show showComingSoon;
+import '../../common/widgets/pro_wizard_scaffold.dart' show ProSpace, showComingSoon;
 import '../controllers/organizer_controller.dart';
 import '../../../l10n/l10n.dart';
 
-List<MuNavSection> organizerNav() => [
-      MuNavSection(items: [
-        MuNavItem(
-          id: 'dashboard',
-          label: l10n.tableauDeBord,
-          icon: PhosphorIcons.squaresFour(),
-          activeIcon: PhosphorIcons.squaresFour(PhosphorIconsStyle.fill),
-        ),
-      ]),
-      MuNavSection(heading: l10n.competitions, items: [
-        MuNavItem(id: 'tournois', label: l10n.tournoisEvenements, icon: PhosphorIcons.trophy()),
-        MuNavItem(id: 'equipes', label: l10n.equipes, icon: PhosphorIcons.usersThree()),
-        MuNavItem(id: 'calendrier', label: l10n.calendrier, icon: PhosphorIcons.calendarDots()),
-        MuNavItem(id: 'scores', label: l10n.scoresEnDirect, icon: PhosphorIcons.broadcast()),
-      ]),
-      MuNavSection(heading: l10n.gestion, items: [
-        MuNavItem(id: 'annonces', label: l10n.annonces, icon: PhosphorIcons.megaphone()),
-        MuNavItem(id: 'revenus', label: l10n.revenus, icon: PhosphorIcons.coins()),
-      ]),
-    ];
-
-/// ORG-02 — the organiser dashboard before the first tournament: the « Premier pas » hero, how it
-/// works in three steps, and the AI planning teaser.
+/// ORG-02 — the organiser dashboard before the first tournament, as a phone page: the « Premier
+/// pas » hero (text over the court art), how it works in three stacked steps, and the AI planning
+/// teaser.
 class OrganizerDashboardScreen extends ConsumerWidget {
   const OrganizerDashboardScreen({super.key});
 
-  // ORG-02 source: hero columns 1,25fr / 1fr, art at least 260 high; 40 step tiles; 2 px between
-  // the AI lines.
-  static const int _heroTextFlex = 125;
-  static const int _heroArtFlex = 100;
-  static const double _heroArtMin = 260;
+  // ORG-02 source: the hero art 260 high; 40 step tiles; 2 px between the AI lines.
+  static const double _heroArt = 260;
   static const double _tile = 40;
   static const double _lineGap = 2;
 
@@ -50,15 +27,13 @@ class OrganizerDashboardScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final c = context.mu;
     final d = ref.watch(organizerProvider).requireValue;
-    final width = MediaQuery.sizeOf(context).width;
-    final narrow = width < ProSplit.stackBelow;
     final firstName = d.manager.split(' ').first;
     final org = d.name.trim().isEmpty ? l10n.tonOrganisation : d.name.trim();
     final logo = d.logo == null ? null : ref.read(uploadedBytesProvider)[d.logo!.id];
     final last = d.events.firstOrNull;
 
     final heroText = Padding(
-      padding: const EdgeInsets.all(MuSpace.s8),
+      padding: const EdgeInsets.all(MuSpace.s5),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.center,
@@ -98,8 +73,8 @@ class OrganizerDashboardScreen extends ConsumerWidget {
       ),
     );
 
-    final art = ConstrainedBox(
-      constraints: const BoxConstraints(minHeight: _heroArtMin),
+    final art = SizedBox(
+      height: _heroArt,
       child: MuCourtArt(
         sport: MuSport.padel,
         semanticLabel: l10n.courtDePadelEclaireLe,
@@ -113,27 +88,16 @@ class OrganizerDashboardScreen extends ConsumerWidget {
         borderRadius: MuRadius.mdAll,
         boxShadow: MuElevation.of(context).level1,
       ),
-      child: narrow
-          ? Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [heroText, SizedBox(height: _heroArtMin, child: art)],
-            )
-          : IntrinsicHeight(
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Expanded(flex: _heroTextFlex, child: heroText),
-                  Expanded(flex: _heroArtFlex, child: art),
-                ],
-              ),
-            ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [heroText, art],
+      ),
     );
 
     Widget stepCard(int n, IconData icon, String title, String body) => Semantics(
           container: true,
           label: l10n.etape(n),
           child: ProCard(
-            padding: const EdgeInsets.all(MuSpace.s5),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -163,46 +127,52 @@ class OrganizerDashboardScreen extends ConsumerWidget {
         );
 
     return ProDashboardScaffold(
-      sections: organizerNav(),
-      role: MuSidebarRole(
-        role: l10n.organisateur,
-        name: org,
-        image: logo == null ? null : MemoryImage(logo),
-      ),
-      user: MuSidebarUser(name: d.manager, email: d.email),
+      space: ProSpace.organizer,
+      userName: d.manager,
       userRole: d.managerRole,
+      userEmail: d.email,
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Wrap(
-            alignment: WrapAlignment.spaceBetween,
-            crossAxisAlignment: WrapCrossAlignment.end,
-            spacing: MuSpace.s6,
-            runSpacing: MuSpace.s3,
+          Row(
             children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Semantics(
-                    header: true,
-                    child: Text(l10n.bienvenue(firstName), style: MuType.h1.copyWith(color: c.text)),
-                  ),
-                  const SizedBox(height: MuSpace.s1),
-                  Text(
-                    l10n.estPreteLanceTonPremier(org),
-                    style: MuType.bodyL.copyWith(color: c.textSecondary),
-                  ),
-                ],
+              // The organisation's logo, or its initials until there is one.
+              MuAvatar(
+                name: org,
+                image: logo == null ? null : MemoryImage(logo),
+                size: MuAvatarSize.s,
               ),
-              MuButton.tertiary(
-                label: l10n.modifierLOrganisation,
-                leading: PhosphorIcons.pencilSimple(),
-                onPressed: () => context.go(Routes.organizerOrganisation),
+              const SizedBox(width: MuSpace.s2),
+              Expanded(
+                child: Text(
+                  [l10n.organisateur, org].join(' · '),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: MuType.labelS.copyWith(color: c.textSecondary),
+                ),
               ),
             ],
           ),
-          const SizedBox(height: MuSpace.s6),
+          const SizedBox(height: MuSpace.s2),
+          Semantics(
+            header: true,
+            child: Text(l10n.bienvenue(firstName), style: MuType.h1.copyWith(color: c.text)),
+          ),
+          const SizedBox(height: MuSpace.s1),
+          Text(
+            l10n.estPreteLanceTonPremier(org),
+            style: MuType.bodyL.copyWith(color: c.textSecondary),
+          ),
+          const SizedBox(height: MuSpace.s2),
+          Align(
+            alignment: AlignmentDirectional.centerStart,
+            child: MuButton.tertiary(
+              label: l10n.modifierLOrganisation,
+              leading: PhosphorIcons.pencilSimple(),
+              onPressed: () => context.go(Routes.organizerOrganisation),
+            ),
+          ),
+          const SizedBox(height: MuSpace.s4),
           hero,
           const SizedBox(height: MuSpace.s6),
           Semantics(
@@ -210,22 +180,27 @@ class OrganizerDashboardScreen extends ConsumerWidget {
             child: Text(l10n.commentCaMarche, style: MuType.h3.copyWith(color: c.text)),
           ),
           const SizedBox(height: MuSpace.s4),
-          ProCardRow(
-            columns: narrow ? 1 : 3,
-            children: [
-              stepCard(1, PhosphorIcons.trophy(), l10n.cree,
-                  l10n.choisisLeFormatLesTerrains),
-              stepCard(2, PhosphorIcons.usersThree(), l10n.ouvreLesInscriptions,
-                  l10n.partageLeLienLesEquipes),
-              stepCard(3, PhosphorIcons.listNumbers(), l10n.publieLeTableau,
-                  l10n.poulesEtTableauFinalPuis),
-            ],
+          stepCard(1, PhosphorIcons.trophy(), l10n.cree, l10n.choisisLeFormatLesTerrains),
+          const SizedBox(height: MuSpace.s3),
+          stepCard(
+            2,
+            PhosphorIcons.usersThree(),
+            l10n.ouvreLesInscriptions,
+            l10n.partageLeLienLesEquipes,
+          ),
+          const SizedBox(height: MuSpace.s3),
+          stepCard(
+            3,
+            PhosphorIcons.listNumbers(),
+            l10n.publieLeTableau,
+            l10n.poulesEtTableauFinalPuis,
           ),
           const SizedBox(height: MuSpace.s6),
           Container(
             padding: const EdgeInsets.symmetric(horizontal: MuSpace.s5, vertical: MuSpace.s4),
             decoration: BoxDecoration(color: c.aiSoft, borderRadius: MuRadius.mdAll),
             child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 MuAiLabel(),
                 const SizedBox(width: MuSpace.s4),

@@ -51,8 +51,8 @@ class _CoachWizardState extends ConsumerState<CoachWizard> {
     final d = ref.watch(coachProvider).requireValue;
     return ProWizardScaffold(
       space: ProSpace.coach,
-      railTitle: l10n.deviensCoachSurMatchup,
-      railMeta: l10n.etapesEnvironMin(CoachSteps.all.length),
+      flowTitle: l10n.deviensCoachSurMatchup,
+      flowMeta: l10n.etapesEnvironMin(CoachSteps.all.length),
       steps: CoachSteps.of(d, widget.step),
       current: widget.step,
       onStepTap: (i) => context.go(_routes[i]),

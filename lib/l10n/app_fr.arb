@@ -6450,5 +6450,1695 @@
   "avecUnePhotoEtUne": "Avec une photo et une bio, les organisateurs t’acceptent plus vite.",
   "completerMonProfil": "Compléter mon profil",
   "cEstToutPourL": "C’est tout pour l’instant",
-  "miseAJour": "Mise à jour…"
+  "miseAJour": "Mise à jour…",
+  "voirLesEtapes": "Voir les étapes",
+  "proNTerrains": "{p0} terrain{p1}",
+  "@proNTerrains": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      },
+      "p1": {
+        "type": "Object"
+      }
+    }
+  },
+  "indiqueTonMatriculeFiscal": "Indique ton matricule fiscal.",
+  "attendsLaFinDeLEnvoiDeTesPhotos": "Attends la fin de l’envoi de tes photos.",
+  "attendsLaFinDeLEnvoi": "Attends la fin de l’envoi.",
+  "matchupNePreleveJamaisRien": ". MatchUp ne prélève jamais rien sur ce compte.",
+  "horaireA": "à",
+  "parPersAbrege": "/pers.",
+  "fevr": "févr.",
+  "dec": "déc.",
+  "aLInstant": "à l’instant",
+  "ilYAMin": "il y a {p0} min",
+  "@ilYAMin": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "ilYAH": "il y a {p0} h",
+  "@ilYAH": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "ilYAJ": "il y a {p0} j",
+  "@ilYAJ": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "bloquerUnCreneau": "Bloquer un créneau",
+  "creneauBloque": "Créneau bloqué",
+  "reservation2": "Réservation",
+  "reservationAVenir": "réservation à venir",
+  "reservationsAVenir": "réservations à venir",
+  "paiementEnAttente": "paiement en attente",
+  "paiementsEnAttente": "paiements en attente",
+  "reservationTerminee": "réservation terminée",
+  "reservationsTerminees": "réservations terminées",
+  "reservationAnnulee2": "réservation annulée",
+  "reservationsAnnulees": "réservations annulées",
+  "ceSoir3": "Ce soir · {p0}",
+  "@ceSoir3": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "aujourdHui4": "Aujourd’hui · {p0}",
+  "@aujourdHui4": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "demain": "Demain · {p0}",
+  "@demain": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "exporterLesReservationsCsv": "Exporter les réservations (CSV)",
+  "rechercherUneReservation": "Rechercher une réservation",
+  "nomRefMuTelephone": "Nom, réf. MU-…, téléphone",
+  "filtrerLesReservations": "Filtrer les réservations",
+  "paiementEnAttente2": "Paiement en attente",
+  "terminees": "Terminées",
+  "annulees": "Annulées",
+  "noShows": "No-shows",
+  "terrains3": "· {p0} terrains",
+  "@terrains3": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "trierParDateLaPlus": "Trier par : date, la plus proche d’abord",
+  "trierParDateLaPlus2": "Trier par : date, la plus lointaine d’abord",
+  "aucuneReservationIci": "Aucune réservation ici",
+  "aucuneReservationPour": "Aucune réservation pour « {p0} »",
+  "@aucuneReservationPour": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "essaieUnAutreFiltreOu": "Essaie un autre filtre ou une autre recherche.",
+  "aVenir5": "{p0} à venir",
+  "@aVenir5": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "reservation3": "1 réservation",
+  "reservations2": "{p0} réservations",
+  "@reservations2": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "voirLesAutresDeCe": "Voir les {p0} autres de ce soir",
+  "@voirLesAutresDeCe": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "voirLesAutres": "Voir les {p0} autres",
+  "@voirLesAutres": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "publique3": "Publique · {p0}/{p1}",
+  "@publique3": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      },
+      "p1": {
+        "type": "Object"
+      }
+    }
+  },
+  "noShow": "No-show",
+  "terminee": "Terminée",
+  "enCours2": "En cours",
+  "tRef": "{p0}, T{p1}, {p2}, {p3}, réf. {p4}",
+  "@tRef": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      },
+      "p1": {
+        "type": "Object"
+      },
+      "p2": {
+        "type": "Object"
+      },
+      "p3": {
+        "type": "Object"
+      },
+      "p4": {
+        "type": "Object"
+      }
+    }
+  },
+  "checkIn": "Check-in",
+  "siCEstBienIl": "Si c’est bien {p0}, il est déjà compté. Sinon, c’est sûrement une capture d’écran : demande le billet de la personne dans son app.",
+  "@siCEstBienIl": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "scannerLeJoueurSuivant": "Scanner le joueur suivant",
+  "voirLaReservation": "Voir la réservation",
+  "scannerUnAutreBillet": "Scanner un autre billet",
+  "voirLesJoueursDeLa": "Voir les joueurs de la réservation",
+  "scannerANouveau": "Scanner à nouveau",
+  "chercherDansLePlanning": "Chercher dans le planning",
+  "valide": "Valide",
+  "bonMatchLaisseEntrerLe": "Bon match ! Laisse entrer le groupe.",
+  "dejaUtilise": "Déjà utilisé",
+  "ceBilletEstDejaPasse": "Ce billet est déjà passé à ",
+  "invalide": "Invalide",
+  "ceBilletNEstPas": "Ce billet n’est pas pour {p0}.",
+  "@ceBilletNEstPas": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "scanneA": "Scanné à ",
+  "football5v5": "{p0} · Football 5v5",
+  "@football5v5": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "reservePar": "Réservé par ",
+  "arrives": "{p0} arrivés",
+  "@arrives": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "joueursArrives": " joueurs arrivés",
+  "joueursArrivesSur": "{p0} joueurs arrivés sur {p1}",
+  "@joueursArrivesSur": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      },
+      "p1": {
+        "type": "Object"
+      }
+    }
+  },
+  "encoreAttendus": "Encore attendus : {p0}",
+  "@encoreAttendus": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "signalerUnAbsent": "Signaler un absent",
+  "billetDe": "Billet de {p0}",
+  "@billetDe": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "premierScan": "Premier scan",
+  "accueilPar": " · accueil, par {p0}",
+  "@accueilPar": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "ceScan": "Ce scan",
+  "refuse": " · refusé",
+  "joueursEntres": "Joueurs entrés",
+  "reserveDansUnAutreTerrain": "Réservé dans un autre terrain",
+  "leCodeEstBienUn": "Le code est bien un billet MatchUp, mais pour un autre lieu. Rien n’est débité ni enregistré chez toi.",
+  "queFaire2": "QUE FAIRE",
+  "demandeAuJoueurDOuvrir": "1. Demande au joueur d’ouvrir sa réservation {p0} dans ",
+  "@demandeAuJoueurDOuvrir": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "pasDeBilletChercheSon": "2. Pas de billet ? Cherche son nom dans le planning du jour.",
+  "espaceProprietaire2": "Espace propriétaire · {p0}",
+  "@espaceProprietaire2": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "retourAPlus": "Retour à Plus",
+  "trierLesClients": "Trier les clients",
+  "rechercherUnClient": "Rechercher un client",
+  "nomTelephoneOuNDe": "Nom, téléphone ou n° de réservation",
+  "filtrerLesClients": "Filtrer les clients",
+  "tous": "Tous",
+  "habitues": "Habitués",
+  "nouveaux": "Nouveaux",
+  "avecNoShow": "Avec no-show",
+  "depuisLe": "depuis le {p0} {p1}",
+  "@depuisLe": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      },
+      "p1": {
+        "type": "Object"
+      }
+    }
+  },
+  "aucunClientDansCeFiltre": "Aucun client dans ce filtre",
+  "aucunClientPour": "Aucun client pour « {p0} »",
+  "@aucunClientPour": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "essaieUnAutreNomNumero": "Essaie un autre nom, numéro ou n° de réservation.",
+  "afficherClientsDePlus": "Afficher 20 clients de plus",
+  "tuVoisLaFiabiliteMatchup": "Tu vois la fiabilité MatchUp de tes clients et ce qu’ils ont payé chez toi, rien d’autre.",
+  "prochaine": "prochaine · {p0}",
+  "@prochaine": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "aujourdHui5": "aujourd’hui · {p0}",
+  "@aujourdHui5": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "noShow2": ", {p0} no-show{p1}",
+  "@noShow2": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      },
+      "p1": {
+        "type": "Object"
+      }
+    }
+  },
+  "nouveau": ", nouveau",
+  "noShow3": "1 no-show",
+  "nouveau2": "Nouveau",
+  "depenses": "dépensés",
+  "fiabiliteMatchup": "Fiabilité MatchUp",
+  "creneauPrefere": "Créneau préféré",
+  "premierMatchIci": "Premier match ici",
+  "message": "Message",
+  "terrainVisibleLesJoueursPeuvent": "Terrain {p0} visible : les joueurs peuvent le réserver.",
+  "@terrainVisibleLesJoueursPeuvent": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "terrainMasquePlusReservable": "Terrain {p0} masqué : plus réservable.",
+  "@terrainMasquePlusReservable": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "terrainEnEntretienCreneauxFermes": "Terrain {p0} en entretien : créneaux fermés.",
+  "@terrainEnEntretienCreneauxFermes": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "terrainRouvertALaReservation": "Terrain {p0} rouvert à la réservation.",
+  "@terrainRouvertALaReservation": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "visibleEtReservable": "Visible et réservable",
+  "masqueIlNApparaitPlus": "Masqué, il n’apparaît plus aux joueurs.",
+  "enEntretien": "En entretien",
+  "fermeTousSesCreneauxJusqu": "Ferme tous ses créneaux jusqu’à ce que tu le rouvres.",
+  "modifierLeSportLaSurface": "Modifier le sport, la surface, l’éclairage",
+  "terrainActif": "terrain actif",
+  "terrainsActifs": "terrains actifs",
+  "occupesJ": "occupés · 7 j",
+  "tousLesJours2": "tous les jours",
+  "tesTerrains2": "TES TERRAINS",
+  "masquePlusReservable": "Masqué = plus réservable",
+  "tarifsEtHeuresDePointe": "Tarifs et heures de pointe",
+  "prixParTerrainDatesSpeciales": "Prix par terrain, dates spéciales",
+  "prixParTerrainDatesSpeciales2": "Prix par terrain, dates spéciales · {p0} /pers. à 10 en soirée",
+  "@prixParTerrainDatesSpeciales2": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "enEntretienTousSesCreneaux": "En entretien : tous ses créneaux sont fermés à la réservation.",
+  "hHCreneauxBloques": "{p0} · {p1} · {p2}h–{p3}h, créneaux bloqués",
+  "@hHCreneauxBloques": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      },
+      "p1": {
+        "type": "Object"
+      },
+      "p2": {
+        "type": "Object"
+      },
+      "p3": {
+        "type": "Object"
+      }
+    }
+  },
+  "terrainSalleCouverte": "Terrain {p0}, salle couverte",
+  "@terrainSalleCouverte": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "terrainGazonSynthetiqueEclaire": "Terrain {p0}, gazon synthétique éclairé",
+  "@terrainGazonSynthetiqueEclaire": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "football5v52": "Football 5v5",
+  "synthetiqueInterieur": "Synthétique · Intérieur",
+  "synthetiqueExterieurEclaire": "Synthétique · Extérieur · Éclairé",
+  "terrainVisibleEtReservable": "Terrain {p0} visible et réservable",
+  "@terrainVisibleEtReservable": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "visible": "Visible",
+  "masque": "Masqué",
+  "creuses": "Creuses",
+  "pointe": "Pointe",
+  "occupeJ": "Occupé · 7 j",
+  "bloquer2": "Bloquer",
+  "sportSurfaceEclairagePuisSes": "Sport, surface, éclairage, puis ses horaires et tarifs. Ton plan Pro n’a pas de limite de terrains.",
+  "plus": "Plus",
+  "notificationsNonLues2": "Notifications, 2 non lues",
+  "monComplexe": "Mon complexe",
+  "habituesNoShows": "Habitués, no-shows",
+  "avisSansReponse": "1 avis sans réponse",
+  "avisSansReponse2": "{p0} avis sans réponse",
+  "@avisSansReponse2": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "argent": "Argent",
+  "versementLunOct": "Versement lun. 19 oct.",
+  "proEssai": "Pro · essai",
+  "compteSecurite": "Compte, sécurité",
+  "roles": "2 rôles",
+  "avis6": "{p0} · {p1} avis",
+  "@avis6": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      },
+      "p1": {
+        "type": "Object"
+      }
+    }
+  },
+  "monCompteProprietaire": "Mon compte propriétaire",
+  "planProEssaiGratuit": "Plan Pro · essai gratuit",
+  "jusquAuMerOctPuis": "Jusqu’au mer. 28 oct., puis 149 DT/mois. Rappel 3 jours avant.",
+  "noShowSignale": "No-show signalé",
+  "noShowsSignales": "{p0} no-shows signalés",
+  "@noShowsSignales": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "estPrevenu": "est prévenu",
+  "sontPrevenus": "sont prévenus",
+  "signalerUnNoShow": "Signaler un no-show",
+  "retourAuCheckIn": "Retour au check-in",
+  "choisisLeJoueurAbsent": "Choisis le joueur absent",
+  "marquerAbsent": "Marquer {p0} absent",
+  "@marquerAbsent": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "marquerJoueursAbsents": "Marquer {p0} joueurs absents",
+  "@marquerJoueursAbsents": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "debut2": "{p0} · {p1} · début {p2}",
+  "@debut2": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      },
+      "p1": {
+        "type": "Object"
+      },
+      "p2": {
+        "type": "Object"
+      }
+    }
+  },
+  "quiNEstPasVenu": "QUI N’EST PAS VENU ?",
+  "tousLesJoueursSontArrives": "Tous les joueurs sont arrivés.",
+  "dejaSignale": "Déjà signalé : {p0}.",
+  "@dejaSignale": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "possibleDesMinApresLe": "Possible dès 15 min après le début, si personne n’a prévenu. Les {p0} autres joueurs ont été scannés.",
+  "@possibleDesMinApresLe": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "ceQuiVaSePasser2": "CE QUI VA SE PASSER",
+  "leurFiabiliteBaisse": "Leur fiabilité baisse",
+  "saFiabiliteBaisse": "Sa fiabilité baisse",
+  "leurPartResteDue": "Leur part reste due",
+  "saPartResteDue": "Sa part reste due",
+  "restentVersesASansRemboursement": "{p0} restent versés à {p1}, sans remboursement.",
+  "@restentVersesASansRemboursement": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      },
+      "p1": {
+        "type": "Object"
+      }
+    }
+  },
+  "ilsSontPrevenusEtPeuvent": "Ils sont prévenus et peuvent contester",
+  "ilEstPrevenuEtPeut": "Il est prévenu et peut contester",
+  "ilAHPourRepondre": "Il a 48 h pour répondre. Tu peux retirer ce signalement pendant 24 h.",
+  "notePourMatchup": "Note pour MatchUp",
+  "exInjoignablePersonneNA": "Ex. : injoignable, personne n’a prévenu",
+  "nEstPasVenu": "{p0} n’est pas venu",
+  "@nEstPasVenu": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "partPayeePasDeBillet": "Part payée · {p0} · pas de billet scanné",
+  "@partPayeePasDeBillet": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "pasArrive": "Pas arrivé",
+  "creneauxBloques": "Créneaux bloqués",
+  "debloquerCeCreneau": "Débloquer ce créneau ?",
+  "lesJoueursPourrontDeNouveau": "Les joueurs pourront de nouveau le réserver.",
+  "garderBloque": "Garder bloqué",
+  "debloquer": "Débloquer",
+  "creneauDebloque": "Créneau débloqué",
+  "bloque2": "bloqué",
+  "bloques": "bloqués",
+  "vueDuPlanning": "Vue du planning",
+  "semaine": "Semaine",
+  "jourDuPlanning": "Jour du planning",
+  "chargementDuPlanning": "Chargement du planning",
+  "planning2": "Planning {p0}, {p1}",
+  "@planning2": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      },
+      "p1": {
+        "type": "Object"
+      }
+    }
+  },
+  "aucuneReservation": "{p0} – {p1} · aucune réservation",
+  "@aucuneReservation": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      },
+      "p1": {
+        "type": "Object"
+      }
+    }
+  },
+  "bloque3": "{p0}, bloqué : {p1}",
+  "@bloque3": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      },
+      "p1": {
+        "type": "Object"
+      }
+    }
+  },
+  "libre2": "Libre",
+  "creneauPasseLibre": "{p0}, créneau passé, libre",
+  "@creneauPasseLibre": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "libreAppuiLongPourBloquer": "{p0}, libre, {p1}, appui long pour bloquer",
+  "@libreAppuiLongPourBloquer": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      },
+      "p1": {
+        "type": "Object"
+      }
+    }
+  },
+  "legende": "Légende",
+  "appuiLongSurUnCreneau": "Appui long sur un créneau libre pour le bloquer",
+  "chargementDeLaSemaine": "Chargement de la semaine",
+  "reservations3": "{p0}, {p1} réservations, {p2} %",
+  "@reservations3": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      },
+      "p1": {
+        "type": "Object"
+      },
+      "p2": {
+        "type": "Object"
+      }
+    }
+  },
+  "resa": "{p0} résa · {p1} %",
+  "@resa": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      },
+      "p1": {
+        "type": "Object"
+      }
+    }
+  },
+  "tousLesLundis": "Tous les lundis",
+  "tousLesMardis": "Tous les mardis",
+  "tousLesMercredis": "Tous les mercredis",
+  "tousLesJeudis": "Tous les jeudis",
+  "tousLesVendredis": "Tous les vendredis",
+  "tousLesSamedis": "Tous les samedis",
+  "tousLesDimanches": "Tous les dimanches",
+  "derniersLundis": "derniers lundis",
+  "derniersMardis": "derniers mardis",
+  "derniersMercredis": "derniers mercredis",
+  "derniersJeudis": "derniers jeudis",
+  "derniersVendredis": "derniers vendredis",
+  "derniersSamedis": "derniers samedis",
+  "derniersDimanches": "derniers dimanches",
+  "indiqueUnPrix2": "Indique un prix",
+  "promoPubliee": "Promo publiée",
+  "le3": "{p0}, le {p1}.",
+  "@le3": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      },
+      "p1": {
+        "type": "Object"
+      }
+    }
+  },
+  "tarifsEnregistres": "Tarifs enregistrés",
+  "promoPubliee2": "Promo {p0} publiée.",
+  "@promoPubliee2": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "lesReservationsDejaPayeesGardent": "Les réservations déjà payées gardent leur prix.",
+  "terrains4": "{p0} · {p1} terrains",
+  "@terrains4": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      },
+      "p1": {
+        "type": "Object"
+      }
+    }
+  },
+  "enregistrerLesTarifs": "Enregistrer les tarifs",
+  "plagesHoraires": "Plages horaires",
+  "duLundiAuVendredi": "Du lundi au vendredi",
+  "heuresCreusesDeAHeures": "Heures creuses de {p0} à {p1}, heures de pointe de {p2} à {p3}, heures creuses de {p4} à minuit",
+  "@heuresCreusesDeAHeures": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      },
+      "p1": {
+        "type": "Object"
+      },
+      "p2": {
+        "type": "Object"
+      },
+      "p3": {
+        "type": "Object"
+      },
+      "p4": {
+        "type": "Object"
+      }
+    }
+  },
+  "samediEtDimancheDeA": "Samedi et dimanche, de {p0} à {p1}.",
+  "@samediEtDimancheDeA": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      },
+      "p1": {
+        "type": "Object"
+      }
+    }
+  },
+  "lesJoueursVoientLePrix": "Les joueurs voient le prix par personne, calculé pour {p0} joueurs.",
+  "@lesJoueursVoientLePrix": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "terrainsEt": "Terrains {p0} et {p1}",
+  "@terrainsEt": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      },
+      "p1": {
+        "type": "Object"
+      }
+    }
+  },
+  "indoorCouvert": "Indoor · couvert",
+  "exterieurGazonSynthetiqueEclaires": "Extérieur · gazon synthétique · éclairés",
+  "promotions": "Promotions",
+  "aucunePromotionEnCoursL": "Aucune promotion en cours. L’assistant t’en proposera quand des créneaux restent vides.",
+  "dApresTaSuggestion": "D’après ta suggestion",
+  "publiee": "Publiée",
+  "aConfirmer": "À confirmer",
+  "dureeDeLaPromo": "Durée de la promo",
+  "terrainsCreneauxRecommandeCarCreneaux": "{p0} terrains · {p1} créneaux {p2} Recommandé car {p3} créneaux sur {p4} sont restés vides ces {p5} {p6}.",
+  "@terrainsCreneauxRecommandeCarCreneaux": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      },
+      "p1": {
+        "type": "Object"
+      },
+      "p2": {
+        "type": "Object"
+      },
+      "p3": {
+        "type": "Object"
+      },
+      "p4": {
+        "type": "Object"
+      },
+      "p5": {
+        "type": "Object"
+      },
+      "p6": {
+        "type": "Object"
+      }
+    }
+  },
+  "publierLaPromo": "Publier la promo",
+  "ceQueVoientLesJoueurs": "Ce que voient les joueurs",
+  "hHPrixDuTerrain": "{p0} · {p1}h – {p2}h · prix du terrain à l’heure",
+  "@hHPrixDuTerrain": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      },
+      "p1": {
+        "type": "Object"
+      },
+      "p2": {
+        "type": "Object"
+      }
+    }
+  },
+  "apercuJoueur": "Aperçu joueur, {p0}",
+  "@apercuJoueur": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "indoor": "Indoor",
+  "pointeTouteLaJournee": "Pointe toute la journée · {p0}",
+  "@pointeTouteLaJournee": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "pointe2": "Pointe {p0} – {p1}{p2}",
+  "@pointe2": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      },
+      "p1": {
+        "type": "Object"
+      },
+      "p2": {
+        "type": "Object"
+      }
+    }
+  },
+  "modifier3": "Modifier : {p0}",
+  "@modifier3": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "exporterLesRevenus": "Exporter les revenus",
+  "periode": "Période",
+  "jours": "7 jours",
+  "jours2": "30 jours",
+  "mois": "12 mois",
+  "telechargerLeReleveDOctobre": "Télécharger le relevé d’octobre",
+  "pdfPourTaComptabiliteTva": "PDF pour ta comptabilité · TVA détaillée",
+  "compteDeVersement": "Compte de versement",
+  "duAu": "du {p0} au {p1} {p2}",
+  "@duAu": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      },
+      "p1": {
+        "type": "Object"
+      },
+      "p2": {
+        "type": "Object"
+      }
+    }
+  },
+  "prochainVersementEstimeSurDeja": "Prochain versement estimé : {p0}, {p1} sur {p2}. Déjà encaissé {p3} {p4}. Encore attendu environ {p5}, {p6}.",
+  "@prochainVersementEstimeSurDeja": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      },
+      "p1": {
+        "type": "Object"
+      },
+      "p2": {
+        "type": "Object"
+      },
+      "p3": {
+        "type": "Object"
+      },
+      "p4": {
+        "type": "Object"
+      },
+      "p5": {
+        "type": "Object"
+      },
+      "p6": {
+        "type": "Object"
+      }
+    }
+  },
+  "dejaEncaisse": "Déjà encaissé",
+  "encoreAttendu": "Encore attendu",
+  "vsJAvant": "vs 7 j avant",
+  "vsJAvant2": "vs 30 j avant",
+  "vsMoisAvant": "vs 12 mois avant",
+  "revenus2": "Revenus · {p0}",
+  "@revenus2": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "revenusParMois": "Revenus par mois",
+  "revenusParJour": "Revenus par jour",
+  "terrainsEnLigneEtSur": "{p0} · 3 terrains · en ligne et sur place, en {p1}",
+  "@terrainsEnLigneEtSur": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      },
+      "p1": {
+        "type": "Object"
+      }
+    }
+  },
+  "mois2": "Mois",
+  "dOuViennentLes": "D’où viennent les {p0}",
+  "@dOuViennentLes": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "payesEnLigne": "{p0} % payés en ligne",
+  "@payesEnLigne": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "payeEnLigne": "Payé en ligne · {p0} %",
+  "@payeEnLigne": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "verseChaqueLundi": "versé chaque lundi",
+  "encaisseSurPlace": "Encaissé sur place · {p0} %",
+  "@encaisseSurPlace": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "noteALAccueil": "noté à l’accueil",
+  "chaqueLundi": "chaque lundi",
+  "prevu": "Prévu · {p0}",
+  "@prevu": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "paiementsDuAu": "Paiements du {p0} au {p1} {p2}",
+  "@paiementsDuAu": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      },
+      "p1": {
+        "type": "Object"
+      },
+      "p2": {
+        "type": "Object"
+      }
+    }
+  },
+  "verse": "Versé · {p0}",
+  "@verse": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "seulsLesJoueursQuiOnt": "Seuls les joueurs qui ont joué chez toi peuvent laisser un avis.",
+  "filtrerLesAvis": "Filtrer les avis",
+  "sansReponse": "Sans réponse",
+  "etoiles": "5 étoiles",
+  "etoilesEtMoins": "3 étoiles et moins",
+  "plusRecents": "PLUS RÉCENTS",
+  "tuAsReponduATous": "Tu as répondu à tous les avis",
+  "aucunAvisRecentIci": "Aucun avis récent ici",
+  "lesPlusAnciensSontDans": "Les plus anciens sont dans « Voir les autres avis ».",
+  "voirLesAutresAvis": "Voir les {p0} autres avis",
+  "@voirLesAutresAvis": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "unAvisInjurieuxOuFaux": "Un avis injurieux ou faux ? Signale-le avec « … » : l’équipe MatchUp le vérifie sous 48 h. Tu ne peux pas supprimer un avis.",
+  "noteMoyenneSurAvis": "Note moyenne {p0} sur 5, {p1} avis",
+  "@noteMoyenneSurAvis": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      },
+      "p1": {
+        "type": "Object"
+      }
+    }
+  },
+  "avisVerifies": "{p0} avis vérifiés",
+  "@avisVerifies": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "repartitionDesNotes": "Répartition des notes",
+  "etoileAvis": "{p0} étoile{p1} : {p2} avis",
+  "@etoileAvis": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      },
+      "p1": {
+        "type": "Object"
+      },
+      "p2": {
+        "type": "Object"
+      }
+    }
+  },
+  "reponsePublieeSurLaPage": "Réponse publiée sur la page d’{p0}.",
+  "@reponsePublieeSurLaPage": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "avisDeSur": "Avis de {p0}, {p1} sur 5",
+  "@avisDeSur": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      },
+      "p1": {
+        "type": "Object"
+      }
+    }
+  },
+  "terrain6": "{p0} · Terrain {p1}",
+  "@terrain6": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      },
+      "p1": {
+        "type": "Object"
+      }
+    }
+  },
+  "repondu": "Répondu",
+  "plusDActionsSurL": "Plus d’actions sur l’avis de {p0}",
+  "@plusDActionsSurL": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "taReponsePublique": "Ta réponse publique",
+  "visibleParTousSurLa": "Visible par tous sur la page d’{p0}.",
+  "@visibleParTousSurLa": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "publierLaReponse": "Publier la réponse",
+  "ouvreLesReglagesDuTelephone": "Ouvre les Réglages du téléphone",
+  "puisMatchupCamera": "Puis MatchUp › Caméra.",
+  "cameraBloquee": "Caméra bloquée",
+  "tuAsRefuseLAcces": "Tu as refusé l’accès à la caméra : impossible de scanner les QR codes des joueurs.",
+  "toucheMatchup": "Touche MatchUp",
+  "activeCameraPuisReviensIci": "Active Caméra, puis reviens ici",
+  "saisirLeCodeALa": "Saisir le code à la main",
+  "leScanPartToutSeul": "Le scan part tout seul dès que le code est net.",
+  "lampeAllumee": "Lampe allumée",
+  "lampe": "Lampe",
+  "saisirLeCode": "Saisir le code",
+  "laCameraNeSOuvre": "La caméra ne s’ouvre pas ? ",
+  "autoriserLAcces": "Autoriser l’accès",
+  "leCodeEstEcritSous": "Le code est écrit sous le QR, dans le billet du joueur.",
+  "codeDuBillet": "Code du billet",
+  "viseLeQrCodeDu": "Vise le QR code du joueur",
+  "scannerLeBilletVise": "Scanner le billet visé",
+  "verification": "Vérification",
+  "prochainCreneau": "Prochain créneau, {p0}, {p1}, {p2}, {p3}",
+  "@prochainCreneau": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      },
+      "p1": {
+        "type": "Object"
+      },
+      "p2": {
+        "type": "Object"
+      },
+      "p3": {
+        "type": "Object"
+      }
+    }
+  },
+  "prochainCreneau2": "PROCHAIN CRÉNEAU",
+  "joueurs4": "{p0} · {p1} joueurs",
+  "@joueurs4": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      },
+      "p1": {
+        "type": "Object"
+      }
+    }
+  },
+  "encoreCeSoir": " · {p0} {p1} encore ce soir",
+  "@encoreCeSoir": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      },
+      "p1": {
+        "type": "Object"
+      }
+    }
+  },
+  "programmeDuJour": "Programme du jour",
+  "dejaEncaissesEnCoursDe": "{p0} déjà encaissés · {p1} en cours de paiement par les joueurs (dus 3 h avant chaque match).",
+  "@dejaEncaissesEnCoursDe": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      },
+      "p1": {
+        "type": "Object"
+      }
+    }
+  },
+  "derniersAvis": "Derniers avis",
+  "tousLesAvis": "Tous les avis",
+  "chiffresDuJour": "Chiffres du jour",
+  "partiePubliqueJoueurs": "Partie publique · {p0}/{p1} joueurs",
+  "@partiePubliqueJoueurs": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      },
+      "p1": {
+        "type": "Object"
+      }
+    }
+  },
+  "partiePriveeJoueurs": "Partie privée · {p0} joueurs",
+  "@partiePriveeJoueurs": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "prochaineArrivee": "Prochaine arrivée · {p0}",
+  "@prochaineArrivee": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "scanner": "Scanner",
+  "aucuneReservationAujourdHui": "Aucune réservation aujourd’hui",
+  "reservation4": "réservation",
+  "reservations4": "réservations",
+  "creneauLibre": "créneau libre",
+  "creneauxLibres": "créneaux libres",
+  "enAttente4": "{p0} {p1} en attente",
+  "@enAttente4": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      },
+      "p1": {
+        "type": "Object"
+      }
+    }
+  },
+  "maintenant": "Maintenant",
+  "termine6": "{p0} · terminé",
+  "@termine6": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "personneAuCheckIn": "Personne au check-in",
+  "terrain7": "Terrain {p0}, {p1}, {p2}",
+  "@terrain7": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      },
+      "p1": {
+        "type": "Object"
+      },
+      "p2": {
+        "type": "Object"
+      }
+    }
+  },
+  "terrainBloque": "Terrain {p0}, bloqué, {p1}",
+  "@terrainBloque": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      },
+      "p1": {
+        "type": "Object"
+      }
+    }
+  },
+  "pers3": "{p0} · {p1} /pers.",
+  "@pers3": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      },
+      "p1": {
+        "type": "Object"
+      }
+    }
+  },
+  "terrainLibre": "Terrain {p0}, libre, {p1}",
+  "@terrainLibre": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      },
+      "p1": {
+        "type": "Object"
+      }
+    }
+  },
+  "suggestionDeLIa": "Suggestion de l’IA",
+  "tarifs2": "Tarifs · {p0}",
+  "@tarifs2": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "jeudiHHDeCreneaux": "Jeudi {p0}h–{p1}h : 80 % de créneaux vides. Proposer −{p2} % ?",
+  "@jeudiHHDeCreneaux": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      },
+      "p1": {
+        "type": "Object"
+      },
+      "p2": {
+        "type": "Object"
+      }
+    }
+  },
+  "surTesDerniersJeudisCreneaux": "sur tes 5 derniers jeudis, 36 créneaux sur 45 sont restés vides entre {p0}h et {p1}h.",
+  "@surTesDerniersJeudisCreneaux": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      },
+      "p1": {
+        "type": "Object"
+      }
+    }
+  },
+  "apres": "après {p0}",
+  "@apres": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "terrainsCreneauxLesJoueursVoient": "{p0} terrains · {p1} créneaux · {p2} Les joueurs voient le prix barré. Rien ne change sans ta confirmation.",
+  "@terrainsCreneauxLesJoueursVoient": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      },
+      "p1": {
+        "type": "Object"
+      },
+      "p2": {
+        "type": "Object"
+      }
+    }
+  },
+  "ignorer": "Ignorer",
+  "revenusProchainVersementVersLe": "Revenus : prochain versement vers le {p0}",
+  "@revenusProchainVersementVersLe": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "versementPrevuVersLe": "Versement prévu vers le {p0}",
+  "@versementPrevuVersLe": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "dernier": "Dernier : {p0} · {p1}",
+  "@dernier": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      },
+      "p1": {
+        "type": "Object"
+      }
+    }
+  },
+  "avisSansReponse3": "{p0} avis · {p1} sans réponse",
+  "@avisSansReponse3": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      },
+      "p1": {
+        "type": "Object"
+      }
+    }
+  },
+  "terrain8": "Terrain {p0} · {p1}",
+  "@terrain8": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      },
+      "p1": {
+        "type": "Object"
+      }
+    }
+  },
+  "tuAsReponduLe": "Tu as répondu le {p0}",
+  "@tuAsReponduLe": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "jourABloquer": "Jour à bloquer",
+  "plageHoraire": "Plage horaire",
+  "de": "De",
+  "noteInterne": "Note interne",
+  "visibleParTonEquipeSeulement": "Visible par ton équipe seulement.",
+  "repeterChaqueSemaine": "Répéter chaque semaine",
+  "tousLesSTouteLa": "Tous les {p0}s, toute la journée",
+  "@tousLesSTouteLa": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "tousLesSDeA": "Tous les {p0}s, de {p1} à {p2}",
+  "@tousLesSDeA": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      },
+      "p1": {
+        "type": "Object"
+      },
+      "p2": {
+        "type": "Object"
+      }
+    }
+  },
+  "lesJoueursVoientIndisponibleSur": "Les joueurs voient « Indisponible » sur ces créneaux. Tu peux les débloquer à tout moment depuis le planning.",
+  "hAucuneReservationTouchee": "{p0} h · {p1} {p2} · aucune réservation touchée",
+  "@hAucuneReservationTouchee": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      },
+      "p1": {
+        "type": "Object"
+      },
+      "p2": {
+        "type": "Object"
+      }
+    }
+  },
+  "creneau2": "créneau",
+  "creneaux3": "créneaux",
+  "reservationADeplacer": "1 réservation à déplacer",
+  "reservationsADeplacer": "{p0} réservations à déplacer",
+  "@reservationsADeplacer": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "bloquerCreneau": "Bloquer 1 créneau",
+  "bloquerCreneaux": "Bloquer {p0} créneaux",
+  "@bloquerCreneaux": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "organisateur3": " · organisateur",
+  "fiableMatchsHonores": "Fiable {p0} % · {p1}/{p2} matchs honorés",
+  "@fiableMatchsHonores": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      },
+      "p1": {
+        "type": "Object"
+      },
+      "p2": {
+        "type": "Object"
+      }
+    }
+  },
+  "ecrireA": "Écrire à {p0}",
+  "@ecrireA": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "placeLibre4": "1 place libre",
+  "joueursSur3": "{p0} joueurs sur {p1}",
+  "@joueursSur3": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      },
+      "p1": {
+        "type": "Object"
+      }
+    }
+  },
+  "terrainH": "TERRAIN · {p0} H",
+  "@terrainH": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "dejaEncaisse2": "DÉJÀ ENCAISSÉ",
+  "partsDe3": "{p0} parts de {p1}",
+  "@partsDe3": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      },
+      "p1": {
+        "type": "Object"
+      }
+    }
+  },
+  "payeEnLigne2": "Payé en ligne",
+  "attendusDeAvant": "{p0} attendus de {p1} {p2} avant ",
+  "@attendusDeAvant": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      },
+      "p1": {
+        "type": "Object"
+      },
+      "p2": {
+        "type": "Object"
+      }
+    }
+  },
+  "t18h00LeJourJ": "18h00 le jour J",
+  "sinonLaPartieEstAnnulee": ", sinon la partie est annulée et remboursée.",
+  "deplacer": "Déplacer",
+  "noShowPossibleDesAnnuler": "No-show possible dès {p0} · annuler rembourse les {p1} joueurs.",
+  "@noShowPossibleDesAnnuler": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      },
+      "p1": {
+        "type": "Object"
+      }
+    }
+  },
+  "etLesJoueursSontPrevenus": "{p0} et les joueurs sont prévenus tout de suite. Le créneau redevient libre.",
+  "@etLesJoueursSontPrevenus": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "sontRemboursesAuxJoueurs": "{p0} sont remboursés aux {p1} joueurs.",
+  "@sontRemboursesAuxJoueurs": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      },
+      "p1": {
+        "type": "Object"
+      }
+    }
+  },
+  "remboursesAuxJoueurs": "{p0} remboursés aux joueurs.",
+  "@remboursesAuxJoueurs": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "faireLeCheckIn": "Faire le check-in",
+  "des3": "dès {p0}",
+  "@des3": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "changerDeRoleProprietaire": "Changer de rôle, {p0}, propriétaire",
+  "@changerDeRoleProprietaire": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "entretien": "Entretien",
+  "evenementPrive": "Événement privé",
+  "tournoi": "Tournoi",
+  "meteo": "Météo",
+  "autre": "Autre",
+  "suite": "{p0}, {p1}, suite",
+  "@suite": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      },
+      "p1": {
+        "type": "Object"
+      }
+    }
+  },
+  "terminePaye": "{p0}, {p1}, terminé, payé",
+  "@terminePaye": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      },
+      "p1": {
+        "type": "Object"
+      }
+    }
+  },
+  "noShow4": "{p0}, {p1}, no-show",
+  "@noShow4": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      },
+      "p1": {
+        "type": "Object"
+      }
+    }
+  },
+  "enCours3": "{p0}, {p1}, en cours",
+  "@enCours3": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      },
+      "p1": {
+        "type": "Object"
+      }
+    }
+  },
+  "taPartieSur": "{p0}, ta partie, {p1} sur {p2}",
+  "@taPartieSur": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      },
+      "p1": {
+        "type": "Object"
+      },
+      "p2": {
+        "type": "Object"
+      }
+    }
+  },
+  "partiePubliqueDeSur": "{p0}, partie publique de {p1}, {p2} sur {p3}",
+  "@partiePubliqueDeSur": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      },
+      "p1": {
+        "type": "Object"
+      },
+      "p2": {
+        "type": "Object"
+      },
+      "p3": {
+        "type": "Object"
+      }
+    }
+  },
+  "surPaye": "{p0}, {p1}, {p2} sur {p3} payé",
+  "@surPaye": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      },
+      "p1": {
+        "type": "Object"
+      },
+      "p2": {
+        "type": "Object"
+      },
+      "p3": {
+        "type": "Object"
+      }
+    }
+  },
+  "priveePaye": "Privée · payé",
+  "voirLeGraphique": "Voir le graphique",
+  "voirLeTableau": "Voir le tableau",
+  "datesAConfirmer": " · dates à confirmer"
 }

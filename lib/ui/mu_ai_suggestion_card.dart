@@ -220,8 +220,9 @@ class _MuAiSuggestionCardState extends State<MuAiSuggestionCard> {
                 Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
+                    // AiSuggestionCard.md footer: actions M — secondary, then primary.
                     if (widget.secondary != null)
-                      MuButton.tertiary(
+                      MuButton.secondary(
                         label: widget.secondary!.label,
                         onPressed: () {
                           widget.secondary!.onPressed();
@@ -230,7 +231,7 @@ class _MuAiSuggestionCardState extends State<MuAiSuggestionCard> {
                       ),
                     if (widget.primary != null) ...[
                       const SizedBox(width: MuSpace.s2),
-                      MuButton.secondary(
+                      MuButton.primary(
                         label: widget.primary!.label,
                         leading: widget.primaryIcon,
                         onPressed: widget.primary!.onPressed,
