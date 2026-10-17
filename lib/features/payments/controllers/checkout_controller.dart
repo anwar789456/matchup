@@ -30,6 +30,8 @@ class CheckoutRequest {
     this.extraInfo = const [],
     this.termsLabel = 'conditions de réservation',
     this.termsSuffix,
+    this.lineup,
+    this.publicGame = false,
   });
 
   final CheckoutKind kind;
@@ -68,6 +70,12 @@ class CheckoutRequest {
   final List<(String, String)> extraInfo;
   final String termsLabel;
   final String? termsSuffix;
+
+  /// (players in, players total) of the booking, for PAY-09's ticket and « Encore 4 places ».
+  final (int, int)? lineup;
+
+  /// The booking is a public game, visible in Explorer.
+  final bool publicGame;
 
   /// Called once the payment went through, with how much came from the balance.
   final Future<void> Function(PaymentReceipt receipt, num fromBalance) onPaid;

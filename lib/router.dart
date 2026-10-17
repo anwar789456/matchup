@@ -49,6 +49,12 @@ import 'features/home/screens/home_screen.dart';
 import 'features/home/widgets/player_shell.dart';
 import 'features/onboarding/screens/splash_screen.dart';
 import 'features/organizer_onboarding/controllers/organizer_controller.dart';
+import 'features/payments/screens/checkout_screen.dart';
+import 'features/payments/screens/payment_result_screens.dart';
+import 'features/payments/screens/split_tracker_screen.dart';
+import 'features/wallet/screens/refund_screens.dart';
+import 'features/wallet/screens/topup_screen.dart';
+import 'features/wallet/screens/wallet_screen.dart';
 import 'features/organizer_onboarding/screens/organisation_screen.dart';
 import 'features/organizer_onboarding/screens/organizer_dashboard_screen.dart';
 import 'features/onboarding/screens/welcome_screen.dart';
@@ -140,6 +146,13 @@ abstract final class Routes {
   static const settingsDelete = '/settings/delete'; // SET-07
   static const roleChoice = roles; // PRF-06 « Ajouter un rôle » → AUTH-11
   static const wallet = '/wallet'; // WAL-01 (phase 9)
+  static const walletTopUp = '/wallet/topup'; // WAL-02 / WAL-03
+  static const walletRefund = '/wallet/refund'; // WAL-04
+  static String walletRefundStatus(String id) => '/wallet/refund/$id'; // WAL-05
+  static const checkout = '/pay'; // PAY-01 to PAY-08
+  static const paymentSuccess = '/pay/success'; // PAY-09
+  static const paymentFailed = '/pay/failed'; // PAY-10
+  static String bookingPayments(String id) => '/booking/$id/payments'; // PAY-11 / PAY-12
   static const subscriptionOffers = '/premium'; // SUB-01 (phase 10)
 
   // Pro onboardings (phase 4).
@@ -330,6 +343,13 @@ final routerProvider = Provider<GoRouter>((ref) {
         path: '/booking/:id',
         parentNavigatorKey: _rootKey,
         builder: (context, state) => BookingDetailScreen(bookingId: state.pathParameters['id']!),
+        routes: [
+          GoRoute(
+            path: 'payments',
+            parentNavigatorKey: _rootKey,
+            builder: (context, state) => SplitTrackerScreen(bookingId: state.pathParameters['id']!),
+          ),
+        ],
       ),
       GoRoute(
         path: '/match/:id/score',
@@ -351,7 +371,20 @@ final routerProvider = Provider<GoRouter>((ref) {
       _root(Routes.settingsPrivacy, (_) => const PrivacyScreen()),
       _root(Routes.settingsAccounts, (_) => const ConnectedAccountsScreen()),
       _root(Routes.settingsDelete, (_) => const DeleteAccountScreen()),
-      _later(Routes.wallet, 'Portefeuille', Routes.home),
+      _root(Routes.wallet, (_) => const WalletScreen()),
+      _root(Routes.walletTopUp, (_) => const TopUpScreen()),
+      _root(Routes.walletRefund, (_) => const RefundRequestScreen()),
+      GoRoute(
+        path: '/wallet/refund/:id',
+        parentNavigatorKey: _rootKey,
+        builder: (context, state) => RefundStatusScreen(requestId: state.pathParameters['id']!),
+      ),
+      _root(Routes.checkout, (_) => const CheckoutScreen()),
+      _root(Routes.paymentSuccess, (_) => const PaymentSuccessScreen()),
+      _root(Routes.paymentFailed, (s) {
+        final (card, reason) = s.extra as (String, String?)? ?? ('ta carte', null);
+        return PaymentFailedScreen(cardLabel: card, reason: reason);
+      }),
       _later(Routes.subscriptionOffers, 'MatchUp Premium', Routes.home),
       _owner(Routes.ownerCompany, const CompanyScreen()),
       _owner(Routes.ownerAddress, const AddressScreen()),

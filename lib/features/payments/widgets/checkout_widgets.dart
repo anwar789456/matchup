@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
@@ -146,7 +147,7 @@ class CardRow extends StatelessWidget {
               ),
               if (card.isDefault) ...[
                 const SizedBox(width: MuSpace.s2),
-                const MuToneBadge(label: 'Par défaut', tone: MuBadgeTone.neutral),
+                const MuStatusBadge(status: MuStatus.neutral, label: 'Par défaut', size: MuBadgeSize.s),
               ],
             ],
           ),

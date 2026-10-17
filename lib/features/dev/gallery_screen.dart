@@ -12,6 +12,7 @@ import '../common/data/story_data.dart';
 import '../explore/controllers/explore_controller.dart';
 import '../games/widgets/claim_takeover.dart';
 import '../home/controllers/home_providers.dart';
+import '../payments/data/payment_repository.dart';
 
 /// Debug-only widget gallery: every Mu* widget, in Light and Night match side by side on wide
 /// screens (a toggle on phones), with a right-to-left switch.
@@ -1494,6 +1495,73 @@ class _GalleryBodyState extends State<_GalleryBody> {
               ),
             ],
           ),
+        ]),
+        _Section('Debug — paiement', [
+          Consumer(
+            builder: (context, ref, _) => MuSelect<PaymentOutcome>(
+              label: 'Issue du prochain paiement',
+              helper: 'Le faux PaymentRepository joue cette issue au prochain « Payer ».',
+              value: ref.watch(paymentOutcomeProvider),
+              options: [
+                for (final o in PaymentOutcome.values) MuSelectOption(value: o, label: o.label),
+              ],
+              onChanged: (o) => ref.read(paymentOutcomeProvider.notifier).select(o),
+            ),
+          ),
+          const SizedBox(height: MuSpace.s3),
+          Builder(
+            builder: (context) => MuButton.secondary(
+              label: 'Ouvrir MuLoadingOverlay',
+              size: MuButtonSize.m,
+              onPressed: () async {
+                final o = MuLoadingOverlay.show(
+                  context,
+                  amount: formatDT(15),
+                  detail: 'Football · Arena Five · Terrain 1',
+                );
+                await Future<void>.delayed(const Duration(seconds: 2));
+                o.success(detail: 'Ta place est confirmée · reçu envoyé par e-mail');
+                await Future<void>.delayed(const Duration(seconds: 1));
+                o.close();
+              },
+            ),
+          ),
+        ]),
+        _Section('TransactionRow', [
+          MuTransactionRow(
+            tx: MuTransaction(
+              id: 'g-1',
+              kind: MuTransactionKind.booking,
+              sport: MuSport.football,
+              label: 'Part · Arena Five',
+              meta: 'Aujourd’hui · 18h00 · Visa •••• 4242',
+              amount: -15,
+              date: DateTime(2026, 10, 16, 18),
+            ),
+          ),
+          MuTransactionRow(
+            tx: MuTransaction(
+              id: 'g-2',
+              kind: MuTransactionKind.topup,
+              label: 'Recharge',
+              meta: '12 oct. · Visa •••• 4242',
+              amount: 50,
+              date: DateTime(2026, 10, 12),
+            ),
+          ),
+          MuTransactionRow(
+            tx: MuTransaction(
+              id: 'g-3',
+              kind: MuTransactionKind.refund,
+              sport: MuSport.basketball,
+              label: 'Remboursement · Hoop Zone',
+              meta: '9 oct. · en cours',
+              amount: 9,
+              date: DateTime(2026, 10, 9),
+              status: MuTransactionStatus.pending,
+            ),
+          ),
+          const MuTransactionRow.loading(),
         ]),
         _Section('Debug — place libérée (GAM-04)', [
           Consumer(

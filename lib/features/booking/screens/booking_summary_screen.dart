@@ -8,14 +8,16 @@ import '../../../router.dart';
 import '../../../theme/theme.dart';
 import '../../../ui/ui.dart';
 import '../../home/controllers/home_providers.dart';
+import '../../matches/data/bookings_repository.dart';
+import '../../payments/controllers/checkout_controller.dart';
+import '../../venue/data/venue_details.dart';
 import '../../venue/widgets/venue_widgets.dart';
 import '../controllers/booking_controller.dart';
 import '../widgets/booking_scaffold.dart';
 
 /// BKG-04 · Réservation 3/3, récapitulatif: the slot and the game, who pays what (« Chacun paie sa
 /// part » or « Je paie tout »), the balance, the price detail and the cancellation policy, then
-/// « Payer ma part ». The payment is the fake of CLAUDE.md rule 10 (Milestone 4 designs the
-/// checkout).
+/// « Payer ma part », which opens the checkout (PAY-01).
 class BookingSummaryScreen extends ConsumerStatefulWidget {
   const BookingSummaryScreen({super.key});
 
@@ -29,17 +31,55 @@ class _BookingSummaryScreenState extends ConsumerState<BookingSummaryScreen> {
   Future<void> _pay() async {
     setState(() => _paying = true);
     try {
-      await ref.read(bookingProvider.notifier).pay();
-      if (mounted) context.go(Routes.bookingDone);
-    } catch (_) {
-      if (mounted) {
-        MuToast.show(
-          context,
-          title: 'Le paiement n’est pas passé',
-          description: 'Rien n’a été débité. Réessaie dans un instant.',
-          tone: MuToastTone.error,
-        );
-      }
+      final draft = ref.read(bookingProvider);
+      final slot = draft.slot!;
+      final reference = await ref.read(bookingsRepositoryProvider).nextReference();
+      if (!mounted) return;
+      final v = slot.venue;
+      final public = draft.type == BookingType.public;
+      final share = draft.split == PaymentSplit.share;
+      final players = public ? draft.players : draft.capacity;
+      final hours = slot.end.difference(slot.start).inMinutes / 60;
+      final format = v.venue.sport == MuSport.football ? 'Foot ${v.format.replaceAll(' contre ', ' vs ')}' : v.format;
+      ref.read(checkoutRequestProvider.notifier).start(
+        CheckoutRequest(
+          kind: CheckoutKind.share,
+          eyebrow: '${share ? 'Ta part' : 'Le terrain'} · réservation $reference',
+          title: slot.title,
+          subtitle: '${formatDay(slot.start)} · ${slot.timeRange} · $format',
+          amount: draft.amount,
+          lineLabel: share ? 'Ta part · 1 joueur sur $players' : 'Le terrain · $players joueurs',
+          sport: v.venue.sport,
+          reference: reference,
+          policy: (slot.start.subtract(VenueDetails.freeUntil), slot.start.subtract(VenueDetails.halfUntil)),
+          policyVenue: v.venue.name,
+          spotsLine: share ? 'Ta part : ${formatDT(draft.share)} sur ${formatDT(slot.price)}' : null,
+          detailRows: [
+            (
+              'Quoi',
+              'Part de réservation',
+              public
+                  ? 'Partie publique · ${draft.gender.label.toLowerCase()} · ${formatLevel(draft.level.start)} – ${formatLevel(draft.level.end)}'
+                  : 'Partie privée',
+            ),
+            ('Où', v.venue.name, v.street),
+            ('Terrain', slot.court.name, '${v.surface[0].toUpperCase()}${v.surface.substring(1)} · ${slot.court.description.toLowerCase()}'),
+            (
+              'Quand',
+              '${formatDay(slot.start)} · ${slot.timeRange}',
+              '${formatAmount(hours)} h${slot.peak ? ' · heure de pointe' : ''}',
+            ),
+            ('Joueurs', '${draft.team}/$players', public ? '${players - draft.team} places encore ouvertes' : 'Partie entre amis'),
+          ],
+          lineup: (draft.team, players),
+          publicGame: public && draft.visibility == GameVisibility.everyone,
+          successRoute: Routes.booking(reference),
+          onPaid: (receipt, fromBalance) async {
+            await ref.read(bookingProvider.notifier).completePaid(receipt, fromBalance, reference: reference);
+          },
+        ),
+      );
+      context.push(Routes.checkout);
     } finally {
       if (mounted) setState(() => _paying = false);
     }

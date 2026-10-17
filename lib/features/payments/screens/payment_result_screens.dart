@@ -132,7 +132,7 @@ class PaymentSuccessScreen extends ConsumerWidget {
                       court: req.title.split(' · ').skip(1).join(' · '),
                       date: req.subtitle.split(' · ').first,
                       time: req.subtitle.split(' · ').length > 1 ? req.subtitle.split(' · ')[1].split(' – ').first : '',
-                      players: '6/10',
+                      players: req.lineup == null ? '' : '${req.lineup!.$1}/${req.lineup!.$2}',
                       paid: formatDT(receipt.amount),
                       data: 'https://matchup.tn/r/${req.reference}',
                     ),
@@ -152,6 +152,7 @@ class PaymentSuccessScreen extends ConsumerWidget {
                         ),
                       ],
                     ),
+                    if (req.lineup != null && req.lineup!.$1 < req.lineup!.$2) ...[
                     const SizedBox(height: MuSpace.s4),
                     MuCardSurface(
                       child: Column(
@@ -159,21 +160,22 @@ class PaymentSuccessScreen extends ConsumerWidget {
                         children: [
                           Row(
                             children: [
-                              Expanded(child: Text('Encore 4 places', style: MuType.labelL.copyWith(color: c.text))),
-                              MuToneBadge(label: '6/10', tone: MuBadgeTone.warning, icon: PhosphorIcons.clock(PhosphorIconsStyle.fill)),
+                              Expanded(child: Text('Encore ${req.lineup!.$2 - req.lineup!.$1} places', style: MuType.labelL.copyWith(color: c.text))),
+                              MuStatusBadge(status: MuStatus.pending, label: '${req.lineup!.$1}/${req.lineup!.$2}', size: MuBadgeSize.s),
                             ],
                           ),
-                          Text('Ta partie publique est visible dans Explorer.', style: caption),
+                          Text(req.publicGame ? 'Ta partie publique est visible dans Explorer.' : 'Invite tes amis pour compléter l’équipe.', style: caption),
                           const SizedBox(height: MuSpace.s3),
                           MuButton.secondary(
                             label: 'Inviter des joueurs',
                             leading: PhosphorIcons.userPlus(),
                             fullWidth: true,
-                            onPressed: () => context.push(Routes.booking(req.reference!)),
+                            onPressed: () => context.push(Routes.bookingInvitesAfter),
                           ),
                         ],
                       ),
                     ),
+                    ],
                   ],
                 ],
               ),

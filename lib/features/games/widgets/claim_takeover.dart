@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import '../../../core/format.dart';
 import '../../../router.dart';
 import '../../../ui/ui.dart';
+import '../../payments/data/payment_repository.dart';
 import '../controllers/game_actions.dart';
 import '../data/games_repository.dart';
 
@@ -24,7 +25,10 @@ Future<void> showClaimTakeover(BuildContext context, WidgetRef ref, String gameI
   );
   if (claimed == true && context.mounted) {
     final spot = firstFreeSlot(d.teams) ?? (0, 0);
-    await actions.join(g, team: spot.$1, slot: spot.$2);
+    final receipt = await ref
+        .read(paymentRepositoryProvider)
+        .pay(g.pricePerPlayer, reason: 'Partie ${g.id} · ${g.title}');
+    await actions.completeJoin(g, team: spot.$1, slot: spot.$2, receipt: receipt);
     if (!context.mounted) return;
     context.go(Routes.matches);
     context.push(Routes.gameJoined(gameId));

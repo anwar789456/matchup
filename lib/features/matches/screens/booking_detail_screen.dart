@@ -529,7 +529,7 @@ class _BookingDetailScreenState extends ConsumerState<BookingDetailScreen> {
                 button: true,
                 label: 'Suivre les paiements',
                 child: InkWell(
-                  onTap: () => showComingSoon(context),
+                  onTap: () => context.push(Routes.bookingPayments(b.id!)),
                   child: Row(
                     children: [
                       Expanded(

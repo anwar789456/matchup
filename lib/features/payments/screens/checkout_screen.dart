@@ -107,7 +107,7 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
     final repo = ref.read(paymentRepositoryProvider);
     final cards = ref.read(paymentCardsProvider).value ?? const <PaymentCard>[];
     PaymentCard? card;
-    var method = _due == 0 && _useBalance ? PayWith.balance : PayWith.card;
+    final method = _due == 0 && _useBalance ? PayWith.balance : PayWith.card;
 
     if (method == PayWith.card) {
       if (_mode == _Mode.newCard) {
@@ -217,9 +217,10 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
 
   Future<void> _succeed(MuLoadingOverlay overlay, PaymentReceipt receipt, CheckoutRequest req) async {
     overlay.success(detail: 'Ta place est confirmée · reçu envoyé par e-mail');
+    final pause = MuMotion.durationOf(context, MuMotion.success);
     await req.onPaid(receipt, _fromBalance);
     ref.read(lastPaymentProvider.notifier).set(req, receipt);
-    await Future<void>.delayed(MuMotion.durationOf(context, MuMotion.success));
+    await Future<void>.delayed(pause);
     if (!mounted) return;
     overlay.close();
     ref.read(checkoutRequestProvider.notifier).clear();
@@ -391,7 +392,7 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
               ],
               const SizedBox(height: MuSpace.s3),
               if (payWithBalance)
-                MuBanner(
+                const MuBanner(
                   tone: MuBannerTone.info,
                   title: 'Ton solde couvre tout : ta carte ne sera pas débitée.',
                 )

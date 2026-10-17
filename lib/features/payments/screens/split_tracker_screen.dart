@@ -9,11 +9,11 @@ import '../../../theme/theme.dart';
 import '../../../ui/ui.dart';
 import '../../common/data/story_data.dart';
 import '../../common/widgets/flow_scaffold.dart';
-import '../../home/controllers/home_providers.dart';
 import '../../matches/controllers/matches_providers.dart';
 import '../../matches/data/bookings_repository.dart';
 import '../../wallet/data/wallet_repository.dart';
 import '../controllers/checkout_controller.dart';
+import '../data/payment_repository.dart';
 
 /// PAY-11 · Suivi des paiements: collected so far, the deadline (3 h before), who still owes,
 /// reminders, who paid, the open place, and « Payer le reste » (PAY-12).
@@ -280,7 +280,7 @@ class _SplitTrackerScreenState extends ConsumerState<SplitTrackerScreen> {
                             children: [
                               Expanded(child: Text('COLLECTÉ', style: MuType.overline.copyWith(color: c.textSecondary))),
                               if (pending.isNotEmpty)
-                                MuToneBadge(label: '${pending.length} parts en attente', tone: MuBadgeTone.warning, icon: PhosphorIcons.clock(PhosphorIconsStyle.fill))
+                                MuStatusBadge(status: MuStatus.pending, label: '${pending.length} parts en attente', size: MuBadgeSize.s)
                               else
                                 const MuStatusBadge(status: MuStatus.paid, label: 'Tout est payé', size: MuBadgeSize.s),
                             ],
@@ -381,7 +381,7 @@ class _SplitTrackerScreenState extends ConsumerState<SplitTrackerScreen> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(p.name, style: MuType.label.copyWith(color: c.text)),
-                                    MuToneBadge(label: '${formatDT(b.share)} à payer', tone: MuBadgeTone.warning, icon: PhosphorIcons.clock(PhosphorIconsStyle.fill)),
+                                    MuStatusBadge(status: MuStatus.pending, label: '${formatDT(b.share)} à payer', size: MuBadgeSize.s),
                                   ],
                                 ),
                               ),

@@ -3,7 +3,7 @@ import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 import '../theme/theme.dart';
 
-enum MuStatus { confirmed, paid, pending, failed, live, refunded, full, verified, cancelled, draft }
+enum MuStatus { confirmed, paid, pending, failed, live, refunded, full, verified, cancelled, draft, neutral }
 
 enum MuBadgeSize { m, s }
 
@@ -46,6 +46,7 @@ class MuStatusBadge extends StatelessWidget {
         MuStatus.verified => 'Vérifié',
         MuStatus.cancelled => 'Annulé',
         MuStatus.draft => 'Brouillon',
+        MuStatus.neutral => '',
       };
 
   @override
@@ -64,6 +65,7 @@ class MuStatusBadge extends StatelessWidget {
       MuStatus.verified => (c.accent, c.onAccent, PhosphorIcons.sealCheck(fill), false),
       MuStatus.cancelled => (c.surfaceMuted, c.textSecondary, PhosphorIcons.xCircle(fill), true),
       MuStatus.draft => (c.surfaceMuted, c.textSecondary, PhosphorIcons.notePencil(fill), true),
+      MuStatus.neutral => (c.surfaceMuted, c.textSecondary, null, true),
     };
     final text = label ?? _defaultLabel;
 

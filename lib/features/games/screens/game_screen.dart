@@ -12,6 +12,8 @@ import '../../../ui/ui.dart';
 import '../../common/data/story_data.dart';
 import '../../common/widgets/coming_soon.dart';
 import '../../common/widgets/flow_scaffold.dart';
+import '../../payments/controllers/checkout_controller.dart';
+import '../../venue/data/venue_details.dart';
 import '../controllers/game_actions.dart';
 import '../data/games_repository.dart';
 import '../widgets/game_widgets.dart';
@@ -31,7 +33,6 @@ class GameScreen extends ConsumerStatefulWidget {
 }
 
 class _GameScreenState extends ConsumerState<GameScreen> {
-  bool _paying = false;
   bool _hidden = false;
 
   // GAM-01: hero 188 high; the main card overlaps it by 20 with a radius-lg top.
@@ -39,24 +40,38 @@ class _GameScreenState extends ConsumerState<GameScreen> {
   static const double _overlap = 20;
   static const double _bottomRoom = MuSpace.s16 + MuSpace.s8;
 
-  Future<void> _join(GameDetails d, (int, int) spot) async {
-    if (_paying) return;
-    setState(() => _paying = true);
-    try {
-      await ref.read(gameActionsProvider).join(d.game, team: spot.$1, slot: spot.$2);
-      if (!mounted) return;
-      context.pushReplacement(Routes.gameJoined(widget.gameId));
-    } catch (e) {
-      if (!mounted) return;
-      MuToast.show(
-        context,
-        tone: MuToastTone.error,
-        title: 'Le paiement n’a pas abouti',
-        description: 'Réessaie dans un instant.',
-      );
-    } finally {
-      if (mounted) setState(() => _paying = false);
-    }
+  /// « Rejoindre et payer »: the share goes through the checkout (PAY-01); once paid the place is
+  /// taken and PAY-09 « Terminé » leads to GAM-05.
+  void _join(GameDetails d, (int, int) spot) {
+    final g = d.game;
+    final format = g.sport == MuSport.football ? 'Foot 5 vs 5' : g.sport.label;
+    ref.read(checkoutRequestProvider.notifier).start(
+      CheckoutRequest(
+        kind: CheckoutKind.share,
+        eyebrow: 'Ta part · partie ${g.id}',
+        title: g.court == null ? g.venue : '${g.venue} · ${g.court}',
+        subtitle: '${formatDay(g.start)} · ${formatTime(g.start)} · $format',
+        amount: g.pricePerPlayer,
+        lineLabel: 'Ta part · 1 joueur sur ${g.spotsTotal}',
+        sport: g.sport,
+        policy: (
+          g.start.subtract(VenueDetails.freeUntil),
+          g.start.subtract(VenueDetails.halfUntil),
+        ),
+        policyVenue: g.venue,
+        detailRows: [
+          ('Quoi', 'Place dans une partie ouverte', g.levelMin == null ? g.gameType : '${g.gameType} · ${formatLevel(g.levelMin!)} – ${formatLevel(g.levelMax!)}'),
+          ('Où', g.venue, g.place),
+          ('Quand', formatDateTime(g.start), null),
+          ('Joueurs', '${g.spotsTotal - g.spotsLeft}/${g.spotsTotal}', '${g.spotsLeft} places encore ouvertes'),
+        ],
+        successRoute: Routes.gameJoined(widget.gameId),
+        onPaid: (receipt, fromBalance) => ref
+            .read(gameActionsProvider)
+            .completeJoin(g, team: spot.$1, slot: spot.$2, receipt: receipt, fromBalance: fromBalance),
+      ),
+    );
+    context.push(Routes.checkout);
   }
 
   Future<void> _waitlist(GameDetails d) async {
@@ -212,7 +227,6 @@ class _GameScreenState extends ConsumerState<GameScreen> {
             price: formatDT(g.pricePerPlayer),
             size: MuButtonSize.xl,
             fullWidth: true,
-            loading: _paying,
             onPressed: spot == null ? null : () => _join(d, spot),
           );
         }
@@ -467,7 +481,7 @@ class _GameScreenState extends ConsumerState<GameScreen> {
           sport: g.sport,
           teams: d.teams,
           title: 'Composition',
-          disabled: full || joined || _paying,
+          disabled: full || joined,
           onJoin: (team, slot, position) => _join(d, (team, slot)),
         ),
         const SizedBox(height: MuSpace.s2),
