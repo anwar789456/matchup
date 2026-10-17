@@ -12,6 +12,9 @@ import '../common/data/story_data.dart';
 import '../explore/controllers/explore_controller.dart';
 import '../games/widgets/claim_takeover.dart';
 import '../home/controllers/home_providers.dart';
+import '../notifications/controllers/live_events.dart';
+import '../notifications/data/push_service.dart';
+import '../payments/data/payment_repository.dart';
 
 /// Debug-only widget gallery: every Mu* widget, in Light and Night match side by side on wide
 /// screens (a toggle on phones), with a right-to-left switch.
@@ -360,7 +363,7 @@ class _GalleryBodyState extends State<_GalleryBody> {
             ),
           ),
         ]),
-        const _Section('PhoneField', [
+        _Section('PhoneField', [
           MuPhoneField(helper: 'On t’envoie un code à 6 chiffres par SMS.'),
         ]),
         _Section('OtpInput', [
@@ -569,13 +572,13 @@ class _GalleryBodyState extends State<_GalleryBody> {
             runSpacing: MuSpace.s3,
             crossAxisAlignment: WrapCrossAlignment.center,
             children: [
-              const MuAiLabel(),
-              const MuAiLabel(size: MuAiLabelSize.s),
-              const MuAiLabel(variant: MuAiLabelVariant.inline, text: 'Résumé généré par l’IA'),
+              MuAiLabel(),
+              MuAiLabel(size: MuAiLabelSize.s),
+              MuAiLabel(variant: MuAiLabelVariant.inline, text: 'Résumé généré par l’IA'),
               Container(
                 padding: const EdgeInsets.all(MuSpace.s3),
                 color: c.navBg,
-                child: const MuAiLabel(variant: MuAiLabelVariant.media, size: MuAiLabelSize.s),
+                child: MuAiLabel(variant: MuAiLabelVariant.media, size: MuAiLabelSize.s),
               ),
             ],
           ),
@@ -602,20 +605,20 @@ class _GalleryBodyState extends State<_GalleryBody> {
             action: MuAction('Mettre à jour la carte', () {}),
           ),
           const SizedBox(height: MuSpace.s3),
-          const MuBanner(
+          MuBanner(
             tone: MuBannerTone.success,
             title: 'Paiement reçu',
             detail: '15 DT · Arena Five, sam. 18 oct. · 20h00',
           ),
           const SizedBox(height: MuSpace.s3),
-          const MuBanner(
+          MuBanner(
             tone: MuBannerTone.warning,
             variant: MuBannerVariant.strip,
             title: 'Tu es hors ligne',
             detail: 'Données en cache du 18 oct. à 20h00',
           ),
           const SizedBox(height: MuSpace.s3),
-          const MuBanner(
+          MuBanner(
             tone: MuBannerTone.neutral,
             title: 'Ta progression est enregistrée',
             detail: 'Tu peux reprendre plus tard.',
@@ -768,6 +771,35 @@ class _GalleryBodyState extends State<_GalleryBody> {
               features: [('Terrains illimités', true), ('Comptes gérants', false)],
             ),
           ),
+          const SizedBox(height: MuSpace.s4),
+          MuPricingCard(
+            period: _period,
+            current: true,
+            onCta: null,
+            plan: const MuPlan(
+              name: 'Premium',
+              audience: 'Joueur',
+              pitch: 'Passe avant les autres et progresse avec l’IA.',
+              monthly: 19,
+              yearly: 190,
+              features: [('Priorité sur les listes d’attente', true)],
+            ),
+          ),
+          const SizedBox(height: MuSpace.s4),
+          MuPricingCard(
+            period: _period,
+            compact: true,
+            current: true,
+            onCta: null,
+            plan: const MuPlan(
+              name: 'Gratuit',
+              audience: 'Joueur',
+              pitch: 'Parties, réservations et niveau IA, sans engagement.',
+              monthly: 0,
+              yearly: 0,
+              features: [],
+            ),
+          ),
         ]),
         const _Section('KpiCard', [
           MuKpiCard(
@@ -882,8 +914,8 @@ class _GalleryBodyState extends State<_GalleryBody> {
           const SizedBox(height: MuSpace.s3),
           MuGameCard(game: Story.g2, variant: MuGameCardVariant.compact, onTap: () {}),
           const SizedBox(height: MuSpace.s3),
-          const MuSkeletonGroup(
-            child: MuGameCard.loading(variant: MuGameCardVariant.featured),
+          MuSkeletonGroup(
+            child: const MuGameCard.loading(variant: MuGameCardVariant.featured),
           ),
         ]),
         _Section('BookingCard', [
@@ -940,7 +972,7 @@ class _GalleryBodyState extends State<_GalleryBody> {
             onRebook: () {},
           ),
           const SizedBox(height: MuSpace.s3),
-          const MuSkeletonGroup(child: MuBookingCard.loading()),
+          MuSkeletonGroup(child: const MuBookingCard.loading()),
         ]),
         _Section('VenueCard', [
           MuVenueCard(
@@ -975,8 +1007,8 @@ class _GalleryBodyState extends State<_GalleryBody> {
             ),
           ),
           const SizedBox(height: MuSpace.s3),
-          const MuSkeletonGroup(
-            child: MuVenueCard.loading(variant: MuVenueCardVariant.compact),
+          MuSkeletonGroup(
+            child: const MuVenueCard.loading(variant: MuVenueCardVariant.compact),
           ),
         ]),
         _Section('TournamentCard', [
@@ -988,12 +1020,12 @@ class _GalleryBodyState extends State<_GalleryBody> {
             onTap: () {},
           ),
           const SizedBox(height: MuSpace.s3),
-          const MuSkeletonGroup(child: MuTournamentCard.loading()),
+          MuSkeletonGroup(child: const MuTournamentCard.loading()),
         ]),
-        const _Section('Skeleton', [
+        _Section('Skeleton', [
           MuSkeletonGroup(
             label: 'Chargement des parties',
-            child: Row(
+            child: const Row(
               children: [
                 MuSkeleton.circle(size: MuSize.avatarM),
                 SizedBox(width: MuSpace.s3),
@@ -1192,7 +1224,7 @@ class _GalleryBodyState extends State<_GalleryBody> {
             legend: true,
           ),
         ]),
-        const _Section('Takeover — billet', [
+        _Section('Takeover — billet', [
           MuTicket(
             reference: 'MU-48213',
             sport: MuSport.football,
@@ -1261,15 +1293,15 @@ class _GalleryBodyState extends State<_GalleryBody> {
             MuStatusBadge(status: MuStatus.cancelled, label: 'Annulée', iconOnly: true),
           ]),
         ]),
-        const _Section('ReliabilityBadge', [
+        _Section('ReliabilityBadge', [
           Row(children: [
             MuReliabilityBadge(score: 96),
-            SizedBox(width: MuSpace.s2),
+            const SizedBox(width: MuSpace.s2),
             MuReliabilityBadge(score: 82, size: MuBadgeSize.s),
-            SizedBox(width: MuSpace.s2),
+            const SizedBox(width: MuSpace.s2),
             MuReliabilityBadge(score: 61, size: MuBadgeSize.s),
           ]),
-          SizedBox(height: MuSpace.s3),
+          const SizedBox(height: MuSpace.s3),
           MuReliabilityBadge(score: 96, detail: true, honored: 47, total: 49, period: '12 mois'),
         ]),
         _Section('MatchFitScore — ring', [
@@ -1326,16 +1358,16 @@ class _GalleryBodyState extends State<_GalleryBody> {
             ),
           ),
           const SizedBox(height: MuSpace.s3),
-          const MuLineup(
+          MuLineup(
             sport: MuSport.padel,
             variant: MuLineupVariant.compact,
             header: false,
             teams: [
-              MuLineupTeam(
+              const MuLineupTeam(
                 name: 'Toi / Mariem',
                 players: [MuLineupPlayer('Yassine B.', you: true), MuLineupPlayer('Mariem K.')],
               ),
-              MuLineupTeam(name: 'Ines / Nour', players: [MuLineupPlayer('Ines M.'), null]),
+              const MuLineupTeam(name: 'Ines / Nour', players: [MuLineupPlayer('Ines M.'), null]),
             ],
           ),
         ]),
@@ -1495,6 +1527,171 @@ class _GalleryBodyState extends State<_GalleryBody> {
             ],
           ),
         ]),
+        _Section('Debug — paiement', [
+          Consumer(
+            builder: (context, ref, _) => MuSelect<PaymentOutcome>(
+              label: 'Issue du prochain paiement',
+              helper: 'Le faux PaymentRepository joue cette issue au prochain « Payer ».',
+              value: ref.watch(paymentOutcomeProvider),
+              options: [
+                for (final o in PaymentOutcome.values) MuSelectOption(value: o, label: o.label),
+              ],
+              onChanged: (o) => ref.read(paymentOutcomeProvider.notifier).select(o),
+            ),
+          ),
+          const SizedBox(height: MuSpace.s3),
+          Builder(
+            builder: (context) => MuButton.secondary(
+              label: 'Ouvrir MuLoadingOverlay',
+              size: MuButtonSize.m,
+              onPressed: () async {
+                final o = MuLoadingOverlay.show(
+                  context,
+                  amount: formatDT(15),
+                  detail: 'Football · Arena Five · Terrain 1',
+                );
+                await Future<void>.delayed(const Duration(seconds: 2));
+                o.success(detail: 'Ta place est confirmée · reçu envoyé par e-mail');
+                await Future<void>.delayed(const Duration(seconds: 1));
+                o.close();
+              },
+            ),
+          ),
+        ]),
+        const _Section('ProgressRing', [
+          Wrap(
+            spacing: MuSpace.s4,
+            crossAxisAlignment: WrapCrossAlignment.center,
+            children: [
+              MuProgressRing(value: 25, size: 32),
+              MuProgressRing(value: 70),
+              MuProgressRing(value: 3, max: 12, size: 72),
+              MuProgressRing(value: 3, max: 12, size: 120, unit: 'séances'),
+              MuProgressRing(value: 12, max: 12, size: 72),
+              MuProgressRing(value: 60, size: 72, tone: MuTone.ai),
+            ],
+          ),
+        ]),
+        _Section('TransactionRow', [
+          MuTransactionRow(
+            tx: MuTransaction(
+              id: 'g-1',
+              kind: MuTransactionKind.booking,
+              sport: MuSport.football,
+              label: 'Part · Arena Five',
+              meta: 'Aujourd’hui · 18h00 · Visa •••• 4242',
+              amount: -15,
+              date: DateTime(2026, 10, 16, 18),
+            ),
+          ),
+          MuTransactionRow(
+            tx: MuTransaction(
+              id: 'g-2',
+              kind: MuTransactionKind.topup,
+              label: 'Recharge',
+              meta: '12 oct. · Visa •••• 4242',
+              amount: 50,
+              date: DateTime(2026, 10, 12),
+            ),
+          ),
+          MuTransactionRow(
+            tx: MuTransaction(
+              id: 'g-3',
+              kind: MuTransactionKind.refund,
+              sport: MuSport.basketball,
+              label: 'Remboursement · Hoop Zone',
+              meta: '9 oct. · en cours',
+              amount: 9,
+              date: DateTime(2026, 10, 9),
+              status: MuTransactionStatus.pending,
+            ),
+          ),
+          const MuTransactionRow.loading(),
+        ]),
+        _Section('Debug — notifications (NOT-07 à NOT-09)', [
+          Consumer(
+            builder: (context, ref, _) => MuButton.secondary(
+              label: 'Rami S. rejoint G1',
+              leading: PhosphorIcons.userPlus(),
+              size: MuButtonSize.m,
+              onPressed: () => ref.read(liveEventsProvider).playerJoined(Story.g1.id!),
+            ),
+          ),
+          const SizedBox(height: MuSpace.s2),
+          for (final m in PushSamples.all)
+            Consumer(
+              builder: (context, ref, _) => MuButton.tertiary(
+                label: 'Push : ${m.title}',
+                size: MuButtonSize.m,
+                onPressed: () => ref.read(pushServiceProvider).show(m),
+              ),
+            ),
+          const SizedBox(height: MuSpace.s2),
+          Text(
+            'Le menu debug flottant (bouton bug) ouvre les mêmes actions depuis n’importe quel écran, '
+            'par exemple pendant que GAM-01 est ouvert.',
+            style: MuType.caption.copyWith(color: c.textSecondary),
+          ),
+        ]),
+        _Section('NotificationItem', [
+          MuNotificationItem(
+            title: 'Une place s’est libérée',
+            body: 'Foot 5v5 · Arena Five · dim. 18 oct. · 20h00.',
+            time: '1 min',
+            sport: MuSport.football,
+            priority: MuNotificationPriority.urgent,
+            unread: true,
+            actions: [
+              MuButton.primary(
+                label: 'Réclamer la place',
+                countdown: '14:59',
+                size: MuButtonSize.s,
+                onPressed: () {},
+              ),
+            ],
+          ),
+          MuNotificationItem(
+            title: 'Ta part de 15 DT est en attente',
+            body: 'À régler avant mer. 21 oct. · 18h00.',
+            time: '2 h',
+            priority: MuNotificationPriority.important,
+            unread: true,
+            onMarkRead: () {},
+            onDelete: () {},
+            swiped: true,
+          ),
+          const MuNotificationItem(
+            title: 'Nour A. et 2 autres ont rejoint ta partie',
+            body: 'Arena Five · 6/10 joueurs, encore 4 places.',
+            time: '3 h',
+            sport: MuSport.football,
+            people: [MuPerson('Nour A.'), MuPerson('Omar D.'), MuPerson('Aziz H.')],
+          ),
+          MuNotificationItem(
+            title: 'Remboursement de 15 DT effectué',
+            body: '15 DT crédités sur ton solde MatchUp.',
+            time: '9 oct.',
+            icon: PhosphorIcons.wallet(),
+            status: MuTone.success,
+          ),
+        ]),
+        _Section('Snackbar', [
+          const MuSnackbar(message: 'Partie quittée', action: MuAction('Annuler', _noop)),
+          const SizedBox(height: MuSpace.s2),
+          const MuSnackbar(message: 'Hors ligne. Reconnexion…', tone: MuToastTone.warning, busy: true),
+          const SizedBox(height: MuSpace.s2),
+          Builder(
+            builder: (context) => MuButton.secondary(
+              label: 'Empiler 3 toasts',
+              size: MuButtonSize.m,
+              onPressed: () {
+                for (final t in ['Réservation confirmée', 'Lien copié', 'Profil mis à jour']) {
+                  MuToast.show(context, title: t, tone: MuToastTone.success);
+                }
+              },
+            ),
+          ),
+        ]),
         _Section('Debug — place libérée (GAM-04)', [
           Consumer(
             builder: (context, ref, _) => MuButton.primary(
@@ -1545,3 +1742,5 @@ class _Section extends StatelessWidget {
     );
   }
 }
+
+void _noop() {}

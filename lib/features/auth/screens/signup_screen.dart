@@ -11,6 +11,7 @@ import '../controllers/auth_providers.dart';
 import '../data/auth_repository.dart';
 import '../widgets/auth_messages.dart';
 import '../widgets/auth_widgets.dart';
+import '../../../l10n/l10n.dart';
 
 /// AUTH-01 · Inscription, with the AUTH-01b error states (email taken, weak password, terms not
 /// accepted) shown on submit. What the player typed is always kept.
@@ -106,28 +107,28 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
     return FlowScaffold(
       onBack: () => goBack(context, Routes.welcome3),
       topAction: MuButton.tertiary(
-        label: 'Se connecter',
+        label: l10n.seConnecter,
         onPressed: () => context.pushReplacement(Routes.login),
       ),
       body: [
-        const FlowTitle(
-          'Crée ton compte',
-          lead: 'Trouve des parties à ton niveau près de chez toi. C’est gratuit.',
+        FlowTitle(
+          l10n.creeTonCompte,
+          lead: l10n.trouveDesPartiesATon,
         ),
         SocialButtons(
           onGoogle: () => _social(SocialProvider.google),
           onApple: () => _social(SocialProvider.apple),
         ),
-        const OrDivider(),
+        OrDivider(),
         Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             MuTextField(
-              label: 'Email',
+              label: l10n.email,
               controller: _email,
               focusNode: _emailFocus,
               leadingIcon: PhosphorIcons.envelopeSimple(),
-              placeholder: 'yassine.b@email.tn',
+              placeholder: l10n.yassineBEmailTn,
               keyboardType: TextInputType.emailAddress,
               textInputAction: TextInputAction.next,
               autofillHints: const [AutofillHints.email],
@@ -136,9 +137,9 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
               messageExtra: _emailTaken
                   ? Text.rich(
                       TextSpan(children: [
-                        const TextSpan(text: 'C’est le tien ? '),
+                        TextSpan(text: l10n.cEstLeTien),
                         inlineLink(
-                          'Se connecter',
+                          l10n.seConnecter,
                           () => context.pushReplacement(Routes.login),
                           MuType.labelS,
                         ),
@@ -173,13 +174,13 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
           children: [
             MuCheckbox(
               value: _consent,
-              label: 'J’accepte les conditions d’utilisation et la politique de confidentialité',
+              label: l10n.jAccepteLesConditionsD,
               error: _submitted && !_consent ? AuthMessages.consent : null,
               onChanged: (v) => setState(() => _consent = v ?? false),
             ),
             MuCheckbox(
               value: _marketing,
-              label: 'Recevoir les parties près de chez moi par email (facultatif)',
+              label: l10n.recevoirLesPartiesPresDe,
               onChanged: (v) => setState(() => _marketing = v ?? false),
             ),
           ],
@@ -187,7 +188,7 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
       ],
       bottomBar: [
         MuButton.primary(
-          label: 'Créer mon compte',
+          label: l10n.creerMonCompte,
           size: MuButtonSize.xl,
           fullWidth: true,
           loading: _loading,

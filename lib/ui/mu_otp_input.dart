@@ -8,6 +8,7 @@ import '../theme/theme.dart';
 import 'mu_button.dart';
 import 'mu_spinner.dart';
 import 'mu_text_field.dart';
+import '../l10n/l10n.dart';
 
 /// OtpInput (components/OtpInput.md): six boxes for the SMS code, built on one hidden TextField so
 /// auto-advance, backspace, paste and SMS autofill work natively.
@@ -15,11 +16,11 @@ import 'mu_text_field.dart';
 /// [resendIn] starts a countdown « Renvoyer le code dans 0:45 », then shows the « Renvoyer le
 /// code » link that calls [onResend]. It hides after [success].
 class MuOtpInput extends StatefulWidget {
-  const MuOtpInput({
+  MuOtpInput({
     super.key,
     this.length = 6,
     this.controller,
-    this.label = 'Code reçu par SMS',
+    String? label,
     this.helper,
     this.error,
     this.success,
@@ -30,7 +31,7 @@ class MuOtpInput extends StatefulWidget {
     this.autofocus = false,
     this.onChanged,
     this.onCompleted,
-  });
+  }) : label = label ?? l10n.codeRecuParSms;
 
   final int length;
   final TextEditingController? controller;
@@ -166,7 +167,7 @@ class _MuOtpInputState extends State<MuOtpInput> with TickerProviderStateMixin {
         for (var i = 0; i < widget.length; i++) ...[
           if (i > 0) const SizedBox(width: MuSpace.s2),
           Semantics(
-            label: 'Chiffre ${i + 1} sur ${widget.length}',
+            label: l10n.chiffreSur(i + 1, widget.length),
             value: i < code.length ? code[i] : null,
             child: _Box(
               digit: i < code.length ? code[i] : null,
@@ -248,7 +249,7 @@ class _MuOtpInputState extends State<MuOtpInput> with TickerProviderStateMixin {
           children: [
             MuSpinner(size: MuSize.iconXs, color: c.textSecondary),
             const SizedBox(width: MuSpace.s2),
-            Text('Vérification du code…', style: MuType.caption.copyWith(color: c.textSecondary)),
+            Text(l10n.verificationDuCode, style: MuType.caption.copyWith(color: c.textSecondary)),
           ],
         ),
       );
@@ -290,7 +291,7 @@ class _MuOtpInputState extends State<MuOtpInput> with TickerProviderStateMixin {
               Text.rich(
                 TextSpan(
                   children: [
-                    const TextSpan(text: 'Renvoyer le code dans '),
+                    TextSpan(text: l10n.renvoyerLeCodeDans),
                     TextSpan(
                       text:
                           '${_secondsLeft ~/ 60}:${(_secondsLeft % 60).toString().padLeft(2, '0')}',
@@ -302,7 +303,7 @@ class _MuOtpInputState extends State<MuOtpInput> with TickerProviderStateMixin {
               )
             else
               MuButton.link(
-                label: 'Renvoyer le code',
+                label: l10n.renvoyerLeCode,
                 onPressed: widget.disabled != null || widget.verifying || widget.onResend == null
                     ? null
                     : () {

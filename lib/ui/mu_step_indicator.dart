@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../theme/theme.dart';
+import '../l10n/l10n.dart';
 
 enum MuStepVariant { bar, dots }
 
@@ -39,7 +40,7 @@ class MuStepIndicator extends StatelessWidget {
   Widget _bar(BuildContext context) {
     final c = context.mu;
     final slow = MuMotion.durationOf(context, MuMotion.slow);
-    final valueText = 'Étape $step sur $total${title != null ? ' : $title' : ''}';
+    final valueText = l10n.etapeSur2(step, total, title != null ? ' : $title' : '');
     return Semantics(
       label: valueText,
       excludeSemantics: true,
@@ -49,7 +50,7 @@ class MuStepIndicator extends StatelessWidget {
         children: [
           Text.rich(
             TextSpan(children: [
-              TextSpan(text: 'Étape $step sur $total'),
+              TextSpan(text: l10n.etapeSur(step, total)),
               if (title != null) ...[
                 const TextSpan(text: ' · '),
                 TextSpan(text: title, style: MuType.labelS.copyWith(color: c.text)),
@@ -97,13 +98,13 @@ class MuStepIndicator extends StatelessWidget {
     final c = context.mu;
     final base = MuMotion.durationOf(context, MuMotion.base);
     return Semantics(
-      label: 'Diapo $step sur $total',
+      label: l10n.diapoSur(step, total),
       excludeSemantics: true,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
           if (showLabel) ...[
-            Text('$step sur $total', style: MuType.labelS.copyWith(color: c.textSecondary)),
+            Text(l10n.stepOfTotal(step, total), style: MuType.labelS.copyWith(color: c.textSecondary)),
             const SizedBox(height: MuSpace.s2),
           ],
           Row(

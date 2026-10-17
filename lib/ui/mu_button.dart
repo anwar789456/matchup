@@ -4,6 +4,7 @@ import 'package:phosphor_flutter/phosphor_flutter.dart';
 import '../theme/theme.dart';
 import 'mu_spinner.dart';
 import 'src/interaction.dart';
+import '../l10n/l10n.dart';
 
 enum MuButtonVariant { primary, secondary, tertiary, destructive, destructiveOutline, link }
 
@@ -217,7 +218,7 @@ class MuButton extends StatelessWidget {
     return Semantics(
       button: true,
       enabled: enabled,
-      label: loading ? 'Chargement' : (success ? 'Fait' : null),
+      label: loading ? 'Chargement' : (success ? l10n.fait : null),
       child: result,
     );
   }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../theme/theme.dart';
 import 'mu_skeleton.dart';
+import '../l10n/l10n.dart';
 
 enum MuSparkTone { muted, accent }
 
@@ -59,9 +60,8 @@ class MuSparkline extends StatelessWidget {
     final label =
         semanticLabel ??
         (points.length < 2
-            ? 'Pas encore assez de données pour une tendance'
-            : 'Tendance sur ${values.length} points : de ${_fmt(points.first)} à '
-                  '${_fmt(points.last)}');
+            ? l10n.pasEncoreAssezDeDonnees
+            : l10n.tendanceSurPointsDeA(values.length, _fmt(points.first), _fmt(points.last)));
     return Semantics(
       image: true,
       label: label,

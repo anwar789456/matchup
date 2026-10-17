@@ -13,6 +13,7 @@ import '../controllers/owner_controller.dart';
 import '../data/owner_draft.dart';
 import '../data/owner_repository.dart';
 import '../widgets/owner_wizard.dart';
+import '../../../l10n/l10n.dart';
 
 /// Keeps the 20 RIB digits, grouped 2-3-13-2 as on the bank certificate (« 08 006 0123456789012 34 »).
 class RibFormatter extends TextInputFormatter {
@@ -60,8 +61,9 @@ class PayoutScreen extends ConsumerStatefulWidget {
 }
 
 class _PayoutScreenState extends ConsumerState<PayoutScreen> {
-  // OWN-07: PDF, JPG, PNG · 5 Mo max.
+  // OWN-07: PDF, JPG, PNG · 5 Mo max; 2 px between the security note's lines.
   static const _maxBytes = 5 * 1000 * 1000;
+  static const double _lineGap = 2;
 
   late final _d = ref.read(ownerProvider).requireValue;
   late final _holder = TextEditingController(text: _d.holder);
@@ -79,8 +81,8 @@ class _PayoutScreenState extends ConsumerState<PayoutScreen> {
     service: ref.read(uploadServiceProvider),
     maxBytes: _maxBytes,
     tooBig: (f) => (
-      '${f.name} pèse ${formatFileSize(f.sizeBytes)} (max 5 Mo). Choisis un fichier plus léger.',
-      'Fichier trop lourd',
+      l10n.peseMaxMoChoisisUn2(f.name, formatFileSize(f.sizeBytes)),
+      l10n.fichierTropLourd,
     ),
     onDone: (file, _) => _owner.edit(
       (d) => d.copyWith(
@@ -120,7 +122,7 @@ class _PayoutScreenState extends ConsumerState<PayoutScreen> {
     setState(() {
       _checking = false;
       _ribError = result.error;
-      _ribSuccess = result.valid ? '20 chiffres · clé RIB valide' : null;
+      _ribSuccess = result.valid ? l10n.chiffresCleRibValide : null;
     });
     return result.valid;
   }
@@ -139,12 +141,12 @@ class _PayoutScreenState extends ConsumerState<PayoutScreen> {
     final digits = RibFormatter.digitsOf(_rib.text);
     final d = ref.read(ownerProvider).requireValue;
     setState(() {
-      _holderError = _holder.text.trim().isEmpty ? 'Indique le titulaire du compte.' : null;
-      _bankError = _bank.isEmpty ? 'Choisis ta banque.' : null;
-      _ribError = digits.length == 20 ? _ribError : 'Le RIB compte 20 chiffres.';
+      _holderError = _holder.text.trim().isEmpty ? l10n.indiqueLeTitulaireDuCompte : null;
+      _bankError = _bank.isEmpty ? l10n.choisisTaBanque : null;
+      _ribError = digits.length == 20 ? _ribError : l10n.leRibCompteChiffres;
       _fileError = _queue.busy
-          ? 'Attends la fin de l’envoi.'
-          : (d.ribCertificate == null ? 'Ajoute ton attestation de RIB.' : null);
+          ? l10n.attendsLaFinDeLEnvoi
+          : (d.ribCertificate == null ? l10n.ajouteTonAttestationDeRib : null);
     });
     final ribOk = digits.length == 20 && (_ribSuccess != null || await _check(digits));
     return ribOk && _holderError == null && _bankError == null && _fileError == null;
@@ -166,10 +168,9 @@ class _PayoutScreenState extends ConsumerState<PayoutScreen> {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         MuTextField(
-          label: 'Titulaire du compte',
+          label: l10n.titulaireDuCompte,
           controller: _holder,
-          size: MuFieldSize.m,
-          helper: 'Comme sur ton relevé bancaire.',
+          helper: l10n.commeSurTonReleveBancaire,
           error: _holderError,
           onChanged: (v) {
             if (_holderError != null) setState(() => _holderError = null);
@@ -178,10 +179,9 @@ class _PayoutScreenState extends ConsumerState<PayoutScreen> {
         ),
         const SizedBox(height: MuSpace.s5),
         MuSelect<String>(
-          label: 'Banque',
-          size: MuFieldSize.m,
+          label: l10n.banque,
           value: _bank.isEmpty ? null : _bank,
-          placeholder: 'Choisis ta banque',
+          placeholder: l10n.choisisTaBanque2,
           error: _bankError,
           options: [
             for (final (id, name) in OwnerCatalog.banks) MuSelectOption(value: id, label: name),
@@ -197,16 +197,15 @@ class _PayoutScreenState extends ConsumerState<PayoutScreen> {
         ),
         const SizedBox(height: MuSpace.s5),
         MuTextField(
-          label: 'RIB',
+          label: l10n.rib,
           controller: _rib,
-          size: MuFieldSize.m,
           leadingIcon: PhosphorIcons.bank(),
           keyboardType: TextInputType.number,
           inputFormatters: [RibFormatter()],
           autocorrect: false,
           error: _ribError,
           success: _ribSuccess,
-          helper: _checking ? 'Vérification du RIB…' : null,
+          helper: _checking ? l10n.verificationDuRib : null,
           onChanged: (v) {
             final digits = RibFormatter.digitsOf(v);
             setState(() {
@@ -221,10 +220,10 @@ class _PayoutScreenState extends ConsumerState<PayoutScreen> {
     );
 
     final upload = MuFileUpload.dropzone(
-      label: 'Attestation de RIB',
-      title: 'Glisse ou choisis ton attestation',
+      label: l10n.attestationDeRib,
+      title: l10n.glisseOuChoisisTonAttestation,
       linkPart: null,
-      hint: 'PDF, JPG, PNG · 5 Mo max',
+      hint: l10n.pdfJpgPngMoMax2,
       files: files,
       error: _fileError,
       onAdd: _pick,
@@ -240,12 +239,11 @@ class _PayoutScreenState extends ConsumerState<PayoutScreen> {
 
     return OwnerWizard(
       step: 6,
-      title: 'Où verser tes revenus ?',
+      title: l10n.ouVerserTesRevenus,
       lead:
-          'Chaque lundi, MatchUp vire sur ce compte les réservations payées en ligne la semaine '
-          'passée.',
+          l10n.chaqueLundiMatchupVireSur,
       validate: _validate,
-      body: ProFormCard(
+      body: ProFormSections(
         divided: false,
         children: [
           Column(
@@ -254,13 +252,14 @@ class _PayoutScreenState extends ConsumerState<PayoutScreen> {
               MuBanner(
                 tone: MuBannerTone.info,
                 icon: PhosphorIcons.hourglassMedium(),
-                title: 'Vérifié sous 48 h',
+                title: l10n.verifieSousH,
                 detail:
-                    'On vérifie que le compte est bien au nom ${elideDe(legal)}. Tes réservations '
-                    's’ouvrent sans attendre, les versements partent dès la validation.',
+                    l10n.onVerifieQueLeCompte(elideDe(legal)),
               ),
               const SizedBox(height: MuSpace.s6),
-              _TwoColumns(start: fields, end: upload),
+              fields,
+              const SizedBox(height: MuSpace.s6),
+              upload,
               const SizedBox(height: MuSpace.s6),
               Container(
                 padding: const EdgeInsets.all(MuSpace.s4),
@@ -275,17 +274,16 @@ class _PayoutScreenState extends ConsumerState<PayoutScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Tes coordonnées bancaires sont chiffrées',
+                            l10n.tesCoordonneesBancairesSontChiffrees,
                             style: MuType.label.copyWith(color: c.text),
                           ),
-                          const SizedBox(height: _TwoColumns.lineGap),
+                          const SizedBox(height: _lineGap),
                           Text.rich(
                             TextSpan(
                               children: [
-                                const TextSpan(
+                                TextSpan(
                                   text:
-                                      'Après l’enregistrement, seuls les 4 derniers chiffres '
-                                      'restent visibles : ',
+                                      l10n.apresLEnregistrementSeulsLes,
                                 ),
                                 TextSpan(
                                   // Kept on one line, as in the design.
@@ -294,9 +292,7 @@ class _PayoutScreenState extends ConsumerState<PayoutScreen> {
                                           .replaceAll(' ', '\u00A0'),
                                   style: MuType.label.copyWith(color: c.text),
                                 ),
-                                const TextSpan(
-                                  text: '. MatchUp ne prélève jamais rien sur ce compte.',
-                                ),
+                                TextSpan(text: l10n.matchupNePreleveJamaisRien),
                               ],
                             ),
                             style: MuType.body.copyWith(color: c.textSecondary),
@@ -311,39 +307,6 @@ class _PayoutScreenState extends ConsumerState<PayoutScreen> {
           ),
         ],
       ),
-    );
-  }
-}
-
-/// Fields beside the upload (gap 24), stacked below 720.
-class _TwoColumns extends StatelessWidget {
-  const _TwoColumns({required this.start, required this.end});
-
-  final Widget start;
-  final Widget end;
-
-  static const double _stackBelow = 720;
-  static const double lineGap = 2;
-
-  @override
-  Widget build(BuildContext context) {
-    if (MediaQuery.sizeOf(context).width < _stackBelow) {
-      return Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          start,
-          const SizedBox(height: MuSpace.s6),
-          end,
-        ],
-      );
-    }
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Expanded(child: start),
-        const SizedBox(width: MuSpace.s6),
-        Expanded(child: end),
-      ],
     );
   }
 }

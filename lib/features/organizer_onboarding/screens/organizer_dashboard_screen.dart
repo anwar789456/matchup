@@ -8,40 +8,18 @@ import '../../../theme/theme.dart';
 import '../../../ui/ui.dart';
 import '../../common/data/pro_providers.dart';
 import '../../common/widgets/pro_dashboard_scaffold.dart';
-import '../../common/widgets/pro_wizard_scaffold.dart' show showComingSoon;
+import '../../common/widgets/pro_wizard_scaffold.dart' show ProSpace, showComingSoon;
 import '../controllers/organizer_controller.dart';
+import '../../../l10n/l10n.dart';
 
-List<MuNavSection> organizerNav() => [
-      MuNavSection(items: [
-        MuNavItem(
-          id: 'dashboard',
-          label: 'Tableau de bord',
-          icon: PhosphorIcons.squaresFour(),
-          activeIcon: PhosphorIcons.squaresFour(PhosphorIconsStyle.fill),
-        ),
-      ]),
-      MuNavSection(heading: 'Compétitions', items: [
-        MuNavItem(id: 'tournois', label: 'Tournois & événements', icon: PhosphorIcons.trophy()),
-        MuNavItem(id: 'equipes', label: 'Équipes', icon: PhosphorIcons.usersThree()),
-        MuNavItem(id: 'calendrier', label: 'Calendrier', icon: PhosphorIcons.calendarDots()),
-        MuNavItem(id: 'scores', label: 'Scores en direct', icon: PhosphorIcons.broadcast()),
-      ]),
-      MuNavSection(heading: 'Gestion', items: [
-        MuNavItem(id: 'annonces', label: 'Annonces', icon: PhosphorIcons.megaphone()),
-        MuNavItem(id: 'revenus', label: 'Revenus', icon: PhosphorIcons.coins()),
-      ]),
-    ];
-
-/// ORG-02 — the organiser dashboard before the first tournament: the « Premier pas » hero, how it
-/// works in three steps, and the AI planning teaser.
+/// ORG-02 — the organiser dashboard before the first tournament, as a phone page: the « Premier
+/// pas » hero (text over the court art), how it works in three stacked steps, and the AI planning
+/// teaser.
 class OrganizerDashboardScreen extends ConsumerWidget {
   const OrganizerDashboardScreen({super.key});
 
-  // ORG-02 source: hero columns 1,25fr / 1fr, art at least 260 high; 40 step tiles; 2 px between
-  // the AI lines.
-  static const int _heroTextFlex = 125;
-  static const int _heroArtFlex = 100;
-  static const double _heroArtMin = 260;
+  // ORG-02 source: the hero art 260 high; 40 step tiles; 2 px between the AI lines.
+  static const double _heroArt = 260;
   static const double _tile = 40;
   static const double _lineGap = 2;
 
@@ -49,29 +27,26 @@ class OrganizerDashboardScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final c = context.mu;
     final d = ref.watch(organizerProvider).requireValue;
-    final width = MediaQuery.sizeOf(context).width;
-    final narrow = width < ProSplit.stackBelow;
     final firstName = d.manager.split(' ').first;
-    final org = d.name.trim().isEmpty ? 'Ton organisation' : d.name.trim();
+    final org = d.name.trim().isEmpty ? l10n.tonOrganisation : d.name.trim();
     final logo = d.logo == null ? null : ref.read(uploadedBytesProvider)[d.logo!.id];
     final last = d.events.firstOrNull;
 
     final heroText = Padding(
-      padding: const EdgeInsets.all(MuSpace.s8),
+      padding: const EdgeInsets.all(MuSpace.s5),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text('PREMIER PAS', style: MuType.overline.copyWith(color: c.textSecondary)),
+          Text(l10n.premierPas, style: MuType.overline.copyWith(color: c.textSecondary)),
           const SizedBox(height: MuSpace.s4),
           Semantics(
             header: true,
-            child: Text('Crée ton premier tournoi', style: MuType.h2.copyWith(color: c.text)),
+            child: Text(l10n.creeTonPremierTournoi, style: MuType.h2.copyWith(color: c.text)),
           ),
           const SizedBox(height: MuSpace.s4),
           Text(
-            'Format, terrains, dates, frais d’inscription : on te guide étape par étape. Ton '
-            'brouillon est enregistré à chaque étape.',
+            l10n.formatTerrainsDatesFraisD,
             style: MuType.bodyL.copyWith(color: c.textSecondary),
           ),
           const SizedBox(height: MuSpace.s6),
@@ -80,14 +55,14 @@ class OrganizerDashboardScreen extends ConsumerWidget {
             runSpacing: MuSpace.s3,
             children: [
               MuButton.primary(
-                label: 'Créer un tournoi',
+                label: l10n.creerUnTournoi,
                 leading: PhosphorIcons.plus(),
                 size: MuButtonSize.l,
                 onPressed: () => showComingSoon(context),
               ),
               if (last != null)
                 MuButton.secondary(
-                  label: 'Reprendre ${last.name}',
+                  label: l10n.reprendre(last.name),
                   leading: PhosphorIcons.copy(),
                   size: MuButtonSize.l,
                   onPressed: () => showComingSoon(context),
@@ -98,11 +73,11 @@ class OrganizerDashboardScreen extends ConsumerWidget {
       ),
     );
 
-    final art = ConstrainedBox(
-      constraints: const BoxConstraints(minHeight: _heroArtMin),
-      child: const MuCourtArt(
+    final art = SizedBox(
+      height: _heroArt,
+      child: MuCourtArt(
         sport: MuSport.padel,
-        semanticLabel: 'Court de padel éclairé le soir',
+        semanticLabel: l10n.courtDePadelEclaireLe,
       ),
     );
 
@@ -113,27 +88,16 @@ class OrganizerDashboardScreen extends ConsumerWidget {
         borderRadius: MuRadius.mdAll,
         boxShadow: MuElevation.of(context).level1,
       ),
-      child: narrow
-          ? Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [heroText, SizedBox(height: _heroArtMin, child: art)],
-            )
-          : IntrinsicHeight(
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Expanded(flex: _heroTextFlex, child: heroText),
-                  Expanded(flex: _heroArtFlex, child: art),
-                ],
-              ),
-            ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [heroText, art],
+      ),
     );
 
     Widget stepCard(int n, IconData icon, String title, String body) => Semantics(
           container: true,
-          label: 'Étape $n',
+          label: l10n.etape(n),
           child: ProCard(
-            padding: const EdgeInsets.all(MuSpace.s5),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -163,82 +127,92 @@ class OrganizerDashboardScreen extends ConsumerWidget {
         );
 
     return ProDashboardScaffold(
-      sections: organizerNav(),
-      role: MuSidebarRole(
-        role: 'Organisateur',
-        name: org,
-        image: logo == null ? null : MemoryImage(logo),
-      ),
-      user: MuSidebarUser(name: d.manager, email: d.email),
+      space: ProSpace.organizer,
+      userName: d.manager,
       userRole: d.managerRole,
+      userEmail: d.email,
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Wrap(
-            alignment: WrapAlignment.spaceBetween,
-            crossAxisAlignment: WrapCrossAlignment.end,
-            spacing: MuSpace.s6,
-            runSpacing: MuSpace.s3,
+          Row(
             children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Semantics(
-                    header: true,
-                    child: Text('Bienvenue, $firstName', style: MuType.h1.copyWith(color: c.text)),
-                  ),
-                  const SizedBox(height: MuSpace.s1),
-                  Text(
-                    '$org est prête. Lance ton premier tournoi en quelques minutes.',
-                    style: MuType.bodyL.copyWith(color: c.textSecondary),
-                  ),
-                ],
+              // The organisation's logo, or its initials until there is one.
+              MuAvatar(
+                name: org,
+                image: logo == null ? null : MemoryImage(logo),
+                size: MuAvatarSize.s,
               ),
-              MuButton.tertiary(
-                label: 'Modifier l’organisation',
-                leading: PhosphorIcons.pencilSimple(),
-                onPressed: () => context.go(Routes.organizerOrganisation),
+              const SizedBox(width: MuSpace.s2),
+              Expanded(
+                child: Text(
+                  [l10n.organisateur, org].join(' · '),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: MuType.labelS.copyWith(color: c.textSecondary),
+                ),
               ),
             ],
           ),
-          const SizedBox(height: MuSpace.s6),
+          const SizedBox(height: MuSpace.s2),
+          Semantics(
+            header: true,
+            child: Text(l10n.bienvenue(firstName), style: MuType.h1.copyWith(color: c.text)),
+          ),
+          const SizedBox(height: MuSpace.s1),
+          Text(
+            l10n.estPreteLanceTonPremier(org),
+            style: MuType.bodyL.copyWith(color: c.textSecondary),
+          ),
+          const SizedBox(height: MuSpace.s2),
+          Align(
+            alignment: AlignmentDirectional.centerStart,
+            child: MuButton.tertiary(
+              label: l10n.modifierLOrganisation,
+              leading: PhosphorIcons.pencilSimple(),
+              onPressed: () => context.go(Routes.organizerOrganisation),
+            ),
+          ),
+          const SizedBox(height: MuSpace.s4),
           hero,
           const SizedBox(height: MuSpace.s6),
           Semantics(
             header: true,
-            child: Text('Comment ça marche', style: MuType.h3.copyWith(color: c.text)),
+            child: Text(l10n.commentCaMarche, style: MuType.h3.copyWith(color: c.text)),
           ),
           const SizedBox(height: MuSpace.s4),
-          ProCardRow(
-            columns: narrow ? 1 : 3,
-            children: [
-              stepCard(1, PhosphorIcons.trophy(), 'Crée',
-                  'Choisis le format, les terrains, les dates et les frais d’inscription.'),
-              stepCard(2, PhosphorIcons.usersThree(), 'Ouvre les inscriptions',
-                  'Partage le lien : les équipes s’inscrivent et paient leur place en ligne.'),
-              stepCard(3, PhosphorIcons.listNumbers(), 'Publie le tableau',
-                  'Poules et tableau final, puis les scores en direct le jour J.'),
-            ],
+          stepCard(1, PhosphorIcons.trophy(), l10n.cree, l10n.choisisLeFormatLesTerrains),
+          const SizedBox(height: MuSpace.s3),
+          stepCard(
+            2,
+            PhosphorIcons.usersThree(),
+            l10n.ouvreLesInscriptions,
+            l10n.partageLeLienLesEquipes,
+          ),
+          const SizedBox(height: MuSpace.s3),
+          stepCard(
+            3,
+            PhosphorIcons.listNumbers(),
+            l10n.publieLeTableau,
+            l10n.poulesEtTableauFinalPuis,
           ),
           const SizedBox(height: MuSpace.s6),
           Container(
             padding: const EdgeInsets.symmetric(horizontal: MuSpace.s5, vertical: MuSpace.s4),
             decoration: BoxDecoration(color: c.aiSoft, borderRadius: MuRadius.mdAll),
             child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const MuAiLabel(),
+                MuAiLabel(),
                 const SizedBox(width: MuSpace.s4),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text('Bientôt : l’IA prépare ton tableau et ton planning',
+                      Text(l10n.bientotLIaPrepareTon,
                           style: MuType.label.copyWith(color: c.text)),
                       const SizedBox(height: _lineGap),
                       Text(
-                        'À partir de tes terrains, de tes créneaux et du repos entre deux matchs. '
-                        'Tu modifies et valides tout avant de publier.',
+                        l10n.aPartirDeTesTerrains,
                         style: MuType.body.copyWith(color: c.textSecondary),
                       ),
                     ],

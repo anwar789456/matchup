@@ -9,6 +9,7 @@ import '../../../ui/ui.dart';
 import '../controllers/onboarding_controller.dart';
 import '../data/question_bank.dart';
 import '../widgets/onboarding_step_scaffold.dart';
+import '../../../l10n/l10n.dart';
 
 /// PLY-02 · Questionnaire IA: six quick questions, one at a time, to estimate the level in [sport].
 /// Answers are saved as they are given; the screen reopens on the first unanswered question.
@@ -78,9 +79,9 @@ class _QuestionnaireScreenState extends ConsumerState<QuestionnaireScreen> {
     return OnboardingStepScaffold(
       route: Routes.playerQuestions(widget.sport),
       step: 2,
-      stepTitle: 'Ton niveau',
+      stepTitle: l10n.tonNiveau,
       onBack: _back,
-      backLabel: _index == 0 ? 'Retour' : 'Question précédente',
+      backLabel: _index == 0 ? l10n.retour : l10n.questionPrecedente,
       body: [
         Container(
           padding: const EdgeInsets.fromLTRB(MuSpace.s4, MuSpace.s3, MuSpace.s4, MuSpace.s4),
@@ -90,16 +91,16 @@ class _QuestionnaireScreenState extends ConsumerState<QuestionnaireScreen> {
             children: [
               Row(
                 children: [
-                  const MuAiLabel(size: MuAiLabelSize.s, onAiSurface: true),
+                  MuAiLabel(size: MuAiLabelSize.s, onAiSurface: true),
                   const SizedBox(width: MuSpace.s2),
                   Expanded(
                     child: Text(
-                      'Niveau ${widget.sport.lowerName}',
+                      l10n.niveau2(widget.sport.lowerName),
                       style: MuType.labelS.copyWith(color: c.aiText),
                     ),
                   ),
                   Text(
-                    'Question $n sur ${_questions.length}',
+                    l10n.questionSur(n, _questions.length),
                     style: MuType.labelS.copyWith(color: c.aiText),
                   ),
                 ],
@@ -115,7 +116,7 @@ class _QuestionnaireScreenState extends ConsumerState<QuestionnaireScreen> {
               ),
               const SizedBox(height: MuSpace.s3),
               Text(
-                '6 questions rapides pour te proposer des parties équilibrées.',
+                l10n.questionsRapidesPourTeProposer,
                 style: MuType.caption.copyWith(color: c.textSecondary),
               ),
             ],
@@ -150,7 +151,7 @@ class _QuestionnaireScreenState extends ConsumerState<QuestionnaireScreen> {
       bottomBar: [
         _last
             ? MuButton.primary(
-                label: 'Voir mon niveau',
+                label: l10n.voirMonNiveau,
                 trailing: PhosphorIcons.arrowRight(),
                 size: MuButtonSize.xl,
                 fullWidth: true,
@@ -158,7 +159,7 @@ class _QuestionnaireScreenState extends ConsumerState<QuestionnaireScreen> {
                 onPressed: answer == null ? null : _next,
               )
             : MuButton.primary(
-                label: 'Continuer',
+                label: l10n.continuer,
                 size: MuButtonSize.xl,
                 fullWidth: true,
                 onPressed: answer == null ? null : _next,

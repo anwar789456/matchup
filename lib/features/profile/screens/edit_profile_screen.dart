@@ -10,6 +10,7 @@ import '../../common/data/story_data.dart';
 import '../../common/widgets/coming_soon.dart';
 import '../../common/widgets/flow_scaffold.dart';
 import '../data/profile_repository.dart';
+import '../../../l10n/l10n.dart';
 
 /// PRF-04 · Modifier le profil: cover and photo, handle and bio, sports and positions, zones,
 /// visibility; « Enregistrer ».
@@ -26,8 +27,8 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
   late final TextEditingController _bio;
   bool _saving = false;
 
-  static const _padelSides = ['Côté gauche', 'Côté droit', 'Peu importe'];
-  static const _footPositions = ['Gardien', 'Défenseur', 'Milieu', 'Attaquant'];
+  static final _padelSides = [l10n.coteGauche, l10n.coteDroit, l10n.peuImporte];
+  static final _footPositions = [l10n.gardien, l10n.defenseur, l10n.milieu, l10n.attaquant];
   static const double _cover = 140;
 
   @override
@@ -49,7 +50,7 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
     await ref.read(playerProfileRepositoryProvider).save(d);
     ref.invalidate(myProfileProvider);
     if (!mounted) return;
-    MuToast.show(context, tone: MuToastTone.success, title: 'Profil enregistré');
+    MuToast.show(context, tone: MuToastTone.success, title: l10n.profilEnregistre);
     context.pop();
   }
 
@@ -62,7 +63,7 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
       if (p == null) {
         return Scaffold(
           backgroundColor: c.bg,
-          body: const Center(child: MuSpinner(semanticLabel: 'Chargement')),
+          body: Center(child: MuSpinner(semanticLabel: l10n.chargement)),
         );
       }
       _init(p);
@@ -123,17 +124,17 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
       body: Column(
         children: [
           MuTopAppBar.compact(
-            title: 'Modifier le profil',
-            backLabel: 'Retour au profil sans enregistrer',
+            title: l10n.modifierLeProfil,
+            backLabel: l10n.retourAuProfilSansEnregistrer,
             onBack: () => context.pop(),
           ),
           Expanded(
             child: ListView(
               padding: const EdgeInsets.fromLTRB(MuSpace.s4, MuSpace.s2, MuSpace.s4, MuSpace.s6),
               children: [
-                head('Photo et couverture'),
+                head(l10n.photoEtCouverture),
                 const SizedBox(height: MuSpace.s3),
-                Text('Couverture', style: MuType.label.copyWith(color: c.text)),
+                Text(l10n.couverture, style: MuType.label.copyWith(color: c.text)),
                 const SizedBox(height: MuSpace.s2),
                 ClipRRect(
                   borderRadius: MuRadius.mdAll,
@@ -145,13 +146,13 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
                         MuCourtArt(
                           sport: d.coverSport,
                           variant: MuCourtArtVariant.photo,
-                          semanticLabel: 'Couverture actuelle',
+                          semanticLabel: l10n.couvertureActuelle,
                         ),
                         PositionedDirectional(
                           end: MuSpace.s3,
                           bottom: MuSpace.s3,
                           child: MuButton.secondary(
-                            label: 'Changer',
+                            label: l10n.changer,
                             leading: PhosphorIcons.image(),
                             size: MuButtonSize.s,
                             onPressed: () => showComingSoon(context),
@@ -162,28 +163,28 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
                   ),
                 ),
                 const SizedBox(height: MuSpace.s1),
-                Text('Ton terrain préféré, ou une des 6 couvertures MatchUp.', style: caption),
+                Text(l10n.tonTerrainPrefereOuUne, style: caption),
                 const SizedBox(height: MuSpace.s4),
                 MuFileUpload.avatar(
-                  label: 'Photo de profil',
+                  label: l10n.photoDeProfil,
                   name: d.name,
-                  helper: 'JPG, PNG · 10 Mo max · visage bien visible',
+                  helper: l10n.jpgPngMoMaxVisage,
                   onAdd: () => showComingSoon(context),
                   onRemove: (_) => showComingSoon(context),
                 ),
                 const SizedBox(height: MuSpace.s6),
-                head('Infos'),
+                head(l10n.infos),
                 const SizedBox(height: MuSpace.s3),
                 MuTextField(
-                  label: 'Pseudo',
+                  label: l10n.pseudo,
                   controller: _handle,
                   prefixText: '@',
-                  helper: 'Ton lien de profil : matchup.tn/@${_handle.text}',
+                  helper: l10n.tonLienDeProfilMatchup(_handle.text),
                   onChanged: (_) => setState(() {}),
                 ),
                 const SizedBox(height: MuSpace.s4),
                 MuTextField(
-                  label: 'Bio',
+                  label: l10n.bio,
                   optional: true,
                   controller: _bio,
                   multiline: true,
@@ -191,8 +192,8 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
                 ),
                 const SizedBox(height: MuSpace.s6),
                 head(
-                  'Sports et postes',
-                  sub: 'Les organisateurs cherchent souvent un poste précis.',
+                  l10n.sportsEtPostes,
+                  sub: l10n.lesOrganisateursCherchentSouventUn,
                 ),
                 const SizedBox(height: MuSpace.s3),
                 Wrap(
@@ -218,11 +219,11 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
                 ),
                 if (d.sports.contains(MuSport.padel)) ...[
                   const SizedBox(height: MuSpace.s3),
-                  positionCard(MuSport.padel, 'Padel · ton côté', _padelSides),
+                  positionCard(MuSport.padel, l10n.padelTonCote, _padelSides),
                 ],
                 if (d.sports.contains(MuSport.football)) ...[
                   const SizedBox(height: MuSpace.s3),
-                  positionCard(MuSport.football, 'Football · ton poste', _footPositions),
+                  positionCard(MuSport.football, l10n.footballTonPoste, _footPositions),
                 ],
                 const SizedBox(height: MuSpace.s3),
                 Container(
@@ -231,19 +232,19 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const MuAiLabel(size: MuAiLabelSize.s, onAiSurface: true),
+                      MuAiLabel(size: MuAiLabelSize.s, onAiSurface: true),
                       const SizedBox(width: MuSpace.s2),
                       Expanded(
                         child: Text.rich(
                           TextSpan(
                             children: [
-                              const TextSpan(
-                                text: 'Ton niveau n’est pas un champ : l’IA l’estime après tes matchs. ',
+                              TextSpan(
+                                text: l10n.tonNiveauNEstPas,
                               ),
                               WidgetSpan(
                                 alignment: PlaceholderAlignment.middle,
                                 child: MuButton.link(
-                                  label: 'Voir ou ajuster',
+                                  label: l10n.voirOuAjuster,
                                   inline: true,
                                   onPressed: () => context.pop(),
                                 ),
@@ -257,33 +258,33 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
                   ),
                 ),
                 const SizedBox(height: MuSpace.s6),
-                head('Où tu joues'),
+                head(l10n.ouTuJoues),
                 const SizedBox(height: MuSpace.s3),
                 MuTagInput(
-                  label: 'Tes zones',
+                  label: l10n.tesZones,
                   tags: d.zones,
                   max: 5,
-                  helper: 'On te propose des parties dans ces zones en priorité.',
+                  helper: l10n.onTeProposeDesParties,
                   suggestions: [for (final (z, _) in Story.zones) z],
                   onChanged: (z) => set((p) => p.copyWith(zones: z)),
                 ),
                 const SizedBox(height: MuSpace.s6),
-                head('Visibilité'),
+                head(l10n.visibilite),
                 const SizedBox(height: MuSpace.s3),
                 MuRadioGroup<ProfileVisibility>(
-                  label: 'Qui peut voir ton profil ?',
+                  label: l10n.quiPeutVoirTonProfil,
                   value: d.visibility,
                   onChanged: (v) => set((p) => p.copyWith(visibility: v)),
-                  options: const [
+                  options: [
                     MuRadioOption(
                       value: ProfileVisibility.everyone,
-                      label: 'Tout le monde',
-                      description: 'Visible dans Explorer et dans les parties.',
+                      label: l10n.toutLeMonde,
+                      description: l10n.visibleDansExplorerEtDans,
                     ),
                     MuRadioOption(
                       value: ProfileVisibility.followers,
-                      label: 'Mes abonnés',
-                      description: 'Les autres voient ton pseudo et ta photo.',
+                      label: l10n.mesAbonnes,
+                      description: l10n.lesAutresVoientTonPseudo,
                     ),
                   ],
                 ),
@@ -291,29 +292,29 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
                 MuSwitch(
                   value: d.showLevel,
                   icon: PhosphorIcons.gauge(),
-                  label: 'Afficher mon niveau',
-                  description: 'Pour être invité au bon niveau.',
+                  label: l10n.afficherMonNiveau,
+                  description: l10n.pourEtreInviteAuBon,
                   onChanged: (v) => set((p) => p.copyWith(showLevel: v)),
                 ),
                 const SizedBox(height: MuSpace.s3),
                 MuSwitch(
                   value: d.showReliability,
                   icon: PhosphorIcons.shieldCheck(),
-                  label: 'Afficher ma fiabilité',
-                  description: 'Rassure les organisateurs de parties.',
+                  label: l10n.afficherMaFiabilite,
+                  description: l10n.rassureLesOrganisateursDeParties,
                   onChanged: (v) => set((p) => p.copyWith(showReliability: v)),
                 ),
                 const SizedBox(height: MuSpace.s3),
                 MuSwitch(
                   value: d.suggestPartner,
                   icon: PhosphorIcons.sparkle(),
-                  label: 'Me proposer comme partenaire',
-                  description: 'Suggéré par l’IA aux joueurs de ton niveau.',
+                  label: l10n.meProposerCommePartenaire,
+                  description: l10n.suggereParLIaAux,
                   onChanged: (v) => set((p) => p.copyWith(suggestPartner: v)),
                 ),
                 const SizedBox(height: MuSpace.s4),
                 MuSettingsRow(
-                  title: 'Plus de réglages de confidentialité',
+                  title: l10n.plusDeReglagesDeConfidentialite,
                   onTap: () => context.push(Routes.settingsPrivacy),
                 ),
               ],
@@ -324,7 +325,7 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
       bottomNavigationBar: StickyActionBar(
         children: [
           MuButton.primary(
-            label: 'Enregistrer',
+            label: l10n.enregistrer,
             size: MuButtonSize.xl,
             fullWidth: true,
             loading: _saving,

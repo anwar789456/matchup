@@ -12,10 +12,16 @@ import '../../../ui/ui.dart';
 import '../../common/data/story_data.dart';
 import '../../common/widgets/coming_soon.dart';
 import '../../common/widgets/flow_scaffold.dart';
+import '../../home/controllers/home_providers.dart';
+import '../../states/widgets/state_widgets.dart';
+import '../../notifications/controllers/live_events.dart';
+import '../../payments/controllers/checkout_controller.dart';
+import '../../venue/data/venue_details.dart';
 import '../controllers/game_actions.dart';
 import '../data/games_repository.dart';
 import '../widgets/game_widgets.dart';
 import '../widgets/leave_dialog.dart';
+import '../../../l10n/l10n.dart';
 
 /// GAM-01 · Partie ouverte / GAM-02 · Partie complète: the lobby of an open game — hero, facts,
 /// the venue, the organiser, « Pourquoi pour toi », the lineup, the chat preview, the rules — and
@@ -31,7 +37,6 @@ class GameScreen extends ConsumerStatefulWidget {
 }
 
 class _GameScreenState extends ConsumerState<GameScreen> {
-  bool _paying = false;
   bool _hidden = false;
 
   // GAM-01: hero 188 high; the main card overlaps it by 20 with a radius-lg top.
@@ -39,24 +44,38 @@ class _GameScreenState extends ConsumerState<GameScreen> {
   static const double _overlap = 20;
   static const double _bottomRoom = MuSpace.s16 + MuSpace.s8;
 
-  Future<void> _join(GameDetails d, (int, int) spot) async {
-    if (_paying) return;
-    setState(() => _paying = true);
-    try {
-      await ref.read(gameActionsProvider).join(d.game, team: spot.$1, slot: spot.$2);
-      if (!mounted) return;
-      context.pushReplacement(Routes.gameJoined(widget.gameId));
-    } catch (e) {
-      if (!mounted) return;
-      MuToast.show(
-        context,
-        tone: MuToastTone.error,
-        title: 'Le paiement n’a pas abouti',
-        description: 'Réessaie dans un instant.',
-      );
-    } finally {
-      if (mounted) setState(() => _paying = false);
-    }
+  /// « Rejoindre et payer »: the share goes through the checkout (PAY-01); once paid the place is
+  /// taken and PAY-09 « Terminé » leads to GAM-05.
+  void _join(GameDetails d, (int, int) spot) {
+    final g = d.game;
+    final format = g.sport == MuSport.football ? l10n.footVs : g.sport.label;
+    ref.read(checkoutRequestProvider.notifier).start(
+      CheckoutRequest(
+        kind: CheckoutKind.share,
+        eyebrow: l10n.taPartPartie('${g.id}'),
+        title: g.court == null ? g.venue : '${g.venue} · ${g.court}',
+        subtitle: '${formatDay(g.start)} · ${formatTime(g.start)} · $format',
+        amount: g.pricePerPlayer,
+        lineLabel: l10n.taPartJoueurSur(g.spotsTotal),
+        sport: g.sport,
+        policy: (
+          g.start.subtract(VenueDetails.freeUntil),
+          g.start.subtract(VenueDetails.halfUntil),
+        ),
+        policyVenue: g.venue,
+        detailRows: [
+          (l10n.quoi, l10n.placeDansUnePartieOuverte, g.levelMin == null ? g.gameType : '${g.gameType} · ${formatLevel(g.levelMin!)} – ${formatLevel(g.levelMax!)}'),
+          (l10n.ou, g.venue, g.place),
+          (l10n.quand, formatDateTime(g.start), null),
+          (l10n.joueurs, '${g.spotsTotal - g.spotsLeft}/${g.spotsTotal}', l10n.placesEncoreOuvertes(g.spotsLeft)),
+        ],
+        successRoute: Routes.gameJoined(widget.gameId),
+        onPaid: (receipt, fromBalance) => ref
+            .read(gameActionsProvider)
+            .completeJoin(g, team: spot.$1, slot: spot.$2, receipt: receipt, fromBalance: fromBalance),
+      ),
+    );
+    context.push(Routes.checkout);
   }
 
   Future<void> _waitlist(GameDetails d) async {
@@ -68,8 +87,7 @@ class _GameScreenState extends ConsumerState<GameScreen> {
   void _share(GameDetails d) => SharePlus.instance.share(
     ShareParams(
       text:
-          '${d.game.sport.label} · ${d.game.title} · ${formatDateTime(d.game.start)} · '
-          'https://matchup.tn/g/${d.game.id}',
+          l10n.httpsMatchupTnG(d.game.sport.label, d.game.title, formatDateTime(d.game.start), '${d.game.id}'),
     ),
   );
 
@@ -77,24 +95,49 @@ class _GameScreenState extends ConsumerState<GameScreen> {
   Widget build(BuildContext context) {
     final c = context.mu;
     final details = ref.watch(gameDetailsProvider(widget.gameId));
+    // NOT-07: someone joins while the lobby is open — the lineup refreshes and a toast says so.
+    ref.listen(gameLiveEventsProvider, (_, next) {
+      final e = next.value;
+      if (e == null || e.gameId != widget.gameId) return;
+      MuToast.show(
+        context,
+        tone: MuToastTone.info,
+        icon: PhosphorIcons.userPlus(PhosphorIconsStyle.fill),
+        title: e.title,
+        description: e.description,
+      );
+    });
     return Scaffold(
       backgroundColor: c.bg,
       body: switch (details) {
         AsyncData(:final value) => _body(context, value),
-        AsyncError() => Center(
-          child: Padding(
-            padding: const EdgeInsets.all(MuSpace.s4),
-            child: MuEmptyState(
-              title: 'Partie introuvable',
-              description: 'Elle a peut-être été annulée.',
-              actions: [
-                MuButton.primary(
-                  label: 'Voir les parties',
-                  onPressed: () => context.go(Routes.explore),
-                ),
-              ],
+        // STA-03: a dead link (expired, or the organiser deleted the game).
+        AsyncError() => Column(
+          children: [
+            MuTopAppBar.compact(
+              title: l10n.partie,
+              onBack: () => goBack(context, Routes.explore),
             ),
-          ),
+            Expanded(
+              child: NotFoundState(
+                title: l10n.cettePartieNExistePlus,
+                description:
+                    l10n.leLienAExpireOu,
+                link: 'matchup.tn/p/${widget.gameId}',
+                actionLabel: l10n.trouverUneAutrePartie,
+                onAction: () => context.go(Routes.explore),
+                alternativesTitle: l10n.partiesProchesCeWeekEnd,
+                alternatives: [
+                  for (final g in (ref.watch(recommendedGamesProvider).value ?? const <MuGame>[]).take(2))
+                    MuGameCard(
+                      game: g,
+                      onTap: () => context.push(Routes.game(g.id!)),
+                      onJoin: () => context.push(Routes.game(g.id!)),
+                    ),
+                ],
+              ),
+            ),
+          ],
         ),
         _ => Column(
           children: [
@@ -111,10 +154,10 @@ class _GameScreenState extends ConsumerState<GameScreen> {
                 ],
               ),
             ),
-            const Expanded(
+            Expanded(
               child: MuSkeletonGroup(
-                label: 'Chargement de la partie',
-                child: Padding(
+                label: l10n.chargementDeLaPartie,
+                child: const Padding(
                   padding: EdgeInsets.all(MuSpace.s4),
                   child: MuSkeleton.text(lines: 6),
                 ),
@@ -138,13 +181,13 @@ class _GameScreenState extends ConsumerState<GameScreen> {
           context,
           PhosphorIcons.checkCircle(PhosphorIconsStyle.fill),
           c.successText,
-          'Tu joues · annulation gratuite jusqu’à ${formatDateTime(d.freeUntil)}',
+          l10n.tuJouesAnnulationGratuiteJusqu(formatDateTime(d.freeUntil)),
         );
         action = Row(
           children: [
             Expanded(
               child: MuButton.secondary(
-                label: 'Quitter la partie',
+                label: l10n.quitterLaPartie,
                 leading: PhosphorIcons.signOut(),
                 size: MuButtonSize.l,
                 fullWidth: true,
@@ -154,7 +197,7 @@ class _GameScreenState extends ConsumerState<GameScreen> {
             const SizedBox(width: MuSpace.s3),
             Expanded(
               child: MuButton.primary(
-                label: 'Discussion',
+                label: l10n.discussion,
                 leading: PhosphorIcons.chatCircle(),
                 size: MuButtonSize.l,
                 fullWidth: true,
@@ -168,10 +211,10 @@ class _GameScreenState extends ConsumerState<GameScreen> {
           context,
           PhosphorIcons.hourglassMedium(),
           c.warningText,
-          'Tu es ${d.waitlistPosition ?? 1}e sur la liste d’attente',
+          l10n.tuEsESurLa(d.waitlistPosition ?? 1),
         );
         action = MuButton.primary(
-          label: 'Voir la liste d’attente',
+          label: l10n.voirLaListeDAttente,
           size: MuButtonSize.xl,
           fullWidth: true,
           onPressed: () => context.push(Routes.gameWaitlist(widget.gameId)),
@@ -181,19 +224,19 @@ class _GameScreenState extends ConsumerState<GameScreen> {
           hint = Text.rich(
             TextSpan(
               children: [
-                const TextSpan(text: 'Gratuit · tu ne paies '),
+                TextSpan(text: l10n.gratuitTuNePaies),
                 TextSpan(
                   text: formatDT(g.pricePerPlayer),
                   style: MuType.labelS.copyWith(color: c.text),
                 ),
-                const TextSpan(text: ' que si tu réclames une place'),
+                TextSpan(text: l10n.queSiTuReclamesUne),
               ],
             ),
             textAlign: TextAlign.center,
             style: MuType.caption.copyWith(color: c.textSecondary),
           );
           action = MuButton.primary(
-            label: 'Rejoindre la liste d’attente',
+            label: l10n.rejoindreLaListeDAttente,
             leading: PhosphorIcons.hourglassMedium(),
             size: MuButtonSize.xl,
             fullWidth: true,
@@ -204,15 +247,14 @@ class _GameScreenState extends ConsumerState<GameScreen> {
             context,
             PhosphorIcons.shieldCheck(),
             c.successText,
-            'Annulation gratuite jusqu’à ${formatDateTime(d.freeUntil)}',
+            l10n.annulationGratuiteJusquA(formatDateTime(d.freeUntil)),
           );
           final spot = firstFreeSlot(d.teams);
           action = MuButton.primary(
-            label: 'Rejoindre et payer',
+            label: l10n.rejoindreEtPayer,
             price: formatDT(g.pricePerPlayer),
             size: MuButtonSize.xl,
             fullWidth: true,
-            loading: _paying,
             onPressed: spot == null ? null : () => _join(d, spot),
           );
         }
@@ -244,8 +286,8 @@ class _GameScreenState extends ConsumerState<GameScreen> {
     final g = d.game;
     final full = g.isFull;
     final joined = d.membership == GameMembership.joined;
-    final sportLine = g.sport == MuSport.football ? '${g.sport.label} · 5 vs 5' : g.sport.label;
-    final organiserFirst = (g.organiser ?? 'l’organisateur').split(' ').first;
+    final sportLine = g.sport == MuSport.football ? l10n.vs(g.sport.label) : g.sport.label;
+    final organiserFirst = (g.organiser ?? l10n.lOrganisateur).split(' ').first;
 
     final hero = SizedBox(
       height: _hero + _overlap,
@@ -264,12 +306,12 @@ class _GameScreenState extends ConsumerState<GameScreen> {
               actions: [
                 MuBarAction(
                   icon: PhosphorIcons.shareNetwork(),
-                  label: 'Partager la partie',
+                  label: l10n.partagerLaPartie,
                   onPressed: () => _share(d),
                 ),
                 MuBarAction(
                   icon: PhosphorIcons.dotsThreeVertical(),
-                  label: 'Plus d’actions',
+                  label: l10n.plusDActions,
                   onPressed: () => showComingSoon(context),
                 ),
               ],
@@ -284,11 +326,11 @@ class _GameScreenState extends ConsumerState<GameScreen> {
                 Flexible(child: KickoffPill(start: g.start)),
                 const SizedBox(width: MuSpace.s2),
                 if (full)
-                  const MuStatusBadge(status: MuStatus.full, label: 'Complet', size: MuBadgeSize.s)
+                  MuStatusBadge(status: MuStatus.full, label: l10n.complet, size: MuBadgeSize.s)
                 else
-                  const MuStatusBadge(
+                  MuStatusBadge(
                     status: MuStatus.confirmed,
-                    label: 'Terrain réservé',
+                    label: l10n.terrainReserve,
                     size: MuBadgeSize.s,
                   ),
               ],
@@ -306,7 +348,7 @@ class _GameScreenState extends ConsumerState<GameScreen> {
         MuChip(label: g.gameType, icon: PhosphorIcons.usersThree(), size: MuChipSize.s),
         if (g.levelLabel != null)
           MuChip(
-            label: 'Niveau ${g.levelLabel!.replaceAll('–', ' – ')}',
+            label: l10n.niveau2(g.levelLabel!.replaceAll('–', ' – ')),
             icon: PhosphorIcons.gauge(),
             size: MuChipSize.s,
           ),
@@ -315,20 +357,20 @@ class _GameScreenState extends ConsumerState<GameScreen> {
 
     final facts = FactsCard(
       cells: [
-        FactCell(formatDay(g.start), formatTime(g.start), caption: 'jusqu’à ${formatTime(d.end)}'),
+        FactCell(formatDay(g.start), formatTime(g.start), caption: l10n.jusquA(formatTime(d.end))),
         FactCell(
-          'Ta part',
+          l10n.taPart,
           formatDT(g.pricePerPlayer),
-          caption: '${formatDT(d.courtPrice)} le terrain',
+          caption: l10n.leTerrain(formatDT(d.courtPrice)),
         ),
         full
             ? FactCell(
-                'Joueurs',
+                l10n.joueurs,
                 '${g.spotsTotal}/${g.spotsTotal}',
-                captionWidget: Text('Complet', style: MuType.caption.copyWith(color: c.errorText)),
+                captionWidget: Text(l10n.complet, style: MuType.caption.copyWith(color: c.errorText)),
               )
             : FactCell(
-                'Places',
+                l10n.places,
                 '${g.spotsLeft}',
                 caption: '${d.playersIn}/${g.spotsTotal} joueurs',
               ),
@@ -351,7 +393,7 @@ class _GameScreenState extends ConsumerState<GameScreen> {
           const SizedBox(height: MuSpace.s3),
           Semantics(
             button: true,
-            label: 'Organisée par ${g.organiser}, voir son profil',
+            label: l10n.organiseeParVoirSonProfil('${g.organiser}'),
             excludeSemantics: true,
             child: InkWell(
               borderRadius: MuRadius.smAll,
@@ -371,7 +413,7 @@ class _GameScreenState extends ConsumerState<GameScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Organisée par',
+                          l10n.organiseePar,
                           style: MuType.caption.copyWith(color: c.textSecondary),
                         ),
                         Row(
@@ -429,26 +471,26 @@ class _GameScreenState extends ConsumerState<GameScreen> {
                                 fit: BoxFit.scaleDown,
                                 alignment: AlignmentDirectional.centerStart,
                                 child: Text(
-                                  'Pourquoi pour toi',
+                                  l10n.pourquoiPourToi,
                                   style: MuType.h3.copyWith(color: c.text),
                                 ),
                               ),
                             ),
                           ),
                           const SizedBox(width: MuSpace.s2),
-                          const MuAiLabel(size: MuAiLabelSize.s),
+                          MuAiLabel(size: MuAiLabelSize.s),
                         ],
                       ),
                     ),
                     MuButton.tertiary(
-                      label: 'Pas pour moi',
+                      label: l10n.pasPourMoi,
                       size: MuButtonSize.s,
                       onPressed: () {
                         setState(() => _hidden = true);
                         MuToast.show(
                           context,
-                          title: 'Merci, on en tient compte',
-                          description: 'L’IA proposera moins de parties comme celle-ci.',
+                          title: l10n.merciOnEnTientCompte,
+                          description: l10n.lIaProposeraMoinsDe,
                         );
                       },
                     ),
@@ -466,8 +508,8 @@ class _GameScreenState extends ConsumerState<GameScreen> {
         MuLineup(
           sport: g.sport,
           teams: d.teams,
-          title: 'Composition',
-          disabled: full || joined || _paying,
+          title: l10n.composition,
+          disabled: full || joined,
           onJoin: (team, slot, position) => _join(d, (team, slot)),
         ),
         const SizedBox(height: MuSpace.s2),
@@ -485,11 +527,10 @@ class _GameScreenState extends ConsumerState<GameScreen> {
                   Flexible(
                     child: Text(
                       full
-                          ? '${d.waitlistCount} en liste d’attente · tu serais '
-                                '${d.waitlistCount + 1}e'
+                          ? l10n.enListeDAttenteTu(d.waitlistCount, d.waitlistCount + 1)
                           : joined
-                          ? 'Ta place est prise, à ${formatTime(g.start)} sur le terrain'
-                          : 'Touche un « + » pour choisir ton poste',
+                          ? l10n.taPlaceEstPriseA(formatTime(g.start))
+                          : l10n.toucheUnPourChoisirTon,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: MuType.caption.copyWith(color: c.textSecondary),
@@ -498,7 +539,7 @@ class _GameScreenState extends ConsumerState<GameScreen> {
                 ],
               ),
             ),
-            Text('Moy. ', style: MuType.caption.copyWith(color: c.textSecondary)),
+            Text(l10n.moy, style: MuType.caption.copyWith(color: c.textSecondary)),
             Text(formatLevel(d.averageLevel), style: MuType.numS.copyWith(color: c.text)),
           ],
         ),
@@ -509,7 +550,7 @@ class _GameScreenState extends ConsumerState<GameScreen> {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         SectionHead(
-          'Discussion',
+          l10n.discussion,
           trailing: Text.rich(
             TextSpan(
               children: [
@@ -535,7 +576,7 @@ class _GameScreenState extends ConsumerState<GameScreen> {
               const SizedBox(height: MuSpace.s3),
               if (joined)
                 MuButton.secondary(
-                  label: 'Ouvrir la discussion',
+                  label: l10n.ouvrirLaDiscussion,
                   leading: PhosphorIcons.chatCircle(),
                   fullWidth: true,
                   onPressed: () => showComingSoon(context),
@@ -543,8 +584,8 @@ class _GameScreenState extends ConsumerState<GameScreen> {
               else
                 ChatLocked(
                   full
-                      ? 'Tu pourras écrire dès que tu as une place.'
-                      : 'Rejoins la partie pour écrire aux joueurs.',
+                      ? l10n.tuPourrasEcrireDesQue
+                      : l10n.rejoinsLaPartiePourEcrire,
                 ),
             ],
           ),
@@ -555,7 +596,7 @@ class _GameScreenState extends ConsumerState<GameScreen> {
     final rules = Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        const SectionHead('Règles et annulation'),
+        SectionHead(l10n.reglesEtAnnulation),
         const SizedBox(height: MuSpace.s3),
         MuCardSurface(
           child: Column(
@@ -571,7 +612,7 @@ class _GameScreenState extends ConsumerState<GameScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Arrive 10 min avant le coup d’envoi',
+                          l10n.arriveMinAvantLeCoup,
                           style: MuType.label.copyWith(color: c.text),
                         ),
                         Text(d.arrivalNote, style: MuType.caption.copyWith(color: c.textSecondary)),
@@ -588,7 +629,7 @@ class _GameScreenState extends ConsumerState<GameScreen> {
               ),
               const SizedBox(height: MuSpace.s3),
               Text(
-                'Remboursé sur ton solde MatchUp, en entier si $organiserFirst annule.',
+                l10n.rembourseSurTonSoldeMatchup(organiserFirst),
                 style: MuType.caption.copyWith(color: c.textSecondary),
               ),
             ],

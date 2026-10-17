@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../theme/theme.dart';
 import 'mu_sport_icon.dart';
 import 'src/explore_map.dart';
+import '../l10n/l10n.dart';
 
 /// A geographic point.
 @immutable
@@ -71,20 +72,20 @@ class MuMapView extends StatefulWidget {
 
   /// The interactive map. [zoom] is a web-map zoom level here (12,5 ≈ a district and its
   /// neighbours).
-  const MuMapView.explore({
+  MuMapView.explore({
     super.key,
     required this.center,
     this.venues = const [],
     this.user,
     this.zoom = 12.5,
-    this.label = 'Carte des terrains — glisse pour te déplacer, pince ou utilise + et − pour zoomer',
+    String? label,
     this.selectedId,
     this.onSelect,
     this.onOpen,
     this.onSearchArea,
     this.onLocate,
     this.tiles = true,
-  })  : interactive = true,
+  })  : label = label ?? l10n.carteDesTerrainsGlissePour, interactive = true,
         district = null,
         street = null;
 

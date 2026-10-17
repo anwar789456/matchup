@@ -5,7 +5,9 @@ import '../../booking/data/payment_repository.dart';
 import '../../explore/controllers/explore_controller.dart';
 import '../../home/controllers/home_providers.dart';
 import '../../profile/data/me_repository.dart';
+import '../../wallet/data/wallet_repository.dart';
 import '../data/games_repository.dart';
+import '../../../l10n/l10n.dart';
 
 /// What a player does with an open game: join (after paying the share), leave, the waitlist. Each
 /// action refreshes the game page, « Mes matchs », the Home and Explorer.
@@ -24,12 +26,23 @@ class GameActions {
       ..invalidate(exploreGamesProvider);
   }
 
-  /// Pays the share (CLAUDE.md rule 10: the fake payment until PAY-01), then takes the place.
-  Future<void> join(MuGame game, {required int team, required int slot}) async {
-    await _ref
-        .read(paymentRepositoryProvider)
-        .pay(game.pricePerPlayer, reason: 'Partie ${game.id} · ${game.title}');
+  /// The share went through the checkout (PAY-01): takes the place and records the wallet line.
+  Future<void> completeJoin(
+    MuGame game, {
+    required int team,
+    required int slot,
+    required PaymentReceipt receipt,
+    num fromBalance = 0,
+  }) async {
     await _games.join(game.id!, team: team, slot: slot);
+    await _ref
+        .read(walletActionsProvider)
+        .paid(
+          receipt: receipt,
+          label: l10n.partText(game.venue),
+          sport: game.sport,
+          fromBalance: fromBalance,
+        );
     _refresh(game.id!);
   }
 

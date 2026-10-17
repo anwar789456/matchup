@@ -11,7 +11,10 @@ import '../../../ui/ui.dart';
 import '../../common/data/story_data.dart';
 import '../../common/widgets/coming_soon.dart';
 import '../../home/controllers/home_providers.dart';
+import '../../subscription/controllers/subscription_controller.dart';
+import '../../subscription/data/subscription_repository.dart';
 import '../data/profile_repository.dart';
+import '../../../l10n/l10n.dart';
 
 /// PRF-05 · Menu du compte: the sheet from the Home avatar — profile, wallet, Premium, settings,
 /// role switch (PRF-06), help, sign out.
@@ -24,7 +27,7 @@ Future<void> showAccountMenu(BuildContext context, WidgetRef ref) {
 
   return MuBottomSheet.show<void>(
     context,
-    title: 'Mon compte',
+    title: l10n.monCompte,
     height: MuSheetHeight.auto,
     child: Consumer(
       builder: (context, ref, _) {
@@ -40,7 +43,7 @@ Future<void> showAccountMenu(BuildContext context, WidgetRef ref) {
             children: [
               Semantics(
                 button: true,
-                label: 'Mon profil, ${me?.displayName ?? Story.myName}',
+                label: l10n.monProfil2(me?.displayName ?? Story.myName),
                 excludeSemantics: true,
                 child: InkWell(
                   borderRadius: MuRadius.smAll,
@@ -94,37 +97,45 @@ Future<void> showAccountMenu(BuildContext context, WidgetRef ref) {
               const SizedBox(height: MuSpace.s2),
               _Item(
                 icon: PhosphorIcons.userCircle(),
-                title: 'Mon profil',
+                title: l10n.monProfil,
                 onTap: () => go(Routes.profile),
               ),
               _Item(
                 icon: PhosphorIcons.wallet(),
-                title: 'Portefeuille',
-                detail: 'Remboursements et parts payées',
+                title: l10n.portefeuille,
+                detail: l10n.remboursementsEtPartsPayees,
                 end: Text(
                   formatDT(me?.balance ?? Story.myBalance),
                   style: MuType.numM.copyWith(color: c.text),
                 ),
-                semanticLabel: 'Portefeuille, solde ${formatDT(me?.balance ?? Story.myBalance)}',
+                semanticLabel: l10n.portefeuilleSolde(formatDT(me?.balance ?? Story.myBalance)),
                 onTap: () => go(Routes.wallet),
               ),
               _Item(
                 icon: PhosphorIcons.crownSimple(),
-                title: 'MatchUp Premium',
-                detail: '14 jours gratuits, sans engagement',
-                onTap: () => go(Routes.subscriptionOffers),
+                title: l10n.matchupPremium,
+                detail: switch (ref.watch(subscriptionProvider).value?.status) {
+                  PremiumStatus.trial => l10n.essaiGratuitEnCours,
+                  PremiumStatus.cancelled => l10n.resilieActifJusquAuOct,
+                  _ => l10n.joursGratuitsSansEngagement,
+                },
+                onTap: () => go(
+                  ref.read(subscriptionProvider).value?.premium ?? false
+                      ? Routes.subscription
+                      : Routes.subscriptionOffers,
+                ),
               ),
               _Item(
                 icon: PhosphorIcons.gearSix(),
-                title: 'Paramètres',
+                title: l10n.parametres,
                 onTap: () => go(Routes.settings),
               ),
               _Item(
                 icon: PhosphorIcons.arrowsLeftRight(),
-                title: 'Changer de rôle',
-                detail: 'Joueur · Propriétaire de terrain à terminer',
+                title: l10n.changerDeRole,
+                detail: l10n.joueurProprietaireDeTerrainA,
                 end: Semantics(
-                  label: 'Une configuration à terminer',
+                  label: l10n.uneConfigurationATerminer,
                   child: Container(
                     width: MuSpace.s2,
                     height: MuSpace.s2,
@@ -138,7 +149,7 @@ Future<void> showAccountMenu(BuildContext context, WidgetRef ref) {
               ),
               _Item(
                 icon: PhosphorIcons.lifebuoy(),
-                title: 'Aide',
+                title: l10n.aide,
                 onTap: () {
                   nav.pop();
                   showComingSoon(context);
@@ -149,7 +160,7 @@ Future<void> showAccountMenu(BuildContext context, WidgetRef ref) {
               const SizedBox(height: MuSpace.s2),
               _Item(
                 icon: PhosphorIcons.signOut(),
-                title: 'Se déconnecter',
+                title: l10n.seDeconnecter,
                 onTap: () async {
                   nav.pop();
                   await signOutToLogin(context, ref);
@@ -164,28 +175,40 @@ Future<void> showAccountMenu(BuildContext context, WidgetRef ref) {
 }
 
 /// PRF-06 · Changer de rôle.
-Future<void> showRoleSwitcher(BuildContext context) => MuRoleSwitcher.show(
+/// [current] is the space on screen (`player`, `owner`); picking another one opens it.
+Future<void> showRoleSwitcher(BuildContext context, {String current = 'player'}) {
+  final router = GoRouter.of(context);
+  return MuRoleSwitcher.show(
   context,
-  current: 'player',
+  current: current,
   roles: [
     MuRole(
       id: 'player',
-      name: 'Joueur',
+      name: l10n.joueur,
       icon: PhosphorIcons.personSimpleRun(),
-      detail: 'Padel ${formatLevel(Story.myLevels[MuSport.padel]!)} · ${Story.zone}',
+      detail: l10n.padel2(formatLevel(Story.myLevels[MuSport.padel]!), Story.zone),
     ),
     MuRole(
       id: 'owner',
-      name: 'Propriétaire de terrain',
+      name: l10n.proprietaireDeTerrain,
       icon: PhosphorIcons.storefront(),
-      detail: 'Configuration à terminer · 3 étapes',
+      detail: l10n.configurationATerminerEtapes,
       pending: 1,
-      semanticLabel: 'Passer en Propriétaire de terrain et terminer la configuration',
+      semanticLabel: l10n.passerEnProprietaireDeTerrain,
     ),
+    MuRole(id: 'admin', name: l10n.adminMatchup, icon: PhosphorIcons.shieldCheck()),
   ],
-  onChanged: (r) => context.push(Routes.ownerCompany),
-  onAddRole: () => context.push(Routes.roleChoice),
+  onChanged: (r) {
+    if (r.id == current) return;
+    router.go(switch (r.id) {
+      'owner' => Routes.ownerToday,
+      'admin' => Routes.adminOverview,
+      _ => Routes.home,
+    });
+  },
+  onAddRole: () => router.push(Routes.roleChoice),
 );
+}
 
 /// Signs out and lands on the login (AUTH-05).
 Future<void> signOutToLogin(BuildContext context, WidgetRef ref) async {

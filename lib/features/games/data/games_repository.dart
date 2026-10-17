@@ -39,6 +39,9 @@ abstract interface class GamesRepository {
 
   /// A player left a full game: one place opens, for the waitlist to claim.
   Future<void> freeSpot(String id);
+
+  /// Someone else took a place (the real-time update of NOT-07; debug menu until a backend).
+  Future<void> playerJoined(String id);
 }
 
 /// The story's games (design/screens/STORY-DATA.md), with the membership kept in memory.
@@ -310,6 +313,11 @@ class FakeGamesRepository implements GamesRepository {
   @override
   Future<void> freeSpot(String id) async {
     _freed[id] = (_freed[id] ?? 0) + 1;
+  }
+
+  @override
+  Future<void> playerJoined(String id) async {
+    _freed[id] = (_freed[id] ?? 0) - 1;
   }
 }
 

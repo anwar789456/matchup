@@ -9,6 +9,7 @@ import '../../explore/data/tournaments_repository.dart';
 import '../../games/data/games_repository.dart';
 import '../../home/controllers/home_providers.dart';
 import '../../venue/data/venues_repository.dart';
+import '../../../l10n/l10n.dart';
 
 /// Explorer's segments (« Parties · Terrains · Tournois ») and views (« Carte · Liste »).
 enum ExploreTab { games, venues, tournaments }
@@ -19,13 +20,15 @@ enum ExploreView { list, map }
 enum ExploreWhen { any, tonight, weekend, day }
 
 enum ExploreTime {
-  morning('Matin'),
-  afternoon('Après-midi'),
-  evening('Soir · après 18h');
+  morning,
+  afternoon,
+  evening;
 
-  const ExploreTime(this.label);
-
-  final String label;
+  String get label => switch (this) {
+    ExploreTime.morning => l10n.matin,
+    ExploreTime.afternoon => l10n.apresMidi,
+    ExploreTime.evening => l10n.soirApres18h,
+  };
 
   bool matches(DateTime d) => switch (this) {
     ExploreTime.morning => d.hour < 12,
@@ -35,38 +38,50 @@ enum ExploreTime {
 }
 
 enum ExploreGameType {
-  all('Toutes'),
-  mixte('Mixte'),
-  femmes('Femmes'),
-  hommes('Hommes');
+  all,
+  mixte,
+  femmes,
+  hommes;
 
-  const ExploreGameType(this.label);
-
-  final String label;
+  String get label => switch (this) {
+    ExploreGameType.all => l10n.toutes,
+    ExploreGameType.mixte => l10n.mixte,
+    ExploreGameType.femmes => l10n.femmes,
+    ExploreGameType.hommes => l10n.hommes,
+  };
 }
 
 enum ExploreSort {
-  recommended('Recommandées'),
-  closest('Plus proches'),
-  soonest('Plus tôt'),
-  cheapest('Moins chères');
+  recommended,
+  closest,
+  soonest,
+  cheapest;
 
-  const ExploreSort(this.label);
-
-  final String label;
+  String get label => switch (this) {
+    ExploreSort.recommended => l10n.recommandees,
+    ExploreSort.closest => l10n.plusProches,
+    ExploreSort.soonest => l10n.plusTot,
+    ExploreSort.cheapest => l10n.moinsCheres,
+  };
 }
 
 /// Equipment filters of EXP-04, each standing for the venue amenities it needs.
 enum ExploreAmenity {
-  changing('Vestiaires et douches', [MuAmenity.changingRooms, MuAmenity.showers]),
-  parking('Parking', [MuAmenity.parking]),
-  cafe('Café', [MuAmenity.cafe]),
-  bibs('Chasubles', [MuAmenity.bibs]);
+  changing([MuAmenity.changingRooms, MuAmenity.showers]),
+  parking([MuAmenity.parking]),
+  cafe([MuAmenity.cafe]),
+  bibs([MuAmenity.bibs]);
 
-  const ExploreAmenity(this.label, this.needs);
+  const ExploreAmenity(this.needs);
 
-  final String label;
   final List<MuAmenity> needs;
+
+  String get label => switch (this) {
+    ExploreAmenity.changing => l10n.vestiairesEtDouches,
+    ExploreAmenity.parking => l10n.parking,
+    ExploreAmenity.cafe => l10n.cafe,
+    ExploreAmenity.bibs => l10n.chasubles,
+  };
 }
 
 /// The filters (EXP-04 and the quick chips). Price and level ranges are null when open.
@@ -333,7 +348,7 @@ class ExploreController extends Notifier<ExploreState> {
   ExploreState build() {
     final me = ref.read(meProvider).value;
     return ExploreState(
-      zone: me?.zone ?? 'La Marsa',
+      zone: me?.zone ?? l10n.laMarsa,
       filters: ExploreFilters(level: myLevelRange(me?.levels.values)),
     );
   }

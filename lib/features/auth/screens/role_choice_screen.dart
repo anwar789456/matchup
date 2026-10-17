@@ -10,6 +10,7 @@ import '../../common/widgets/flow_scaffold.dart';
 import '../controllers/auth_providers.dart';
 import '../data/auth_repository.dart';
 import '../widgets/auth_widgets.dart';
+import '../../../l10n/l10n.dart';
 
 /// AUTH-11 · Choix du rôle: one or more roles; « Continuer » opens the first one's onboarding.
 class RoleChoiceScreen extends ConsumerStatefulWidget {
@@ -37,26 +38,26 @@ class _RoleChoiceScreenState extends ConsumerState<RoleChoiceScreen> {
   bool _loading = false;
 
   static final _options = [
-    _RoleOption(UserRole.player, 'Joueur', 'Joueur',
-        'Trouve des parties, réserve des terrains et paie ta part.', Routes.playerSports,
+    _RoleOption(UserRole.player, l10n.joueur, l10n.joueur,
+        l10n.trouveDesPartiesReserveDes, Routes.playerSports,
         MuSportTile.icon(PhosphorIcons.personSimpleRun())),
-    _RoleOption(UserRole.owner, 'Propriétaire de terrain', 'Propriétaire',
-        'Gère tes terrains, ton planning et tes réservations.', Routes.ownerCompany,
+    _RoleOption(UserRole.owner, l10n.proprietaireDeTerrain, l10n.proprietaire,
+        l10n.gereTesTerrainsTonPlanning, Routes.ownerCompany,
         MuSportTile.icon(PhosphorIcons.storefront())),
-    const _RoleOption(UserRole.coach, 'Coach', 'Coach',
-        'Publie tes programmes et suis la progression de tes élèves.', Routes.coachProfile,
-        MuSportTile.asset(MuGlyph.whistle)),
-    const _RoleOption(UserRole.organizer, 'Organisateur', 'Organisateur',
-        'Crée et gère tes tournois et tes événements.', Routes.organizerOrganisation,
-        MuSportTile.asset(MuGlyph.trophy)),
+    _RoleOption(UserRole.coach, l10n.coach, l10n.coach,
+        l10n.publieTesProgrammesEtSuis, Routes.coachProfile,
+        const MuSportTile.asset(MuGlyph.whistle)),
+    _RoleOption(UserRole.organizer, l10n.organisateur, l10n.organisateur,
+        l10n.creeEtGereTesTournois, Routes.organizerOrganisation,
+        const MuSportTile.asset(MuGlyph.trophy)),
   ];
 
   _RoleOption? get _first => _options.where((o) => _roles.contains(o.role)).firstOrNull;
 
   String get _label {
     final first = _first;
-    if (first == null) return 'Choisis au moins un rôle';
-    return _roles.length > 1 ? 'Continuer · ${first.short} d’abord' : 'Continuer';
+    if (first == null) return l10n.choisisAuMoinsUnRole;
+    return _roles.length > 1 ? l10n.continuerDAbord(first.short) : l10n.continuer;
   }
 
   Future<void> _continue() async {
@@ -77,9 +78,9 @@ class _RoleChoiceScreenState extends ConsumerState<RoleChoiceScreen> {
     return FlowScaffold(
       onBack: () => goBack(context, Routes.verifyEmail),
       body: [
-        const FlowTitle('Comment vas-tu utiliser MatchUp ?', lead: 'Choisis un ou plusieurs rôles.'),
+        FlowTitle(l10n.commentVasTuUtiliserMatchup, lead: l10n.choisisUnOuPlusieursRoles),
         MuChoiceGroup(
-          label: 'Tes rôles sur MatchUp',
+          label: l10n.tesRolesSurMatchup,
           children: [
             for (final o in _options)
               MuChoiceCard(
@@ -99,7 +100,7 @@ class _RoleChoiceScreenState extends ConsumerState<RoleChoiceScreen> {
           iconSize: MuSize.iconXs,
           gap: MuSpace.s2,
           style: MuType.caption.copyWith(color: c.textSecondary),
-          text: const TextSpan(text: 'Tu pourras en ajouter d’autres plus tard depuis ton profil.'),
+          text: TextSpan(text: l10n.tuPourrasEnAjouterD),
         ),
       ],
       bottomBar: [

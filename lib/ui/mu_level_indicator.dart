@@ -3,6 +3,7 @@ import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 import '../core/format.dart';
 import '../theme/theme.dart';
+import '../l10n/l10n.dart';
 
 enum MuLevelVariant { inline, bar }
 
@@ -12,7 +13,7 @@ enum MuLevelSize { s, m }
 enum MuConfidence { low, medium, high }
 
 /// The four bands of the 1,0–7,0 scale, each 1,5 points wide.
-const muLevelBands = ['Débutant', 'Intermédiaire', 'Avancé', 'Expert'];
+final muLevelBands = [l10n.debutant, l10n.intermediaire, l10n.avance, l10n.expert];
 
 /// LevelIndicator (components/LevelIndicator.md): a level and its band — inline « 3,5
 /// Intermédiaire », or a 6-segment bar with a marker on the exact level and the bands under it.
@@ -64,7 +65,7 @@ class MuLevelIndicator extends StatelessWidget {
   static const double _dotSize = 6;
   static const double _sparkle = 14;
 
-  String get _spoken => '${formatLevel(level)} sur 7, ${levelBand(level)}';
+  String get _spoken => l10n.sur3(formatLevel(level), levelBand(level));
 
   @override
   Widget build(BuildContext context) {
@@ -72,7 +73,7 @@ class MuLevelIndicator extends StatelessWidget {
     if (variant == MuLevelVariant.inline) {
       final small = size == MuLevelSize.s;
       return Semantics(
-        label: 'Niveau $_spoken',
+        label: l10n.niveau2(_spoken),
         excludeSemantics: true,
         child: Text.rich(
           TextSpan(
@@ -110,9 +111,9 @@ class MuLevelIndicator extends StatelessWidget {
                     ),
                   ),
                 Text(switch (confidence!) {
-                  MuConfidence.low => 'Confiance faible',
-                  MuConfidence.medium => 'Confiance moyenne',
-                  MuConfidence.high => 'Confiance élevée',
+                  MuConfidence.low => l10n.confianceFaible,
+                  MuConfidence.medium => l10n.confianceMoyenne,
+                  MuConfidence.high => l10n.confianceElevee,
                 }, style: MuType.caption.copyWith(color: c.textSecondary)),
               ],
               const Spacer(),
@@ -132,7 +133,7 @@ class MuLevelIndicator extends StatelessWidget {
                 ),
                 const SizedBox(width: MuSpace.s1),
                 Text(
-                  trend == 0 ? 'Stable' : '${trend! > 0 ? '+' : '−'}${formatLevel(trend!.abs())}',
+                  trend == 0 ? l10n.stable : '${trend! > 0 ? '+' : '−'}${formatLevel(trend!.abs())}',
                   style: (trend == 0 ? MuType.labelS : MuType.numXs).copyWith(
                     color: trend! > 0
                         ? c.successText
@@ -156,7 +157,7 @@ class MuLevelIndicator extends StatelessWidget {
           '${trend == null
               ? ''
               : trend == 0
-              ? ', stable'
+              ? l10n.stable2
               : ', ${trend! > 0 ? 'plus' : 'moins'} ${formatLevel(trend!.abs())} ${trendLabel ?? ''}'}',
       excludeSemantics: true,
       child: Column(
@@ -189,7 +190,7 @@ class MuLevelIndicator extends StatelessWidget {
                           color: c.aiText,
                         ),
                         const SizedBox(width: MuSpace.s1),
-                        Text('Estimation IA', style: MuType.labelS.copyWith(color: c.aiText)),
+                        Text(l10n.estimationIa, style: MuType.labelS.copyWith(color: c.aiText)),
                       ],
                     ),
                   ),

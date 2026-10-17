@@ -13,6 +13,7 @@ import '../controllers/onboarding_controller.dart';
 import '../data/level_estimator.dart';
 import '../data/question_bank.dart';
 import '../widgets/onboarding_step_scaffold.dart';
+import '../../../l10n/l10n.dart';
 
 /// PLY-03 · Niveau estimé (IA): the estimate with its confidence, why, « Ajuster mon niveau », and
 /// the other sports still to estimate.
@@ -48,11 +49,11 @@ class _LevelResultScreenState extends ConsumerState<LevelResultScreen> {
     return OnboardingStepScaffold(
       route: Routes.playerLevel(widget.sport),
       step: 2,
-      stepTitle: 'Ton niveau',
+      stepTitle: l10n.tonNiveau,
       onBack: () => goBack(context, Routes.playerQuestions(widget.sport)),
       gap: MuSpace.s4,
       body: [
-        FlowTitle('Ton niveau ${widget.sport.withDe}'),
+        FlowTitle(l10n.tonNiveau2(widget.sport.withDe)),
         _EstimateCard(
           sport: widget.sport,
           estimate: estimate,
@@ -64,7 +65,7 @@ class _LevelResultScreenState extends ConsumerState<LevelResultScreen> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             MuButton.secondary(
-              label: 'Ajuster mon niveau',
+              label: l10n.ajusterMonNiveau,
               leading: PhosphorIcons.pencilSimple(),
               trailing: _adjusting ? PhosphorIcons.caretUp() : PhosphorIcons.caretDown(),
               size: MuButtonSize.l,
@@ -86,15 +87,14 @@ class _LevelResultScreenState extends ConsumerState<LevelResultScreen> {
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: [
                             MuLevelSlider(
-                              label: 'Ton niveau ${widget.sport.lowerName}',
+                              label: l10n.tonNiveau2(widget.sport.lowerName),
                               value: level,
                               aiEstimate: estimate.level,
                               onChanged: (v) => ref.onboarding.setLevel(widget.sport, v),
                             ),
                             const SizedBox(height: MuSpace.s2),
                             Text(
-                              'Tu connais ton jeu mieux que personne : ton choix remplace '
-                              'l’estimation.',
+                              l10n.tuConnaisTonJeuMieux,
                               style: MuType.caption.copyWith(color: c.textSecondary),
                             ),
                           ],
@@ -106,7 +106,7 @@ class _LevelResultScreenState extends ConsumerState<LevelResultScreen> {
             const SizedBox(height: MuSpace.s3),
             ProgressSavedNote(
               icon: PhosphorIcons.arrowsClockwise(),
-              text: 'Le niveau se met à jour automatiquement après tes matchs.',
+              text: l10n.leNiveauSeMetA,
             ),
           ],
         ),
@@ -123,15 +123,15 @@ class _LevelResultScreenState extends ConsumerState<LevelResultScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text('${other.onboardingName} · à estimer',
+                      Text(l10n.aEstimer(other.onboardingName),
                           style: MuType.label.copyWith(color: c.text)),
-                      Text('6 questions, moins d’une minute',
+                      Text(l10n.questionsMoinsDUneMinute,
                           style: MuType.caption.copyWith(color: c.textSecondary)),
                     ],
                   ),
                 ),
                 MuButton.tertiary(
-                  label: 'Estimer',
+                  label: l10n.estimer,
                   size: MuButtonSize.s,
                   onPressed: () => context.push(Routes.playerQuestions(other)),
                 ),
@@ -141,7 +141,7 @@ class _LevelResultScreenState extends ConsumerState<LevelResultScreen> {
       ],
       bottomBar: [
         MuButton.primary(
-          label: 'C’est bon',
+          label: l10n.cEstBon,
           size: MuButtonSize.xl,
           fullWidth: true,
           onPressed: () => context.push(Routes.playerPosition),
@@ -174,11 +174,11 @@ class _EstimateCard extends StatelessWidget {
     final (String confidence, int dots) = switch (estimate.confidence) {
       EstimateConfidence.low => ('faible', 1),
       EstimateConfidence.medium => ('moyenne', 2),
-      EstimateConfidence.high => ('élevée', 3),
+      EstimateConfidence.high => (l10n.elevee, 3),
     };
     return Semantics(
       container: true,
-      label: adjusted ? 'Niveau ${sport.lowerName} choisi' : 'Niveau ${sport.lowerName} estimé',
+      label: adjusted ? l10n.niveauChoisi(sport.lowerName) : l10n.niveauEstime(sport.lowerName),
       child: Container(
         padding: const EdgeInsets.all(MuSpace.s4),
         decoration: BoxDecoration(
@@ -193,11 +193,11 @@ class _EstimateCard extends StatelessWidget {
             Row(
               children: [
                 if (!adjusted) ...[
-                  const MuAiLabel(),
+                  MuAiLabel(),
                   const SizedBox(width: MuSpace.s2),
                 ],
                 Expanded(
-                  child: Text(adjusted ? 'Ton niveau' : 'Niveau estimé',
+                  child: Text(adjusted ? l10n.tonNiveau : l10n.niveauEstime2,
                       style: MuType.label.copyWith(color: c.textSecondary)),
                 ),
                 MuChip.sport(sport),
@@ -208,7 +208,7 @@ class _EstimateCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 Semantics(
-                  label: '${formatLevel(level)} sur 7',
+                  label: l10n.sur(formatLevel(level)),
                   excludeSemantics: true,
                   child: Text(formatLevel(level), style: MuType.numHero.copyWith(color: c.text)),
                 ),
@@ -220,7 +220,7 @@ class _EstimateCard extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(levelBand(level), style: MuType.h3.copyWith(color: c.text)),
-                        Text('sur une échelle de 1,0 à 7,0',
+                        Text(l10n.surUneEchelleDeA,
                             style: MuType.caption.copyWith(color: c.textSecondary)),
                       ],
                     ),
@@ -232,7 +232,7 @@ class _EstimateCard extends StatelessWidget {
             MuLevelIndicator(
               level: level,
               variant: MuLevelVariant.bar,
-              label: 'Niveau ${sport.lowerName} estimé',
+              label: l10n.niveauEstime(sport.lowerName),
             ),
             const SizedBox(height: MuSpace.s3),
             Container(
@@ -256,10 +256,10 @@ class _EstimateCard extends StatelessWidget {
                     child: Text.rich(
                       TextSpan(children: [
                         TextSpan(
-                          text: 'Confiance : $confidence',
+                          text: l10n.confiance(confidence),
                           style: MuType.labelS.copyWith(color: c.text),
                         ),
-                        const TextSpan(text: ' · s’affine après 3 matchs'),
+                        TextSpan(text: l10n.sAffineApresMatchs),
                       ]),
                       style: MuType.caption.copyWith(color: c.textSecondary),
                     ),
@@ -305,10 +305,10 @@ class _Reasons extends StatelessWidget {
             Expanded(
               child: Semantics(
                 header: true,
-                child: Text('Pourquoi ce niveau ?', style: MuType.h3.copyWith(color: c.text)),
+                child: Text(l10n.pourquoiCeNiveau, style: MuType.h3.copyWith(color: c.text)),
               ),
             ),
-            Text('Basé sur tes réponses', style: MuType.caption.copyWith(color: c.textSecondary)),
+            Text(l10n.baseSurTesReponses, style: MuType.caption.copyWith(color: c.textSecondary)),
           ],
         ),
         const SizedBox(height: MuSpace.s3),

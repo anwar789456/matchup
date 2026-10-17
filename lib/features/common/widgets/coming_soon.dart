@@ -4,17 +4,18 @@ import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 import '../../../theme/theme.dart';
 import '../../../ui/ui.dart';
+import '../../../l10n/l10n.dart';
 
 /// « Bientôt disponible » for a button whose screen comes with a later milestone (CLAUDE.md
 /// rule 8): notifications, wallet, checkout, the AI assistant…
 void showComingSoon(BuildContext context) => MuToast.show(
   context,
-  title: 'Bientôt disponible',
-  description: 'Cet écran arrive dans une prochaine version de MatchUp.',
+  title: l10n.bientotDisponible,
+  description: l10n.cetEcranArriveDansUne,
 );
 
-const _soonTitle = 'Bientôt disponible';
-const _soonText = 'Cet écran arrive dans une prochaine version de MatchUp.';
+final _soonTitle = l10n.bientotDisponible;
+final _soonText = l10n.cetEcranArriveDansUne;
 
 /// A tab whose screens are not designed yet (Entraînement, Communauté; Mes matchs until its
 /// phase): the tab's large title over the « Bientôt disponible » empty state.
@@ -46,10 +47,10 @@ class ComingSoonTab extends StatelessWidget {
                 ),
               ),
             ),
-            const Expanded(
+            Expanded(
               child: Center(
                 child: SingleChildScrollView(
-                  padding: EdgeInsets.all(MuSpace.s4),
+                  padding: const EdgeInsets.all(MuSpace.s4),
                   child: MuEmptyState(
                     title: _soonTitle,
                     description: _soonText,
@@ -91,7 +92,7 @@ class ComingSoonScreen extends StatelessWidget {
                   const SizedBox(width: MuSpace.s1),
                   MuIconButton(
                     icon: PhosphorIcons.arrowLeft(),
-                    label: 'Retour',
+                    label: l10n.retour,
                     size: MuIconButtonSize.l,
                     onPressed: () => context.canPop() ? context.pop() : context.go(fallback),
                   ),
@@ -110,10 +111,10 @@ class ComingSoonScreen extends StatelessWidget {
                 ],
               ),
             ),
-            const Expanded(
+            Expanded(
               child: Center(
                 child: SingleChildScrollView(
-                  padding: EdgeInsets.all(MuSpace.s4),
+                  padding: const EdgeInsets.all(MuSpace.s4),
                   child: MuEmptyState(
                     title: _soonTitle,
                     description: _soonText,

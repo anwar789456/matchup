@@ -3,6 +3,7 @@ import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 import '../theme/theme.dart';
 import 'src/interaction.dart';
+import '../l10n/l10n.dart';
 
 /// One step of a [MuWizardStepper].
 @immutable
@@ -66,7 +67,7 @@ class MuWizardStepper extends StatelessWidget {
     final next = current + 1 < steps.length ? steps[current + 1] : null;
     return Semantics(
       label: label,
-      value: 'Étape ${current + 1} sur ${steps.length} : ${step.label}',
+      value: l10n.etapeSur3(current + 1, steps.length, step.label),
       excludeSemantics: true,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -74,13 +75,13 @@ class MuWizardStepper extends StatelessWidget {
         children: [
           Text.rich(
             TextSpan(children: [
-              TextSpan(text: 'Étape ${current + 1} sur ${steps.length} · '),
+              TextSpan(text: l10n.etapeSur4(current + 1, steps.length)),
               TextSpan(text: step.label, style: MuType.label.copyWith(color: c.text)),
             ]),
             style: MuType.caption.copyWith(color: c.textSecondary),
           ),
           if (next != null)
-            Text('Suivant : ${next.label}', style: MuType.caption.copyWith(color: c.textSecondary)),
+            Text(l10n.suivant2(next.label), style: MuType.caption.copyWith(color: c.textSecondary)),
           const SizedBox(height: MuSpace.s2),
           Row(
             children: [
@@ -289,10 +290,10 @@ class _VerticalStepState extends State<_VerticalStep> {
     );
 
     final spoken = '${widget.step.label}, ${switch (status) {
-      _Status.done => 'terminé',
-      _Status.current => 'étape en cours',
-      _Status.error => 'à corriger',
-      _Status.upcoming => 'à venir',
+      _Status.done => l10n.termine2,
+      _Status.current => l10n.etapeEnCours,
+      _Status.error => l10n.aCorriger,
+      _Status.upcoming => l10n.aVenir3,
     }}';
     if (widget.onTap == null) {
       return Semantics(label: spoken, excludeSemantics: true, child: row);

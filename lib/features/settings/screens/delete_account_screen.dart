@@ -12,6 +12,7 @@ import '../../common/data/story_data.dart';
 import '../../common/widgets/coming_soon.dart';
 import '../../common/widgets/flow_scaffold.dart';
 import '../../player_onboarding/controllers/onboarding_controller.dart';
+import '../../../l10n/l10n.dart';
 
 /// SET-07 · Supprimer le compte: the consequences, an optional reason, « SUPPRIMER » to enable
 /// the button; then signed out to ONB-01.
@@ -27,13 +28,13 @@ class _DeleteAccountScreenState extends ConsumerState<DeleteAccountScreen> {
   String? _reason;
   bool _deleting = false;
 
-  static const _word = 'SUPPRIMER';
-  static const _reasons = [
-    'Je ne joue plus',
-    'Pas assez de parties près de chez moi',
-    'Trop de notifications',
-    'J’ai un autre compte',
-    'Autre raison',
+  static final _word = l10n.supprimer2;
+  static final _reasons = [
+    l10n.jeNeJouePlus,
+    l10n.pasAssezDePartiesPres,
+    l10n.tropDeNotifications,
+    l10n.jAiUnAutreCompte,
+    l10n.autreRaison,
   ];
 
   @override
@@ -51,8 +52,8 @@ class _DeleteAccountScreenState extends ConsumerState<DeleteAccountScreen> {
     if (!mounted) return;
     MuToast.show(
       context,
-      title: 'Compte supprimé',
-      description: 'Reconnecte-toi avant le 15 nov. pour tout garder.',
+      title: l10n.compteSupprime,
+      description: l10n.reconnecteToiAvantLeNov,
     );
     context.go(Routes.splash);
   }
@@ -95,8 +96,8 @@ class _DeleteAccountScreenState extends ConsumerState<DeleteAccountScreen> {
       body: Column(
         children: [
           MuTopAppBar.compact(
-            title: 'Supprimer le compte',
-            backLabel: 'Retour aux paramètres',
+            title: l10n.supprimerLeCompte,
+            backLabel: l10n.retourAuxParametres,
             onBack: () => context.pop(),
           ),
           Expanded(
@@ -104,38 +105,38 @@ class _DeleteAccountScreenState extends ConsumerState<DeleteAccountScreen> {
               padding: const EdgeInsets.fromLTRB(MuSpace.s4, MuSpace.s2, MuSpace.s4, MuSpace.s6),
               children: [
                 MuSettingsGroup(
-                  title: 'Ce qui va se passer',
+                  title: l10n.ceQuiVaSePasser,
                   children: [
                     step(
                       PhosphorIcons.calendarX(),
-                      'Tes 2 matchs à venir sont annulés',
-                      'dim. 18 oct. et mer. 21 oct. Chaque joueur est remboursé, toi compris.',
+                      l10n.tesMatchsAVenirSont,
+                      l10n.dimOctEtMerOct,
                     ),
                     step(
                       PhosphorIcons.wallet(),
-                      'Retire d’abord ton solde de ${formatDT(Story.myBalance)}',
-                      'Une fois le compte supprimé, on ne pourra plus te le verser.',
+                      l10n.retireDAbordTonSolde(formatDT(Story.myBalance)),
+                      l10n.uneFoisLeCompteSupprime,
                       extra: MuButton.link(
-                        label: 'Retirer mon solde',
+                        label: l10n.retirerMonSolde,
                         onPressed: () => showComingSoon(context),
                       ),
                     ),
                     step(
                       PhosphorIcons.hourglass(),
-                      'Ton profil est effacé dans 30 jours',
-                      'Niveau, matchs et avis. Reconnecte-toi avant le 15 nov. pour tout garder.',
+                      l10n.tonProfilEstEffaceDans,
+                      l10n.niveauMatchsEtAvisReconnecte,
                     ),
                     step(
                       PhosphorIcons.warning(),
-                      'Après le 15 nov., c’est définitif',
-                      'Personne ne pourra récupérer ton compte, même en nous écrivant.',
+                      l10n.apresLeNovCEst,
+                      l10n.personneNePourraRecupererTon,
                       error: true,
                     ),
                   ],
                 ),
                 const SizedBox(height: MuSpace.s5),
                 MuSettingsGroup(
-                  title: 'Confirmer',
+                  title: l10n.confirmer,
                   children: [
                     Padding(
                       padding: const EdgeInsets.all(MuSpace.s4),
@@ -143,21 +144,21 @@ class _DeleteAccountScreenState extends ConsumerState<DeleteAccountScreen> {
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
                           MuSelect<String>(
-                            label: 'Pourquoi pars-tu ?',
-                            placeholder: 'Choisis une raison',
-                            helper: 'Ça nous aide à améliorer MatchUp.',
+                            label: l10n.pourquoiParsTu,
+                            placeholder: l10n.choisisUneRaison,
+                            helper: l10n.caNousAideAAmeliorer,
                             value: _reason,
                             options: [for (final r in _reasons) MuSelectOption(value: r, label: r)],
                             onChanged: (v) => setState(() => _reason = v),
                           ),
                           const SizedBox(height: MuSpace.s5),
                           MuTextField(
-                            label: 'Tape $_word pour confirmer',
+                            label: l10n.tapePourConfirmer(_word),
                             controller: _confirm,
                             placeholder: _word,
                             helper: _ok
-                                ? 'Tu peux supprimer ton compte.'
-                                : 'Le bouton s’active quand le mot est tapé.',
+                                ? l10n.tuPeuxSupprimerTonCompte
+                                : l10n.leBoutonSActiveQuand,
                             textCapitalization: TextCapitalization.characters,
                             autocorrect: false,
                             onChanged: (_) => setState(() {}),
@@ -176,13 +177,13 @@ class _DeleteAccountScreenState extends ConsumerState<DeleteAccountScreen> {
       bottomNavigationBar: StickyActionBar(
         children: [
           MuButton.primary(
-            label: 'Garder mon compte',
+            label: l10n.garderMonCompte,
             size: MuButtonSize.xl,
             fullWidth: true,
             onPressed: () => context.go(Routes.settings),
           ),
           MuButton.destructive(
-            label: 'Supprimer mon compte',
+            label: l10n.supprimerMonCompte,
             size: MuButtonSize.xl,
             fullWidth: true,
             loading: _deleting,

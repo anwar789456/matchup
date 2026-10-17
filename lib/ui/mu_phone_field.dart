@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import '../core/format.dart';
 import '../theme/theme.dart';
 import 'mu_text_field.dart';
+import '../l10n/l10n.dart';
 
 /// Keeps the 8 Tunisian digits, drops a pasted 216 / 00216 country code, groups 2-3-3 and keeps
 /// the caret after the same digit.
@@ -45,9 +46,9 @@ class MuPhoneFormatter extends TextInputFormatter {
 /// « 20 123 456 ». [onChanged] receives the raw digits. Shows « Le numéro doit contenir
 /// 8 chiffres. » on blur when 1–7 digits are typed.
 class MuPhoneField extends StatefulWidget {
-  const MuPhoneField({
+  MuPhoneField({
     super.key,
-    this.label = 'Numéro de téléphone',
+    String? label,
     this.controller,
     this.size = MuFieldSize.l,
     this.helper,
@@ -59,7 +60,7 @@ class MuPhoneField extends StatefulWidget {
     this.autofocus = false,
     this.onChanged,
     this.onSubmitted,
-  });
+  }) : label = label ?? l10n.numeroDeTelephone;
 
   final String label;
   final TextEditingController? controller;
@@ -103,7 +104,7 @@ class _MuPhoneFieldState extends State<MuPhoneField> {
     final n = MuPhoneFormatter.digitsOf(_controller.text).length;
     setState(() {
       _blurError = n > 0 && n < MuPhoneFormatter.maxDigits
-          ? 'Le numéro doit contenir 8 chiffres.'
+          ? l10n.leNumeroDoitContenirChiffres
           : null;
     });
   }
@@ -159,7 +160,7 @@ class _CountrySegment extends StatelessWidget {
     final c = context.mu;
     final inset = large ? MuSpace.s3 : MuSpace.s2;
     return Semantics(
-      label: 'Indicatif +216, Tunisie',
+      label: l10n.indicatifTunisie,
       excludeSemantics: true,
       child: Padding(
         padding: EdgeInsetsDirectional.only(start: large ? MuSpace.s4 : MuSpace.s3),

@@ -13,6 +13,7 @@ import '../../common/widgets/flow_scaffold.dart';
 import '../controllers/onboarding_controller.dart';
 import '../data/location_services.dart';
 import '../widgets/onboarding_step_scaffold.dart';
+import '../../../l10n/l10n.dart';
 
 /// PLY-06 · Localisation: explains why before the system prompt. Granted → PLY-07 with the
 /// position; refused → PLY-08.
@@ -34,17 +35,17 @@ class _LocationScreenState extends ConsumerState<LocationScreen> {
   static const double _labelPadV = 2;
 
   static const _me = MuLatLng(36.866, 10.296);
-  static const _venues = [
-    MuMapVenue(id: 'arena', name: 'Arena Five', sport: MuSport.football,
-        position: MuLatLng(36.8780, 10.3230), area: 'La Marsa'),
-    MuMapVenue(id: 'smash', name: 'Smash Padel Club', sport: MuSport.padel,
-        position: MuLatLng(36.8540, 10.2660), area: 'Lac 2'),
-    MuMapVenue(id: 'carthage', name: 'Padel House Carthage', sport: MuSport.padel,
-        position: MuLatLng(36.8550, 10.3300), area: 'Carthage'),
-    MuMapVenue(id: 'gammarth', name: 'Gammarth Five', sport: MuSport.football,
-        position: MuLatLng(36.8790, 10.2800), area: 'Gammarth'),
-    MuMapVenue(id: 'hoop', name: 'Urban Court', sport: MuSport.basketball,
-        position: MuLatLng(36.8700, 10.2540), area: 'La Marsa'),
+  static final _venues = [
+    MuMapVenue(id: 'arena', name: l10n.arenaFive, sport: MuSport.football,
+        position: const MuLatLng(36.8780, 10.3230), area: l10n.laMarsa),
+    MuMapVenue(id: 'smash', name: l10n.smashPadelClub, sport: MuSport.padel,
+        position: const MuLatLng(36.8540, 10.2660), area: l10n.lac),
+    MuMapVenue(id: 'carthage', name: l10n.padelHouseCarthage, sport: MuSport.padel,
+        position: const MuLatLng(36.8550, 10.3300), area: l10n.carthage),
+    MuMapVenue(id: 'gammarth', name: l10n.gammarthFive, sport: MuSport.football,
+        position: const MuLatLng(36.8790, 10.2800), area: l10n.gammarth),
+    MuMapVenue(id: 'hoop', name: l10n.urbanCourt, sport: MuSport.basketball,
+        position: const MuLatLng(36.8700, 10.2540), area: l10n.laMarsa),
   ];
 
   Future<void> _activate() async {
@@ -68,7 +69,7 @@ class _LocationScreenState extends ConsumerState<LocationScreen> {
     return OnboardingStepScaffold(
       route: Routes.playerLocation,
       step: 5,
-      stepTitle: 'Localisation',
+      stepTitle: l10n.localisation,
       onBack: () => goBack(context, Routes.playerAvailability),
       body: [
         ExcludeSemantics(
@@ -77,15 +78,15 @@ class _LocationScreenState extends ConsumerState<LocationScreen> {
             child: Stack(
               alignment: Alignment.center,
               children: [
-                const Positioned.fill(
+                Positioned.fill(
                   child: MuMapView(
                     center: _me,
                     user: _me,
                     venues: _venues,
                     zoom: _zoom,
-                    district: 'La Marsa',
-                    street: 'Route La Marsa',
-                    label: 'Terrains autour de La Marsa',
+                    district: l10n.laMarsa,
+                    street: l10n.routeLaMarsa,
+                    label: l10n.terrainsAutourDeLaMarsa,
                   ),
                 ),
                 IgnorePointer(
@@ -103,29 +104,29 @@ class _LocationScreenState extends ConsumerState<LocationScreen> {
                       borderRadius: MuRadius.fullAll,
                       boxShadow: MuElevation.of(context).level1,
                     ),
-                    child: Text('5 km', style: MuType.labelS.copyWith(color: c.infoText)),
+                    child: Text(l10n.km4, style: MuType.labelS.copyWith(color: c.infoText)),
                   ),
                 ),
               ],
             ),
           ),
         ),
-        const FlowTitle(
-          'Joue près de chez toi',
-          lead: 'Active ta position pour voir ce qui se passe autour de toi.',
+        FlowTitle(
+          l10n.jouePresDeChezToi,
+          lead: l10n.activeTaPositionPourVoir,
         ),
         Column(
           children: [
             _Benefit(
               icon: Icon(PhosphorIcons.mapPin(), size: MuSize.iconS, color: c.text),
-              title: 'Des parties à moins de 5 km',
-              text: 'Triées par distance, à ton niveau.',
+              title: l10n.desPartiesAMoinsDe,
+              text: l10n.trieesParDistanceATon,
             ),
             const SizedBox(height: MuSpace.s4),
             _Benefit(
               icon: Icon(PhosphorIcons.path(), size: MuSize.iconS, color: c.text),
-              title: 'L’itinéraire jusqu’au terrain',
-              text: 'Avec le temps de trajet avant chaque match.',
+              title: l10n.lItineraireJusquAuTerrain,
+              text: l10n.avecLeTempsDeTrajet,
             ),
             const SizedBox(height: MuSpace.s4),
             _Benefit(
@@ -135,8 +136,8 @@ class _LocationScreenState extends ConsumerState<LocationScreen> {
                 height: MuSize.iconS,
                 colorFilter: ColorFilter.mode(c.text, BlendMode.srcIn),
               ),
-              title: 'Les terrains autour de toi',
-              text: 'Créneaux libres et prix par personne.',
+              title: l10n.lesTerrainsAutourDeToi,
+              text: l10n.creneauxLibresEtPrixPar,
             ),
           ],
         ),
@@ -144,11 +145,10 @@ class _LocationScreenState extends ConsumerState<LocationScreen> {
       bottomBar: [
         ProgressSavedNote(
           icon: PhosphorIcons.deviceMobile(),
-          text: 'Ton téléphone va te demander l’autorisation juste après. Tu peux la retirer à '
-              'tout moment dans les réglages.',
+          text: l10n.tonTelephoneVaTeDemander,
         ),
         MuButton.primary(
-          label: 'Activer la localisation',
+          label: l10n.activerLaLocalisation,
           leading: PhosphorIcons.navigationArrow(),
           size: MuButtonSize.xl,
           fullWidth: true,
@@ -156,7 +156,7 @@ class _LocationScreenState extends ConsumerState<LocationScreen> {
           onPressed: _activate,
         ),
         MuButton.tertiary(
-          label: 'Choisir mes zones à la main',
+          label: l10n.choisirMesZonesALa,
           size: MuButtonSize.l,
           fullWidth: true,
           onPressed: () => context.push(Routes.playerZones),

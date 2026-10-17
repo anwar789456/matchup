@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 import '../theme/theme.dart';
+import '../l10n/l10n.dart';
 
 /// KpiCard (components/KpiCard.md): label, big tabular value (with its unit), then the change
 /// over a period — or a [note] when there is nothing to compare yet. A rise is good unless
@@ -19,6 +20,7 @@ class MuKpiCard extends StatelessWidget {
     this.period,
     this.upIsGood = true,
     this.note,
+    this.padding = const EdgeInsets.all(MuSpace.s5),
   });
 
   final String label;
@@ -36,6 +38,9 @@ class MuKpiCard extends StatelessWidget {
   final bool upIsGood;
   final String? note;
 
+  /// `space-5` by default; dashboards with two tiles per row use `space-4` (OWN-10, OWN-25).
+  final EdgeInsetsGeometry padding;
+
   @override
   Widget build(BuildContext context) {
     final c = context.mu;
@@ -45,35 +50,39 @@ class MuKpiCard extends StatelessWidget {
       final flat = delta == 0;
       final good = flat ? null : (delta! > 0) == upIsGood;
       final color = good == null ? c.textSecondary : (good ? c.successText : c.errorText);
-      change = Row(
+      // The period moves under the change when the tile is too narrow for both (OWN-10).
+      change = Wrap(
+        crossAxisAlignment: WrapCrossAlignment.center,
+        spacing: MuSpace.s2,
         children: [
-          Icon(
-            flat
-                ? PhosphorIcons.minus()
-                : (delta! > 0 ? PhosphorIcons.trendUp() : PhosphorIcons.trendDown()),
-            size: MuSize.iconXs,
-            color: color,
+          Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(
+                flat
+                    ? PhosphorIcons.minus()
+                    : (delta! > 0 ? PhosphorIcons.trendUp() : PhosphorIcons.trendDown()),
+                size: MuSize.iconXs,
+                color: color,
+              ),
+              const SizedBox(width: MuSpace.s1),
+              Text(deltaText!, style: MuType.numS.copyWith(color: color)),
+            ],
           ),
-          const SizedBox(width: MuSpace.s1),
-          Text(deltaText!, style: MuType.numS.copyWith(color: color)),
-          if (period != null) ...[
-            const SizedBox(width: MuSpace.s2),
-            Flexible(
-              child: Text(period!, style: MuType.caption.copyWith(color: c.textSecondary)),
-            ),
-          ],
+          if (period != null)
+            Text(period!, style: MuType.caption.copyWith(color: c.textSecondary)),
         ],
       );
     }
 
     return Semantics(
       container: true,
-      label: [label, empty ? 'pas encore de valeur' : '$value${unit == null ? '' : ' $unit'}',
+      label: [label, empty ? l10n.pasEncoreDeValeur : '$value${unit == null ? '' : ' $unit'}',
               ?deltaText, ?period, ?note]
           .join(', '),
       excludeSemantics: true,
       child: Container(
-        padding: const EdgeInsets.all(MuSpace.s5),
+        padding: padding,
         decoration: BoxDecoration(
           color: c.surface,
           borderRadius: MuRadius.mdAll,
@@ -85,16 +94,22 @@ class MuKpiCard extends StatelessWidget {
           children: [
             Text(label, style: MuType.label.copyWith(color: c.textSecondary)),
             const SizedBox(height: MuSpace.s2),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.baseline,
-              textBaseline: TextBaseline.alphabetic,
-              children: [
-                Text(value, style: MuType.numXl.copyWith(color: c.text)),
-                if (unit != null) ...[
-                  const SizedBox(width: MuSpace.s1),
-                  Text(unit!, style: MuType.numM.copyWith(color: c.textSecondary)),
+            // Half-width cards on a 360 phone: the number shrinks rather than overflow.
+            FittedBox(
+              fit: BoxFit.scaleDown,
+              alignment: AlignmentDirectional.centerStart,
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.baseline,
+                textBaseline: TextBaseline.alphabetic,
+                children: [
+                  Text(value, style: MuType.numXl.copyWith(color: c.text)),
+                  if (unit != null) ...[
+                    const SizedBox(width: MuSpace.s1),
+                    Text(unit!, style: MuType.numM.copyWith(color: c.textSecondary)),
+                  ],
                 ],
-              ],
+              ),
             ),
             const SizedBox(height: MuSpace.s2),
             change ??

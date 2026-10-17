@@ -13,6 +13,7 @@ import 'src/card_surface.dart';
 import 'src/price_tag.dart';
 import 'src/scoreboard_strip.dart';
 import 'src/tone_badge.dart';
+import '../l10n/l10n.dart';
 
 /// The data a tournament card shows.
 @immutable
@@ -143,12 +144,12 @@ class MuTournamentCard extends StatelessWidget {
         ? const MuStatusBadge(status: MuStatus.full)
         : t.almostFull
             ? MuToneBadge(
-                label: 'Plus que $left ${left == 1 ? 'place' : 'places'}',
+                label: l10n.plusQue(left, left == 1 ? 'place' : 'places'),
                 tone: MuBadgeTone.warning,
                 icon: PhosphorIcons.warning(PhosphorIconsStyle.fill),
               )
-            : const MuStatusBadge(status: MuStatus.confirmed, label: 'Inscriptions ouvertes');
-    final spots = full ? 'complet' : '$left libres sur ${t.teamsTotal} équipes';
+            : MuStatusBadge(status: MuStatus.confirmed, label: l10n.inscriptionsOuvertes);
+    final spots = full ? 'complet' : l10n.libresSurEquipes(left, t.teamsTotal);
 
     Widget line(IconData icon, String text) => Row(
           children: [
@@ -169,8 +170,7 @@ class MuTournamentCard extends StatelessWidget {
       onTap: onTap,
       color: surfaceColor,
       padding: EdgeInsets.zero,
-      semanticLabel: '${t.name}, $dates, ${t.venue} · ${t.place}, $spots, '
-          '${formatDT(t.feePerTeam)} par équipe',
+      semanticLabel: l10n.parEquipe(t.name, dates, t.venue, t.place, spots, formatDT(t.feePerTeam)),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         mainAxisSize: MainAxisSize.min,
@@ -189,7 +189,7 @@ class MuTournamentCard extends StatelessWidget {
                       child: MuCourtArt(
                         sport: t.sport,
                         variant: MuCourtArtVariant.poster,
-                        semanticLabel: 'Affiche du tournoi ${t.name}',
+                        semanticLabel: l10n.afficheDuTournoi(t.name),
                         child: Align(
                           alignment: Alignment.bottomCenter,
                           child: Padding(
@@ -245,7 +245,7 @@ class MuTournamentCard extends StatelessWidget {
                           MuChip.sport(t.sport, size: MuChipSize.s),
                           if (level != null)
                             MuChip(
-                              label: 'Niveau $level',
+                              label: l10n.niveau2(level),
                               icon: PhosphorIcons.gauge(),
                               kind: MuChipKind.input,
                               size: MuChipSize.s,
@@ -259,22 +259,21 @@ class MuTournamentCard extends StatelessWidget {
             ),
           ),
           MuScoreboardStrip(
-            semanticLabel: 'Inscription ${formatDT(t.feePerTeam)} par équipe'
-                '${t.prize == null ? '' : ', dotation ${formatDT(t.prize!)}'}, $spots',
+            semanticLabel: l10n.inscriptionParEquipe(formatDT(t.feePerTeam), t.prize == null ? '' : l10n.dotation2(formatDT(t.prize!)), spots),
             cells: [
               MuStripCell(
-                label: 'Inscription',
-                value: MuScoreboardStrip.value(context, formatAmount(t.feePerTeam), 'DT'),
-                sub: MuScoreboardStrip.sub(context, 'par équipe'),
+                label: l10n.inscription,
+                value: MuScoreboardStrip.value(context, formatAmount(t.feePerTeam), dtUnit),
+                sub: MuScoreboardStrip.sub(context, l10n.parEquipe2),
               ),
               if (t.prize != null)
                 MuStripCell(
-                  label: 'Dotation',
+                  label: l10n.dotation,
                   labelIcon: PhosphorIcons.trophy(),
-                  value: MuScoreboardStrip.value(context, formatAmount(t.prize!), 'DT'),
+                  value: MuScoreboardStrip.value(context, formatAmount(t.prize!), dtUnit),
                 ),
               MuStripCell(
-                label: 'Places',
+                label: l10n.places,
                 value: MuScoreboardStrip.value(
                   context,
                   '${full ? 0 : left}',
@@ -296,16 +295,16 @@ class MuTournamentCard extends StatelessWidget {
                           text: '${t.teamsRegistered}/${t.teamsTotal}',
                           style: MuType.numXs.copyWith(color: c.text),
                         ),
-                        const TextSpan(text: ' équipes inscrites'),
+                        TextSpan(text: l10n.equipesInscrites),
                       ],
                     ),
                     style: MuType.caption.copyWith(color: c.textSecondary),
                   ),
                 ),
                 if (full)
-                  MuButton.secondary(label: 'Liste d’attente', onPressed: onWaitlist)
+                  MuButton.secondary(label: l10n.listeDAttente, onPressed: onWaitlist)
                 else
-                  MuButton.primary(label: 'S’inscrire', onPressed: onRegister),
+                  MuButton.primary(label: l10n.sInscrire, onPressed: onRegister),
               ],
             ),
           ),
@@ -317,7 +316,7 @@ class MuTournamentCard extends StatelessWidget {
   Widget _buildCompact(BuildContext context, MuTournament t) {
     final c = context.mu;
     final left = t.teamsLeft;
-    final placesLabel = left <= 0 ? 'Complet' : '$left ${left == 1 ? 'place' : 'places'}';
+    final placesLabel = left <= 0 ? l10n.complet : '$left ${left == 1 ? 'place' : 'places'}';
     final placesColor = t.almostFull ? c.warningText : c.text;
     final dates = formatDateRange(t.start, t.end);
 
@@ -326,7 +325,7 @@ class MuTournamentCard extends StatelessWidget {
       color: surfaceColor,
       padding: const EdgeInsets.all(MuSpace.s3),
       semanticLabel:
-          '${t.name}, $dates, ${t.venue}, $placesLabel, ${formatDT(t.feePerTeam)} par équipe',
+          l10n.parEquipe3(t.name, dates, t.venue, placesLabel, formatDT(t.feePerTeam)),
       child: ExcludeSemantics(
         child: ConstrainedBox(
           constraints: const BoxConstraints(minHeight: _minHeight - MuSpace.s3 * 2),

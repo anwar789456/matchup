@@ -4,12 +4,13 @@ import 'package:phosphor_flutter/phosphor_flutter.dart';
 import '../../../theme/theme.dart';
 import '../../../ui/ui.dart';
 import 'balanced_text.dart';
+import '../../../l10n/l10n.dart';
 
 /// The mobile flow layout of the auth and onboarding screens: top bar (back « Retour » + an
 /// optional end action), an optional [header] under it (step indicator), the scrolling body on
 /// `surface`, and the sticky bottom action bar (`elevation-2-up`) holding the XL primary action.
 class FlowScaffold extends StatelessWidget {
-  const FlowScaffold({
+  FlowScaffold({
     super.key,
     required this.body,
     this.onBack,
@@ -18,8 +19,8 @@ class FlowScaffold extends StatelessWidget {
     this.bottomBar = const [],
     this.centerBody = false,
     this.gap = MuSpace.s6,
-    this.backLabel = 'Retour',
-  });
+    String? backLabel,
+  }) : backLabel = backLabel ?? l10n.retour;
 
   final List<Widget> body;
   final VoidCallback? onBack;
@@ -121,22 +122,25 @@ class StickyActionBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final c = context.mu;
-    return DecoratedBox(
-      decoration: BoxDecoration(color: c.surface, boxShadow: MuElevation.of(context).level2Up),
-      child: SafeArea(
-        top: false,
-        minimum: const EdgeInsets.only(bottom: MuSpace.s3),
-        child: Padding(
-          padding: const EdgeInsets.fromLTRB(MuSpace.s4, MuSpace.s3, MuSpace.s4, 0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              for (final (i, child) in children.indexed) ...[
-                if (i > 0) const SizedBox(height: MuSpace.s3),
-                child,
+    // Toasts stay above the sticky bar.
+    return MuToastAnchor(
+      child: DecoratedBox(
+        decoration: BoxDecoration(color: c.surface, boxShadow: MuElevation.of(context).level2Up),
+        child: SafeArea(
+          top: false,
+          minimum: const EdgeInsets.only(bottom: MuSpace.s3),
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(MuSpace.s4, MuSpace.s3, MuSpace.s4, 0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                for (final (i, child) in children.indexed) ...[
+                  if (i > 0) const SizedBox(height: MuSpace.s3),
+                  child,
+                ],
               ],
-            ],
+            ),
           ),
         ),
       ),

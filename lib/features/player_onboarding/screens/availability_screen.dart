@@ -9,24 +9,25 @@ import '../../../ui/ui.dart';
 import '../../common/widgets/flow_scaffold.dart';
 import '../controllers/onboarding_controller.dart';
 import '../widgets/onboarding_step_scaffold.dart';
+import '../../../l10n/l10n.dart';
 
 /// PLY-05 · Disponibilités: days × matin / après-midi / soir (optional).
 class AvailabilityScreen extends ConsumerWidget {
   const AvailabilityScreen({super.key});
 
-  static const days = [
-    ('lun', 'lun.', 'Lundi'),
-    ('mar', 'mar.', 'Mardi'),
-    ('mer', 'mer.', 'Mercredi'),
-    ('jeu', 'jeu.', 'Jeudi'),
-    ('ven', 'ven.', 'Vendredi'),
-    ('sam', 'sam.', 'Samedi'),
-    ('dim', 'dim.', 'Dimanche'),
+  static final days = [
+    ('lun', 'lun.', l10n.lundi),
+    ('mar', 'mar.', l10n.mardi),
+    ('mer', 'mer.', l10n.mercredi),
+    ('jeu', 'jeu.', l10n.jeudi),
+    ('ven', 'ven.', l10n.vendredi),
+    ('sam', 'sam.', l10n.samedi),
+    ('dim', 'dim.', l10n.dimanche),
   ];
-  static const slots = [
-    ('matin', 'Matin', '8h–12h', 'matin'),
-    ('aprem', 'Après-midi', '12h–18h', 'après-midi'),
-    ('soir', 'Soir', '18h–23h', 'soir'),
+  static final slots = [
+    ('matin', l10n.matin, '8h–12h', 'matin'),
+    ('aprem', l10n.apresMidi, '12h–18h', l10n.apresMidi2),
+    ('soir', l10n.soir, '18h–23h', 'soir'),
   ];
 
   // PLY-05: the day column is 48 wide, cells 44 high and 6 apart; legend keys 16.
@@ -56,18 +57,18 @@ class AvailabilityScreen extends ConsumerWidget {
     return OnboardingStepScaffold(
       route: Routes.playerAvailability,
       step: 4,
-      stepTitle: 'Tes disponibilités',
+      stepTitle: l10n.tesDisponibilites,
       onBack: () => goBack(context, Routes.playerPosition),
       onSkip: next,
       gap: MuSpace.s5,
       body: [
-        const FlowTitle(
-          'Quand es-tu dispo ?',
-          lead: 'Touche les créneaux où tu peux jouer, on s’en sert pour te proposer des parties.',
+        FlowTitle(
+          l10n.quandEsTuDispo,
+          lead: l10n.toucheLesCreneauxOuTu,
         ),
         Semantics(
           container: true,
-          label: 'Tes disponibilités dans la semaine',
+          label: l10n.tesDisponibilitesDansLaSemaine,
           child: Column(
             children: [
               ExcludeSemantics(
@@ -110,7 +111,7 @@ class AvailabilityScreen extends ConsumerWidget {
               child: Icon(PhosphorIcons.check(), size: MuSize.iconXs * 0.75, color: c.onAccent),
             ),
             const SizedBox(width: MuSpace.s2),
-            Text('Dispo', style: MuType.caption.copyWith(color: c.textSecondary)),
+            Text(l10n.dispo, style: MuType.caption.copyWith(color: c.textSecondary)),
             const SizedBox(width: MuSpace.s4),
             Container(
               width: _key,
@@ -122,12 +123,12 @@ class AvailabilityScreen extends ConsumerWidget {
               ),
             ),
             const SizedBox(width: MuSpace.s2),
-            Text('Pas dispo', style: MuType.caption.copyWith(color: c.textSecondary)),
+            Text(l10n.pasDispo, style: MuType.caption.copyWith(color: c.textSecondary)),
             const Spacer(),
             Semantics(
               liveRegion: true,
               child: Text(
-                n == 0 ? 'Aucun créneau' : (n == 1 ? '1 créneau' : '$n créneaux'),
+                n == 0 ? 'Aucun créneau' : (n == 1 ? l10n.creneau : l10n.creneaux(n)),
                 style: MuType.label.copyWith(color: c.text),
               ),
             ),
@@ -136,7 +137,7 @@ class AvailabilityScreen extends ConsumerWidget {
       ],
       bottomBar: [
         MuButton.primary(
-          label: 'Continuer',
+          label: l10n.continuer,
           size: MuButtonSize.xl,
           fullWidth: true,
           onPressed: next,

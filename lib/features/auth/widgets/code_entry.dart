@@ -4,6 +4,7 @@ import '../../../theme/theme.dart';
 import '../../../ui/ui.dart';
 import '../../common/widgets/flow_scaffold.dart';
 import 'auth_messages.dart';
+import '../../../l10n/l10n.dart';
 
 /// The code step shared by AUTH-03 (SMS) and AUTH-07 (email reset code): title with where the code
 /// went, the six boxes, and « Vérifier » in the sticky bar. Verifies on the 6th digit too.
@@ -103,7 +104,7 @@ class _CodeEntryState extends State<CodeEntry> {
       onBack: widget.onBack,
       header: widget.header,
       body: [
-        FlowTitle('Entre le code', leadSpan: widget.lead),
+        FlowTitle(l10n.entreLeCode, leadSpan: widget.lead),
         MuOtpInput(
           controller: _code,
           label: widget.label,
@@ -117,7 +118,7 @@ class _CodeEntryState extends State<CodeEntry> {
           onResend: () async {
             await widget.onResend();
             if (!context.mounted) return;
-            MuToast.show(context, tone: MuToastTone.success, title: 'Code renvoyé');
+            MuToast.show(context, tone: MuToastTone.success, title: l10n.codeRenvoye);
           },
           onChanged: (_) {
             if (_error != null) setState(() => _error = null);

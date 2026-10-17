@@ -9,6 +9,7 @@ import '../../../theme/theme.dart';
 import '../../../ui/ui.dart';
 import '../../common/widgets/balanced_text.dart';
 import '../widgets/welcome_illustrations.dart';
+import '../../../l10n/l10n.dart';
 
 /// ONB-02 · ONB-03 · ONB-04 — the three welcome slides, swipeable, always in Night match.
 /// Each slide keeps its own route; buttons and swipes keep the URL in sync.
@@ -48,24 +49,24 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
 
   static const double _artHeight = 500;
 
-  static const _slides = [
+  static final _slides = [
     _Slide(
       sport: MuSport.football,
-      title: 'Trouve des joueurs à ton niveau',
-      text: 'Rejoins des parties près de chez toi, équilibrées selon le niveau de chacun.',
-      illustration: LevelMatchIllustration(),
+      title: l10n.trouveDesJoueursATon,
+      text: l10n.rejoinsDesPartiesPresDe,
+      illustration: const LevelMatchIllustration(),
     ),
     _Slide(
       sport: MuSport.padel,
-      title: 'Réserve et paie en quelques secondes',
-      text: 'Choisis ton créneau et paie seulement ta part. Chacun règle la sienne.',
-      illustration: SplitPaymentIllustration(),
+      title: l10n.reserveEtPaieEnQuelques,
+      text: l10n.choisisTonCreneauEtPaie,
+      illustration: const SplitPaymentIllustration(),
     ),
     _Slide(
       sport: MuSport.basketball,
-      title: 'Progresse et affronte les meilleurs',
-      text: 'Ton niveau évolue à chaque match. Quand tu es prêt, vise les tournois.',
-      illustration: ProgressIllustration(),
+      title: l10n.progresseEtAffronteLesMeilleurs,
+      text: l10n.tonNiveauEvolueAChaque,
+      illustration: const ProgressIllustration(),
       artTop: 0,
       fade: [0, 0.24, 0.52, 0.92],
     ),
@@ -160,14 +161,14 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
               if (_page > 0)
                 MuIconButton(
                   icon: PhosphorIcons.arrowLeft(),
-                  label: 'Retour',
+                  label: l10n.retour,
                   size: MuIconButtonSize.l,
                   onPressed: () => _goTo(_page - 1),
                 ),
               const Spacer(),
               if (!_last)
                 MuButton.tertiary(
-                  label: 'Passer',
+                  label: l10n.passer,
                   onPressed: () => _goTo(_slides.length - 1),
                 ),
             ],
@@ -197,21 +198,21 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
             const SizedBox(height: MuSpace.s6),
             if (_last) ...[
               MuButton.primary(
-                label: 'Commencer',
+                label: l10n.commencer,
                 size: MuButtonSize.xl,
                 fullWidth: true,
                 onPressed: () => context.push(Routes.signup),
               ),
               const SizedBox(height: MuSpace.s3),
               MuButton.secondary(
-                label: 'J’ai déjà un compte',
+                label: l10n.jAiDejaUnCompte,
                 size: MuButtonSize.xl,
                 fullWidth: true,
                 onPressed: () => context.push(Routes.login),
               ),
             ] else
               MuButton.primary(
-                label: 'Suivant',
+                label: l10n.suivant,
                 trailing: PhosphorIcons.arrowRight(),
                 size: MuButtonSize.xl,
                 fullWidth: true,

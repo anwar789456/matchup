@@ -8,6 +8,7 @@ import '../theme/theme.dart';
 import 'mu_button.dart';
 import 'mu_icon_button.dart';
 import 'src/interaction.dart';
+import '../l10n/l10n.dart';
 
 enum MuSearchFieldSize { l, m }
 
@@ -237,7 +238,7 @@ class _MuSearchFieldState<T> extends State<MuSearchField<T>> {
           if (_controller.text.isNotEmpty)
             MuIconButton(
               icon: PhosphorIcons.xCircle(PhosphorIconsStyle.fill),
-              label: 'Effacer',
+              label: l10n.effacer,
               size: MuIconButtonSize.s,
               color: c.textSecondary,
               onPressed: _controller.clear,
@@ -263,7 +264,7 @@ class _MuSearchFieldState<T> extends State<MuSearchField<T>> {
     final box = this.context.findRenderObject() as RenderBox?;
     final width = box?.size.width ?? 0;
     final height = box?.size.height ?? 0;
-    final message = widget.emptyMessage?.call(_query) ?? 'Aucun résultat pour « $_query »';
+    final message = widget.emptyMessage?.call(_query) ?? l10n.aucunResultatPour(_query);
     return CompositedTransformFollower(
       link: _link,
       showWhenUnlinked: false,
@@ -423,13 +424,13 @@ class MuSearchResults<T> extends StatelessWidget {
             ),
             const SizedBox(height: MuSpace.s3),
             Text(
-              'Aucun résultat pour « $query »',
+              l10n.aucunResultatPour(query),
               textAlign: TextAlign.center,
               style: MuType.label.copyWith(color: c.text),
             ),
             const SizedBox(height: MuSpace.s1),
             Text(
-              'Vérifie l’orthographe ou cherche un quartier, un terrain ou un joueur.',
+              l10n.verifieLOrthographeOuCherche,
               textAlign: TextAlign.center,
               style: MuType.caption.copyWith(color: c.textSecondary),
             ),
@@ -442,15 +443,15 @@ class MuSearchResults<T> extends StatelessWidget {
     final children = <Widget>[];
     if (recents.isNotEmpty) {
       children.add(header(
-        'Recherches récentes',
+        l10n.recherchesRecentes,
         onClearRecent == null
             ? null
-            : MuButton.link(label: 'Tout effacer', onPressed: onClearRecent),
+            : MuButton.link(label: l10n.toutEffacer, onPressed: onClearRecent),
       ));
       for (final r in recents) {
         children.add(_ResultRow(
           onTap: onRecent == null ? null : () => onRecent!(r),
-          semanticLabel: 'Recherche récente : $r',
+          semanticLabel: l10n.rechercheRecente(r),
           leading: Icon(
             PhosphorIcons.clockCounterClockwise(),
             size: MuSize.iconS,
@@ -464,7 +465,7 @@ class MuSearchResults<T> extends StatelessWidget {
               ? null
               : MuIconButton(
                   icon: PhosphorIcons.x(),
-                  label: 'Retirer « $r » des recherches récentes',
+                  label: l10n.retirerDesRecherchesRecentes(r),
                   size: MuIconButtonSize.s,
                   color: c.textSecondary,
                   onPressed: () => onRemoveRecent!(r),

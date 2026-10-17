@@ -5,6 +5,7 @@ import '../core/format.dart';
 import '../theme/theme.dart';
 import 'mu_sport_icon.dart';
 import 'src/interaction.dart';
+import '../l10n/l10n.dart';
 
 enum MuChipKind { filter, choice, sport, level, input }
 
@@ -160,7 +161,7 @@ class MuChip extends StatelessWidget {
       if (kind == MuChipKind.input && onRemove != null) {
         children.add(const SizedBox(width: MuSpace.s1));
         children.add(_RemoveButton(
-          label: removeLabel ?? 'Retirer ${label ?? ''}',
+          label: removeLabel ?? l10n.retirer(label ?? ''),
           onPressed: onRemove!,
         ));
       }
@@ -186,7 +187,7 @@ class MuChip extends StatelessWidget {
     if (!_interactive) {
       return Semantics(
         label: kind == MuChipKind.level
-            ? 'Niveau ${formatLevel(level!)}, ${levelBand(level!)}'
+            ? l10n.niveau5(formatLevel(level!), levelBand(level!))
             : null,
         excludeSemantics: kind == MuChipKind.level,
         child: chip,

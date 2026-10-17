@@ -9,6 +9,7 @@ import '../controllers/auth_providers.dart';
 import '../widgets/auth_messages.dart';
 import '../widgets/auth_widgets.dart';
 import '../widgets/code_entry.dart';
+import '../../../l10n/l10n.dart';
 
 /// AUTH-03 · Code SMS, with the AUTH-03b error state (wrong code, tries left, resend).
 class SmsCodeScreen extends ConsumerWidget {
@@ -22,14 +23,14 @@ class SmsCodeScreen extends ConsumerWidget {
     return CodeEntry(
       onBack: () => goBack(context, Routes.phone),
       lead: TextSpan(children: [
-        const TextSpan(text: 'Code envoyé au '),
+        TextSpan(text: l10n.codeEnvoyeAu),
         TextSpan(text: maskPhone(digits), style: MuType.labelL.copyWith(color: c.text)),
         const TextSpan(text: ' · '),
-        inlineLink('Modifier', () => goBack(context, Routes.phone), MuType.labelL),
+        inlineLink(l10n.modifier, () => goBack(context, Routes.phone), MuType.labelL),
       ]),
-      label: 'Code reçu par SMS',
-      helper: 'Le code expire dans 10 minutes.',
-      buttonLabel: 'Vérifier',
+      label: l10n.codeRecuParSms,
+      helper: l10n.leCodeExpireDansMinutes,
+      buttonLabel: l10n.verifier,
       successMessage: AuthMessages.phoneVerified,
       verify: repo.verifyPhoneCode,
       onResend: () => repo.sendPhoneCode(digits),

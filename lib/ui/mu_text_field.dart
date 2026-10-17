@@ -5,6 +5,7 @@ import 'package:phosphor_flutter/phosphor_flutter.dart';
 import '../theme/theme.dart';
 import 'mu_icon_button.dart';
 import 'src/interaction.dart';
+import '../l10n/l10n.dart';
 
 enum MuFieldSize { l, m }
 
@@ -157,7 +158,7 @@ class _MuTextFieldState extends State<MuTextField> {
     final over = widget.maxLength != null && length > widget.maxLength!;
     final error = widget.error ??
         (over
-            ? '${length - widget.maxLength!} caractères en trop — raccourcis un peu ton texte.'
+            ? l10n.caracteresEnTropRaccourcisUn(length - widget.maxLength!)
             : null);
     final hasError = error != null;
 
@@ -205,7 +206,7 @@ class _MuTextFieldState extends State<MuTextField> {
       if (showClear)
         MuIconButton(
           icon: PhosphorIcons.xCircle(PhosphorIconsStyle.fill),
-          label: 'Effacer',
+          label: l10n.effacer,
           size: MuIconButtonSize.s,
           color: c.textSecondary,
           onPressed: () {
@@ -361,7 +362,7 @@ class MuFieldLabel extends StatelessWidget {
         TextSpan(text: label),
         if (optional)
           TextSpan(
-            text: ' (facultatif)',
+            text: l10n.facultatif2,
             style: MuType.body.copyWith(color: c.textSecondary),
           ),
       ]),

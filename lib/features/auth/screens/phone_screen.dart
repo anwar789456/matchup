@@ -10,6 +10,7 @@ import '../../../ui/ui.dart';
 import '../../common/widgets/flow_scaffold.dart';
 import '../controllers/auth_providers.dart';
 import '../widgets/auth_widgets.dart';
+import '../../../l10n/l10n.dart';
 
 /// AUTH-02 · Téléphone: add a +216 number to receive the SMS code.
 class PhoneScreen extends ConsumerStatefulWidget {
@@ -41,7 +42,7 @@ class _PhoneScreenState extends ConsumerState<PhoneScreen> {
 
   Future<void> _submit() async {
     if (_digits.length != MuPhoneFormatter.maxDigits) {
-      setState(() => _error = 'Le numéro doit contenir 8 chiffres.');
+      setState(() => _error = l10n.leNumeroDoitContenirChiffres);
       return;
     }
     setState(() => _loading = true);
@@ -61,13 +62,13 @@ class _PhoneScreenState extends ConsumerState<PhoneScreen> {
     return FlowScaffold(
       onBack: () => goBack(context, Routes.signup),
       body: [
-        const FlowTitle(
-          'Ajoute ton numéro',
-          lead: 'Pour confirmer les parties et sécuriser les paiements.',
+        FlowTitle(
+          l10n.ajouteTonNumero,
+          lead: l10n.pourConfirmerLesPartiesEt,
         ),
         MuPhoneField(
           controller: _phone,
-          helper: 'On t’envoie un code à 6 chiffres par SMS.',
+          helper: l10n.onTEnvoieUnCode,
           error: _error,
           onChanged: (d) => setState(() {
             _digits = d;
@@ -83,24 +84,24 @@ class _PhoneScreenState extends ConsumerState<PhoneScreen> {
               IconLine(
                 icon: PhosphorIcons.calendarCheck(),
                 text: TextSpan(children: [
-                  TextSpan(text: 'Des parties confirmées.', style: strong),
-                  const TextSpan(text: ' Un numéro vérifié par joueur, c’est moins d’absents le jour J.'),
+                  TextSpan(text: l10n.desPartiesConfirmees, style: strong),
+                  TextSpan(text: l10n.unNumeroVerifieParJoueur),
                 ]),
               ),
               const SizedBox(height: MuSpace.s4),
               IconLine(
                 icon: PhosphorIcons.shieldCheck(),
                 text: TextSpan(children: [
-                  TextSpan(text: 'Des paiements protégés.', style: strong),
-                  const TextSpan(text: ' On s’assure que c’est bien toi avant de débiter ta part.'),
+                  TextSpan(text: l10n.desPaiementsProteges, style: strong),
+                  TextSpan(text: l10n.onSAssureQueC),
                 ]),
               ),
               const SizedBox(height: MuSpace.s4),
               IconLine(
                 icon: PhosphorIcons.lockSimple(),
                 text: TextSpan(children: [
-                  TextSpan(text: 'Ton numéro reste privé.', style: strong),
-                  const TextSpan(text: ' Seuls les organisateurs de tes parties le voient.'),
+                  TextSpan(text: l10n.tonNumeroRestePrive, style: strong),
+                  TextSpan(text: l10n.seulsLesOrganisateursDeTes),
                 ]),
               ),
             ],
@@ -109,7 +110,7 @@ class _PhoneScreenState extends ConsumerState<PhoneScreen> {
       ],
       bottomBar: [
         MuButton.primary(
-          label: 'Recevoir le code',
+          label: l10n.recevoirLeCode,
           size: MuButtonSize.xl,
           fullWidth: true,
           loading: _loading,

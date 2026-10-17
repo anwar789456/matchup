@@ -4,6 +4,7 @@ import 'package:phosphor_flutter/phosphor_flutter.dart';
 import '../../../core/format.dart';
 import '../../../theme/theme.dart';
 import '../../../ui/ui.dart';
+import '../../../l10n/l10n.dart';
 
 /// PAY-07 · 3-D Secure: our frame around the bank's window — no X, « Paiement sécurisé par
 /// Stripe », the summary, the dashed « Fenêtre de ta banque » with a fake SMS code form, and the
@@ -57,7 +58,7 @@ class _SecurePaymentState extends State<_SecurePayment> {
     );
     return MuTakeover(
       closable: false,
-      title: 'Paiement sécurisé',
+      title: l10n.paiementSecurise,
       body: ListView(
         padding: const EdgeInsets.all(MuSpace.s4),
         children: [
@@ -66,7 +67,7 @@ class _SecurePaymentState extends State<_SecurePayment> {
             children: [
               Icon(PhosphorIcons.lockSimple(), size: MuSize.iconXs, color: c.textSecondary),
               const SizedBox(width: MuSpace.s1),
-              Text('Paiement sécurisé par Stripe', style: caption),
+              Text(l10n.paiementSecuriseParStripe, style: caption),
             ],
           ),
           const SizedBox(height: MuSpace.s4),
@@ -78,8 +79,8 @@ class _SecurePaymentState extends State<_SecurePayment> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text('MatchUp', style: MuType.label.copyWith(color: c.text)),
-                      Text('Ta part · ${widget.cardLabel}', style: caption),
+                      Text(l10n.matchup, style: MuType.label.copyWith(color: c.text)),
+                      Text(l10n.taPart2(widget.cardLabel), style: caption),
                     ],
                   ),
                 ),
@@ -88,7 +89,7 @@ class _SecurePaymentState extends State<_SecurePayment> {
             ),
           ),
           const SizedBox(height: MuSpace.s4),
-          Text('Fenêtre de ta banque', style: MuType.labelS.copyWith(color: c.textSecondary)),
+          Text(l10n.fenetreDeTaBanque, style: MuType.labelS.copyWith(color: c.textSecondary)),
           const SizedBox(height: MuSpace.s2),
           Container(
             constraints: const BoxConstraints(minHeight: 240),
@@ -108,24 +109,24 @@ class _SecurePaymentState extends State<_SecurePayment> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text('Ta banque', style: MuType.labelL.copyWith(color: c.text)),
-                          Text('Paiement en ligne sécurisé', style: caption),
+                          Text(l10n.taBanque, style: MuType.labelL.copyWith(color: c.text)),
+                          Text(l10n.paiementEnLigneSecurise, style: caption),
                         ],
                       ),
                     ),
                   ],
                 ),
                 const SizedBox(height: MuSpace.s4),
-                Text('Confirme ce paiement', style: MuType.h3.copyWith(color: c.text)),
+                Text(l10n.confirmeCePaiement, style: MuType.h3.copyWith(color: c.text)),
                 const SizedBox(height: MuSpace.s2),
-                row('Marchand', 'MATCHUP'),
-                row('Montant', '${formatAmount(widget.amount)},000 TND'.replaceAll(',000,000', ',000')),
-                row('Carte', widget.cardLabel.toUpperCase()),
+                row(l10n.marchand, l10n.matchup2),
+                row(l10n.montant, l10n.tnd(formatAmount(widget.amount)).replaceAll(',000,000', ',000')),
+                row(l10n.carte, widget.cardLabel.toUpperCase()),
                 const SizedBox(height: MuSpace.s3),
-                Text('Code envoyé par SMS au ${widget.phone}', style: caption),
+                Text(l10n.codeEnvoyeParSmsAu(widget.phone), style: caption),
                 const SizedBox(height: MuSpace.s2),
                 MuTextField(
-                  label: 'Code',
+                  label: l10n.code,
                   hideLabel: true,
                   controller: _code,
                   keyboardType: TextInputType.number,
@@ -133,19 +134,19 @@ class _SecurePaymentState extends State<_SecurePayment> {
                 ),
                 const SizedBox(height: MuSpace.s3),
                 MuButton.primary(
-                  label: 'Valider',
+                  label: l10n.valider,
                   fullWidth: true,
                   onPressed: () => Navigator.of(context).pop(true),
                 ),
                 const SizedBox(height: MuSpace.s2),
                 MuButton.tertiary(
-                  label: 'Annuler',
+                  label: l10n.annuler,
                   fullWidth: true,
                   onPressed: () => Navigator.of(context).pop(false),
                 ),
                 const SizedBox(height: MuSpace.s2),
                 Text(
-                  'Service client de ta banque · 24 h/24',
+                  l10n.serviceClientDeTaBanque,
                   textAlign: TextAlign.center,
                   style: caption,
                 ),
@@ -163,8 +164,7 @@ class _SecurePaymentState extends State<_SecurePayment> {
                 const SizedBox(width: MuSpace.s2),
                 Expanded(
                   child: Text(
-                    'Ne ferme pas cette page. Tu reviendras automatiquement sur MatchUp. Pour '
-                    'annuler, utilise « Annuler » dans la fenêtre de ta banque : rien ne sera débité.',
+                    l10n.neFermePasCettePage,
                     style: MuType.caption.copyWith(color: c.text),
                   ),
                 ),

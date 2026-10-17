@@ -9,6 +9,7 @@ import '../../common/widgets/pro_wizard_scaffold.dart';
 import '../controllers/coach_controller.dart';
 import '../data/coach_draft.dart';
 import '../widgets/coach_wizard.dart';
+import '../../../l10n/l10n.dart';
 
 /// COA-01 — the coach profile: photo, city, bio, specialties (6 max), sports and levels.
 class CoachProfileScreen extends ConsumerStatefulWidget {
@@ -54,10 +55,10 @@ class _CoachProfileScreenState extends ConsumerState<CoachProfileScreen> {
   bool _validate() {
     final d = ref.read(coachProvider).requireValue;
     setState(() {
-      _bioError = d.bio.trim().isEmpty ? 'Présente-toi en quelques phrases.' : null;
-      _specialtiesError = d.specialties.isEmpty ? 'Choisis au moins une spécialité.' : null;
-      _sportsError = d.sports.isEmpty ? 'Choisis au moins un sport.' : null;
-      _levelsError = d.levels.isEmpty ? 'Choisis au moins un niveau.' : null;
+      _bioError = d.bio.trim().isEmpty ? l10n.presenteToiEnQuelquesPhrases : null;
+      _specialtiesError = d.specialties.isEmpty ? l10n.choisisAuMoinsUneSpecialite : null;
+      _sportsError = d.sports.isEmpty ? l10n.choisisAuMoinsUnSport : null;
+      _levelsError = d.levels.isEmpty ? l10n.choisisAuMoinsUnNiveau : null;
     });
     return [_bioError, _specialtiesError, _sportsError, _levelsError].every((e) => e == null);
   }
@@ -86,7 +87,7 @@ class _CoachProfileScreenState extends ConsumerState<CoachProfileScreen> {
     final sports = Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        groupLabel('Sports'),
+        groupLabel(l10n.sports),
         const SizedBox(height: MuSpace.s3),
         Wrap(
           spacing: MuSpace.s2,
@@ -121,7 +122,7 @@ class _CoachProfileScreenState extends ConsumerState<CoachProfileScreen> {
         );
     // Two by two, as in the design.
     final levels = MuCheckboxGroup(
-      label: 'Niveaux que tu entraînes',
+      label: l10n.niveauxQueTuEntraines,
       error: _levelsError,
       children: [
         for (var i = 0; i < CoachCatalog.levels.length; i += 2)
@@ -141,30 +142,29 @@ class _CoachProfileScreenState extends ConsumerState<CoachProfileScreen> {
 
     return CoachWizard(
       step: 0,
-      title: 'Présente-toi aux joueurs',
-      lead: 'Les élèves choisissent d’abord un coach, puis un programme. Sois précis.',
+      title: l10n.presenteToiAuxJoueurs,
+      lead: l10n.lesElevesChoisissentDAbord,
       validate: _validate,
-      body: ProFormCard(
+      body: ProFormSections(
         divided: false,
         children: [
           Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              ProFieldGrid(
+              ProFieldColumn(
                 children: [
                   MuFileUpload.avatar(
-                    label: 'Photo de profil',
+                    label: l10n.photoDeProfil,
                     name: d.name,
-                    helper: 'JPG, PNG · visage bien visible',
+                    helper: l10n.jpgPngVisageBienVisible,
                     image: photo == null ? null : MemoryImage(photo),
                     onAdd: _pickPhoto,
                     onRemove: (_) => _coach.edit((d) => d.copyWith(clearPhoto: true)),
                   ),
                   MuSelect<String>(
-                    label: 'Ville où tu coaches',
-                    size: MuFieldSize.m,
+                    label: l10n.villeOuTuCoaches,
                     value: d.city,
-                    helper: 'Les élèves cherchent un coach près de chez eux.',
+                    helper: l10n.lesElevesCherchentUnCoach,
                     options: [
                       for (final city in CoachCatalog.cities)
                         MuSelectOption(value: city, label: city),
@@ -175,9 +175,8 @@ class _CoachProfileScreenState extends ConsumerState<CoachProfileScreen> {
               ),
               const SizedBox(height: MuSpace.s5),
               MuTextField(
-                label: 'Bio',
+                label: l10n.bio,
                 controller: _bio,
-                size: MuFieldSize.m,
                 multiline: true,
                 minLines: 3,
                 maxLength: CoachCatalog.bioMax,
@@ -192,10 +191,9 @@ class _CoachProfileScreenState extends ConsumerState<CoachProfileScreen> {
                 child: Container(height: 1, color: c.border),
               ),
               groupLabel(
-                'Spécialités',
+                l10n.specialites,
                 aside:
-                    '${d.specialties.length} spécialité${d.specialties.length > 1 ? 's' : ''} sur '
-                    '${CoachCatalog.maxSpecialties} max',
+                    l10n.specialiteSurMax(d.specialties.length, d.specialties.length > 1 ? 's' : '', CoachCatalog.maxSpecialties),
               ),
               const SizedBox(height: MuSpace.s3),
               Wrap(
@@ -222,7 +220,7 @@ class _CoachProfileScreenState extends ConsumerState<CoachProfileScreen> {
                 MuFieldMessage.error(_specialtiesError!),
               ],
               const SizedBox(height: MuSpace.s5),
-              ProFieldGrid(children: [sports, levels]),
+              ProFieldColumn(children: [sports, levels]),
             ],
           ),
         ],

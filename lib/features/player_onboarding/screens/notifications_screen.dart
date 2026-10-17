@@ -10,6 +10,7 @@ import '../../common/widgets/flow_scaffold.dart';
 import '../controllers/onboarding_controller.dart';
 import '../data/location_services.dart';
 import '../widgets/onboarding_step_scaffold.dart';
+import '../../../l10n/l10n.dart';
 
 /// PLY-09 · Notifications: concrete examples before the system prompt; « Plus tard » is as visible.
 class NotificationsScreen extends ConsumerStatefulWidget {
@@ -48,7 +49,7 @@ class _NotificationsScreenState extends ConsumerState<NotificationsScreen> {
     return OnboardingStepScaffold(
       route: Routes.playerNotifications,
       step: 6,
-      stepTitle: 'Notifications',
+      stepTitle: l10n.notifications,
       onBack: () => goBack(
         context,
         state.locationGranted == false ? Routes.playerLocationDenied : Routes.playerZones,
@@ -57,8 +58,7 @@ class _NotificationsScreenState extends ConsumerState<NotificationsScreen> {
       body: [
         Semantics(
           image: true,
-          label: 'Exemples de notifications MatchUp : une place libérée, une invitation de '
-              'Mariem K., un rappel de match',
+          label: l10n.exemplesDeNotificationsMatchupUne,
           excludeSemantics: true,
           child: ClipRRect(
             borderRadius: MuRadius.lgAll,
@@ -73,25 +73,25 @@ class _NotificationsScreenState extends ConsumerState<NotificationsScreen> {
                       card(MuNotificationItem(
                         priority: MuNotificationPriority.urgent,
                         sport: MuSport.padel,
-                        title: 'Une place s’est libérée',
-                        body: 'Padel ce soir à Smash Padel Club. Tu as 14:59 pour la réclamer.',
+                        title: l10n.unePlaceSEstLiberee,
+                        body: l10n.padelCeSoirASmash,
                         time: 'maintenant',
                         background: c.surfaceElevated,
                       )),
                       const SizedBox(height: MuSpace.s2),
                       card(MuNotificationItem(
-                        avatarName: 'Mariem K.',
+                        avatarName: l10n.mariemK,
                         sport: MuSport.padel,
-                        title: 'Mariem K. t’invite à jouer',
-                        body: 'Padel 2 vs 2 · dim. 19 oct. · 18h30 · 15 DT par personne.',
-                        time: '12 min',
+                        title: l10n.mariemKTInviteA,
+                        body: l10n.padelVsDimOct18h30,
+                        time: l10n.min2,
                         background: c.surfaceElevated,
                       )),
                       const SizedBox(height: MuSpace.s2),
                       card(MuNotificationItem(
                         sport: MuSport.football,
-                        title: 'Rappel : match ce soir 20h00',
-                        body: 'Arena Five · Terrain 2 · La Marsa. Pars vers 19h35.',
+                        title: l10n.rappelMatchCeSoir20h00,
+                        body: l10n.arenaFiveTerrainLaMarsa,
                         time: '1 h',
                         background: c.surfaceElevated,
                       )),
@@ -102,19 +102,18 @@ class _NotificationsScreenState extends ConsumerState<NotificationsScreen> {
             ),
           ),
         ),
-        const FlowTitle(
-          'Ne rate aucune partie',
-          lead: 'Places libérées, invitations, rappels : on te prévient seulement pour ce qui '
-              'compte. Tu règles tout dans Paramètres.',
+        FlowTitle(
+          l10n.neRateAucunePartie,
+          lead: l10n.placesLibereesInvitationsRappelsOn,
         ),
       ],
       bottomBar: [
         ProgressSavedNote(
           icon: PhosphorIcons.deviceMobile(),
-          text: 'Ton téléphone va te demander l’autorisation juste après.',
+          text: l10n.tonTelephoneVaTeDemander2,
         ),
         MuButton.primary(
-          label: 'Activer les notifications',
+          label: l10n.activerLesNotifications,
           leading: PhosphorIcons.bellRinging(),
           size: MuButtonSize.xl,
           fullWidth: true,
@@ -122,7 +121,7 @@ class _NotificationsScreenState extends ConsumerState<NotificationsScreen> {
           onPressed: _activate,
         ),
         MuButton.tertiary(
-          label: 'Plus tard',
+          label: l10n.plusTard,
           size: MuButtonSize.l,
           fullWidth: true,
           onPressed: _next,

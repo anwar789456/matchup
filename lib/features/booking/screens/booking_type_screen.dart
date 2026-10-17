@@ -10,6 +10,7 @@ import '../../../ui/ui.dart';
 import '../../common/widgets/flow_scaffold.dart';
 import '../controllers/booking_controller.dart';
 import '../widgets/booking_scaffold.dart';
+import '../../../l10n/l10n.dart';
 
 /// BKG-01 · Réservation 1/3: privée (friends only) or publique (the free places go to Explorer).
 class BookingTypeScreen extends ConsumerWidget {
@@ -25,11 +26,11 @@ class BookingTypeScreen extends ConsumerWidget {
 
     return BookingStepScaffold(
       step: 1,
-      title: 'Type de partie',
+      title: l10n.typeDePartie,
       gap: MuSpace.s6,
       bottomBar: [
         MuButton.primary(
-          label: private ? 'Continuer · inviter mes amis' : 'Continuer',
+          label: private ? l10n.continuerInviterMesAmis : l10n.continuer,
           size: MuButtonSize.xl,
           fullWidth: true,
           onPressed: () => context.push(private ? Routes.bookingInvites : Routes.bookingPublic),
@@ -37,27 +38,25 @@ class BookingTypeScreen extends ConsumerWidget {
       ],
       body: (context, d, slot) => [
         BookingSlotCard(slot: slot, share: perHead),
-        const FlowTitle(
-          'Qui joue avec toi ?',
+        FlowTitle(
+          l10n.quiJoueAvecToi,
           lead:
-              'Choisis qui peut rejoindre ton terrain. Tu pourras inviter tes amis dans les deux '
-              'cas.',
+              l10n.choisisQuiPeutRejoindreTon,
         ),
         MuChoiceGroup(
-          label: 'Type de réservation',
+          label: l10n.typeDeReservation,
           children: [
             MuChoiceCard(
-              title: 'Privée',
-              description: 'J’invite mes amis. Personne d’autre ne peut rejoindre.',
+              title: l10n.privee,
+              description: l10n.jInviteMesAmisPersonne,
               leading: BookingIconTile(PhosphorIcons.lockKey()),
               selected: private,
               onTap: () => booking.setType(BookingType.private),
             ),
             MuChoiceCard(
-              title: 'Publique',
+              title: l10n.publique2,
               description:
-                  'Je complète avec des joueurs. Tes places libres s’affichent dans '
-                  'Explorer pour des joueurs à ton niveau.',
+                  l10n.jeCompleteAvecDesJoueurs,
               leading: BookingIconTile(PhosphorIcons.usersThree()),
               selected: !private,
               onTap: () => booking.setType(BookingType.public),
@@ -76,10 +75,9 @@ class BookingTypeScreen extends ConsumerWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('Chacun paie sa part', style: MuType.label.copyWith(color: c.text)),
+                    Text(l10n.chacunPaieSaPart2, style: MuType.label.copyWith(color: c.text)),
                     Text(
-                      '${formatDT(perHead)} par personne à ${d.capacity}. Tu choisis comment '
-                      'partager à l’étape suivante.',
+                      l10n.parPersonneATuChoisis(formatDT(perHead), d.capacity),
                       style: MuType.body.copyWith(color: c.textSecondary),
                     ),
                   ],

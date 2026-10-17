@@ -8,6 +8,7 @@ import '../../common/widgets/pro_wizard_scaffold.dart';
 import '../controllers/owner_controller.dart';
 import '../data/owner_draft.dart';
 import '../widgets/owner_wizard.dart';
+import '../../../l10n/l10n.dart';
 
 /// OWN-06 — the venue photos: the drop zone, then the grid (cover first, progress rings, refused
 /// files), reordered by dragging.
@@ -27,9 +28,8 @@ class _PhotosScreenState extends ConsumerState<PhotosScreen> {
     service: ref.read(uploadServiceProvider),
     maxBytes: _maxBytes,
     tooBig: (f) => (
-      '${f.name} pèse ${formatFileSize(f.sizeBytes)} (max 10 Mo). Réduis sa taille ou choisis '
-          'une autre photo.',
-      'Fichier trop lourd',
+      l10n.peseMaxMoReduisSa(f.name, formatFileSize(f.sizeBytes)),
+      l10n.fichierTropLourd,
     ),
     onDone: (file, picked) {
       if (picked.bytes != null) ref.read(uploadedBytesProvider)[file.id] = picked.bytes!;
@@ -73,7 +73,7 @@ class _PhotosScreenState extends ConsumerState<PhotosScreen> {
       MuToast.show(
         context,
         tone: MuToastTone.warning,
-        title: '$_maxPhotos photos maximum : les suivantes sont ignorées.',
+        title: l10n.photosMaximumLesSuivantesSont(_maxPhotos),
       );
     }
   }
@@ -99,8 +99,8 @@ class _PhotosScreenState extends ConsumerState<PhotosScreen> {
     final photos = ref.read(ownerProvider).requireValue.photos;
     setState(() {
       _error = _queue.busy
-          ? 'Attends la fin de l’envoi de tes photos.'
-          : (photos.isEmpty ? 'Ajoute au moins une photo de ton terrain.' : null);
+          ? l10n.attendsLaFinDeLEnvoiDeTesPhotos
+          : (photos.isEmpty ? l10n.ajouteAuMoinsUnePhoto : null);
     });
     return _error == null;
   }
@@ -117,25 +117,25 @@ class _PhotosScreenState extends ConsumerState<PhotosScreen> {
 
     return OwnerWizard(
       step: 5,
-      title: 'Montre ton terrain',
-      lead: 'Montre l’éclairage, les vestiaires et le parking : les joueurs réservent plus vite.',
+      title: l10n.montreTonTerrain,
+      lead: l10n.montreLEclairageLesVestiaires,
       validate: _validate,
-      body: ProFormCard(
+      body: ProFormSections(
         divided: false,
         children: [
           ProFormSection(
             children: [
               MuFileUpload.dropzone(
-                label: 'Ajoute tes photos',
-                hint: 'JPG, PNG · 10 Mo max · jusqu’à 20 photos',
+                label: l10n.ajouteTesPhotos,
+                hint: l10n.jpgPngMoMaxJusqu,
                 onAdd: files.length >= _maxPhotos ? null : _pick,
               ),
               if (files.isNotEmpty)
                 MuFileUpload.grid(
-                  label: 'Tes photos',
+                  label: l10n.tesPhotos,
                   files: files,
                   maxFiles: _maxPhotos,
-                  helper: 'La 1re photo sert de couverture. Glisse une photo pour changer l’ordre.',
+                  helper: l10n.la1rePhotoSertDe,
                   error: _error ?? _queue.lastError,
                   onAdd: _pick,
                   onRemove: _remove,

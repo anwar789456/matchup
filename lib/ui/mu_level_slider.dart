@@ -7,20 +7,21 @@ import '../theme/theme.dart';
 import 'mu_button.dart';
 import 'mu_level_indicator.dart' show muLevelBands;
 import 'src/interaction.dart';
+import '../l10n/l10n.dart';
 
 /// LevelSlider (components/LevelSlider.md): one level on the 1,0–7,0 scale, step 0,5, with a
 /// big readout, the four bands, and — after the AI questionnaire — the « IA » estimate as a marker
 /// above the track with « Revenir à 3,5 ».
 class MuLevelSlider extends StatefulWidget {
-  const MuLevelSlider({
+  MuLevelSlider({
     super.key,
     required this.value,
     required this.onChanged,
     required this.label,
     this.aiEstimate,
-    this.aiNote = 'd’après tes réponses',
+    String? aiNote,
     this.readout = true,
-  });
+  }) : aiNote = aiNote ?? l10n.dApresTesReponses;
 
   final double value;
   final ValueChanged<double>? onChanged;
@@ -298,12 +299,12 @@ class _MuLevelSliderState extends State<MuLevelSlider> {
               spacing: MuSpace.s2,
               children: [
                 Text(
-                  'Estimé par l’IA : ${formatLevel(ai)} · ${widget.aiNote}',
+                  l10n.estimeParLIa(formatLevel(ai), widget.aiNote),
                   style: MuType.caption.copyWith(color: c.textSecondary),
                 ),
                 if (v != ai && _enabled)
                   MuButton.link(
-                    label: 'Revenir à ${formatLevel(ai)}',
+                    label: l10n.revenirA(formatLevel(ai)),
                     inline: true,
                     linkStyle: MuType.labelS,
                     onPressed: () => widget.onChanged?.call(ai),

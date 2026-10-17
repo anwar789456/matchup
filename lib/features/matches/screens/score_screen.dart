@@ -10,6 +10,7 @@ import '../../../ui/ui.dart';
 import '../../common/widgets/flow_scaffold.dart';
 import '../controllers/matches_providers.dart';
 import '../data/bookings_repository.dart';
+import '../../../l10n/l10n.dart';
 
 /// MAT-09 · Score du match: the padel scoreboard, the sets with steppers, « Ajouter un 3e set »,
 /// then « Enregistrer le score ».
@@ -39,8 +40,8 @@ class _ScoreScreenState extends ConsumerState<ScoreScreen> {
     MuToast.show(
       context,
       tone: MuToastTone.success,
-      title: 'Score enregistré',
-      description: '${_opponents(m)} ont 48 h pour le confirmer.',
+      title: l10n.scoreEnregistre,
+      description: l10n.ontHPourLeConfirmer(_opponents(m)),
     );
     _back();
   }
@@ -71,10 +72,10 @@ class _ScoreScreenState extends ConsumerState<ScoreScreen> {
         backgroundColor: c.bg,
         body: Center(
           child: past.isLoading
-              ? const MuSpinner(semanticLabel: 'Chargement')
+              ? MuSpinner(semanticLabel: l10n.chargement)
               : MuEmptyState(
-                  title: 'Match introuvable',
-                  actions: [MuButton.primary(label: 'Retour', onPressed: _back)],
+                  title: l10n.matchIntrouvable,
+                  actions: [MuButton.primary(label: l10n.retour, onPressed: _back)],
                 ),
         ),
       );
@@ -102,12 +103,12 @@ class _ScoreScreenState extends ConsumerState<ScoreScreen> {
                 children: [
                   MuIconButton(
                     icon: PhosphorIcons.arrowLeft(),
-                    label: 'Retour',
+                    label: l10n.retour,
                     size: MuIconButtonSize.l,
                     onPressed: _back,
                   ),
                   const Spacer(),
-                  MuButton.tertiary(label: 'Passer', onPressed: _back),
+                  MuButton.tertiary(label: l10n.passer, onPressed: _back),
                 ],
               ),
             ),
@@ -116,9 +117,9 @@ class _ScoreScreenState extends ConsumerState<ScoreScreen> {
             child: ListView(
               padding: const EdgeInsets.fromLTRB(MuSpace.s4, MuSpace.s2, MuSpace.s4, MuSpace.s6),
               children: [
-                const FlowTitle(
-                  'Le score du match',
-                  lead: 'Facultatif. Ça aide l’IA à affiner les niveaux de chacun.',
+                FlowTitle(
+                  l10n.leScoreDuMatch,
+                  lead: l10n.facultatifCaAideLIa,
                 ),
                 const SizedBox(height: MuSpace.s5),
                 MuScoreboard(
@@ -147,7 +148,7 @@ class _ScoreScreenState extends ConsumerState<ScoreScreen> {
                   Align(
                     alignment: AlignmentDirectional.centerStart,
                     child: MuButton.tertiary(
-                      label: 'Ajouter un ${sets.length + 1}e set',
+                      label: l10n.ajouterUnESet(sets.length + 1),
                       leading: PhosphorIcons.plus(),
                       onPressed: () => setState(() => _sets = [...sets, (0, 0)]),
                     ),
@@ -160,8 +161,7 @@ class _ScoreScreenState extends ConsumerState<ScoreScreen> {
                     const SizedBox(width: MuSpace.s2),
                     Expanded(
                       child: Text(
-                        '${_opponents(m)} confirmeront le score. Sans réponse sous 48 h, il est '
-                        'validé.',
+                        l10n.confirmerontLeScoreSansReponse(_opponents(m)),
                         style: MuType.caption.copyWith(color: c.textSecondary),
                       ),
                     ),
@@ -175,7 +175,7 @@ class _ScoreScreenState extends ConsumerState<ScoreScreen> {
       bottomNavigationBar: StickyActionBar(
         children: [
           MuButton.primary(
-            label: 'Enregistrer le score',
+            label: l10n.enregistrerLeScore,
             size: MuButtonSize.xl,
             fullWidth: true,
             loading: _saving,
@@ -210,7 +210,7 @@ class _SetsHeader extends StatelessWidget {
         children: [
           SizedBox(
             width: _label,
-            child: Text('Sets', style: MuType.h3.copyWith(color: c.text)),
+            child: Text(l10n.sets, style: MuType.h3.copyWith(color: c.text)),
           ),
           Expanded(
             child: Text(
@@ -262,7 +262,7 @@ class _SetRow extends StatelessWidget {
         children: [
           SizedBox(
             width: _SetsHeader._label,
-            child: Text('Set ${index + 1}', style: MuType.label.copyWith(color: c.text)),
+            child: Text(l10n.setText(index + 1), style: MuType.label.copyWith(color: c.text)),
           ),
           Expanded(
             child: FittedBox(
@@ -273,9 +273,9 @@ class _SetRow extends StatelessWidget {
                 max: max,
                 size: MuStepperSize.s,
                 layout: MuStepperLayout.bare,
-                label: 'Set ${index + 1}, $homeName',
-                decrementLabel: 'Retirer un jeu à ${homeName.replaceAll(' / ', ' et ')}',
-                incrementLabel: 'Ajouter un jeu à ${homeName.replaceAll(' / ', ' et ')}',
+                label: l10n.setText2(index + 1, homeName),
+                decrementLabel: l10n.retirerUnJeuA(homeName.replaceAll(' / ', ' et ')),
+                incrementLabel: l10n.ajouterUnJeuA(homeName.replaceAll(' / ', ' et ')),
                 onChanged: (v) => onChanged((v, set.$2)),
               ),
             ),
@@ -297,9 +297,9 @@ class _SetRow extends StatelessWidget {
                 max: max,
                 size: MuStepperSize.s,
                 layout: MuStepperLayout.bare,
-                label: 'Set ${index + 1}, $awayName',
-                decrementLabel: 'Retirer un jeu à ${awayName.replaceAll(' / ', ' et ')}',
-                incrementLabel: 'Ajouter un jeu à ${awayName.replaceAll(' / ', ' et ')}',
+                label: l10n.setText2(index + 1, awayName),
+                decrementLabel: l10n.retirerUnJeuA(awayName.replaceAll(' / ', ' et ')),
+                incrementLabel: l10n.ajouterUnJeuA(awayName.replaceAll(' / ', ' et ')),
                 onChanged: (v) => onChanged((set.$1, v)),
               ),
             ),

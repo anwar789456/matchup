@@ -5,6 +5,7 @@ import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 import '../core/format.dart';
 import '../theme/theme.dart';
+import '../l10n/l10n.dart';
 
 enum MuSlotStatus { available, booked, blocked, mine }
 
@@ -85,7 +86,7 @@ class MuSlotRange {
 /// The court column stays put while the times scroll; the end edge fades while more slots follow.
 /// The summary lives in the screen's sticky bottom bar on mobile.
 class MuSlotGrid extends StatefulWidget {
-  const MuSlotGrid({
+  MuSlotGrid({
     super.key,
     required this.courts,
     required this.start,
@@ -95,9 +96,9 @@ class MuSlotGrid extends StatefulWidget {
     this.onChanged,
     this.maxSlots = 2,
     this.legend = true,
-    this.priceNote = 'Prix du terrain / h',
+    String? priceNote,
     this.padding = MuSpace.s4,
-  });
+  }) : priceNote = priceNote ?? l10n.prixDuTerrainH;
 
   final List<MuSlotCourt> courts;
 
@@ -320,7 +321,7 @@ class _MuSlotGridState extends State<MuSlotGrid> {
                         onTapCell: (k) => _tap(court, start + k),
                         semantics: [
                           for (var k = 0; k < span; k++)
-                            '${court.name}, ${_time(i + k)}, sélectionné',
+                            l10n.selectionne(court.name, _time(i + k)),
                         ],
                       )
                     : s.free
@@ -328,9 +329,7 @@ class _MuSlotGridState extends State<MuSlotGrid> {
                         slot: s,
                         onTap: () => _tap(court, start),
                         semantics:
-                            '${court.name}, ${_time(i)}, disponible'
-                            '${s.peak ? ', heure de pointe' : ''}'
-                            '${s.price == null ? '' : ', ${formatDT(s.price!)} de l’heure'}',
+                            l10n.disponible(court.name, _time(i), s.peak ? l10n.heureDePointe3 : '', s.price == null ? '' : l10n.deLHeure(formatDT(s.price!))),
                       )
                     : _Taken(slot: s, semantics: '${court.name}, ${_time(i)}'),
               ),
@@ -456,7 +455,7 @@ class _Price extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: MuSpace.s1),
               decoration: BoxDecoration(color: c.successSoft, borderRadius: MuRadius.fullAll),
               child: Text(
-                '−${slot.discount} %',
+                ltr('−${slot.discount} %'),
                 style: MuType.labelS.copyWith(color: c.successText),
               ),
             ),
@@ -592,7 +591,7 @@ class _Taken extends StatelessWidget {
     final c = context.mu;
     final (String word, Widget child) = switch (slot.status) {
       MuSlotStatus.mine => (
-        'ta réservation',
+        l10n.taReservation,
         Row(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -602,12 +601,12 @@ class _Taken extends StatelessWidget {
               color: c.textInverse,
             ),
             const SizedBox(width: MuSpace.s1),
-            Text('Toi', style: MuType.labelS.copyWith(color: c.textInverse)),
+            Text(l10n.toi, style: MuType.labelS.copyWith(color: c.textInverse)),
           ],
         ),
       ),
       MuSlotStatus.blocked => (
-        (slot.label ?? 'Bloqué').toLowerCase(),
+        (slot.label ?? l10n.bloque).toLowerCase(),
         Container(
           padding: const EdgeInsets.symmetric(horizontal: MuSpace.s2, vertical: MuSpace.s1 / 2),
           decoration: BoxDecoration(color: c.surface, borderRadius: MuRadius.fullAll),
@@ -620,12 +619,12 @@ class _Taken extends StatelessWidget {
                 color: c.textSecondary,
               ),
               const SizedBox(width: MuSpace.s1),
-              Text(slot.label ?? 'Bloqué', style: MuType.labelS.copyWith(color: c.textSecondary)),
+              Text(slot.label ?? l10n.bloque, style: MuType.labelS.copyWith(color: c.textSecondary)),
             ],
           ),
         ),
       ),
-      _ => ('réservé', Text('Réservé', style: MuType.labelS.copyWith(color: c.textSecondary))),
+      _ => (l10n.reserve, Text(l10n.reserve2, style: MuType.labelS.copyWith(color: c.textSecondary))),
     };
     final Color ground = switch (slot.status) {
       MuSlotStatus.mine => c.surfaceInverse,
@@ -706,21 +705,21 @@ class _Legend extends StatelessWidget {
         spacing: MuSpace.s4,
         runSpacing: MuSpace.s2,
         children: [
-          key(DecoratedBox(decoration: box(c.surface, c.borderStrong)), 'Disponible'),
+          key(DecoratedBox(decoration: box(c.surface, c.borderStrong)), l10n.disponible2),
           key(
             DecoratedBox(
               decoration: box(c.accent),
               child: Icon(PhosphorIcons.check(), size: MuSize.iconXs * 0.75, color: c.onAccent),
             ),
-            'Ta sélection',
+            l10n.taSelection,
           ),
-          key(DecoratedBox(decoration: box(c.surfaceMuted, c.border)), 'Réservé'),
+          key(DecoratedBox(decoration: box(c.surfaceMuted, c.border)), l10n.reserve2),
           key(
             CustomPaint(
               painter: _Hatch(c.borderStrong),
               child: DecoratedBox(decoration: box(c.surface.withValues(alpha: 0), c.border)),
             ),
-            'Bloqué',
+            l10n.bloque,
           ),
           key(
             DecoratedBox(
@@ -731,7 +730,7 @@ class _Legend extends StatelessWidget {
                 color: c.warningText,
               ),
             ),
-            'Heure de pointe',
+            l10n.heureDePointe2,
           ),
           key(
             DecoratedBox(
@@ -742,7 +741,7 @@ class _Legend extends StatelessWidget {
                 ),
               ),
             ),
-            'Promo',
+            l10n.promo,
           ),
           key(
             DecoratedBox(
@@ -753,7 +752,7 @@ class _Legend extends StatelessWidget {
                 color: c.textInverse,
               ),
             ),
-            'Ta réservation',
+            l10n.taReservation2,
           ),
         ],
       ),

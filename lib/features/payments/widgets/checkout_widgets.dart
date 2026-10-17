@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
@@ -6,6 +7,7 @@ import '../../../core/format.dart';
 import '../../../theme/theme.dart';
 import '../../../ui/ui.dart';
 import '../data/payment_repository.dart';
+import '../../../l10n/l10n.dart';
 
 /// The hatched « MODE TEST · carte 4242 4242 4242 4242 » ribbon, debug builds only.
 class TestRibbon extends StatelessWidget {
@@ -24,8 +26,8 @@ class TestRibbon extends StatelessWidget {
           children: [
             Icon(PhosphorIcons.flask(), size: MuSize.iconXs, color: c.text),
             const SizedBox(width: MuSpace.s1),
-            Text('MODE TEST', style: MuType.overline.copyWith(color: c.text)),
-            Text('  ·  carte ', style: MuType.caption.copyWith(color: c.text)),
+            Text(l10n.modeTest, style: MuType.overline.copyWith(color: c.text)),
+            Text(l10n.carte2, style: MuType.caption.copyWith(color: c.text)),
             Directionality(
               textDirection: TextDirection.ltr,
               child: Text('4242 4242 4242 4242', style: MuType.numXs.copyWith(color: c.text)),
@@ -126,8 +128,8 @@ class CardRow extends StatelessWidget {
                           child: Text(
                             note ??
                                 (warn
-                                    ? 'Expire le mois prochain (${card.expiry})'
-                                    : 'Expire ${card.expiry}'),
+                                    ? l10n.expireLeMoisProchain(card.expiry)
+                                    : l10n.expire(card.expiry)),
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: MuType.caption.copyWith(
@@ -146,7 +148,7 @@ class CardRow extends StatelessWidget {
               ),
               if (card.isDefault) ...[
                 const SizedBox(width: MuSpace.s2),
-                const MuToneBadge(label: 'Par défaut', tone: MuBadgeTone.neutral),
+                MuStatusBadge(status: MuStatus.neutral, label: l10n.parDefaut, size: MuBadgeSize.s),
               ],
             ],
           ),
@@ -181,16 +183,16 @@ class BrandMark extends StatelessWidget {
 /// The lines of the total: « Ta part · 1 joueur sur 10 · 15 DT », « Frais de service · Offerts »,
 /// « Total à payer · 15 DT ».
 class TotalCard extends StatelessWidget {
-  const TotalCard({
+  TotalCard({
     super.key,
     required this.lineLabel,
     required this.amount,
     required this.total,
     this.discountLabel,
     this.discount,
-    this.feeLabel = 'Frais de service',
+    String? feeLabel,
     this.note,
-  });
+  }) : feeLabel = feeLabel ?? l10n.fraisDeService;
 
   final String lineLabel;
   final num amount;
@@ -215,7 +217,7 @@ class TotalCard extends StatelessWidget {
       ),
     );
     return Semantics(
-      label: 'Total',
+      label: l10n.total,
       child: Container(
         padding: const EdgeInsets.all(MuSpace.s4),
         decoration: BoxDecoration(color: c.surfaceMuted, borderRadius: MuRadius.mdAll),
@@ -225,16 +227,16 @@ class TotalCard extends StatelessWidget {
             line(lineLabel, Text(formatDT(amount), style: MuType.numS.copyWith(color: c.text))),
             if (discount != null)
               line(
-                discountLabel ?? 'Réduction',
+                discountLabel ?? l10n.reduction,
                 Text('−${formatDT(discount!)}', style: MuType.numS.copyWith(color: c.successText)),
               ),
-            line(feeLabel, Text('Offerts', style: MuType.label.copyWith(color: c.successText))),
+            line(feeLabel, Text(l10n.offerts, style: MuType.label.copyWith(color: c.successText))),
             const SizedBox(height: MuSpace.s2),
             Divider(height: 1, thickness: 1, color: c.border),
             const SizedBox(height: MuSpace.s2),
             Row(
               children: [
-                Expanded(child: Text('Total à payer', style: MuType.labelL.copyWith(color: c.text))),
+                Expanded(child: Text(l10n.totalAPayer, style: MuType.labelL.copyWith(color: c.text))),
                 Text(formatDT(total), style: MuType.numXl.copyWith(color: c.text)),
               ],
             ),
@@ -299,10 +301,10 @@ class PolicyCard extends StatelessWidget {
             Expanded(
               child: Semantics(
                 header: true,
-                child: Text('Si tu annules', style: MuType.h3.copyWith(color: c.text)),
+                child: Text(l10n.siTuAnnules, style: MuType.h3.copyWith(color: c.text)),
               ),
             ),
-            Text('Politique ${elideDe(venue)}', style: MuType.caption.copyWith(color: c.textSecondary)),
+            Text(l10n.politique(elideDe(venue)), style: MuType.caption.copyWith(color: c.textSecondary)),
           ],
         ),
         const SizedBox(height: MuSpace.s3),
@@ -323,22 +325,22 @@ class PolicyCard extends StatelessWidget {
               tier(
                 PhosphorIcons.checkCircle(PhosphorIconsStyle.fill),
                 c.success,
-                'Gratuite jusqu’au ${formatDateTime(freeUntil)}',
-                '100 % remboursé sur ton solde MatchUp',
+                l10n.gratuiteJusquAu(formatDateTime(freeUntil)),
+                l10n.rembourseSurTonSoldeMatchup2,
               ),
               const SizedBox(height: MuSpace.s3),
               tier(
                 PhosphorIcons.clock(PhosphorIconsStyle.fill),
                 c.warning,
-                '50 % jusqu’au ${formatDateTime(halfUntil)}',
-                'Entre 24 h et 6 h avant le match',
+                l10n.jusquAu(formatDateTime(halfUntil)),
+                l10n.entreHEtHAvant2,
               ),
               const SizedBox(height: MuSpace.s3),
               tier(
                 PhosphorIcons.xCircle(PhosphorIconsStyle.fill),
                 c.error,
-                'Non remboursable ensuite',
-                'Sauf si $venue annule : tout est remboursé',
+                l10n.nonRemboursableEnsuite,
+                l10n.saufSiAnnuleToutEst(venue),
               ),
             ],
           ),
@@ -350,7 +352,7 @@ class PolicyCard extends StatelessWidget {
 
 /// « Paiement sécurisé par Stripe » under the pay button.
 class SecureNote extends StatelessWidget {
-  const SecureNote({super.key, this.text = 'Paiement sécurisé par Stripe'});
+  SecureNote({super.key, String? text}) : text = text ?? l10n.paiementSecuriseParStripe;
 
   final String text;
 
@@ -393,7 +395,7 @@ class CardInputZone extends StatelessWidget {
   /// Field key → message (« number », « expiry », « cvc »).
   final Map<String, String> errors;
 
-  static const countries = ['Tunisie', 'France', 'Algérie', 'Maroc', 'Italie'];
+  static final countries = [l10n.tunisie, l10n.france, l10n.algerie, l10n.maroc, l10n.italie];
 
   /// Luhn check on the digits.
   static bool luhn(String digits) {
@@ -418,9 +420,9 @@ class CardInputZone extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         MuTextField(
-          label: 'Nom sur la carte',
+          label: l10n.nomSurLaCarte,
           controller: name,
-          helper: 'Tel qu’il est écrit sur ta carte.',
+          helper: l10n.telQuIlEstEcrit,
           textCapitalization: TextCapitalization.characters,
           autofillHints: const [AutofillHints.creditCardName],
         ),
@@ -442,18 +444,18 @@ class CardInputZone extends StatelessWidget {
                     children: [
                       Expanded(
                         child: Text(
-                          'Cartes acceptées',
+                          l10n.cartesAcceptees,
                           style: MuType.caption.copyWith(color: c.textSecondary),
                         ),
                       ),
-                      const BrandMark('VISA'),
+                      BrandMark(l10n.visa2),
                       const SizedBox(width: MuSpace.s1),
                       const BrandMark('MC'),
                     ],
                   ),
                   const SizedBox(height: MuSpace.s4),
                   MuTextField(
-                    label: 'Numéro de carte',
+                    label: l10n.numeroDeCarte,
                     controller: number,
                     leadingIcon: PhosphorIcons.creditCard(),
                     keyboardType: TextInputType.number,
@@ -472,9 +474,9 @@ class CardInputZone extends StatelessWidget {
                     children: [
                       Expanded(
                         child: MuTextField(
-                          label: 'Expiration',
+                          label: l10n.expiration,
                           controller: expiry,
-                          placeholder: 'MM / AA',
+                          placeholder: l10n.mmAa,
                           keyboardType: TextInputType.number,
                           textDirection: TextDirection.ltr,
                           inputFormatters: [
@@ -489,9 +491,9 @@ class CardInputZone extends StatelessWidget {
                       const SizedBox(width: MuSpace.s3),
                       Expanded(
                         child: MuTextField(
-                          label: 'CVC',
+                          label: l10n.cvc,
                           controller: cvc,
-                          helper: '3 chiffres au dos',
+                          helper: l10n.chiffresAuDos,
                           keyboardType: TextInputType.number,
                           obscureText: true,
                           textDirection: TextDirection.ltr,
@@ -507,7 +509,7 @@ class CardInputZone extends StatelessWidget {
                   ),
                   const SizedBox(height: MuSpace.s4),
                   MuSelect<String>(
-                    label: 'Pays',
+                    label: l10n.pays,
                     value: country,
                     options: [for (final k in countries) MuSelectOption(value: k, label: k)],
                     onChanged: onCountry,
@@ -531,7 +533,7 @@ class CardInputZone extends StatelessWidget {
                     Icon(PhosphorIcons.lockSimple(), size: MuSize.iconXs - 2, color: c.textSecondary),
                     const SizedBox(width: MuSpace.s1),
                     Text(
-                      'Zone sécurisée Stripe · Payment Element',
+                      l10n.zoneSecuriseeStripePaymentElement,
                       style: MuType.caption.copyWith(color: c.textSecondary),
                     ),
                   ],

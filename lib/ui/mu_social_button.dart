@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 import '../theme/theme.dart';
 import 'src/interaction.dart';
+import '../l10n/l10n.dart';
 
 enum MuSocialProvider { google, apple }
 
@@ -46,8 +47,8 @@ class MuSocialButton extends StatelessWidget {
   String get _label =>
       label ??
       switch (provider) {
-        MuSocialProvider.google => 'Continuer avec Google',
-        MuSocialProvider.apple => 'Continuer avec Apple',
+        MuSocialProvider.google => l10n.continuerAvecGoogle,
+        MuSocialProvider.apple => l10n.continuerAvecApple,
       };
 
   @override

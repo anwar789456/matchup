@@ -14,6 +14,7 @@ import '../../common/widgets/flow_scaffold.dart';
 import '../controllers/onboarding_controller.dart';
 import '../data/profile_repository.dart';
 import '../widgets/onboarding_step_scaffold.dart';
+import '../../../l10n/l10n.dart';
 
 /// PLY-10 · Profil: photo and pseudo, then « Terminer » opens the Home with its guided tour.
 class ProfileScreen extends ConsumerStatefulWidget {
@@ -98,8 +99,8 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
       if (mounted) {
         MuToast.show(context,
             tone: MuToastTone.error,
-            title: 'Impossible d’ouvrir tes photos',
-            description: 'Vérifie l’accès aux photos dans les réglages.');
+            title: l10n.impossibleDOuvrirTesPhotos,
+            description: l10n.verifieLAccesAuxPhotos);
       }
     }
   }
@@ -136,18 +137,18 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
     final shown = name.isEmpty ? null : publicName(name);
     final displayName = name.isNotEmpty
         ? name
-        : (_pseudo.text.trim().isNotEmpty ? _pseudo.text.trim() : 'MatchUp');
+        : (_pseudo.text.trim().isNotEmpty ? _pseudo.text.trim() : l10n.matchup);
 
     return OnboardingStepScaffold(
       route: Routes.playerProfile,
       step: 7,
-      stepTitle: 'Ton profil',
+      stepTitle: l10n.tonProfil,
       onBack: () => goBack(context, Routes.playerNotifications),
       onSkip: () => _finish(skip: true),
       body: [
-        const FlowTitle(
-          'Montre-toi',
-          lead: 'Une photo et un pseudo, pour que les joueurs te reconnaissent sur le terrain.',
+        FlowTitle(
+          l10n.montreToi,
+          lead: l10n.unePhotoEtUnPseudo,
         ),
         Column(
           children: [
@@ -169,7 +170,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                       decoration: BoxDecoration(color: c.surface, shape: BoxShape.circle),
                       child: MuIconButton(
                         icon: PhosphorIcons.camera(),
-                        label: 'Prendre ou choisir une photo',
+                        label: l10n.prendreOuChoisirUnePhoto,
                         variant: MuIconButtonVariant.primary,
                         onPressed: _pickPhoto,
                       ),
@@ -180,7 +181,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
             ),
             const SizedBox(height: MuSpace.s2),
             MuButton.tertiary(
-              label: photo == null ? 'Ajouter une photo' : 'Changer de photo',
+              label: photo == null ? l10n.ajouterUnePhoto : l10n.changerDePhoto,
               size: MuButtonSize.s,
               onPressed: _pickPhoto,
             ),
@@ -190,7 +191,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             MuTextField(
-              label: 'Pseudo',
+              label: l10n.pseudo,
               controller: _pseudo,
               prefixText: '@',
               autofillHints: const [AutofillHints.username],
@@ -202,16 +203,15 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
             ),
             const SizedBox(height: MuSpace.s5),
             MuTextField(
-              label: 'Prénom et nom',
+              label: l10n.prenomEtNom,
               controller: _name,
-              placeholder: 'Ex. Yassine Belhadj',
+              placeholder: l10n.exYassineBelhadj,
               autofillHints: const [AutofillHints.name],
               textCapitalization: TextCapitalization.words,
               textInputAction: TextInputAction.done,
               helper: shown == null
-                  ? 'Les autres joueurs voient ton prénom et l’initiale de ton nom, jamais ton '
-                      'nom complet.'
-                  : 'Les autres joueurs voient « $shown », jamais ton nom complet.',
+                  ? l10n.lesAutresJoueursVoientTon
+                  : l10n.lesAutresJoueursVoientJamais(shown),
               onSubmitted: (_) => _finish(),
             ),
           ],
@@ -219,7 +219,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
       ],
       bottomBar: [
         MuButton.primary(
-          label: 'Terminer',
+          label: l10n.terminer,
           size: MuButtonSize.xl,
           fullWidth: true,
           loading: _saving,

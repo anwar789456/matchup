@@ -28,6 +28,7 @@ class MuRadioGroup<T> extends StatelessWidget {
     this.description,
     this.error,
     this.horizontal = false,
+    this.hideLabel = false,
   });
 
   final String label;
@@ -37,6 +38,9 @@ class MuRadioGroup<T> extends StatelessWidget {
   final ValueChanged<T>? onChanged;
   final String? error;
   final bool horizontal;
+
+  /// The label stays for screen readers only (a section heading already says it).
+  final bool hideLabel;
 
   @override
   Widget build(BuildContext context) {
@@ -57,10 +61,10 @@ class MuRadioGroup<T> extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: [
-          Text(label, style: MuType.label.copyWith(color: c.text)),
+          if (!hideLabel) Text(label, style: MuType.label.copyWith(color: c.text)),
           if (description != null)
             Text(description!, style: MuType.body.copyWith(color: c.textSecondary)),
-          const SizedBox(height: MuSpace.s2),
+          if (!hideLabel || description != null) const SizedBox(height: MuSpace.s2),
           if (horizontal)
             Wrap(spacing: MuSpace.s6, children: rows)
           else

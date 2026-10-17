@@ -47,7 +47,7 @@ void main() {
           FakeTournamentsRepository(latency: Duration.zero),
         ),
         paymentRepositoryProvider.overrideWithValue(
-          const FakePaymentRepository(latency: Duration.zero),
+          FakePaymentRepository(latency: Duration.zero),
         ),
       ],
     );
@@ -118,10 +118,15 @@ void main() {
     await see(tester, find.text('Gratuit jusqu’au mar. 20 oct. · 20h00'));
     await tap(tester, find.text('Payer ma part'));
 
-    // BKG-05, saved and listed in Explorer.
-    expect(find.text('C’est réservé !'), findsOneWidget);
-    expect(find.text('Réf. MU-48214'), findsOneWidget);
-    await see(tester, find.text('Ta partie publique'));
+    // PAY-01 → PAY-09 (reçu, billet, « Encore 4 places »), saved and listed in Explorer.
+    expect(find.text('Ta part · réservation MU-48214'.toUpperCase()), findsOneWidget);
+    await see(tester, find.byType(MuCheckbox));
+    await tap(tester, find.byType(MuCheckbox));
+    await tap(tester, find.widgetWithText(MuButton, 'Payer'));
+    expect(find.text('Paiement réussi'), findsOneWidget);
+    expect(find.text('MU-48214'), findsWidgets);
+    await see(tester, find.text('Encore 4 places'));
+    expect(find.text('Ta partie publique est visible dans Explorer.'), findsOneWidget);
     // The fakes wait on the fake clock: read them outside it.
     final upcoming = await tester.runAsync(bookings.upcoming);
     expect(upcoming!.bookings.map((b) => b.id), contains('MU-48214'));
@@ -150,9 +155,14 @@ void main() {
     expect(find.text('Payer le terrain'), findsOneWidget);
     await tap(tester, find.text('Payer le terrain'));
 
-    expect(find.text('C’est réservé !'), findsOneWidget);
-    expect(find.textContaining('Le terrain est payé : ${formatDT(150)}.'), findsOneWidget);
-    await see(tester, find.text('Ta partie privée'));
+    // PAY-01: the balance is offered again in the checkout; card pays the whole court.
+    await see(tester, find.byType(MuCheckbox));
+    await tap(tester, find.byType(MuCheckbox));
+    await tap(tester, find.widgetWithText(MuButton, 'Payer'));
+    expect(find.text('Paiement réussi'), findsOneWidget);
+    await tap(tester, find.text('Terminé'));
+    // MAT-05 of the new booking.
+    expect(find.textContaining('MU-48214', findRichText: true), findsWidgets);
     final open = await tester.runAsync(games.openGames);
     expect(open!.map((g) => g.id), isNot(contains('MU-48214')));
     expect(tester.takeException(), isNull);

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../theme/theme.dart';
 import '../../../ui/ui.dart';
+import '../../../l10n/l10n.dart';
 
 /// A link inside a sentence (« Modifier », « Se connecter », « Créer un compte »).
 InlineSpan inlineLink(String label, VoidCallback onTap, TextStyle style) => WidgetSpan(
@@ -12,7 +13,7 @@ InlineSpan inlineLink(String label, VoidCallback onTap, TextStyle style) => Widg
 
 /// « ou avec ton email » between the social buttons and the form.
 class OrDivider extends StatelessWidget {
-  const OrDivider({super.key, this.label = 'ou avec ton email'});
+  OrDivider({super.key, String? label}) : label = label ?? l10n.ouAvecTonEmail;
 
   final String label;
 

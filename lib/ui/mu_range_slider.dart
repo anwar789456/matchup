@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 
 import '../theme/theme.dart';
 import 'src/interaction.dart';
+import '../l10n/l10n.dart';
 
 /// A named stretch of a [MuRangeSlider] track (« Débutant » 1,0–2,5).
 @immutable
@@ -21,7 +22,7 @@ class MuRangeBand {
 /// press ends, to refresh results once. With [bands] the track splits at their edges and names
 /// them underneath (bands inside the range in `label-s`).
 class MuRangeSlider extends StatefulWidget {
-  const MuRangeSlider({
+  MuRangeSlider({
     super.key,
     required this.values,
     required this.min,
@@ -32,11 +33,11 @@ class MuRangeSlider extends StatefulWidget {
     this.step = 1,
     this.format,
     this.formatRange,
-    this.minLabel = 'Minimum',
-    this.maxLabel = 'Maximum',
+    String? minLabel,
+    String? maxLabel,
     this.bands = const [],
     this.showLimits = true,
-  });
+  }) : maxLabel = maxLabel ?? l10n.maximum, minLabel = minLabel ?? l10n.minimum;
 
   final RangeValues values;
   final double min;
@@ -220,7 +221,7 @@ class _MuRangeSliderState extends State<MuRangeSlider> {
             child: Semantics(
               slider: true,
               label: i == 0 ? widget.minLabel : widget.maxLabel,
-              value: '${_fmt(r.start)} à ${_fmt(r.end)}',
+              value: l10n.rangeTo(_fmt(r.start), _fmt(r.end)),
               increasedValue: _fmt(_snap(v + widget.step)),
               decreasedValue: _fmt(_snap(v - widget.step)),
               onIncrease: _enabled ? () => _move(i, v + widget.step) : null,

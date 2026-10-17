@@ -7,6 +7,7 @@ import '../theme/theme.dart';
 import 'mu_avatar.dart';
 import 'mu_icon_button.dart';
 import 'src/interaction.dart';
+import '../l10n/l10n.dart';
 
 /// An entry of the [MuTopBar] account menu.
 @immutable
@@ -32,21 +33,21 @@ class MuMenuEntry {
 ///
 /// Breadcrumbs come with the second-level dashboard pages.
 class MuTopBar extends StatefulWidget {
-  const MuTopBar({
+  MuTopBar({
     super.key,
     required this.title,
     required this.userName,
     required this.userRole,
     this.userEmail,
     this.userImage,
-    this.searchPlaceholder = 'Rechercher un joueur, un terrain, une réservation…',
+    String? searchPlaceholder,
     this.onSearch,
     this.onAssistant,
     this.notifications = 0,
     this.onNotifications,
     this.menuItems = const [],
     this.leading,
-  });
+  }) : searchPlaceholder = searchPlaceholder ?? l10n.rechercherUnJoueurUnTerrain;
 
   final String title;
   final String userName;
@@ -90,7 +91,7 @@ class _MuTopBarState extends State<MuTopBar> {
   @override
   Widget build(BuildContext context) {
     final c = context.mu;
-    final shortcut = _apple ? '⌘ K' : 'Ctrl K';
+    final shortcut = _apple ? '⌘ K' : l10n.ctrlK;
 
     return CallbackShortcuts(
       bindings: {
@@ -147,13 +148,13 @@ class _MuTopBarState extends State<MuTopBar> {
                 if (compact)
                   MuIconButton(
                     icon: PhosphorIcons.magnifyingGlass(),
-                    label: 'Rechercher',
+                    label: l10n.rechercher,
                     onPressed: widget.onSearch ?? () {},
                   ),
                 if (widget.onAssistant != null && compact)
                   MuIconButton(
                     icon: PhosphorIcons.sparkle(PhosphorIconsStyle.fill),
-                    label: 'Assistant',
+                    label: l10n.assistant,
                     color: c.aiText,
                     onPressed: widget.onAssistant,
                   )
@@ -164,8 +165,8 @@ class _MuTopBarState extends State<MuTopBar> {
                 MuIconButton(
                   icon: PhosphorIcons.bell(),
                   label: widget.notifications > 0
-                      ? 'Notifications, ${widget.notifications} non lues'
-                      : 'Notifications',
+                      ? l10n.notificationsNonLues(widget.notifications)
+                      : l10n.notifications,
                   badge: widget.notifications > 0 ? widget.notifications : null,
                   onPressed: widget.onNotifications ?? () {},
                 ),
@@ -236,7 +237,7 @@ class _MuTopBarState extends State<MuTopBar> {
       child: Semantics(
         button: true,
         expanded: _menuOpen,
-        label: '${widget.userName}, ${widget.userRole}. Menu du compte',
+        label: l10n.menuDuCompte(widget.userName, widget.userRole),
         excludeSemantics: true,
         child: MuFocusRing(
           borderRadius: MuRadius.fullAll,
@@ -313,7 +314,7 @@ class _SearchTriggerState extends State<_SearchTrigger> {
     return Semantics(
       button: true,
       label: widget.placeholder,
-      hint: 'Raccourci ${widget.shortcut}',
+      hint: l10n.raccourci(widget.shortcut),
       excludeSemantics: true,
       child: MouseRegion(
         onEnter: (_) => setState(() => _hovered = true),
@@ -419,7 +420,7 @@ class _AssistantButtonState extends State<_AssistantButton> {
                         color: c.aiText,
                       ),
                       const SizedBox(width: MuSpace.s2),
-                      Text('Assistant', style: MuType.label.copyWith(color: c.aiText)),
+                      Text(l10n.assistant, style: MuType.label.copyWith(color: c.aiText)),
                     ],
                   ),
                 ),

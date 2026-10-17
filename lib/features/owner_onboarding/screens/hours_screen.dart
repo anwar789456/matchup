@@ -9,6 +9,7 @@ import '../../common/widgets/pro_wizard_scaffold.dart';
 import '../controllers/owner_controller.dart';
 import '../data/owner_draft.dart';
 import '../widgets/owner_wizard.dart';
+import '../../../l10n/l10n.dart';
 
 /// OWN-04 — opening hours per weekday (a switch, opening and closing selects, the length), « Appliquer
 /// à tous les jours », and exceptional closures.
@@ -19,7 +20,7 @@ class HoursScreen extends ConsumerStatefulWidget {
   ConsumerState<HoursScreen> createState() => _HoursScreenState();
 }
 
-const _days = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'];
+final _days = [l10n.lundi, l10n.mardi, l10n.mercredi, l10n.jeudi, l10n.vendredi, l10n.samedi, l10n.dimanche];
 
 /// 06h00 to 02h00 the next day, every half hour (OWN-04 source).
 final _times = [for (var m = 6 * 60; m <= 26 * 60; m += 30) m];
@@ -57,7 +58,7 @@ class _HoursScreenState extends ConsumerState<HoursScreen> {
     MuToast.show(
       context,
       tone: MuToastTone.success,
-      title: 'Horaires du ${_days[source].toLowerCase()} appliqués à tous les jours ouverts',
+      title: l10n.horairesDuAppliquesATous(_days[source].toLowerCase()),
     );
   }
 
@@ -72,7 +73,7 @@ class _HoursScreenState extends ConsumerState<HoursScreen> {
         ]);
     });
     if (hours.every((h) => !h.open)) {
-      MuToast.show(context, tone: MuToastTone.error, title: 'Ouvre au moins un jour.');
+      MuToast.show(context, tone: MuToastTone.error, title: l10n.ouvreAuMoinsUnJour);
       return false;
     }
     return _errors.isEmpty;
@@ -80,93 +81,57 @@ class _HoursScreenState extends ConsumerState<HoursScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final c = context.mu;
     final hours = ref.watch(ownerProvider.select((v) => v.requireValue.hours));
 
     return OwnerWizard(
       step: 3,
-      title: 'Tes horaires d’ouverture',
-      lead: 'Les joueurs ne peuvent réserver que pendant ces plages.',
+      title: l10n.tesHorairesDOuverture,
+      lead: l10n.lesJoueursNePeuventReserver,
       validate: _validate,
-      body: ProFormCard(
+      body: ProFormSections(
         children: [
           ProFormSection(
-            title: 'Horaires de la semaine',
-            description: 'Les créneaux sont générés toutes les heures dans ces plages.',
+            title: l10n.horairesDeLaSemaine,
+            description: l10n.lesCreneauxSontGeneresToutes,
             trailing: MuButton.tertiary(
-              label: 'Appliquer à tous les jours',
+              label: l10n.appliquerATousLesJours,
               leading: PhosphorIcons.copy(),
               size: MuButtonSize.s,
               onPressed: _applyToAll,
             ),
             children: [
-              LayoutBuilder(
-                builder: (context, constraints) {
-                  final stacked = constraints.maxWidth < _DayRow.stackBelow;
-                  return Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      if (!stacked)
-                        ExcludeSemantics(
-                          child: Container(
-                            padding: const EdgeInsets.only(bottom: MuSpace.s2),
-                            decoration: BoxDecoration(
-                              border: Border(bottom: BorderSide(color: c.border)),
-                            ),
-                            child: Row(
-                              children: [
-                                Expanded(child: _head(c, 'Jour')),
-                                SizedBox(width: _DayRow.select, child: _head(c, 'Ouverture')),
-                                const SizedBox(width: MuSpace.s3 * 2 + _DayRow.to),
-                                SizedBox(width: _DayRow.select, child: _head(c, 'Fermeture')),
-                                const SizedBox(width: MuSpace.s3),
-                                SizedBox(
-                                  width: _DayRow.length,
-                                  child: _head(c, 'Durée', end: true),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      for (final (i, h) in hours.indexed)
-                        _DayRow(
-                          day: _days[i],
-                          hours: h,
-                          stacked: stacked,
-                          last: i == hours.length - 1,
-                          error: _errors.contains(i),
-                          onChanged: (v) => _setDay(i, v),
-                        ),
-                    ],
-                  );
-                },
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  for (final (i, h) in hours.indexed)
+                    _DayRow(
+                      day: _days[i],
+                      hours: h,
+                      last: i == hours.length - 1,
+                      error: _errors.contains(i),
+                      onChanged: (v) => _setDay(i, v),
+                    ),
+                ],
               ),
             ],
           ),
           ProExtraRow(
             icon: PhosphorIcons.calendarX(),
-            title: 'Fermetures exceptionnelles',
-            caption: 'Aïd, jours fériés, travaux : les créneaux de ces dates disparaissent.',
-            action: 'Ajouter une fermeture',
+            title: l10n.fermeturesExceptionnelles,
+            caption: l10n.aidJoursFeriesTravauxLes,
+            action: l10n.ajouterUneFermeture,
             onAction: () => showComingSoon(context),
           ),
         ],
       ),
     );
   }
-
-  Widget _head(MuColors c, String text, {bool end = false}) => Text(
-    text,
-    textAlign: end ? TextAlign.end : TextAlign.start,
-    style: MuType.labelS.copyWith(color: c.textSecondary),
-  );
 }
 
 class _DayRow extends StatelessWidget {
   const _DayRow({
     required this.day,
     required this.hours,
-    required this.stacked,
     required this.last,
     required this.error,
     required this.onChanged,
@@ -174,17 +139,14 @@ class _DayRow extends StatelessWidget {
 
   final String day;
   final DayHours hours;
-  final bool stacked;
   final bool last;
   final bool error;
   final ValueChanged<DayHours> onChanged;
 
-  // OWN-04 source: rows ≥ 52; selects 128; « à » 14; length 40.
+  // OWN-04 source: rows ≥ 52; « à » 14; the length 40 wide.
   static const double _minHeight = 52;
-  static const double select = 128;
-  static const double to = 14;
-  static const double length = 40;
-  static const double stackBelow = 520;
+  static const double _to = 14;
+  static const double _lengthWidth = 40;
 
   @override
   Widget build(BuildContext context) {
@@ -195,19 +157,14 @@ class _DayRow extends StatelessWidget {
       for (final m in values) MuSelectOption(value: m, label: formatHour(m)),
     ];
 
-    // On phones the two selects share the row.
-    Widget slot(Widget child) =>
-        stacked ? Expanded(child: child) : SizedBox(width: select, child: child);
-
+    // The day's switch, then the two selects sharing the row under it.
     final range = hours.open
         ? Row(
-            mainAxisSize: stacked ? MainAxisSize.max : MainAxisSize.min,
             children: [
-              slot(
-                MuSelect<int>(
-                  label: 'Ouverture le $lower',
+              Expanded(
+                child: MuSelect<int>(
+                  label: l10n.ouvertureLe(lower),
                   hideLabel: true,
-                  size: MuFieldSize.m,
                   value: hours.from,
                   options: options(_times),
                   onChanged: (v) => onChanged(hours.copyWith(from: v)),
@@ -215,19 +172,18 @@ class _DayRow extends StatelessWidget {
               ),
               const SizedBox(width: MuSpace.s3),
               SizedBox(
-                width: to,
+                width: _to,
                 child: Text(
-                  'à',
+                  l10n.horaireA,
                   textAlign: TextAlign.center,
                   style: MuType.body.copyWith(color: c.textSecondary),
                 ),
               ),
               const SizedBox(width: MuSpace.s3),
-              slot(
-                MuSelect<int>(
-                  label: 'Fermeture le $lower',
+              Expanded(
+                child: MuSelect<int>(
+                  label: l10n.fermetureLe(lower),
                   hideLabel: true,
-                  size: MuFieldSize.m,
                   value: hours.close,
                   options: options(_times),
                   onChanged: (v) => onChanged(hours.copyWith(close: v)),
@@ -235,7 +191,7 @@ class _DayRow extends StatelessWidget {
               ),
               const SizedBox(width: MuSpace.s3),
               SizedBox(
-                width: length,
+                width: _lengthWidth,
                 child: Text(
                   hours.minutes > 0 ? _length(hours.minutes) : '—',
                   textAlign: TextAlign.end,
@@ -249,7 +205,7 @@ class _DayRow extends StatelessWidget {
             children: [
               Icon(PhosphorIcons.moon(), size: MuSize.iconXs, color: c.textSecondary),
               const SizedBox(width: MuSpace.s2),
-              Text('Fermé toute la journée', style: MuType.body.copyWith(color: c.textSecondary)),
+              Text(l10n.fermeTouteLaJournee, style: MuType.body.copyWith(color: c.textSecondary)),
             ],
           );
 
@@ -269,27 +225,14 @@ class _DayRow extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          if (stacked) ...[
-            toggle,
-            if (hours.open) ...[
-              const SizedBox(height: MuSpace.s2),
-              Align(alignment: AlignmentDirectional.centerStart, child: range),
-            ],
-            if (!hours.open) ...[const SizedBox(height: MuSpace.s1), range],
-          ] else
-            Row(
-              children: [
-                Expanded(
-                  child: Align(alignment: AlignmentDirectional.centerStart, child: toggle),
-                ),
-                const SizedBox(width: MuSpace.s4),
-                range,
-              ],
-            ),
+          toggle,
+          const SizedBox(height: MuSpace.s2),
+          range,
+          const SizedBox(height: MuSpace.s1),
           if (error)
-            const Padding(
-              padding: EdgeInsets.symmetric(vertical: MuSpace.s1),
-              child: MuFieldMessage.error('La fermeture doit venir après l’ouverture.'),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: MuSpace.s1),
+              child: MuFieldMessage.error(l10n.laFermetureDoitVenirApres),
             ),
         ],
       ),

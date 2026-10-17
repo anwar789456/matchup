@@ -15,6 +15,7 @@ import '../../matches/data/bookings_repository.dart';
 import '../controllers/booking_controller.dart';
 import '../data/teammates_repository.dart';
 import '../widgets/booking_scaffold.dart';
+import '../../../l10n/l10n.dart';
 
 final _suggestedProvider = FutureProvider.family<List<Teammate>, String>(
   (ref, venueId) => ref.watch(teammatesRepositoryProvider).suggested(venueId),
@@ -44,7 +45,7 @@ class _BookingInvitesScreenState extends ConsumerState<BookingInvitesScreen> {
     final c = context.mu;
     final draft = ref.watch(bookingProvider);
     final booking = ref.read(bookingProvider.notifier);
-    final zone = ref.watch(meProvider).value?.zone ?? 'La Marsa';
+    final zone = ref.watch(meProvider).value?.zone ?? l10n.laMarsa;
     final reference = draft.confirmed?.id ?? ref.watch(_nextReferenceProvider).value;
     final link = reference == null ? null : 'matchup.tn/r/$reference';
     final n = draft.invited.length;
@@ -52,17 +53,17 @@ class _BookingInvitesScreenState extends ConsumerState<BookingInvitesScreen> {
 
     return BookingStepScaffold(
       step: 2,
-      title: 'Tes invités',
+      title: l10n.tesInvites,
       bottomBar: [
         MuButton.primary(
           label: n == 0
-              ? 'Continuer sans inviter'
-              : 'Inviter $n ${n == 1 ? 'ami' : 'amis'} et continuer',
+              ? l10n.continuerSansInviter
+              : l10n.inviterEtContinuer(n, n == 1 ? 'ami' : 'amis'),
           size: MuButtonSize.xl,
           fullWidth: true,
           onPressed: () {
             if (widget.afterBooking) {
-              MuToast.show(context, title: 'Invitations envoyées', tone: MuToastTone.success);
+              MuToast.show(context, title: l10n.invitationsEnvoyees, tone: MuToastTone.success);
               context.pop();
             } else {
               context.push(Routes.bookingSummary);
@@ -84,20 +85,18 @@ class _BookingInvitesScreenState extends ConsumerState<BookingInvitesScreen> {
             children: [
               Semantics(
                 header: true,
-                child: Text('Invite tes amis', style: MuType.h2.copyWith(color: c.text)),
+                child: Text(l10n.inviteTesAmis, style: MuType.h2.copyWith(color: c.text)),
               ),
               const SizedBox(height: MuSpace.s1),
               Text(
-                'Partie ${d.type == BookingType.private ? 'privée' : 'publique'} · ${s.court.name} · '
-                '${formatDay(s.start)} · ${formatTime(s.start)}. Chacun paie '
-                '${formatDT(d.type == BookingType.private ? share : d.share)} en acceptant.',
+                l10n.partieChacunPaieEnAcceptant(d.type == BookingType.private ? l10n.privee2 : 'publique', s.court.name, formatDay(s.start), formatTime(s.start), formatDT(d.type == BookingType.private ? share : d.share)),
                 style: MuType.body.copyWith(color: c.textSecondary),
               ),
             ],
           ),
           MuSearchField<void>(
-            label: 'Rechercher un ami',
-            placeholder: 'Nom, pseudo ou numéro',
+            label: l10n.rechercherUnAmi,
+            placeholder: l10n.nomPseudoOuNumero,
             onChanged: (v) => setState(() => _query = v),
           ),
           Column(
@@ -112,14 +111,14 @@ class _BookingInvitesScreenState extends ConsumerState<BookingInvitesScreen> {
                       header: true,
                       child: Text(
                         n == 0
-                            ? 'Aucun ami invité'
-                            : '$n ${n == 1 ? 'ami invité' : 'amis invités'}',
+                            ? l10n.aucunAmiInvite
+                            : '$n ${n == 1 ? l10n.amiInvite : l10n.amisInvites}',
                         style: MuType.labelL.copyWith(color: c.text),
                       ),
                     ),
                   ),
                   Text(
-                    'Il reste $left ${left == 1 ? 'place' : 'places'} sur ${d.capacity}',
+                    l10n.ilResteSur(left, left == 1 ? 'place' : 'places', d.capacity),
                     style: MuType.caption.copyWith(color: c.textSecondary),
                   ),
                 ],
@@ -135,7 +134,7 @@ class _BookingInvitesScreenState extends ConsumerState<BookingInvitesScreen> {
                         label: name,
                         kind: MuChipKind.input,
                         onRemove: () => booking.toggleInvite(name),
-                        removeLabel: 'Retirer $name',
+                        removeLabel: l10n.retirer(name),
                       ),
                   ],
                 ),
@@ -147,10 +146,10 @@ class _BookingInvitesScreenState extends ConsumerState<BookingInvitesScreen> {
             children: [
               Semantics(
                 header: true,
-                child: Text('Coéquipiers suggérés', style: MuType.labelL.copyWith(color: c.text)),
+                child: Text(l10n.coequipiersSuggeres, style: MuType.labelL.copyWith(color: c.text)),
               ),
               Text(
-                'Ils ont déjà joué avec toi à ${s.venue.venue.name} ou près de $zone.',
+                l10n.ilsOntDejaJoueAvec(s.venue.venue.name, zone),
                 style: MuType.caption.copyWith(color: c.textSecondary),
               ),
               const SizedBox(height: MuSpace.s2),
@@ -168,7 +167,7 @@ class _BookingInvitesScreenState extends ConsumerState<BookingInvitesScreen> {
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: MuSpace.s3),
                   child: Text(
-                    'Aucun coéquipier ne s’appelle « $_query ». Partage le lien ci-dessous.',
+                    l10n.aucunCoequipierNeSAppelle(_query),
                     style: MuType.body.copyWith(color: c.textSecondary),
                   ),
                 ),
@@ -220,7 +219,7 @@ class _MateRow extends StatelessWidget {
             ),
             MuCheckbox(
               value: invited,
-              semanticLabel: 'Inviter ${mate.name}',
+              semanticLabel: l10n.inviter(mate.name),
               onChanged: full ? null : (_) => onChanged(),
             ),
           ],
@@ -241,8 +240,7 @@ class _ShareLink extends StatelessWidget {
   Widget build(BuildContext context) {
     final c = context.mu;
     final message =
-        'Rejoins-moi au ${slot.venue.venue.sport.label.toLowerCase()} : ${slot.title}, '
-        '${formatDateTime(slot.start)}. https://$link';
+        l10n.rejoinsMoiAuHttps(slot.venue.venue.sport.label.toLowerCase(), slot.title, formatDateTime(slot.start), link);
     return Container(
       padding: const EdgeInsets.all(MuSpace.s4),
       decoration: BoxDecoration(color: c.surfaceMuted, borderRadius: MuRadius.mdAll),
@@ -251,10 +249,10 @@ class _ShareLink extends StatelessWidget {
         children: [
           Semantics(
             header: true,
-            child: Text('Ou partage le lien', style: MuType.labelL.copyWith(color: c.text)),
+            child: Text(l10n.ouPartageLeLien, style: MuType.labelL.copyWith(color: c.text)),
           ),
           Text(
-            'Seules les personnes qui ont le lien peuvent rejoindre.',
+            l10n.seulesLesPersonnesQuiOnt,
             style: MuType.caption.copyWith(color: c.textSecondary),
           ),
           const SizedBox(height: MuSpace.s3),
@@ -280,13 +278,13 @@ class _ShareLink extends StatelessWidget {
             children: [
               Expanded(
                 child: MuButton.secondary(
-                  label: 'Copier le lien',
+                  label: l10n.copierLeLien,
                   leading: PhosphorIcons.copy(),
                   fullWidth: true,
                   onPressed: () async {
                     await Clipboard.setData(ClipboardData(text: 'https://$link'));
                     if (context.mounted) {
-                      MuToast.show(context, title: 'Lien copié', tone: MuToastTone.success);
+                      MuToast.show(context, title: l10n.lienCopie, tone: MuToastTone.success);
                     }
                   },
                 ),
@@ -294,7 +292,7 @@ class _ShareLink extends StatelessWidget {
               const SizedBox(width: MuSpace.s2),
               Expanded(
                 child: MuButton.secondary(
-                  label: 'WhatsApp',
+                  label: l10n.whatsapp,
                   leading: PhosphorIcons.whatsappLogo(),
                   fullWidth: true,
                   onPressed: () => launchUrl(

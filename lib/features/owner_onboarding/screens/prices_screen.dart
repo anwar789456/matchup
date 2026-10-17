@@ -12,6 +12,7 @@ import '../controllers/owner_controller.dart';
 import '../data/owner_draft.dart';
 import '../data/owner_repository.dart';
 import '../widgets/owner_wizard.dart';
+import '../../../l10n/l10n.dart';
 
 /// OWN-05 — court prices per hour, off-peak and peak, for each sport and type of court; the
 /// weekend rule; and the live preview of what a player pays.
@@ -31,7 +32,7 @@ class _Group {
   final List<Court> courts = [];
 
   String get title =>
-      '${OwnerCatalog.sportName(first.sport)} · ${first.indoor ? 'Intérieur' : 'Extérieur'}';
+      '${OwnerCatalog.sportName(first.sport)} · ${first.indoor ? l10n.interieur : l10n.exterieur}';
 
   /// « Terrains 1 et 2 », « Terrain 3 », « Central et Annexe ».
   String get names {
@@ -41,7 +42,7 @@ class _Group {
     final numbered = RegExp(r'^Terrain (\S+)$');
     final numbers = [for (final c in courts) numbered.firstMatch(c.name)?.group(1)];
     if (numbers.every((n) => n != null)) {
-      return courts.length == 1 ? courts.first.name : 'Terrains ${join(numbers.cast<String>())}';
+      return courts.length == 1 ? courts.first.name : l10n.terrains2(join(numbers.cast<String>()));
     }
     return join([for (final c in courts) c.name]);
   }
@@ -105,48 +106,41 @@ class _PricesScreenState extends ConsumerState<PricesScreen> {
 
     return OwnerWizard(
       step: 4,
-      title: 'Fixe tes tarifs',
+      title: l10n.fixeTesTarifs,
       lead:
-          'Les joueurs comparent le prix par personne : MatchUp l’affiche à côté du prix du '
-          'terrain.',
+          l10n.lesJoueursComparentLePrix,
       validate: _validate,
-      body: ProFormCard(
+      body: ProFormSections(
         children: [
           Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               ProFormSection(
-                title: 'Prix du terrain à l’heure',
-                description: 'Le prix par joueur est calculé pour 10 joueurs, comme sur MatchUp.',
+                title: l10n.prixDuTerrainAL,
+                description: l10n.lePrixParJoueurEst,
                 trailing: MuButton.tertiary(
-                  label: 'Modifier les plages',
+                  label: l10n.modifierLesPlages,
                   leading: PhosphorIcons.clock(),
                   size: MuButtonSize.s,
                   onPressed: () => showComingSoon(context),
                 ),
                 children: [
-                  LayoutBuilder(
-                    builder: (context, constraints) {
-                      final stacked = constraints.maxWidth < _PriceRow.stackBelow;
-                      return Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
-                          if (!stacked) _header(c),
-                          for (final (i, g) in groups.indexed)
-                            _PriceRow(
-                              group: g,
-                              stacked: stacked,
-                              last: i == groups.length - 1,
-                              off: _field('${g.key}-off', d.prices[g.key]?.offPeak),
-                              peak: _field('${g.key}-peak', d.prices[g.key]?.peak),
-                              offError: _errors.contains('${g.key}-off'),
-                              peakError: _errors.contains('${g.key}-peak'),
-                              onOff: (t) => _set(g.key, peak: false, text: t),
-                              onPeak: (t) => _set(g.key, peak: true, text: t),
-                            ),
-                        ],
-                      );
-                    },
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      _header(c),
+                      for (final (i, g) in groups.indexed)
+                        _PriceRow(
+                          group: g,
+                          last: i == groups.length - 1,
+                          off: _field('${g.key}-off', d.prices[g.key]?.offPeak),
+                          peak: _field('${g.key}-peak', d.prices[g.key]?.peak),
+                          offError: _errors.contains('${g.key}-off'),
+                          peakError: _errors.contains('${g.key}-peak'),
+                          onOff: (t) => _set(g.key, peak: false, text: t),
+                          onPeak: (t) => _set(g.key, peak: true, text: t),
+                        ),
+                    ],
                   ),
                 ],
               ),
@@ -155,8 +149,8 @@ class _PricesScreenState extends ConsumerState<PricesScreen> {
                 value: d.weekendPeak,
                 labelAtStart: true,
                 icon: PhosphorIcons.calendarStar(),
-                label: 'Week-end en heures de pointe',
-                description: 'Samedi et dimanche, de l’ouverture à la fermeture.',
+                label: l10n.weekEndEnHeuresDe,
+                description: l10n.samediEtDimancheDeL,
                 onChanged: (v) => _owner.edit((d) => d.copyWith(weekendPeak: v)),
               ),
               if (groups.isNotEmpty) ...[
@@ -167,9 +161,9 @@ class _PricesScreenState extends ConsumerState<PricesScreen> {
           ),
           ProExtraRow(
             icon: PhosphorIcons.calendarPlus(),
-            title: 'Dates spéciales',
-            caption: 'Ramadan, Aïd, soir de finale : un autre tarif pour un jour précis.',
-            action: 'Ajouter une date',
+            title: l10n.datesSpeciales,
+            caption: l10n.ramadanAidSoirDeFinale,
+            action: l10n.ajouterUneDate,
             onAction: () => showComingSoon(context),
           ),
         ],
@@ -177,6 +171,7 @@ class _PricesScreenState extends ConsumerState<PricesScreen> {
     );
   }
 
+  /// The two price bands and their hours, over the two fields of each row.
   Widget _header(MuColors c) {
     Widget band(IconData icon, String title, String hours) => Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -185,7 +180,7 @@ class _PricesScreenState extends ConsumerState<PricesScreen> {
           children: [
             Icon(icon, size: MuSize.iconXs, color: c.text),
             const SizedBox(width: MuSpace.s2),
-            Text(title, style: MuType.label.copyWith(color: c.text)),
+            Flexible(child: Text(title, style: MuType.label.copyWith(color: c.text))),
           ],
         ),
         const SizedBox(height: _PriceRow.lineGap),
@@ -202,21 +197,14 @@ class _PricesScreenState extends ConsumerState<PricesScreen> {
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
             Expanded(
-              flex: _PriceRow.typeFlex,
-              child: Text('Type de terrain', style: MuType.labelS.copyWith(color: c.textSecondary)),
+              child: band(PhosphorIcons.sun(), l10n.heuresCreuses, l10n.lunVen08h0017h00),
             ),
-            const SizedBox(width: MuSpace.s4),
+            const SizedBox(width: MuSpace.s3),
             Expanded(
-              flex: _PriceRow.fieldFlex,
-              child: band(PhosphorIcons.sun(), 'Heures creuses', 'Lun.–ven. · 08h00–17h00'),
-            ),
-            const SizedBox(width: MuSpace.s4),
-            Expanded(
-              flex: _PriceRow.fieldFlex,
               child: band(
                 PhosphorIcons.lightning(),
-                'Heures de pointe',
-                'Lun.–ven. · 17h00–fermeture',
+                l10n.heuresDePointe,
+                l10n.lunVen17h00Fermeture,
               ),
             ),
           ],
@@ -229,7 +217,6 @@ class _PricesScreenState extends ConsumerState<PricesScreen> {
 class _PriceRow extends StatelessWidget {
   const _PriceRow({
     required this.group,
-    required this.stacked,
     required this.last,
     required this.off,
     required this.peak,
@@ -240,7 +227,6 @@ class _PriceRow extends StatelessWidget {
   });
 
   final _Group group;
-  final bool stacked;
   final bool last;
   final TextEditingController off;
   final TextEditingController peak;
@@ -249,12 +235,9 @@ class _PriceRow extends StatelessWidget {
   final ValueChanged<String> onOff;
   final ValueChanged<String> onPeak;
 
-  // OWN-05 source: columns 1,15fr / 1fr / 1fr; sport tile 32; 2 px between lines.
-  static const int typeFlex = 115;
-  static const int fieldFlex = 100;
+  // OWN-05 source: sport tile 32; 2 px between lines.
   static const double _tile = 32;
   static const double lineGap = 2;
-  static const double stackBelow = 520;
 
   @override
   Widget build(BuildContext context) {
@@ -262,7 +245,7 @@ class _PriceRow extends StatelessWidget {
     final sport = group.first.sport;
     final players = OwnerCatalog.playersOf(sport);
     final fieldPrefix =
-        '${OwnerCatalog.sportName(sport)} ${group.first.indoor ? 'intérieur' : 'extérieur'}';
+        '${OwnerCatalog.sportName(sport)} ${group.first.indoor ? l10n.interieur2 : l10n.exterieur2}';
 
     Widget price(
       TextEditingController ctl,
@@ -273,17 +256,17 @@ class _PriceRow extends StatelessWidget {
       final v = int.tryParse(ctl.text);
       return MuTextField(
         label: '$fieldPrefix, $band',
-        hideLabel: !stacked,
+        // The bands over the rows name the two columns, as in the design.
+        hideLabel: true,
         controller: ctl,
-        size: MuFieldSize.m,
-        suffixText: 'DT /h',
+        suffixText: l10n.dtH2,
         keyboardType: TextInputType.number,
         inputFormatters: [
           FilteringTextInputFormatter.digitsOnly,
           LengthLimitingTextInputFormatter(4),
         ],
-        error: error ? 'Indique un prix.' : null,
-        helper: v == null || v == 0 ? null : 'soit ${formatDT(v / players)} /pers.',
+        error: error ? l10n.indiqueUnPrix : null,
+        helper: v == null || v == 0 ? null : l10n.soitPers(formatDT(v / players)),
         onChanged: onChanged,
       );
     }
@@ -313,46 +296,30 @@ class _PriceRow extends StatelessWidget {
       ],
     );
 
-    final offField = price(off, 'heures creuses', offError, onOff);
-    final peakField = price(peak, 'heures de pointe', peakError, onPeak);
+    final offField = price(off, l10n.heuresCreuses2, offError, onOff);
+    final peakField = price(peak, l10n.heuresDePointe2, peakError, onPeak);
 
     return Container(
       padding: const EdgeInsets.symmetric(vertical: MuSpace.s3),
       decoration: BoxDecoration(
         border: last ? null : Border(bottom: BorderSide(color: c.border)),
       ),
-      child: stacked
-          ? Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                type,
-                const SizedBox(height: MuSpace.s3),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Expanded(child: offField),
-                    const SizedBox(width: MuSpace.s3),
-                    Expanded(child: peakField),
-                  ],
-                ),
-              ],
-            )
-          : Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Expanded(
-                  flex: typeFlex,
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: MuSpace.s1),
-                    child: type,
-                  ),
-                ),
-                const SizedBox(width: MuSpace.s4),
-                Expanded(flex: fieldFlex, child: offField),
-                const SizedBox(width: MuSpace.s4),
-                Expanded(flex: fieldFlex, child: peakField),
-              ],
-            ),
+      // The court type, then its off-peak and peak prices side by side, under the bands.
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          type,
+          const SizedBox(height: MuSpace.s3),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Expanded(child: offField),
+              const SizedBox(width: MuSpace.s3),
+              Expanded(child: peakField),
+            ],
+          ),
+        ],
+      ),
     );
   }
 }
@@ -391,8 +358,7 @@ class _Preview extends ConsumerWidget {
             container: true,
             liveRegion: true,
             label:
-                'Aperçu joueur : $when, heure de pointe, '
-                '${perPerson == null ? 'prix à définir' : '${formatDT(perPerson)} par personne'}',
+                l10n.apercuJoueurHeureDePointe(when, perPerson == null ? l10n.prixADefinir : l10n.parPersonne2(formatDT(perPerson))),
             excludeSemantics: true,
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: MuSpace.s5, vertical: MuSpace.s4),
@@ -408,7 +374,7 @@ class _Preview extends ConsumerWidget {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Text(
-                        'APERÇU JOUEUR · EN DIRECT',
+                        l10n.apercuJoueurEnDirect,
                         style: MuType.overline.copyWith(color: c.textSecondary),
                       ),
                       const SizedBox(height: MuSpace.s2),
@@ -429,7 +395,7 @@ class _Preview extends ConsumerWidget {
                             Icon(PhosphorIcons.lightning(), size: MuSize.iconXs, color: c.text),
                             const SizedBox(width: MuSpace.s1),
                             Text(
-                              'Heure de pointe · 1 h',
+                              l10n.heureDePointeH,
                               style: MuType.labelS.copyWith(color: c.text),
                             ),
                           ],
@@ -451,14 +417,13 @@ class _Preview extends ConsumerWidget {
                             style: MuType.numXl.copyWith(color: c.text),
                           ),
                           const SizedBox(width: MuSpace.s2),
-                          Text('/pers.', style: MuType.body.copyWith(color: c.textSecondary)),
+                          Text(l10n.parPersAbrege, style: MuType.body.copyWith(color: c.textSecondary)),
                         ],
                       ),
                       const SizedBox(height: _tight),
                       if (price != null)
                         Text(
-                          '${formatDT(price)} le terrain · soit ${formatDT(perPerson!)} /pers. pour '
-                          '$players joueurs',
+                          l10n.leTerrainSoitPersPour(formatDT(price), formatDT(perPerson!), players),
                           style: MuType.caption.copyWith(color: c.textSecondary),
                         ),
                     ],

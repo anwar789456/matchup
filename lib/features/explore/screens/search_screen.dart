@@ -10,6 +10,7 @@ import '../../../theme/theme.dart';
 import '../../../ui/ui.dart';
 import '../controllers/explore_controller.dart';
 import '../data/search_repository.dart';
+import '../../../l10n/l10n.dart';
 
 /// What a search row opens.
 sealed class _Hit {
@@ -84,9 +85,9 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
   /// « Foot 5v5 femmes · Arena Five », « Padel · Smash Padel Club ».
   static String _gameName(MuGame g) {
     final kind = switch (g.sport) {
-      MuSport.football => 'Foot 5v5',
-      MuSport.padel => 'Padel',
-      MuSport.basketball => 'Basket',
+      MuSport.football => l10n.foot5v5,
+      MuSport.padel => l10n.padel,
+      MuSport.basketball => l10n.basket,
     };
     final type = g.gameType == 'Mixte' ? '' : ' ${g.gameType.toLowerCase()}';
     return '$kind$type · ${g.venue}';
@@ -120,7 +121,7 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
         ? const <MuSearchGroup<_Hit>>[]
         : [
             MuSearchGroup<_Hit>(
-              label: 'Zones',
+              label: l10n.zones,
               items: [
                 for (final z in zones)
                   if (_matches(z.name))
@@ -155,7 +156,7 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
               ],
             ),
             MuSearchGroup<_Hit>(
-              label: 'Terrains',
+              label: l10n.terrains,
               items: [
                 for (final v in venues)
                   if (fresh(v.name) &&
@@ -170,7 +171,7 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
               ],
             ),
             MuSearchGroup<_Hit>(
-              label: 'Parties',
+              label: l10n.parties,
               items: [
                 for (final g in games)
                   if (_matches(_gameName(g)) || _matches(g.place))
@@ -178,16 +179,14 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
                       value: _GameHit(g.id!),
                       title: _gameName(g),
                       subtitle:
-                          '${g.dateLabel?.toLowerCase() ?? formatDay(g.start)} · '
-                          '${g.isFull ? 'complet' : countLabel(g.spotsLeft, 'place', 'places')}'
-                          ' · ${formatDT(g.pricePerPlayer)}/pers.',
+                          l10n.pers(g.dateLabel?.toLowerCase() ?? formatDay(g.start), g.isFull ? 'complet' : countLabel(g.spotsLeft, 'place', 'places'), formatDT(g.pricePerPlayer)),
                       trailing: formatTime(g.start),
                       leading: _sportTile(g.sport),
                     ),
               ],
             ),
             MuSearchGroup<_Hit>(
-              label: 'Joueurs',
+              label: l10n.joueurs,
               items: [
                 for (final p in players)
                   if (fresh(p.name) && (_matches(p.name) || _matches(p.place)))
@@ -216,15 +215,15 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
               children: [
                 MuIconButton(
                   icon: PhosphorIcons.arrowLeft(),
-                  label: 'Retour',
+                  label: l10n.retour,
                   size: MuIconButtonSize.l,
                   onPressed: () => context.canPop() ? context.pop() : context.go(Routes.explore),
                 ),
                 const SizedBox(width: MuSpace.s1),
                 Expanded(
                   child: MuSearchField<void>(
-                    label: 'Rechercher',
-                    placeholder: 'Terrain, partie, quartier…',
+                    label: l10n.rechercher,
+                    placeholder: l10n.terrainPartieQuartier,
                     controller: _controller,
                     autofocus: true,
                     onChanged: (q) => setState(() => _query = q),
@@ -247,7 +246,7 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
               onRemoveRecent: ref.read(recentSearchesProvider.notifier).remove,
               onClearRecent: ref.read(recentSearchesProvider.notifier).clear,
               emptyAction: MuButton.secondary(
-                label: 'Voir les terrains près de moi',
+                label: l10n.voirLesTerrainsPresDe,
                 onPressed: () {
                   ref.read(exploreProvider.notifier).setTab(ExploreTab.venues);
                   context.canPop() ? context.pop() : context.go(Routes.explore);
@@ -258,7 +257,7 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
               Padding(
                 padding: const EdgeInsets.all(MuSpace.s4),
                 child: Text(
-                  'Cherche un quartier comme $zone, un terrain, une partie ou un joueur.',
+                  l10n.chercheUnQuartierCommeUn(zone),
                   style: MuType.body.copyWith(color: c.textSecondary),
                 ),
               ),

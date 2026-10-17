@@ -56,7 +56,7 @@ void main() {
           FakeTournamentsRepository(latency: Duration.zero),
         ),
         paymentRepositoryProvider.overrideWithValue(
-          const FakePaymentRepository(latency: Duration.zero),
+          FakePaymentRepository(latency: Duration.zero),
         ),
       ],
     );
@@ -109,6 +109,14 @@ void main() {
     expect(find.text('Remboursé sur ton solde MatchUp, en entier si Skander annule.'), findsOneWidget);
 
     await tap(tester, find.text('Rejoindre et payer'));
+
+    // PAY-01: accept the terms, pay with the default card, then PAY-09 « Terminé ».
+    expect(find.text('Paiement'), findsWidgets);
+    await see(tester, find.byType(MuCheckbox));
+    await tap(tester, find.byType(MuCheckbox));
+    await tap(tester, find.widgetWithText(MuButton, 'Payer'));
+    expect(find.text('Paiement réussi'), findsOneWidget);
+    await tap(tester, find.text('Terminé'));
 
     // GAM-05.
     expect(find.text('Tu es dans la partie !'), findsOneWidget);

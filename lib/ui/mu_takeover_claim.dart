@@ -9,13 +9,14 @@ import '../theme/theme.dart';
 import 'mu_button.dart';
 import 'mu_court_art.dart';
 import 'mu_takeover.dart';
+import '../l10n/l10n.dart';
 
 /// The claim composition of Takeover (Takeover.md « Claim »): « LISTE D’ATTENTE », the title, a
 /// 216 ring timer around « 14:59 » and « pour réclamer ta place », the game card, the note, then
 /// « Laisser passer » above « Réclamer la place · 14:59 ». The ring turns `error` in the last
 /// minute; at 0 the action is disabled and the ring says « Temps écoulé ».
 class MuTakeoverClaim extends StatefulWidget {
-  const MuTakeoverClaim({
+  MuTakeoverClaim({
     super.key,
     required this.endsAt,
     required this.total,
@@ -26,11 +27,11 @@ class MuTakeoverClaim extends StatefulWidget {
     required this.price,
     required this.onClaim,
     required this.onPass,
-    this.title = 'Une place s’est libérée !',
-    this.eyebrow = 'Liste d’attente',
+    String? title,
+    String? eyebrow,
     this.note,
     this.onClose,
-  });
+  }) : eyebrow = eyebrow ?? l10n.listeDAttente, title = title ?? l10n.unePlaceSEstLiberee2;
 
   final DateTime endsAt;
   final Duration total;
@@ -103,7 +104,7 @@ class _MuTakeoverClaimState extends State<MuTakeoverClaim> {
     final progress = urgent ? c.error : c.primary;
 
     return MuTakeover(
-      closeLabel: 'Décider plus tard',
+      closeLabel: l10n.deciderPlusTard,
       onClose: widget.onClose,
       barEnd: const SizedBox(width: MuSize.touchTarget),
       body: ListView(
@@ -132,7 +133,7 @@ class _MuTakeoverClaimState extends State<MuTakeoverClaim> {
           const SizedBox(height: MuSpace.s6),
           Center(
             child: Semantics(
-              label: expired ? 'Temps écoulé' : 'Temps restant $clock',
+              label: expired ? l10n.tempsEcoule : l10n.tempsRestant2(clock),
               liveRegion: true,
               excludeSemantics: true,
               child: SizedBox(
@@ -157,7 +158,7 @@ class _MuTakeoverClaimState extends State<MuTakeoverClaim> {
                           ),
                         ),
                         Text(
-                          expired ? 'Temps écoulé' : 'pour réclamer ta place',
+                          expired ? l10n.tempsEcoule : l10n.pourReclamerTaPlace,
                           style: MuType.caption.copyWith(color: c.textSecondary),
                         ),
                       ],
@@ -234,14 +235,14 @@ class _MuTakeoverClaimState extends State<MuTakeoverClaim> {
         mainAxisSize: MainAxisSize.min,
         children: [
           MuButton.tertiary(
-            label: 'Laisser passer',
+            label: l10n.laisserPasser,
             size: MuButtonSize.l,
             fullWidth: true,
             onPressed: widget.onPass,
           ),
           const SizedBox(height: MuSpace.s2),
           MuButton.primary(
-            label: 'Réclamer la place',
+            label: l10n.reclamerLaPlace,
             leading: PhosphorIcons.timer(),
             countdown: expired ? null : clock,
             size: MuButtonSize.xl,

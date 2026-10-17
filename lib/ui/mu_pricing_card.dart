@@ -4,6 +4,7 @@ import 'package:phosphor_flutter/phosphor_flutter.dart';
 import '../core/format.dart';
 import '../theme/theme.dart';
 import 'mu_button.dart';
+import '../l10n/l10n.dart';
 
 enum MuBillingPeriod { month, year }
 
@@ -47,6 +48,10 @@ class MuPricingCard extends StatelessWidget {
     this.chosen = false,
     this.trialDays = 14,
     this.savings,
+    this.current = false,
+    this.compact = false,
+    this.cta,
+    this.trialNote,
   });
 
   final MuPlan plan;
@@ -58,6 +63,18 @@ class MuPricingCard extends StatelessWidget {
 
   /// Yearly badge (« 2 mois offerts »).
   final String? savings;
+
+  /// « Ton offre actuelle » in place of the button, no trial note.
+  final bool current;
+
+  /// A row for plan pickers: name + badges, pitch, amount over its unit.
+  final bool compact;
+
+  /// The button label (« Essayer 14 jours gratuits »); « Choisir [plan] » by default.
+  final String? cta;
+
+  /// Overrides the « 14 jours gratuits, puis … » note.
+  final String? trialNote;
 
   // PricingCard.md: 2 px edge on the recommended plan, 2 px ring 4 px outside the chosen one;
   // feature icons 18; badges 2 px tall padding.
@@ -71,27 +88,39 @@ class MuPricingCard extends StatelessWidget {
     final c = context.mu;
     final yearly = period == MuBillingPeriod.year;
     final amount = yearly ? plan.yearly : plan.monthly;
-    final unit = yearly ? '/ an' : '/ mois';
+    final unit = yearly ? l10n.perYear : l10n.perMonth;
     final after = yearly ? '${formatDT(plan.yearly)}/an' : '${formatDT(plan.monthly)}/mois';
 
-    final cta = chosen
+    if (compact) return _compact(context, c, yearly, amount);
+    final free = amount == 0;
+    final cta = current
+        ? _currentBlock(c)
+        : chosen
         ? MuButton.primary(
-            label: 'Offre choisie',
+            label: l10n.offreChoisie,
+            size: MuButtonSize.l,
+            fullWidth: true,
+            onPressed: onCta,
+          )
+        : recommended
+        ? MuButton.primary(
+            label: this.cta ?? l10n.choisir2(plan.name),
             size: MuButtonSize.l,
             fullWidth: true,
             onPressed: onCta,
           )
         : MuButton.secondary(
-            label: 'Choisir ${plan.name}',
+            label: this.cta ?? l10n.choisir2(plan.name),
             size: MuButtonSize.l,
             fullWidth: true,
             onPressed: onCta,
           );
+    final unitText = free ? l10n.pourToujours : unit;
 
     return Semantics(
       container: true,
       selected: chosen,
-      label: '${plan.name}, ${formatDT(amount)} $unit${recommended ? ', populaire' : ''}',
+      label: '${plan.name}, ${formatDT(amount)} $unit${recommended ? l10n.populaire : ''}',
       child: Stack(
         // Passes a stretched height on to the card (two plans side by side stay level).
         fit: StackFit.passthrough,
@@ -115,7 +144,7 @@ class MuPricingCard extends StatelessWidget {
               ),
             ),
           ),
-          _card(context, c, yearly, amount, unit, after, cta),
+          _card(context, c, yearly, amount, unitText, after, cta),
         ],
       ),
     );
@@ -168,7 +197,7 @@ class MuPricingCard extends StatelessWidget {
                         color: c.onAccent,
                       ),
                       const SizedBox(width: MuSpace.s1),
-                      Text('Populaire', style: MuType.labelS.copyWith(color: c.onAccent)),
+                      Text(l10n.populaire2, style: MuType.labelS.copyWith(color: c.onAccent)),
                     ],
                   ),
                 ),
@@ -206,7 +235,7 @@ class MuPricingCard extends StatelessWidget {
                 ),
                 const SizedBox(width: MuSpace.s2),
                 Text(
-                  'soit ${formatDT((plan.yearly / 12).round())}/mois',
+                  l10n.soitMois(formatDT((plan.yearly / 12 * 1000).round() / 1000)),
                   style: MuType.caption.copyWith(color: c.textSecondary),
                 ),
               ],
@@ -214,19 +243,21 @@ class MuPricingCard extends StatelessWidget {
           ],
           const SizedBox(height: MuSpace.s5),
           cta,
-          const SizedBox(height: MuSpace.s3),
-          Text(
-            '$trialDays jours gratuits, puis $after · Résiliable à tout moment',
-            textAlign: TextAlign.center,
-            style: MuType.caption.copyWith(color: c.textSecondary),
-          ),
+          if (!current) ...[
+            const SizedBox(height: MuSpace.s3),
+            Text(
+              trialNote ?? l10n.joursGratuitsPuisResiliableA2(trialDays, after),
+              textAlign: TextAlign.center,
+              style: MuType.caption.copyWith(color: c.textSecondary),
+            ),
+          ],
           const SizedBox(height: MuSpace.s5),
           Container(height: 1, color: c.border),
           const SizedBox(height: MuSpace.s5),
           for (final (i, (label, included)) in plan.features.indexed) ...[
             if (i > 0) const SizedBox(height: MuSpace.s3),
             Semantics(
-              label: included ? label : '$label, non inclus',
+              label: included ? label : l10n.nonInclus2(label),
               excludeSemantics: true,
               child: Row(
                 children: [
@@ -247,6 +278,107 @@ class MuPricingCard extends StatelessWidget {
             ),
           ],
         ],
+      ),
+    );
+  }
+
+  Widget _currentBlock(MuColors c) => Container(
+    constraints: const BoxConstraints(minHeight: MuSize.controlL),
+    alignment: Alignment.center,
+    decoration: BoxDecoration(
+      color: c.surfaceMuted,
+      borderRadius: MuRadius.smAll,
+      border: Border.all(color: c.border),
+    ),
+    child: Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Icon(
+          PhosphorIcons.checkCircle(PhosphorIconsStyle.fill),
+          size: MuSize.iconXs,
+          color: c.successText,
+        ),
+        const SizedBox(width: MuSpace.s2),
+        Text(l10n.tonOffreActuelle, style: MuType.label.copyWith(color: c.textSecondary)),
+      ],
+    ),
+  );
+
+  Widget _compact(BuildContext context, MuColors c, bool yearly, num amount) {
+    final free = amount == 0;
+    final unit = free ? l10n.forever : (yearly ? l10n.perYear : l10n.perMonth);
+    return Semantics(
+      container: true,
+      label: '${plan.name}, ${formatDT(amount)} $unit${current ? l10n.tonOffreActuelle2 : ''}',
+      child: Container(
+        padding: const EdgeInsets.all(MuSpace.s4),
+        decoration: BoxDecoration(
+          color: c.surface,
+          borderRadius: MuRadius.mdAll,
+          border: recommended ? Border.all(color: c.primary, width: _edge) : null,
+          boxShadow: MuElevation.of(context).level1,
+        ),
+        child: ExcludeSemantics(
+          child: Row(
+            children: [
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Wrap(
+                      spacing: MuSpace.s2,
+                      runSpacing: MuSpace.s1,
+                      crossAxisAlignment: WrapCrossAlignment.center,
+                      children: [
+                        Text(plan.name, style: MuType.labelL.copyWith(color: c.text)),
+                        if (current)
+                          Container(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: MuSpace.s2,
+                              vertical: _pillPadY,
+                            ),
+                            decoration: BoxDecoration(
+                              color: c.surfaceMuted,
+                              borderRadius: MuRadius.fullAll,
+                              border: Border.all(color: c.border),
+                            ),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Icon(
+                                  PhosphorIcons.checkCircle(PhosphorIconsStyle.fill),
+                                  size: MuSize.iconXs,
+                                  color: c.textSecondary,
+                                ),
+                                const SizedBox(width: MuSpace.s1),
+                                Text(
+                                  l10n.tonOffreActuelle,
+                                  style: MuType.labelS.copyWith(color: c.textSecondary),
+                                ),
+                              ],
+                            ),
+                          ),
+                      ],
+                    ),
+                    const SizedBox(height: MuSpace.s1),
+                    Text(plan.pitch, style: MuType.caption.copyWith(color: c.textSecondary)),
+                  ],
+                ),
+              ),
+              const SizedBox(width: MuSpace.s3),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Directionality(
+                    textDirection: TextDirection.ltr,
+                    child: Text(formatDT(amount), style: MuType.numL.copyWith(color: c.text)),
+                  ),
+                  Text(unit, style: MuType.caption.copyWith(color: c.textSecondary)),
+                ],
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }

@@ -4,20 +4,21 @@ import 'package:flutter/services.dart';
 import '../theme/theme.dart';
 import 'mu_chip.dart';
 import 'mu_text_field.dart';
+import '../l10n/l10n.dart';
 
 /// TagInput (components/TagInput.md): a field holding chips — zones, tags — with an inline text
 /// to add one (Enter or a comma), Backspace removing the last, and a « 2/5 » counter.
 class MuTagInput extends StatefulWidget {
-  const MuTagInput({
+  MuTagInput({
     super.key,
     required this.label,
     required this.tags,
     required this.onChanged,
     this.max = 5,
-    this.placeholder = 'Ajoute une zone',
+    String? placeholder,
     this.helper,
     this.suggestions = const [],
-  });
+  }) : placeholder = placeholder ?? l10n.ajouteUneZone;
 
   final String label;
   final List<String> tags;
@@ -91,7 +92,7 @@ class _MuTagInputState extends State<MuTagInput> {
                     kind: MuChipKind.input,
                     size: MuChipSize.s,
                     onRemove: () => _remove(t),
-                    removeLabel: 'Retirer $t',
+                    removeLabel: l10n.retirer(t),
                   ),
                 if (!full)
                   ConstrainedBox(

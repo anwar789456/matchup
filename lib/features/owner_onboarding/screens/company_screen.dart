@@ -9,6 +9,7 @@ import '../../common/widgets/pro_wizard_scaffold.dart';
 import '../controllers/owner_controller.dart';
 import '../data/owner_repository.dart';
 import '../widgets/owner_wizard.dart';
+import '../../../l10n/l10n.dart';
 
 /// OWN-01 — the company: venue name, legal name, tax id and legal form, then the venue's phone
 /// and business email.
@@ -53,15 +54,15 @@ class _CompanyScreenState extends ConsumerState<CompanyScreen> {
 
   bool _validate() {
     setState(() {
-      _venueError = _venue.text.trim().isEmpty ? 'Indique le nom du terrain.' : null;
-      _legalError = _legal.text.trim().isEmpty ? 'Indique la raison sociale.' : null;
+      _venueError = _venue.text.trim().isEmpty ? l10n.indiqueLeNomDuTerrain : null;
+      _legalError = _legal.text.trim().isEmpty ? l10n.indiqueLaRaisonSociale : null;
       final tax = _tax.text.trim();
       _taxError = tax.isEmpty
-          ? 'Indique ton matricule fiscal.'
-          : (_taxId.hasMatch(tax) ? null : 'Le matricule fiscal ressemble à 1234567/A/M/000.');
+          ? l10n.indiqueTonMatriculeFiscal
+          : (_taxId.hasMatch(tax) ? null : l10n.leMatriculeFiscalRessembleA);
       _phoneError = MuPhoneFormatter.digitsOf(_phone.text).length == 8
           ? null
-          : 'Le numéro doit contenir 8 chiffres.';
+          : l10n.leNumeroDoitContenirChiffres;
       _emailError = AuthMessages.validateEmail(_email.text);
     });
     return [_venueError, _legalError, _taxError, _phoneError, _emailError].every((e) => e == null);
@@ -71,22 +72,21 @@ class _CompanyScreenState extends ConsumerState<CompanyScreen> {
   Widget build(BuildContext context) {
     return OwnerWizard(
       step: 0,
-      title: 'Parle-nous de ton entreprise',
-      lead: 'Les joueurs ne verront que le nom du terrain et son téléphone.',
+      title: l10n.parleNousDeTonEntreprise,
+      lead: l10n.lesJoueursNeVerrontQue,
       validate: _validate,
-      body: ProFormCard(
+      body: ProFormSections(
         children: [
           ProFormSection(
-            title: 'Ton établissement',
-            description: 'Ces infos figurent sur tes factures. Tu pourras les modifier plus tard.',
+            title: l10n.tonEtablissement,
+            description: l10n.cesInfosFigurentSurTes,
             children: [
-              ProFieldGrid(
+              ProFieldColumn(
                 children: [
                   MuTextField(
-                    label: 'Nom du terrain',
+                    label: l10n.nomDuTerrain,
                     controller: _venue,
-                    size: MuFieldSize.m,
-                    helper: 'Le nom que les joueurs verront sur MatchUp.',
+                    helper: l10n.leNomQueLesJoueurs,
                     error: _venueError,
                     textCapitalization: TextCapitalization.words,
                     onChanged: (v) {
@@ -95,10 +95,9 @@ class _CompanyScreenState extends ConsumerState<CompanyScreen> {
                     },
                   ),
                   MuTextField(
-                    label: 'Raison sociale',
+                    label: l10n.raisonSociale,
                     controller: _legal,
-                    size: MuFieldSize.m,
-                    helper: 'Comme sur ton registre de commerce.',
+                    helper: l10n.commeSurTonRegistreDe,
                     error: _legalError,
                     onChanged: (v) {
                       if (_legalError != null) setState(() => _legalError = null);
@@ -106,11 +105,10 @@ class _CompanyScreenState extends ConsumerState<CompanyScreen> {
                     },
                   ),
                   MuTextField(
-                    label: 'Matricule fiscal',
+                    label: l10n.matriculeFiscal,
                     controller: _tax,
-                    size: MuFieldSize.m,
                     placeholder: '1234567/A/M/000',
-                    helper: 'Il figure sur ta carte d’identification fiscale.',
+                    helper: l10n.ilFigureSurTaCarte,
                     error: _taxError,
                     textCapitalization: TextCapitalization.characters,
                     autocorrect: false,
@@ -120,8 +118,7 @@ class _CompanyScreenState extends ConsumerState<CompanyScreen> {
                     },
                   ),
                   MuSelect<String>(
-                    label: 'Forme juridique',
-                    size: MuFieldSize.m,
+                    label: l10n.formeJuridique,
                     value: _form,
                     options: [
                       for (final (id, label) in OwnerCatalog.legalForms)
@@ -137,16 +134,15 @@ class _CompanyScreenState extends ConsumerState<CompanyScreen> {
             ],
           ),
           ProFormSection(
-            title: 'Contact',
-            description: 'Responsable du compte : ${_d.manager}',
+            title: l10n.contact,
+            description: l10n.responsableDuCompte(_d.manager),
             children: [
-              ProFieldGrid(
+              ProFieldColumn(
                 children: [
                   MuPhoneField(
-                    label: 'Téléphone du terrain',
+                    label: l10n.telephoneDuTerrain,
                     controller: _phone,
-                    size: MuFieldSize.m,
-                    helper: 'Les joueurs t’appellent à ce numéro le jour du match.',
+                    helper: l10n.lesJoueursTAppellentA,
                     error: _phoneError,
                     onChanged: (digits) {
                       if (_phoneError != null) setState(() => _phoneError = null);
@@ -154,14 +150,13 @@ class _CompanyScreenState extends ConsumerState<CompanyScreen> {
                     },
                   ),
                   MuTextField(
-                    label: 'Email pro',
+                    label: l10n.emailPro,
                     controller: _email,
-                    size: MuFieldSize.m,
                     leadingIcon: PhosphorIcons.envelopeSimple(),
                     keyboardType: TextInputType.emailAddress,
                     autofillHints: const [AutofillHints.email],
                     autocorrect: false,
-                    helper: 'Pour les réservations, les versements et les factures.',
+                    helper: l10n.pourLesReservationsLesVersements,
                     error: _emailError,
                     onChanged: (v) {
                       if (_emailError != null) setState(() => _emailError = null);

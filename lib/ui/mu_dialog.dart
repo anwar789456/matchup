@@ -3,6 +3,7 @@ import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 import '../theme/theme.dart';
 import 'mu_icon_button.dart';
+import '../l10n/l10n.dart';
 
 enum MuDialogTone { neutral, destructive, warning, success, info }
 
@@ -212,7 +213,7 @@ class MuDialog extends StatelessWidget {
               end: MuSpace.s3,
               child: MuIconButton(
                 icon: PhosphorIcons.x(),
-                label: 'Fermer',
+                label: l10n.fermer,
                 onPressed: onClose ?? () => Navigator.of(context).maybePop(),
               ),
             ),

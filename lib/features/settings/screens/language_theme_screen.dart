@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import '../../../core/app_settings.dart';
 import '../../../theme/theme.dart';
 import '../../../ui/ui.dart';
+import '../../../l10n/l10n.dart';
 
 /// SET-04 · Langue et thème: Français · العربية · English; Clair · Sombre · Système. Both apply
 /// at once and are saved on the device.
@@ -31,8 +32,8 @@ class LanguageThemeScreen extends ConsumerWidget {
       body: Column(
         children: [
           MuTopAppBar.compact(
-            title: 'Langue et thème',
-            backLabel: 'Retour aux paramètres',
+            title: l10n.langueEtTheme,
+            backLabel: l10n.retourAuxParametres,
             onBack: () => context.pop(),
           ),
           Expanded(
@@ -41,46 +42,44 @@ class LanguageThemeScreen extends ConsumerWidget {
               children: [
                 card([
                   MuRadioGroup<String>(
-                    label: 'Langue',
+                    label: l10n.langue,
                     value: app.locale.languageCode,
                     onChanged: (v) => ctrl.setLocale(Locale(v)),
-                    options: const [
+                    options: [
                       MuRadioOption(
                         value: 'fr',
-                        label: 'Français',
-                        description: 'Langue par défaut de MatchUp',
+                        label: l10n.francais,
+                        description: l10n.langueParDefautDeMatchup,
                       ),
                       MuRadioOption(
                         value: 'ar',
                         label: 'العربية',
-                        description: 'Arabe · l’interface passe de droite à gauche',
+                        description: l10n.arabeLInterfacePasseDe,
                       ),
-                      MuRadioOption(value: 'en', label: 'English', description: 'Anglais'),
+                      MuRadioOption(value: 'en', label: l10n.english, description: l10n.anglais),
                     ],
                   ),
                   const SizedBox(height: MuSpace.s3),
                   Text(
-                    'En arabe, les menus et les flèches s’inversent. Les chiffres, les scores et '
-                    'les cartes restent dans le même sens.',
+                    l10n.enArabeLesMenusEt,
                     style: caption,
                   ),
                 ]),
                 const SizedBox(height: MuSpace.s5),
                 card([
                   MuRadioGroup<ThemeMode>(
-                    label: 'Thème',
+                    label: l10n.theme,
                     value: app.themeMode,
                     onChanged: ctrl.setThemeMode,
-                    options: const [
-                      MuRadioOption(value: ThemeMode.light, label: 'Clair'),
-                      MuRadioOption(value: ThemeMode.dark, label: 'Sombre'),
-                      MuRadioOption(value: ThemeMode.system, label: 'Système'),
+                    options: [
+                      MuRadioOption(value: ThemeMode.light, label: l10n.clair),
+                      MuRadioOption(value: ThemeMode.dark, label: l10n.sombre),
+                      MuRadioOption(value: ThemeMode.system, label: l10n.systeme),
                     ],
                   ),
                   const SizedBox(height: MuSpace.s3),
                   Text(
-                    'Système suit le réglage de ton téléphone. Sombre, c’est « Night match » : '
-                    'pensé pour les matchs du soir.',
+                    l10n.systemeSuitLeReglageDe,
                     style: caption,
                   ),
                 ]),

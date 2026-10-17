@@ -8,14 +8,17 @@ import '../../../router.dart';
 import '../../../theme/theme.dart';
 import '../../../ui/ui.dart';
 import '../../home/controllers/home_providers.dart';
+import '../../matches/data/bookings_repository.dart';
+import '../../payments/controllers/checkout_controller.dart';
+import '../../venue/data/venue_details.dart';
 import '../../venue/widgets/venue_widgets.dart';
 import '../controllers/booking_controller.dart';
 import '../widgets/booking_scaffold.dart';
+import '../../../l10n/l10n.dart';
 
 /// BKG-04 · Réservation 3/3, récapitulatif: the slot and the game, who pays what (« Chacun paie sa
 /// part » or « Je paie tout »), the balance, the price detail and the cancellation policy, then
-/// « Payer ma part ». The payment is the fake of CLAUDE.md rule 10 (Milestone 4 designs the
-/// checkout).
+/// « Payer ma part », which opens the checkout (PAY-01).
 class BookingSummaryScreen extends ConsumerStatefulWidget {
   const BookingSummaryScreen({super.key});
 
@@ -29,17 +32,55 @@ class _BookingSummaryScreenState extends ConsumerState<BookingSummaryScreen> {
   Future<void> _pay() async {
     setState(() => _paying = true);
     try {
-      await ref.read(bookingProvider.notifier).pay();
-      if (mounted) context.go(Routes.bookingDone);
-    } catch (_) {
-      if (mounted) {
-        MuToast.show(
-          context,
-          title: 'Le paiement n’est pas passé',
-          description: 'Rien n’a été débité. Réessaie dans un instant.',
-          tone: MuToastTone.error,
-        );
-      }
+      final draft = ref.read(bookingProvider);
+      final slot = draft.slot!;
+      final reference = await ref.read(bookingsRepositoryProvider).nextReference();
+      if (!mounted) return;
+      final v = slot.venue;
+      final public = draft.type == BookingType.public;
+      final share = draft.split == PaymentSplit.share;
+      final players = public ? draft.players : draft.capacity;
+      final hours = slot.end.difference(slot.start).inMinutes / 60;
+      final format = v.venue.sport == MuSport.football ? l10n.foot(v.format.replaceAll(' contre ', ' vs ')) : v.format;
+      ref.read(checkoutRequestProvider.notifier).start(
+        CheckoutRequest(
+          kind: CheckoutKind.share,
+          eyebrow: l10n.reservation(share ? l10n.taPart : l10n.leTerrain2, reference),
+          title: slot.title,
+          subtitle: '${formatDay(slot.start)} · ${slot.timeRange} · $format',
+          amount: draft.amount,
+          lineLabel: share ? l10n.taPartJoueurSur(players) : l10n.leTerrainJoueurs(players),
+          sport: v.venue.sport,
+          reference: reference,
+          policy: (slot.start.subtract(VenueDetails.freeUntil), slot.start.subtract(VenueDetails.halfUntil)),
+          policyVenue: v.venue.name,
+          spotsLine: share ? l10n.taPartSur(formatDT(draft.share), formatDT(slot.price)) : null,
+          detailRows: [
+            (
+              l10n.quoi,
+              l10n.partDeReservation,
+              public
+                  ? l10n.partiePublique2(draft.gender.label.toLowerCase(), formatLevel(draft.level.start), formatLevel(draft.level.end))
+                  : l10n.partiePrivee,
+            ),
+            (l10n.ou, v.venue.name, v.street),
+            (l10n.terrain2, slot.court.name, '${v.surface[0].toUpperCase()}${v.surface.substring(1)} · ${slot.court.description.toLowerCase()}'),
+            (
+              l10n.quand,
+              '${formatDay(slot.start)} · ${slot.timeRange}',
+              '${formatAmount(hours)} h${slot.peak ? l10n.heureDePointe : ''}',
+            ),
+            (l10n.joueurs, '${draft.team}/$players', public ? l10n.placesEncoreOuvertes(players - draft.team) : l10n.partieEntreAmis),
+          ],
+          lineup: (draft.team, players),
+          publicGame: public && draft.visibility == GameVisibility.everyone,
+          successRoute: Routes.booking(reference),
+          onPaid: (receipt, fromBalance) async {
+            await ref.read(bookingProvider.notifier).completePaid(receipt, fromBalance, reference: reference);
+          },
+        ),
+      );
+      context.push(Routes.checkout);
     } finally {
       if (mounted) setState(() => _paying = false);
     }
@@ -55,11 +96,11 @@ class _BookingSummaryScreenState extends ConsumerState<BookingSummaryScreen> {
     final used = booking.balanceUsed(balance);
     final due = draft.amount - used;
     final share = draft.split == PaymentSplit.share;
-    final cta = due == 0 ? 'Payer avec mon solde' : (share ? 'Payer ma part' : 'Payer le terrain');
+    final cta = due == 0 ? 'Payer avec mon solde' : (share ? l10n.payerMaPart : l10n.payerLeTerrain);
 
     return BookingStepScaffold(
       step: 3,
-      title: 'Récapitulatif',
+      title: l10n.recapitulatif,
       gap: MuSpace.s6 + MuSpace.s1,
       bottomBar: [
         MuButton.primary(
@@ -75,12 +116,12 @@ class _BookingSummaryScreenState extends ConsumerState<BookingSummaryScreen> {
       body: (context, d, slot) {
         final friends = d.invited.length;
         final public = d.type == BookingType.public;
-        final team = [MuPerson(me?.displayName ?? 'Moi'), for (final n in d.invited) MuPerson(n)];
+        final team = [MuPerson(me?.displayName ?? l10n.moi), for (final n in d.invited) MuPerson(n)];
         final players = public ? d.players : d.capacity;
         final places = players - d.team;
         final policy = policyFor(slot.start);
         final others = [
-          if (friends > 0) 'Tes $friends ${friends == 1 ? 'ami' : 'amis'}',
+          if (friends > 0) l10n.tes(friends, friends == 1 ? 'ami' : 'amis'),
           if (public && d.spots > 0) 'les ${d.spots} ${d.spots == 1 ? 'joueur' : 'joueurs'}',
         ];
 
@@ -115,7 +156,7 @@ class _BookingSummaryScreenState extends ConsumerState<BookingSummaryScreen> {
         return [
           Semantics(
             header: true,
-            child: Text('Vérifie et paie ta part', style: MuType.h2.copyWith(color: c.text)),
+            child: Text(l10n.verifieEtPaieTaPart, style: MuType.h2.copyWith(color: c.text)),
           ),
           // ── The game ──
           Container(
@@ -160,7 +201,7 @@ class _BookingSummaryScreenState extends ConsumerState<BookingSummaryScreen> {
                 ),
                 const SizedBox(height: MuSpace.s2),
                 row(
-                  'Quand',
+                  l10n.quand,
                   Text(
                     '${formatDay(slot.start)} · ${slot.timeRange}',
                     style: MuType.label.copyWith(color: c.text),
@@ -168,18 +209,17 @@ class _BookingSummaryScreenState extends ConsumerState<BookingSummaryScreen> {
                 ),
                 Divider(height: 1, thickness: 1, color: c.border),
                 row(
-                  'Partie',
+                  l10n.partie,
                   Text(
                     public
-                        ? 'Publique · ${d.gender.label.toLowerCase()} · '
-                              '${formatLevel(d.level.start)} – ${formatLevel(d.level.end)}'
-                        : 'Privée · sur invitation',
+                        ? l10n.publique(d.gender.label.toLowerCase(), formatLevel(d.level.start), formatLevel(d.level.end))
+                        : l10n.priveeSurInvitation,
                     style: MuType.label.copyWith(color: c.text),
                   ),
                 ),
                 Divider(height: 1, thickness: 1, color: c.border),
                 row(
-                  'Joueurs',
+                  l10n.joueurs,
                   Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
@@ -187,7 +227,7 @@ class _BookingSummaryScreenState extends ConsumerState<BookingSummaryScreen> {
                         people: team,
                         max: 3,
                         size: MuAvatarSize.xs,
-                        semanticLabel: '${d.team} joueurs inscrits',
+                        semanticLabel: l10n.joueursInscrits(d.team),
                       ),
                       const SizedBox(width: MuSpace.s2),
                       Text(
@@ -200,7 +240,7 @@ class _BookingSummaryScreenState extends ConsumerState<BookingSummaryScreen> {
                 Align(
                   alignment: AlignmentDirectional.centerStart,
                   child: MuButton.tertiary(
-                    label: 'Modifier la partie',
+                    label: l10n.modifierLaPartie,
                     leading: PhosphorIcons.pencilSimple(),
                     onPressed: () => context.pop(),
                   ),
@@ -214,28 +254,26 @@ class _BookingSummaryScreenState extends ConsumerState<BookingSummaryScreen> {
             children: [
               Semantics(
                 header: true,
-                child: Text('Qui paie quoi ?', style: MuType.h3.copyWith(color: c.text)),
+                child: Text(l10n.quiPaieQuoi, style: MuType.h3.copyWith(color: c.text)),
               ),
               const SizedBox(height: MuSpace.s3),
               MuChoiceGroup(
-                label: 'Partage du paiement',
+                label: l10n.partageDuPaiement,
                 children: [
                   MuChoiceCard(
-                    title: 'Chacun paie sa part · ${formatDT(d.share)}',
+                    title: l10n.chacunPaieSaPart(formatDT(d.share)),
                     description: others.isEmpty
-                        ? 'Tu paies ta part maintenant. Les autres paient la leur en rejoignant.'
-                        : 'Tu paies ta part maintenant. ${others.join(' et ')} paient la leur en '
-                              '${public ? 'rejoignant' : 'acceptant'}.',
+                        ? l10n.tuPaiesTaPartMaintenant
+                        : l10n.tuPaiesTaPartMaintenant2(others.join(' et '), public ? 'rejoignant' : 'acceptant'),
                     leading: BookingIconTile(PhosphorIcons.usersThree()),
                     selected: share,
                     onTap: () => booking.setSplit(PaymentSplit.share),
-                    extra: _Tag(text: 'Recommandé', icon: PhosphorIcons.thumbsUp()),
+                    extra: _Tag(text: l10n.recommande, icon: PhosphorIcons.thumbsUp()),
                   ),
                   MuChoiceCard(
-                    title: 'Je paie tout · ${formatDT(slot.price)}',
+                    title: l10n.jePaieTout(formatDT(slot.price)),
                     description:
-                        'Tu avances le terrain. Chaque part payée ensuite t’est '
-                        'remboursée sur ton solde.',
+                        l10n.tuAvancesLeTerrainChaque,
                     leading: BookingIconTile(PhosphorIcons.handCoins()),
                     selected: !share,
                     onTap: () => booking.setSplit(PaymentSplit.all),
@@ -245,10 +283,9 @@ class _BookingSummaryScreenState extends ConsumerState<BookingSummaryScreen> {
               if (share) ...[
                 const SizedBox(height: MuSpace.s3),
                 MuBanner(
-                  title: 'Tout doit être payé avant ${formatDateTime(policy.payBefore)}',
+                  title: l10n.toutDoitEtrePayeAvant(formatDateTime(policy.payBefore)),
                   detail:
-                      'Sinon la réservation est annulée et chacun est remboursé. Tu pourras '
-                      'payer le reste toi-même.',
+                      l10n.sinonLaReservationEstAnnulee,
                   icon: PhosphorIcons.hourglassMedium(),
                 ),
               ],
@@ -257,7 +294,7 @@ class _BookingSummaryScreenState extends ConsumerState<BookingSummaryScreen> {
           // ── Solde ──
           MuSwitch(
             value: d.useBalance,
-            label: 'Utiliser mon solde MatchUp',
+            label: l10n.utiliserMonSoldeMatchup,
             description: '${formatDT(balance)} disponibles',
             icon: PhosphorIcons.wallet(),
             labelAtStart: true,
@@ -272,18 +309,18 @@ class _BookingSummaryScreenState extends ConsumerState<BookingSummaryScreen> {
               children: [
                 priceLine(
                   '${slot.court.name} · ${slot.lengthLabel}'
-                  '${slot.peak ? ' · heure de pointe' : ''}',
+                  '${slot.peak ? l10n.heureDePointe : ''}',
                   money(slot.price),
                 ),
                 priceLine(
-                  share ? 'Ta part · 1 joueur sur ${d.players}' : 'Tu avances le terrain',
+                  share ? l10n.taPartJoueurSur(d.players) : l10n.tuAvancesLeTerrain,
                   money(d.amount),
                 ),
                 priceLine(
-                  'Frais de service',
-                  Text('Offerts', style: MuType.label.copyWith(color: c.successText)),
+                  l10n.fraisDeService,
+                  Text(l10n.offerts, style: MuType.label.copyWith(color: c.successText)),
                 ),
-                if (used > 0) priceLine('Solde MatchUp', money(used, minus: true)),
+                if (used > 0) priceLine(l10n.soldeMatchup, money(used, minus: true)),
                 const SizedBox(height: MuSpace.s2),
                 Divider(height: 1, thickness: 1, color: c.border),
                 const SizedBox(height: MuSpace.s3),
@@ -291,7 +328,7 @@ class _BookingSummaryScreenState extends ConsumerState<BookingSummaryScreen> {
                   children: [
                     Expanded(
                       child: Text(
-                        'À payer maintenant',
+                        l10n.aPayerMaintenant,
                         style: MuType.labelL.copyWith(color: c.text),
                       ),
                     ),
@@ -310,11 +347,11 @@ class _BookingSummaryScreenState extends ConsumerState<BookingSummaryScreen> {
             children: [
               Semantics(
                 header: true,
-                child: Text('Si tu annules', style: MuType.h3.copyWith(color: c.text)),
+                child: Text(l10n.siTuAnnules, style: MuType.h3.copyWith(color: c.text)),
               ),
               const SizedBox(height: MuSpace.s1),
               Text(
-                'Politique ${elideDe(slot.venue.venue.name)}, appliquée à chaque joueur.',
+                l10n.politiqueAppliqueeAChaqueJoueur(elideDe(slot.venue.venue.name)),
                 style: MuType.body.copyWith(color: c.textSecondary),
               ),
               const SizedBox(height: MuSpace.s3),
@@ -324,15 +361,14 @@ class _BookingSummaryScreenState extends ConsumerState<BookingSummaryScreen> {
           Text.rich(
             TextSpan(
               children: [
-                const TextSpan(text: 'En payant, tu acceptes les '),
+                TextSpan(text: l10n.enPayantTuAcceptesLes),
                 TextSpan(
-                  text: 'conditions de réservation',
+                  text: l10n.conditionsDeReservation,
                   style: MuType.labelS.copyWith(color: c.text),
                 ),
                 TextSpan(
                   text:
-                      ' ${elideDe(slot.venue.venue.name)} et la politique d’annulation '
-                      'ci-dessus.',
+                      l10n.etLaPolitiqueDAnnulation(elideDe(slot.venue.venue.name)),
                 ),
               ],
             ),

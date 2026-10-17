@@ -5,6 +5,7 @@ import '../../../theme/theme.dart';
 import '../../../ui/ui.dart';
 import '../../common/widgets/flow_scaffold.dart';
 import '../controllers/onboarding_controller.dart';
+import '../../../l10n/l10n.dart';
 
 /// The player onboarding's 8 steps (PLY-01 … PLY-10).
 const int onboardingSteps = 8;
@@ -12,7 +13,7 @@ const int onboardingSteps = 8;
 /// A player onboarding screen: back, optional « Passer », « Étape n sur 8 · title », body and the
 /// sticky bottom bar. Opening it records [route] so the player resumes here.
 class OnboardingStepScaffold extends ConsumerStatefulWidget {
-  const OnboardingStepScaffold({
+  OnboardingStepScaffold({
     super.key,
     required this.route,
     required this.step,
@@ -22,8 +23,8 @@ class OnboardingStepScaffold extends ConsumerStatefulWidget {
     this.onSkip,
     this.bottomBar = const [],
     this.gap = MuSpace.s6,
-    this.backLabel = 'Retour',
-  });
+    String? backLabel,
+  }) : backLabel = backLabel ?? l10n.retour;
 
   final String route;
   final int step;
@@ -53,7 +54,7 @@ class _OnboardingStepScaffoldState extends ConsumerState<OnboardingStepScaffold>
       backLabel: widget.backLabel,
       topAction: widget.onSkip == null
           ? null
-          : MuButton.tertiary(label: 'Passer', onPressed: widget.onSkip),
+          : MuButton.tertiary(label: l10n.passer, onPressed: widget.onSkip),
       header: MuStepIndicator(
         step: widget.step,
         total: onboardingSteps,

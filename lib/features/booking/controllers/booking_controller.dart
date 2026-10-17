@@ -13,6 +13,8 @@ import '../../profile/data/me_repository.dart';
 import '../../venue/data/venue_details.dart';
 import '../data/payment_repository.dart';
 import '../data/teammates_repository.dart';
+import '../../wallet/data/wallet_repository.dart';
+import '../../../l10n/l10n.dart';
 
 /// Privée (friends only) or publique (open to players at the right level in Explorer).
 enum BookingType { private, public }
@@ -25,13 +27,15 @@ enum GameVisibility { everyone, followers }
 
 /// « Mixte · Femmes · Hommes ».
 enum GameGender {
-  mixte('Mixte'),
-  femmes('Femmes'),
-  hommes('Hommes');
+  mixte,
+  femmes,
+  hommes;
 
-  const GameGender(this.label);
-
-  final String label;
+  String get label => switch (this) {
+    GameGender.mixte => l10n.mixte,
+    GameGender.femmes => l10n.femmes,
+    GameGender.hommes => l10n.hommes,
+  };
 }
 
 /// The chosen slot, once « Continuer » leaves VEN-02.
@@ -200,7 +204,7 @@ DayGrid dayGrid(VenueDetails venue, DaySchedule schedule, {required bool fullDay
         name: court.name,
         detail: court.gridDetail,
         icon: court.indoor ? PhosphorIcons.umbrella() : null,
-        iconLabel: court.indoor ? 'Couvert' : null,
+        iconLabel: court.indoor ? l10n.couvert : null,
         slots: [
           for (final t in times)
             () {
@@ -304,25 +308,23 @@ class BookingController extends Notifier<BookingDraft> {
   num balanceUsed(num balance) =>
       state.useBalance ? (balance < state.amount ? balance : state.amount) : 0;
 
-  /// « Payer ma part »: the fake payment (CLAUDE.md rule 10), then the booking is saved, a public
-  /// game goes to Explorer, and Home and Mes matchs refresh.
-  Future<MuBooking> pay() async {
+  /// « Payer ma part » went through the checkout (PAY-01): the booking is saved under
+  /// [reference], a public game goes to Explorer, the wallet gets its line, and Home and Mes
+  /// matchs refresh. [fromBalance] is what the checkout took from the balance.
+  Future<MuBooking> completePaid(
+    PaymentReceipt receipt,
+    num fromBalance, {
+    String? reference,
+  }) async {
     final d = state;
     final slot = d.slot!;
     final me = await ref.read(meRepositoryProvider).me();
-    final fromBalance = balanceUsed(me.balance);
-    final due = d.amount - fromBalance;
-    if (due > 0) {
-      await ref
-          .read(paymentRepositoryProvider)
-          .pay(due, reason: '${slot.title} · ${slot.timeRange}');
-    }
-    if (fromBalance > 0) await ref.read(meRepositoryProvider).debit(fromBalance);
     final people = [MuPerson(me.displayName), for (final n in d.invited) MuPerson(n)];
     final booking = await ref
         .read(bookingsRepositoryProvider)
         .add(
           MuBooking(
+            id: reference,
             sport: slot.venue.venue.sport,
             venue: slot.venue.venue.name,
             court: slot.court.name,
@@ -357,6 +359,16 @@ class BookingController extends Notifier<BookingDraft> {
             ),
           );
     }
+    await ref
+        .read(walletActionsProvider)
+        .paid(
+          receipt: receipt,
+          label: d.split == PaymentSplit.share
+              ? l10n.partText(slot.venue.venue.name)
+              : l10n.terrain(slot.venue.venue.name),
+          sport: slot.venue.venue.sport,
+          fromBalance: fromBalance,
+        );
     ref
       ..invalidate(upcomingMatchesProvider)
       ..invalidate(meProvider)

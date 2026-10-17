@@ -18,3 +18,26 @@ class SimulatedOffline extends Notifier<bool> {
 }
 
 final simulatedOfflineProvider = NotifierProvider<SimulatedOffline, bool>(SimulatedOffline.new);
+
+/// A server that answers 5xx (STA-02). [reference] is what support asks for.
+class ServerException implements Exception {
+  const ServerException({this.status = 503, this.reference = 'MU-7F3A-2C'});
+
+  final int status;
+  final String reference;
+
+  @override
+  String toString() => 'ServerException($status, $reference)';
+}
+
+/// The debug menu's « Simuler une erreur serveur » (STA-02): lists of Mes matchs fail with a 503.
+class SimulatedServerError extends Notifier<bool> {
+  @override
+  bool build() => false;
+
+  void set(bool on) => state = on;
+}
+
+final simulatedServerErrorProvider = NotifierProvider<SimulatedServerError, bool>(
+  SimulatedServerError.new,
+);

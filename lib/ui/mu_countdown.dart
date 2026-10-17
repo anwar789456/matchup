@@ -5,6 +5,7 @@ import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 import '../core/format.dart';
 import '../theme/theme.dart';
+import '../l10n/l10n.dart';
 
 enum MuCountdownFormat { clock, relative }
 
@@ -16,17 +17,17 @@ enum MuCountdownSize { s, m, l, hero }
 ///
 /// The `blocks` format (days away) comes with the Tournaments milestone.
 class MuCountdown extends StatefulWidget {
-  const MuCountdown({
+  MuCountdown({
     super.key,
     required this.endsAt,
     this.format = MuCountdownFormat.clock,
     this.size = MuCountdownSize.m,
     this.label,
     this.urgentAfter = const Duration(minutes: 5),
-    this.expiredLabel = 'Temps écoulé',
+    String? expiredLabel,
     this.centered = false,
     this.onExpire,
-  });
+  }) : expiredLabel = expiredLabel ?? l10n.tempsEcoule;
 
   final DateTime endsAt;
   final MuCountdownFormat format;
@@ -111,12 +112,12 @@ class _MuCountdownState extends State<MuCountdown> with SingleTickerProviderStat
   String get _value {
     if (widget.format == MuCountdownFormat.clock) return formatClock(_left);
     final m = _left.inMinutes;
-    if (m < 1) return 'Dans < 1 min';
+    if (m < 1) return l10n.dansMin;
     final d = _left.inDays;
     final h = _left.inHours % 24;
-    if (d > 0) return 'Dans $d j${h > 0 ? ' $h h' : ''}';
-    if (_left.inHours > 0) return 'Dans ${_left.inHours} h ${m % 60} min';
-    return 'Dans $m min';
+    if (d > 0) return l10n.dansJ(d, h > 0 ? ' $h h' : '');
+    if (_left.inHours > 0) return l10n.dansHMin(_left.inHours, m % 60);
+    return l10n.dansMin2(m);
   }
 
   @override
@@ -191,7 +192,7 @@ class _MuCountdownState extends State<MuCountdown> with SingleTickerProviderStat
     final minutes = _left.inMinutes;
     final spoken = expired
         ? widget.expiredLabel
-        : '${widget.label ?? 'Temps restant'} ${minutes < 1 ? 'moins d’une minute' : '$minutes minutes'}';
+        : '${widget.label ?? l10n.tempsRestant} ${minutes < 1 ? l10n.moinsDUneMinute : '$minutes minutes'}';
     return Semantics(
       liveRegion: true,
       label: spoken,

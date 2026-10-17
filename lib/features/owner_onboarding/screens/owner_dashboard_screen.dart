@@ -9,48 +9,11 @@ import '../../../theme/theme.dart';
 import '../../../ui/ui.dart';
 import '../../common/data/pro_providers.dart';
 import '../../common/widgets/pro_dashboard_scaffold.dart';
-import '../../common/widgets/pro_wizard_scaffold.dart' show showComingSoon;
+import '../../common/widgets/pro_wizard_scaffold.dart' show ProSpace, showComingSoon;
 import '../controllers/owner_controller.dart';
 import '../data/owner_repository.dart';
 import 'plan_screen.dart' show OwnerPlans;
-
-/// The owner's sidebar (Sidebar.md « Content »).
-List<MuNavSection> ownerNav() => [
-  MuNavSection(
-    items: [
-      MuNavItem(
-        id: 'dashboard',
-        label: 'Tableau de bord',
-        icon: PhosphorIcons.squaresFour(),
-        activeIcon: PhosphorIcons.squaresFour(PhosphorIconsStyle.fill),
-      ),
-    ],
-  ),
-  MuNavSection(
-    heading: 'Activité',
-    items: [
-      MuNavItem(id: 'planning', label: 'Planning', icon: PhosphorIcons.calendarDots()),
-      MuNavItem(id: 'reservations', label: 'Réservations', icon: PhosphorIcons.ticket()),
-      const MuNavItem(id: 'terrains', label: 'Terrains', asset: MuGlyph.court),
-      MuNavItem(id: 'tarifs', label: 'Tarifs', icon: PhosphorIcons.tag()),
-    ],
-  ),
-  MuNavSection(
-    heading: 'Clientèle',
-    items: [
-      MuNavItem(id: 'clients', label: 'Clients', icon: PhosphorIcons.users()),
-      MuNavItem(id: 'avis', label: 'Avis', icon: PhosphorIcons.star()),
-    ],
-  ),
-  MuNavSection(
-    heading: 'Gestion',
-    items: [
-      MuNavItem(id: 'revenus', label: 'Revenus', icon: PhosphorIcons.coins()),
-      MuNavItem(id: 'abonnement', label: 'Abonnement', icon: PhosphorIcons.crownSimple()),
-      MuNavItem(id: 'parametres', label: 'Paramètres', icon: PhosphorIcons.gearSix()),
-    ],
-  ),
-];
+import '../../../l10n/l10n.dart';
 
 /// One line of « Mise en route ».
 class _Task {
@@ -73,8 +36,8 @@ class _Task {
   final Widget? badge;
 }
 
-/// OWN-09 — the owner dashboard on its first day: what is left to set up, today's bookings (none
-/// yet) and the four KPIs, empty until the first booking.
+/// OWN-09 — the owner dashboard on its first day, as a phone page: what is left to set up,
+/// today's bookings (none yet) and the four KPIs two by two, empty until the first booking.
 class OwnerDashboardScreen extends ConsumerWidget {
   const OwnerDashboardScreen({super.key});
 
@@ -83,8 +46,7 @@ class OwnerDashboardScreen extends ConsumerWidget {
     final c = context.mu;
     final d = ref.watch(ownerProvider).requireValue;
     final now = ref.watch(clockProvider)();
-    final width = MediaQuery.sizeOf(context).width;
-    final venue = d.venueName.trim().isEmpty ? 'ton terrain' : d.venueName.trim();
+    final venue = d.venueName.trim().isEmpty ? l10n.tonTerrain : d.venueName.trim();
     final firstName = d.manager.split(' ').first;
     final email = d.email.isEmpty ? '' : d.email;
 
@@ -96,75 +58,73 @@ class OwnerDashboardScreen extends ConsumerWidget {
 
     final tasks = [
       _Task(
-        title: 'Infos de l’entreprise',
+        title: l10n.infosDeLEntreprise,
         detail: d.reached >= 1
-            ? '${d.legalName} · matricule fiscal ${d.taxId.isEmpty ? 'à ajouter' : 'ajouté'}'
-            : 'Raison sociale, matricule fiscal et contact.',
+            ? l10n.matriculeFiscal2(d.legalName, d.taxId.isEmpty ? l10n.aAjouter : l10n.ajoute)
+            : l10n.raisonSocialeMatriculeFiscalEt,
         done: d.reached >= 1,
-        action: d.reached >= 1 ? 'Modifier' : 'Reprendre',
-        semanticAction: 'Modifier les infos de l’entreprise',
+        action: d.reached >= 1 ? l10n.modifier : l10n.reprendre2,
+        semanticAction: l10n.modifierLesInfosDeL,
         onAction: () => go(0),
       ),
       _Task(
-        title: 'Adresse et terrains',
+        title: l10n.adresseEtTerrains,
         detail: d.reached >= 3
             ? '${d.street}, ${d.city} · ${OwnerSteps.courtsSummary(d).replaceFirst(' · ', ' ')}'
-            : 'Où te trouver, et chaque terrain réservable.',
+            : l10n.ouTeTrouverEtChaque,
         done: d.reached >= 3,
-        action: d.reached >= 3 ? 'Modifier' : 'Reprendre',
-        semanticAction: 'Modifier l’adresse et les terrains',
+        action: d.reached >= 3 ? l10n.modifier : l10n.reprendre2,
+        semanticAction: l10n.modifierLAdresseEtLes,
         onAction: () => go(d.reached >= 3 ? 1 : d.reached.clamp(1, 2)),
       ),
       _Task(
-        title: 'Horaires et tarifs',
+        title: l10n.horairesEtTarifs,
         detail: d.reached >= 5 && bounds != null
-            ? '${d.openDays}j/7 · de ${bounds.$1} à ${bounds.$2} DT /h, soit ${perHead(bounds.$1)} '
-                  'à ${perHead(bounds.$2)} DT /pers.'
-            : 'Quand on peut réserver, et à quel prix.',
+            ? l10n.jDeADtH(d.openDays, bounds.$1, bounds.$2, perHead(bounds.$1), perHead(bounds.$2))
+            : l10n.quandOnPeutReserverEt,
         done: d.reached >= 5,
-        action: d.reached >= 5 ? 'Modifier' : 'Reprendre',
-        semanticAction: 'Modifier les horaires et les tarifs',
+        action: d.reached >= 5 ? l10n.modifier : l10n.reprendre2,
+        semanticAction: l10n.modifierLesHorairesEtLes,
         onAction: () => go(d.reached >= 5 ? 3 : d.reached.clamp(3, 4)),
       ),
       _Task(
-        title: 'Photos et versements',
+        title: l10n.photosEtVersements,
         detail: d.reached >= 7
-            ? '${d.photos.length} photos · ${OwnerCatalog.bankName(d.bank)} '
-                  '${OwnerSteps.maskRib(d.rib)}'
-            : 'Tes photos, et le compte où on verse tes revenus.',
+            ? l10n.photos2(d.photos.length, OwnerCatalog.bankName(d.bank), OwnerSteps.maskRib(d.rib))
+            : l10n.tesPhotosEtLeCompte,
         done: d.reached >= 7,
         badge: d.reached >= 7
-            ? const MuStatusBadge(
+            ? MuStatusBadge(
                 status: MuStatus.pending,
-                label: 'RIB en vérification',
+                label: l10n.ribEnVerification,
                 size: MuBadgeSize.s,
               )
             : null,
-        action: d.reached >= 7 ? 'Modifier' : 'Reprendre',
-        semanticAction: 'Modifier les photos et les versements',
+        action: d.reached >= 7 ? l10n.modifier : l10n.reprendre2,
+        semanticAction: l10n.modifierLesPhotosEtLes,
         onAction: () => go(d.reached >= 7 ? 5 : d.reached.clamp(5, 6)),
       ),
       if (d.trialStartedAt == null && d.reached >= 7)
         _Task(
-          title: 'Choisis ton offre',
-          detail: '${OwnerCatalog.trialDays} jours d’essai gratuit, sans paiement aujourd’hui.',
+          title: l10n.choisisTonOffre,
+          detail: l10n.joursDEssaiGratuitSans(OwnerCatalog.trialDays),
           done: false,
-          action: 'Choisir',
+          action: l10n.choisir,
           onAction: () => go(7),
         ),
       _Task(
-        title: 'Ajoute ta politique d’annulation',
-        detail: 'Les joueurs la lisent avant de payer. Par exemple : remboursé jusqu’à 24 h avant.',
+        title: l10n.ajouteTaPolitiqueDAnnulation,
+        detail: l10n.lesJoueursLaLisentAvant,
         done: false,
-        action: 'Ajouter',
+        action: l10n.ajouter,
         onAction: () => showComingSoon(context),
       ),
       _Task(
-        title: 'Publie ton premier créneau',
+        title: l10n.publieTonPremierCreneau,
         detail:
-            'Tes terrains deviennent réservables et visibles à ${d.city.isEmpty ? 'ta ville' : d.city}.',
+            l10n.tesTerrainsDeviennentReservablesEt(d.city.isEmpty ? l10n.taVille : d.city),
         done: false,
-        action: 'Publier',
+        action: l10n.publier,
         onAction: () => showComingSoon(context),
       ),
     ];
@@ -177,53 +137,31 @@ class OwnerDashboardScreen extends ConsumerWidget {
     final plan = OwnerPlans.of(d.plan).name;
 
     final setup = ProCard(
-      padding: const EdgeInsets.fromLTRB(MuSpace.s6, MuSpace.s6, MuSpace.s6, MuSpace.s4),
+      padding: const EdgeInsets.fromLTRB(MuSpace.s4, MuSpace.s5, MuSpace.s4, MuSpace.s2),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Wrap(
-            alignment: WrapAlignment.spaceBetween,
-            crossAxisAlignment: WrapCrossAlignment.end,
-            spacing: MuSpace.s6,
-            runSpacing: MuSpace.s3,
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text('MISE EN ROUTE', style: MuType.overline.copyWith(color: c.textSecondary)),
-                  const SizedBox(height: MuSpace.s1),
-                  Semantics(
-                    header: true,
-                    child: Text(
-                      'Termine la configuration ${elideDe(venue)}',
-                      style: MuType.h2.copyWith(color: c.text),
-                    ),
-                  ),
-                  const SizedBox(height: MuSpace.s1),
-                  Text(
-                    left == 0
-                        ? 'Tout est prêt.'
-                        : 'Encore $left étape${left > 1 ? 's' : ''} et les joueurs pourront '
-                              'réserver.',
-                    style: MuType.body.copyWith(color: c.textSecondary),
-                  ),
-                ],
-              ),
-              Padding(
-                padding: const EdgeInsets.only(bottom: MuSpace.s1),
-                child: SizedBox(
-                  width: _progressWidth,
-                  child: MuProgressBar(
-                    label: 'Configuration',
-                    value: done.toDouble(),
-                    max: tasks.length.toDouble(),
-                    size: MuProgressSize.l,
-                    valueLabel: '$done/${tasks.length} · $percent %',
-                  ),
-                ),
-              ),
-            ],
+          Text(l10n.miseEnRoute, style: MuType.overline.copyWith(color: c.textSecondary)),
+          const SizedBox(height: MuSpace.s1),
+          Semantics(
+            header: true,
+            child: Text(
+              l10n.termineLaConfiguration(elideDe(venue)),
+              style: MuType.h2.copyWith(color: c.text),
+            ),
+          ),
+          const SizedBox(height: MuSpace.s1),
+          Text(
+            left == 0 ? l10n.toutEstPret : l10n.encoreEtapeEtLesJoueurs(left, left > 1 ? 's' : ''),
+            style: MuType.body.copyWith(color: c.textSecondary),
+          ),
+          const SizedBox(height: MuSpace.s4),
+          MuProgressBar(
+            label: l10n.configuration,
+            value: done.toDouble(),
+            max: tasks.length.toDouble(),
+            size: MuProgressSize.l,
+            valueLabel: '$done/${tasks.length} · $percent %',
           ),
           const SizedBox(height: MuSpace.s3),
           for (final (i, t) in tasks.indexed)
@@ -243,32 +181,27 @@ class OwnerDashboardScreen extends ConsumerWidget {
               Expanded(
                 child: Semantics(
                   header: true,
-                  child: Text('Réservations du jour', style: MuType.h3.copyWith(color: c.text)),
+                  child: Text(l10n.reservationsDuJour, style: MuType.h3.copyWith(color: c.text)),
                 ),
               ),
               Text(formatDay(now), style: MuType.caption.copyWith(color: c.textSecondary)),
             ],
           ),
           const SizedBox(height: MuSpace.s2),
-          // Beside the setup card the empty state centres in the stretched card.
-          _fill(
-            width >= ProSplit.stackBelow,
-            Center(
-              child: MuEmptyState(
-                compact: true,
-                illustration: MuEmptyIllustration.bookings,
-                title: 'Aucune réservation pour l’instant',
-                description:
-                    'Publie ton premier créneau : il apparaîtra aux joueurs '
-                    '${elideDe(d.city.isEmpty ? 'ta ville' : d.city)}.',
-                actions: [
-                  MuButton.secondary(
-                    label: 'Ouvrir le planning',
-                    leading: PhosphorIcons.calendarDots(),
-                    onPressed: () => showComingSoon(context),
-                  ),
-                ],
-              ),
+          Center(
+            child: MuEmptyState(
+              compact: true,
+              illustration: MuEmptyIllustration.bookings,
+              title: l10n.aucuneReservationPourLInstant,
+              description:
+                  l10n.publieTonPremierCreneauIl(elideDe(d.city.isEmpty ? l10n.taVille : d.city)),
+              actions: [
+                MuButton.secondary(
+                  label: l10n.ouvrirLePlanning,
+                  leading: PhosphorIcons.calendarDots(),
+                  onPressed: () => showComingSoon(context),
+                ),
+              ],
             ),
           ),
         ],
@@ -276,64 +209,56 @@ class OwnerDashboardScreen extends ConsumerWidget {
     );
 
     return ProDashboardScaffold(
-      sections: ownerNav(),
-      role: MuSidebarRole(role: 'Propriétaire', name: venue),
-      user: MuSidebarUser(name: d.manager, email: email),
-      userRole: 'Propriétaire',
+      space: ProSpace.owner,
+      userName: d.manager,
+      userRole: l10n.proprietaire,
+      userEmail: email,
       notifications: 1,
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Wrap(
-            alignment: WrapAlignment.spaceBetween,
-            crossAxisAlignment: WrapCrossAlignment.end,
-            spacing: MuSpace.s6,
-            runSpacing: MuSpace.s3,
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Semantics(
-                    header: true,
-                    child: Text('Bonjour $firstName', style: MuType.h1.copyWith(color: c.text)),
-                  ),
-                  const SizedBox(height: MuSpace.s1),
-                  Text(
-                    trialEnd != null
-                        ? '${withFullStop('Ton essai $plan court jusqu’au ${formatDay(trialEnd)}')} Voici où en est '
-                              '$venue.'
-                        : 'Termine la configuration pour démarrer ton essai gratuit. Voici où en '
-                              'est $venue.',
-                    style: MuType.bodyL.copyWith(color: c.textSecondary),
-                  ),
-                ],
-              ),
-              const MuStatusBadge(status: MuStatus.draft, label: 'Pas encore visible des joueurs'),
-            ],
+          Semantics(
+            header: true,
+            child: Text(l10n.bonjour(firstName), style: MuType.h1.copyWith(color: c.text)),
           ),
-          const SizedBox(height: MuSpace.s6),
-          ProSplit(start: setup, end: bookings),
-          const SizedBox(height: MuSpace.s6),
+          const SizedBox(height: MuSpace.s1),
+          Text(
+            trialEnd != null
+                ? l10n.voiciOuEnEst(
+                    withFullStop(l10n.tonEssaiCourtJusquAu(plan, formatDay(trialEnd))),
+                    venue,
+                  )
+                : l10n.termineLaConfigurationPourDemarrer(venue),
+            style: MuType.bodyL.copyWith(color: c.textSecondary),
+          ),
+          const SizedBox(height: MuSpace.s3),
+          Align(
+            alignment: AlignmentDirectional.centerStart,
+            child: MuStatusBadge(status: MuStatus.draft, label: l10n.pasEncoreVisibleDesJoueurs),
+          ),
+          const SizedBox(height: MuSpace.s5),
+          setup,
+          const SizedBox(height: MuSpace.s4),
+          bookings,
+          const SizedBox(height: MuSpace.s4),
           ProCardRow(
-            columns: width < ProSplit.stackBelow ? 2 : 4,
-            children: const [
+            children: [
               MuKpiCard(
-                label: 'Taux d’occupation',
+                label: l10n.tauxDOccupation,
                 value: '—',
-                note: 'Calculé dès ta première réservation',
+                note: l10n.calculeDesTaPremiereReservation,
               ),
               MuKpiCard(
-                label: 'Revenus du jour',
+                label: l10n.revenusDuJour,
                 value: '0',
                 unit: 'DT',
-                note: 'Aucun paiement encaissé',
+                note: l10n.aucunPaiementEncaisse,
               ),
-              MuKpiCard(label: 'Réservations', value: '0', note: 'Pas encore de comparaison'),
+              MuKpiCard(label: l10n.reservations, value: '0', note: l10n.pasEncoreDeComparaison),
               MuKpiCard(
-                label: 'Note moyenne',
+                label: l10n.noteMoyenne,
                 value: '—',
-                note: 'Après les premiers avis des joueurs',
+                note: l10n.apresLesPremiersAvisDes,
               ),
             ],
           ),
@@ -341,11 +266,6 @@ class OwnerDashboardScreen extends ConsumerWidget {
       ),
     );
   }
-
-  // OWN-09 source: the progress block is 220 wide.
-  static const double _progressWidth = 220;
-
-  static Widget _fill(bool fill, Widget child) => fill ? Expanded(child: child) : child;
 }
 
 class _TaskRow extends StatelessWidget {
@@ -373,16 +293,17 @@ class _TaskRow extends StatelessWidget {
     } else if (primary) {
       action = MuButton.primary(
         label: t.action,
-        leading: t.action == 'Ajouter' ? PhosphorIcons.plus() : null,
+        leading: t.action == l10n.ajouter ? PhosphorIcons.plus() : null,
+        size: MuButtonSize.s,
         onPressed: t.onAction,
       );
     } else {
-      action = MuButton.secondary(label: t.action, onPressed: t.onAction);
+      action = MuButton.secondary(label: t.action, size: MuButtonSize.s, onPressed: t.onAction);
     }
 
     return Semantics(
       container: true,
-      label: t.done ? 'Fait' : 'À faire',
+      label: t.done ? l10n.fait : l10n.aFaire,
       child: Container(
         constraints: const BoxConstraints(minHeight: _minHeight),
         padding: const EdgeInsets.symmetric(vertical: MuSpace.s2),
@@ -411,10 +332,10 @@ class _TaskRow extends StatelessWidget {
                   ),
                   const SizedBox(height: _lineGap),
                   Text(t.detail, style: MuType.caption.copyWith(color: c.textSecondary)),
+                  if (t.badge != null) ...[const SizedBox(height: MuSpace.s1), t.badge!],
                 ],
               ),
             ),
-            if (t.badge != null) ...[const SizedBox(width: MuSpace.s3), t.badge!],
             const SizedBox(width: MuSpace.s3),
             action,
           ],

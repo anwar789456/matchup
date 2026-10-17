@@ -4,6 +4,7 @@ import 'package:phosphor_flutter/phosphor_flutter.dart';
 import '../theme/theme.dart';
 import 'mu_match_card.dart';
 import 'src/card_surface.dart';
+import '../l10n/l10n.dart';
 
 /// A side of the scoreboard: name, short name, the players (one per line for padel), and whether
 /// it is the player's team.
@@ -98,9 +99,9 @@ class MuScoreboard extends StatelessWidget {
   }
 
   String get _statusText => switch (status) {
-    MuMatchStatus.live => 'En direct${clock == null ? '' : ', $clock'}',
-    MuMatchStatus.finished => 'Terminé${date == null ? '' : ' · $date'}',
-    MuMatchStatus.upcoming => 'À venir${kickoff == null ? '' : ' · $kickoff'}',
+    MuMatchStatus.live => l10n.enDirect2(clock == null ? '' : ', $clock'),
+    MuMatchStatus.finished => l10n.termine4(date == null ? '' : ' · $date'),
+    MuMatchStatus.upcoming => l10n.aVenir2(kickoff == null ? '' : ' · $kickoff'),
   };
 
   String get _scoreText {
@@ -134,9 +135,9 @@ class MuScoreboard extends StatelessWidget {
       ),
     };
     final word = switch (status) {
-      MuMatchStatus.live => Text('EN DIRECT', style: MuType.overline.copyWith(color: ink)),
-      MuMatchStatus.finished => Text('Terminé', style: MuType.labelS.copyWith(color: ink)),
-      MuMatchStatus.upcoming => Text('À venir', style: MuType.labelS.copyWith(color: ink)),
+      MuMatchStatus.live => Text(l10n.enDirect3, style: MuType.overline.copyWith(color: ink)),
+      MuMatchStatus.finished => Text(l10n.termine, style: MuType.labelS.copyWith(color: ink)),
+      MuMatchStatus.upcoming => Text(l10n.aVenir, style: MuType.labelS.copyWith(color: ink)),
     };
     final extra = switch (status) {
       MuMatchStatus.live => clock,
@@ -215,7 +216,7 @@ class MuScoreboard extends StatelessWidget {
           children: [
             Icon(PhosphorIcons.trophy(), size: MuSize.iconXs - 2, color: c.textInverse),
             const SizedBox(width: MuSpace.s1),
-            Text('Vainqueur', style: MuType.labelS.copyWith(color: c.textInverse)),
+            Text(l10n.vainqueur, style: MuType.labelS.copyWith(color: c.textInverse)),
           ],
         ),
       );
@@ -224,7 +225,7 @@ class MuScoreboard extends StatelessWidget {
       return Container(
         padding: const EdgeInsets.symmetric(horizontal: MuSpace.s2, vertical: MuSpace.s1 / 2),
         decoration: BoxDecoration(color: c.accent, borderRadius: MuRadius.fullAll),
-        child: Text('Ton équipe', style: MuType.labelS.copyWith(color: c.onAccent)),
+        child: Text(l10n.tonEquipe, style: MuType.labelS.copyWith(color: c.onAccent)),
       );
     }
     return const SizedBox.shrink();
@@ -282,7 +283,7 @@ class MuScoreboard extends StatelessWidget {
                 SizedBox(
                   width: _setCol,
                   child: Text(
-                    'SET ${s + 1}',
+                    l10n.setText3(s + 1),
                     textAlign: TextAlign.center,
                     style: MuType.overline.copyWith(color: c.textSecondary),
                   ),
@@ -322,7 +323,7 @@ class MuScoreboard extends StatelessWidget {
             children: [
               if (status == MuMatchStatus.upcoming) ...[
                 Text(kickoff ?? '', style: MuType.numL.copyWith(color: c.text)),
-                Text('Coup d’envoi', style: MuType.caption.copyWith(color: c.textSecondary)),
+                Text(l10n.coupDEnvoi, style: MuType.caption.copyWith(color: c.textSecondary)),
               ] else
                 Row(
                   mainAxisSize: MainAxisSize.min,
@@ -418,7 +419,7 @@ class MuScoreboard extends StatelessWidget {
   Widget _meters(BuildContext context) {
     final c = context.mu;
     Widget meter(int v, {required bool reverse}) => Semantics(
-      label: '$v points sur $target',
+      label: l10n.pointsSur(v, target),
       child: ClipRRect(
         borderRadius: MuRadius.fullAll,
         child: Container(
@@ -441,7 +442,7 @@ class MuScoreboard extends StatelessWidget {
         Expanded(child: meter(score!.$1, reverse: true)),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: MuSpace.s3),
-          child: Text('Premier à $target', style: MuType.caption.copyWith(color: c.textSecondary)),
+          child: Text(l10n.premierA(target), style: MuType.caption.copyWith(color: c.textSecondary)),
         ),
         Expanded(child: meter(score!.$2, reverse: false)),
       ],

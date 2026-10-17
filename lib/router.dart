@@ -3,6 +3,18 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import 'features/admin/screens/churn_screen.dart';
+import 'features/admin/screens/finance_screen.dart';
+import 'features/admin/screens/moderation_screen.dart';
+import 'features/admin/screens/overview_screen.dart';
+import 'features/admin/screens/payouts_screen.dart';
+import 'features/admin/screens/review_screen.dart';
+import 'features/admin/screens/suspend_screen.dart';
+import 'features/admin/screens/user_screen.dart';
+import 'features/admin/screens/users_screen.dart';
+import 'features/admin/screens/verifications_screen.dart';
+import 'features/admin/widgets/admin_shell.dart';
+import 'features/admin/widgets/admin_widgets.dart';
 import 'features/auth/screens/account_locked_screen.dart';
 import 'features/auth/screens/forgot_password_screen.dart';
 import 'features/auth/screens/login_screen.dart';
@@ -49,9 +61,42 @@ import 'features/home/screens/home_screen.dart';
 import 'features/home/widgets/player_shell.dart';
 import 'features/onboarding/screens/splash_screen.dart';
 import 'features/organizer_onboarding/controllers/organizer_controller.dart';
+import 'features/notifications/screens/notification_prefs_screen.dart';
+import 'features/notifications/screens/notifications_screen.dart';
+import 'features/payments/screens/checkout_screen.dart';
+import 'features/payments/data/receipt.dart';
+import 'features/payments/screens/payment_result_screens.dart';
+import 'features/payments/screens/receipt_screen.dart';
+import 'features/subscription/screens/cancel_screens.dart';
+import 'features/subscription/screens/change_plan_screen.dart';
+import 'features/subscription/screens/offers_screen.dart';
+import 'features/subscription/screens/premium_checkout_screen.dart';
+import 'features/subscription/screens/premium_welcome_screen.dart';
+import 'features/subscription/screens/subscription_screen.dart';
+import 'features/payments/screens/split_tracker_screen.dart';
+import 'features/wallet/screens/refund_screens.dart';
+import 'features/wallet/screens/topup_screen.dart';
+import 'features/wallet/screens/wallet_screen.dart';
 import 'features/organizer_onboarding/screens/organisation_screen.dart';
 import 'features/organizer_onboarding/screens/organizer_dashboard_screen.dart';
 import 'features/onboarding/screens/welcome_screen.dart';
+import 'features/owner/data/owner_drafts.dart';
+import 'features/owner/data/owner_repository.dart';
+import 'features/owner/screens/block_slot_screen.dart';
+import 'features/owner/screens/booking_screen.dart';
+import 'features/owner/screens/bookings_screen.dart';
+import 'features/owner/screens/check_in_result_screen.dart';
+import 'features/owner/screens/clients_screen.dart';
+import 'features/owner/screens/courts_screen.dart';
+import 'features/owner/screens/more_screen.dart';
+import 'features/owner/screens/no_show_screen.dart';
+import 'features/owner/screens/planning_screen.dart';
+import 'features/owner/screens/prices_screen.dart';
+import 'features/owner/screens/revenue_screen.dart';
+import 'features/owner/screens/reviews_screen.dart';
+import 'features/owner/screens/scanner_screen.dart';
+import 'features/owner/screens/today_screen.dart';
+import 'features/owner/widgets/owner_shell.dart';
 import 'features/owner_onboarding/controllers/owner_controller.dart';
 import 'features/owner_onboarding/screens/address_screen.dart';
 import 'features/owner_onboarding/screens/company_screen.dart';
@@ -75,6 +120,7 @@ import 'features/player_onboarding/screens/zones_screen.dart';
 import 'features/venue/screens/slot_screen.dart';
 import 'features/venue/screens/venue_screen.dart';
 import 'theme/theme.dart';
+import 'l10n/l10n.dart';
 
 /// Route paths, one per screen code (design/screens/SCREENS.md). Error variants (AUTH-01b,
 /// 03b, 05b) are states of their screen, not routes.
@@ -140,7 +186,24 @@ abstract final class Routes {
   static const settingsDelete = '/settings/delete'; // SET-07
   static const roleChoice = roles; // PRF-06 « Ajouter un rôle » → AUTH-11
   static const wallet = '/wallet'; // WAL-01 (phase 9)
-  static const subscriptionOffers = '/premium'; // SUB-01 (phase 10)
+  static const walletTopUp = '/wallet/topup'; // WAL-02 / WAL-03
+  static const walletRefund = '/wallet/refund'; // WAL-04
+  static String walletRefundStatus(String id) => '/wallet/refund/$id'; // WAL-05
+  static const checkout = '/pay'; // PAY-01 to PAY-08
+  static const paymentSuccess = '/pay/success'; // PAY-09
+  static const paymentFailed = '/pay/failed'; // PAY-10
+  static String bookingPayments(String id) => '/booking/$id/payments'; // PAY-11 / PAY-12
+  static const subscriptionOffers = '/premium'; // SUB-01
+  static const premiumCheckout = '/premium/checkout'; // SUB-02
+  static const premiumWelcome = '/premium/welcome'; // SUB-03
+  static const subscription = '/premium/subscription'; // SUB-04
+  static const subscriptionChange = '/premium/change'; // SUB-05
+  static const subscriptionCancel = '/premium/cancel'; // SUB-06
+  static const subscriptionRetention = '/premium/cancel/offer'; // SUB-07
+  static const subscriptionCancelled = '/premium/cancelled'; // SUB-08
+  static const receipt = '/receipt'; // SUB-09 (extra: ReceiptEntry)
+  static const notifications = '/notifications'; // NOT-01 / NOT-02 / NOT-03
+  static const notificationSettings = '/settings/notifications'; // NOT-10
 
   // Pro onboardings (phase 4).
   static const ownerCompany = '/own/company'; // OWN-01
@@ -152,6 +215,33 @@ abstract final class Routes {
   static const ownerPayout = '/own/payout'; // OWN-07
   static const ownerPlan = '/own/plan'; // OWN-08
   static const ownerDashboard = '/own/dashboard'; // OWN-09
+  // Owner space (phase 13): its own shell, Aujourd’hui · Planning · Check-in · Réservations · Plus.
+  static const ownerToday = '/owner/today'; // OWN-10
+  static const ownerPlanning = '/owner/planning'; // OWN-11
+  static const ownerCheckIn = '/owner/checkin'; // OWN-20 (STA-05 when the camera is refused)
+  static const ownerBookings = '/owner/bookings'; // OWN-14
+  static const ownerMore = '/owner/more'; // OWN-15
+  static String ownerBooking(String ref) => '/owner/booking/$ref'; // OWN-12
+  static String ownerNoShow(String ref) => '/owner/booking/$ref/no-show'; // OWN-24
+  static const ownerBlock = '/owner/block'; // OWN-13 (extra: BlockPrefill?)
+  static const ownerTariffs = '/owner/tariffs'; // OWN-16 (extra: PromoDraft?)
+  static const ownerCourtList = '/owner/court-list'; // OWN-17
+  static const ownerClients = '/owner/clients'; // OWN-18
+  static const ownerReviews = '/owner/reviews'; // OWN-19
+  static const ownerCheckInResult = '/owner/checkin/result'; // OWN-21 / 22 / 23 (extra: CheckInResult)
+  static const ownerRevenue = '/owner/revenue'; // OWN-25
+  // Admin space (phase 14): its own shell, Vue · Utilisateurs · Vérifications · Modération · Finance.
+  static const adminOverview = '/admin/overview'; // ADM-01
+  static const adminUsers = '/admin/users'; // ADM-02
+  static const adminVerifications = '/admin/verifications'; // ADM-05
+  static const adminModeration = '/admin/moderation'; // ADM-09
+  static const adminFinance = '/admin/finance'; // ADM-06
+  static String adminUser(String id) => '/admin/user/$id'; // ADM-03
+  static String adminSuspend(String id, {String? review}) =>
+      '/admin/user/$id/suspend${review == null ? '' : l10n.review(review)}'; // ADM-04
+  static const adminPayouts = '/admin/payouts'; // ADM-07
+  static const adminChurn = '/admin/churn'; // ADM-08
+  static String adminReview(String id) => '/admin/review/$id'; // ADM-10
   static const coachProfile = '/coa/profile'; // COA-01
   static const coachCertification = '/coa/certification'; // COA-02
   static const coachDashboard = '/coa/dashboard'; // COA-03
@@ -208,6 +298,7 @@ GoRoute _root(String path, Widget Function(GoRouterState state) build) => GoRout
 );
 
 /// A page of a later phase, for now « Bientôt disponible » (CLAUDE.md rule 8).
+// ignore: unused_element
 GoRoute _later(String path, String title, String fallback) => GoRoute(
   path: path,
   parentNavigatorKey: _rootKey,
@@ -282,12 +373,111 @@ final routerProvider = Provider<GoRouter>((ref) {
             routes: [_route(Routes.matches, (_) => const MatchesScreen())],
           ),
           StatefulShellBranch(
-            routes: [_route(Routes.training, (_) => const ComingSoonTab(title: 'Entraînement'))],
+            routes: [_route(Routes.training, (_) => ComingSoonTab(title: l10n.entrainement))],
           ),
           StatefulShellBranch(
-            routes: [_route(Routes.community, (_) => const ComingSoonTab(title: 'Communauté'))],
+            routes: [_route(Routes.community, (_) => ComingSoonTab(title: l10n.communaute))],
           ),
         ],
+      ),
+      StatefulShellRoute.indexedStack(
+        builder: (context, state, shell) => OwnerShell(shell: shell),
+        branches: [
+          StatefulShellBranch(routes: [_route(Routes.ownerToday, (_) => const OwnerTodayScreen())]),
+          StatefulShellBranch(
+            routes: [_route(Routes.ownerPlanning, (_) => const OwnerPlanningScreen())],
+          ),
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: Routes.ownerCheckIn,
+                builder: (context, state) => const ScannerScreen(),
+                routes: [
+                  GoRoute(
+                    path: 'result',
+                    parentNavigatorKey: _rootKey,
+                    builder: (context, state) =>
+                        CheckInResultScreen(result: state.extra! as CheckInResult),
+                  ),
+                ],
+              ),
+            ],
+          ),
+          StatefulShellBranch(
+            routes: [_route(Routes.ownerBookings, (_) => const OwnerBookingsScreen())],
+          ),
+          StatefulShellBranch(routes: [_route(Routes.ownerMore, (_) => const OwnerMoreScreen())]),
+        ],
+      ),
+      GoRoute(
+        path: '/owner/booking/:ref',
+        parentNavigatorKey: _rootKey,
+        builder: (context, state) => OwnerBookingScreen(bookingRef: state.pathParameters['ref']!),
+        routes: [
+          GoRoute(
+            path: 'no-show',
+            parentNavigatorKey: _rootKey,
+            builder: (context, state) => NoShowScreen(bookingRef: state.pathParameters['ref']!),
+          ),
+        ],
+      ),
+      _root(Routes.ownerBlock, (s) => BlockSlotScreen(prefill: s.extra as BlockPrefill?)),
+      _root(Routes.ownerTariffs, (s) => OwnerPricesScreen(promo: s.extra as PromoDraft?)),
+      _root(Routes.ownerCourtList, (_) => const OwnerCourtsScreen()),
+      _root(Routes.ownerClients, (_) => const OwnerClientsScreen()),
+      _root(Routes.ownerReviews, (_) => const OwnerReviewsScreen()),
+      _root(Routes.ownerRevenue, (_) => const OwnerRevenueScreen()),
+      StatefulShellRoute.indexedStack(
+        builder: (context, state, shell) => AdminShell(shell: shell),
+        branches: [
+          StatefulShellBranch(
+            routes: [_route(Routes.adminOverview, (_) => const AdminOverviewScreen())],
+          ),
+          StatefulShellBranch(
+            routes: [_route(Routes.adminUsers, (_) => const AdminUsersScreen())],
+          ),
+          StatefulShellBranch(
+            routes: [
+              _route(Routes.adminVerifications, (_) => const AdminVerificationsScreen()),
+            ],
+          ),
+          StatefulShellBranch(
+            routes: [_route(Routes.adminModeration, (_) => const AdminModerationScreen())],
+          ),
+          StatefulShellBranch(
+            routes: [_route(Routes.adminFinance, (_) => const AdminFinanceScreen())],
+          ),
+        ],
+      ),
+      GoRoute(
+        path: '/admin/user/:id',
+        parentNavigatorKey: _rootKey,
+        builder: (context, state) => AdminUserScreen(userId: state.pathParameters['id']!),
+        routes: [
+          GoRoute(
+            path: 'suspend',
+            parentNavigatorKey: _rootKey,
+            pageBuilder: (context, state) => adminOverlayPage(
+              context,
+              state,
+              AdminSuspendScreen(
+                userId: state.pathParameters['id']!,
+                reviewId: state.uri.queryParameters['review'],
+              ),
+            ),
+          ),
+        ],
+      ),
+      _root(Routes.adminPayouts, (_) => const AdminPayoutsScreen()),
+      _root(Routes.adminChurn, (_) => const AdminChurnScreen()),
+      GoRoute(
+        path: '/admin/review/:id',
+        parentNavigatorKey: _rootKey,
+        pageBuilder: (context, state) => adminOverlayPage(
+          context,
+          state,
+          AdminReviewScreen(itemId: state.pathParameters['id']!),
+        ),
       ),
       GoRoute(
         path: '/game/:id',
@@ -330,6 +520,13 @@ final routerProvider = Provider<GoRouter>((ref) {
         path: '/booking/:id',
         parentNavigatorKey: _rootKey,
         builder: (context, state) => BookingDetailScreen(bookingId: state.pathParameters['id']!),
+        routes: [
+          GoRoute(
+            path: 'payments',
+            parentNavigatorKey: _rootKey,
+            builder: (context, state) => SplitTrackerScreen(bookingId: state.pathParameters['id']!),
+          ),
+        ],
       ),
       GoRoute(
         path: '/match/:id/score',
@@ -351,8 +548,31 @@ final routerProvider = Provider<GoRouter>((ref) {
       _root(Routes.settingsPrivacy, (_) => const PrivacyScreen()),
       _root(Routes.settingsAccounts, (_) => const ConnectedAccountsScreen()),
       _root(Routes.settingsDelete, (_) => const DeleteAccountScreen()),
-      _later(Routes.wallet, 'Portefeuille', Routes.home),
-      _later(Routes.subscriptionOffers, 'MatchUp Premium', Routes.home),
+      _root(Routes.wallet, (_) => const WalletScreen()),
+      _root(Routes.walletTopUp, (_) => const TopUpScreen()),
+      _root(Routes.walletRefund, (_) => const RefundRequestScreen()),
+      GoRoute(
+        path: '/wallet/refund/:id',
+        parentNavigatorKey: _rootKey,
+        builder: (context, state) => RefundStatusScreen(requestId: state.pathParameters['id']!),
+      ),
+      _root(Routes.checkout, (_) => const CheckoutScreen()),
+      _root(Routes.paymentSuccess, (_) => const PaymentSuccessScreen()),
+      _root(Routes.paymentFailed, (s) {
+        final (card, reason) = s.extra as (String, String?)? ?? (l10n.taCarte, null);
+        return PaymentFailedScreen(cardLabel: card, reason: reason);
+      }),
+      _root(Routes.subscriptionOffers, (_) => const OffersScreen()),
+      _root(Routes.premiumCheckout, (_) => const PremiumCheckoutScreen()),
+      _root(Routes.premiumWelcome, (_) => const PremiumWelcomeScreen()),
+      _root(Routes.subscription, (_) => const SubscriptionScreen()),
+      _root(Routes.subscriptionChange, (_) => const ChangePlanScreen()),
+      _root(Routes.subscriptionCancel, (_) => const CancelReasonScreen()),
+      _root(Routes.subscriptionRetention, (_) => const RetentionOfferScreen()),
+      _root(Routes.subscriptionCancelled, (_) => const CancelledScreen()),
+      _root(Routes.receipt, (s) => ReceiptScreen(entry: s.extra! as ReceiptEntry)),
+      _root(Routes.notifications, (_) => const NotificationCenterScreen()),
+      _root(Routes.notificationSettings, (_) => const NotificationPrefsScreen()),
       _owner(Routes.ownerCompany, const CompanyScreen()),
       _owner(Routes.ownerAddress, const AddressScreen()),
       _owner(Routes.ownerCourts, const CourtsScreen()),

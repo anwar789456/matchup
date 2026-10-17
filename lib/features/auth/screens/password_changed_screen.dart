@@ -7,6 +7,7 @@ import '../../../theme/theme.dart';
 import '../../../ui/ui.dart';
 import '../../common/widgets/flow_scaffold.dart';
 import '../widgets/auth_widgets.dart';
+import '../../../l10n/l10n.dart';
 
 /// AUTH-09 · Mot de passe modifié: confirmation; every other session was closed.
 class PasswordChangedScreen extends StatelessWidget {
@@ -30,24 +31,23 @@ class PasswordChangedScreen extends StatelessWidget {
               badgeInk: MuPalette.white,
             ),
             const SizedBox(height: MuSpace.s6),
-            const FlowTitle(
-              'Mot de passe modifié',
+            FlowTitle(
+              l10n.motDePasseModifie,
               centered: true,
-              lead: 'Tu peux maintenant te connecter avec ton nouveau mot de passe.',
+              lead: l10n.tuPeuxMaintenantTeConnecter,
             ),
           ],
         ),
         MuBanner(
           tone: MuBannerTone.neutral,
           icon: PhosphorIcons.signOut(PhosphorIconsStyle.fill),
-          title: 'Tes autres sessions ont été fermées',
-          detail: 'Par sécurité, on t’a déconnecté de tes autres appareils. Reconnecte-toi avec '
-              'ton nouveau mot de passe.',
+          title: l10n.tesAutresSessionsOntEte,
+          detail: l10n.parSecuriteOnTA,
         ),
       ],
       bottomBar: [
         MuButton.primary(
-          label: 'Se connecter',
+          label: l10n.seConnecter,
           size: MuButtonSize.xl,
           fullWidth: true,
           onPressed: () => context.go(Routes.login),

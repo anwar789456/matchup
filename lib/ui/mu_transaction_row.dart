@@ -6,6 +6,7 @@ import '../theme/theme.dart';
 import 'mu_skeleton.dart';
 import 'mu_sport_icon.dart';
 import 'mu_status_badge.dart';
+import '../l10n/l10n.dart';
 
 enum MuTransactionKind { booking, topup, refund, payout, subscription, penalty }
 
@@ -147,19 +148,19 @@ class MuTransactionRow extends StatelessWidget {
       ),
     };
     final badge = switch (t.status) {
-      MuTransactionStatus.refunded => const MuStatusBadge(
+      MuTransactionStatus.refunded => MuStatusBadge(
         status: MuStatus.refunded,
-        label: 'Remboursé',
+        label: l10n.rembourse2,
         size: MuBadgeSize.s,
       ),
-      MuTransactionStatus.pending => const MuStatusBadge(
+      MuTransactionStatus.pending => MuStatusBadge(
         status: MuStatus.pending,
-        label: 'En attente',
+        label: l10n.enAttente,
         size: MuBadgeSize.s,
       ),
-      MuTransactionStatus.failed => const MuStatusBadge(
+      MuTransactionStatus.failed => MuStatusBadge(
         status: MuStatus.failed,
-        label: 'Échec',
+        label: l10n.echec,
         size: MuBadgeSize.s,
       ),
       MuTransactionStatus.done => null,
@@ -236,9 +237,9 @@ class MuTransactionRow extends StatelessWidget {
     );
     final label =
         '${t.label}, ${t.meta}, ${t.credit ? 'plus' : 'moins'} ${formatDT(t.amount.abs())}'
-        '${failed ? ', non débité' : ''}'
-        '${t.status == MuTransactionStatus.refunded ? ', remboursé' : ''}'
-        '${t.status == MuTransactionStatus.pending ? ', en attente' : ''}';
+        '${failed ? l10n.nonDebite : ''}'
+        '${t.status == MuTransactionStatus.refunded ? l10n.rembourse3 : ''}'
+        '${t.status == MuTransactionStatus.pending ? l10n.enAttente3 : ''}';
     if (onTap == null) return Semantics(label: label, excludeSemantics: true, child: row);
     return Semantics(
       button: true,

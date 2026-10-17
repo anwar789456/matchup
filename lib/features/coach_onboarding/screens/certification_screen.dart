@@ -12,6 +12,7 @@ import '../../common/widgets/pro_wizard_scaffold.dart';
 import '../controllers/coach_controller.dart';
 import '../data/coach_draft.dart';
 import '../widgets/coach_wizard.dart';
+import '../../../l10n/l10n.dart';
 
 /// COA-02 — the diploma: upload, the file's progress through the check, and what the coach can
 /// do before and after it.
@@ -30,8 +31,8 @@ class _CertificationScreenState extends ConsumerState<CertificationScreen> {
     service: ref.read(uploadServiceProvider),
     maxBytes: _maxBytes,
     tooBig: (f) => (
-      '${f.name} pèse ${formatFileSize(f.sizeBytes)} (max 10 Mo). Choisis un fichier plus léger.',
-      'Fichier trop lourd',
+      l10n.peseMaxMoChoisisUn(f.name, formatFileSize(f.sizeBytes)),
+      l10n.fichierTropLourd,
     ),
     onDone: (file, _) async {
       final diploma = DraftFile(id: file.id, name: file.name, sizeBytes: file.sizeBytes);
@@ -70,8 +71,8 @@ class _CertificationScreenState extends ConsumerState<CertificationScreen> {
     final d = ref.read(coachProvider).requireValue;
     setState(() {
       _error = _queue.busy
-          ? 'Attends la fin de l’envoi.'
-          : (d.diploma == null ? 'Ajoute ton diplôme pour lancer la vérification.' : null);
+          ? l10n.attendsLaFinDeLEnvoi
+          : (d.diploma == null ? l10n.ajouteTonDiplomePourLancer : null);
     });
     return _error == null;
   }
@@ -90,10 +91,10 @@ class _CertificationScreenState extends ConsumerState<CertificationScreen> {
     ];
 
     final upload = MuFileUpload.dropzone(
-      label: 'Diplôme ou certificat',
-      title: 'Glisse ou choisis un fichier',
+      label: l10n.diplomeOuCertificat,
+      title: l10n.glisseOuChoisisUnFichier,
       linkPart: null,
-      hint: 'PDF, JPG, PNG · 10 Mo max',
+      hint: l10n.pdfJpgPngMoMax,
       files: files,
       error: _error,
       onAdd: _pick,
@@ -111,73 +112,55 @@ class _CertificationScreenState extends ConsumerState<CertificationScreen> {
 
     return CoachWizard(
       step: 1,
-      title: 'Ta certification',
+      title: l10n.taCertification,
       lead:
-          'Un diplôme vérifié affiche le badge « Coach vérifié » : les élèves réservent en '
-          'confiance.',
+          l10n.unDiplomeVerifieAfficheLe,
       validate: _validate,
-      body: ProFormCard(
+      body: ProFormSections(
         children: [
           Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               sent == null
-                  ? const MuBanner(
+                  ? MuBanner(
                       tone: MuBannerTone.neutral,
-                      title: 'Vérification sous 48 h',
+                      title: l10n.verificationSousH,
                       detail:
-                          'Envoie ton diplôme : on le vérifie auprès de la fédération et tu '
-                          'reçois un email dès que c’est validé.',
+                          l10n.envoieTonDiplomeOnLe,
                     )
                   : MuBanner(
                       tone: MuBannerTone.info,
                       icon: PhosphorIcons.hourglassMedium(),
-                      title: 'Vérification en cours · 48 h',
+                      title: l10n.verificationEnCoursH,
                       detail:
-                          'On vérifie ton diplôme auprès de la fédération. Tu reçois un email '
-                          'dès que c’est validé, au plus tard le ${withFullStop(formatDay(deadline!))}',
+                          l10n.onVerifieTonDiplomeAupres(withFullStop(formatDay(deadline!))),
                     ),
               const SizedBox(height: MuSpace.s6),
-              if (MediaQuery.sizeOf(context).width < _stackBelow)
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    upload,
-                    const SizedBox(height: MuSpace.s5),
-                    file,
-                  ],
-                )
-              else
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Expanded(flex: 2, child: upload),
-                    const SizedBox(width: MuSpace.s5),
-                    Expanded(child: file),
-                  ],
-                ),
+              upload,
+              const SizedBox(height: MuSpace.s5),
+              file,
             ],
           ),
-          ProFieldGrid(
+          ProFieldColumn(
             children: [
               _Checklist(
-                title: 'En attendant, tu peux déjà',
+                title: l10n.enAttendantTuPeuxDeja,
                 icon: PhosphorIcons.check(),
                 color: c.successText,
-                items: const [
-                  'Créer et préparer tes programmes',
-                  'Compléter ton profil et tes tarifs',
-                  'Inviter tes élèves actuels',
+                items: [
+                  l10n.creerEtPreparerTesProgrammes,
+                  l10n.completerTonProfilEtTes,
+                  l10n.inviterTesElevesActuels,
                 ],
               ),
               _Checklist(
-                title: 'Après la validation',
+                title: l10n.apresLaValidation,
                 icon: PhosphorIcons.lockSimple(),
                 color: c.textSecondary,
-                items: const [
-                  'Publier tes programmes',
-                  'Recevoir les paiements de tes élèves',
-                  'Apparaître dans la recherche de coachs',
+                items: [
+                  l10n.publierTesProgrammes,
+                  l10n.recevoirLesPaiementsDeTes,
+                  l10n.apparaitreDansLaRechercheDe,
                 ],
               ),
             ],
@@ -186,8 +169,6 @@ class _CertificationScreenState extends ConsumerState<CertificationScreen> {
       ),
     );
   }
-
-  static const double _stackBelow = 720;
 }
 
 /// « Ton dossier »: the status and the three stages of the check.
@@ -209,22 +190,22 @@ class _Dossier extends StatelessWidget {
       (
         sent ? PhosphorIcons.checkCircle(PhosphorIconsStyle.fill) : PhosphorIcons.circleDashed(),
         sent ? c.successText : c.textSecondary,
-        sent ? 'Diplôme envoyé' : 'Diplôme à envoyer',
-        sent ? formatDateTime(sentAt!) : 'PDF, JPG ou PNG',
+        sent ? l10n.diplomeEnvoye : l10n.diplomeAEnvoyer,
+        sent ? formatDateTime(sentAt!) : l10n.pdfJpgOuPng,
         true,
       ),
       (
         sent ? PhosphorIcons.hourglassMedium() : PhosphorIcons.circleDashed(),
         sent ? c.warningText : c.textSecondary,
-        'En vérification',
-        'Réponse sous 48 h',
+        l10n.enVerification,
+        l10n.reponseSousH,
         sent,
       ),
       (
         PhosphorIcons.circleDashed(),
         c.textSecondary,
-        'Coach vérifié',
-        'Badge sur ton profil',
+        l10n.coachVerifie,
+        l10n.badgeSurTonProfil,
         false,
       ),
     ];
@@ -237,12 +218,12 @@ class _Dossier extends StatelessWidget {
         children: [
           Semantics(
             header: true,
-            child: Text('Ton dossier', style: MuType.label.copyWith(color: c.text)),
+            child: Text(l10n.tonDossier, style: MuType.label.copyWith(color: c.text)),
           ),
           const SizedBox(height: MuSpace.s2),
           sent
-              ? const MuStatusBadge(status: MuStatus.pending, label: 'En attente')
-              : const MuStatusBadge(status: MuStatus.draft, label: 'À envoyer'),
+              ? MuStatusBadge(status: MuStatus.pending, label: l10n.enAttente)
+              : MuStatusBadge(status: MuStatus.draft, label: l10n.aEnvoyer),
           const SizedBox(height: MuSpace.s4),
           for (final (i, (icon, color, title, detail, active)) in stages.indexed)
             IntrinsicHeight(

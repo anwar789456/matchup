@@ -16,6 +16,7 @@ import 'src/card_surface.dart';
 import 'src/price_tag.dart';
 import 'src/scoreboard_strip.dart';
 import 'src/tone_badge.dart';
+import '../l10n/l10n.dart';
 
 /// Where the player stands with a game. Full and almost full are derived from the spots left.
 enum MuGameStatus { open, joined, cancelled }
@@ -23,7 +24,7 @@ enum MuGameStatus { open, joined, cancelled }
 /// The data an open game card shows.
 @immutable
 class MuGame {
-  const MuGame({
+  MuGame({
     required this.sport,
     required this.venue,
     required this.place,
@@ -34,7 +35,7 @@ class MuGame {
     this.id,
     this.venueId,
     this.court,
-    this.gameType = 'Mixte',
+    String? gameType,
     this.levelMin,
     this.levelMax,
     this.distanceKm,
@@ -46,7 +47,7 @@ class MuGame {
     this.matchFitReason,
     this.status = MuGameStatus.open,
     this.refund,
-  });
+  }) : gameType = gameType ?? l10n.mixte;
 
   final String? id;
   final String? venueId;
@@ -89,7 +90,7 @@ class MuGame {
 
   /// « La Marsa · 1,4 km ».
   String get placeLabel =>
-      distanceKm == null ? place : '$place · ${formatLevel(distanceKm!)} km';
+      distanceKm == null ? place : l10n.km(place, formatLevel(distanceKm!));
 
   /// « 3,0–4,5 », or null without a level range.
   String? get levelLabel => levelMin != null && levelMax != null
@@ -119,6 +120,7 @@ class MuGameCard extends StatelessWidget {
     this.onWaitlist,
     this.onView,
     this.surfaceColor,
+    this.waitlisted = false,
   }) : loading = false;
 
   /// The skeleton of a card in [variant] while games load.
@@ -129,7 +131,8 @@ class MuGameCard extends StatelessWidget {
         onJoin = null,
         onWaitlist = null,
         onView = null,
-        surfaceColor = null;
+        surfaceColor = null,
+        waitlisted = false;
 
   final MuGame? game;
   final MuGameCardVariant variant;
@@ -137,6 +140,9 @@ class MuGameCard extends StatelessWidget {
   final VoidCallback? onJoin;
   final VoidCallback? onWaitlist;
   final VoidCallback? onView;
+
+  /// On the waitlist of this full game (shown at once, before the server answers — STA-09).
+  final bool waitlisted;
   final bool loading;
 
   /// Overrides `surface` (welcome illustrations sit on `surface-elevated`).
@@ -157,12 +163,11 @@ class MuGameCard extends StatelessWidget {
 
   static String _spotsLabel(MuGame g) {
     final left = g.spotsLeft;
-    return left <= 0 ? 'Complet' : '$left ${left == 1 ? 'place libre' : 'places libres'}';
+    return left <= 0 ? l10n.complet : '$left ${left == 1 ? l10n.placeLibre3 : l10n.placesLibres2}';
   }
 
   static String _semantics(MuGame g) =>
-      '${g.title}, ${g.sport.label}, ${formatDateTime(g.start)}, ${_spotsLabel(g)}, '
-      '${formatDT(g.pricePerPlayer)} par joueur';
+      l10n.parJoueur2(g.title, g.sport.label, formatDateTime(g.start), _spotsLabel(g), formatDT(g.pricePerPlayer));
 
   @override
   Widget build(BuildContext context) {
@@ -179,15 +184,15 @@ class MuGameCard extends StatelessWidget {
   /// Status flags at the end of the head: Complet, Plus que 1 place, Tu joues, Annulée.
   Widget? _flag(MuGame g) {
     if (g.status == MuGameStatus.cancelled) {
-      return const MuStatusBadge(status: MuStatus.cancelled, label: 'Annulée', size: MuBadgeSize.s);
+      return MuStatusBadge(status: MuStatus.cancelled, label: l10n.annulee, size: MuBadgeSize.s);
     }
     if (g.status == MuGameStatus.joined) {
-      return const MuToneBadge(label: 'Tu joues', tone: MuBadgeTone.accent);
+      return MuToneBadge(label: l10n.tuJoues2, tone: MuBadgeTone.accent);
     }
     if (g.isFull) return const MuStatusBadge(status: MuStatus.full, size: MuBadgeSize.s);
     if (g.almostFull) {
       return MuToneBadge(
-        label: 'Plus que 1 place',
+        label: l10n.plusQuePlace,
         tone: MuBadgeTone.warning,
         icon: PhosphorIcons.warning(PhosphorIconsStyle.fill),
       );
@@ -198,10 +203,17 @@ class MuGameCard extends StatelessWidget {
   Widget? _cta(MuGame g) {
     if (_cancelled(g)) return null;
     if (g.status == MuGameStatus.joined) {
-      return MuButton.secondary(label: 'Voir la partie', onPressed: onView ?? onTap);
+      return MuButton.secondary(label: l10n.voirLaPartie, onPressed: onView ?? onTap);
     }
-    if (g.isFull) return MuButton.secondary(label: 'Liste d’attente', onPressed: onWaitlist);
-    return MuButton.primary(label: 'Rejoindre', onPressed: onJoin);
+    if (g.isFull && waitlisted) {
+      return MuButton.tertiary(
+        label: l10n.onTheWaitlist,
+        leading: PhosphorIcons.check(),
+        onPressed: onTap,
+      );
+    }
+    if (g.isFull) return MuButton.secondary(label: l10n.listeDAttente, onPressed: onWaitlist);
+    return MuButton.primary(label: l10n.rejoindre, onPressed: onJoin);
   }
 
   Widget _organiser(BuildContext context, MuGame g) {
@@ -209,7 +221,7 @@ class MuGameCard extends StatelessWidget {
     return Text.rich(
       TextSpan(
         children: [
-          const TextSpan(text: 'Par '),
+          TextSpan(text: l10n.par),
           TextSpan(text: g.organiser, style: MuType.labelS.copyWith(color: c.text)),
           if (g.organiserReliability != null) ...[
             const TextSpan(text: '  '),
@@ -221,9 +233,9 @@ class MuGameCard extends StatelessWidget {
                 color: c.successText,
               ),
             ),
-            TextSpan(text: ' Fiable ', style: MuType.labelS.copyWith(color: c.successText)),
+            TextSpan(text: l10n.fiable, style: MuType.labelS.copyWith(color: c.successText)),
             TextSpan(
-              text: '${g.organiserReliability} %',
+              text: ltr('${g.organiserReliability} %'),
               style: MuType.numXs.copyWith(color: c.successText),
             ),
           ],
@@ -246,8 +258,8 @@ class MuGameCard extends StatelessWidget {
             Expanded(
               child: Text(
                 g.refund == null
-                    ? 'Partie annulée'
-                    : 'Remboursé ${formatDT(g.refund!)} sur ton solde',
+                    ? l10n.partieAnnulee
+                    : l10n.rembourseSurTonSolde2(formatDT(g.refund!)),
                 style: MuType.caption.copyWith(color: c.infoText),
               ),
             ),
@@ -294,11 +306,11 @@ class MuGameCard extends StatelessWidget {
     final c = context.mu;
     final muted = _cancelled(g);
     return MuStripCell(
-      label: 'Places',
+      label: l10n.places,
       value: MuScoreboardStrip.value(
         context,
         '${g.spotsLeft < 0 ? 0 : g.spotsLeft}',
-        g.spotsLeft == 1 || g.spotsLeft == 0 ? 'libre' : 'libres',
+        g.spotsLeft == 1 || g.spotsLeft == 0 ? l10n.spotFreeOne : l10n.spotFreeMany,
         muted ? c.textSecondary : null,
       ),
       sub: g.spotsTotal <= _DotsMeter.maxDots
@@ -314,17 +326,17 @@ class MuGameCard extends StatelessWidget {
   MuStripCell _priceCell(BuildContext context, MuGame g) {
     final c = context.mu;
     return MuStripCell(
-      label: 'Prix',
+      label: l10n.prix,
       value: _struck(
         g,
         MuScoreboardStrip.value(
           context,
           formatAmount(g.pricePerPlayer),
-          'DT',
+          dtUnit,
           _cancelled(g) ? c.textSecondary : null,
         ),
       ),
-      sub: MuScoreboardStrip.sub(context, 'par joueur'),
+      sub: MuScoreboardStrip.sub(context, l10n.parJoueur3),
     );
   }
 
@@ -337,8 +349,7 @@ class MuGameCard extends StatelessWidget {
       : value;
 
   String _stripSemantics(MuGame g) =>
-      'Heure ${formatTime(g.start)}, ${g.spotsLeft} libres sur ${g.spotsTotal}, '
-      '${formatDT(g.pricePerPlayer)} par joueur';
+      l10n.heureLibresSurParJoueur(formatTime(g.start), g.spotsLeft, g.spotsTotal, formatDT(g.pricePerPlayer));
 
   Widget _standard(BuildContext context, MuGame g) {
     final c = context.mu;
@@ -404,7 +415,7 @@ class MuGameCard extends StatelessWidget {
                     ),
                     if (level != null)
                       MuChip(
-                        label: 'Niveau $level',
+                        label: l10n.niveau2(level),
                         icon: PhosphorIcons.gauge(),
                         kind: MuChipKind.input,
                         size: MuChipSize.s,
@@ -422,7 +433,7 @@ class MuGameCard extends StatelessWidget {
             semanticLabel: _stripSemantics(g),
             cells: [
               MuStripCell(
-                label: 'Heure',
+                label: l10n.heure,
                 value: _struck(
                   g,
                   MuScoreboardStrip.value(
@@ -478,7 +489,7 @@ class MuGameCard extends StatelessWidget {
                             const SizedBox(width: MuSpace.s3),
                             Flexible(
                               child: Text(
-                                'PARTIES POUR TOI',
+                                l10n.partiesPourToi2,
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                                 style: MuType.overline.copyWith(color: onMedia),
@@ -564,14 +575,12 @@ class MuGameCard extends StatelessWidget {
             ),
           ),
           MuScoreboardStrip(
-            semanticLabel: '${g.spotsLeft} libres sur ${g.spotsTotal}, '
-                '${formatDT(g.pricePerPlayer)} par joueur'
-                '${level == null ? '' : ', niveau $level'}',
+            semanticLabel: l10n.libresSurParJoueur(g.spotsLeft, g.spotsTotal, formatDT(g.pricePerPlayer), level == null ? '' : l10n.niveau7(level)),
             cells: [
               _placesCell(context, g),
               _priceCell(context, g),
               MuStripCell(
-                label: 'Niveau',
+                label: l10n.niveau6,
                 value: MuScoreboardStrip.value(context, level ?? '—'),
                 sub: g.levelMin != null && g.levelMax != null
                     ? MuScoreboardStrip.sub(context, levelBand((g.levelMin! + g.levelMax!) / 2))

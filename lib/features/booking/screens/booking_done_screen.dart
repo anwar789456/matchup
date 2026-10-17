@@ -13,6 +13,7 @@ import '../../common/widgets/flow_scaffold.dart';
 import '../../home/controllers/home_providers.dart';
 import '../controllers/booking_controller.dart';
 import '../widgets/booking_scaffold.dart';
+import '../../../l10n/l10n.dart';
 
 /// BKG-05 · Réservation confirmée: the ticket with its QR code, « Ajouter au calendrier » and
 /// « Partager le lien », the game's payments, then « Voir ma réservation » or back home.
@@ -29,12 +30,12 @@ class BookingDoneScreen extends ConsumerWidget {
         '${d.year}${d.month.toString().padLeft(2, '0')}${d.day.toString().padLeft(2, '0')}'
         'T${d.hour.toString().padLeft(2, '0')}${d.minute.toString().padLeft(2, '0')}00';
     return Uri.https('calendar.google.com', '/calendar/render', {
-      'action': 'TEMPLATE',
+      'action': l10n.template,
       'text': '${s.venue.venue.sport.label} · ${s.title}',
       'dates': '${stamp(s.start)}/${stamp(s.end)}',
-      'ctz': 'Africa/Tunis',
+      'ctz': l10n.africaTunis,
       'location': s.venue.postalAddress,
-      'details': 'Réservation $ref · https://matchup.tn/r/$ref',
+      'details': l10n.reservationHttpsMatchupTnR(ref, ref),
     });
   }
 
@@ -73,12 +74,12 @@ class BookingDoneScreen extends ConsumerWidget {
                   children: [
                     MuIconButton(
                       icon: PhosphorIcons.x(),
-                      label: 'Fermer et revenir à l’accueil',
+                      label: l10n.fermerEtRevenirAL,
                       size: MuIconButtonSize.l,
                       onPressed: home,
                     ),
                     const Spacer(),
-                    Text('Réf. $reference', style: MuType.caption.copyWith(color: c.textSecondary)),
+                    Text(l10n.ref(reference), style: MuType.caption.copyWith(color: c.textSecondary)),
                   ],
                 ),
               ),
@@ -101,13 +102,11 @@ class BookingDoneScreen extends ConsumerWidget {
                   ),
                   const SizedBox(height: MuSpace.s3),
                   FlowTitle(
-                    'C’est réservé !',
+                    l10n.cEstReserve,
                     centered: true,
                     lead: paidAll
-                        ? 'Le terrain est payé : ${formatDT(draft.amount)}. Confirmation envoyée à '
-                              '${me?.email ?? 'ton adresse'}.'
-                        : 'Ta part de ${formatDT(draft.amount)} est payée. Confirmation envoyée à '
-                              '${me?.email ?? 'ton adresse'}.',
+                        ? l10n.leTerrainEstPayeConfirmation(formatDT(draft.amount), me?.email ?? l10n.tonAdresse)
+                        : l10n.taPartDeEstPayee(formatDT(draft.amount), me?.email ?? l10n.tonAdresse),
                   ),
                   const SizedBox(height: MuSpace.s6),
                   MuTicket(
@@ -123,7 +122,7 @@ class BookingDoneScreen extends ConsumerWidget {
                   ),
                   const SizedBox(height: MuSpace.s3),
                   Text(
-                    'Présente ce code à l’accueil ${elideDe(v.name)}. Il est aussi dans Mes matchs.',
+                    l10n.presenteCeCodeAL(elideDe(v.name)),
                     textAlign: TextAlign.center,
                     style: MuType.caption.copyWith(color: c.textSecondary),
                   ),
@@ -133,7 +132,7 @@ class BookingDoneScreen extends ConsumerWidget {
                       Expanded(
                         child: _Tile(
                           icon: PhosphorIcons.calendarPlus(),
-                          label: 'Ajouter au calendrier',
+                          label: l10n.ajouterAuCalendrier,
                           onTap: () => launchUrl(
                             _calendar(slot, reference),
                             mode: LaunchMode.externalApplication,
@@ -144,12 +143,11 @@ class BookingDoneScreen extends ConsumerWidget {
                       Expanded(
                         child: _Tile(
                           icon: PhosphorIcons.shareNetwork(),
-                          label: 'Partager le lien',
+                          label: l10n.partagerLeLien,
                           onTap: () => SharePlus.instance.share(
                             ShareParams(
                               text:
-                                  'Rejoins-moi : ${slot.title}, ${formatDateTime(slot.start)}. '
-                                  '$link',
+                                  l10n.rejoinsMoi(slot.title, formatDateTime(slot.start), link),
                             ),
                           ),
                         ),
@@ -177,17 +175,14 @@ class BookingDoneScreen extends ConsumerWidget {
                                   Semantics(
                                     header: true,
                                     child: Text(
-                                      public ? 'Ta partie publique' : 'Ta partie privée',
+                                      public ? l10n.taPartiePublique : l10n.taPartiePrivee,
                                       style: MuType.labelL.copyWith(color: c.text),
                                     ),
                                   ),
                                   Text(
                                     public
-                                        ? '${draft.visibility == GameVisibility.everyone ? 'Dans Explorer' : 'Pour tes abonnés'}'
-                                              ' · niveau ${formatLevel(draft.level.start)} – '
-                                              '${formatLevel(draft.level.end)} · '
-                                              '${draft.gender.label.toLowerCase()}'
-                                        : 'Sur invitation · $friends ${friends == 1 ? 'ami invité' : 'amis invités'}',
+                                        ? l10n.niveau(draft.visibility == GameVisibility.everyone ? l10n.dansExplorer : l10n.pourTesAbonnes, formatLevel(draft.level.start), formatLevel(draft.level.end), draft.gender.label.toLowerCase())
+                                        : l10n.surInvitation(friends, friends == 1 ? l10n.amiInvite : l10n.amisInvites),
                                     style: MuType.caption.copyWith(color: c.textSecondary),
                                   ),
                                 ],
@@ -204,12 +199,12 @@ class BookingDoneScreen extends ConsumerWidget {
                         const SizedBox(height: MuSpace.s4),
                         MuProgressBar(
                           variant: MuProgressVariant.spots,
-                          label: 'Paiements',
+                          label: l10n.paiements,
                           value: 1,
                           pending: friends.toDouble(),
                           max: draft.players.toDouble(),
                           people: [
-                            MuPerson(me?.displayName ?? 'Moi'),
+                            MuPerson(me?.displayName ?? l10n.moi),
                             for (final n in draft.invited) MuPerson(n),
                           ],
                           legend: true,
@@ -231,15 +226,14 @@ class BookingDoneScreen extends ConsumerWidget {
                                     children: [
                                       TextSpan(
                                         text:
-                                            'Tes $friends ${friends == 1 ? 'ami a' : 'amis ont'} '
-                                            'jusqu’au ',
+                                            l10n.tesJusquAu(friends, friends == 1 ? l10n.amiA : l10n.amisOnt),
                                       ),
                                       TextSpan(
                                         text: formatDateTime(policy.payBefore),
                                         style: MuType.labelS.copyWith(color: c.text),
                                       ),
-                                      const TextSpan(
-                                        text: ' pour payer leur part. On les relance pour toi.',
+                                      TextSpan(
+                                        text: l10n.pourPayerLeurPartOn,
                                       ),
                                     ],
                                   ),
@@ -251,7 +245,7 @@ class BookingDoneScreen extends ConsumerWidget {
                         ],
                         const SizedBox(height: MuSpace.s4),
                         MuButton.secondary(
-                          label: 'Inviter des joueurs',
+                          label: l10n.inviterDesJoueurs,
                           leading: PhosphorIcons.userPlus(),
                           size: MuButtonSize.l,
                           fullWidth: true,
@@ -266,13 +260,13 @@ class BookingDoneScreen extends ConsumerWidget {
             StickyActionBar(
               children: [
                 MuButton.primary(
-                  label: 'Voir ma réservation',
+                  label: l10n.voirMaReservation,
                   size: MuButtonSize.xl,
                   fullWidth: true,
                   onPressed: () => context.go(Routes.booking(reference)),
                 ),
                 MuButton.tertiary(
-                  label: 'Retour à l’accueil',
+                  label: l10n.retourALAccueil,
                   size: MuButtonSize.l,
                   fullWidth: true,
                   onPressed: home,

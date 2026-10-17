@@ -4,6 +4,7 @@ import 'package:phosphor_flutter/phosphor_flutter.dart';
 import '../theme/theme.dart';
 import 'mu_button.dart';
 import 'mu_icon_button.dart';
+import '../l10n/l10n.dart';
 
 enum MuBannerVariant { inset, strip }
 
@@ -23,7 +24,7 @@ class MuAction {
 /// one action. Dismissible only when nothing is blocked. (The test-mode ribbon comes with the
 /// Payments milestone.)
 class MuBanner extends StatelessWidget {
-  const MuBanner({
+  MuBanner({
     super.key,
     required this.title,
     this.tone = MuBannerTone.info,
@@ -32,9 +33,9 @@ class MuBanner extends StatelessWidget {
     this.icon,
     this.action,
     this.onDismiss,
-    this.dismissLabel = 'Masquer',
+    String? dismissLabel,
     this.footer,
-  });
+  }) : dismissLabel = dismissLabel ?? l10n.masquer;
 
   final String title;
   final String? detail;

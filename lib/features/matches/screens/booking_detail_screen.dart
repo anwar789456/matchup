@@ -17,6 +17,7 @@ import '../../common/widgets/flow_scaffold.dart';
 import '../../games/widgets/game_widgets.dart';
 import '../controllers/matches_providers.dart';
 import '../data/bookings_repository.dart';
+import '../../../l10n/l10n.dart';
 
 /// MAT-05 · Détail de la réservation: the court under the lights, the facts and the QR code, the
 /// place, the players and their payments, the chat, the cancellation policy; the sticky « Inviter
@@ -45,7 +46,7 @@ class _BookingDetailScreenState extends ConsumerState<BookingDetailScreen> {
 
   Future<void> _copyLink() async {
     await Clipboard.setData(ClipboardData(text: _link));
-    if (mounted) MuToast.show(context, title: 'Lien copié');
+    if (mounted) MuToast.show(context, title: l10n.lienCopie);
   }
 
   void _showTicket(BookingDetails d) {
@@ -53,7 +54,7 @@ class _BookingDetailScreenState extends ConsumerState<BookingDetailScreen> {
     MuTakeover.show<void>(
       context,
       builder: (ctx) => MuTakeover(
-        title: 'Ton billet',
+        title: l10n.tonBillet,
         onClose: () => Navigator.of(ctx).pop(),
         body: ListView(
           padding: const EdgeInsets.all(MuSpace.s4),
@@ -71,7 +72,7 @@ class _BookingDetailScreenState extends ConsumerState<BookingDetailScreen> {
             ),
             const SizedBox(height: MuSpace.s3),
             Text(
-              'Présente ce code à l’accueil ${elideDe(b.venue)}.',
+              l10n.presenteCeCodeAL2(elideDe(b.venue)),
               textAlign: TextAlign.center,
               style: MuType.caption.copyWith(color: ctx.mu.textSecondary),
             ),
@@ -90,11 +91,11 @@ class _BookingDetailScreenState extends ConsumerState<BookingDetailScreen> {
       context,
       tone: MuDialogTone.destructive,
       icon: PhosphorIcons.calendarX(),
-      title: 'Annuler la réservation ?',
+      title: l10n.annulerLaReservation,
       description:
-          '${b.title} · ${formatDateTime(b.start)}. Les joueurs et ${b.venue} seront prévenus.',
+          l10n.lesJoueursEtSerontPrevenus(b.title, formatDateTime(b.start), b.venue),
       consequence:
-          'Les $n joueurs seront remboursés : ${formatDT(b.share)} chacun sur leur solde MatchUp.',
+          l10n.lesJoueursSerontRemboursesChacun(n, formatDT(b.share)),
       consequenceIcon: PhosphorIcons.wallet(),
       content: Builder(
         builder: (context) {
@@ -114,15 +115,15 @@ class _BookingDetailScreenState extends ConsumerState<BookingDetailScreen> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               line(
-                'Ta part remboursée',
+                l10n.taPartRemboursee,
                 Text(formatDT(b.share), style: MuType.numS.copyWith(color: c.text)),
               ),
               line(
-                'Total remboursé · $n joueurs',
+                l10n.totalRembourseJoueurs(n),
                 Text(formatDT(b.share * n), style: MuType.numS.copyWith(color: c.text)),
               ),
               line(
-                'Annulation gratuite · avant ${formatDay(d.freeUntil)}',
+                l10n.annulationGratuiteAvant(formatDay(d.freeUntil)),
                 const MuStatusBadge(status: MuStatus.refunded, label: '100 %', size: MuBadgeSize.s),
               ),
             ],
@@ -131,13 +132,13 @@ class _BookingDetailScreenState extends ConsumerState<BookingDetailScreen> {
       ),
       actions: [
         MuButton.secondary(
-          label: 'Garder la réservation',
+          label: l10n.garderLaReservation,
           size: MuButtonSize.l,
           fullWidth: true,
           onPressed: () => nav.pop(false),
         ),
         MuButton.destructive(
-          label: 'Annuler la réservation',
+          label: l10n.annulerLaReservation2,
           size: MuButtonSize.l,
           fullWidth: true,
           onPressed: () => nav.pop(true),
@@ -156,10 +157,9 @@ class _BookingDetailScreenState extends ConsumerState<BookingDetailScreen> {
       overlay.context,
       overlay: overlay,
       tone: MuToastTone.success,
-      title: 'Réservation annulée',
+      title: l10n.reservationAnnulee,
       description:
-          '${formatDT(c.totalRefund ?? c.refund)} remboursés sur les soldes MatchUp, '
-          'les joueurs sont prévenus.',
+          l10n.remboursesSurLesSoldesMatchup(formatDT(c.totalRefund ?? c.refund)),
     );
   }
 
@@ -175,11 +175,11 @@ class _BookingDetailScreenState extends ConsumerState<BookingDetailScreen> {
           child: Padding(
             padding: const EdgeInsets.all(MuSpace.s4),
             child: MuEmptyState(
-              title: 'Réservation introuvable',
-              description: 'Elle a peut-être été annulée.',
+              title: l10n.reservationIntrouvable,
+              description: l10n.elleAPeutEtreEte,
               actions: [
                 MuButton.primary(
-                  label: 'Voir mes matchs',
+                  label: l10n.voirMesMatchs,
                   onPressed: () => context.go(Routes.matches),
                 ),
               ],
@@ -201,10 +201,10 @@ class _BookingDetailScreenState extends ConsumerState<BookingDetailScreen> {
                 ],
               ),
             ),
-            const Expanded(
+            Expanded(
               child: MuSkeletonGroup(
-                label: 'Chargement de la réservation',
-                child: Padding(
+                label: l10n.chargementDeLaReservation,
+                child: const Padding(
                   padding: EdgeInsets.all(MuSpace.s4),
                   child: MuSkeleton.text(lines: 6),
                 ),
@@ -218,16 +218,14 @@ class _BookingDetailScreenState extends ConsumerState<BookingDetailScreen> {
           : StickyActionBar(
               children: [
                 MuButton.primary(
-                  label: 'Inviter des joueurs · ${details.value!.openSpots} places',
+                  label: l10n.inviterDesJoueursPlaces(details.value!.openSpots),
                   leading: PhosphorIcons.userPlus(),
                   size: MuButtonSize.xl,
                   fullWidth: true,
                   onPressed: () => SharePlus.instance.share(
                     ShareParams(
                       text:
-                          'Rejoins ma partie : ${details.value!.booking.sport.label} · '
-                          '${details.value!.booking.title} · '
-                          '${formatDateTime(details.value!.booking.start)} · $_link',
+                          l10n.rejoinsMaPartie(details.value!.booking.sport.label, details.value!.booking.title, formatDateTime(details.value!.booking.start), _link),
                     ),
                   ),
                 ),
@@ -243,13 +241,13 @@ class _BookingDetailScreenState extends ConsumerState<BookingDetailScreen> {
     final days = b.start.difference(now).inDays;
     final caption = MuType.caption.copyWith(color: c.textSecondary);
     final weekday = switch (b.start.weekday) {
-      DateTime.monday => 'Lundi',
-      DateTime.tuesday => 'Mardi',
-      DateTime.wednesday => 'Mercredi',
-      DateTime.thursday => 'Jeudi',
-      DateTime.friday => 'Vendredi',
-      DateTime.saturday => 'Samedi',
-      _ => 'Dimanche',
+      DateTime.monday => l10n.lundi,
+      DateTime.tuesday => l10n.mardi,
+      DateTime.wednesday => l10n.mercredi,
+      DateTime.thursday => l10n.jeudi,
+      DateTime.friday => l10n.vendredi,
+      DateTime.saturday => l10n.samedi,
+      _ => l10n.dimanche,
     };
 
     final hero = SizedBox(
@@ -260,22 +258,22 @@ class _BookingDetailScreenState extends ConsumerState<BookingDetailScreen> {
           MuCourtArt(
             sport: b.sport,
             variant: MuCourtArtVariant.photo,
-            semanticLabel: '${b.venue}, ${b.court} sous les projecteurs',
+            semanticLabel: l10n.sousLesProjecteurs(b.venue, '${b.court}'),
           ),
           Align(
             alignment: Alignment.topCenter,
             child: MuTopAppBar.media(
               onBack: () => context.pop(),
-              backLabel: 'Retour à Mes matchs',
+              backLabel: l10n.retourAMesMatchs,
               actions: [
                 MuBarAction(
                   icon: PhosphorIcons.shareNetwork(),
-                  label: 'Partager',
+                  label: l10n.partager,
                   onPressed: () => SharePlus.instance.share(ShareParams(text: _link)),
                 ),
                 MuBarAction(
                   icon: PhosphorIcons.dotsThree(),
-                  label: 'Plus d’actions',
+                  label: l10n.plusDActions,
                   onPressed: () => showComingSoon(context),
                 ),
               ],
@@ -290,14 +288,14 @@ class _BookingDetailScreenState extends ConsumerState<BookingDetailScreen> {
       children: [
         Row(
           children: [
-            const MuStatusBadge(
+            MuStatusBadge(
               status: MuStatus.confirmed,
-              label: 'Confirmée',
+              label: l10n.confirmee,
               size: MuBadgeSize.s,
             ),
             const SizedBox(width: MuSpace.s2),
             MuChip(
-              label: b.sport == MuSport.football ? 'Football 5 vs 5' : b.sport.label,
+              label: b.sport == MuSport.football ? l10n.footballVs : b.sport.label,
               kind: MuChipKind.sport,
               sport: b.sport,
               size: MuChipSize.s,
@@ -306,7 +304,7 @@ class _BookingDetailScreenState extends ConsumerState<BookingDetailScreen> {
               child: Text.rich(
                 TextSpan(
                   children: [
-                    const TextSpan(text: 'Réf. '),
+                    TextSpan(text: l10n.ref2),
                     TextSpan(text: b.id, style: MuType.numXs.copyWith(color: c.text)),
                   ],
                 ),
@@ -325,16 +323,16 @@ class _BookingDetailScreenState extends ConsumerState<BookingDetailScreen> {
         ),
         const SizedBox(height: MuSpace.s1),
         Text(
-          '${d.isPublic ? 'Partie publique' : 'Partie privée'} · ${d.gameType}'
-          '${d.levelMin != null ? ' · niveau ${formatLevel(d.levelMin!)} – ${formatLevel(d.levelMax!)}' : ''}'
-          '${d.organizer ? ' · tu organises' : ''}',
+          '${d.isPublic ? l10n.partiePublique : l10n.partiePrivee} · ${d.gameType}'
+          '${d.levelMin != null ? l10n.niveau3(formatLevel(d.levelMin!), formatLevel(d.levelMax!)) : ''}'
+          '${d.organizer ? l10n.tuOrganises : ''}',
           style: MuType.body.copyWith(color: c.textSecondary),
         ),
       ],
     );
 
     final facts = Semantics(
-      label: 'Quand et combien',
+      label: l10n.quandEtCombien,
       child: FactsCard(
         flex: const [100, 125, 90],
         valueStyle: MuType.numM,
@@ -342,13 +340,13 @@ class _BookingDetailScreenState extends ConsumerState<BookingDetailScreen> {
           FactCell(
             weekday,
             '${b.start.day} ${formatMonth(b.start)}',
-            caption: days <= 0 ? 'aujourd’hui' : 'dans $days jour${days > 1 ? 's' : ''}',
+            caption: days <= 0 ? l10n.aujourdHui : l10n.dansJour(days, days > 1 ? 's' : ''),
           ),
-          FactCell('Horaire', b.timeRange, caption: '${b.duration}${d.lit ? ' · éclairé' : ''}'),
+          FactCell(l10n.horaire, b.timeRange, caption: '${b.duration}${d.lit ? l10n.eclaire2 : ''}'),
           FactCell(
-            'Ta part',
+            l10n.taPart,
             formatAmount(b.share),
-            valueUnit: 'DT',
+            valueUnit: dtUnit,
             captionWidget: Row(
               children: [
                 Icon(
@@ -357,7 +355,7 @@ class _BookingDetailScreenState extends ConsumerState<BookingDetailScreen> {
                   color: c.successText,
                 ),
                 const SizedBox(width: MuSpace.s1 / 2),
-                Text('Payé', style: MuType.caption.copyWith(color: c.successText)),
+                Text(l10n.paye, style: MuType.caption.copyWith(color: c.successText)),
               ],
             ),
           ),
@@ -368,14 +366,14 @@ class _BookingDetailScreenState extends ConsumerState<BookingDetailScreen> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               MuButton.secondary(
-                label: 'Afficher le QR code',
+                label: l10n.afficherLeQrCode,
                 leading: PhosphorIcons.qrCode(),
                 fullWidth: true,
                 onPressed: () => _showTicket(d),
               ),
               const SizedBox(height: MuSpace.s2),
               Text(
-                'Ton billet pour l’accueil ${elideDe(b.venue)}, le jour du match.',
+                l10n.tonBilletPourLAccueil(elideDe(b.venue)),
                 textAlign: TextAlign.center,
                 style: caption,
               ),
@@ -388,7 +386,7 @@ class _BookingDetailScreenState extends ConsumerState<BookingDetailScreen> {
     final place = Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        const SectionHead('Lieu'),
+        SectionHead(l10n.lieu),
         const SizedBox(height: MuSpace.s3),
         MuCardSurface(
           padding: EdgeInsets.zero,
@@ -430,9 +428,9 @@ class _BookingDetailScreenState extends ConsumerState<BookingDetailScreen> {
                                   Text(d.venue.name, style: MuType.labelL.copyWith(color: c.text)),
                                   if (d.venue.verified) ...[
                                     const SizedBox(width: MuSpace.s2),
-                                    const MuStatusBadge(
+                                    MuStatusBadge(
                                       status: MuStatus.verified,
-                                      label: 'Vérifié',
+                                      label: l10n.verifie,
                                       size: MuBadgeSize.s,
                                       iconOnly: true,
                                     ),
@@ -441,14 +439,14 @@ class _BookingDetailScreenState extends ConsumerState<BookingDetailScreen> {
                               ),
                               Text(
                                 '${Story.streetOf(d.venue).split(',').first}'
-                                '${d.venue.distanceKm != null ? ' · ${formatLevel(d.venue.distanceKm!)} km' : ''}',
+                                '${d.venue.distanceKm != null ? l10n.km3(formatLevel(d.venue.distanceKm!)) : ''}',
                                 style: caption,
                               ),
                             ],
                           ),
                         ),
                         MuButton.secondary(
-                          label: 'Itinéraire',
+                          label: l10n.itineraire,
                           leading: PhosphorIcons.navigationArrow(),
                           size: MuButtonSize.s,
                           onPressed: () => openDirections(d.venue.position!),
@@ -471,9 +469,9 @@ class _BookingDetailScreenState extends ConsumerState<BookingDetailScreen> {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         SectionHead(
-          'Joueurs',
+          l10n.joueurs,
           trailing: MuButton.tertiary(
-            label: 'Copier le lien',
+            label: l10n.copierLeLien,
             leading: PhosphorIcons.link(),
             size: MuButtonSize.s,
             onPressed: _copyLink,
@@ -506,7 +504,7 @@ class _BookingDetailScreenState extends ConsumerState<BookingDetailScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('NIVEAU MOYEN', style: MuType.overline.copyWith(color: c.textSecondary)),
+                    Text(l10n.niveauMoyen, style: MuType.overline.copyWith(color: c.textSecondary)),
                     MuLevelIndicator(level: d.averageLevel, size: MuLevelSize.s),
                     Text(
                       '${d.teams[0].name} ${filled[0]}/${d.teams[0].players.length} · '
@@ -527,25 +525,25 @@ class _BookingDetailScreenState extends ConsumerState<BookingDetailScreen> {
             children: [
               Semantics(
                 button: true,
-                label: 'Suivre les paiements',
+                label: l10n.suivreLesPaiements,
                 child: InkWell(
-                  onTap: () => showComingSoon(context),
+                  onTap: () => context.push(Routes.bookingPayments(b.id!)),
                   child: Row(
                     children: [
                       Expanded(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text('Paiements', style: MuType.h3.copyWith(color: c.text)),
+                            Text(l10n.paiements, style: MuType.h3.copyWith(color: c.text)),
                             Text(
-                              '${formatDT(d.courtPrice)} le terrain · ${formatDT(b.share)} par joueur',
+                              l10n.leTerrainParJoueur(formatDT(d.courtPrice), formatDT(b.share)),
                               style: caption,
                             ),
                           ],
                         ),
                       ),
                       Text(formatDT(d.received), style: MuType.numS.copyWith(color: c.text)),
-                      Text(' reçus', style: caption),
+                      Text(l10n.recus, style: caption),
                       const SizedBox(width: MuSpace.s1),
                       Icon(PhosphorIcons.caretRight(), size: MuSize.iconXs, color: c.textSecondary),
                     ],
@@ -569,27 +567,27 @@ class _BookingDetailScreenState extends ConsumerState<BookingDetailScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              p.you ? '${p.person.name} · toi' : p.person.name,
+                              p.you ? l10n.toi2(p.person.name) : p.person.name,
                               style: MuType.label.copyWith(color: c.text),
                             ),
                             if (p.organizer && p.paidAt != null)
                               Text(
-                                'Organisateur · payé le ${formatDay(p.paidAt!)}',
+                                l10n.organisateurPayeLe(formatDay(p.paidAt!)),
                                 style: caption,
                               ),
                           ],
                         ),
                       ),
                       if (p.paid)
-                        const MuStatusBadge(
+                        MuStatusBadge(
                           status: MuStatus.paid,
-                          label: 'Payé',
+                          label: l10n.paye,
                           size: MuBadgeSize.s,
                         )
                       else
-                        const MuStatusBadge(
+                        MuStatusBadge(
                           status: MuStatus.pending,
-                          label: 'En attente',
+                          label: l10n.enAttente,
                           size: MuBadgeSize.s,
                         ),
                     ],
@@ -623,11 +621,11 @@ class _BookingDetailScreenState extends ConsumerState<BookingDetailScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              '${d.openSpots} places publiques',
+                              l10n.placesPubliques(d.openSpots),
                               style: MuType.label.copyWith(color: c.text),
                             ),
                             Text(
-                              '${formatDT(b.share)} payés par chaque joueur qui rejoint',
+                              l10n.payesParChaqueJoueurQui(formatDT(b.share)),
                               style: caption,
                             ),
                           ],
@@ -646,9 +644,9 @@ class _BookingDetailScreenState extends ConsumerState<BookingDetailScreen> {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         SectionHead(
-          'Discussion',
+          l10n.discussion,
           trailing: d.unreadMessages > 0
-              ? Text('${d.unreadMessages} nouveaux messages', style: caption)
+              ? Text(l10n.nouveauxMessages(d.unreadMessages), style: caption)
               : null,
         ),
         const SizedBox(height: MuSpace.s3),
@@ -657,7 +655,7 @@ class _BookingDetailScreenState extends ConsumerState<BookingDetailScreen> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               if (d.messages.isEmpty)
-                Text('Pas encore de message.', style: caption)
+                Text(l10n.pasEncoreDeMessage, style: caption)
               else
                 for (final (i, m) in d.messages.indexed) ...[
                   if (i > 0) const SizedBox(height: MuSpace.s3),
@@ -665,7 +663,7 @@ class _BookingDetailScreenState extends ConsumerState<BookingDetailScreen> {
                 ],
               const SizedBox(height: MuSpace.s3),
               MuButton.secondary(
-                label: 'Ouvrir la discussion',
+                label: l10n.ouvrirLaDiscussion,
                 leading: PhosphorIcons.chatCircle(),
                 fullWidth: true,
                 onPressed: () => showComingSoon(context),
@@ -695,14 +693,14 @@ class _BookingDetailScreenState extends ConsumerState<BookingDetailScreen> {
     final cancellation = Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        const SectionHead('Annulation'),
+        SectionHead(l10n.annulation),
         const SizedBox(height: MuSpace.s3),
         MuCardSurface(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Semantics(
-                label: 'Annulation gratuite jusqu’à 24 h avant, 50 % jusqu’à 6 h avant, puis rien',
+                label: l10n.annulationGratuiteJusquAH,
                 child: Row(
                   children: [
                     Expanded(
@@ -735,27 +733,26 @@ class _BookingDetailScreenState extends ConsumerState<BookingDetailScreen> {
               tier(
                 PhosphorIcons.checkCircle(PhosphorIconsStyle.fill),
                 c.success,
-                'Gratuite jusqu’au ${formatDateTime(d.freeUntil)}',
-                '100 % remboursé · tu es ici',
+                l10n.gratuiteJusquAu(formatDateTime(d.freeUntil)),
+                l10n.rembourseTuEsIci,
               ),
               const SizedBox(height: MuSpace.s3),
               tier(
                 PhosphorIcons.clock(PhosphorIconsStyle.fill),
                 c.warning,
-                'Entre 24 h et 6 h avant',
-                '50 % remboursé',
+                l10n.entreHEtHAvant,
+                l10n.rembourse,
               ),
               const SizedBox(height: MuSpace.s3),
               tier(
                 PhosphorIcons.xCircle(PhosphorIconsStyle.fill),
                 c.error,
-                'Moins de 6 h avant',
-                'Non remboursable',
+                l10n.moinsDeHAvant,
+                l10n.nonRemboursable,
               ),
               const SizedBox(height: MuSpace.s4),
               Text(
-                'Si tu annules, les ${d.playersIn} joueurs sont remboursés automatiquement sur leur '
-                'solde MatchUp et prévenus par notification.',
+                l10n.siTuAnnulesLesJoueurs(d.playersIn),
                 style: caption,
               ),
             ],
@@ -764,7 +761,7 @@ class _BookingDetailScreenState extends ConsumerState<BookingDetailScreen> {
         if (d.organizer) ...[
           const SizedBox(height: MuSpace.s4),
           MuButton.destructiveOutline(
-            label: 'Annuler la réservation',
+            label: l10n.annulerLaReservation2,
             leading: PhosphorIcons.calendarX(),
             size: MuButtonSize.l,
             fullWidth: true,

@@ -12,20 +12,27 @@ import 'mu_sport_icon.dart';
 import 'mu_status_badge.dart';
 import 'src/card_surface.dart';
 import 'src/scoreboard_strip.dart';
+import '../l10n/l10n.dart';
 
 /// Venue amenities, with their icon and name (VenueCard « Tags »).
 enum MuAmenity {
-  lighting('Éclairage'),
-  changingRooms('Vestiaires'),
-  showers('Douches'),
-  parking('Parking'),
-  covered('Couvert'),
-  cafe('Café'),
-  bibs('Chasubles');
+  lighting,
+  changingRooms,
+  showers,
+  parking,
+  covered,
+  cafe,
+  bibs;
 
-  const MuAmenity(this.label);
-
-  final String label;
+  String get label => switch (this) {
+    MuAmenity.lighting => l10n.eclairage,
+    MuAmenity.changingRooms => l10n.vestiaires,
+    MuAmenity.showers => l10n.douches,
+    MuAmenity.parking => l10n.parking,
+    MuAmenity.covered => l10n.couvert,
+    MuAmenity.cafe => l10n.cafe,
+    MuAmenity.bibs => l10n.chasubles,
+  };
 
   IconData get icon => switch (this) {
     MuAmenity.lighting => PhosphorIcons.lightbulb(),
@@ -95,7 +102,7 @@ class MuVenue {
   MuSport get sport => sports.first;
 
   /// « La Marsa · 1,4 km ».
-  String get placeLabel => distanceKm == null ? place : '$place · ${formatLevel(distanceKm!)} km';
+  String get placeLabel => distanceKm == null ? place : l10n.km(place, formatLevel(distanceKm!));
 }
 
 enum MuVenueCardVariant { standard, compact }
@@ -143,9 +150,7 @@ class MuVenueCard extends StatelessWidget {
   static const double _skelMeta = 40;
 
   String _semantics(MuVenue v) =>
-      '${v.name}${v.verified ? ', vérifié' : ''}, ${v.sports.map((s) => s.label).join(', ')}, '
-      '${v.placeLabel}${v.rating == null ? '' : ', noté ${formatLevel(v.rating!)} sur 5, '
-                '${v.reviews} avis'}, dès ${formatDT(v.pricePerPerson)} par personne';
+      l10n.desParPersonne(v.name, v.verified ? l10n.verifie2 : '', v.sports.map((s) => s.label).join(', '), v.placeLabel, v.rating == null ? '' : l10n.noteSurAvis(formatLevel(v.rating!), v.reviews), formatDT(v.pricePerPerson));
 
   @override
   Widget build(BuildContext context) {
@@ -160,7 +165,7 @@ class MuVenueCard extends StatelessWidget {
     icon: PhosphorIcons.heart(),
     selectedIcon: PhosphorIcons.heart(PhosphorIconsStyle.fill),
     pressed: favourite,
-    label: 'Mettre ${v.name} en favori',
+    label: l10n.mettreEnFavori(v.name),
     size: onMedia ? MuIconButtonSize.m : MuIconButtonSize.s,
     variant: onMedia ? MuIconButtonVariant.onMedia : MuIconButtonVariant.ghost,
     onPressed: onFavouriteChanged == null ? null : () => onFavouriteChanged!(!favourite),
@@ -204,7 +209,7 @@ class MuVenueCard extends StatelessWidget {
         TextSpan(
           children: [
             TextSpan(
-              text: 'dès ',
+              text: l10n.des,
               style: MuType.caption.copyWith(color: c.textSecondary),
             ),
             TextSpan(text: formatAmount(v.pricePerPerson), style: MuType.numM),
@@ -223,7 +228,7 @@ class MuVenueCard extends StatelessWidget {
   Widget _verifiedSeal(BuildContext context) {
     final c = context.mu;
     return Semantics(
-      label: 'Vérifié',
+      label: l10n.verifie,
       child: Container(
         width: _sealSize,
         height: _sealSize,
@@ -300,13 +305,13 @@ class MuVenueCard extends StatelessWidget {
     final c = context.mu;
     final closed = v.status == MuVenueStatus.closed;
     final String? photoBadge = switch (v.status) {
-      MuVenueStatus.closed => v.opensAt == null ? 'Fermé' : 'Fermé · ouvre à ${v.opensAt}',
-      MuVenueStatus.fullToday => 'Complet aujourd’hui',
+      MuVenueStatus.closed => v.opensAt == null ? l10n.ferme2 : l10n.fermeOuvreA('${v.opensAt}'),
+      MuVenueStatus.fullToday => l10n.completAujourdHui,
       MuVenueStatus.open => null,
     };
     final slotsTitle = v.slotsDay == null
-        ? 'Prochains créneaux'
-        : 'Prochains créneaux · ${v.slotsDay}';
+        ? l10n.prochainsCreneaux
+        : l10n.prochainsCreneaux2('${v.slotsDay}');
 
     return MuCardSurface(
       onTap: onTap,
@@ -326,10 +331,10 @@ class MuVenueCard extends StatelessWidget {
                   if (closed)
                     ColorFiltered(
                       colorFilter: const ColorFilter.matrix(_greyscale),
-                      child: MuCourtArt(sport: v.sport, semanticLabel: 'Photo de ${v.name}'),
+                      child: MuCourtArt(sport: v.sport, semanticLabel: l10n.photoDe(v.name)),
                     )
                   else
-                    MuCourtArt(sport: v.sport, semanticLabel: 'Photo de ${v.name}'),
+                    MuCourtArt(sport: v.sport, semanticLabel: l10n.photoDe(v.name)),
                   if (closed) ColoredBox(color: c.scrim),
                   PositionedDirectional(
                     top: MuSpace.s3,
@@ -403,7 +408,7 @@ class MuVenueCard extends StatelessWidget {
                     if (v.amenities.isNotEmpty)
                       Semantics(
                         container: true,
-                        label: 'Équipements',
+                        label: l10n.equipements,
                         child: Wrap(
                           spacing: _amenityGap,
                           children: [
@@ -427,25 +432,23 @@ class MuVenueCard extends StatelessWidget {
           ),
           MuScoreboardStrip(
             semanticLabel:
-                '${v.rating == null ? '' : 'Note ${formatLevel(v.rating!)}, '}'
-                'dès ${formatDT(v.pricePerPerson)} par joueur'
-                '${v.courtPrice == null ? '' : ', terrain ${formatDT(v.courtPrice!)}'}',
+                l10n.desParJoueur(v.rating == null ? '' : l10n.note2(formatLevel(v.rating!)), formatDT(v.pricePerPerson), v.courtPrice == null ? '' : l10n.terrain5(formatDT(v.courtPrice!))),
             cells: [
               if (v.rating != null)
                 MuStripCell(
-                  label: 'Note',
+                  label: l10n.note,
                   labelIcon: PhosphorIcons.star(PhosphorIconsStyle.fill),
                   value: MuScoreboardStrip.value(context, formatLevel(v.rating!)),
                   sub: MuScoreboardStrip.sub(context, '${v.reviews} avis'),
                 ),
               MuStripCell(
-                label: 'Par joueur',
-                value: MuScoreboardStrip.value(context, formatAmount(v.pricePerPerson), 'DT'),
-                sub: MuScoreboardStrip.sub(context, 'dès'),
+                label: l10n.parJoueur,
+                value: MuScoreboardStrip.value(context, formatAmount(v.pricePerPerson), dtUnit),
+                sub: MuScoreboardStrip.sub(context, l10n.des2),
               ),
               if (v.courtPrice != null)
                 MuStripCell(
-                  label: 'Terrain',
+                  label: l10n.terrain2,
                   value: MuScoreboardStrip.value(
                     context,
                     formatAmount(v.courtPrice!),
@@ -473,8 +476,8 @@ class MuVenueCard extends StatelessWidget {
                         Semantics(
                           button: true,
                           label: v.slotsDay == null
-                              ? 'Réserver à $slot'
-                              : 'Réserver ${v.slotsDay!.toLowerCase()} à $slot',
+                              ? l10n.reserverA(slot)
+                              : l10n.reserverA2(v.slotsDay!.toLowerCase(), slot),
                           excludeSemantics: true,
                           child: MuChip(
                             label: slot,

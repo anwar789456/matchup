@@ -4,18 +4,24 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 
+import '../../../core/clock.dart';
+import '../../../core/connectivity.dart';
 import '../../../core/directions.dart';
 import '../../../core/format.dart';
 import '../../../router.dart';
 import '../../../theme/theme.dart';
 import '../../../ui/ui.dart';
+import '../../notifications/data/notification_repository.dart';
 import '../../common/widgets/coming_soon.dart';
 import '../../explore/controllers/explore_controller.dart';
 import '../../matches/data/bookings_repository.dart';
 import '../../profile/widgets/account_menu.dart';
+import '../../states/data/account_status.dart';
+import '../../states/widgets/state_widgets.dart';
 import '../../player_onboarding/controllers/onboarding_controller.dart';
 import '../controllers/home_providers.dart';
 import '../widgets/guided_tour.dart';
+import '../../../l10n/l10n.dart';
 
 /// HOM-01 · Accueil: « Parties pour toi » (AI), quick actions, the next matches, venues and
 /// tournaments near the player. While a section loads it shows its skeleton (HOM-02) and the header
@@ -88,8 +94,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         : onboarding.pseudo ?? me?.firstName;
     final userName = (fullName?.isNotEmpty ?? false)
         ? fullName!
-        : onboarding.pseudo ?? me?.displayName ?? 'MatchUp';
-    final zone = onboarding.zones.firstOrNull ?? onboarding.area ?? me?.zone ?? 'Tunis';
+        : onboarding.pseudo ?? me?.displayName ?? l10n.matchup;
+    final zone = onboarding.zones.firstOrNull ?? onboarding.area ?? me?.zone ?? l10n.tunis;
     final photo = ref.watch(profilePhotoProvider);
     final level = onboarding.levels.values.firstOrNull ?? me?.levels.values.firstOrNull;
     final showTour = onboarding.completed && !onboarding.tourSeen && games.hasValue;
@@ -129,11 +135,11 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     Widget retry(String what, VoidCallback onRetry) => Padding(
       padding: const EdgeInsets.symmetric(horizontal: MuSpace.s4),
       child: MuBanner(
-        title: 'Impossible de charger $what',
-        detail: 'Vérifie ta connexion puis réessaie.',
+        title: l10n.impossibleDeCharger2(what),
+        detail: l10n.verifieTaConnexionPuisReessaie,
         tone: MuBannerTone.warning,
         icon: PhosphorIcons.wifiSlash(),
-        action: MuAction('Réessayer', onRetry),
+        action: MuAction(l10n.reessayer, onRetry),
       ),
     );
 
@@ -144,24 +150,24 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           sectionHeader(
-            'Parties pour toi',
-            badge: const MuAiLabel(size: MuAiLabelSize.s),
-            action: games.hasValue ? 'Voir tout' : null,
+            l10n.partiesPourToi,
+            badge: MuAiLabel(size: MuAiLabelSize.s),
+            action: games.hasValue ? l10n.voirTout : null,
             onAction: () => _explore(ExploreTab.games),
           ),
           const SizedBox(height: MuSpace.s1),
           caption(
             games.hasValue
-                ? 'Choisies selon ton niveau, tes zones et tes soirs libres.'
-                : 'On cherche les parties à ton niveau autour de $zone…',
+                ? l10n.choisiesSelonTonNiveauTes
+                : l10n.onChercheLesPartiesA(zone),
           ),
           const SizedBox(height: MuSpace.s1),
           if (games.hasError && !games.hasValue)
-            retry('les parties', () => ref.invalidate(recommendedGamesProvider))
+            retry(l10n.lesParties, () => ref.invalidate(recommendedGamesProvider))
           else
             _Rail(
               width: _railCard,
-              loadingLabel: games.hasValue ? null : 'Chargement des parties',
+              loadingLabel: games.hasValue ? null : l10n.chargementDesParties,
               children: games.hasValue
                   ? [
                       for (final g in games.value!)
@@ -185,7 +191,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     // ── Actions rapides ───────────────────────────────────────────────────────────────────────
     final quickActions = Semantics(
       container: true,
-      label: 'Actions rapides',
+      label: l10n.actionsRapides,
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: MuSpace.s4),
         child: IntrinsicHeight(
@@ -194,8 +200,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             children: [
               Expanded(
                 child: _QuickAction(
-                  label: 'Réserver un terrain',
-                  detail: 'Paie ta part, pas tout le terrain',
+                  label: l10n.reserverUnTerrain,
+                  detail: l10n.paieTaPartPasTout,
                   tileColor: c.surfaceMuted,
                   icon: SvgPicture.asset(
                     MuGlyph.court,
@@ -211,8 +217,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                 child: KeyedSubtree(
                   key: _createKey,
                   child: _QuickAction(
-                    label: 'Créer une partie',
-                    detail: 'On complète avec des joueurs à ton niveau',
+                    label: l10n.creerUnePartie,
+                    detail: l10n.onCompleteAvecDesJoueurs,
                     tileColor: c.accent,
                     icon: Icon(PhosphorIcons.plus(), size: MuSize.iconM, color: c.onAccent),
                     onTap: () => _explore(ExploreTab.venues),
@@ -231,20 +237,20 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         sectionHeader(
-          'Tes prochains matchs',
-          action: 'Mes matchs',
+          l10n.tesProchainsMatchs,
+          action: l10n.mesMatchs,
           onAction: () => context.go(Routes.matches),
         ),
         const SizedBox(height: MuSpace.s3),
         if (upcoming.hasError && next == null)
-          retry('tes matchs', () => ref.invalidate(upcomingMatchesProvider))
+          retry(l10n.tesMatchs, () => ref.invalidate(upcomingMatchesProvider))
         else
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: MuSpace.s4),
             child: next == null
-                ? const MuSkeletonGroup(
-                    label: 'Chargement de tes matchs',
-                    child: Column(
+                ? MuSkeletonGroup(
+                    label: l10n.chargementDeTesMatchs,
+                    child: const Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         _InvitationRow.loading(),
@@ -287,13 +293,13 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         sectionHeader(
-          'Terrains près de toi',
-          action: 'Voir tout',
+          l10n.terrainsPresDeToi,
+          action: l10n.voirTout,
           onAction: () => _explore(ExploreTab.venues),
         ),
         const SizedBox(height: MuSpace.s3),
         if (venues.hasError && !venues.hasValue)
-          retry('les terrains', () => ref.invalidate(nearbyVenuesProvider))
+          retry(l10n.lesTerrains, () => ref.invalidate(nearbyVenuesProvider))
         else
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: MuSpace.s4),
@@ -314,9 +320,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                       ],
                     ],
                   )
-                : const MuSkeletonGroup(
-                    label: 'Chargement des terrains',
-                    child: Column(
+                : MuSkeletonGroup(
+                    label: l10n.chargementDesTerrains,
+                    child: const Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         MuVenueCard.loading(variant: MuVenueCardVariant.compact),
@@ -333,11 +339,11 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     final nearTournaments = Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        sectionHeader('Tournois près de chez toi'),
-        caption('Inscris ton équipe avant qu’il soit complet.'),
+        sectionHeader(l10n.tournoisPresDeChezToi),
+        caption(l10n.inscrisTonEquipeAvantQu),
         const SizedBox(height: MuSpace.s3),
         if (tournaments.hasError && !tournaments.hasValue)
-          retry('les tournois', () => ref.invalidate(nearbyTournamentsProvider))
+          retry(l10n.lesTournois, () => ref.invalidate(nearbyTournamentsProvider))
         else
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: MuSpace.s4),
@@ -354,14 +360,17 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                         ),
                     ],
                   )
-                : const MuSkeletonGroup(
-                    label: 'Chargement des tournois',
-                    child: MuTournamentCard.loading(),
+                : MuSkeletonGroup(
+                    label: l10n.chargementDesTournois,
+                    child: const MuTournamentCard.loading(),
                   ),
           ),
       ],
     );
 
+    final offline = ref.watch(simulatedOfflineProvider);
+    final flags = ref.watch(accountFlagsProvider);
+    final suspension = ref.watch(suspensionsProvider)[userName];
     final page = Scaffold(
       backgroundColor: c.bg,
       body: RefreshIndicator(
@@ -370,30 +379,71 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           padding: const EdgeInsets.only(bottom: _bottomRoom),
           children: [
             MuTopAppBar.home(
-              greeting: firstName == null ? 'Salut !' : 'Salut $firstName',
+              greeting: firstName == null ? l10n.salut : l10n.salut2(firstName),
               location: zone,
               userName: userName,
               userImage: photo == null ? null : MemoryImage(photo),
-              notifications: me?.unreadNotifications ?? 0,
+              notifications: ref.watch(unreadNotificationsProvider),
               onLocation: () => showComingSoon(context),
-              onNotifications: () => showComingSoon(context),
+              onNotifications: () => context.push(Routes.notifications),
               onAccount: () => showAccountMenu(context, ref),
             ),
-            const SizedBox(height: MuSpace.s1),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: MuSpace.s4),
-              child: _AskBar(onTap: () => showComingSoon(context)),
-            ),
-            const SizedBox(height: _sectionGap),
-            forYou,
-            const SizedBox(height: _sectionGap - MuSpace.s2),
-            quickActions,
-            const SizedBox(height: _sectionGap),
-            nextMatches,
-            const SizedBox(height: _sectionGap),
-            nearVenues,
-            const SizedBox(height: _sectionGap),
-            nearTournaments,
+            // STA-07: a suspended account sees why and until when, nothing to join.
+            if (suspension != null)
+              Padding(
+                padding: const EdgeInsets.fromLTRB(MuSpace.s4, MuSpace.s2, MuSpace.s4, 0),
+                child: SuspendedAccountView(
+                  suspension: suspension,
+                  now: ref.read(clockProvider)(),
+                  onContest: () => showComingSoon(context),
+                ),
+              )
+            else ...[
+              // STA-01: offline, the cached lists stay with this strip on top.
+              if (offline)
+                OfflineBanner(
+                  // The last successful sync of the fake data (17h42 in the story).
+                  cachedAt: ref.read(clockProvider)().subtract(const Duration(minutes: 18)),
+                  onRetry: () {
+                    ref.read(simulatedOfflineProvider.notifier).set(false);
+                    _refresh();
+                  },
+                ),
+              // STA-06: the email is not verified yet.
+              if (!flags.emailVerified && !flags.emailBannerHidden)
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(MuSpace.s4, MuSpace.s2, MuSpace.s4, 0),
+                  child: EmailNotVerifiedBanner(
+                    email: me?.email ?? '',
+                    flags: flags,
+                    onResend: () =>
+                        ref.read(accountFlagsProvider.notifier).emailSent(me?.email ?? ''),
+                    onHide: ref.read(accountFlagsProvider.notifier).hideEmailBanner,
+                  ),
+                ),
+              const SizedBox(height: MuSpace.s1),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: MuSpace.s4),
+                child: _AskBar(onTap: () => showComingSoon(context)),
+              ),
+              const SizedBox(height: _sectionGap),
+              forYou,
+              const SizedBox(height: _sectionGap - MuSpace.s2),
+              quickActions,
+              const SizedBox(height: _sectionGap),
+              nextMatches,
+              if (offline) ...[
+                const SizedBox(height: MuSpace.s2),
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: MuSpace.s4),
+                  child: OfflineQrNote(),
+                ),
+              ],
+              const SizedBox(height: _sectionGap),
+              nearVenues,
+              const SizedBox(height: _sectionGap),
+              nearTournaments,
+            ],
           ],
         ),
       ),
@@ -409,30 +459,28 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             steps: [
               TourStep(
                 target: _forYouKey,
-                header: const MuAiLabel(size: MuAiLabelSize.s),
-                title: 'Des parties choisies pour toi',
+                header: MuAiLabel(size: MuAiLabelSize.s),
+                title: l10n.desPartiesChoisiesPourToi,
                 body: level == null
-                    ? 'Recommandé car ton niveau, tes soirs libres et tes zones correspondent.'
-                    : 'Recommandé car ton niveau (${formatLevel(level)}), tes soirs libres et tes '
-                          'zones correspondent.',
+                    ? l10n.recommandeCarTonNiveauTes
+                    : l10n.recommandeCarTonNiveauTes2(formatLevel(level)),
               ),
               TourStep(
                 target: _createKey,
                 padding: MuSpace.s1,
-                header: Text('ORGANISER', style: MuType.overline.copyWith(color: c.textSecondary)),
-                title: 'Crée ta partie en 1 minute',
+                header: Text(l10n.organiser, style: MuType.overline.copyWith(color: c.textSecondary)),
+                title: l10n.creeTaPartieEnMinute,
                 body:
-                    'Choisis le terrain et l’heure : on invite des joueurs à ton niveau, et chacun '
-                    'paie sa part.',
+                    l10n.choisisLeTerrainEtL,
               ),
               TourStep(
                 target: ref.read(playerTabKeysProvider)[2],
                 radius: MuRadius.md,
                 padding: 0,
-                header: Text('MES MATCHS', style: MuType.overline.copyWith(color: c.textSecondary)),
-                title: 'Tous tes matchs au même endroit',
+                header: Text(l10n.mesMatchs2, style: MuType.overline.copyWith(color: c.textSecondary)),
+                title: l10n.tousTesMatchsAuMeme,
                 body:
-                    'Parties à venir, invitations et paiements en attente : tout se retrouve ici.',
+                    l10n.partiesAVenirInvitationsEt,
               ),
             ],
           ),
@@ -510,12 +558,11 @@ class _InvitationRow extends StatelessWidget {
     }
     final sport = inv.sport.label.toLowerCase();
     final what =
-        '${inv.venue} · ${formatDay(inv.start)} · ${formatTime(inv.start)} · '
-        '${formatDT(inv.share)} /pers.';
+        l10n.pers2(inv.venue, formatDay(inv.start), formatTime(inv.start), formatDT(inv.share));
     return MuCardSurface(
       padding: padding,
       onTap: onTap,
-      semanticLabel: '${inv.from.name} t’invite au $sport, $what. Répondre',
+      semanticLabel: l10n.tInviteAuRepondre(inv.from.name, sport, what),
       child: Row(
         children: [
           MuAvatar(name: inv.from.name, size: MuAvatarSize.m),
@@ -525,7 +572,7 @@ class _InvitationRow extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  '${inv.from.name} t’invite au $sport',
+                  l10n.tInviteAu(inv.from.name, sport),
                   style: MuType.label.copyWith(color: c.text),
                 ),
                 const SizedBox(height: MuSpace.s1 / 2),
@@ -537,7 +584,7 @@ class _InvitationRow extends StatelessWidget {
           Container(
             padding: const EdgeInsets.symmetric(horizontal: MuSpace.s2, vertical: MuSpace.s1 / 2),
             decoration: ShapeDecoration(color: c.accent, shape: const StadiumBorder()),
-            child: Text('Répondre', style: MuType.labelS.copyWith(color: c.onAccent)),
+            child: Text(l10n.repondre, style: MuType.labelS.copyWith(color: c.onAccent)),
           ),
         ],
       ),
@@ -559,7 +606,7 @@ class _AskBar extends StatelessWidget {
     final c = context.mu;
     return Semantics(
       button: true,
-      label: 'Demande à MatchUp, l’assistant IA',
+      label: l10n.demandeAMatchupLAssistant,
       excludeSemantics: true,
       child: MuFocusRing(
         borderRadius: MuRadius.fullAll,
@@ -584,7 +631,7 @@ class _AskBar extends StatelessWidget {
                     ),
                     const SizedBox(width: MuSpace.s3),
                     Text(
-                      'Demande à MatchUp…',
+                      l10n.demandeAMatchup,
                       style: MuType.bodyL.copyWith(color: c.textSecondary),
                     ),
                   ],

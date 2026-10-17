@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 import '../../../theme/theme.dart';
 import '../../../ui/ui.dart';
+import '../../../l10n/l10n.dart';
 
 /// One step of the guided tour.
 class TourStep {
@@ -137,7 +138,7 @@ class _GuidedTourState extends State<GuidedTour> {
                 step.header,
                 const Spacer(),
                 Semantics(
-                  label: 'Étape ${_index + 1} sur ${widget.steps.length}',
+                  label: l10n.etapeSur(_index + 1, widget.steps.length),
                   excludeSemantics: true,
                   child: Text('${_index + 1}/${widget.steps.length}',
                       style: MuType.numXs.copyWith(color: c.textSecondary)),
@@ -157,10 +158,10 @@ class _GuidedTourState extends State<GuidedTour> {
                 if (!last)
                   Transform.translate(
                     offset: const Offset(-MuSpace.s3, 0),
-                    child: MuButton.tertiary(label: 'Passer la visite', onPressed: widget.onDone),
+                    child: MuButton.tertiary(label: l10n.passerLaVisite, onPressed: widget.onDone),
                   ),
                 const Spacer(),
-                MuButton.primary(label: last ? 'C’est parti' : 'Suivant', onPressed: _next),
+                MuButton.primary(label: last ? l10n.cEstParti : l10n.suivant, onPressed: _next),
               ],
             ),
           ],
