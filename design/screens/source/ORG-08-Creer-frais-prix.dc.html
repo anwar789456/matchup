@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Nouveau tournoi · Frais et prix</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/matchup/tokens.css">
+<link rel="stylesheet" href="ds/matchup/components/bundle.css">
+<script src="ds/matchup/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+/* org:wizard — identical in ORG-05…ORG-09 */
+body{margin:0}
+a{color:var(--link)}
+.wz-root{position:relative; width:390px; box-sizing:border-box; overflow:hidden; display:flex; flex-direction:column; background:var(--surface); color:var(--text); font-family:var(--font-sans)}
+.wz-head{flex:none; display:flex; align-items:center; gap:var(--space-1); padding:52px var(--space-1) 0 var(--space-1)}
+.wz-head__txt{flex:1; min-width:0; display:flex; flex-direction:column}
+.wz-head__txt .caption{color:var(--text-secondary)}
+.wz-steps{flex:none; padding:var(--space-2) var(--space-4) var(--space-4) var(--space-4); border-bottom:1px solid var(--border)}
+.wz-body{flex:1; min-height:0; display:flex; flex-direction:column; gap:var(--space-6); padding:var(--space-5) var(--space-4) var(--space-8) var(--space-4)}
+.wz-body > *{flex-shrink:0}
+.wz-intro{display:flex; flex-direction:column; gap:var(--space-1)}
+.wz-intro p{margin:0; color:var(--text-secondary)}
+.wz-field{display:flex; flex-direction:column; gap:var(--space-3)}
+.wz-field__label{margin:0}
+.wz-rule{height:1px; background:var(--border); margin:0}
+.wz-help{margin:0; display:flex; align-items:flex-start; gap:var(--space-2); color:var(--text-secondary)}
+.wz-help > span:first-child{flex:none; display:flex; margin-top:1px}
+.wz-bar{flex:none; position:relative; z-index:var(--z-sticky); display:flex; flex-direction:column; gap:var(--space-2); padding:var(--space-2) var(--space-4) 34px var(--space-4); background:var(--surface); box-shadow:var(--elevation-2-up)}
+.wz-draft{display:flex; align-items:center; justify-content:center; gap:6px; min-height:24px; color:var(--text-secondary)}
+.wz-actions{display:flex; gap:var(--space-3)}
+.wz-actions > .mu-btn--secondary{flex:none; width:112px}
+.wz-actions > .mu-btn--primary{flex:1}
+.wz-muted{color:var(--text-secondary)}
+.wz-m0{margin:0}
+/* /org:wizard */
+.fee-prizes{display:flex; flex-direction:column; gap:var(--space-3)}
+.fee-prize{display:flex; align-items:flex-end; gap:var(--space-3)}
+.fee-prize > :last-child{flex:1; min-width:0}
+.fee-rank{flex:none; width:48px; height:48px; border-radius:var(--radius-md); display:flex; flex-direction:column; align-items:center; justify-content:center; background:var(--surface-muted); color:var(--text)}
+.fee-rank--1{background:var(--accent); color:var(--on-accent)}
+.fee-head{display:flex; align-items:baseline; justify-content:space-between; gap:var(--space-3)}
+.fee-sim{display:flex; flex-direction:column; gap:10px; padding:var(--space-4); border-radius:var(--radius-md); background:var(--surface-muted)}
+.fee-line{display:flex; align-items:baseline; justify-content:space-between; gap:var(--space-3)}
+.fee-sep{height:1px; background:var(--border)}
+</style>
+</helmet>
+<div class="wz-root" style="height: 1640px">
+<div class="wz-head">
+<a href="ORG-07-Creer-terrains-dates.dc.html" class="mu-iconbtn mu-iconbtn--l mu-iconbtn--ghost" aria-label="Étape précédente" style="color: var(--text)"><x-import component-from-global-scope="MatchUp.Icon" name="arrow-left" size="{{i24}}"></x-import></a>
+<div class="wz-head__txt"><h1 class="label-l wz-m0">Coupe d’hiver padel</h1><span class="caption">Nouveau tournoi · Tunis Padel Series</span></div>
+<a href="ORG-04-Mes-tournois.dc.html" class="mu-btn mu-btn--tertiary mu-btn--m" aria-label="Quitter, le brouillon est enregistré"><span class="mu-btn__content"><span class="mu-btn__label label">Quitter</span></span></a>
+</div>
+<div class="wz-steps"><x-import component-from-global-scope="MatchUp.WizardStepper" variant="compact" label="Créer un tournoi" steps="{{steps}}" current="{{cur}}"></x-import></div>
+
+<div class="wz-body">
+<div class="wz-intro">
+<h2 class="h2 wz-m0">Frais et prix</h2>
+<p class="body">Les équipes paient en ligne pour réserver leur place.</p>
+</div>
+
+<x-import component-from-global-scope="MatchUp.TextField" label="Frais d’inscription par équipe" default-value="100" suffix="DT" inputmode="numeric" helper="Soit 50 DT par joueur. Paiement en ligne obligatoire pour s’inscrire."></x-import>
+
+<x-import component-from-global-scope="MatchUp.Switch" label-position="start" label="Valider chaque équipe à la main" description="Tu acceptes ou refuses chaque inscription. Une équipe refusée est remboursée en entier." default-checked="{{yes}}"></x-import>
+
+<div class="wz-rule"></div>
+
+<div class="wz-field">
+<div class="fee-head"><span class="label-l">Dotation</span><span><span class="caption wz-muted">Total </span><span class="num-m">1 000 DT</span></span></div>
+<div class="fee-prizes">
+<div class="fee-prize"><span class="fee-rank fee-rank--1" aria-hidden="true"><x-import component-from-global-scope="MatchUp.Icon" name="trophy" weight="fill" size="{{i20}}"></x-import><span class="label-s">1er</span></span><x-import component-from-global-scope="MatchUp.TextField" label="Vainqueurs" default-value="550" suffix="DT" inputmode="numeric"></x-import></div>
+<div class="fee-prize"><span class="fee-rank" aria-hidden="true"><x-import component-from-global-scope="MatchUp.Icon" name="medal" size="{{i20}}"></x-import><span class="label-s">2e</span></span><x-import component-from-global-scope="MatchUp.TextField" label="Finalistes" default-value="300" suffix="DT" inputmode="numeric"></x-import></div>
+<div class="fee-prize"><span class="fee-rank" aria-hidden="true"><x-import component-from-global-scope="MatchUp.Icon" name="medal" size="{{i20}}"></x-import><span class="label-s">3e</span></span><x-import component-from-global-scope="MatchUp.TextField" label="3e place" default-value="150" suffix="DT" inputmode="numeric"></x-import></div>
+</div>
+<button type="button" class="mu-btn mu-btn--tertiary mu-btn--m" style="align-self: flex-start; margin-left: -12px"><span class="mu-btn__content"><x-import component-from-global-scope="MatchUp.Icon" name="plus" size="{{i20}}"></x-import><span class="mu-btn__label label">Ajouter un lot (raquettes, bons…)</span></span></button>
+</div>
+
+<div class="wz-rule"></div>
+
+<x-import component-from-global-scope="MatchUp.Radio.Group" label="Si une équipe se désiste" value="{{refund}}" on-change="{{setRefund}}">
+<x-import component-from-global-scope="MatchUp.Radio" value="full" label="Remboursée en entier jusqu’à la clôture" description="Jusqu’au mer. 9 déc., puis 50 % jusqu’à 48 h avant, rien ensuite."></x-import>
+<x-import component-from-global-scope="MatchUp.Radio" value="half" label="Remboursée à 50 % jusqu’à la clôture" description="Rien ensuite."></x-import>
+<x-import component-from-global-scope="MatchUp.Radio" value="none" label="Pas de remboursement" description="Déconseillé : les équipes hésitent davantage à s’inscrire."></x-import>
+</x-import>
+<p class="wz-help caption" style="margin-top: -12px"><span><x-import component-from-global-scope="MatchUp.Icon" name="info" size="{{i16}}"></x-import></span><span>Si tu annules le tournoi, toutes les équipes sont remboursées en entier, quelle que soit la règle.</span></p>
+
+<section class="fee-sim" aria-labelledby="fee-sim-t">
+<span id="fee-sim-t" class="overline wz-muted">Si les 16 équipes s’inscrivent</span>
+<div class="fee-line"><span class="body">Inscriptions · <span class="num-xs">16 × 100 DT</span></span><span class="num-s">1 600 DT</span></div>
+<div class="fee-line"><span class="body">Dotation</span><span class="num-s">−1 000 DT</span></div>
+<div class="fee-sep"></div>
+<div class="fee-line"><span class="label-l">Reste pour toi</span><span class="num-l">600 DT</span></div>
+<span class="caption wz-muted">Avant la location des courts. Versé sur ton compte 2 jours après la finale.</span>
+</section>
+</div>
+
+<div class="wz-bar">
+<span class="wz-draft caption"><x-import component-from-global-scope="MatchUp.Icon" name="cloud-check" size="{{i16}}"></x-import>Brouillon enregistré · à l’instant</span>
+<div class="wz-actions">
+<a href="ORG-07-Creer-terrains-dates.dc.html" class="mu-btn mu-btn--secondary mu-btn--xl"><span class="mu-btn__content"><span class="mu-btn__label label-l">Retour</span></span></a>
+<a href="ORG-09-Apercu-publier.dc.html" class="mu-btn mu-btn--primary mu-btn--xl"><span class="mu-btn__content"><span class="mu-btn__label label-l">Voir l’aperçu</span><x-import component-from-global-scope="MatchUp.Icon" name="arrow-right" size="{{i20}}"></x-import></span></a>
+</div>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":1640}}'>
+class Component extends DCLogic {
+  state = { refund: 'full' };
+  renderVals() {
+    const s = this.state || {};
+    return {
+      yes: true, no: false, i14: 14, i16: 16, i20: 20, i24: 24,
+      steps: [{ label: 'Infos' }, { label: 'Format & règles' }, { label: 'Terrains & dates' }, { label: 'Frais & prix' }, { label: 'Aperçu' }],
+      cur: 3,
+      refund: s.refund, setRefund: (v) => this.setState({ refund: v })
+    };
+  }
+}
+</script>
+</body>
+</html>

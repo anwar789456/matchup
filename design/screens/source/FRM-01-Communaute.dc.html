@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Communauté</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/matchup/tokens.css">
+<link rel="stylesheet" href="ds/matchup/components/bundle.css">
+<script src="ds/matchup/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0}
+a{color:var(--link)}
+.frm-chips{display:flex; gap:var(--space-2); overflow-x:auto; padding:6px var(--space-4); margin:-6px 0; scrollbar-width:none}
+.frm-chips::-webkit-scrollbar{display:none}
+.frm-chips > *{flex:none}
+.frm-compose{display:flex; align-items:center; gap:var(--space-3); min-height:56px; padding:0 var(--space-2) 0 var(--space-3); border-radius:var(--radius-full); background:var(--surface); box-shadow:var(--elevation-1), inset 0 0 0 1px var(--border); text-decoration:none; color:var(--text-secondary)}
+.frm-compose:focus-visible{outline:none; box-shadow:var(--focus-ring)}
+.frm-compose__go{flex:none; width:40px; height:40px; border-radius:var(--radius-full); display:flex; align-items:center; justify-content:center; background:var(--accent); color:var(--on-accent)}
+.frm-feed{display:flex; flex-direction:column; gap:var(--space-3); padding:0 var(--space-4)}
+.frm-mention{display:flex; align-items:center; gap:6px; margin:0 0 -4px 0; color:var(--text-secondary)}
+.frm-mention__dot{width:8px; height:8px; border-radius:var(--radius-full); background:var(--primary)}
+.frm-cats{display:grid; grid-template-columns:repeat(5, minmax(0, 1fr)); gap:var(--space-2); padding:0 var(--space-4)}
+.frm-cat{position:relative; display:flex; flex-direction:column; align-items:center; gap:6px; padding:var(--space-3) 2px var(--space-2) 2px; border-radius:var(--radius-md); background:var(--surface); box-shadow:inset 0 0 0 1px var(--border); text-align:center; color:var(--text)}
+.frm-cat__ico{width:40px; height:40px; border-radius:var(--radius-full); display:flex; align-items:center; justify-content:center; background:var(--surface-muted); box-shadow:inset 0 0 0 1px var(--border)}
+.frm-cat__new{position:absolute; top:6px; inset-inline-end:6px; min-width:18px; height:18px; padding:0 5px; box-sizing:border-box; border-radius:var(--radius-full); background:var(--accent); color:var(--on-accent); display:flex; align-items:center; justify-content:center}
+.frm-cat__name{display:block; line-height:14px; font-size:11px}
+.frm-hot{position:absolute; display:block; border-radius:var(--radius-full); z-index:3}
+.frm-hot:focus-visible{outline:2px solid var(--focus); outline-offset:2px}
+</style>
+</helmet>
+<div style="position: relative; width: 390px; height: 1872px; box-sizing: border-box; overflow: hidden; display: flex; flex-direction: column; background: var(--bg); color: var(--text); font-family: var(--font-sans)">
+<x-import component-from-global-scope="MatchUp.TopAppBar" variant="large" title="Communauté" collapsed="{{yes}}" scrolled="{{no}}" inset="{{inset}}" actions="{{barActions}}"></x-import>
+
+<div style="display: flex; flex-direction: column; gap: 20px; padding: 4px 0 140px 0">
+<div style="padding: 0 16px">
+<a href="FRM-02-Nouveau-post.dc.html" class="frm-compose" aria-label="Écrire un nouveau post">
+<x-import component-from-global-scope="MatchUp.Avatar" name="Yassine B." size="m"></x-import>
+<span class="body" style="flex: 1; min-width: 0">Pose ta question à la communauté</span>
+<span class="frm-compose__go"><x-import component-from-global-scope="MatchUp.Icon" name="note-pencil" size="{{i20}}"></x-import></span>
+</a>
+</div>
+
+<section aria-labelledby="frm-cats-t" style="display: flex; flex-direction: column; gap: 10px">
+<div style="display: flex; align-items: baseline; justify-content: space-between; padding: 0 16px">
+<h2 id="frm-cats-t" class="h3" style="margin: 0">Catégories</h2>
+<span class="caption" style="color: var(--text-secondary)">Nouveaux depuis ta dernière visite</span>
+</div>
+<div class="frm-cats">
+<div class="frm-cat"><span class="frm-cat__ico" style="color: var(--ai-text)"><x-import component-from-global-scope="MatchUp.Icon" name="lightbulb" size="{{i20}}"></x-import></span><span class="label-s frm-cat__name">Conseils &amp; technique</span><span class="frm-cat__new num-xs">4</span></div>
+<div class="frm-cat"><span class="frm-cat__ico"><x-import component-from-global-scope="MatchUp.Icon" name="t-shirt" size="{{i20}}"></x-import></span><span class="label-s frm-cat__name">Équipement</span><span class="frm-cat__new num-xs">2</span></div>
+<div class="frm-cat"><span class="frm-cat__ico" style="color: var(--football-text)"><x-import component-from-global-scope="MatchUp.Icon" name="sport-court" size="{{i20}}"></x-import></span><span class="label-s frm-cat__name">Terrains</span></div>
+<div class="frm-cat"><span class="frm-cat__ico" style="color: var(--warning-text)"><x-import component-from-global-scope="MatchUp.Icon" name="sport-trophy" size="{{i20}}"></x-import></span><span class="label-s frm-cat__name">Tournois</span><span class="frm-cat__new num-xs">1</span></div>
+<div class="frm-cat"><span class="frm-cat__ico" style="color: var(--padel-text)"><x-import component-from-global-scope="MatchUp.Icon" name="chats-circle" size="{{i20}}"></x-import></span><span class="label-s frm-cat__name">Discussions libres</span></div>
+</div>
+</section>
+
+<section aria-labelledby="frm-feed-t" style="display: flex; flex-direction: column; gap: 12px">
+<h2 id="frm-feed-t" class="sr-only" style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0)">Fil de la communauté</h2>
+<div class="frm-chips" role="radiogroup" aria-label="Filtrer par sport">
+<x-import component-from-global-scope="MatchUp.Chip" kind="choice" selected="{{yes}}">Tous les sports</x-import>
+<x-import component-from-global-scope="MatchUp.Chip" kind="sport" sport="football">Football</x-import>
+<x-import component-from-global-scope="MatchUp.Chip" kind="sport" sport="padel">Padel</x-import>
+<x-import component-from-global-scope="MatchUp.Chip" kind="sport" sport="basketball">Basket</x-import>
+</div>
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 0 16px">
+<x-import component-from-global-scope="MatchUp.SegmentedControl" size="s" label="Trier les discussions" options="{{sorts}}" value="tendance"></x-import>
+<span class="caption" style="color: var(--text-secondary)"><span class="num-xs" style="color: var(--text)">248</span> discussions</span>
+</div>
+
+<div class="frm-feed">
+<x-import component-from-global-scope="MatchUp.ForumPostCard" dc-props="{{pPinned}}"></x-import>
+<p class="frm-mention caption"><span class="frm-mention__dot"></span><span><span class="label-s" style="color: var(--text)">Ines M.</span> t’a mentionné · il y a 2 h</span></p>
+<x-import component-from-global-scope="MatchUp.ForumPostCard" dc-props="{{pInes}}"></x-import>
+<x-import component-from-global-scope="MatchUp.ForumPostCard" dc-props="{{pMariem}}"></x-import>
+<x-import component-from-global-scope="MatchUp.ForumPostCard" dc-props="{{pMine}}"></x-import>
+<x-import component-from-global-scope="MatchUp.ForumPostCard" dc-props="{{pSkander}}"></x-import>
+</div>
+</section>
+</div>
+
+<a href="AI-01-Assistant.dc.html" class="frm-hot" aria-label="Ouvrir l’assistant MatchUp" style="right: 16px; bottom: 114px; width: 56px; height: 56px"></a>
+<x-import component-from-global-scope="MatchUp.TabBar" items="{{tabs}}" value="communaute" safe-area="{{sa}}" fab="{{yes}}" dc-props="{{tabStyle}}"></x-import>
+<a href="AI-01-Assistant.dc.html" aria-label="Ouvrir l’assistant MatchUp" style="z-index: calc(var(--z-sticky) + 1); position: absolute; right: 16px; bottom: 114px; width: 56px; height: 56px; border-radius: var(--radius-full)"></a>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":1872}}'>
+class Component extends DCLogic {
+  state = { votes: { pInes: 'up' } };
+  renderVals() {
+    const v = this.state.votes;
+    const vote = (k) => ({ vote: v[k] || null, onVote: (x) => this.setState({ votes: Object.assign({}, v, { [k]: x }) }) });
+    return {
+      yes: true, no: false, i16: 16, i20: 20, i24: 24, inset: 44, sa: 34,
+      barActions: [{ icon: 'magnifying-glass', label: 'Rechercher dans la communauté' }, { icon: 'bookmark-simple', label: 'Mes posts et favoris' }],
+      sorts: [{ value: 'tendance', label: 'Tendance' }, { value: 'recents', label: 'Récents' }, { value: 'top', label: 'Top' }],
+      tabs: [
+        { value: 'accueil', label: 'Accueil', icon: 'house', href: 'HOM-01-Accueil.dc.html' },
+        { value: 'explorer', label: 'Explorer', icon: 'compass', href: 'EXP-01-Explorer-parties.dc.html' },
+        { value: 'matchs', label: 'Mes matchs', icon: 'calendar-check', badge: 1, badgeLabel: '1 invitation', href: 'MAT-01-A-venir.dc.html' },
+        { value: 'entrainement', label: 'Entraînement', icon: 'barbell', href: 'ENT-01-Mon-entrainement.dc.html' },
+        { value: 'communaute', label: 'Communauté', icon: 'users-three', href: 'FRM-01-Communaute.dc.html' }
+      ],
+      tabStyle: { style: { position: 'absolute', left: 0, right: 0, bottom: 0 } },
+      pPinned: Object.assign({
+        category: 'tournaments', sport: 'padel', pinned: true,
+        title: 'Padel Masters Lac 2 : toutes les infos et vos questions',
+        excerpt: 'Sam. 24 → lun. 26 oct. au Smash Padel Club. 16 équipes, 120 DT par équipe, dotation 1 500 DT. Plus que 4 places, inscriptions jusqu’au mer. 21 oct.',
+        tags: ['tournoi', 'lac2'], author: { name: 'Sami C.', level: 4.5 }, time: 'il y a 3 j', votes: 41, replies: 23
+      }, vote('pPinned')),
+      pInes: Object.assign({
+        category: 'technique', sport: 'padel',
+        title: 'Bandeja : je n’arrive pas à la placer croisée',
+        excerpt: 'Elle part toujours au centre et finit dans la grille. @yassine.b tu bosses le programme de Karim J., tu frappes plus devant toi ?',
+        tags: ['bandeja', 'technique'], author: { name: 'Ines M.', level: 4 }, time: 'il y a 2 h', votes: 15, replies: 8
+      }, vote('pInes')),
+      pMariem: Object.assign({
+        category: 'venues', sport: 'padel',
+        title: 'Avis Smash Padel Club après rénovation',
+        excerpt: 'Nouvelles vitres sur les courts 1 et 2, éclairage LED et vestiaires refaits. Seul bémol : le parking est plein dès 19h.',
+        tags: ['smashpadel', 'lac2'], author: { name: 'Mariem K.', level: 4 }, time: 'hier', votes: 27, replies: 9
+      }, vote('pMariem')),
+      pMine: Object.assign({
+        category: 'general', sport: 'football',
+        title: '5v5 dimanche soir à La Marsa, qui est chaud ?',
+        excerpt: 'Il reste 2 places dim. 18 oct. à 20h00 à Arena Five, niveau 3,0 – 4,5. 15 DT par joueur, chasubles fournies. Qui vient ?',
+        tags: ['foot5', 'lamarsa'], author: { name: 'Yassine B.', level: 3 }, time: 'mar.', votes: 21, replies: 12
+      }, vote('pMine')),
+      pSkander: Object.assign({
+        category: 'equipment', sport: 'football', bestAnswer: true,
+        title: 'Crampons pour synthétique ?',
+        excerpt: 'Mes vissés glissent sur le terrain d’Arena Five et me tirent sur les genoux. Moulés, stabilisés ou autre chose ? Budget 200 DT.',
+        tags: ['crampons', 'synthétique'], author: { name: 'Skander T.', level: 4 }, time: 'il y a 2 j', votes: 18, replies: 6,
+        href: 'FRM-04-Discussion.dc.html'
+      }, vote('pSkander'))
+    };
+  }
+}
+</script>
+</body>
+</html>

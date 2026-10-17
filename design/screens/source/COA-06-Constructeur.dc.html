@@ -1,0 +1,269 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Coach · Constructeur de programme</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/matchup/tokens.css">
+<link rel="stylesheet" href="ds/matchup/components/bundle.css">
+<script src="ds/matchup/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+/* coa:shared — identical in COA-04…12 */
+body{margin:0}
+a{color:var(--link)}
+.coa-head{display:flex; align-items:flex-start; justify-content:space-between; gap:var(--space-3); padding:52px var(--space-4) 0 var(--space-4)}
+.coa-head__text{flex:1; min-width:0; display:flex; flex-direction:column; align-items:flex-start; gap:var(--space-2)}
+.coa-head__actions{flex:none; display:flex; align-items:center; gap:var(--space-1); margin-inline-end:calc(-1 * var(--space-1))}
+.coa-role{display:inline-flex; align-items:center; gap:6px; padding:3px 10px 3px 8px; border-radius:var(--radius-full); background:var(--surface); box-shadow:inset 0 0 0 1px var(--border); color:var(--text)}
+.coa-me{position:relative; display:flex; border-radius:var(--radius-full); text-decoration:none; color:inherit}
+.coa-me::before{content:""; position:absolute; inset:-4px}
+.coa-me:focus-visible{outline:none; box-shadow:var(--focus-ring)}
+.coa-sec{display:flex; flex-direction:column; gap:var(--space-3); padding:0 var(--space-4)}
+.coa-sec__head{display:flex; align-items:center; justify-content:space-between; gap:var(--space-3); min-height:32px; margin-inline-end:calc(-1 * var(--space-3))}
+.coa-sec__title{margin:0; display:flex; align-items:center; gap:var(--space-2)}
+.coa-list{margin:0; padding:0; list-style:none; background:var(--surface); border-radius:var(--radius-md); box-shadow:var(--elevation-1); overflow:hidden}
+.coa-list > li{position:relative}
+.coa-list > li + li::before{content:""; position:absolute; top:0; inset-inline-start:68px; inset-inline-end:0; height:1px; background:var(--border); z-index:1}
+.coa-row{position:relative; display:flex; align-items:center; gap:var(--space-3); min-height:64px; padding:var(--space-3) var(--space-4); box-sizing:border-box; color:var(--text); text-decoration:none}
+a.coa-row:hover{background:var(--surface-muted)}
+a.coa-row:focus-visible{outline:none; box-shadow:inset 0 0 0 2px var(--focus)}
+.coa-row__text{flex:1; min-width:0; display:flex; flex-direction:column; gap:2px}
+.coa-row__sub{color:var(--text-secondary); white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+.coa-chev{flex:none; display:flex; color:var(--text-secondary); margin-inline-end:calc(-1 * var(--space-1))}
+.coa-pill{flex:none; display:inline-flex; align-items:center; gap:4px; padding:2px 10px; border-radius:var(--radius-full); background:var(--accent); color:var(--on-accent)}
+.coa-muted{color:var(--text-secondary)}
+.coa-hot{position:absolute; display:block; border-radius:var(--radius-full); z-index:3}
+.coa-hot:focus-visible{outline:2px solid var(--focus); outline-offset:2px}
+/* /coa:shared */
+/* bld:shared — identical in COA-06…08 */
+.bld-top{display:flex; align-items:center; gap:var(--space-1); padding:52px var(--space-4) 0 var(--space-2)}
+.bld-top__text{flex:1; min-width:0; display:flex; flex-direction:column}
+.bld-top__title{white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+.bld-saved{display:inline-flex; align-items:center; gap:4px; color:var(--text-secondary)}
+.bld-bar{position:absolute; left:0; right:0; bottom:0; z-index:2; display:flex; gap:var(--space-3); padding:12px var(--space-4) 34px var(--space-4); background:var(--surface); box-shadow:var(--elevation-2-up)}
+.bld-handle{flex:none; position:relative; display:flex; align-items:center; justify-content:center; width:24px; height:32px; border-radius:var(--radius-xs); color:var(--text-secondary); cursor:grab; touch-action:none}
+.bld-handle::before{content:""; position:absolute; inset:-6px -10px}
+.bld-handle:hover{color:var(--text); background:var(--surface-muted)}
+.bld-handle:focus-visible{outline:none; box-shadow:var(--focus-ring)}
+/* /bld:shared */
+.bld-summary{display:flex; align-items:center; gap:var(--space-3); padding:var(--space-3) var(--space-4) var(--space-3) var(--space-3)}
+.bld-hint{margin:0; display:flex; align-items:center; gap:6px; color:var(--text-secondary)}
+.bld-week{background:var(--surface); border-radius:var(--radius-md); box-shadow:var(--elevation-1); overflow:hidden}
+.bld-week__head{display:flex; align-items:center; gap:var(--space-2); padding:var(--space-3) var(--space-2) var(--space-3) var(--space-3)}
+.bld-week__toggle{appearance:none; border:0; margin:0; padding:0; background:none; font:inherit; color:inherit; text-align:start; cursor:pointer; flex:1; min-width:0; display:flex; align-items:center; gap:var(--space-3); min-height:44px; border-radius:var(--radius-sm)}
+.bld-week__toggle:focus-visible{outline:none; box-shadow:var(--focus-ring)}
+.bld-week__text{flex:1; min-width:0; display:flex; flex-direction:column; gap:2px}
+.bld-week__caret{flex:none; width:32px; height:32px; border-radius:var(--radius-full); background:var(--surface-muted); display:flex; align-items:center; justify-content:center; color:var(--text)}
+.bld-sessions{margin:0; padding:0 0 var(--space-2) 0; list-style:none; border-top:1px solid var(--border)}
+.bld-sess{position:relative; display:flex; align-items:center; gap:var(--space-2); min-height:64px; padding:var(--space-2) var(--space-2) var(--space-2) var(--space-3); box-sizing:border-box}
+.bld-sessions > li + li > .bld-sess::before{content:""; position:absolute; top:0; inset-inline-start:76px; inset-inline-end:0; height:1px; background:var(--border)}
+.bld-num{flex:none; width:32px; height:32px; border-radius:var(--radius-full); background:var(--surface-muted); box-shadow:inset 0 0 0 1px var(--border); display:flex; align-items:center; justify-content:center}
+.bld-sess__text{flex:1; min-width:0; display:flex; flex-direction:column; gap:2px; text-decoration:none; color:var(--text)}
+.bld-sess__meta{display:flex; align-items:center; gap:6px; color:var(--text-secondary); white-space:nowrap}
+.bld-ok{display:inline-flex; align-items:center; gap:3px; color:var(--success-text)}
+.bld-wait{display:inline-flex; align-items:center; gap:3px; color:var(--warning-text)}
+.bld-go{appearance:none; border:0; margin:0; padding:0; background:none; font:inherit; cursor:pointer; flex:none; position:relative; width:40px; height:40px; border-radius:var(--radius-full); display:flex; align-items:center; justify-content:center; color:var(--text-secondary); text-decoration:none}
+.bld-go:hover{background:var(--surface-muted); color:var(--text)}
+.bld-go:focus-visible{outline:none; box-shadow:var(--focus-ring)}
+.bld-drills{position:relative; margin:0 var(--space-3) var(--space-2) 60px; padding:var(--space-1) 0; list-style:none; display:flex; flex-direction:column; gap:var(--space-2)}
+.bld-drill{display:flex; align-items:center; gap:var(--space-2); min-height:52px; padding:var(--space-2) var(--space-2) var(--space-2) var(--space-1); border-radius:var(--radius-sm); background:var(--surface-muted); box-sizing:border-box}
+.bld-type{flex:none; width:28px; height:28px; border-radius:var(--radius-xs); background:var(--surface); display:flex; align-items:center; justify-content:center; color:var(--text)}
+.bld-drill__text{flex:1; min-width:0; display:flex; flex-direction:column; gap:1px}
+.bld-drill__text > .caption{white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+.bld-add{appearance:none; margin:0; font:inherit; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:var(--space-2); min-height:44px; border-radius:var(--radius-sm); border:1.5px dashed var(--border-strong); background:transparent; color:var(--text)}
+.bld-add:hover{background:var(--surface-muted)}
+.bld-add:focus-visible{outline:none; box-shadow:var(--focus-ring)}
+.bld-add.is-target{border-style:solid; border-color:var(--primary); box-shadow:0 0 0 3px var(--accent)}
+.bld-addsess{margin:var(--space-1) var(--space-3) var(--space-1) var(--space-3)}
+.bld-lib{margin:0; padding:0; list-style:none; display:flex; flex-direction:column}
+.bld-lib > li{display:flex; align-items:center; gap:var(--space-3); min-height:64px; padding:var(--space-2) 0; border-bottom:1px solid var(--border)}
+.bld-lib__text{flex:1; min-width:0; display:flex; flex-direction:column; gap:2px}
+.bld-chips{display:flex; gap:var(--space-2); overflow-x:auto; margin:0 calc(-1 * var(--space-4)); padding:2px var(--space-4); scrollbar-width:none}
+.bld-chips::-webkit-scrollbar{display:none}
+.bld-chips > *{flex:none}
+</style>
+</helmet>
+<div style="position: relative; width: 390px; height: 1940px; box-sizing: border-box; overflow: hidden; background: var(--bg); color: var(--text); font-family: var(--font-sans)">
+
+<header class="bld-top">
+<a href="COA-05-Programmes.dc.html" class="mu-iconbtn mu-iconbtn--l mu-iconbtn--ghost" aria-label="Retour à mes programmes" style="color: var(--text)"><x-import component-from-global-scope="MatchUp.Icon" name="arrow-left" size="{{i24}}"></x-import></a>
+<div class="bld-top__text">
+<span class="label-l bld-top__title">Jeu au filet en 4 semaines</span>
+<span class="caption bld-saved"><x-import component-from-global-scope="MatchUp.Icon" name="cloud-check" size="{{i14}}"></x-import>Brouillon enregistré · il y a 1 min</span>
+</div>
+<button type="button" class="mu-iconbtn mu-iconbtn--l mu-iconbtn--ghost" aria-label="Aperçu élève" style="color: var(--text)"><x-import component-from-global-scope="MatchUp.Icon" name="eye" size="{{i24}}"></x-import></button>
+</header>
+
+<div style="display: flex; flex-direction: column; gap: 16px; padding: 8px 16px 0 16px">
+<x-import component-from-global-scope="MatchUp.StepIndicator" step="{{one}}" total="{{two}}" title="Contenu"></x-import>
+
+<div class="mu-card bld-summary">
+<span style="flex: none; width: 56px; height: 56px; border-radius: var(--radius-sm); overflow: hidden; display: flex"><x-import component-from-global-scope="MatchUp.CourtArt" sport="padel" variant="photo" dc-props="{{cover}}"></x-import></span>
+<div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 4px">
+<span style="display: flex; align-items: center; gap: 8px"><x-import component-from-global-scope="MatchUp.Chip" kind="sport" sport="padel" size="s">Padel</x-import><span class="caption coa-muted">Niveau <span class="num-xs" style="color: var(--text)">2,5 – 4,0</span></span></span>
+<span class="caption coa-muted"><span class="num-xs" style="color: var(--text)">4</span> sem. · <span class="num-xs" style="color: var(--text)">{{sessCount}}</span> séances · <span class="num-xs" style="color: var(--text)">{{drillCount}}</span> exercices</span>
+</div>
+<button type="button" class="mu-btn mu-btn--tertiary mu-btn--s" style="margin-inline-end: -8px"><span class="mu-btn__content"><span class="mu-btn__label label">Infos</span></span></button>
+</div>
+
+<p class="bld-hint caption"><x-import component-from-global-scope="MatchUp.Icon" name="dots-six-vertical" size="{{i16}}"></x-import>Maintiens la poignée pour réordonner semaines, séances et exercices.</p>
+
+<section class="bld-week" aria-labelledby="w1-t">
+<div class="bld-week__head">
+<span class="bld-handle" role="button" tabindex="0" aria-label="Déplacer la semaine 1"><x-import component-from-global-scope="MatchUp.Icon" name="dots-six-vertical" size="{{i20}}"></x-import></span>
+<button type="button" class="bld-week__toggle" aria-expanded="{{w1}}" onclick="{{tw1}}">
+<span class="bld-week__text"><span class="overline coa-muted">Semaine 1</span><span id="w1-t" class="label-l">Les bases au filet</span><span class="caption coa-muted">3 séances · 9 exercices · 66 min</span></span>
+<span class="bld-week__caret"><x-import component-from-global-scope="MatchUp.Icon" name="{{w1Icon}}" size="{{i16}}"></x-import></span>
+</button>
+</div>
+<sc-if value="{{w1}}">
+<ol class="bld-sessions">
+<li><div class="bld-sess"><span class="bld-handle" role="button" tabindex="0" aria-label="Déplacer la séance 1"><x-import component-from-global-scope="MatchUp.Icon" name="dots-six-vertical" size="{{i20}}"></x-import></span><span class="bld-num num-s">1</span><span class="bld-sess__text"><span class="label">Position d’attente au filet</span><span class="bld-sess__meta caption">3 exercices · 20 min · <span class="bld-ok"><x-import component-from-global-scope="MatchUp.Icon" name="check-circle" size="{{i14}}"></x-import>Vidéo</span></span></span><a href="COA-07-Seance-video.dc.html" class="bld-go" aria-label="Modifier la séance 1"><x-import component-from-global-scope="MatchUp.Icon" name="caret-right" size="{{i20}}"></x-import></a></div></li>
+<li><div class="bld-sess"><span class="bld-handle" role="button" tabindex="0" aria-label="Déplacer la séance 2"><x-import component-from-global-scope="MatchUp.Icon" name="dots-six-vertical" size="{{i20}}"></x-import></span><span class="bld-num num-s">2</span><span class="bld-sess__text"><span class="label">Volée de coup droit</span><span class="bld-sess__meta caption">3 exercices · 22 min · <span class="bld-ok"><x-import component-from-global-scope="MatchUp.Icon" name="check-circle" size="{{i14}}"></x-import>Vidéo</span></span></span><a href="COA-07-Seance-video.dc.html" class="bld-go" aria-label="Modifier la séance 2"><x-import component-from-global-scope="MatchUp.Icon" name="caret-right" size="{{i20}}"></x-import></a></div></li>
+<li><div class="bld-sess"><span class="bld-handle" role="button" tabindex="0" aria-label="Déplacer la séance 3"><x-import component-from-global-scope="MatchUp.Icon" name="dots-six-vertical" size="{{i20}}"></x-import></span><span class="bld-num num-s">3</span><span class="bld-sess__text"><span class="label">Volée de revers</span><span class="bld-sess__meta caption">3 exercices · 24 min · <span class="bld-ok"><x-import component-from-global-scope="MatchUp.Icon" name="check-circle" size="{{i14}}"></x-import>Vidéo</span></span></span><a href="COA-07-Seance-video.dc.html" class="bld-go" aria-label="Modifier la séance 3"><x-import component-from-global-scope="MatchUp.Icon" name="caret-right" size="{{i20}}"></x-import></a></div></li>
+</ol>
+</sc-if>
+</section>
+
+<section class="bld-week" aria-labelledby="w2-t">
+<div class="bld-week__head">
+<span class="bld-handle" role="button" tabindex="0" aria-label="Déplacer la semaine 2"><x-import component-from-global-scope="MatchUp.Icon" name="dots-six-vertical" size="{{i20}}"></x-import></span>
+<button type="button" class="bld-week__toggle" aria-expanded="{{w2}}" onclick="{{tw2}}">
+<span class="bld-week__text"><span class="overline coa-muted">Semaine 2</span><span id="w2-t" class="label-l">Placement</span><span class="caption coa-muted">3 séances · {{w2Drills}} exercices · 71 min</span></span>
+<span class="bld-week__caret"><x-import component-from-global-scope="MatchUp.Icon" name="{{w2Icon}}" size="{{i16}}"></x-import></span>
+</button>
+</div>
+<sc-if value="{{w2}}">
+<ol class="bld-sessions">
+<li><div class="bld-sess"><span class="bld-handle" role="button" tabindex="0" aria-label="Déplacer la séance 4"><x-import component-from-global-scope="MatchUp.Icon" name="dots-six-vertical" size="{{i20}}"></x-import></span><span class="bld-num num-s">4</span><span class="bld-sess__text"><span class="label">Fermer l’angle</span><span class="bld-sess__meta caption">3 exercices · 22 min · <span class="bld-ok"><x-import component-from-global-scope="MatchUp.Icon" name="check-circle" size="{{i14}}"></x-import>Vidéo</span></span></span><a href="COA-07-Seance-video.dc.html" class="bld-go" aria-label="Modifier la séance 4"><x-import component-from-global-scope="MatchUp.Icon" name="caret-right" size="{{i20}}"></x-import></a></div></li>
+<li>
+<div class="bld-sess"><span class="bld-handle" role="button" tabindex="0" aria-label="Déplacer la séance 5"><x-import component-from-global-scope="MatchUp.Icon" name="dots-six-vertical" size="{{i20}}"></x-import></span><span class="bld-num num-s" style="background: var(--accent); color: var(--on-accent); box-shadow: none">5</span><a href="COA-07-Seance-video.dc.html" class="bld-sess__text"><span class="label">Volée croisée profonde</span><span class="bld-sess__meta caption">{{s5Count}} · 24 min · <span class="bld-wait"><x-import component-from-global-scope="MatchUp.Icon" name="hourglass-medium" size="{{i14}}"></x-import>En traitement</span></span></a><button type="button" class="bld-go" aria-label="Replier les exercices de la séance 5" aria-expanded="true"><x-import component-from-global-scope="MatchUp.Icon" name="caret-up" size="{{i20}}"></x-import></button></div>
+<ol class="bld-drills" aria-label="Exercices de la séance 5">
+<sc-for list="{{drills}}" as="d">
+<li class="bld-drill"><span class="bld-handle" role="button" tabindex="0" aria-label="Déplacer {{d.name}}"><x-import component-from-global-scope="MatchUp.Icon" name="dots-six-vertical" size="{{i16}}"></x-import></span><span class="bld-type" title="{{d.kind}}"><x-import component-from-global-scope="MatchUp.Icon" name="{{d.icon}}" size="{{i16}}"></x-import></span><span class="bld-drill__text"><span class="label">{{d.name}}</span><span class="caption coa-muted">{{d.meta}}</span></span><button type="button" class="mu-iconbtn mu-iconbtn--s mu-iconbtn--ghost" aria-label="Options de {{d.name}}" style="color: var(--text-secondary)"><x-import component-from-global-scope="MatchUp.Icon" name="dots-three-vertical" size="{{i16}}"></x-import></button></li>
+</sc-for>
+<li><button type="button" class="bld-add {{addClass}}" style="width: 100%" onclick="{{openSheet}}"><x-import component-from-global-scope="MatchUp.Icon" name="plus" size="{{i16}}"></x-import><span class="label">Ajouter un exercice</span></button></li>
+</ol>
+</li>
+<li><div class="bld-sess"><span class="bld-handle" role="button" tabindex="0" aria-label="Déplacer la séance 6"><x-import component-from-global-scope="MatchUp.Icon" name="dots-six-vertical" size="{{i20}}"></x-import></span><span class="bld-num num-s">6</span><span class="bld-sess__text"><span class="label">Volée amortie</span><span class="bld-sess__meta caption">4 exercices · 25 min · <span class="bld-ok"><x-import component-from-global-scope="MatchUp.Icon" name="check-circle" size="{{i14}}"></x-import>Vidéo</span></span></span><a href="COA-07-Seance-video.dc.html" class="bld-go" aria-label="Modifier la séance 6"><x-import component-from-global-scope="MatchUp.Icon" name="caret-right" size="{{i20}}"></x-import></a></div></li>
+</ol>
+<div class="bld-addsess"><button type="button" class="mu-btn mu-btn--tertiary mu-btn--s"><span class="mu-btn__content"><x-import component-from-global-scope="MatchUp.Icon" name="plus" size="{{i16}}"></x-import><span class="mu-btn__label label">Ajouter une séance</span></span></button></div>
+</sc-if>
+</section>
+
+<section class="bld-week" aria-labelledby="w3-t">
+<div class="bld-week__head">
+<span class="bld-handle" role="button" tabindex="0" aria-label="Déplacer la semaine 3"><x-import component-from-global-scope="MatchUp.Icon" name="dots-six-vertical" size="{{i20}}"></x-import></span>
+<button type="button" class="bld-week__toggle" aria-expanded="{{w3}}" onclick="{{tw3}}">
+<span class="bld-week__text"><span class="overline coa-muted">Semaine 3</span><span id="w3-t" class="label-l">Sous pression</span><span class="caption coa-muted">3 séances · 10 exercices · 78 min</span></span>
+<span class="bld-week__caret"><x-import component-from-global-scope="MatchUp.Icon" name="{{w3Icon}}" size="{{i16}}"></x-import></span>
+</button>
+</div>
+<sc-if value="{{w3}}">
+<ol class="bld-sessions">
+<li><div class="bld-sess"><span class="bld-handle" role="button" tabindex="0" aria-label="Déplacer la séance 7"><x-import component-from-global-scope="MatchUp.Icon" name="dots-six-vertical" size="{{i20}}"></x-import></span><span class="bld-num num-s">7</span><span class="bld-sess__text"><span class="label">Défendre le lob depuis le filet</span><span class="bld-sess__meta caption">3 exercices · 25 min</span></span><a href="COA-07-Seance-video.dc.html" class="bld-go" aria-label="Modifier la séance 7"><x-import component-from-global-scope="MatchUp.Icon" name="caret-right" size="{{i20}}"></x-import></a></div></li>
+<li><div class="bld-sess"><span class="bld-handle" role="button" tabindex="0" aria-label="Déplacer la séance 8"><x-import component-from-global-scope="MatchUp.Icon" name="dots-six-vertical" size="{{i20}}"></x-import></span><span class="bld-num num-s">8</span><span class="bld-sess__text"><span class="label">Enchaînement volée – smash</span><span class="bld-sess__meta caption">4 exercices · 28 min</span></span><a href="COA-07-Seance-video.dc.html" class="bld-go" aria-label="Modifier la séance 8"><x-import component-from-global-scope="MatchUp.Icon" name="caret-right" size="{{i20}}"></x-import></a></div></li>
+<li><div class="bld-sess"><span class="bld-handle" role="button" tabindex="0" aria-label="Déplacer la séance 9"><x-import component-from-global-scope="MatchUp.Icon" name="dots-six-vertical" size="{{i20}}"></x-import></span><span class="bld-num num-s">9</span><span class="bld-sess__text"><span class="label">Bandeja de dépannage</span><span class="bld-sess__meta caption">3 exercices · 25 min</span></span><a href="COA-07-Seance-video.dc.html" class="bld-go" aria-label="Modifier la séance 9"><x-import component-from-global-scope="MatchUp.Icon" name="caret-right" size="{{i20}}"></x-import></a></div></li>
+</ol>
+</sc-if>
+</section>
+
+<section class="bld-week" aria-labelledby="w4-t">
+<div class="bld-week__head">
+<span class="bld-handle" role="button" tabindex="0" aria-label="Déplacer la semaine 4"><x-import component-from-global-scope="MatchUp.Icon" name="dots-six-vertical" size="{{i20}}"></x-import></span>
+<button type="button" class="bld-week__toggle" aria-expanded="{{w4}}" onclick="{{tw4}}">
+<span class="bld-week__text"><span class="overline coa-muted">Semaine 4</span><span id="w4-t" class="label-l">En match</span><span class="caption bld-wait"><x-import component-from-global-scope="MatchUp.Icon" name="warning-circle" size="{{i14}}"></x-import>1 séance · ajoute-en 2 pour publier</span></span>
+<span class="bld-week__caret"><x-import component-from-global-scope="MatchUp.Icon" name="{{w4Icon}}" size="{{i16}}"></x-import></span>
+</button>
+</div>
+<sc-if value="{{w4}}">
+<ol class="bld-sessions">
+<li><div class="bld-sess"><span class="bld-handle" role="button" tabindex="0" aria-label="Déplacer la séance 10"><x-import component-from-global-scope="MatchUp.Icon" name="dots-six-vertical" size="{{i20}}"></x-import></span><span class="bld-num num-s">10</span><span class="bld-sess__text"><span class="label">Monter au filet à deux</span><span class="bld-sess__meta caption">3 exercices · 24 min</span></span><a href="COA-07-Seance-video.dc.html" class="bld-go" aria-label="Modifier la séance 10"><x-import component-from-global-scope="MatchUp.Icon" name="caret-right" size="{{i20}}"></x-import></a></div></li>
+</ol>
+<div class="bld-addsess"><button type="button" class="mu-btn mu-btn--tertiary mu-btn--s"><span class="mu-btn__content"><x-import component-from-global-scope="MatchUp.Icon" name="plus" size="{{i16}}"></x-import><span class="mu-btn__label label">Ajouter une séance</span></span></button></div>
+</sc-if>
+</section>
+
+<button type="button" class="bld-add" style="min-height: 52px"><x-import component-from-global-scope="MatchUp.Icon" name="plus" size="{{i20}}"></x-import><span class="label">Ajouter une semaine</span></button>
+</div>
+
+<div class="bld-bar">
+<a href="COA-08-Prix-et-publication.dc.html" class="mu-btn mu-btn--primary mu-btn--xl mu-btn--block"><span class="mu-btn__content"><span class="mu-btn__label label-l">Continuer vers le prix</span><x-import component-from-global-scope="MatchUp.Icon" name="arrow-right" size="{{i20}}"></x-import></span></a>
+</div>
+
+<x-import component-from-global-scope="MatchUp.BottomSheet" inline="{{yes}}" open="{{sheetOpen}}" on-close="{{closeSheet}}" height="auto" modal="{{no}}" scrim="{{no}}" auto-focus="{{no}}" title="Ajouter un exercice" safe-area="{{safe}}" footer="{{sheetFooter}}">
+<div style="display: flex; flex-direction: column; gap: 12px">
+<p class="body coa-muted" style="margin: -8px 0 0 0">Dans <span class="label" style="color: var(--text)">Séance 5 · Volée croisée profonde</span></p>
+<x-import component-from-global-scope="MatchUp.SearchField" label="Rechercher un exercice" placeholder="Rechercher un exercice" size="l"></x-import>
+<div class="bld-chips" role="radiogroup" aria-label="Catégorie d’exercice">
+<x-import component-from-global-scope="MatchUp.Chip" kind="choice" selected="{{yes}}">Tous · 24</x-import>
+<x-import component-from-global-scope="MatchUp.Chip" kind="choice">Jeu au filet</x-import>
+<x-import component-from-global-scope="MatchUp.Chip" kind="choice">Déplacements</x-import>
+<x-import component-from-global-scope="MatchUp.Chip" kind="choice">Physique</x-import>
+</div>
+<ul class="bld-lib" aria-label="Ma bibliothèque d’exercices">
+<sc-for list="{{library}}" as="l">
+<li>
+<span class="bld-type" style="width: 40px; height: 40px; border-radius: var(--radius-sm); background: var(--surface-muted)"><x-import component-from-global-scope="MatchUp.Icon" name="{{l.icon}}" size="{{i20}}"></x-import></span>
+<span class="bld-lib__text"><span class="label">{{l.name}}</span><span class="caption coa-muted">{{l.meta}}</span></span>
+<x-import component-from-global-scope="MatchUp.Checkbox" checked="{{l.on}}" on-change="{{l.toggle}}" aria-label="Ajouter {{l.name}}"></x-import>
+</li>
+</sc-for>
+</ul>
+<a href="COA-07-Seance-video.dc.html" class="mu-btn mu-btn--tertiary mu-btn--m" style="align-self: flex-start; margin-inline-start: -8px"><span class="mu-btn__content"><x-import component-from-global-scope="MatchUp.Icon" name="plus-circle" size="{{i20}}"></x-import><span class="mu-btn__label label">Créer un nouvel exercice</span></span></a>
+</div>
+</x-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":1940}}'>
+class Component extends DCLogic {
+  state = { open: { w1: false, w2: true, w3: false, w4: false }, sheet: true, added: false, pick: { split: true, jeu: false, basse: false, gainage: false } };
+  toggleWeek(k) { this.setState({ open: Object.assign({}, this.state.open, { [k]: !this.state.open[k] }) }); }
+  renderVals() {
+    const st = this.state;
+    const lib = [
+      ['split', 'Split-step avant la volée', '45 s × 4 · vidéo 0:35', 'timer'],
+      ['jeu', 'Jeu dirigé 2 contre 1 au filet', '4 min × 3 · vidéo 1:10', 'timer'],
+      ['basse', 'Volée basse sous la bande', '10 rép. × 3 · sans vidéo', 'repeat'],
+      ['gainage', 'Gainage latéral', '30 s × 3 · vidéo 0:28', 'timer']
+    ];
+    const library = lib.map(([id, name, meta, icon]) => ({
+      name, meta, icon, on: !!st.pick[id],
+      toggle: () => this.setState({ pick: Object.assign({}, st.pick, { [id]: !st.pick[id] }) })
+    }));
+    const n = library.filter((l) => l.on).length;
+    const drills = [
+      { name: 'Échauffement au filet', meta: '3 min · vidéo 0:40', icon: 'timer', kind: 'Durée' },
+      { name: 'Ouverture de raquette', meta: '12 rép. × 3 · vidéo 0:52', icon: 'repeat', kind: 'Répétitions' },
+      { name: 'Volée croisée sur panier de balles', meta: '45 s × 6 · vidéo : envoi 64 %', icon: 'timer', kind: 'Durée' }
+    ];
+    if (st.added) lib.forEach(([id, name, meta, icon]) => { if (st.pick[id]) drills.push({ name, meta, icon, kind: icon === 'timer' ? 'Durée' : 'Répétitions' }); });
+    const add = () => this.setState({ added: true, sheet: false });
+    return {
+      yes: true, no: false, i14: 14, i16: 16, i20: 20, i24: 24, one: 1, two: 2, lv3: 3,
+      safe: { bottom: 34 },
+      cover: { style: { width: '56px', height: '56px' } },
+      w1: st.open.w1, w2: st.open.w2, w3: st.open.w3, w4: st.open.w4,
+      w1Icon: st.open.w1 ? 'caret-up' : 'caret-down', w2Icon: st.open.w2 ? 'caret-up' : 'caret-down',
+      w3Icon: st.open.w3 ? 'caret-up' : 'caret-down', w4Icon: st.open.w4 ? 'caret-up' : 'caret-down',
+      tw1: () => this.toggleWeek('w1'), tw2: () => this.toggleWeek('w2'), tw3: () => this.toggleWeek('w3'), tw4: () => this.toggleWeek('w4'),
+      drills, library,
+      s5Count: drills.length + ' exercices',
+      w2Drills: 7 + drills.length,
+      sessCount: 10,
+      drillCount: 29 + drills.length,
+      sheetOpen: st.sheet,
+      addClass: st.sheet ? 'is-target' : '',
+      openSheet: () => this.setState({ sheet: true, added: false }),
+      closeSheet: () => this.setState({ sheet: false }),
+      sheetFooter: React.createElement(MatchUp.Button, { size: 'xl', fullWidth: true, disabled: n === 0, onClick: add }, n === 0 ? 'Choisis un exercice' : (n === 1 ? 'Ajouter 1 exercice' : 'Ajouter ' + n + ' exercices'))
+    };
+  }
+}
+</script>
+</body>
+</html>

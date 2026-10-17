@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Créer l’équipe</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/matchup/tokens.css">
+<link rel="stylesheet" href="ds/matchup/components/bundle.css">
+<script src="ds/matchup/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0}
+a{color:var(--link)}
+.tc-muted{color:var(--text-secondary)}
+.tc-m0{margin:0}
+.tc-logo{position:relative; flex:none; width:72px; height:72px; border-radius:var(--radius-md); background:var(--padel-soft); color:var(--padel-text); display:flex; align-items:center; justify-content:center}
+.tc-logo__cam{appearance:none; border:0; padding:0; margin:0; cursor:pointer; position:absolute; right:-6px; bottom:-6px; width:28px; height:28px; border-radius:var(--radius-full); background:var(--surface); box-shadow:var(--elevation-1), inset 0 0 0 1px var(--border); color:var(--text); display:flex; align-items:center; justify-content:center}
+.tc-cap{display:flex; align-items:center; gap:12px; padding:12px; border-radius:var(--radius-md); background:var(--surface); box-shadow:inset 0 0 0 1px var(--border)}
+.tc-crown{display:inline-flex; align-items:center; gap:4px; padding:2px 8px; border-radius:var(--radius-full); background:var(--accent); color:var(--on-accent)}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; box-sizing: border-box; overflow: hidden; display: flex; flex-direction: column; background: var(--surface); color: var(--text); font-family: var(--font-sans)">
+<div style="display: flex; align-items: center; gap: 8px; padding: 52px 16px 0 8px">
+<a href="TRN-02-Detail-du-tournoi.dc.html" class="mu-iconbtn mu-iconbtn--l mu-iconbtn--ghost" aria-label="Retour" style="color: var(--text)"><x-import component-from-global-scope="MatchUp.Icon" name="arrow-left" size="{{i24}}"></x-import></a>
+<div style="flex: 1; min-width: 0"><x-import component-from-global-scope="MatchUp.StepIndicator" step="{{one}}" total="{{three}}" title="Ton équipe"></x-import></div>
+</div>
+<div style="flex: 1; min-height: 0; overflow: auto; display: flex; flex-direction: column; gap: 20px; padding: 16px 16px 24px 16px">
+<div style="display: flex; flex-direction: column; gap: 4px">
+<h1 class="h2 tc-m0">Crée ton équipe</h1>
+<p class="body tc-m0 tc-muted">Une paire, un nom, un capitaine. Tu ajoutes ton ou ta partenaire à l’étape suivante.</p>
+</div>
+
+<x-import component-from-global-scope="MatchUp.TournamentCard" dc-props="{{tour}}"></x-import>
+
+<div style="display: flex; align-items: flex-start; gap: 16px">
+<div style="display: flex; flex-direction: column; align-items: center; gap: 8px; padding-top: 2px">
+<div class="tc-logo" role="img" aria-label="Logo de l’équipe : initiales LF">
+<span class="h3">LF</span>
+<button type="button" class="tc-logo__cam" aria-label="Ajouter un logo"><x-import component-from-global-scope="MatchUp.Icon" name="camera-plus" size="{{i16}}"></x-import></button>
+</div>
+<span class="caption tc-muted">Logo</span>
+</div>
+<div style="flex: 1; min-width: 0">
+<x-import component-from-global-scope="MatchUp.TextField" label="Nom de l’équipe" default-value="Les Faucons" success="Nom libre dans ce tournoi" max-length="{{max}}"></x-import>
+</div>
+</div>
+<p class="caption tc-m0 tc-muted" style="margin-top: -8px">Sans logo, on affiche vos initiales. Tu peux en ajouter un jusqu’au tirage des poules.</p>
+
+<section aria-labelledby="tc-cap" style="display: flex; flex-direction: column; gap: 8px">
+<h2 id="tc-cap" class="label-l tc-m0">Capitaine</h2>
+<div class="tc-cap">
+<x-import component-from-global-scope="MatchUp.Avatar" name="Yassine B." size="m" level="{{l35}}"></x-import>
+<span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px">
+<span style="display: flex; align-items: center; gap: 8px"><span class="label">Yassine B. · toi</span><span class="tc-crown label-s"><x-import component-from-global-scope="MatchUp.Icon" name="crown" weight="fill" size="{{i14}}"></x-import>Capitaine</span></span>
+<span class="caption tc-muted">Padel 3,5 · Intermédiaire · côté gauche</span>
+</span>
+</div>
+<p class="caption tc-m0 tc-muted" style="display: flex; gap: 6px"><span style="display: flex; flex: none; padding-top: 1px"><x-import component-from-global-scope="MatchUp.Icon" name="info" size="{{i14}}"></x-import></span>Tu paies l’inscription et reçois les annonces de l’organisateur. Tu pourras passer le brassard à ton partenaire.</p>
+</section>
+</div>
+<div style="padding: 12px 16px 34px 16px; background: var(--surface); box-shadow: var(--elevation-2-up)">
+<a href="TRN-05-Membres.dc.html" class="mu-btn mu-btn--primary mu-btn--xl mu-btn--block"><span class="mu-btn__content"><span class="mu-btn__label label-l">Continuer</span><x-import component-from-global-scope="MatchUp.Icon" name="arrow-right" size="{{i20}}"></x-import></span></a>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      yes: true, i14: 14, i16: 16, i20: 20, i24: 24, one: 1, three: 3, l35: 3.5, max: 24,
+      tour: {
+        variant: 'compact', sport: 'padel', name: 'Padel Masters Lac 2', start: new Date(2026, 9, 24, 9), end: new Date(2026, 9, 26, 9),
+        venue: 'Smash Padel Club', place: 'Lac 2', fee: 120, prize: 1500, teamsTotal: 16, teamsRegistered: 12
+      }
+    };
+  }
+}
+</script>
+</body>
+</html>

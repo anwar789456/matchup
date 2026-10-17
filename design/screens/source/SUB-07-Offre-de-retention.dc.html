@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Offre de rétention</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/matchup/tokens.css">
+<link rel="stylesheet" href="ds/matchup/components/bundle.css">
+<script src="ds/matchup/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0}
+a{color:var(--link)}
+.sub-body > *{flex-shrink:0}
+.sub-opts{display:grid; grid-template-columns:1fr 1fr; gap:var(--space-3)}
+.sub-opt{display:flex; flex-direction:column; gap:var(--space-2); padding:var(--space-3) var(--space-3) var(--space-4); border-radius:var(--radius-md); background:var(--surface-muted)}
+.sub-opt__head{display:flex; align-items:center; gap:var(--space-2)}
+.sub-opt__ico{flex:none; width:28px; height:28px; border-radius:var(--radius-full); display:grid; place-items:center; background:var(--surface); color:var(--text); box-shadow:inset 0 0 0 1px var(--border)}
+.sub-opt ul{margin:0; padding:0 0 0 18px; display:flex; flex-direction:column; gap:4px; color:var(--text-secondary)}
+</style>
+</helmet>
+<div style="position: relative; width: 390px; height: 844px; box-sizing: border-box; overflow: hidden; display: flex; flex-direction: column; background: var(--surface); color: var(--text); font-family: var(--font-sans)">
+<div style="display: flex; align-items: center; gap: 8px; padding: 52px 16px 0 8px">
+<a href="SUB-06-Resilier-raison.dc.html" class="mu-iconbtn mu-iconbtn--l mu-iconbtn--ghost" aria-label="Retour à la raison" style="color: var(--text)"><x-import component-from-global-scope="MatchUp.Icon" name="arrow-left" size="{{i24}}"></x-import></a>
+<div style="flex: 1; min-width: 0"><x-import component-from-global-scope="MatchUp.StepIndicator" step="{{two}}" total="{{two}}" title="Résilier Premium"></x-import></div>
+</div>
+
+<div class="sub-body" style="flex: 1; min-height: 0; overflow: auto; display: flex; flex-direction: column; gap: 20px; padding: 16px 16px 20px 16px">
+<div style="display: flex; flex-direction: column; gap: 6px">
+<h1 class="h2" style="margin: 0">Une dernière option</h1>
+<p class="body" style="margin: 0; color: var(--text-secondary)">Tu as répondu « Trop cher ». Si tu préfères résilier, choisis « Non merci, résilier » : rien d’autre à faire.</p>
+</div>
+
+<x-import component-from-global-scope="MatchUp.AiSuggestionCard" context="Offre pour toi" title="−30 % pendant 2 mois" reason="tu as joué 4 matchs ce mois-ci : Premium te sert encore." dismissible="{{no}}" heading-level="{{two}}">
+<span style="display: flex; flex-direction: column; gap: 6px">
+<span style="display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap"><span class="num-l" style="color: var(--text)">13,300 DT</span><span class="body" style="color: var(--text-secondary)">/mois au lieu de 19 DT</span></span>
+<span class="caption" style="color: var(--text-secondary)">Les 30 oct. et 30 nov., puis 19 DT/mois. Toujours résiliable.</span>
+</span>
+</x-import>
+
+<div class="sub-opts">
+<div class="sub-opt">
+<div class="sub-opt__head"><span class="sub-opt__ico"><x-import component-from-global-scope="MatchUp.Icon" name="crown-simple" size="{{i16}}"></x-import></span><span class="label">Avec l’offre</span></div>
+<ul class="caption">
+<li>Premium continue</li>
+<li>13,300 DT le 30 oct.</li>
+<li>19 DT dès le 30 déc.</li>
+</ul>
+</div>
+<div class="sub-opt">
+<div class="sub-opt__head"><span class="sub-opt__ico"><x-import component-from-global-scope="MatchUp.Icon" name="x-circle" size="{{i16}}"></x-import></span><span class="label">Si tu résilies</span></div>
+<ul class="caption">
+<li>Actif jusqu’au 30 oct.</li>
+<li>Aucun prélèvement</li>
+<li>Puis offre Gratuit</li>
+</ul>
+</div>
+</div>
+</div>
+
+<div style="padding: 12px 16px 34px 16px; background: var(--surface); box-shadow: var(--elevation-2-up); display: flex; flex-direction: column; gap: 8px">
+<a href="SUB-04-Abonnement.dc.html" class="mu-btn mu-btn--secondary mu-btn--xl mu-btn--block"><span class="mu-btn__content"><span class="mu-btn__label label-l">Accepter l’offre</span><span class="mu-btn__dot" aria-hidden="true">·</span><span class="mu-btn__price num-m">13,300 DT/mois</span></span></a>
+<a href="SUB-08-Resiliation-confirmee.dc.html" class="mu-btn mu-btn--secondary mu-btn--xl mu-btn--block"><span class="mu-btn__content"><span class="mu-btn__label label-l">Non merci, résilier</span></span></a>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() { return { yes: true, no: false, two: 2, i16: 16, i20: 20, i24: 24 }; }
+}
+</script>
+</body>
+</html>

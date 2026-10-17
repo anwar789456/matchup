@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Demander un remboursement</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/matchup/tokens.css">
+<link rel="stylesheet" href="ds/matchup/components/bundle.css">
+<script src="ds/matchup/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0}
+a{color:var(--link)}
+.rfd-sec{display:flex; flex-direction:column; gap:var(--space-3)}
+.rfd-sec__t{margin:0; display:flex; align-items:center; gap:var(--space-2)}
+.rfd-n{flex:none; width:24px; height:24px; border-radius:var(--radius-full); background:var(--surface-inverse); color:var(--text-inverse); display:inline-flex; align-items:center; justify-content:center}
+.rfd-list{display:flex; flex-direction:column; padding:4px 16px}
+.rfd-list .mu-radio{padding-block:12px; align-items:center}
+.rfd-list .mu-radio + .mu-radio{border-top:1px solid var(--border)}
+.rfd-list .mu-radio__text{flex:1; min-width:0}
+.rfd-list .mu-radio__label{display:block}
+.rfd-pay{display:flex; align-items:center; gap:12px; width:100%}
+.rfd-pay__ico{flex:none; width:40px; height:40px; border-radius:var(--radius-full); display:flex; align-items:center; justify-content:center}
+.rfd-pay__txt{flex:1; min-width:0; display:flex; flex-direction:column; gap:2px}
+.rfd-chips{display:flex; flex-wrap:wrap; gap:var(--space-2)}
+.rfd-tag{display:inline-flex; align-items:center; gap:4px; padding:2px 8px; border-radius:var(--radius-full); background:var(--success-soft); color:var(--success-text); white-space:nowrap}
+</style>
+</helmet>
+<div style="position: relative; width: 390px; height: 1368px; box-sizing: border-box; overflow: hidden; display: flex; flex-direction: column; background: var(--surface); color: var(--text); font-family: var(--font-sans)">
+
+<div style="display: flex; align-items: center; gap: 4px; padding: 52px 16px 4px 8px">
+<a href="WAL-01-Portefeuille.dc.html" class="mu-iconbtn mu-iconbtn--l mu-iconbtn--ghost" aria-label="Retour au portefeuille" style="color: var(--text)"><x-import component-from-global-scope="MatchUp.Icon" name="arrow-left" size="{{i24}}"></x-import></a>
+<h1 class="h3" style="flex: 1; margin: 0">Demander un remboursement</h1>
+</div>
+
+<div style="flex: 1; min-height: 0; display: flex; flex-direction: column; gap: 32px; padding: 8px 16px 24px 16px">
+<p class="body" style="margin: 0; color: var(--text-secondary)">Un souci avec un paiement ? Dis-nous ce qui s’est passé : on vérifie avec le terrain, puis on te rembourse.</p>
+
+<section class="rfd-sec" aria-labelledby="rfd-1">
+<h2 id="rfd-1" class="rfd-sec__t h3"><span class="rfd-n label-s">1</span>Quel paiement ?</h2>
+<div class="mu-card rfd-list">
+<x-import component-from-global-scope="MatchUp.Radio.Group" aria-labelledby="rfd-1" value="{{pay}}" on-change="{{setPay}}">
+<x-import component-from-global-scope="MatchUp.Radio" value="hoop"><span class="rfd-pay"><span class="rfd-pay__ico" style="background: var(--basketball-soft); color: var(--basketball-text)"><x-import component-from-global-scope="MatchUp.Icon" name="sport-basketball" size="{{i20}}"></x-import></span><span class="rfd-pay__txt"><span class="label">Part · Hoop Zone</span><span class="caption" style="color: var(--text-secondary)">dim. 27 sept. · Carte •••• 4242</span></span><span class="num-s">9 DT</span></span></x-import>
+<x-import component-from-global-scope="MatchUp.Radio" value="smash"><span class="rfd-pay"><span class="rfd-pay__ico" style="background: var(--padel-soft); color: var(--padel-text)"><x-import component-from-global-scope="MatchUp.Icon" name="sport-padel" size="{{i20}}"></x-import></span><span class="rfd-pay__txt"><span class="label">Part · Smash Padel Club</span><span class="caption" style="color: var(--text-secondary)">ven. 9 oct. · Solde MatchUp</span></span><span class="num-s">20 DT</span></span></x-import>
+<x-import component-from-global-scope="MatchUp.Radio" value="arena"><span class="rfd-pay"><span class="rfd-pay__ico" style="background: var(--football-soft); color: var(--football-text)"><x-import component-from-global-scope="MatchUp.Icon" name="sport-football" size="{{i20}}"></x-import></span><span class="rfd-pay__txt"><span class="label">Part · Arena Five</span><span class="caption" style="color: var(--text-secondary)">sam. 3 oct. · Carte •••• 4242</span></span><span class="num-s">15 DT</span></span></x-import>
+</x-import>
+</div>
+<p class="caption" style="margin: 0; display: flex; align-items: flex-start; gap: 8px; color: var(--text-secondary)"><span style="flex: none; display: flex"><x-import component-from-global-scope="MatchUp.Icon" name="info" size="{{i16}}"></x-import></span><span>Une partie à venir ? Annule ta place depuis <a href="MAT-01-A-venir.dc.html" class="label-s" style="color: var(--text)">Mes matchs</a> : le remboursement est automatique.</span></p>
+</section>
+
+<section class="rfd-sec" aria-labelledby="rfd-2">
+<h2 id="rfd-2" class="rfd-sec__t h3"><span class="rfd-n label-s">2</span>Que s’est-il passé ?</h2>
+<div class="rfd-chips" role="radiogroup" aria-labelledby="rfd-2">
+<x-import component-from-global-scope="MatchUp.Chip" kind="choice" selected="{{rClosed}}" on-click="{{toClosed}}" role="radio" aria-checked="{{rClosed}}">Terrain fermé</x-import>
+<x-import component-from-global-scope="MatchUp.Chip" kind="choice" selected="{{rCancel}}" on-click="{{toCancel}}" role="radio" aria-checked="{{rCancel}}">Partie annulée</x-import>
+<x-import component-from-global-scope="MatchUp.Chip" kind="choice" selected="{{rTwice}}" on-click="{{toTwice}}" role="radio" aria-checked="{{rTwice}}">Payé deux fois</x-import>
+<x-import component-from-global-scope="MatchUp.Chip" kind="choice" selected="{{rOther}}" on-click="{{toOther}}" role="radio" aria-checked="{{rOther}}">Autre</x-import>
+</div>
+<x-import component-from-global-scope="MatchUp.TextField" label="Explique en quelques mots" multiline="{{yes}}" rows="{{three}}" max-length="{{max}}" counter="{{yes}}" value="{{reason}}" on-change="{{setReason}}"></x-import>
+<x-import component-from-global-scope="MatchUp.FileUpload" variant="grid" label="Photo" optional="{{yes}}" files="{{photos}}" max-files="{{three}}" cover-label="{{nil}}" hint="JPG, PNG · 10 Mo max" helper="Une photo du terrain fermé aide à traiter ta demande plus vite." on-remove="{{noop}}"></x-import>
+</section>
+
+<section class="rfd-sec" aria-labelledby="rfd-3">
+<h2 id="rfd-3" class="rfd-sec__t h3"><span class="rfd-n label-s">3</span>Où veux-tu être remboursé ?</h2>
+<div class="mu-card rfd-list">
+<x-import component-from-global-scope="MatchUp.Radio.Group" aria-labelledby="rfd-3" value="{{dest}}" on-change="{{setDest}}">
+<x-import component-from-global-scope="MatchUp.Radio" value="solde" description="Sous 5 jours ouvrés au plus tard, utilisable dès réception."><span style="display: flex; align-items: center; justify-content: space-between; gap: 8px; width: 100%"><span class="label">Sur mon solde MatchUp</span><span class="rfd-tag label-s"><x-import component-from-global-scope="MatchUp.Icon" name="lightning" weight="fill" size="{{i14}}"></x-import>Plus rapide</span></span></x-import>
+<x-import component-from-global-scope="MatchUp.Radio" value="carte" description="5 à 10 jours ouvrés, selon ta banque."><span class="label">Sur ma carte Visa •••• 4242</span></x-import>
+</x-import>
+</div>
+</section>
+
+</div>
+
+<div style="position: absolute; left: 0; right: 0; bottom: 0; padding: 12px 16px 34px 16px; background: var(--surface); box-shadow: var(--elevation-2-up); display: flex; flex-direction: column; gap: 8px">
+<div style="display: flex; align-items: baseline; justify-content: space-between; gap: 12px"><span class="caption" style="color: var(--text-secondary)">Montant demandé · {{payLabel}}</span><span class="num-m">{{payAmt}}</span></div>
+<a href="WAL-05-Statut-du-remboursement.dc.html" class="mu-btn mu-btn--primary mu-btn--xl mu-btn--block"><span class="mu-btn__content"><x-import component-from-global-scope="MatchUp.Icon" name="paper-plane-right" size="{{i20}}"></x-import><span class="mu-btn__label label-l">Envoyer la demande</span></span></a>
+</div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":1368}}'>
+class Component extends DCLogic {
+  state = { pay: 'hoop', why: 'closed', reason: 'Le terrain était fermé à notre arrivée.', dest: 'solde' };
+  renderVals() {
+    const s = this.state;
+    const P = { hoop: ['Hoop Zone', '9 DT'], smash: ['Smash Padel Club', '20 DT'], arena: ['Arena Five', '15 DT'] };
+    const why = (v) => () => this.setState({ why: v });
+    return {
+      yes: true, nil: null, i14: 14, i16: 16, i20: 20, i24: 24, three: 3, max: 300,
+      noop: () => {},
+      pay: s.pay, setPay: (v) => this.setState({ pay: v }),
+      payLabel: P[s.pay][0], payAmt: P[s.pay][1],
+      rClosed: s.why === 'closed', rCancel: s.why === 'cancel', rTwice: s.why === 'twice', rOther: s.why === 'other',
+      toClosed: why('closed'), toCancel: why('cancel'), toTwice: why('twice'), toOther: why('other'),
+      reason: s.reason, setReason: (v) => this.setState({ reason: v }),
+      photos: [{ id: 'p1', name: 'Hoop Zone, portail fermé', sport: 'basketball', status: 'done', type: 'image/jpeg' }],
+      dest: s.dest, setDest: (v) => this.setState({ dest: v })
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -48,7 +48,8 @@ a{color:var(--link)}
 </a>
 <nav aria-label="Mon compte" style="display: flex; flex-direction: column">
 <a href="PRF-01-Mon-profil.dc.html" class="prf-item"><span class="prf-item__ico"><x-import component-from-global-scope="MatchUp.Icon" name="user-circle" size="{{i24}}"></x-import></span><span class="prf-item__txt"><span class="body-l">Mon profil</span></span></a>
-<div class="prf-item" role="link" aria-disabled="true" aria-label="Portefeuille, solde 30 DT"><span class="prf-item__ico"><x-import component-from-global-scope="MatchUp.Icon" name="wallet" size="{{i24}}"></x-import></span><span class="prf-item__txt"><span class="body-l">Portefeuille</span><span class="caption" style="color: var(--text-secondary)">Remboursements et parts payées</span></span><span class="prf-item__end"><span class="num-m" style="color: var(--text)">30 DT</span></span></div>
+<a href="WAL-01-Portefeuille.dc.html" class="prf-item" aria-label="Portefeuille, solde 30 DT"><span class="prf-item__ico"><x-import component-from-global-scope="MatchUp.Icon" name="wallet" size="{{i24}}"></x-import></span><span class="prf-item__txt"><span class="body-l">Portefeuille</span><span class="caption" style="color: var(--text-secondary)">Remboursements et parts payées</span></span><span class="prf-item__end"><span class="num-m" style="color: var(--text)">30 DT</span></span></a>
+<a href="SUB-01-Offres.dc.html" class="prf-item"><span class="prf-item__ico"><x-import component-from-global-scope="MatchUp.Icon" name="crown-simple" size="{{i24}}"></x-import></span><span class="prf-item__txt"><span class="body-l">MatchUp Premium</span><span class="caption" style="color: var(--text-secondary)">14 jours gratuits, sans engagement</span></span></a>
 <a href="SET-01-Parametres.dc.html" class="prf-item"><span class="prf-item__ico"><x-import component-from-global-scope="MatchUp.Icon" name="gear-six" size="{{i24}}"></x-import></span><span class="prf-item__txt"><span class="body-l">Paramètres</span></span></a>
 <a href="PRF-06-Changer-de-role.dc.html" class="prf-item"><span class="prf-item__ico"><x-import component-from-global-scope="MatchUp.Icon" name="arrows-left-right" size="{{i24}}"></x-import></span><span class="prf-item__txt"><span class="body-l">Changer de rôle</span><span class="caption" style="color: var(--text-secondary)">Joueur · Propriétaire de terrain à terminer</span></span><span class="prf-item__end"><x-import component-from-global-scope="MatchUp.Counter" dot="{{yes}}" label="Une configuration à terminer"></x-import></span></a>
 <div class="prf-item" role="link" tabindex="0"><span class="prf-item__ico"><x-import component-from-global-scope="MatchUp.Icon" name="lifebuoy" size="{{i24}}"></x-import></span><span class="prf-item__txt"><span class="body-l">Aide</span></span></div>
@@ -72,8 +73,8 @@ class Component extends DCLogic {
         { value: 'accueil', label: 'Accueil', icon: 'house', href: 'HOM-01-Accueil.dc.html' },
         { value: 'explorer', label: 'Explorer', icon: 'compass', href: 'EXP-01-Explorer-parties.dc.html' },
         { value: 'matchs', label: 'Mes matchs', icon: 'calendar-check', badge: 1, badgeLabel: '1 invitation', href: 'MAT-01-A-venir.dc.html' },
-        { value: 'entrainement', label: 'Entraînement', icon: 'barbell' },
-        { value: 'communaute', label: 'Communauté', icon: 'users-three' }
+        { value: 'entrainement', label: 'Entraînement', icon: 'barbell', href: 'ENT-01-Mon-entrainement.dc.html' },
+        { value: 'communaute', label: 'Communauté', icon: 'users-three', href: 'FRM-01-Communaute.dc.html' }
       ],
       tabStyle: { style: { position: 'absolute', left: 0, right: 0, bottom: 0 } },
       foot: {

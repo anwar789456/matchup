@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Propriétaire · Détail de réservation</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/matchup/tokens.css">
+<link rel="stylesheet" href="ds/matchup/components/bundle.css">
+<script src="ds/matchup/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+/* own:shared — identical in OWN-10…16 */
+body{margin:0}
+a{color:var(--link)}
+.own-head{position:relative; z-index:2; flex:none; display:flex; align-items:flex-end; gap:var(--space-1); padding:52px var(--space-2) var(--space-2) var(--space-4)}
+.own-head__txt{flex:1; min-width:0; display:flex; flex-direction:column; gap:2px}
+.own-role{display:flex; align-items:center; gap:6px; color:var(--text-secondary)}
+.own-role__icon{display:flex; color:var(--text)}
+.own-avatar{flex:none; width:48px; height:48px; display:grid; place-items:center; border-radius:var(--radius-full); text-decoration:none}
+.own-avatar:focus-visible{outline:none; box-shadow:var(--focus-ring)}
+.own-hot{position:absolute; display:block; border-radius:var(--radius-sm)}
+.own-hot:focus-visible{outline:none; box-shadow:var(--focus-ring)}
+.own-sec{display:flex; flex-direction:column; gap:var(--space-3)}
+.own-sec__head{display:flex; align-items:center; justify-content:space-between; gap:var(--space-3); min-height:32px}
+.own-sec__head .mu-btn{margin-inline-end:calc(-1 * var(--space-2))}
+.own-tag{flex:none; display:inline-flex; align-items:center; justify-content:center; min-width:28px; height:22px; padding:0 6px; box-sizing:border-box; border-radius:var(--radius-xs); background:var(--surface-muted); color:var(--text)}
+/* /own:shared */
+/* own:planning — identical in OWN-11, OWN-12, OWN-13 */
+.pl-wrap{position:relative; flex:1; min-height:0; overflow:auto; background:var(--surface); box-shadow:inset 0 1px 0 var(--border)}
+.pl-grid{display:grid; grid-template-columns:48px repeat(3, minmax(104px, 1fr)); column-gap:4px; row-gap:4px; padding:0 8px 120px 0; min-width:100%; box-sizing:border-box}
+.pl-corner, .pl-court{position:sticky; top:0; z-index:2; background:var(--surface); box-shadow:0 1px 0 var(--border)}
+.pl-corner{left:0; z-index:3}
+.pl-court{display:flex; flex-direction:column; justify-content:center; gap:0; height:48px; padding:0 4px}
+.pl-court__name{display:flex; align-items:center; gap:4px}
+.pl-time{position:sticky; left:0; z-index:1; background:var(--surface); display:flex; justify-content:flex-end; padding:2px 6px 0 0; color:var(--text-secondary)}
+.pl-early{grid-column:2 / -1; display:flex; align-items:center; gap:6px; height:32px; padding:0 8px; border-radius:var(--radius-xs); color:var(--text-secondary); background:var(--surface-muted)}
+.pl-cell{position:relative; display:flex; flex-direction:column; justify-content:center; gap:1px; height:60px; padding:0 8px; box-sizing:border-box; border-radius:var(--radius-xs); text-decoration:none; color:var(--text); overflow:hidden; min-width:0}
+.pl-cell > span{white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+.pl-cell__meta{display:flex; align-items:center; gap:3px; color:var(--text-secondary)}
+.pl-cell--booked{background:var(--surface); box-shadow:inset 0 0 0 1px var(--border-strong), inset 3px 0 0 var(--football)}
+.pl-cell--public{background:var(--football-soft); box-shadow:inset 3px 0 0 var(--football)}
+.pl-cell--past{background:var(--surface-muted); color:var(--text-secondary); box-shadow:inset 0 0 0 1px var(--border)}
+.pl-cell--noshow{background:var(--error-soft); color:var(--error-text); box-shadow:inset 0 0 0 1px color-mix(in srgb, var(--error) 30%, transparent)}
+.pl-cell--noshow .pl-cell__meta{color:var(--error-text)}
+.pl-cell--blocked{background:repeating-linear-gradient(135deg, var(--surface) 0 6px, var(--surface-muted) 6px 7px, var(--border-strong) 7px 8px, var(--surface-muted) 8px 9px); box-shadow:inset 0 0 0 1px var(--border-strong); color:var(--text-secondary)}
+.pl-cell--free{background:transparent; box-shadow:none; border:1px dashed var(--border-strong); color:var(--text-secondary)}
+.pl-cell--sel{box-shadow:inset 0 0 0 2px var(--text), inset 3px 0 0 var(--football)}
+.pl-chip{align-self:flex-start; display:flex; flex-direction:column; padding:2px 6px; border-radius:var(--radius-xs); background:var(--surface)}
+.pl-live{display:inline-block; width:6px; height:6px; border-radius:var(--radius-full); background:var(--error); flex:none}
+.pl-now{grid-column:1 / -1; position:relative; height:0; z-index:1}
+.pl-now__line{position:absolute; left:44px; right:0; top:-3px; height:2px; background:var(--error); border-radius:2px}
+.pl-now__dot{position:absolute; left:40px; top:-6px; width:8px; height:8px; border-radius:var(--radius-full); background:var(--error)}
+.pl-legend{display:flex; flex-wrap:wrap; align-items:center; gap:4px 12px; color:var(--text-secondary)}
+.pl-legend > span{display:flex; align-items:center; gap:5px}
+.pl-key{width:14px; height:10px; border-radius:2px; box-sizing:border-box}
+/* /own:planning */
+.o12-block{display:flex; flex-direction:column; gap:var(--space-3); padding:var(--space-4) 0; border-top:1px solid var(--border)}
+.o12-money{display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); border-radius:var(--radius-md); background:var(--surface-muted)}
+.o12-money > div{display:flex; flex-direction:column; gap:2px; padding:var(--space-3) var(--space-4)}
+.o12-money > div + div{border-inline-start:1px solid var(--border)}
+.o12-acts{margin:0; padding:0; list-style:none; display:flex; flex-direction:column}
+.o12-act{display:flex; align-items:center; gap:var(--space-3); min-height:52px; text-decoration:none; color:var(--text)}
+.o12-act + .o12-act{border-top:1px solid var(--border)}
+.o12-act__icon{flex:none; width:36px; height:36px; border-radius:var(--radius-sm); display:grid; place-items:center; background:var(--surface-muted)}
+.o12-act--danger{color:var(--error-text)}
+.o12-act--danger .o12-act__icon{background:var(--error-soft)}
+.o12-act--off{color:var(--text-secondary)}
+.o12-bar{position:absolute; z-index:calc(var(--z-sheet) + 1); left:0; right:0; bottom:0; display:flex; gap:12px; padding:12px 16px 34px 16px; background:var(--surface-elevated); box-shadow:var(--elevation-2-up)}
+.o12-acts3{display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); gap:8px; padding-top:var(--space-4); border-top:1px solid var(--border)}
+.o12-acts3 .mu-btn{padding-inline:8px}
+
+</style>
+</helmet>
+<div style="position: relative; width: 390px; height: 844px; box-sizing: border-box; overflow: hidden; display: flex; flex-direction: column; background: var(--bg); color: var(--text); font-family: var(--font-sans)">
+
+<header class="own-head">
+<div class="own-head__txt">
+<span class="own-role caption"><span class="own-role__icon"><x-import component-from-global-scope="MatchUp.Icon" name="storefront" size="{{i16}}"></x-import></span>Espace propriétaire · Arena Five</span>
+<h1 class="h1" style="margin: 0">Planning</h1>
+</div>
+<a href="OWN-13-Bloquer-un-creneau.dc.html" class="mu-btn mu-btn--secondary mu-btn--s" style="margin-bottom: 8px"><span class="mu-btn__content"><x-import component-from-global-scope="MatchUp.Icon" name="lock-simple" size="{{i16}}"></x-import><span class="mu-btn__label label">Bloquer</span></span></a>
+<a href="PRF-06-Changer-de-role.dc.html" class="own-avatar" aria-label="Changer de rôle, Skander T., propriétaire"><x-import component-from-global-scope="MatchUp.Avatar" name="Skander T." size="s"></x-import></a>
+</header>
+
+<div style="flex: none; display: flex; flex-direction: column; gap: 10px; padding: 4px 16px 10px 16px">
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 12px">
+<x-import component-from-global-scope="MatchUp.SegmentedControl" size="s" label="Vue du planning" options="{{views}}" value="day"></x-import>
+<span class="caption" style="color: var(--text-secondary); text-align: end"><span class="label-s" style="color: var(--text)">10 réservations</span> · 56 %</span>
+</div>
+<x-import component-from-global-scope="MatchUp.DatePicker" variant="strip" label="Jour du planning" today="{{today}}" default-value="{{day}}" start-date="{{start}}" min-date="{{start}}" days="{{d14}}" bleed="{{b16}}"></x-import>
+<div class="pl-legend caption" aria-label="Légende">
+<span><span class="pl-key" style="background: var(--surface); box-shadow: inset 0 0 0 1px var(--border-strong), inset 3px 0 0 var(--football)"></span>Privée</span>
+<span><span class="pl-key" style="background: var(--football-soft); box-shadow: inset 3px 0 0 var(--football)"></span>Publique</span>
+<span><span class="pl-key" style="border: 1px dashed var(--border-strong)"></span>Libre</span>
+<span><span class="pl-key" style="background: repeating-linear-gradient(135deg, var(--surface) 0 2px, var(--border-strong) 2px 3px); box-shadow: inset 0 0 0 1px var(--border-strong)"></span>Bloqué</span>
+<span><span style="display: flex; color: var(--warning-text)"><x-import component-from-global-scope="MatchUp.Icon" name="lightning" weight="fill" size="{{i12}}"></x-import></span>Pointe</span>
+<span style="flex-basis: 100%"><span style="display: flex; color: var(--text)"><x-import component-from-global-scope="MatchUp.Icon" name="hand-pointing" size="{{i14}}"></x-import></span>Appui long sur un créneau libre pour le bloquer</span>
+</div>
+</div>
+
+<div class="pl-wrap" role="region" aria-label="Planning du mer. 21 oct., terrains en colonnes, heures en lignes">
+<div class="pl-grid" role="grid" aria-label="Planning Arena Five, mercredi 21 octobre">
+<div class="pl-corner"></div>
+<div class="pl-court" role="columnheader"><span class="pl-court__name label">Terrain 1</span><span class="caption" style="color: var(--text-secondary)">Extérieur</span></div>
+<div class="pl-court" role="columnheader"><span class="pl-court__name label">Terrain 2</span><span class="caption" style="color: var(--text-secondary)">Extérieur</span></div>
+<div class="pl-court" role="columnheader"><span class="pl-court__name label">Terrain 3<span style="display: flex; color: var(--text-secondary)"><x-import component-from-global-scope="MatchUp.Icon" name="umbrella" size="{{i14}}"></x-import></span></span><span class="caption" style="color: var(--text-secondary)">Indoor</span></div>
+
+<div class="pl-time num-xs" style="padding-top: 8px">08h</div>
+<div class="pl-early caption"><x-import component-from-global-scope="MatchUp.Icon" name="caret-down" size="{{i14}}"></x-import>08h00 – 17h00 · aucune réservation</div>
+
+<div class="pl-time num-xs">17h</div>
+<a href="OWN-13-Bloquer-un-creneau.dc.html" class="pl-cell pl-cell--free" aria-label="Terrain 1, 17h00, libre"><span class="caption">Libre</span><span class="pl-cell__meta caption"><span class="num-xs">120 DT</span></span></a>
+<a href="OWN-11-Planning.dc.html" class="pl-cell pl-cell--booked" aria-label="Terrain 2, 17h00, Aziz H."><span class="label-s">Aziz H.</span><span class="pl-cell__meta caption">Privée · payé</span></a>
+<a href="OWN-13-Bloquer-un-creneau.dc.html" class="pl-cell pl-cell--free" aria-label="Terrain 3, 17h00, libre"><span class="caption">Libre</span><span class="pl-cell__meta caption"><span class="num-xs">120 DT</span></span></a>
+
+<div class="pl-time num-xs">18h</div>
+<a href="OWN-11-Planning.dc.html" class="pl-cell pl-cell--booked" aria-label="Terrain 1, 18h00, Hamza R."><span class="label-s">Hamza R.</span><span class="pl-cell__meta caption">Privée · payé</span></a>
+<a href="OWN-11-Planning.dc.html" class="pl-cell pl-cell--booked" aria-label="Terrain 2, 18h00, Omar D."><span class="label-s">Omar D.</span><span class="pl-cell__meta caption">Privée · payé</span></a>
+<a href="OWN-13-Bloquer-un-creneau.dc.html" class="pl-cell pl-cell--free" aria-label="Terrain 3, 18h00, libre"><span class="caption">Libre</span><span class="pl-cell__meta caption"><span style="display: flex; color: var(--warning-text)"><x-import component-from-global-scope="MatchUp.Icon" name="lightning" weight="fill" size="{{i12}}"></x-import></span><span class="num-xs">150 DT</span></span></a>
+
+<div class="pl-time num-xs">19h</div>
+<a href="OWN-11-Planning.dc.html" class="pl-cell pl-cell--booked" aria-label="Terrain 1, 19h00, Ines M."><span class="label-s">Ines M.</span><span class="pl-cell__meta caption">Privée · payé</span></a>
+<a href="OWN-11-Planning.dc.html" class="pl-cell pl-cell--booked" aria-label="Terrain 2, 19h00, Nour A."><span class="label-s">Nour A.</span><span class="pl-cell__meta caption">Privée · payé</span></a>
+<a href="OWN-11-Planning.dc.html" class="pl-cell pl-cell--public" aria-label="Terrain 3, 19h00, Salma G."><span class="label-s">Salma G.</span><span class="pl-cell__meta caption">8/10 joueurs</span></a>
+
+<div class="pl-time num-xs">20h</div>
+<a href="OWN-13-Bloquer-un-creneau.dc.html" class="pl-cell pl-cell--free" aria-label="Terrain 1, 20h00, libre"><span class="caption">Libre</span><span class="pl-cell__meta caption"><span style="display: flex; color: var(--warning-text)"><x-import component-from-global-scope="MatchUp.Icon" name="lightning" weight="fill" size="{{i12}}"></x-import></span><span class="num-xs">150 DT</span></span></a>
+<a href="OWN-11-Planning.dc.html" class="pl-cell pl-cell--booked" aria-label="Terrain 2, 20h00, Lina F., 2 heures"><span class="label-s">Lina F.</span><span class="pl-cell__meta caption">20h – 22h</span></a>
+<a href="OWN-11-Planning.dc.html" class="pl-cell pl-cell--booked" aria-label="Terrain 3, 20h00, Rami S."><span class="label-s">Rami S.</span><span class="pl-cell__meta caption">Privée · payé</span></a>
+
+<div class="pl-time num-xs">21h</div>
+<a href="OWN-12-Reservation.dc.html" class="pl-cell pl-cell--public pl-cell--sel" aria-current="true" aria-label="Terrain 1, 21h00, partie publique de Yassine B., 6 sur 10, sélectionnée"><span class="label-s">Yassine B.</span><span class="pl-cell__meta caption">6/10 joueurs</span></a>
+<a href="OWN-11-Planning.dc.html" class="pl-cell pl-cell--booked" aria-label="Terrain 2, 21h00, suite de la réservation de Lina F."><span class="label-s">Lina F.</span><span class="pl-cell__meta caption">suite</span></a>
+<a href="OWN-13-Bloquer-un-creneau.dc.html" class="pl-cell pl-cell--free" aria-label="Terrain 3, 21h00, libre"><span class="caption">Libre</span><span class="pl-cell__meta caption"><span style="display: flex; color: var(--warning-text)"><x-import component-from-global-scope="MatchUp.Icon" name="lightning" weight="fill" size="{{i12}}"></x-import></span><span class="num-xs">150 DT</span></span></a>
+
+<div class="pl-time num-xs">22h</div>
+<a href="OWN-13-Bloquer-un-creneau.dc.html" class="pl-cell pl-cell--free" aria-label="Terrain 1, 22h00, libre"><span class="caption">Libre</span><span class="pl-cell__meta caption"><span style="display: flex; color: var(--warning-text)"><x-import component-from-global-scope="MatchUp.Icon" name="lightning" weight="fill" size="{{i12}}"></x-import></span><span class="num-xs">150 DT</span></span></a>
+<a href="OWN-13-Bloquer-un-creneau.dc.html" class="pl-cell pl-cell--free" aria-label="Terrain 2, 22h00, libre"><span class="caption">Libre</span><span class="pl-cell__meta caption"><span style="display: flex; color: var(--warning-text)"><x-import component-from-global-scope="MatchUp.Icon" name="lightning" weight="fill" size="{{i12}}"></x-import></span><span class="num-xs">150 DT</span></span></a>
+<a href="OWN-13-Bloquer-un-creneau.dc.html" class="pl-cell pl-cell--free" aria-label="Terrain 3, 22h00, libre"><span class="caption">Libre</span><span class="pl-cell__meta caption"><span style="display: flex; color: var(--warning-text)"><x-import component-from-global-scope="MatchUp.Icon" name="lightning" weight="fill" size="{{i12}}"></x-import></span><span class="num-xs">150 DT</span></span></a>
+
+<div class="pl-time num-xs">23h</div>
+<a href="OWN-13-Bloquer-un-creneau.dc.html" class="pl-cell pl-cell--free" aria-label="Terrain 1, 23h00, libre"><span class="caption">Libre</span><span class="pl-cell__meta caption"><span class="num-xs">120 DT</span></span></a>
+<a href="OWN-13-Bloquer-un-creneau.dc.html" class="pl-cell pl-cell--free" aria-label="Terrain 2, 23h00, libre"><span class="caption">Libre</span><span class="pl-cell__meta caption"><span class="num-xs">120 DT</span></span></a>
+<a href="OWN-11-Planning.dc.html" class="pl-cell pl-cell--booked" aria-label="Terrain 3, 23h00, Rim H."><span class="label-s">Rim H.</span><span class="pl-cell__meta caption">Privée · payé</span></a>
+</div>
+</div>
+
+<x-import component-from-global-scope="MatchUp.TabBar" items="{{tabs}}" value="planning" label="Navigation propriétaire" safe-area="{{sa}}" fab="{{yes}}" dc-props="{{tabStyle}}"></x-import>
+<x-import component-from-global-scope="MatchUp.BottomSheet" inline="{{yes}}" open="{{yes}}" height="auto" title="Mer. 21 oct. · 21h00" safe-area="{{safe}}">
+<div style="display: flex; flex-direction: column; padding-bottom: 60px">
+<div style="display: flex; flex-direction: column; gap: 8px; padding-bottom: 16px">
+<div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap">
+<x-import component-from-global-scope="MatchUp.StatusBadge" status="confirmed" size="s"></x-import>
+<x-import component-from-global-scope="MatchUp.Chip" size="s" icon="users-three">Partie publique</x-import>
+<span class="caption" style="margin-inline-start: auto; color: var(--text-secondary)">Réf. <span class="num-xs" style="color: var(--text)">MU-48213</span></span>
+</div>
+<p class="caption" style="margin: 0; display: flex; align-items: center; gap: 4px; color: var(--text-secondary)"><span style="display: flex; color: var(--football-text)"><x-import component-from-global-scope="MatchUp.Icon" name="sport-football" size="{{i14}}"></x-import></span><span><span class="label" style="color: var(--text)">Terrain 1 · 21h00 – 22h00</span> · 5v5 mixte · 2,5–4,0</span></p>
+</div>
+
+<div class="o12-block">
+<div style="display: flex; align-items: center; gap: 12px">
+<x-import component-from-global-scope="MatchUp.Avatar" name="Yassine B." size="m" level="{{lv3}}"></x-import>
+<div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px">
+<span class="label">Yassine B. <span class="caption" style="color: var(--text-secondary)">· organisateur</span></span>
+<span class="caption" style="display: flex; align-items: center; gap: 4px; color: var(--text-secondary)"><span style="display: flex; color: var(--success-text)"><x-import component-from-global-scope="MatchUp.Icon" name="shield-check" weight="fill" size="{{i14}}"></x-import></span>Fiable 96 % · 48/50 matchs honorés</span>
+</div>
+<x-import component-from-global-scope="MatchUp.IconButton" icon="chat-circle-dots" label="Écrire à Yassine B." variant="secondary" size="m"></x-import>
+</div>
+<x-import component-from-global-scope="MatchUp.ProgressBar" variant="spots" value="{{six}}" max="{{ten}}" people="{{people6}}" size="l" label="Joueurs"></x-import>
+</div>
+
+<div class="o12-block">
+<div class="o12-money">
+<div><span class="overline" style="color: var(--text-secondary)">Terrain · 1 h</span><span class="num-l">150 DT</span><span class="caption" style="display: flex; align-items: center; gap: 4px; color: var(--text-secondary)"><span style="display: flex; color: var(--warning-text)"><x-import component-from-global-scope="MatchUp.Icon" name="lightning" weight="fill" size="{{i14}}"></x-import></span>Heure de pointe</span></div>
+<div><span class="overline" style="color: var(--text-secondary)">Déjà encaissé</span><span class="num-l">90 DT</span><span class="caption" style="color: var(--text-secondary)">6 parts de 15 DT</span></div>
+</div>
+<p class="caption" style="margin: 0; display: flex; align-items: flex-start; gap: 8px; color: var(--text-secondary)"><span style="display: flex; color: var(--warning-text)"><x-import component-from-global-scope="MatchUp.Icon" name="clock" weight="fill" size="{{i16}}"></x-import></span><span>60 DT attendus de 4 joueurs avant <span class="label-s" style="color: var(--text)">18h00 le jour J</span>, sinon la partie est annulée et remboursée.</span></p>
+</div>
+
+<div class="o12-acts3" role="group" aria-label="Autres actions">
+<button type="button" class="mu-btn mu-btn--secondary mu-btn--m"><span class="mu-btn__content"><x-import component-from-global-scope="MatchUp.Icon" name="arrows-left-right" size="{{i16}}"></x-import><span class="mu-btn__label label">Déplacer</span></span></button>
+<button type="button" class="mu-btn mu-btn--secondary mu-btn--m" disabled="" aria-describedby="o12-ns"><span class="mu-btn__content"><x-import component-from-global-scope="MatchUp.Icon" name="user-minus" size="{{i16}}"></x-import><span class="mu-btn__label label">No-show</span></span></button>
+<button type="button" class="mu-btn mu-btn--destructive-outline mu-btn--m"><span class="mu-btn__content"><x-import component-from-global-scope="MatchUp.Icon" name="calendar-x" size="{{i16}}"></x-import><span class="mu-btn__label label">Annuler</span></span></button>
+</div>
+<p id="o12-ns" class="caption" style="margin: 8px 0 0 0; color: var(--text-secondary)">No-show possible dès 21h00 · annuler rembourse les 6 joueurs.</p>
+</div>
+</x-import>
+<a href="OWN-11-Planning.dc.html" class="own-hot" aria-label="Fermer le détail de la réservation" style="z-index: calc(var(--z-sheet) + 1); left: 340px; top: 224px; width: 44px; height: 44px; border-radius: var(--radius-full)"></a>
+<div class="o12-bar">
+<a href="OWN-20-Scanner.dc.html" class="mu-btn mu-btn--primary mu-btn--xl mu-btn--block"><span class="mu-btn__content"><x-import component-from-global-scope="MatchUp.Icon" name="qr-code" size="{{i20}}"></x-import><span class="mu-btn__label label-l">Faire le check-in</span><span class="mu-btn__dot" aria-hidden="true">·</span><span class="mu-btn__price num-m">dès 20h45</span></span></a>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      yes: true, no: false, i12: 12, i14: 14, i16: 16, i20: 20, i24: 24, sa: 34, d14: 14, b16: 16,
+      today: new Date(2026, 9, 16), day: new Date(2026, 9, 21), start: new Date(2026, 9, 16),
+      people6: [{ name: 'Yassine B.' }, { name: 'Skander T.' }, { name: 'Hamza R.' }, { name: 'Aziz H.' }, { name: 'Omar D.' }, { name: 'Nour A.' }],
+      six: 6, ten: 10, safe: { bottom: 34 }, lv3: 3,
+      views: [{ value: 'day', label: 'Jour' }, { value: 'week', label: 'Semaine' }],
+      tabs: [
+        { value: 'jour', label: 'Aujourd’hui', icon: 'house', href: 'OWN-10-Aujourdhui.dc.html' },
+        { value: 'planning', label: 'Planning', icon: 'calendar-blank', href: 'OWN-11-Planning.dc.html' },
+        { value: 'scan', label: 'Check-in', icon: 'qr-code', href: 'OWN-20-Scanner.dc.html' },
+        { value: 'resa', label: 'Réservations', icon: 'list-checks', href: 'OWN-14-Reservations.dc.html' },
+        { value: 'plus', label: 'Plus', icon: 'dots-three', href: 'OWN-15-Plus.dc.html' }
+      ],
+      tabStyle: { style: { position: 'absolute', left: 0, right: 0, bottom: 0 } }
+    };
+  }
+}
+</script>
+</body>
+</html>

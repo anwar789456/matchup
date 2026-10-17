@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Match en direct</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/matchup/tokens.css">
+<link rel="stylesheet" href="ds/matchup/components/bundle.css">
+<script src="ds/matchup/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0}
+a{color:var(--link)}
+.lv-muted{color:var(--text-secondary)}
+.lv-m0{margin:0}
+.lv-sec{display:flex; flex-direction:column; gap:12px}
+.lv-head{display:flex; align-items:baseline; justify-content:space-between; gap:8px}
+.lv-stat{display:grid; grid-template-columns:72px 1fr 72px; align-items:center; gap:12px; min-height:40px}
+.lv-bar{display:flex; gap:3px; height:8px}
+.lv-bar span{border-radius:var(--radius-full)}
+.lv-row{display:grid; grid-template-columns:1fr auto; gap:12px; align-items:center; min-height:52px; padding:6px 16px}
+.lv-row + .lv-row{border-top:1px solid var(--border)}
+.lv-row.is-you{background:color-mix(in srgb, var(--accent) 22%, transparent)}
+.lv-livetag{display:inline-flex; align-items:center; gap:5px; color:var(--error-text)}
+.lv-livetag i{width:6px; height:6px; border-radius:var(--radius-full); background:var(--live)}
+.lv-next{display:flex; align-items:center; gap:12px; padding:14px 16px}
+.lv-hot{position:absolute; display:block; border-radius:var(--radius-full)}
+</style>
+</helmet>
+<div style="position: relative; width: 390px; height: 1412px; box-sizing: border-box; overflow: hidden; display: flex; flex-direction: column; background: var(--bg); color: var(--text); font-family: var(--font-sans)">
+<header style="flex: none; display: flex; align-items: center; gap: 4px; padding: 52px 8px 8px 8px; background: var(--bg)">
+<a href="TRN-07-Inscription-confirmee.dc.html" class="mu-iconbtn mu-iconbtn--l mu-iconbtn--ghost" aria-label="Retour" style="color: var(--text)"><x-import component-from-global-scope="MatchUp.Icon" name="arrow-left" size="{{i24}}"></x-import></a>
+<span style="flex: 1; min-width: 0; display: flex; flex-direction: column">
+<span class="label-l">Poule B · match 1</span>
+<span class="caption lv-muted">Padel Masters Lac 2 · sam. 24 oct.</span>
+</span>
+<button type="button" class="mu-iconbtn mu-iconbtn--l mu-iconbtn--ghost" aria-label="Alertes du match activées" aria-pressed="true" style="color: var(--text)"><x-import component-from-global-scope="MatchUp.Icon" name="bell-ringing" size="{{i24}}"></x-import></button>
+<button type="button" class="mu-iconbtn mu-iconbtn--l mu-iconbtn--ghost" aria-label="Partager le direct" style="color: var(--text)"><x-import component-from-global-scope="MatchUp.Icon" name="share-network" size="{{i24}}"></x-import></button>
+</header>
+
+<main style="flex: 1; min-height: 0; display: flex; flex-direction: column; gap: 24px; padding: 4px 0 24px 0">
+<x-import component-from-global-scope="MatchUp.Scoreboard" sport="padel" status="live" period="Set 2" clock="40’" venue="Smash Padel Club · Court 2" teams="{{teams}}" sets="{{sets}}" game="{{game}}" serving="{{zero}}" events="{{events}}" dc-props="{{boardStyle}}"></x-import>
+
+<div style="display: flex; flex-direction: column; gap: 24px; padding: 0 16px">
+<section class="lv-sec" aria-labelledby="lv-stats">
+<div class="lv-head">
+<h2 id="lv-stats" class="h3 lv-m0">En chiffres</h2>
+<span class="caption lv-muted">saisi par l’arbitre</span>
+</div>
+<div class="mu-card" style="display: flex; flex-direction: column; gap: 4px; padding: 12px 16px">
+<div style="display: grid; grid-template-columns: 72px 1fr 72px; gap: 12px; padding-bottom: 4px"><span class="label-s">Faucons</span><span></span><span class="label-s" style="text-align: end">Ines / Nour</span></div>
+<sc-for list="{{stats}}" as="s">
+<div class="lv-stat">
+<span class="num-l">{{s.a}}</span>
+<span style="display: flex; flex-direction: column; gap: 4px">
+<span class="caption lv-muted" style="text-align: center">{{s.label}}</span>
+<span class="lv-bar"><span style="flex: {{s.a}}; background: var(--text)"></span><span style="flex: {{s.b}}; background: var(--border-strong)"></span></span>
+</span>
+<span class="num-l lv-muted" style="text-align: end">{{s.b}}</span>
+</div>
+</sc-for>
+</div>
+</section>
+
+<section class="lv-sec" aria-labelledby="lv-poule">
+<div class="lv-head">
+<h2 id="lv-poule" class="h3 lv-m0">Poule B en direct</h2>
+<a href="TRN-09-Poules-et-classement.dc.html" class="mu-btn mu-btn--tertiary mu-btn--s" style="margin-right: -8px"><span class="mu-btn__content"><span class="mu-btn__label label">Toutes les poules</span></span></a>
+</div>
+<div class="mu-card" style="padding: 4px 0; overflow: hidden">
+<div class="lv-row">
+<span style="display: flex; flex-direction: column; gap: 1px"><span class="label">Skander T. / Omar D.</span><span class="caption lv-muted">6-3 6-4 contre Aziz H. / Salma G. · 9h00</span></span>
+<span class="num-m">2 pts</span>
+</div>
+<div class="lv-row is-you">
+<span style="display: flex; flex-direction: column; gap: 1px"><span class="label">Les Faucons · toi</span><span class="caption lv-livetag"><i></i>En cours · 6-4 3-2</span></span>
+<span class="num-m">0 pt</span>
+</div>
+<div class="lv-row">
+<span style="display: flex; flex-direction: column; gap: 1px"><span class="label">Ines M. / Nour A.</span><span class="caption lv-livetag"><i></i>En cours · 4-6 2-3</span></span>
+<span class="num-m">0 pt</span>
+</div>
+<div class="lv-row">
+<span style="display: flex; flex-direction: column; gap: 1px"><span class="label">Aziz H. / Salma G.</span><span class="caption lv-muted">Défaite 3-6 4-6</span></span>
+<span class="num-m lv-muted">0 pt</span>
+</div>
+</div>
+</section>
+
+<section class="mu-card" aria-labelledby="lv-next-t" style="padding: 0; overflow: hidden">
+<div class="lv-next">
+<span style="flex: none; display: flex; flex-direction: column; align-items: center; justify-content: center; width: 52px; height: 52px; border-radius: var(--radius-sm); background: var(--padel-soft); color: var(--padel-text)"><span class="overline">Sam.</span><span class="num-m">15h30</span></span>
+<span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px">
+<span class="overline lv-muted">Ton prochain match</span>
+<h2 id="lv-next-t" class="label-l lv-m0">contre Skander T. / Omar D.</h2>
+<span class="caption lv-muted">Court 1 · match 2 de la Poule B</span>
+</span>
+</div>
+</section>
+
+<a href="TRN-11-Recap-IA.dc.html" class="mu-card" style="display: flex; align-items: center; gap: 12px; padding: 12px 16px; text-decoration: none; color: var(--text); box-shadow: inset 0 0 0 1px var(--ai-soft), var(--elevation-1)">
+<span style="flex: none; width: 36px; height: 36px; border-radius: var(--radius-full); background: var(--ai-soft); color: var(--ai-text); display: flex; align-items: center; justify-content: center"><x-import component-from-global-scope="MatchUp.Icon" name="sparkle" weight="fill" size="{{i20}}"></x-import></span>
+<span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px"><span class="label">Résumé IA à la fin du match</span><span class="caption lv-muted">Prêt à partager quand l’arbitre valide le score.</span></span>
+<span style="display: flex; color: var(--text-secondary)"><x-import component-from-global-scope="MatchUp.Icon" name="caret-right" size="{{i20}}"></x-import></span>
+</a>
+</div>
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":1412}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      boardStyle: { style: { borderRadius: 0 } },
+      yes: true, zero: 0, i16: 16, i20: 20, i24: 24,
+      teams: [
+        { name: 'Les Faucons', short: 'LF', players: [{ name: 'Yassine B.' }, { name: 'Mariem K.' }], you: true },
+        { name: 'Ines M. / Nour A.', short: 'IN', players: [{ name: 'Ines M.' }, { name: 'Nour A.' }] }
+      ],
+      sets: [[6, 4], [3, 2]], game: ['30', '15'],
+      events: [
+        { minute: '38’', type: 'break', team: 0, player: 'Mariem K.', label: 'Break · 3-2' },
+        { minute: '30’', type: 'set', label: 'Set 1 pour Les Faucons', score: '6 – 4' },
+        { minute: '29’', type: 'break', team: 0, player: 'Yassine B.', label: 'Break · 6-4' },
+        { minute: '18’', type: 'break', team: 1, player: 'Nour A.', label: 'Break · 3-3' },
+        { minute: '9’', type: 'break', team: 0, player: 'Mariem K.', label: 'Break · 2-1' },
+        { minute: '0’', type: 'start', label: 'Début du match' }
+      ],
+      stats: [
+        { label: 'Jeux gagnés', a: 9, b: 6 },
+        { label: 'Breaks', a: 3, b: 1 },
+        { label: 'Sets', a: 1, b: 0 }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

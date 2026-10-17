@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Plan IA · objectifs</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/matchup/tokens.css">
+<link rel="stylesheet" href="ds/matchup/components/bundle.css">
+<script src="ds/matchup/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0}
+a{color:var(--link)}
+.ent-q{display:flex; flex-direction:column; gap:12px}
+.ent-q__head{display:flex; align-items:baseline; justify-content:space-between; gap:8px}
+.ent-wrap{display:flex; flex-wrap:wrap; gap:8px}
+.ent-days{display:grid; grid-template-columns:repeat(7, minmax(0, 1fr)); gap:6px}
+.ent-day{appearance:none; margin:0; border:0; padding:0; font-family:var(--font-sans); cursor:pointer; height:48px; border-radius:var(--radius-sm); background:var(--surface); color:var(--text); box-shadow:inset 0 0 0 1px var(--border-control); display:flex; align-items:center; justify-content:center}
+.ent-day[aria-pressed="true"]{background:var(--accent); color:var(--on-accent); box-shadow:none}
+.ent-day:focus-visible{box-shadow:var(--focus-ring); outline:none}
+.ent-src{display:flex; align-items:center; gap:10px}
+.ent-src__icon{flex:none; width:32px; height:32px; border-radius:var(--radius-full); background:var(--ai-soft); color:var(--ai-text); display:flex; align-items:center; justify-content:center}
+</style>
+</helmet>
+<div style="position: relative; width: 390px; height: 1188px; box-sizing: border-box; overflow: hidden; display: flex; flex-direction: column; background: var(--surface); color: var(--text); font-family: var(--font-sans)">
+<div style="flex: none; display: flex; align-items: center; justify-content: space-between; padding: 52px 16px 0 4px; min-height: 48px">
+<a href="ENT-01-Mon-entrainement.dc.html" class="mu-iconbtn mu-iconbtn--l mu-iconbtn--ghost" aria-label="Retour" style="color: var(--text)"><x-import component-from-global-scope="MatchUp.Icon" name="arrow-left" size="{{i24}}"></x-import></a>
+<span class="label-s" style="display: inline-flex; align-items: center; gap: 4px; height: 24px; padding: 0 10px; border-radius: var(--radius-full); background: var(--accent); color: var(--on-accent)"><x-import component-from-global-scope="MatchUp.Icon" name="crown-simple" weight="fill" size="{{i14}}"></x-import>Inclus dans Premium</span>
+</div>
+
+<main style="flex: 1; min-height: 0; display: flex; flex-direction: column; gap: 28px; padding: 8px 16px 24px 16px">
+<div style="display: flex; flex-direction: column; gap: 8px">
+<div style="display: flex; align-items: center; gap: 10px">
+<h1 class="h1" style="margin: 0">Ton plan de la semaine</h1>
+</div>
+<p class="body-l" style="margin: 0; color: var(--text-secondary)">Dis-nous ce que tu veux travailler et quand tu es libre. L’IA prépare 3 séances autour de ton programme.</p>
+</div>
+
+<section class="ent-q" aria-labelledby="q-goal">
+<div class="ent-q__head"><h2 id="q-goal" class="h3" style="margin: 0">Ton objectif</h2><span class="caption" style="color: var(--text-secondary)">2 max</span></div>
+<div class="ent-wrap" role="group" aria-labelledby="q-goal">
+<x-import component-from-global-scope="MatchUp.Chip" kind="choice" selected="{{yes}}" icon="crosshair">Placement</x-import>
+<x-import component-from-global-scope="MatchUp.Chip" kind="choice" selected="{{yes}}" icon="person-simple-run">Endurance</x-import>
+<x-import component-from-global-scope="MatchUp.Chip" kind="choice">Service</x-import>
+<x-import component-from-global-scope="MatchUp.Chip" kind="choice">Retour</x-import>
+<x-import component-from-global-scope="MatchUp.Chip" kind="choice">Volée</x-import>
+<x-import component-from-global-scope="MatchUp.Chip" kind="choice">Bandeja</x-import>
+<x-import component-from-global-scope="MatchUp.Chip" kind="choice">Vitesse</x-import>
+</div>
+</section>
+
+<section class="ent-q" aria-labelledby="q-days">
+<div class="ent-q__head"><h2 id="q-days" class="h3" style="margin: 0">Tes jours libres</h2><span class="caption" style="color: var(--text-secondary)"><span class="num-xs" style="color: var(--text)">3</span> jours</span></div>
+<div class="ent-days" role="group" aria-labelledby="q-days">
+<button type="button" class="ent-day" aria-pressed="true" aria-label="Lundi"><span class="label">lun.</span></button>
+<button type="button" class="ent-day" aria-pressed="false" aria-label="Mardi"><span class="label">mar.</span></button>
+<button type="button" class="ent-day" aria-pressed="true" aria-label="Mercredi"><span class="label">mer.</span></button>
+<button type="button" class="ent-day" aria-pressed="false" aria-label="Jeudi"><span class="label">jeu.</span></button>
+<button type="button" class="ent-day" aria-pressed="false" aria-label="Vendredi"><span class="label">ven.</span></button>
+<button type="button" class="ent-day" aria-pressed="true" aria-label="Samedi"><span class="label">sam.</span></button>
+<button type="button" class="ent-day" aria-pressed="false" aria-label="Dimanche"><span class="label">dim.</span></button>
+</div>
+<div class="ent-wrap" role="group" aria-label="Moment de la journée">
+<x-import component-from-global-scope="MatchUp.Chip" kind="choice" icon="sun-horizon">Matin</x-import>
+<x-import component-from-global-scope="MatchUp.Chip" kind="choice" icon="sun">Midi</x-import>
+<x-import component-from-global-scope="MatchUp.Chip" kind="choice" selected="{{yes}}" icon="moon">Soir</x-import>
+</div>
+<p class="caption" style="margin: -4px 0 0 0; color: var(--text-secondary)">Pré-rempli avec tes disponibilités du profil. Tes matchs déjà prévus sont évités.</p>
+</section>
+
+<section class="ent-q" aria-labelledby="q-time">
+<h2 id="q-time" class="h3" style="margin: 0">Durée d’une séance</h2>
+<div class="ent-wrap" role="radiogroup" aria-labelledby="q-time">
+<x-import component-from-global-scope="MatchUp.Chip" kind="choice">15 min</x-import>
+<x-import component-from-global-scope="MatchUp.Chip" kind="choice" selected="{{yes}}">20 min</x-import>
+<x-import component-from-global-scope="MatchUp.Chip" kind="choice">30 min</x-import>
+<x-import component-from-global-scope="MatchUp.Chip" kind="choice">45 min</x-import>
+</div>
+</section>
+
+<section class="ent-q" aria-labelledby="q-int">
+<div style="display: flex; flex-direction: column; gap: 2px">
+<h2 id="q-int" class="h3" style="margin: 0">Intensité</h2>
+<p class="caption" style="margin: 0; color: var(--text-secondary)">Modérée : tu restes frais pour tes matchs du week-end.</p>
+</div>
+<x-import component-from-global-scope="MatchUp.SegmentedControl" label="Intensité" options="{{intensity}}" value="moderee" full-width="{{yes}}"></x-import>
+</section>
+
+<section class="mu-card" aria-labelledby="q-src" style="display: flex; flex-direction: column; gap: 12px; padding: 16px; background: var(--bg); box-shadow: none">
+<div style="display: flex; align-items: center; gap: 8px">
+<h2 id="q-src" class="label-l" style="margin: 0">Ce que l’IA utilise</h2>
+<x-import component-from-global-scope="MatchUp.AiLabel" size="s"></x-import>
+</div>
+<div class="ent-src"><span class="ent-src__icon"><x-import component-from-global-scope="MatchUp.Icon" name="sport-padel" size="{{i16}}"></x-import></span><span class="body" style="flex: 1">Tes 18 matchs de padel et ton niveau 3,5</span></div>
+<div class="ent-src"><span class="ent-src__icon"><x-import component-from-global-scope="MatchUp.Icon" name="users-three" size="{{i16}}"></x-import></span><span class="body" style="flex: 1">Les 9 avis de tes coéquipiers</span></div>
+<div style="height: 1px; background: var(--border)"></div>
+<x-import component-from-global-scope="MatchUp.Switch" label-position="start" default-checked="{{yes}}" label="Inclure mon programme Bandeja" description="La séance 6 prend une de tes 3 places."></x-import>
+</section>
+</main>
+
+<div style="flex: none; padding: 12px 16px 34px 16px; background: var(--surface); box-shadow: var(--elevation-2-up); display: flex; flex-direction: column; gap: 10px">
+<p class="caption" style="margin: 0; text-align: center; color: var(--text-secondary)">Tu verras le plan avant qu’il entre dans ton agenda.</p>
+<a href="ENT-07-Plan-IA.dc.html" class="mu-btn mu-btn--primary mu-btn--xl mu-btn--block"><span class="mu-btn__content"><x-import component-from-global-scope="MatchUp.Icon" name="sparkle" weight="fill" size="{{i20}}"></x-import><span class="mu-btn__label label-l">Générer mon plan</span></span></a>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":1188}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      yes: true, no: false, i14: 14, i16: 16, i20: 20, i24: 24,
+      intensity: [{ value: 'douce', label: 'Douce' }, { value: 'moderee', label: 'Modérée' }, { value: 'intense', label: 'Intense' }]
+    };
+  }
+}
+</script>
+</body>
+</html>

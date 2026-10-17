@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Coach · Prix et publication</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/matchup/tokens.css">
+<link rel="stylesheet" href="ds/matchup/components/bundle.css">
+<script src="ds/matchup/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+/* coa:shared — identical in COA-04…12 */
+body{margin:0}
+a{color:var(--link)}
+.coa-head{display:flex; align-items:flex-start; justify-content:space-between; gap:var(--space-3); padding:52px var(--space-4) 0 var(--space-4)}
+.coa-head__text{flex:1; min-width:0; display:flex; flex-direction:column; align-items:flex-start; gap:var(--space-2)}
+.coa-head__actions{flex:none; display:flex; align-items:center; gap:var(--space-1); margin-inline-end:calc(-1 * var(--space-1))}
+.coa-role{display:inline-flex; align-items:center; gap:6px; padding:3px 10px 3px 8px; border-radius:var(--radius-full); background:var(--surface); box-shadow:inset 0 0 0 1px var(--border); color:var(--text)}
+.coa-me{position:relative; display:flex; border-radius:var(--radius-full); text-decoration:none; color:inherit}
+.coa-me::before{content:""; position:absolute; inset:-4px}
+.coa-me:focus-visible{outline:none; box-shadow:var(--focus-ring)}
+.coa-sec{display:flex; flex-direction:column; gap:var(--space-3); padding:0 var(--space-4)}
+.coa-sec__head{display:flex; align-items:center; justify-content:space-between; gap:var(--space-3); min-height:32px; margin-inline-end:calc(-1 * var(--space-3))}
+.coa-sec__title{margin:0; display:flex; align-items:center; gap:var(--space-2)}
+.coa-list{margin:0; padding:0; list-style:none; background:var(--surface); border-radius:var(--radius-md); box-shadow:var(--elevation-1); overflow:hidden}
+.coa-list > li{position:relative}
+.coa-list > li + li::before{content:""; position:absolute; top:0; inset-inline-start:68px; inset-inline-end:0; height:1px; background:var(--border); z-index:1}
+.coa-row{position:relative; display:flex; align-items:center; gap:var(--space-3); min-height:64px; padding:var(--space-3) var(--space-4); box-sizing:border-box; color:var(--text); text-decoration:none}
+a.coa-row:hover{background:var(--surface-muted)}
+a.coa-row:focus-visible{outline:none; box-shadow:inset 0 0 0 2px var(--focus)}
+.coa-row__text{flex:1; min-width:0; display:flex; flex-direction:column; gap:2px}
+.coa-row__sub{color:var(--text-secondary); white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+.coa-chev{flex:none; display:flex; color:var(--text-secondary); margin-inline-end:calc(-1 * var(--space-1))}
+.coa-pill{flex:none; display:inline-flex; align-items:center; gap:4px; padding:2px 10px; border-radius:var(--radius-full); background:var(--accent); color:var(--on-accent)}
+.coa-muted{color:var(--text-secondary)}
+.coa-hot{position:absolute; display:block; border-radius:var(--radius-full); z-index:3}
+.coa-hot:focus-visible{outline:2px solid var(--focus); outline-offset:2px}
+/* /coa:shared */
+/* bld:shared — identical in COA-06…08 */
+.bld-top{display:flex; align-items:center; gap:var(--space-1); padding:52px var(--space-4) 0 var(--space-2)}
+.bld-top__text{flex:1; min-width:0; display:flex; flex-direction:column}
+.bld-top__title{white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+.bld-saved{display:inline-flex; align-items:center; gap:4px; color:var(--text-secondary)}
+.bld-bar{position:absolute; left:0; right:0; bottom:0; z-index:2; display:flex; gap:var(--space-3); padding:12px var(--space-4) 34px var(--space-4); background:var(--surface); box-shadow:var(--elevation-2-up)}
+.bld-handle{flex:none; position:relative; display:flex; align-items:center; justify-content:center; width:24px; height:32px; border-radius:var(--radius-xs); color:var(--text-secondary); cursor:grab; touch-action:none}
+.bld-handle::before{content:""; position:absolute; inset:-6px -10px}
+.bld-handle:hover{color:var(--text); background:var(--surface-muted)}
+.bld-handle:focus-visible{outline:none; box-shadow:var(--focus-ring)}
+/* /bld:shared */
+.pub-sec{display:flex; flex-direction:column; gap:var(--space-3)}
+.pub-sec > h2{margin:0}
+.pub-card{display:flex; flex-direction:column; gap:var(--space-4); padding:var(--space-4)}
+.pub-sum{display:flex; flex-direction:column; padding:var(--space-1) var(--space-3); border-radius:var(--radius-sm); background:var(--surface-muted)}
+.pub-sum > div{display:flex; align-items:center; justify-content:space-between; gap:var(--space-3); min-height:36px}
+.pub-sum > div + div{border-top:1px solid var(--border)}
+.pub-ai{display:flex; flex-direction:column; gap:var(--space-2); padding:var(--space-3); border-radius:var(--radius-sm); background:var(--ai-soft)}
+.pub-check{margin:0; padding:0; list-style:none; display:flex; flex-direction:column}
+.pub-check > li{display:flex; align-items:center; gap:var(--space-3); min-height:52px; padding:var(--space-2) 0; border-bottom:1px solid var(--border)}
+.pub-check > li:last-child{border-bottom:0}
+.pub-ico{flex:none; width:28px; height:28px; border-radius:var(--radius-full); display:flex; align-items:center; justify-content:center}
+.pub-ico--ok{background:var(--success-soft); color:var(--success-text)}
+.pub-ico--wait{background:var(--warning-soft); color:var(--warning-text)}
+.pub-hr{height:1px; background:var(--border); margin:0}
+</style>
+</helmet>
+<div style="position: relative; width: 390px; height: 2084px; box-sizing: border-box; overflow: hidden; background: var(--bg); color: var(--text); font-family: var(--font-sans)">
+
+<header class="bld-top">
+<a href="COA-06-Constructeur.dc.html" class="mu-iconbtn mu-iconbtn--l mu-iconbtn--ghost" aria-label="Retour au contenu du programme" style="color: var(--text)"><x-import component-from-global-scope="MatchUp.Icon" name="arrow-left" size="{{i24}}"></x-import></a>
+<div class="bld-top__text">
+<span class="label-l bld-top__title">Prix et publication</span>
+<span class="caption bld-saved"><x-import component-from-global-scope="MatchUp.Icon" name="cloud-check" size="{{i14}}"></x-import>Jeu au filet en 4 semaines · brouillon</span>
+</div>
+</header>
+
+<div style="display: flex; flex-direction: column; gap: 24px; padding: 8px 16px 200px 16px">
+<x-import component-from-global-scope="MatchUp.StepIndicator" step="{{two}}" total="{{two}}" title="Prix et publication"></x-import>
+
+<section class="pub-sec" aria-labelledby="pub-acc">
+<h2 id="pub-acc" class="h3">Comment les joueurs y accèdent</h2>
+<div class="mu-card pub-card">
+<x-import component-from-global-scope="MatchUp.Switch" label="Vendre le programme" description="Paiement unique, accès sans limite de durée." label-position="start" checked="{{sell}}" on-change="{{setSell}}"></x-import>
+<sc-if value="{{sell}}">
+<x-import component-from-global-scope="MatchUp.TextField" label="Prix pour un élève" default-value="35" suffix="DT" inputmode="numeric"></x-import>
+<div class="pub-ai">
+<span style="display: flex; align-items: center; gap: 8px"><x-import component-from-global-scope="MatchUp.AiLabel" size="s"></x-import><span class="label">Prix conseillé : 30 – 40 DT</span></span>
+<span class="caption" style="color: var(--text)">Recommandé car les programmes padel de 4 semaines se vendent entre 30 et 45 DT autour de Lac 2, et le tien vise un niveau 2,5 – 4,0.</span>
+</div>
+<div class="pub-sum" aria-label="Ce que tu reçois par vente">
+<div><span class="body coa-muted">Prix payé par l’élève</span><span class="num-s">35 DT</span></div>
+<div><span class="body coa-muted">Commission MatchUp · 10 %</span><span class="num-s">−3,500 DT</span></div>
+<div><span class="label">Tu reçois par vente</span><span class="num-m">31,500 DT</span></div>
+</div>
+</sc-if>
+<div class="pub-hr"></div>
+<x-import component-from-global-scope="MatchUp.Switch" label="Inclure dans Premium" description="Les abonnés Premium le suivent sans payer. Tu touches une part de l’abonnement selon leurs séances faites." label-position="start" checked="{{prem}}" on-change="{{setPrem}}"></x-import>
+</div>
+</section>
+
+<section class="pub-sec" aria-labelledby="pub-prev">
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 12px">
+<h2 id="pub-prev" class="h3" style="margin: 0">Aperçu</h2>
+<x-import component-from-global-scope="MatchUp.SegmentedControl" label="Vu par" size="s" options="{{views}}" value="{{view}}" on-change="{{setView}}"></x-import>
+</div>
+<x-import component-from-global-scope="MatchUp.ProgramCard" dc-props="{{card}}"></x-import>
+<p class="caption coa-muted" style="margin: 0">{{viewNote}}</p>
+</section>
+
+<section class="pub-sec" aria-labelledby="pub-chk">
+<h2 id="pub-chk" class="h3">Avant la mise en ligne</h2>
+<div class="mu-card" style="padding: 4px 16px">
+<ul class="pub-check">
+<li><span class="pub-ico pub-ico--ok"><x-import component-from-global-scope="MatchUp.Icon" name="check" size="{{i16}}"></x-import></span><span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px"><span class="label">Titre, description et couverture</span><span class="caption coa-muted">Prêts</span></span></li>
+<li><span class="pub-ico pub-ico--ok"><x-import component-from-global-scope="MatchUp.Icon" name="seal-check" size="{{i16}}"></x-import></span><span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px"><span class="label">Coach vérifié</span><span class="caption coa-muted">Certificat FTT niveau 2 validé</span></span></li>
+<li><span class="pub-ico pub-ico--wait"><x-import component-from-global-scope="MatchUp.Icon" name="hourglass-medium" size="{{i16}}"></x-import></span><span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px"><span class="label">1 vidéo en traitement</span><span class="caption coa-muted">Séance 5 · prête dans 1 min environ</span></span></li>
+<li><span class="pub-ico pub-ico--wait"><x-import component-from-global-scope="MatchUp.Icon" name="warning" size="{{i16}}"></x-import></span><span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px"><span class="label">2 séances à ajouter</span><span class="caption coa-muted">Semaine 4 · 10 séances sur 12</span></span><a href="COA-06-Constructeur.dc.html" class="mu-btn mu-btn--secondary mu-btn--s"><span class="mu-btn__content"><span class="mu-btn__label label">Compléter</span></span></a></li>
+</ul>
+</div>
+</section>
+
+<section class="pub-sec" aria-labelledby="pub-when">
+<h2 id="pub-when" class="h3">Quand publier ?</h2>
+<x-import component-from-global-scope="MatchUp.Radio.Group" label="Date de publication" name="pub-when" value="{{when}}" on-change="{{setWhen}}">
+<x-import component-from-global-scope="MatchUp.Radio" value="ready" label="Dès que tout est prêt" description="On le met en ligne quand les 12 séances et leurs vidéos sont prêtes. Tu reçois une notification."></x-import>
+<x-import component-from-global-scope="MatchUp.Radio" value="date" label="Le lun. 26 oct. · 8h00" description="On te prévient la veille s’il manque encore quelque chose."></x-import>
+</x-import>
+</section>
+</div>
+
+<div class="bld-bar" style="flex-direction: column; gap: 4px">
+<a href="COA-05-Programmes.dc.html" class="mu-btn mu-btn--primary mu-btn--xl mu-btn--block"><span class="mu-btn__content"><x-import component-from-global-scope="MatchUp.Icon" name="calendar-check" size="{{i20}}"></x-import><span class="mu-btn__label label-l">Programmer la publication</span></span></a>
+<a href="COA-05-Programmes.dc.html" class="mu-btn mu-btn--tertiary mu-btn--l mu-btn--block"><span class="mu-btn__content"><span class="mu-btn__label label-l">Enregistrer le brouillon</span></span></a>
+<span class="caption coa-muted" style="text-align: center">Commission de 10 % par vente · versements chaque lundi</span>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":2084}}'>
+class Component extends DCLogic {
+  state = { sell: true, prem: true, view: 'joueur', when: 'ready' };
+  renderVals() {
+    const st = this.state;
+    const premiumView = st.view === 'premium' && st.prem;
+    return {
+      yes: true, no: false, i14: 14, i16: 16, i20: 20, i24: 24, two: 2,
+      sell: st.sell, setSell: (v) => this.setState({ sell: v }),
+      prem: st.prem, setPrem: (v) => this.setState({ prem: v }),
+      views: [{ value: 'joueur', label: 'Joueur' }, { value: 'premium', label: 'Premium', icon: 'crown-simple' }],
+      view: st.view, setView: (v) => this.setState({ view: v }),
+      when: st.when, setWhen: (v) => this.setState({ when: v }),
+      card: {
+        title: 'Jeu au filet en 4 semaines', coach: { name: 'Karim J.', verified: true }, sport: 'padel', level: 3,
+        weeks: 4, sessions: 12, minutesPerDay: 25, cover: 'photo',
+        price: st.sell ? 35 : undefined, premium: premiumView || (!st.sell && st.prem)
+      },
+      viewNote: premiumView ? 'Les abonnés Premium voient « Inclus dans Premium » à la place du prix.' : 'Sans avis pour l’instant : la note apparaît après les 3 premiers retours d’élèves.'
+    };
+  }
+}
+</script>
+</body>
+</html>

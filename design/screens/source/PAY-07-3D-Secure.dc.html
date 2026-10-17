@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>3-D Secure</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/matchup/tokens.css">
+<link rel="stylesheet" href="ds/matchup/components/bundle.css">
+<script src="ds/matchup/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0}
+a{color:var(--link)}
+.pay-root{position:relative; width:390px; box-sizing:border-box; display:flex; flex-direction:column; overflow:hidden; background:var(--bg); color:var(--text); font-family:var(--font-sans)}
+.pay-head{flex:none; display:flex; align-items:center; gap:4px; min-height:48px; padding:52px 16px 8px 8px}
+.pay-head__title{flex:1; min-width:0; margin:0}
+.pay-head__aside{display:inline-flex; align-items:center; gap:4px; color:var(--text-secondary)}
+.pay-ribbon{flex:none}
+.pay-body{flex:1; min-height:0; display:flex; flex-direction:column; gap:28px; padding:20px 16px 160px 16px}
+.pay-body > *{flex-shrink:0}
+.pay-sec{display:flex; flex-direction:column; gap:12px}
+.pay-sec__head{display:flex; align-items:baseline; justify-content:space-between; gap:12px}
+.pay-sec__title{margin:0}
+.pay-muted{color:var(--text-secondary)}
+.pay-ink{color:var(--text)}
+.pay-m0{margin:0}
+.pay-ico{display:inline-flex; flex:none}
+
+/* summary ticket */
+.pay-sum{display:flex; flex-direction:column; padding:0; overflow:hidden}
+.pay-sum__top{display:flex; align-items:center; gap:12px; padding:16px}
+.pay-sum__txt{flex:1; min-width:0; display:flex; flex-direction:column; gap:2px}
+.pay-perf{position:relative; height:0; margin:0 16px; border-top:1.5px dashed var(--border-strong)}
+.pay-perf::before,.pay-perf::after{content:""; position:absolute; top:-9px; width:16px; height:16px; border-radius:var(--radius-full); background:var(--bg)}
+.pay-perf::before{left:-25px}
+.pay-perf::after{right:-25px}
+.pay-sum__toggle{appearance:none; border:0; margin:0; width:100%; background:none; font:inherit; cursor:pointer; text-align:start; display:flex; align-items:center; gap:8px; min-height:52px; padding:0 16px; text-decoration:none; color:var(--text)}
+.pay-sum__toggle:focus-visible{outline:none; box-shadow:var(--focus-ring); border-radius:var(--radius-md)}
+.pay-sum__toggle .pay-grow{flex:1}
+.pay-dl{margin:0; display:flex; flex-direction:column; padding:0 16px 8px 16px}
+.pay-dl > div{display:flex; align-items:flex-start; justify-content:space-between; gap:16px; padding:11px 0; border-top:1px solid var(--border)}
+.pay-dl dt{flex:none; color:var(--text-secondary)}
+.pay-dl dd{margin:0; text-align:end; display:flex; flex-direction:column; align-items:flex-end; gap:2px}
+.pay-split{display:flex; flex-direction:column; gap:8px; margin:4px 16px 16px 16px; padding:12px; border-radius:var(--radius-sm); background:var(--surface-muted)}
+.pay-split__bar{display:grid; grid-template-columns:repeat(10, 1fr); gap:3px}
+.pay-split__bar span{height:8px; border-radius:var(--radius-full); background:var(--border)}
+.pay-split__bar span.is-me{background:var(--accent); box-shadow:inset 0 0 0 1.5px var(--text)}
+.pay-split__bar span.is-paid{background:var(--text-secondary)}
+.pay-split__legend{display:flex; flex-wrap:wrap; gap:4px 12px}
+.pay-split__legend span{display:inline-flex; align-items:center; gap:6px}
+.pay-split__legend i{display:inline-block; width:10px; height:10px; border-radius:var(--radius-full)}
+
+/* promo */
+.pay-promo{display:flex; align-items:flex-start; gap:8px}
+.pay-promo > :first-child{flex:1; min-width:0}
+.pay-promo__btn{flex:none; margin-top:28px}
+
+/* payment methods */
+.pay-methods{display:flex; flex-direction:column; padding:4px 16px}
+.pay-methods .mu-radio{padding-block:14px; align-items:center}
+.pay-methods .mu-radio + .mu-radio{border-top:1px solid var(--border)}
+.pay-methods .mu-radio__text{flex:1; min-width:0}
+.pay-methods .mu-radio__label{display:block}
+.pay-card{display:flex; align-items:center; gap:12px; width:100%}
+.pay-card__txt{flex:1; min-width:0; display:flex; flex-direction:column; gap:2px}
+.pay-brand{flex:none; display:inline-flex; align-items:center; justify-content:center; width:44px; height:28px; box-sizing:border-box; border-radius:var(--radius-xs); background:var(--surface); box-shadow:inset 0 0 0 1.5px var(--text); color:var(--text); letter-spacing:0.04em}
+.pay-brand--s{width:36px; height:22px}
+.pay-brand--wallet{background:var(--surface-muted); box-shadow:inset 0 0 0 1px var(--border)}
+.pay-tag{display:inline-flex; align-items:center; gap:4px; padding:2px 8px; border-radius:var(--radius-full); background:var(--surface-muted); color:var(--text-secondary); white-space:nowrap}
+.pay-warn{display:inline-flex; align-items:center; gap:4px; color:var(--warning-text)}
+.pay-ok{display:inline-flex; align-items:center; gap:4px; color:var(--success-text)}
+.pay-err{display:inline-flex; align-items:center; gap:4px; color:var(--error-text)}
+.pay-add{display:flex; align-items:center; gap:12px; min-height:56px; border-top:1px solid var(--border); text-decoration:none; color:var(--text)}
+.pay-add__ico{flex:none; width:44px; height:28px; box-sizing:border-box; border-radius:var(--radius-xs); box-shadow:inset 0 0 0 1.5px var(--border-strong); display:flex; align-items:center; justify-content:center; color:var(--text-secondary)}
+.pay-add:focus-visible{outline:none; box-shadow:var(--focus-ring); border-radius:var(--radius-sm)}
+
+/* express wallets */
+.pay-or{display:flex; align-items:center; gap:12px; color:var(--text-secondary)}
+.pay-or::before,.pay-or::after{content:""; flex:1; height:1px; background:var(--border)}
+.pay-xp{display:grid; grid-template-columns:1fr 1fr; gap:12px}
+.pay-xp__btn{appearance:none; border:0; margin:0; cursor:pointer; height:var(--control-l); border-radius:var(--radius-md); background:var(--ink-900); color:var(--white); box-shadow:inset 0 0 0 1px var(--border-strong); font:inherit}
+.pay-xp__btn:focus-visible{outline:none; box-shadow:var(--focus-ring)}
+
+/* totals */
+.pay-tot{display:flex; flex-direction:column; gap:10px; padding:16px; border-radius:var(--radius-md); background:var(--surface); box-shadow:var(--elevation-1), inset 0 0 0 1px var(--border)}
+.pay-line{display:flex; align-items:baseline; justify-content:space-between; gap:12px}
+.pay-rule{height:1px; background:var(--border); margin:2px 0}
+
+/* policy */
+.pay-pol{display:flex; flex-direction:column; gap:12px; padding:16px}
+.pay-pol__bar{display:grid; grid-template-columns:1.3fr 1fr 1fr; gap:4px}
+.pay-pol__bar span{height:6px}
+.pay-tier{display:flex; align-items:flex-start; gap:10px}
+.pay-tier > span:last-child{flex:1; display:flex; flex-direction:column}
+
+/* sticky pay bar */
+.pay-bar{position:absolute; left:0; right:0; bottom:0; z-index:var(--z-sticky); padding:12px 16px 34px 16px; background:var(--surface); box-shadow:var(--elevation-2-up); display:flex; flex-direction:column; gap:8px}
+.pay-secure{display:flex; align-items:center; justify-content:center; gap:6px; margin:0; color:var(--text-secondary)}
+
+/* payment element zone */
+.pay-pe{position:relative; margin-top:12px; display:flex; flex-direction:column; gap:16px; padding:28px 16px 16px 16px; border-radius:var(--radius-md); border:1.5px dashed var(--border-strong); background:var(--surface)}
+.pay-pe__legend{position:absolute; top:-11px; left:12px; display:inline-flex; align-items:center; gap:6px; padding:2px 8px; border-radius:var(--radius-full); background:var(--bg); color:var(--text-secondary); box-shadow:inset 0 0 0 1px var(--border)}
+.pay-pe__brands{display:flex; align-items:center; gap:6px}
+.pay-pe__row{display:grid; grid-template-columns:1fr 1fr; gap:12px}
+
+/* state hero (result / error screens) */
+.pay-hero{display:flex; flex-direction:column; align-items:center; gap:8px; text-align:center}
+.pay-hero__ico{width:72px; height:72px; border-radius:var(--radius-full); display:flex; align-items:center; justify-content:center; margin-bottom:4px}
+@keyframes pay-pop{from{transform:scale(0.6); opacity:0}to{transform:none; opacity:1}}
+@keyframes pay-draw{from{stroke-dashoffset:40}to{stroke-dashoffset:0}}
+.pay-check{animation:pay-pop var(--duration-slow) var(--ease-pop) both}
+.pay-check path{stroke-dasharray:40; animation:pay-draw var(--duration-slow) var(--ease-enter) 120ms both}
+@media (prefers-reduced-motion: reduce){.pay-check, .pay-check path{animation:none}}
+.pay-steps{margin:0; padding:0; list-style:none; display:flex; flex-direction:column; gap:12px}
+.pay-steps li{display:flex; gap:12px; align-items:flex-start}
+.pay-steps__n{flex:none; width:24px; height:24px; border-radius:var(--radius-full); display:flex; align-items:center; justify-content:center; background:var(--surface); box-shadow:inset 0 0 0 1px var(--border-strong); color:var(--text)}
+.pay-tile{appearance:none; border:0; margin:0; font:inherit; cursor:pointer; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:var(--space-2); min-height:84px; padding:var(--space-3); border-radius:var(--radius-md); background:var(--surface); color:var(--text); box-shadow:var(--elevation-1), inset 0 0 0 1px var(--border); text-align:center; text-decoration:none}
+.pay-tile:focus-visible{outline:none; box-shadow:var(--focus-ring)}
+.pay-hot{position:absolute; display:block; z-index:calc(var(--z-takeover) + 1); border-radius:var(--radius-md)}
+.pay-hot:focus-visible{outline:2px solid var(--focus); outline-offset:2px}
+.bank{flex:1; display:flex; flex-direction:column; gap:10px; padding:16px; margin-top:8px; border-radius:var(--radius-xs); background:var(--white); color:var(--ink-900); box-shadow:0 0 0 1px var(--ink-100)}
+.bank .pay-muted{color:var(--ink-500)}
+.bank__top{display:flex; align-items:center; gap:10px; padding-bottom:10px; border-bottom:1px solid var(--ink-100)}
+.bank__logo{width:36px; height:36px; border-radius:var(--radius-xs); background:var(--ink-700); color:var(--white); display:flex; align-items:center; justify-content:center}
+.bank__dl{margin:0; display:flex; flex-direction:column; gap:2px}
+.bank__dl div{display:flex; justify-content:space-between}
+.bank__dl dd{margin:0}
+.bank__otp{display:grid; grid-template-columns:repeat(6, 1fr); gap:6px}
+.bank__otp span{height:36px; border-radius:var(--radius-xs); box-shadow:inset 0 0 0 1px var(--ink-300); display:flex; align-items:center; justify-content:center}
+.bank__otp span.is-cur{box-shadow:inset 0 0 0 2px var(--ink-700)}
+.bank__btn{display:flex; align-items:center; justify-content:center; height:40px; border-radius:var(--radius-xs); background:var(--ink-700); color:var(--white); text-decoration:none}
+.bank__cancel{align-self:center; color:var(--ink-700)}
+.pay-3ds-ribbon{position:absolute; left:0; right:0; top:52px; z-index:calc(var(--z-takeover) + 1)}
+</style>
+</helmet>
+<div class="pay-root" style="height: 844px; background: var(--bg)">
+<div class="pay-3ds-ribbon"><div class="pay-ribbon"><x-import component-from-global-scope="MatchUp.Banner" variant="ribbon">carte <span class="num-xs">4242 4242 4242 4242</span></x-import></div></div>
+<x-import component-from-global-scope="MatchUp.Takeover.SecurePayment" inline="{{yes}}" open="{{yes}}" safe-area="{{safe}}" amount="15 DT" merchant="Arena Five · via MatchUp" detail="Ta part · mer. 21 oct. · 21h00" hint="Tu reviendras automatiquement sur MatchUp. Pour annuler, utilise « Annuler » dans la fenêtre de ta banque : rien ne sera débité.">
+<div class="bank">
+<div class="bank__top"><span class="bank__logo"><x-import component-from-global-scope="MatchUp.Icon" name="bank" size="{{i20}}"></x-import></span><span style="display: flex; flex-direction: column"><span class="label">Ta banque</span><span class="caption pay-muted">Paiement en ligne sécurisé</span></span></div>
+<p class="label pay-m0">Confirme ce paiement</p>
+<dl class="bank__dl">
+<div><dt class="caption pay-muted">Marchand</dt><dd class="caption">MATCHUP</dd></div>
+<div><dt class="caption pay-muted">Montant</dt><dd class="caption">15,000 TND</dd></div>
+<div><dt class="caption pay-muted">Carte</dt><dd class="caption">VISA •••• 4242</dd></div>
+</dl>
+<p class="caption pay-m0">Code envoyé par SMS au +216 20 ••• 456</p>
+<div class="bank__otp num-m" aria-hidden="true"><span>4</span><span>8</span><span>2</span><span class="is-cur"></span><span></span><span></span></div>
+<a href="PAY-09-Paiement-reussi.dc.html" class="bank__btn label">Valider</a>
+<a href="PAY-01-Checkout.dc.html" class="bank__cancel caption">Annuler</a>
+<p class="caption pay-muted" style="margin: auto 0 0 0; padding-top: 10px; border-top: 1px solid var(--ink-100); text-align: center">Service client de ta banque · 24 h/24</p>
+</div>
+</x-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      yes: true, no: false, i14: 14, i16: 16, i20: 20, i24: 24, i32: 32, i40: 40, three: 3,
+      thumb: { style: { width: 48, height: 48, borderRadius: 'var(--radius-sm)', flex: 'none' } },
+      team: [{ name: 'Yassine B.' }, { name: 'Skander T.' }, { name: 'Hamza R.' }, { name: 'Aziz H.' }, { name: 'Omar D.' }, { name: 'Nour A.' }],
+      safe: { top: 88, bottom: 34 }
+    };
+  }
+}
+</script>
+</body>
+</html>

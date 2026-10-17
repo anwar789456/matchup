@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Payer le reste</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/matchup/tokens.css">
+<link rel="stylesheet" href="ds/matchup/components/bundle.css">
+<script src="ds/matchup/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0}
+a{color:var(--link)}
+.rst-sum{display:flex; flex-direction:column; padding:var(--space-1) var(--space-4); border-radius:var(--radius-md); background:var(--surface-muted)}
+.rst-sum > div{display:flex; align-items:center; gap:var(--space-3); min-height:48px}
+.rst-sum > div + div{border-top:1px solid var(--border)}
+.rst-brand{flex:none; display:inline-flex; align-items:center; justify-content:center; width:44px; height:28px; box-sizing:border-box; border-radius:var(--radius-xs); background:var(--surface); box-shadow:inset 0 0 0 1.5px var(--text); color:var(--text); letter-spacing:0.04em}
+.rst-opt{display:inline-flex; align-items:center; gap:var(--space-2)}
+.rst-wallet{flex:none; display:inline-flex; align-items:center; justify-content:center; width:44px; height:28px; box-sizing:border-box; border-radius:var(--radius-xs); background:var(--surface-muted); box-shadow:inset 0 0 0 1px var(--border); color:var(--text)}
+</style>
+</helmet>
+<div style="position: relative; width: 390px; height: 844px; box-sizing: border-box; overflow: hidden; background: var(--bg); color: var(--text); font-family: var(--font-sans)">
+
+<div aria-hidden="true" style="display: flex; flex-direction: column">
+<div style="display: flex; align-items: center; gap: 4px; padding: 52px 16px 8px 8px">
+<span class="mu-iconbtn mu-iconbtn--l mu-iconbtn--ghost" style="color: var(--text)"><x-import component-from-global-scope="MatchUp.Icon" name="arrow-left" size="{{i24}}"></x-import></span>
+<div style="flex: 1; min-width: 0; display: flex; flex-direction: column">
+<span class="label-l">Paiements de la partie</span>
+<span class="caption" style="color: var(--text-secondary)">Arena Five · Terrain 1 · mer. 21 oct. · 21h00</span>
+</div>
+</div>
+<div style="padding: 8px 16px">
+<div class="mu-card" style="display: flex; flex-direction: column; gap: 16px; padding: 16px">
+<div style="display: flex; align-items: flex-start; justify-content: space-between; gap: 12px">
+<div style="display: flex; flex-direction: column; gap: 2px">
+<span class="overline" style="color: var(--text-secondary)">Collecté</span>
+<span><span class="num-xl">105 DT</span><span class="body" style="color: var(--text-secondary)"> sur 150 DT</span></span>
+</div>
+<x-import component-from-global-scope="MatchUp.StatusBadge" status="pending" label="2 parts en attente"></x-import>
+</div>
+<x-import component-from-global-scope="MatchUp.ProgressBar" size="l" value="{{paid}}" pending="{{pend}}" max="{{court}}" show-value="{{no}}" aria-label="Paiements reçus" legend="{{legend}}"></x-import>
+</div>
+</div>
+</div>
+
+<x-import component-from-global-scope="MatchUp.BottomSheet" inline="{{yes}}" open="{{yes}}" height="auto" title="Payer le reste" show-close="{{yes}}" safe-area="{{safe}}">
+<div style="display: flex; flex-direction: column; gap: 20px">
+<p class="body-l" style="margin: 0">Tu avances <span class="label-l">30 DT</span> pour Lina F. et Rami S. Ils pourront te rembourser via l’app.</p>
+
+<div class="rst-sum" aria-label="Détail du montant">
+<div><x-import component-from-global-scope="MatchUp.AvatarStack" people="{{late}}" size="s" label="Lina F. et Rami S."></x-import><span style="flex: 1; min-width: 0; display: flex; flex-direction: column"><span class="label">Parts de Lina F. et Rami S.</span><span class="caption" style="color: var(--text-secondary)">2 × 15 DT</span></span><span class="num-l">30 DT</span></div>
+</div>
+
+<x-import component-from-global-scope="MatchUp.Radio.Group" label="Payer avec" name="rst-method" value="{{method}}" on-change="{{setMethod}}">
+<x-import component-from-global-scope="MatchUp.Radio" value="visa" description="Par défaut · expire 08/27"><span class="rst-opt"><span class="rst-brand label-s">VISA</span><span class="label">Visa •••• 4242</span></span></x-import>
+<x-import component-from-global-scope="MatchUp.Radio" value="solde" description="30 DT disponibles · il te restera 0 DT"><span class="rst-opt"><span class="rst-wallet"><x-import component-from-global-scope="MatchUp.Icon" name="wallet" size="{{i16}}"></x-import></span><span class="label">Solde MatchUp</span></span></x-import>
+</x-import>
+
+<p class="caption" style="margin: 0; display: flex; align-items: flex-start; gap: 8px; color: var(--text-secondary)"><span style="flex: none; display: flex; color: var(--info-text)"><x-import component-from-global-scope="MatchUp.Icon" name="arrow-u-up-left" size="{{i16}}"></x-import></span><span>Ils reçoivent une demande de 15 DT chacun ; leur paiement arrive sur ton solde MatchUp.</span></p>
+
+<div style="display: flex; flex-direction: column; gap: 4px">
+<a href="PAY-06-Paiement-en-cours.dc.html" class="mu-btn mu-btn--primary mu-btn--xl mu-btn--block"><span class="mu-btn__content"><x-import component-from-global-scope="MatchUp.Icon" name="lock-simple" size="{{i20}}"></x-import><span class="mu-btn__label label-l">Payer 30 DT</span></span></a>
+<a href="PAY-11-Suivi-des-paiements.dc.html" class="mu-btn mu-btn--tertiary mu-btn--l mu-btn--block"><span class="mu-btn__content"><span class="mu-btn__label label-l">Annuler</span></span></a>
+<span class="caption" style="display: flex; align-items: center; justify-content: center; gap: 6px; color: var(--text-secondary)"><x-import component-from-global-scope="MatchUp.Icon" name="lock-simple" size="{{i14}}"></x-import>Paiement sécurisé par Stripe</span>
+</div>
+</div>
+</x-import>
+<a href="PAY-11-Suivi-des-paiements.dc.html" aria-label="Fermer et revenir au suivi" style="position: absolute; left: 0; right: 0; top: 0; height: 176px"></a>
+<a href="PAY-11-Suivi-des-paiements.dc.html" aria-label="Fermer" style="position: absolute; right: 6px; top: 212px; width: 44px; height: 44px; border-radius: var(--radius-full); z-index: calc(var(--z-sheet) + 1)"></a>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  state = { method: 'visa' };
+  renderVals() {
+    return {
+      yes: true, no: false, i14: 14, i16: 16, i20: 20, i24: 24,
+      safe: { bottom: 34 },
+      paid: 105, pend: 30, court: 150,
+      legend: ['7 parts payées', '2 en attente', '1 place libre'],
+      late: [{ name: 'Lina F.' }, { name: 'Rami S.' }],
+      method: this.state.method,
+      setMethod: (v) => this.setState({ method: v })
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Admin · Utilisateurs</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/matchup/tokens.css">
+<link rel="stylesheet" href="ds/matchup/components/bundle.css">
+<script src="ds/matchup/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+/* adm:shared — identical in ADM-01…10 */
+body{margin:0}
+a{color:var(--link)}
+.adm-head{display:flex; align-items:flex-start; justify-content:space-between; gap:var(--space-3); padding:52px var(--space-2) var(--space-3) var(--space-4)}
+.adm-head__titles{flex:1; min-width:0; display:flex; flex-direction:column; align-items:flex-start; gap:var(--space-2)}
+.adm-head__title{margin:0}
+.adm-role{display:inline-flex; align-items:center; gap:var(--space-1); height:24px; padding:0 10px 0 8px; border-radius:var(--radius-full); background:var(--surface-inverse); color:var(--text-inverse)}
+.adm-me{flex:none; width:48px; height:48px; display:grid; place-items:center; border-radius:var(--radius-full); text-decoration:none}
+.adm-me:focus-visible,.adm-hot:focus-visible{outline:none; box-shadow:var(--focus-ring)}
+.adm-bar{display:flex; align-items:center; gap:var(--space-1); padding:52px var(--space-2) var(--space-2) var(--space-1)}
+.adm-bar__titles{flex:1; min-width:0; display:flex; flex-direction:column; gap:2px}
+.adm-sec{display:flex; flex-direction:column; gap:var(--space-2); margin:0}
+.adm-sec__head{display:flex; align-items:center; justify-content:space-between; gap:var(--space-2); min-height:32px}
+.adm-sec__title{margin:0; display:flex; align-items:center; gap:var(--space-2)}
+.adm-over{margin:0; color:var(--text-secondary)}
+.adm-muted{color:var(--text-secondary)}
+.adm-list{margin:0; padding:0; list-style:none; background:var(--surface); border-radius:var(--radius-md); box-shadow:var(--elevation-1); overflow:hidden}
+.adm-list > li{position:relative}
+.adm-list > li + li::before{content:""; position:absolute; top:0; inset-inline-start:var(--space-4); inset-inline-end:0; height:1px; background:var(--border); z-index:1}
+.adm-list--inset > li + li::before{inset-inline-start:68px}
+.adm-row{position:relative; display:flex; align-items:center; gap:var(--space-3); min-height:64px; padding:var(--space-3) var(--space-4); box-sizing:border-box; color:var(--text); text-decoration:none}
+a.adm-row:hover{background:var(--surface-muted)}
+a.adm-row:focus-visible{outline:none; box-shadow:inset 0 0 0 2px var(--focus)}
+.adm-row--top{align-items:flex-start}
+.adm-ico{flex:none; width:40px; height:40px; border-radius:var(--radius-sm); display:grid; place-items:center; background:var(--surface-muted); color:var(--text)}
+.adm-ico--error{background:var(--error-soft); color:var(--error-text)}
+.adm-ico--warning{background:var(--warning-soft); color:var(--warning-text)}
+.adm-ico--info{background:var(--info-soft); color:var(--info-text)}
+.adm-ico--ai{background:var(--ai-soft); color:var(--ai-text)}
+.adm-ico--success{background:var(--success-soft); color:var(--success-text)}
+.adm-txt{flex:1; min-width:0; display:flex; flex-direction:column; gap:2px}
+.adm-one{white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+.adm-two{display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden}
+.adm-end{flex:none; display:flex; flex-direction:column; align-items:flex-end; gap:4px; text-align:end}
+.adm-chev{flex:none; display:flex; color:var(--text-secondary); margin-inline-end:calc(-1 * var(--space-1))}
+.adm-chips{display:flex; gap:var(--space-2); overflow-x:auto; padding:6px var(--space-4); margin:-6px 0; scrollbar-width:none}
+.adm-chips::-webkit-scrollbar{display:none}
+.adm-chips > *{flex:none}
+.adm-meta{display:flex; align-items:center; justify-content:space-between; gap:var(--space-2); min-height:40px; padding:0 var(--space-2) 0 var(--space-4)}
+.adm-score{flex:none; width:76px; display:flex; flex-direction:column; align-items:flex-end; gap:4px}
+.adm-score__top{display:flex; align-items:baseline; gap:4px}
+.adm-score__track{width:100%; height:4px; border-radius:var(--radius-full); background:var(--surface-muted); overflow:hidden}
+.adm-score__fill{height:100%; border-radius:var(--radius-full)}
+.adm-score--high .adm-score__fill{background:var(--error)}
+.adm-score--high .adm-score__level{color:var(--error-text)}
+.adm-score--mid .adm-score__fill{background:var(--warning)}
+.adm-score--mid .adm-score__level{color:var(--warning-text)}
+.adm-score--low .adm-score__fill{background:var(--text-secondary)}
+.adm-score--low .adm-score__level{color:var(--text-secondary)}
+.adm-why{display:flex; align-items:center; gap:6px; color:var(--text-secondary)}
+.adm-stickybar{position:absolute; left:0; right:0; bottom:0; z-index:4; display:flex; gap:var(--space-3); padding:12px var(--space-4) 34px var(--space-4); background:var(--surface); box-shadow:var(--elevation-2-up)}
+.adm-hot{position:absolute; display:block; border-radius:var(--radius-full); z-index:5}
+/* /adm:shared */
+.usr-row{min-height:68px}
+.usr-row.is-on{background:var(--surface-muted)}
+.usr-check{flex:none; display:flex; align-items:center; justify-content:center; width:24px}
+.usr-tools{padding:6px var(--space-2) 34px var(--space-2); gap:0}
+.usr-tool{appearance:none; border:0; margin:0; flex:1 1 0; min-width:0; min-height:56px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4px; border-radius:var(--radius-md); background:transparent; color:var(--text); font:inherit; cursor:pointer}
+.usr-tool:hover{background:var(--surface-muted)}
+.usr-tool:focus-visible{outline:none; box-shadow:var(--focus-ring)}
+.usr-tool--danger{color:var(--error-text)}
+.usr-selbar{display:flex; align-items:center; gap:var(--space-2); min-height:40px; padding:0 var(--space-2) 0 var(--space-4)}
+</style>
+</helmet>
+<div style="position: relative; width: 390px; height: 844px; box-sizing: border-box; overflow: hidden; display: flex; flex-direction: column; background: var(--bg); color: var(--text); font-family: var(--font-sans)">
+
+<header class="adm-head" style="padding-bottom: 12px">
+<div class="adm-head__titles">
+<span class="adm-role label-s"><x-import component-from-global-scope="MatchUp.Icon" name="shield-check" size="{{i14}}" weight="fill"></x-import>Admin</span>
+<h1 class="adm-head__title h1">Utilisateurs</h1>
+</div>
+<a href="PRF-06-Changer-de-role.dc.html" class="adm-me" aria-label="Leila M., admin. Changer de rôle"><x-import component-from-global-scope="MatchUp.Avatar" name="Leila M." size="s"></x-import></a>
+</header>
+
+<div style="flex: none; display: flex; flex-direction: column; gap: 12px; padding-bottom: 4px">
+<div style="padding: 0 16px"><x-import component-from-global-scope="MatchUp.SearchField" label="Rechercher un utilisateur" placeholder="Nom, email, téléphone…"></x-import></div>
+<div class="adm-chips" role="group" aria-label="Filtres">
+<x-import component-from-global-scope="MatchUp.Chip" trailing-icon="caret-down">Rôle</x-import>
+<x-import component-from-global-scope="MatchUp.Chip" trailing-icon="caret-down">Statut</x-import>
+<x-import component-from-global-scope="MatchUp.Chip" count="{{n3}}">Signalés</x-import>
+<x-import component-from-global-scope="MatchUp.Chip" count="{{n2}}">À vérifier</x-import>
+<x-import component-from-global-scope="MatchUp.Chip">Nouveaux · 7 jours</x-import>
+</div>
+</div>
+
+<sc-if value="{{bulk}}">
+<div class="usr-selbar" style="margin-top: 4px">
+<x-import component-from-global-scope="MatchUp.Checkbox" checked="{{allOn}}" indeterminate="{{someOn}}" on-change="{{toggleAll}}" aria-label="Tout sélectionner sur cette page"></x-import>
+<p class="label" style="flex: 1; margin: 0 0 0 4px"><span class="num-s">{{selCount}}</span> {{selWord}}</p>
+<x-import component-from-global-scope="MatchUp.Button" variant="tertiary" size="s" on-click="{{exitBulk}}">Annuler</x-import>
+</div>
+</sc-if>
+<sc-if value="{{normal}}">
+<div class="adm-meta" style="margin-top: 4px">
+<p class="label" style="margin: 0; white-space: nowrap"><span class="num-s">12 480</span> utilisateurs</p>
+<div style="display: flex; align-items: center">
+<x-import component-from-global-scope="MatchUp.Button" variant="tertiary" size="s" leading-icon="arrows-down-up" on-click="{{openSort}}">À traiter d’abord</x-import>
+<x-import component-from-global-scope="MatchUp.IconButton" icon="check-square" label="Sélectionner plusieurs utilisateurs" size="m" on-click="{{enterBulk}}"></x-import>
+</div>
+</div>
+</sc-if>
+
+<div style="flex: 1; min-height: 0; overflow: auto; padding: 4px 16px 132px 16px">
+<ul class="adm-list adm-list--inset" aria-label="Utilisateurs">
+<sc-for list="{{users}}" as="u">
+<li>
+<sc-if value="{{u.bulk}}">
+<div class="adm-row usr-row {{u.cls}}">
+<span class="usr-check"><x-import component-from-global-scope="MatchUp.Checkbox" checked="{{u.on}}" on-change="{{u.toggle}}" aria-label="Sélectionner {{u.name}}"></x-import></span>
+<x-import component-from-global-scope="MatchUp.Avatar" name="{{u.name}}" size="m"></x-import>
+<span class="adm-txt"><span class="label adm-one">{{u.name}}</span><span class="caption adm-muted adm-one">{{u.role}}</span><span class="caption adm-muted adm-one">{{u.meta}}</span></span>
+<span class="adm-end"><x-import component-from-global-scope="MatchUp.StatusBadge" status="{{u.status}}" label="{{u.statusLabel}}" size="s"></x-import></span>
+</div>
+</sc-if>
+<sc-if value="{{u.normal}}">
+<a href="{{u.href}}" class="adm-row usr-row">
+<x-import component-from-global-scope="MatchUp.Avatar" name="{{u.name}}" size="m"></x-import>
+<span class="adm-txt"><span class="label adm-one">{{u.name}}</span><span class="caption adm-muted adm-one">{{u.role}}</span><span class="caption adm-muted adm-one">{{u.meta}}</span></span>
+<span class="adm-end"><x-import component-from-global-scope="MatchUp.StatusBadge" status="{{u.status}}" label="{{u.statusLabel}}" size="s"></x-import></span>
+<span class="adm-chev"><x-import component-from-global-scope="MatchUp.Icon" name="caret-right" size="{{i20}}"></x-import></span>
+</a>
+</sc-if>
+</li>
+</sc-for>
+</ul>
+<p class="caption" style="margin: 12px 0 0 0; text-align: center; color: var(--text-secondary)">9 sur 12 480 · fais défiler pour charger la suite</p>
+</div>
+
+<sc-if value="{{bulk}}">
+<div class="adm-stickybar usr-tools" role="toolbar" aria-label="Actions sur la sélection">
+<button type="button" class="usr-tool"><x-import component-from-global-scope="MatchUp.Icon" name="envelope-simple" size="{{i24}}"></x-import><span class="label-s">Message</span></button>
+<button type="button" class="usr-tool"><x-import component-from-global-scope="MatchUp.Icon" name="download-simple" size="{{i24}}"></x-import><span class="label-s">Exporter</span></button>
+<button type="button" class="usr-tool"><x-import component-from-global-scope="MatchUp.Icon" name="warning" size="{{i24}}"></x-import><span class="label-s">Avertir</span></button>
+<button type="button" class="usr-tool usr-tool--danger"><x-import component-from-global-scope="MatchUp.Icon" name="prohibit" size="{{i24}}"></x-import><span class="label-s">{{suspendLabel}}</span></button>
+</div>
+</sc-if>
+<sc-if value="{{normal}}">
+<x-import component-from-global-scope="MatchUp.TabBar" items="{{tabs}}" value="users" label="Navigation admin" safe-area="{{sa}}" fab="{{yes}}" dc-props="{{tabStyle}}"></x-import>
+</sc-if>
+
+<sc-if value="{{sortOpen}}">
+<x-import component-from-global-scope="MatchUp.BottomSheet" inline="{{yes}}" open="{{yes}}" height="auto" title="Trier les utilisateurs" safe-area="{{safe}}" on-close="{{closeSort}}" footer="{{sortFooter}}">
+<x-import component-from-global-scope="MatchUp.Radio.Group" aria-label="Ordre de la liste" value="{{sort}}" on-change="{{setSort}}">
+<x-import component-from-global-scope="MatchUp.Radio" value="traiter" label="À traiter d’abord" description="Signalés, puis vérifications en attente."></x-import>
+<x-import component-from-global-scope="MatchUp.Radio" value="activite" label="Dernière activité"></x-import>
+<x-import component-from-global-scope="MatchUp.Radio" value="inscription" label="Inscription la plus récente"></x-import>
+<x-import component-from-global-scope="MatchUp.Radio" value="fiabilite" label="Fiabilité la plus basse"></x-import>
+<x-import component-from-global-scope="MatchUp.Radio" value="nom" label="Nom (A → Z)"></x-import>
+</x-import>
+</x-import>
+</sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(props) { super(props); this.state = { bulk: true, sel: ['bons', 'promo'], sortOpen: false, sort: 'traiter' }; }
+  renderVals() {
+    const st = this.state;
+    const sel = st.sel || [];
+    const base = [
+      { id: 'bons', name: 'bons.plans.tn', role: 'Joueur · inscrit jeu. 15 oct.', meta: '4 posts signalés · spam', status: 'failed', statusLabel: 'Signalé' },
+      { id: 'promo', name: 'promo_crampons', role: 'Joueur · inscrit mer. 14 oct.', meta: '6 posts signalés · spam', status: 'failed', statusLabel: 'Signalé' },
+      { id: 'omar', name: 'Omar D.', role: 'Joueur · La Marsa', meta: '2 no-shows · 1 signalement', status: 'failed', statusLabel: 'Signalé', href: 'ADM-03-Detail-utilisateur.dc.html' },
+      { id: 'karim', name: 'Karim J.', role: 'Coach padel · Lac 2', meta: 'Badge « Certifié FTT » à vérifier', status: 'pending', statusLabel: 'À vérifier', href: 'ADM-05-Verifications.dc.html' },
+      { id: 'sonia', name: 'Sonia L.', role: 'Coach football · Ariana', meta: 'Document illisible', status: 'pending', statusLabel: 'À vérifier', href: 'ADM-05-Verifications.dc.html' },
+      { id: 'yassine', name: 'Yassine B.', role: 'Joueur · Propriétaire · La Marsa', meta: '1 commentaire masqué', status: 'confirmed', statusLabel: 'Actif' },
+      { id: 'mariem', name: 'Mariem K.', role: 'Joueur · La Marsa', meta: 'Fiable 98 % · 74 matchs', status: 'confirmed', statusLabel: 'Actif' },
+      { id: 'sami', name: 'Sami C.', role: 'Organisateur · Tunis Padel Series', meta: '2 tournois actifs', status: 'confirmed', statusLabel: 'Actif' },
+      { id: 'skander', name: 'Skander T.', role: 'Joueur · Propriétaire · Arena Five', meta: 'Fiable 96 % · terrain vérifié', status: 'confirmed', statusLabel: 'Actif' }
+    ];
+    const toggle = (id) => () => this.setState({ sel: sel.indexOf(id) !== -1 ? sel.filter((x) => x !== id) : sel.concat([id]) });
+    const users = base.map((u) => Object.assign({}, u, {
+      bulk: !!st.bulk, normal: !st.bulk, on: sel.indexOf(u.id) !== -1, cls: sel.indexOf(u.id) !== -1 ? 'is-on' : '', toggle: toggle(u.id)
+    }));
+    const n = sel.length;
+    const h = React.createElement;
+    return {
+      yes: true, i14: 14, i16: 16, i20: 20, i24: 24, sa: 34, n2: 2, n3: 3,
+      safe: { bottom: 34 },
+      bulk: !!st.bulk, normal: !st.bulk, sortOpen: !!st.sortOpen, sort: st.sort,
+      users,
+      selCount: String(n), selWord: n > 1 ? 'sélectionnés' : 'sélectionné',
+      allOn: n === base.length, someOn: n > 0 && n < base.length,
+      suspendLabel: n ? 'Suspendre (' + n + ')' : 'Suspendre',
+      toggleAll: () => this.setState({ sel: n === base.length ? [] : base.map((u) => u.id) }),
+      enterBulk: () => this.setState({ bulk: true, sel: [] }),
+      exitBulk: () => this.setState({ bulk: false, sel: [] }),
+      openSort: () => this.setState({ sortOpen: true }),
+      closeSort: () => this.setState({ sortOpen: false }),
+      setSort: (v) => this.setState({ sort: v }),
+      sortFooter: h(MatchUp.Button, { size: 'xl', fullWidth: true, onClick: () => this.setState({ sortOpen: false }) }, 'Appliquer'),
+      tabs: [
+        { value: 'vue', label: 'Vue', icon: 'gauge', href: 'ADM-01-Vue-d-ensemble.dc.html' },
+        { value: 'users', label: 'Utilisateurs', icon: 'users', href: 'ADM-02-Utilisateurs.dc.html' },
+        { value: 'verif', label: 'Vérifications', icon: 'seal-check', href: 'ADM-05-Verifications.dc.html' },
+        { value: 'modo', label: 'Modération', icon: 'flag', badge: 7, badgeLabel: '7 signalements', href: 'ADM-09-Moderation.dc.html' },
+        { value: 'finance', label: 'Finance', icon: 'chart-line-up', href: 'ADM-06-Finance.dc.html' }
+      ],
+      tabStyle: { style: { position: 'absolute', left: 0, right: 0, bottom: 0 } }
+    };
+  }
+}
+</script>
+</body>
+</html>

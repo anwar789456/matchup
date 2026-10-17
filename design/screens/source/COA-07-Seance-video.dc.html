@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Coach · Séance et vidéo</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/matchup/tokens.css">
+<link rel="stylesheet" href="ds/matchup/components/bundle.css">
+<script src="ds/matchup/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+/* coa:shared — identical in COA-04…12 */
+body{margin:0}
+a{color:var(--link)}
+.coa-head{display:flex; align-items:flex-start; justify-content:space-between; gap:var(--space-3); padding:52px var(--space-4) 0 var(--space-4)}
+.coa-head__text{flex:1; min-width:0; display:flex; flex-direction:column; align-items:flex-start; gap:var(--space-2)}
+.coa-head__actions{flex:none; display:flex; align-items:center; gap:var(--space-1); margin-inline-end:calc(-1 * var(--space-1))}
+.coa-role{display:inline-flex; align-items:center; gap:6px; padding:3px 10px 3px 8px; border-radius:var(--radius-full); background:var(--surface); box-shadow:inset 0 0 0 1px var(--border); color:var(--text)}
+.coa-me{position:relative; display:flex; border-radius:var(--radius-full); text-decoration:none; color:inherit}
+.coa-me::before{content:""; position:absolute; inset:-4px}
+.coa-me:focus-visible{outline:none; box-shadow:var(--focus-ring)}
+.coa-sec{display:flex; flex-direction:column; gap:var(--space-3); padding:0 var(--space-4)}
+.coa-sec__head{display:flex; align-items:center; justify-content:space-between; gap:var(--space-3); min-height:32px; margin-inline-end:calc(-1 * var(--space-3))}
+.coa-sec__title{margin:0; display:flex; align-items:center; gap:var(--space-2)}
+.coa-list{margin:0; padding:0; list-style:none; background:var(--surface); border-radius:var(--radius-md); box-shadow:var(--elevation-1); overflow:hidden}
+.coa-list > li{position:relative}
+.coa-list > li + li::before{content:""; position:absolute; top:0; inset-inline-start:68px; inset-inline-end:0; height:1px; background:var(--border); z-index:1}
+.coa-row{position:relative; display:flex; align-items:center; gap:var(--space-3); min-height:64px; padding:var(--space-3) var(--space-4); box-sizing:border-box; color:var(--text); text-decoration:none}
+a.coa-row:hover{background:var(--surface-muted)}
+a.coa-row:focus-visible{outline:none; box-shadow:inset 0 0 0 2px var(--focus)}
+.coa-row__text{flex:1; min-width:0; display:flex; flex-direction:column; gap:2px}
+.coa-row__sub{color:var(--text-secondary); white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+.coa-chev{flex:none; display:flex; color:var(--text-secondary); margin-inline-end:calc(-1 * var(--space-1))}
+.coa-pill{flex:none; display:inline-flex; align-items:center; gap:4px; padding:2px 10px; border-radius:var(--radius-full); background:var(--accent); color:var(--on-accent)}
+.coa-muted{color:var(--text-secondary)}
+.coa-hot{position:absolute; display:block; border-radius:var(--radius-full); z-index:3}
+.coa-hot:focus-visible{outline:2px solid var(--focus); outline-offset:2px}
+/* /coa:shared */
+/* bld:shared — identical in COA-06…08 */
+.bld-top{display:flex; align-items:center; gap:var(--space-1); padding:52px var(--space-4) 0 var(--space-2)}
+.bld-top__text{flex:1; min-width:0; display:flex; flex-direction:column}
+.bld-top__title{white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+.bld-saved{display:inline-flex; align-items:center; gap:4px; color:var(--text-secondary)}
+.bld-bar{position:absolute; left:0; right:0; bottom:0; z-index:2; display:flex; gap:var(--space-3); padding:12px var(--space-4) 34px var(--space-4); background:var(--surface); box-shadow:var(--elevation-2-up)}
+.bld-handle{flex:none; position:relative; display:flex; align-items:center; justify-content:center; width:24px; height:32px; border-radius:var(--radius-xs); color:var(--text-secondary); cursor:grab; touch-action:none}
+.bld-handle::before{content:""; position:absolute; inset:-6px -10px}
+.bld-handle:hover{color:var(--text); background:var(--surface-muted)}
+.bld-handle:focus-visible{outline:none; box-shadow:var(--focus-ring)}
+/* /bld:shared */
+.ses-block{display:flex; flex-direction:column; gap:var(--space-3)}
+.ses-block__head{display:flex; align-items:baseline; justify-content:space-between; gap:var(--space-3)}
+.ses-block__head h2{margin:0}
+.vid{overflow:hidden; display:flex; flex-direction:column}
+.vid__over{position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:var(--space-2); background:color-mix(in srgb, var(--ink-900) 74%, transparent); color:var(--white); text-align:center; padding:var(--space-4)}
+.vid__disc{width:48px; height:48px; border-radius:var(--radius-full); background:rgba(255,255,255,.16); box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.5); display:flex; align-items:center; justify-content:center}
+.vid__body{display:flex; flex-direction:column; gap:var(--space-3); padding:var(--space-3) var(--space-4) var(--space-4) var(--space-4)}
+.vid__file{display:flex; align-items:center; gap:var(--space-3)}
+.vid__tile{flex:none; width:40px; height:40px; border-radius:var(--radius-sm); background:var(--surface-muted); display:flex; align-items:center; justify-content:center}
+.drl{margin:0; padding:0; list-style:none; display:flex; flex-direction:column; gap:var(--space-2)}
+.drl-row{display:flex; align-items:center; gap:var(--space-3); padding:var(--space-2) var(--space-2) var(--space-2) var(--space-2); min-height:68px; box-sizing:border-box}
+.drl-thumb{flex:none; position:relative; width:64px; height:44px; border-radius:var(--radius-xs); overflow:hidden; display:flex}
+.drl-thumb__t{position:absolute; inset-inline-end:4px; bottom:2px; color:#fff; z-index:1}
+.drl-text{flex:1; min-width:0; display:flex; flex-direction:column; gap:2px}
+.drl-open{display:flex; flex-direction:column; gap:var(--space-4); padding:var(--space-1) var(--space-4) var(--space-4) var(--space-4); border-top:1px solid var(--border)}
+.drl-grid{display:grid; grid-template-columns:1fr 1fr; gap:var(--space-3)}
+.drl-add{appearance:none; margin:0; font:inherit; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:var(--space-2); min-height:48px; border-radius:var(--radius-sm); border:1.5px dashed var(--border-strong); background:transparent; color:var(--text); text-decoration:none}
+.drl-add:hover{background:var(--surface)}
+.drl-add:focus-visible{outline:none; box-shadow:var(--focus-ring)}
+</style>
+</helmet>
+<div style="position: relative; width: 390px; height: 1808px; box-sizing: border-box; overflow: hidden; background: var(--bg); color: var(--text); font-family: var(--font-sans)">
+
+<header class="bld-top">
+<a href="COA-06-Constructeur.dc.html" class="mu-iconbtn mu-iconbtn--l mu-iconbtn--ghost" aria-label="Retour au programme" style="color: var(--text)"><x-import component-from-global-scope="MatchUp.Icon" name="arrow-left" size="{{i24}}"></x-import></a>
+<div class="bld-top__text">
+<span class="label-l bld-top__title">Séance 5</span>
+<span class="caption coa-muted">Semaine 2 · Jeu au filet en 4 semaines</span>
+</div>
+<span class="caption bld-saved" style="margin-inline-end: 4px"><x-import component-from-global-scope="MatchUp.Icon" name="cloud-check" size="{{i16}}"></x-import>Enregistrée</span>
+</header>
+
+<div style="display: flex; flex-direction: column; gap: 24px; padding: 16px 16px 132px 16px">
+
+<x-import component-from-global-scope="MatchUp.TextField" label="Titre de la séance" default-value="Volée croisée profonde" max-length="{{titleMax}}" counter="{{yes}}"></x-import>
+
+<section class="ses-block" aria-labelledby="ses-vid">
+<div class="ses-block__head"><h2 id="ses-vid" class="h3">Vidéo de la séance</h2><x-import component-from-global-scope="MatchUp.StatusBadge" status="pending" label="En traitement" size="s"></x-import></div>
+<div class="mu-card vid">
+<div style="position: relative; display: flex">
+<x-import component-from-global-scope="MatchUp.CourtArt" sport="padel" variant="photo" dc-props="{{hero}}"></x-import>
+<div class="vid__over" role="status">
+<span class="vid__disc"><x-import component-from-global-scope="MatchUp.Icon" name="hourglass-medium" size="{{i24}}"></x-import></span>
+<span class="label-l">Traitement de la vidéo…</span>
+<span class="caption" style="opacity: .86">Optimisation pour mobile et sous-titres · environ 1 min</span>
+</div>
+</div>
+<div class="vid__body">
+<div class="vid__file">
+<span class="vid__tile"><x-import component-from-global-scope="MatchUp.Icon" name="file-video" size="{{i20}}"></x-import></span>
+<span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px"><span class="label" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis">volee-croisee-demo.mp4</span><span class="caption coa-muted">86,2 Mo · 2:14 · envoyée</span></span>
+<button type="button" class="mu-btn mu-btn--tertiary mu-btn--s" style="margin-inline-end: -8px"><span class="mu-btn__content"><span class="mu-btn__label label">Remplacer</span></span></button>
+</div>
+<x-import component-from-global-scope="MatchUp.ProgressBar" indeterminate="{{yes}}" size="s" label="Traitement" value-label="≈ 1 min" aria-label="Traitement de volee-croisee-demo.mp4"></x-import>
+<p class="caption coa-muted" style="margin: 0">Continue à modifier la séance : la vidéo sera visible par tes élèves dès qu’elle est prête.</p>
+</div>
+</div>
+</section>
+
+<section class="ses-block" aria-labelledby="ses-drl">
+<div class="ses-block__head"><h2 id="ses-drl" class="h3">Exercices</h2><span class="caption coa-muted"><span class="num-xs" style="color: var(--text)">4</span> exercices · 24 min</span></div>
+<ol class="drl">
+<li class="mu-card"><div class="drl-row">
+<span class="bld-handle" role="button" tabindex="0" aria-label="Déplacer Échauffement au filet"><x-import component-from-global-scope="MatchUp.Icon" name="dots-six-vertical" size="{{i20}}"></x-import></span>
+<span class="drl-thumb"><x-import component-from-global-scope="MatchUp.CourtArt" sport="padel" variant="photo" dc-props="{{thumb}}"></x-import><span class="drl-thumb__t num-xs">0:40</span></span>
+<span class="drl-text"><span class="label">Échauffement au filet</span><span class="caption coa-muted">Durée · 3 min</span></span>
+<button type="button" class="mu-iconbtn mu-iconbtn--m mu-iconbtn--ghost" aria-label="Modifier Échauffement au filet" style="color: var(--text-secondary)"><x-import component-from-global-scope="MatchUp.Icon" name="caret-down" size="{{i20}}"></x-import></button>
+</div></li>
+<li class="mu-card"><div class="drl-row">
+<span class="bld-handle" role="button" tabindex="0" aria-label="Déplacer Ouverture de raquette"><x-import component-from-global-scope="MatchUp.Icon" name="dots-six-vertical" size="{{i20}}"></x-import></span>
+<span class="drl-thumb"><x-import component-from-global-scope="MatchUp.CourtArt" sport="padel" variant="photo" dc-props="{{thumb}}"></x-import><span class="drl-thumb__t num-xs">0:52</span></span>
+<span class="drl-text"><span class="label">Ouverture de raquette</span><span class="caption coa-muted">Répétitions · 12 rép. × 3 séries</span></span>
+<button type="button" class="mu-iconbtn mu-iconbtn--m mu-iconbtn--ghost" aria-label="Modifier Ouverture de raquette" style="color: var(--text-secondary)"><x-import component-from-global-scope="MatchUp.Icon" name="caret-down" size="{{i20}}"></x-import></button>
+</div></li>
+<li class="mu-card" style="box-shadow: var(--elevation-1), inset 0 0 0 2px var(--primary)">
+<div class="drl-row">
+<span class="bld-handle" role="button" tabindex="0" aria-label="Déplacer Volée croisée sur panier de balles"><x-import component-from-global-scope="MatchUp.Icon" name="dots-six-vertical" size="{{i20}}"></x-import></span>
+<span class="drl-thumb" style="align-items: center; justify-content: center; background: var(--surface-muted)"><x-import component-from-global-scope="MatchUp.Icon" name="upload-simple" size="{{i20}}"></x-import></span>
+<span class="drl-text"><span class="label">Volée croisée sur panier de balles</span><span class="caption coa-muted">Durée · 45 s × 6 séries</span></span>
+<button type="button" class="mu-iconbtn mu-iconbtn--m mu-iconbtn--ghost" aria-label="Replier Volée croisée sur panier de balles" aria-expanded="true" style="color: var(--text)"><x-import component-from-global-scope="MatchUp.Icon" name="caret-up" size="{{i20}}"></x-import></button>
+</div>
+<div class="drl-open">
+<x-import component-from-global-scope="MatchUp.SegmentedControl" label="Type d’exercice" options="{{modes}}" value="{{mode}}" on-change="{{setMode}}" full-width="{{yes}}"></x-import>
+<div class="drl-grid">
+<sc-if value="{{isTime}}"><x-import component-from-global-scope="MatchUp.Stepper" label="Durée (s)" value="{{secs}}" on-change="{{setSecs}}" min="{{s15}}" max="{{s180}}" step="{{s15}}" size="s" decrement-label="Retirer 15 secondes" increment-label="Ajouter 15 secondes"></x-import></sc-if>
+<sc-if value="{{isReps}}"><x-import component-from-global-scope="MatchUp.Stepper" label="Répétitions" value="{{reps}}" on-change="{{setReps}}" min="{{one}}" max="{{s50}}" size="s" decrement-label="Retirer une répétition" increment-label="Ajouter une répétition"></x-import></sc-if>
+<x-import component-from-global-scope="MatchUp.Stepper" label="Séries" value="{{sets}}" on-change="{{setSets}}" min="{{one}}" max="{{s10}}" size="s" decrement-label="Retirer une série" increment-label="Ajouter une série"></x-import>
+</div>
+<x-import component-from-global-scope="MatchUp.FileUpload" label="Vidéo de l’exercice" title="Ajouter une vidéo" hint="MP4, MOV · 500 Mo max · 3 min max" accept="video/mp4,video/quicktime" files="{{drillFiles}}" on-cancel="{{noop}}"></x-import>
+</div>
+</li>
+<li class="mu-card"><div class="drl-row">
+<span class="bld-handle" role="button" tabindex="0" aria-label="Déplacer Split-step avant la volée"><x-import component-from-global-scope="MatchUp.Icon" name="dots-six-vertical" size="{{i20}}"></x-import></span>
+<span class="drl-thumb"><x-import component-from-global-scope="MatchUp.CourtArt" sport="padel" variant="photo" dc-props="{{thumb}}"></x-import><span class="drl-thumb__t num-xs">0:35</span></span>
+<span class="drl-text"><span class="label">Split-step avant la volée</span><span class="caption coa-muted">Durée · 45 s × 4 séries</span></span>
+<button type="button" class="mu-iconbtn mu-iconbtn--m mu-iconbtn--ghost" aria-label="Modifier Split-step avant la volée" style="color: var(--text-secondary)"><x-import component-from-global-scope="MatchUp.Icon" name="caret-down" size="{{i20}}"></x-import></button>
+</div></li>
+</ol>
+<a href="COA-06-Constructeur.dc.html" class="drl-add"><x-import component-from-global-scope="MatchUp.Icon" name="plus" size="{{i20}}"></x-import><span class="label">Ajouter un exercice</span></a>
+</section>
+
+<x-import component-from-global-scope="MatchUp.TextField" label="Consigne pour tes élèves" optional="{{yes}}" multiline="{{yes}}" rows="{{three}}" max-length="{{noteMax}}" counter="{{yes}}" default-value="Vise la grille latérale, pas le centre. Après chaque volée, reviens en position d’attente avant la balle suivante." helper="Affichée sous la vidéo dans le lecteur de séance."></x-import>
+</div>
+
+<div class="bld-bar">
+<a href="COA-06-Constructeur.dc.html" class="mu-btn mu-btn--primary mu-btn--xl mu-btn--block"><span class="mu-btn__content"><span class="mu-btn__label label-l">Enregistrer la séance</span></span></a>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":1808}}'>
+class Component extends DCLogic {
+  state = { mode: 'time', secs: 45, reps: 12, sets: 6 };
+  renderVals() {
+    const MO = 1024 * 1024;
+    const st = this.state;
+    return {
+      yes: true, no: false, i14: 14, i16: 16, i20: 20, i24: 24, one: 1, three: 3, s10: 10, s15: 15, s50: 50, s180: 180,
+      titleMax: 60, noteMax: 280,
+      hero: { style: { width: '100%', aspectRatio: '16 / 9', filter: 'grayscale(.35)' } },
+      thumb: { style: { width: '64px', height: '44px' } },
+      modes: [{ value: 'time', label: 'Durée', icon: 'timer' }, { value: 'reps', label: 'Répétitions', icon: 'repeat' }],
+      mode: st.mode, isTime: st.mode === 'time', isReps: st.mode === 'reps',
+      setMode: (v) => this.setState({ mode: v }),
+      secs: st.secs, setSecs: (v) => this.setState({ secs: v }),
+      reps: st.reps, setReps: (v) => this.setState({ reps: v }),
+      sets: st.sets, setSets: (v) => this.setState({ sets: v }),
+      drillFiles: [{ id: 'v3', name: 'panier-croise.mov', type: 'video/quicktime', size: 28.7 * MO, status: 'uploading', progress: 64 }],
+      noop: () => {}
+    };
+  }
+}
+</script>
+</body>
+</html>

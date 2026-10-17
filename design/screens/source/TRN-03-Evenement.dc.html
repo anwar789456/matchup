@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Événement</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/matchup/tokens.css">
+<link rel="stylesheet" href="ds/matchup/components/bundle.css">
+<script src="ds/matchup/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0}
+a{color:var(--link)}
+.evt-sec{display:flex; flex-direction:column; gap:12px}
+.evt-sec__head{display:flex; align-items:center; justify-content:space-between; gap:8px; min-height:32px}
+.evt-fact{display:flex; flex-direction:column; gap:2px; padding:12px 12px 14px 12px; min-width:0}
+.evt-fact + .evt-fact{border-inline-start:1px solid var(--border)}
+.evt-muted{color:var(--text-secondary)}
+.evt-m0{margin:0}
+.evt-prog{margin:0; padding:0; list-style:none; display:flex; flex-direction:column}
+.evt-prog li{display:grid; grid-template-columns:52px 20px 1fr; column-gap:8px; position:relative; padding-bottom:14px}
+.evt-prog li:last-child{padding-bottom:0}
+.evt-prog li:not(:last-child)::before{content:""; position:absolute; left:69px; top:16px; bottom:-2px; width:2px; border-radius:2px; background:var(--border)}
+.evt-prog__dot{width:12px; height:12px; margin:4px; border-radius:var(--radius-full); box-sizing:border-box; background:var(--surface); box-shadow:inset 0 0 0 2px var(--padel)}
+.evt-rule{display:flex; align-items:flex-start; gap:12px}
+.evt-rule__icon{flex:none; width:20px; height:20px; color:var(--text-secondary); display:flex; align-items:center; justify-content:center}
+.evt-pill{white-space:nowrap}
+.evt-hot{position:absolute; display:block; border-radius:var(--radius-full)}
+.evt-hot:focus-visible{outline:2px solid var(--focus); outline-offset:2px}
+</style>
+</helmet>
+<div style="position: relative; width: 390px; height: 1632px; box-sizing: border-box; overflow: hidden; background: var(--bg); color: var(--text); font-family: var(--font-sans)">
+
+<x-import component-from-global-scope="MatchUp.CourtArt" sport="padel" label="Court de padel indoor de Padel House Menzah" dc-props="{{heroArt}}"></x-import>
+<div style="position: absolute; left: 16px; right: 16px; top: 108px; display: flex; align-items: center; justify-content: space-between">
+<div data-theme="dark" class="evt-pill" style="display: flex; align-items: center; height: 32px; padding: 0 12px; border-radius: var(--radius-full); background: var(--surface-elevated); color: var(--text); box-shadow: var(--elevation-2)">
+<x-import component-from-global-scope="MatchUp.Countdown" format="relative" size="s" label="Début" seconds="{{starts}}" running="{{no}}"></x-import>
+</div>
+<span class="label-s evt-pill" style="display: inline-flex; align-items: center; gap: 6px; height: 28px; padding: 0 10px; border-radius: var(--radius-full); background: var(--accent); color: var(--on-accent)"><x-import component-from-global-scope="MatchUp.Icon" name="gift" size="{{i14}}"></x-import>Gratuit</span>
+</div>
+<x-import component-from-global-scope="MatchUp.TopAppBar" variant="media" title="Événement" inset="{{inset}}" on-back="{{noop}}" actions="{{barActions}}" dc-props="{{barStyle}}"></x-import>
+<a href="TRN-01-Tournois.dc.html" class="evt-hot" aria-label="Retour aux tournois et événements" style="left: 6px; top: 50px; width: 44px; height: 44px"></a>
+
+<main style="position: absolute; left: 0; right: 0; top: 156px; bottom: 0; border-radius: var(--radius-lg) var(--radius-lg) 0 0; background: var(--bg); padding: 20px 16px 0 16px; display: flex; flex-direction: column; gap: 24px">
+
+<section aria-labelledby="evt-title" style="display: flex; flex-direction: column; gap: 16px">
+<div style="display: flex; flex-direction: column; gap: 8px">
+<div style="display: flex; flex-wrap: wrap; align-items: center; gap: 8px">
+<x-import component-from-global-scope="MatchUp.Chip" kind="sport" sport="padel" size="s">Padel · initiation</x-import>
+<x-import component-from-global-scope="MatchUp.Chip" kind="level" size="s" icon="users-three">Femmes · tous niveaux</x-import>
+</div>
+<h1 id="evt-title" class="h1 evt-m0">Journée initiation padel&nbsp;·&nbsp;femmes</h1>
+<p class="body evt-m0 evt-muted">Inscription individuelle : viens seule ou avec une amie.</p>
+</div>
+
+<div class="mu-card" role="group" aria-label="L’essentiel de l’événement" style="display: grid; grid-template-columns: 1.1fr 1.05fr 0.85fr; padding: 0">
+<div class="evt-fact">
+<span class="overline evt-muted">Sam. 24 oct.</span>
+<span class="num-xl">9h00</span>
+<span class="caption evt-muted">jusqu’à 12h00</span>
+</div>
+<div class="evt-fact">
+<span class="overline evt-muted">Prix</span>
+<span class="num-xl">Gratuit</span>
+<span class="caption evt-muted">raquettes prêtées</span>
+</div>
+<div class="evt-fact">
+<span class="overline evt-muted">Places</span>
+<span class="num-xl">7</span>
+<span class="caption evt-muted">9/16 prises</span>
+</div>
+</div>
+
+<div class="mu-card" style="display: flex; align-items: center; gap: 12px; padding: 12px 12px 12px 16px">
+<x-import component-from-global-scope="MatchUp.AvatarStack" people="{{girls}}" size="s" max="{{four}}" label="9 inscrites"></x-import>
+<span style="flex: 1; min-width: 0" class="caption evt-muted"><span class="label" style="color: var(--text)">Mariem K., Ines M.</span> et 7 autres sont inscrites</span>
+</div>
+</section>
+
+<section class="evt-sec" aria-labelledby="evt-prog">
+<div class="evt-sec__head">
+<h2 id="evt-prog" class="h3 evt-m0">Au programme</h2>
+<span class="caption evt-muted">3 h · groupes de 4</span>
+</div>
+<div class="mu-card" style="padding: 16px">
+<ol class="evt-prog">
+<sc-for list="{{prog}}" as="p">
+<li><span class="num-s" style="padding-top: 1px">{{p.time}}</span><span class="evt-prog__dot"></span><span style="display: flex; flex-direction: column; gap: 2px"><span class="label">{{p.title}}</span><span class="caption evt-muted">{{p.detail}}</span></span></li>
+</sc-for>
+</ol>
+</div>
+</section>
+
+<section class="evt-sec" aria-labelledby="evt-coach">
+<h2 id="evt-coach" class="h3 evt-m0">Ton coach du jour</h2>
+<div class="mu-card" style="display: flex; flex-direction: column; gap: 12px; padding: 16px">
+<div style="display: flex; align-items: center; gap: 12px">
+<x-import component-from-global-scope="MatchUp.Avatar" name="Karim J." size="l"></x-import>
+<span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px">
+<span class="label-l">Karim J.</span>
+<span class="caption evt-muted" style="display: flex; align-items: center; gap: 4px"><span style="display: flex; color: var(--warning)"><x-import component-from-global-scope="MatchUp.Icon" name="star" weight="fill" size="{{i14}}"></x-import></span><span class="num-xs" style="color: var(--text)">4,9</span> (64 avis) · coach padel, Lac 2</span>
+<span class="caption" style="display: flex; align-items: center; gap: 4px; color: var(--success-text)"><x-import component-from-global-scope="MatchUp.Icon" name="certificate" size="{{i14}}"></x-import>Certifié FTT niveau 2</span>
+</span>
+</div>
+<p class="body evt-m0 evt-muted">« On commence par les bases, sans pression. À midi, tu sais servir, jouer avec les vitres et tenir un échange. »</p>
+<a href="ENT-02-Programmes.dc.html" class="mu-btn mu-btn--secondary mu-btn--m mu-btn--block"><span class="mu-btn__content"><x-import component-from-global-scope="MatchUp.Icon" name="graduation-cap" size="{{i20}}"></x-import><span class="mu-btn__label label">Voir ses programmes</span></span></a>
+</div>
+</section>
+
+<section class="evt-sec" aria-labelledby="evt-info">
+<h2 id="evt-info" class="h3 evt-m0">Bon à savoir</h2>
+<div class="mu-card" style="display: flex; flex-direction: column; gap: 16px; padding: 16px">
+<div class="evt-rule">
+<span class="evt-rule__icon"><x-import component-from-global-scope="MatchUp.Icon" name="sneaker-move" size="{{i20}}"></x-import></span>
+<span style="display: flex; flex-direction: column; gap: 2px"><span class="label">Viens en tenue de sport</span><span class="caption evt-muted">Raquettes et balles prêtées. Baskets à semelle claire conseillées.</span></span>
+</div>
+<div class="evt-rule">
+<span class="evt-rule__icon"><x-import component-from-global-scope="MatchUp.Icon" name="calendar-x" size="{{i20}}"></x-import></span>
+<span style="display: flex; flex-direction: column; gap: 2px"><span class="label">Un empêchement ? Désinscris-toi</span><span class="caption evt-muted">Jusqu’au ven. 23 oct. · 20h00, pour libérer ta place à une autre joueuse.</span></span>
+</div>
+<div style="height: 1px; background: var(--border)"></div>
+<div style="display: flex; gap: 12px">
+<div style="flex: none; width: 72px; height: 72px; border-radius: var(--radius-sm); overflow: hidden">
+<x-import component-from-global-scope="MatchUp.MapView" interactive="{{no}}" venues="{{venues}}" default-selected-id="phm" center="{{mapCenter}}" zoom="{{mapZoom}}" height="{{mapH}}" view-toggle="{{no}}" user="{{nobody}}" label="Padel House Menzah sur la carte, Menzah 6" dc-props="{{mapStyle}}"></x-import>
+</div>
+<div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px">
+<span class="label-l">Padel House Menzah</span>
+<span class="caption evt-muted">Menzah 6 · <span class="num-xs" style="color: var(--text)">5,0 km</span> · <span class="num-xs" style="color: var(--text)">4,6</span> (52 avis)</span>
+<span class="caption evt-muted" style="display: flex; align-items: center; gap: 4px"><x-import component-from-global-scope="MatchUp.Icon" name="info" size="{{i14}}"></x-import>Terrain en cours de vérification</span>
+</div>
+<button type="button" class="mu-iconbtn mu-iconbtn--m mu-iconbtn--secondary" aria-label="Itinéraire vers Padel House Menzah" style="align-self: center"><x-import component-from-global-scope="MatchUp.Icon" name="navigation-arrow" size="{{i20}}"></x-import></button>
+</div>
+</div>
+</section>
+
+</main>
+
+<div style="position: absolute; left: 0; right: 0; bottom: 0; z-index: var(--z-sticky); padding: 12px 16px 34px 16px; background: var(--surface); box-shadow: var(--elevation-2-up); display: flex; flex-direction: column; gap: 10px">
+<p class="caption" style="margin: 0; display: flex; align-items: center; justify-content: center; gap: 6px; color: var(--text-secondary)"><x-import component-from-global-scope="MatchUp.Icon" name="users-three" size="{{i16}}"></x-import>Réservée aux joueuses · <span class="num-xs" style="color: var(--text)">7</span> places restantes</p>
+<button type="button" class="mu-btn mu-btn--primary mu-btn--xl mu-btn--block"><span class="mu-btn__content"><x-import component-from-global-scope="MatchUp.Icon" name="share-network" size="{{i20}}"></x-import><span class="mu-btn__label label-l">Partager à une joueuse</span></span></button>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":1632}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      yes: true, no: false, i14: 14, i16: 16, i20: 20, i24: 24, inset: 44, four: 4,
+      starts: (7 * 24 + 15) * 3600, mapZoom: 1.4, mapH: 72, nobody: null,
+      noop: () => {},
+      heroArt: { style: { position: 'absolute', top: 0, left: 0, right: 0, height: '188px' } },
+      barStyle: { style: { position: 'absolute', top: 0, left: 0, right: 0, zIndex: 2 } },
+      barActions: [{ icon: 'share-network', label: 'Partager l’événement' }, { icon: 'bookmark-simple', label: 'Enregistrer l’événement' }],
+      girls: ['Mariem K.', 'Ines M.', 'Nour A.', 'Salma G.', 'Lina F.', 'Sarra B.', 'Amel T.', 'Rim H.', 'Yosra M.'].map((name) => ({ name })),
+      prog: [
+        { time: '9h00', title: 'Accueil et échauffement', detail: 'Prêt du matériel, groupes de niveau.' },
+        { time: '9h30', title: 'Les coups de base', detail: 'Coup droit, revers et service.' },
+        { time: '10h30', title: 'Jouer avec les vitres', detail: 'Laisser rebondir, ressortir la balle.' },
+        { time: '11h15', title: 'Mini-matchs encadrés', detail: 'En double, rotations toutes les 10 min.' },
+        { time: '12h00', title: 'Fin et verre de l’amitié', detail: 'Karim te conseille pour la suite.' }
+      ],
+      venues: [{ id: 'phm', name: 'Padel House Menzah', sport: 'padel', lat: 36.8420, lng: 10.1680, area: 'Menzah 6', distance: '5,0 km', rating: 4.6, reviews: 52, priceFrom: 18 }],
+      mapCenter: { lat: 36.8420, lng: 10.1680 },
+      mapStyle: { style: { borderRadius: 0, boxShadow: 'none' } }
+    };
+  }
+}
+</script>
+</body>
+</html>

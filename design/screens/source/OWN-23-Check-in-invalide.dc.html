@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Check-in invalide</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/matchup/tokens.css">
+<link rel="stylesheet" href="ds/matchup/components/bundle.css">
+<script src="ds/matchup/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+/* own:checkin — identical in OWN-21…23 */
+body{margin:0}
+a{color:var(--link)}
+.own-res{display:flex; flex-direction:column; gap:var(--space-4); min-height:100%; padding:var(--space-2) var(--space-4) var(--space-4) var(--space-4); box-sizing:border-box}
+.own-hero{display:flex; flex-direction:column; align-items:center; gap:var(--space-3); padding:var(--space-6) var(--space-5) var(--space-5) var(--space-5); border-radius:var(--radius-lg); text-align:center}
+.own-hero--ok{background:var(--success-soft); color:var(--success-text)}
+.own-hero--warn{background:var(--warning-soft); color:var(--warning-text)}
+.own-hero--err{background:var(--error-soft); color:var(--error-text)}
+.own-disc{width:104px; height:104px; border-radius:var(--radius-full); display:grid; place-items:center; margin-bottom:var(--space-1)}
+.own-hero--ok .own-disc{background:var(--success); color:var(--white); box-shadow:0 0 0 10px color-mix(in srgb, var(--success) 18%, transparent)}
+.own-hero--warn .own-disc{background:var(--warning); color:var(--ink-900); box-shadow:0 0 0 10px color-mix(in srgb, var(--warning) 22%, transparent)}
+.own-hero--err .own-disc{background:var(--error); color:var(--white); box-shadow:0 0 0 10px color-mix(in srgb, var(--error) 18%, transparent)}
+.own-hero__word{margin:0}
+.own-hero__say{margin:0; color:var(--text)}
+.own-pill{display:inline-flex; align-items:center; gap:6px; padding:4px 12px; border-radius:var(--radius-full); background:var(--surface); color:var(--text-secondary)}
+.own-card{display:flex; flex-direction:column; gap:var(--space-3); padding:var(--space-4)}
+.own-row{display:flex; align-items:center; gap:var(--space-3)}
+.own-tile{flex:none; width:44px; height:44px; border-radius:var(--radius-sm); display:grid; place-items:center}
+.own-sec{color:var(--text-secondary)}
+.own-hr{height:1px; background:var(--border); margin:0}
+.own-dl{margin:0; display:flex; flex-direction:column; gap:var(--space-2)}
+.own-dl > div{display:flex; align-items:baseline; justify-content:space-between; gap:var(--space-3)}
+.own-dl dt{color:var(--text-secondary)}
+.own-dl dd{margin:0; text-align:end}
+.own-actions{margin-top:auto; display:flex; flex-direction:column; gap:var(--space-3); padding-top:var(--space-2)}
+.own-close{position:absolute; display:block; z-index:calc(var(--z-takeover) + 1); border-radius:var(--radius-full)}
+.own-close:focus-visible{outline:none; box-shadow:var(--focus-ring)}
+/* /own:checkin */
+</style>
+</helmet>
+<div style="position: relative; width: 390px; height: 844px; box-sizing: border-box; overflow: hidden; background: var(--bg); color: var(--text); font-family: var(--font-sans)">
+<x-import component-from-global-scope="MatchUp.Takeover" inline="{{yes}}" open="{{yes}}" safe-area="{{safe}}" title="Check-in" close-label="Fermer et revenir au scanner" label="Résultat du check-in : invalide" on-close="{{noop}}">
+<div class="own-res">
+
+<section class="own-hero own-hero--err" role="alert" aria-label="Billet invalide">
+<span class="own-disc"><x-import component-from-global-scope="MatchUp.Icon" name="x" weight="bold" size="{{i56}}"></x-import></span>
+<h1 class="display own-hero__word">Invalide</h1>
+<p class="body-l own-hero__say">Ce billet n’est pas pour Arena Five.</p>
+<span class="own-pill caption"><x-import component-from-global-scope="MatchUp.Icon" name="clock" size="{{i14}}"></x-import>Scanné à <span class="num-xs" style="color: var(--text)">20h51</span> · <span class="num-xs" style="color: var(--text)">MU-48377</span></span>
+</section>
+
+<article class="mu-card own-card" aria-label="Pourquoi le billet est refusé">
+<div class="own-row" style="align-items: flex-start">
+<span class="own-tile" style="background: var(--error-soft); color: var(--error-text)"><x-import component-from-global-scope="MatchUp.Icon" name="map-pin" size="{{i24}}"></x-import></span>
+<div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px">
+<span class="label-l">Réservé dans un autre terrain</span>
+<span class="body own-sec">Le code est bien un billet MatchUp, mais pour un autre lieu. Rien n’est débité ni enregistré chez toi.</span>
+</div>
+</div>
+<div class="own-hr"></div>
+<p class="overline own-sec" style="margin: 0">Que faire</p>
+<ol class="body" style="margin: 0; padding-inline-start: 20px; display: flex; flex-direction: column; gap: 6px">
+<li>Demande au joueur d’ouvrir sa réservation Arena Five dans <span class="label">Mes matchs</span>.</li>
+<li>Pas de billet ? Cherche son nom dans le planning du jour.</li>
+</ol>
+</article>
+
+<div class="own-actions">
+<a href="OWN-20-Scanner.dc.html" class="mu-btn mu-btn--primary mu-btn--xl mu-btn--block"><span class="mu-btn__content"><x-import component-from-global-scope="MatchUp.Icon" name="arrows-clockwise" size="{{i20}}"></x-import><span class="mu-btn__label label-l">Scanner à nouveau</span></span></a>
+<a href="OWN-11-Planning.dc.html" class="mu-btn mu-btn--secondary mu-btn--l mu-btn--block"><span class="mu-btn__content"><x-import component-from-global-scope="MatchUp.Icon" name="calendar-blank" size="{{i20}}"></x-import><span class="mu-btn__label label-l">Chercher dans le planning</span></span></a>
+</div>
+</div>
+</x-import>
+<a href="OWN-20-Scanner.dc.html" class="own-close" aria-label="Fermer et revenir au scanner" style="right: 4px; top: 48px; width: 48px; height: 48px"></a>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      yes: true, no: false, i14: 14, i16: 16, i20: 20, i24: 24, i56: 56,
+      noop: () => {},
+      safe: { top: 44, bottom: 34 }
+    };
+  }
+}
+</script>
+</body>
+</html>

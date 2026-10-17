@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Séance</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/matchup/tokens.css">
+<link rel="stylesheet" href="ds/matchup/components/bundle.css">
+<script src="ds/matchup/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0}
+a{color:var(--link)}
+.ent-step{display:grid; grid-template-columns:28px 1fr; gap:10px; align-items:start}
+.ent-step__n{width:28px; height:28px; border-radius:var(--radius-full); background:var(--surface-muted); display:flex; align-items:center; justify-content:center}
+.ent-tile{display:flex; flex-direction:column; gap:12px; padding:16px; border-radius:var(--radius-md); background:var(--surface); box-shadow:inset 0 0 0 1px var(--border)}
+.ent-hot{position:absolute; display:block; border-radius:var(--radius-full); z-index:calc(var(--z-takeover) + 1)}
+.ent-hot:focus-visible{outline:2px solid var(--focus); outline-offset:2px}
+</style>
+</helmet>
+<div data-theme="dark" style="position: relative; width: 390px; height: 1392px; box-sizing: border-box; overflow: hidden; background: var(--bg); color: var(--text); font-family: var(--font-sans)">
+
+<div style="position: relative; height: 372px; overflow: hidden">
+<x-import component-from-global-scope="MatchUp.Takeover.Viewer" inline="{{yes}}" open="{{yes}}" safe-area="{{safe}}" items="{{drills}}" index="{{one}}" label="Vidéos de la séance 5 · Bandeja croisée" close-label="Quitter la séance" share-label="Partager l’exercice" on-close="{{noop}}" on-index-change="{{noop}}"></x-import>
+</div>
+<a href="ENT-01-Mon-entrainement.dc.html" class="ent-hot" aria-label="Quitter la séance" style="left: 6px; top: 50px; width: 44px; height: 44px"></a>
+
+<main style="display: flex; flex-direction: column; gap: 24px; padding: 20px 16px 156px 16px">
+
+<section aria-labelledby="ent-drill" style="display: flex; flex-direction: column; gap: 12px">
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 8px">
+<span class="overline" style="color: var(--text-secondary)">Séance 5 · Bandeja croisée</span>
+<span class="caption" style="color: var(--text-secondary)"><span class="num-xs" style="color: var(--text)">9 min</span> sur 22</span>
+</div>
+<x-import component-from-global-scope="MatchUp.ProgressBar" variant="segmented" value="{{one}}" max="{{four}}" size="s" show-value="{{no}}" aria-label="1 exercice fait sur 4"></x-import>
+<h1 id="ent-drill" class="h2" style="margin: 4px 0 0 0">Bandeja croisée sur lancer</h1>
+<p class="body" style="margin: -4px 0 0 0; color: var(--text-secondary)">3 séries de 12 · 45 s de repos entre les séries · avec un partenaire qui lance</p>
+<ol style="margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 12px">
+<li class="ent-step"><span class="ent-step__n num-xs">1</span><span class="body" style="padding-top: 4px">Ton partenaire lance un lob à mi-court, sur ton côté gauche.</span></li>
+<li class="ent-step"><span class="ent-step__n num-xs">2</span><span class="body" style="padding-top: 4px">Arme tôt, épaule de profil. Frappe devant l’épaule, poignet ferme.</span></li>
+<li class="ent-step"><span class="ent-step__n num-xs">3</span><span class="body" style="padding-top: 4px">Vise la grille latérale opposée, puis remonte au filet en 2 pas.</span></li>
+</ol>
+<div style="display: flex; align-items: flex-start; gap: 10px; padding: 12px; border-radius: var(--radius-md); background: var(--surface-muted)">
+<x-import component-from-global-scope="MatchUp.Avatar" name="Karim J." size="s"></x-import>
+<span style="display: flex; flex-direction: column; gap: 2px"><span class="label-s" style="color: var(--text-secondary)">Le conseil de Karim</span><span class="body">Finis ton geste vers la grille, pas vers le sol : c’est ce qui fait tourner la balle.</span></span>
+</div>
+</section>
+
+<section aria-label="Compteur et minuteur" style="display: flex; flex-direction: column; gap: 12px">
+<div class="ent-tile">
+<div style="display: flex; align-items: center; justify-content: space-between">
+<span class="label">Série 2 sur 3</span>
+<span style="display: flex; gap: 4px" aria-label="Série 1 faite">
+<span style="width: 20px; height: 6px; border-radius: var(--radius-full); background: var(--accent)"></span>
+<span style="width: 20px; height: 6px; border-radius: var(--radius-full); background: var(--text-secondary)"></span>
+<span style="width: 20px; height: 6px; border-radius: var(--radius-full); background: var(--border-strong)"></span>
+</span>
+</div>
+<x-import component-from-global-scope="MatchUp.Stepper" layout="inline" label="Bandejas réussies" helper="Objectif : 12" value="{{reps}}" min="{{zero}}" max="{{twelve}}" decrement-label="Retirer une bandeja" increment-label="Ajouter une bandeja"></x-import>
+</div>
+<div class="ent-tile" style="flex-direction: row; align-items: center; justify-content: space-between">
+<x-import component-from-global-scope="MatchUp.Countdown" seconds="{{rest}}" running="{{no}}" size="l" label="Repos entre les séries" urgent-at="{{urgent}}"></x-import>
+<button type="button" class="mu-btn mu-btn--secondary mu-btn--m"><span class="mu-btn__content"><x-import component-from-global-scope="MatchUp.Icon" name="play" weight="fill" size="{{i16}}"></x-import><span class="mu-btn__label label">Lancer</span></span></button>
+</div>
+</section>
+
+<section aria-label="Mes notes" style="display: flex; flex-direction: column; gap: 8px">
+<x-import component-from-global-scope="MatchUp.TextField" label="Mes notes" multiline="{{yes}}" rows="{{two}}" max-length="{{noteMax}}" counter="{{yes}}" default-value="Poignet plus ferme qu’hier. Je frappe encore un peu derrière la tête." helper="Visibles par toi seul. Tu peux les envoyer à Karim à la fin."></x-import>
+</section>
+
+<a href="ENT-03-Detail-du-programme.dc.html" style="display: flex; align-items: center; gap: 12px; padding: 12px; border-radius: var(--radius-md); background: var(--surface); box-shadow: inset 0 0 0 1px var(--border); text-decoration: none; color: var(--text)">
+<span style="flex: none; width: 36px; height: 36px; border-radius: var(--radius-full); background: var(--surface-muted); display: flex; align-items: center; justify-content: center"><span class="num-s">3</span></span>
+<span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px"><span class="caption" style="color: var(--text-secondary)">Ensuite</span><span class="label">Bandeja croisée en déplacement</span><span class="caption" style="color: var(--text-secondary)">3 séries de 8 · 1:05 de vidéo</span></span>
+<span style="display: flex; color: var(--text-secondary)"><x-import component-from-global-scope="MatchUp.Icon" name="list-checks" size="{{i20}}"></x-import></span>
+</a>
+</main>
+
+<div style="position: absolute; left: 0; right: 0; bottom: 0; z-index: var(--z-sticky); padding: 12px 16px 34px 16px; background: var(--surface); box-shadow: inset 0 1px 0 var(--border); display: grid; grid-template-columns: 56px 1fr; gap: 12px">
+<button type="button" class="mu-btn mu-btn--secondary mu-btn--xl" aria-label="Passer l’exercice" title="Passer l’exercice" style="width: 56px; padding: 0"><span class="mu-btn__content"><x-import component-from-global-scope="MatchUp.Icon" name="skip-forward" size="{{i24}}"></x-import></span></button>
+<a href="ENT-05-Seance-terminee.dc.html" class="mu-btn mu-btn--primary mu-btn--xl mu-btn--block"><span class="mu-btn__content"><x-import component-from-global-scope="MatchUp.Icon" name="check" weight="bold" size="{{i20}}"></x-import><span class="mu-btn__label label-l">Marquer comme fait</span></span></a>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":1392}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      yes: true, no: false, zero: 0, one: 1, two: 2, four: 4, twelve: 12, reps: 8, rest: 45, urgent: 10, noteMax: 280,
+      i16: 16, i20: 20, i24: 24,
+      noop: () => {},
+      safe: { top: 44, bottom: 0 },
+      drills: [
+        { sport: 'padel', kind: 'video', duration: '0:45', alt: 'Vidéo de l’échauffement' },
+        { sport: 'padel', kind: 'video', duration: '1:12', alt: 'Vidéo de démonstration de la bandeja croisée' },
+        { sport: 'padel', kind: 'video', duration: '1:05', alt: 'Vidéo de la bandeja en déplacement' },
+        { sport: 'padel', kind: 'video', duration: '0:50', alt: 'Vidéo du jeu à thème' }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

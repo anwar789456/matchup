@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Terrain · arabe</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/matchup/tokens.css">
+<link rel="stylesheet" href="ds/matchup/components/bundle.css">
+<script src="ds/matchup/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0}
+a{color:var(--link)}
+.ven-sec{display:flex; flex-direction:column; gap:var(--space-4); padding:var(--space-5) var(--space-4); background:var(--surface)}
+.ven-sec__head{display:flex; align-items:center; justify-content:space-between; gap:var(--space-3)}
+.ven-amen{display:grid; grid-template-columns:repeat(3, minmax(0, 1fr)); gap:var(--space-3) var(--space-2)}
+.ven-amen__item{display:flex; align-items:center; gap:var(--space-2); min-height:44px; color:var(--text)}
+.ven-amen__ico{flex:none; width:36px; height:36px; border-radius:var(--radius-sm); background:var(--surface-muted); display:flex; align-items:center; justify-content:center}
+.ven-tier{display:flex; gap:var(--space-3); align-items:flex-start}
+.ven-tier__ico{flex:none; width:32px; height:32px; border-radius:var(--radius-full); display:flex; align-items:center; justify-content:center}
+.ven-strip{display:grid; grid-template-columns:repeat(2, minmax(0, 1fr)); border-radius:var(--radius-md); background:var(--surface-muted)}
+.ven-strip > div{display:flex; flex-direction:column; gap:2px; padding:var(--space-3)}
+.ven-strip > div + div{border-inline-start:1px solid var(--border)}
+.ven-review{display:flex; flex-direction:column; gap:var(--space-2); padding:var(--space-4) 0}
+.ven-review + .ven-review{border-top:1px solid var(--border)}
+/* rtl: numeric runs that must read left to right (ranges, times, counters) */
+.rtl-ltr{direction:ltr; unicode-bidi:isolate; display:inline-block}
+</style>
+</helmet>
+<div dir="rtl" lang="ar" style="position: relative; width: 390px; height: 2448px; box-sizing: border-box; overflow: hidden; display: flex; flex-direction: column; gap: 8px; background: var(--bg); color: var(--text); font-family: var(--font-arabic)">
+
+<div style="position: relative; flex: none; height: 252px">
+<x-import component-from-global-scope="MatchUp.CourtArt" sport="football" variant="photo" label="الملعب 2 في Arena Five مُضاء ليلًا" dc-props="{{artStyle}}"></x-import>
+<div aria-hidden="true" style="position: absolute; inset: 0; background: var(--photo-scrim); opacity: 0.6"></div>
+<div style="position: absolute; inset-inline: 8px; top: 52px; display: flex; align-items: center; justify-content: space-between">
+<a href="EXP-03-Explorer-terrains.dc.html" class="mu-iconbtn mu-iconbtn--m mu-iconbtn--on-media" aria-label="رجوع"><x-import component-from-global-scope="MatchUp.Icon" name="arrow-left" size="{{i20}}"></x-import></a>
+<div style="display: flex; gap: 8px">
+<x-import component-from-global-scope="MatchUp.IconButton" icon="share-network" label="مشاركة الملعب" variant="on-media"></x-import>
+<x-import component-from-global-scope="MatchUp.IconButton" icon="heart" label="إضافة إلى المفضّلة" variant="on-media"></x-import>
+</div>
+</div>
+<div style="position: absolute; inset-inline-end: 16px; bottom: 16px; display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; border-radius: var(--radius-full); background: var(--scrim); color: var(--white)">
+<x-import component-from-global-scope="MatchUp.Icon" name="images" size="{{i16}}"></x-import>
+<span class="num-xs rtl-ltr">1/8</span>
+</div>
+</div>
+
+<section class="ven-sec" style="margin-top: -8px; gap: 12px; padding-top: 20px">
+<div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap">
+<x-import component-from-global-scope="MatchUp.Chip" kind="sport" sport="football" size="s">كرة القدم · خماسي</x-import>
+<x-import component-from-global-scope="MatchUp.StatusBadge" status="verified" label="ملعب موثَّق"></x-import>
+</div>
+<div style="display: flex; flex-direction: column; gap: 4px">
+<h1 class="h1" style="margin: 0; font-family: var(--font-sans)">Arena Five</h1>
+<div style="display: flex; align-items: center; gap: 8px; color: var(--text-secondary)">
+<x-import component-from-global-scope="MatchUp.StarRating" read-only="{{yes}}" size="{{s16}}" value="{{rating}}" show-value="{{no}}" label="التقييم 4,7 من 5"></x-import>
+<span class="num-s" style="color: var(--text)">4,7</span><span class="caption">(128 تقييمًا)</span>
+</div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 6px">
+<p class="body" style="margin: 0; display: flex; align-items: center; gap: 6px; color: var(--text-secondary)"><x-import component-from-global-scope="MatchUp.Icon" name="map-pin" size="{{i16}}"></x-import>طريق الكورنيش، المرسى · 1,4 كم</p>
+<p class="body" style="margin: 0; display: flex; align-items: center; gap: 6px; color: var(--text-secondary)"><x-import component-from-global-scope="MatchUp.Icon" name="clock" size="{{i16}}"></x-import><span><span style="color: var(--success-text)" class="label">مفتوح</span> · من <span class="num-xs">8:00</span> إلى <span class="num-xs">00:00</span> كل يوم</span></p>
+</div>
+<div class="ven-strip" style="margin-top: 4px">
+<div><span class="overline" style="color: var(--text-secondary)">للاعب الواحد</span><span><span class="num-l rtl-ltr">12–15</span><span class="label"> د.ت</span></span></div>
+<div><span class="overline" style="color: var(--text-secondary)">الملعب · ساعة</span><span><span class="num-l rtl-ltr">120–150</span><span class="label"> د.ت</span></span></div>
+</div>
+</section>
+
+<section class="ven-sec" style="padding-inline: 0; padding-bottom: 0; gap: 12px">
+<div class="ven-sec__head" style="padding: 0 16px">
+<h2 class="h3" style="margin: 0">اختر موعدك</h2>
+<x-import component-from-global-scope="MatchUp.IconButton" icon="calendar-blank" label="فتح التقويم" variant="secondary" size="s"></x-import>
+</div>
+<div style="padding: 0 16px">
+<div class="mu-datepicker mu-datepicker--strip">
+<div class="mu-strip" role="radiogroup" aria-label="يوم الحجز" style="padding-inline: 16px; margin-inline: -16px; scroll-padding-inline: 16px">
+<button type="button" role="radio" aria-checked="false" aria-label="الجمعة 16 أكتوبر، اليوم" class="mu-strip__day is-today"><span class="mu-strip__wd caption">اليوم</span><span class="mu-strip__num num-m">16</span><span class="mu-strip__foot" aria-hidden="true"><span class="mu-strip__pip"></span></span></button>
+<button type="button" role="radio" aria-checked="false" aria-label="السبت 17 أكتوبر، مكتمل" class="mu-strip__day is-soldout"><span class="mu-strip__wd caption">سبت</span><span class="mu-strip__num num-m">17</span><span class="mu-strip__foot" aria-hidden="true"></span></button>
+<button type="button" role="radio" aria-checked="false" aria-label="الأحد 18 أكتوبر" class="mu-strip__day"><span class="mu-strip__wd caption">أحد</span><span class="mu-strip__num num-m">18</span><span class="mu-strip__foot" aria-hidden="true"><span class="mu-strip__pip"></span></span></button>
+<button type="button" role="radio" aria-checked="false" aria-label="الاثنين 19 أكتوبر" class="mu-strip__day"><span class="mu-strip__wd caption">اثنين</span><span class="mu-strip__num num-m">19</span><span class="mu-strip__foot" aria-hidden="true"><span class="mu-strip__pip"></span></span></button>
+<button type="button" role="radio" aria-checked="false" aria-label="الثلاثاء 20 أكتوبر" class="mu-strip__day"><span class="mu-strip__wd caption">ثلاثاء</span><span class="mu-strip__num num-m">20</span><span class="mu-strip__foot" aria-hidden="true"><span class="mu-strip__pip"></span></span></button>
+<button type="button" role="radio" aria-checked="true" aria-label="الأربعاء 21 أكتوبر" class="mu-strip__day is-selected"><span class="mu-strip__wd caption">أربعاء</span><span class="mu-strip__num num-m">21</span><span class="mu-strip__foot" aria-hidden="true"><span class="mu-strip__pip"></span></span></button>
+<button type="button" role="radio" aria-checked="false" aria-label="الخميس 22 أكتوبر" class="mu-strip__day"><span class="mu-strip__wd caption">خميس</span><span class="mu-strip__num num-m">22</span><span class="mu-strip__foot" aria-hidden="true"><span class="mu-strip__pip"></span></span></button>
+<button type="button" role="radio" aria-checked="false" aria-label="الجمعة 23 أكتوبر" class="mu-strip__day"><span class="mu-strip__wd caption">جمعة</span><span class="mu-strip__num num-m">23</span><span class="mu-strip__foot" aria-hidden="true"><span class="mu-strip__pip"></span></span></button>
+<button type="button" role="radio" aria-checked="false" aria-label="السبت 24 أكتوبر، مكتمل" class="mu-strip__day is-soldout"><span class="mu-strip__wd caption">سبت</span><span class="mu-strip__num num-m">24</span><span class="mu-strip__foot" aria-hidden="true"></span></button>
+</div>
+</div>
+</div>
+<div style="display: flex; align-items: center; justify-content: space-between; padding: 0 16px">
+<span class="label">الأربعاء 21 أكتوبر · <span class="num-xs rtl-ltr">20:00 – 00:00</span></span>
+<button type="button" class="mu-btn mu-btn--tertiary mu-btn--s" style="margin-inline-end: -8px"><span class="mu-btn__content"><span class="mu-btn__label label">اليوم كاملًا</span></span></button>
+</div>
+
+<div class="mu-card mu-slotgrid is-narrow mu-slotgrid--flush">
+<ul class="mu-slotgrid__legend" aria-label="دليل الألوان">
+<li class="mu-slotgrid__key"><span class="mu-slotgrid__swatch is-available" aria-hidden="true"></span><span class="caption">متاح</span></li>
+<li class="mu-slotgrid__key"><span class="mu-slotgrid__swatch is-selected" aria-hidden="true"><x-import component-from-global-scope="MatchUp.Icon" name="check" size="{{i12}}"></x-import></span><span class="caption">اختيارك</span></li>
+<li class="mu-slotgrid__key"><span class="mu-slotgrid__swatch is-booked" aria-hidden="true"></span><span class="caption">محجوز</span></li>
+<li class="mu-slotgrid__key"><span class="mu-slotgrid__swatch is-peak" aria-hidden="true"><x-import component-from-global-scope="MatchUp.Icon" name="lightning" weight="fill" size="{{i12}}"></x-import></span><span class="caption">وقت الذروة</span></li>
+<li class="mu-slotgrid__key"><span class="mu-slotgrid__swatch is-promo" aria-hidden="true"><span class="label-s">−%</span></span><span class="caption">تخفيض</span></li>
+</ul>
+<div class="mu-slotgrid__scroller has-more">
+<div role="grid" aria-label="مواعيد Arena Five، الأربعاء 21 أكتوبر" aria-rowcount="4" aria-colcount="5" class="mu-slotgrid__grid" style="--slot-cols: 4; --slot-w: 80px; --slot-court: 112px">
+<div role="row" class="mu-slotgrid__row mu-slotgrid__row--head"><span role="columnheader" class="mu-slotgrid__corner caption">سعر الملعب / ساعة</span><span role="columnheader" class="mu-slotgrid__time num-xs">20:00</span><span role="columnheader" class="mu-slotgrid__time num-xs">21:00</span><span role="columnheader" class="mu-slotgrid__time num-xs">22:00</span><span role="columnheader" class="mu-slotgrid__time num-xs">23:00</span></div>
+<div role="row" class="mu-slotgrid__row"><span role="rowheader" class="mu-slotgrid__court"><span class="mu-slotgrid__court-name label">الملعب 1</span><span class="mu-slotgrid__court-detail caption">مُضاء</span></span>
+<span role="gridcell" aria-label="الملعب 1، 20:00، متاح، وقت الذروة، 150 د.ت للساعة" class="mu-slotgrid__cell mu-slotgrid__cell--available is-peak" style="grid-column: 2 / span 1"><span class="mu-slotgrid__line"><x-import component-from-global-scope="MatchUp.Icon" name="lightning" weight="fill" size="{{i12}}"></x-import><span class="num-s">150</span></span></span>
+<span role="gridcell" aria-label="الملعب 1، 21:00، متاح، وقت الذروة، 150 د.ت للساعة" class="mu-slotgrid__cell mu-slotgrid__cell--available is-peak" style="grid-column: 3 / span 1"><span class="mu-slotgrid__line"><x-import component-from-global-scope="MatchUp.Icon" name="lightning" weight="fill" size="{{i12}}"></x-import><span class="num-s">150</span></span></span>
+<span role="gridcell" aria-label="الملعب 1، 22:00، متاح، وقت الذروة، 150 د.ت للساعة" class="mu-slotgrid__cell mu-slotgrid__cell--available is-peak" style="grid-column: 4 / span 1"><span class="mu-slotgrid__line"><x-import component-from-global-scope="MatchUp.Icon" name="lightning" weight="fill" size="{{i12}}"></x-import><span class="num-s">150</span></span></span>
+<span role="gridcell" aria-label="الملعب 1، 23:00، متاح، 120 د.ت للساعة" class="mu-slotgrid__cell mu-slotgrid__cell--available" style="grid-column: 5 / span 1"><span class="num-s">120</span></span>
+</div>
+<div role="row" class="mu-slotgrid__row"><span role="rowheader" class="mu-slotgrid__court"><span class="mu-slotgrid__court-name label">الملعب 2</span><span class="mu-slotgrid__court-detail caption">مُضاء</span></span>
+<span role="gridcell" aria-label="الملعب 2، من 20:00 إلى 22:00، محجوز" aria-disabled="true" class="mu-slotgrid__cell mu-slotgrid__cell--booked" style="grid-column: 2 / span 2"><span class="mu-slotgrid__state label-s">محجوز</span></span>
+<span role="gridcell" aria-label="الملعب 2، 22:00، متاح، وقت الذروة، 150 د.ت للساعة" class="mu-slotgrid__cell mu-slotgrid__cell--available is-peak" style="grid-column: 4 / span 1"><span class="mu-slotgrid__line"><x-import component-from-global-scope="MatchUp.Icon" name="lightning" weight="fill" size="{{i12}}"></x-import><span class="num-s">150</span></span></span>
+<span role="gridcell" aria-label="الملعب 2، 23:00، متاح، 120 د.ت للساعة" class="mu-slotgrid__cell mu-slotgrid__cell--available" style="grid-column: 5 / span 1"><span class="num-s">120</span></span>
+</div>
+<div role="row" class="mu-slotgrid__row"><span role="rowheader" class="mu-slotgrid__court"><span class="mu-slotgrid__court-name label">الملعب 3 <x-import component-from-global-scope="MatchUp.Icon" name="umbrella" size="{{i14}}" label="مغطّى"></x-import></span><span class="mu-slotgrid__court-detail caption">داخلي</span></span>
+<span role="gridcell" aria-label="الملعب 3، 20:00، محجوز" aria-disabled="true" class="mu-slotgrid__cell mu-slotgrid__cell--booked" style="grid-column: 2 / span 1"><span class="mu-slotgrid__state label-s">محجوز</span></span>
+<span role="gridcell" aria-label="الملعب 3، 21:00، متاح، وقت الذروة، 150 د.ت للساعة" class="mu-slotgrid__cell mu-slotgrid__cell--available is-peak" style="grid-column: 3 / span 1"><span class="mu-slotgrid__line"><x-import component-from-global-scope="MatchUp.Icon" name="lightning" weight="fill" size="{{i12}}"></x-import><span class="num-s">150</span></span></span>
+<span role="gridcell" aria-label="الملعب 3، 22:00، متاح، وقت الذروة، 150 د.ت للساعة" class="mu-slotgrid__cell mu-slotgrid__cell--available is-peak" style="grid-column: 4 / span 1"><span class="mu-slotgrid__line"><x-import component-from-global-scope="MatchUp.Icon" name="lightning" weight="fill" size="{{i12}}"></x-import><span class="num-s">150</span></span></span>
+<span role="gridcell" aria-label="الملعب 3، 23:00، محجوز" aria-disabled="true" class="mu-slotgrid__cell mu-slotgrid__cell--booked" style="grid-column: 5 / span 1"><span class="mu-slotgrid__state label-s">محجوز</span></span>
+</div>
+</div>
+</div>
+</div>
+<p class="caption" style="margin: -4px 0 0 0; padding: 0 16px 20px 16px; color: var(--text-secondary)">سعر الملعب للساعة. إذا كنتم 10 لاعبين: <span class="label-s" style="color: var(--text)">15 د.ت للفرد</span> من <span class="num-xs">18:00</span> إلى <span class="num-xs">23:00</span>، و12 د.ت قبل ذلك.</p>
+</section>
+
+<section class="ven-sec">
+<h2 class="h3" style="margin: 0">المرافق</h2>
+<div class="ven-amen">
+<div class="ven-amen__item"><span class="ven-amen__ico"><x-import component-from-global-scope="MatchUp.Icon" name="coat-hanger" size="{{i20}}"></x-import></span><span class="body">غرف تبديل</span></div>
+<div class="ven-amen__item"><span class="ven-amen__ico"><x-import component-from-global-scope="MatchUp.Icon" name="shower" size="{{i20}}"></x-import></span><span class="body">دُشّات</span></div>
+<div class="ven-amen__item"><span class="ven-amen__ico"><x-import component-from-global-scope="MatchUp.Icon" name="car-simple" size="{{i20}}"></x-import></span><span class="body">مأوى</span></div>
+<div class="ven-amen__item"><span class="ven-amen__ico"><x-import component-from-global-scope="MatchUp.Icon" name="lightbulb" size="{{i20}}"></x-import></span><span class="body">إنارة</span></div>
+<div class="ven-amen__item"><span class="ven-amen__ico"><x-import component-from-global-scope="MatchUp.Icon" name="coffee" size="{{i20}}"></x-import></span><span class="body">مقهى</span></div>
+<div class="ven-amen__item"><span class="ven-amen__ico"><x-import component-from-global-scope="MatchUp.Icon" name="t-shirt" size="{{i20}}"></x-import></span><span class="body">صدريات</span></div>
+</div>
+</section>
+
+<section class="ven-sec">
+<div class="ven-sec__head">
+<h2 class="h3" style="margin: 0">الملاعب</h2>
+<span class="caption" style="color: var(--text-secondary)">خماسي · عشب اصطناعي</span>
+</div>
+<div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px">
+<div style="display: flex; flex-direction: column; gap: 8px; min-width: 0">
+<x-import component-from-global-scope="MatchUp.CourtArt" sport="football" variant="pattern" dc-props="{{tile}}"></x-import>
+<div style="display: flex; flex-direction: column; gap: 2px"><span class="label">الملعب 1</span><span class="caption" style="color: var(--text-secondary)">خارجي · مُضاء</span></div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 8px; min-width: 0">
+<x-import component-from-global-scope="MatchUp.CourtArt" sport="football" variant="pattern" dc-props="{{tile}}"></x-import>
+<div style="display: flex; flex-direction: column; gap: 2px"><span class="label">الملعب 2</span><span class="caption" style="color: var(--text-secondary)">خارجي · مُضاء</span></div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 8px; min-width: 0">
+<x-import component-from-global-scope="MatchUp.CourtArt" sport="football" variant="pattern" dc-props="{{tile}}"></x-import>
+<div style="display: flex; flex-direction: column; gap: 2px"><span class="label" style="display: flex; align-items: center; gap: 4px">الملعب 3 <x-import component-from-global-scope="MatchUp.Icon" name="umbrella" size="{{i16}}" label="مغطّى"></x-import></span><span class="caption" style="color: var(--text-secondary)">داخلي · مغطّى</span></div>
+</div>
+</div>
+</section>
+
+<section class="ven-sec">
+<div class="ven-sec__head">
+<h2 class="h3" style="margin: 0">العنوان</h2>
+<span class="caption" style="color: var(--text-secondary)">على بُعد 1,4 كم منك</span>
+</div>
+<div style="position: relative">
+<x-import component-from-global-scope="MatchUp.MapView" interactive="{{no}}" venues="{{mapVenues}}" default-selected-id="arena" center="{{mapCenter}}" zoom="{{z16}}" height="{{h176}}" user="{{nullUser}}" label="Arena Five، المرسى"></x-import>
+<button type="button" class="mu-btn mu-btn--secondary mu-btn--s" style="position: absolute; inset-inline-end: 12px; bottom: 12px; box-shadow: var(--elevation-2)"><span class="mu-btn__content"><x-import component-from-global-scope="MatchUp.Icon" name="navigation-arrow" size="{{i16}}"></x-import><span class="mu-btn__label label">الاتجاهات</span></span></button>
+</div>
+<p class="body" style="margin: 0">طريق الكورنيش، 2070 المرسى</p>
+</section>
+
+<section class="ven-sec">
+<h2 class="h3" style="margin: 0">الإلغاء والاسترجاع</h2>
+<div style="display: flex; flex-direction: column; gap: 12px">
+<div class="ven-tier">
+<span class="ven-tier__ico" style="background: var(--success-soft); color: var(--success-text)"><x-import component-from-global-scope="MatchUp.Icon" name="check-circle" size="{{i20}}"></x-import></span>
+<div style="display: flex; flex-direction: column; gap: 2px"><span class="label">مجاني حتى 24 ساعة قبل الموعد</span><span class="caption" style="color: var(--text-secondary)">يُسترجَع المبلغ كاملًا إلى رصيدك في MatchUp</span></div>
+</div>
+<div class="ven-tier">
+<span class="ven-tier__ico" style="background: var(--warning-soft); color: var(--warning-text)"><x-import component-from-global-scope="MatchUp.Icon" name="circle-half" size="{{i20}}"></x-import></span>
+<div style="display: flex; flex-direction: column; gap: 2px"><span class="label">استرجاع 50% بين 24 و6 ساعات قبل الموعد</span><span class="caption" style="color: var(--text-secondary)">يعود إليك نصف حصّتك</span></div>
+</div>
+<div class="ven-tier">
+<span class="ven-tier__ico" style="background: var(--error-soft); color: var(--error-text)"><x-import component-from-global-scope="MatchUp.Icon" name="prohibit" size="{{i20}}"></x-import></span>
+<div style="display: flex; flex-direction: column; gap: 2px"><span class="label">لا استرجاع قبل أقل من 6 ساعات</span><span class="caption" style="color: var(--text-secondary)">إلا إذا ألغى Arena Five الحجز: يُسترجَع المبلغ كاملًا</span></div>
+</div>
+</div>
+</section>
+
+<section class="ven-sec" style="gap: 0; padding-bottom: 162px">
+<div class="ven-sec__head" style="padding-bottom: 12px">
+<h2 class="h3" style="margin: 0; display: flex; align-items: baseline; gap: 8px">التقييمات <span class="num-m">4,7</span><span class="caption" style="color: var(--text-secondary)">من 5</span></h2>
+<button type="button" class="mu-btn mu-btn--tertiary mu-btn--s" style="margin-inline-end: -8px"><span class="mu-btn__content"><span class="mu-btn__label label">عرض التقييمات الـ128</span></span></button>
+</div>
+<div class="ven-review">
+<div style="display: flex; align-items: center; gap: 10px">
+<x-import component-from-global-scope="MatchUp.Avatar" name="سكندر ت." size="s"></x-import>
+<div style="flex: 1; display: flex; flex-direction: column"><span class="label">سكندر ت.</span><span class="caption" style="color: var(--text-secondary)">منذ 3 أيام · الملعب 2</span></div>
+<x-import component-from-global-scope="MatchUp.StarRating" read-only="{{yes}}" size="{{s16}}" value="{{r5}}" show-value="{{no}}" label="5 من 5"></x-import>
+</div>
+<p class="body" style="margin: 0">العشب ممتاز والإنارة رائعة في المساء. غرف التبديل نظيفة، ونعود كل أحد.</p>
+</div>
+</section>
+
+<div style="position: absolute; left: 0; right: 0; bottom: 0; z-index: var(--z-sticky); padding: 12px 16px 34px 16px; background: var(--surface); box-shadow: var(--elevation-2-up); display: flex; flex-direction: column; gap: 10px">
+<div style="display: flex; align-items: baseline; justify-content: space-between; gap: 12px">
+<span><span class="caption" style="color: var(--text-secondary)">ابتداءً من </span><span class="num-l">12</span><span class="label"> د.ت</span><span class="caption" style="color: var(--text-secondary)"> للفرد</span></span>
+<span class="caption" style="color: var(--text-secondary)">الملعب <span class="num-xs rtl-ltr">120–150</span> د.ت · ساعة · 10 لاعبين</span>
+</div>
+<a href="VEN-02-Creneau.dc.html" class="mu-btn mu-btn--primary mu-btn--xl mu-btn--block"><span class="mu-btn__content"><span class="mu-btn__label label-l">احجز</span></span></a>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":2448}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      yes: true, no: false, i12: 12, i14: 14, i16: 16, i20: 20, i24: 24, s16: 16, h176: 176, z16: 1.6,
+      rating: 4.7, r5: 5, nullUser: null,
+      artStyle: { style: { position: 'absolute', inset: 0, width: '100%', height: '100%' } },
+      tile: { style: { width: '100%', aspectRatio: '3 / 2', borderRadius: 'var(--radius-sm)' } },
+      mapVenues: [{ id: 'arena', name: 'Arena Five', sport: 'football', lat: 36.8805, lng: 10.3215, area: 'المرسى', distance: '1,4 كم', rating: 4.7, reviews: 128, priceFrom: 12 }],
+      mapCenter: { lat: 36.8805, lng: 10.3215 }
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Assistant · résultats</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/matchup/tokens.css">
+<link rel="stylesheet" href="ds/matchup/components/bundle.css">
+<script src="ds/matchup/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0}
+a{color:var(--link)}
+.ai-root{position:relative; width:390px; box-sizing:border-box; overflow:hidden; background:var(--bg); color:var(--text); font-family:var(--font-sans)}
+.ai-close{color:var(--text)}
+.ai-who{display:flex; flex-direction:column; gap:0}
+.ai-who .caption{color:var(--text-secondary)}
+.ai-thread{flex:1; min-height:0; overflow:hidden; display:flex; flex-direction:column; gap:20px; padding:12px 16px 8px 16px}
+.ai-thread--end{justify-content:flex-end; gap:16px; -webkit-mask-image:linear-gradient(to bottom, transparent 0, #000 32px); mask-image:linear-gradient(to bottom, transparent 0, #000 32px)}
+.ai-thread > *{flex-shrink:0}
+.ai-day{align-self:center; margin:0; color:var(--text-secondary)}
+.ai-me{align-self:flex-end; max-width:78%; margin:0; padding:10px 16px; border-radius:var(--radius-lg) var(--radius-xs) var(--radius-lg) var(--radius-lg); background:var(--primary); color:var(--on-primary)}
+.ai-turn{display:flex; flex-direction:column; align-items:flex-start; gap:10px}
+.ai-turn > .ai-full{align-self:stretch}
+.ai-turn .mu-assist__bubble{max-width:92%}
+.ai-heard{display:flex; flex-wrap:wrap; align-items:center; gap:6px}
+.ai-heard__lead{color:var(--text-secondary); margin-inline-end:2px}
+.ai-ink{color:var(--text)}
+.ai-muted{color:var(--text-secondary)}
+.ai-m0{margin:0}
+.ai-ok{display:inline-flex; align-items:center; gap:3px; color:var(--success-text)}
+.ai-venue{display:flex; align-items:center; gap:12px}
+.ai-venue__txt{flex:1; min-width:0; display:flex; flex-direction:column; gap:2px}
+.ai-slots{display:grid; grid-template-columns:repeat(3, 1fr); gap:8px}
+.ai-slot{display:flex; flex-direction:column; align-items:center; padding:8px 4px; border-radius:var(--radius-sm); background:var(--surface); box-shadow:inset 0 0 0 1px var(--border-control); color:var(--text); text-align:center}
+.ai-slot.is-on{background:var(--accent); color:var(--on-accent); box-shadow:inset 0 0 0 1.5px var(--text)}
+.ai-slot.is-on .ai-muted{color:var(--on-accent)}
+.ai-price{display:flex; align-items:baseline; justify-content:space-between; gap:12px; padding-top:10px; border-top:1px solid var(--border)}
+.ai-fit{display:flex; align-items:center; gap:8px; margin-top:-2px}
+.ai-replies{display:flex; flex-wrap:wrap; gap:8px}
+.ai-fb{display:flex; align-items:center; gap:2px; margin-inline-start:-6px; color:var(--text-secondary)}
+.ai-fb__note{display:inline-flex; align-items:center; gap:4px; margin-inline-start:6px}
+.ai-root .mu-takeover__footer{border-top:1px solid var(--border); background:var(--bg)}
+.ai-overline{margin:0; color:var(--text-secondary)}
+</style>
+</helmet>
+<div class="ai-root" style="height: 1392px">
+<x-import component-from-global-scope="MatchUp.Takeover" inline="{{yes}}" open="{{yes}}" closable="{{no}}" safe-area="{{safe}}" label="Assistant MatchUp" class-name="mu-takeover--assistant">
+<div class="mu-takeover__bar">
+<div class="mu-takeover__bar-start"><span class="mu-assist__id"><span class="mu-assist__mark" aria-hidden="true"><x-import component-from-global-scope="MatchUp.Icon" name="sparkle" weight="fill" size="{{i18}}"></x-import></span><span class="label-l">Assistant MatchUp</span></span></div>
+<div class="mu-takeover__bar-end"><a href="HOM-01-Accueil.dc.html" class="mu-iconbtn mu-iconbtn--m mu-iconbtn--ghost ai-close" aria-label="Fermer l’assistant"><x-import component-from-global-scope="MatchUp.Icon" name="x" size="{{i20}}"></x-import></a></div>
+</div>
+
+<div class="ai-thread" aria-live="polite">
+<p class="ai-day caption">Aujourd’hui · 18h00</p>
+<p class="ai-me body-l">Réserve un terrain à La Marsa samedi</p>
+
+<div class="ai-turn">
+<div class="mu-assist__from"><span class="mu-assist__avatar" aria-hidden="true"><x-import component-from-global-scope="MatchUp.Icon" name="sparkle" weight="fill" size="{{i14}}"></x-import></span><span class="label-s">MatchUp</span><span class="mu-assist__ia label-s"><x-import component-from-global-scope="MatchUp.Icon" name="sparkle" weight="fill" size="{{i12}}"></x-import>IA</span></div>
+<div class="ai-heard" role="group" aria-label="Ce que l’assistant a compris">
+<span class="ai-heard__lead caption">J’ai compris</span>
+<x-import component-from-global-scope="MatchUp.Chip" kind="input" size="s" icon="sport-football">Foot 5v5</x-import>
+<x-import component-from-global-scope="MatchUp.Chip" kind="input" size="s" icon="map-pin">La Marsa</x-import>
+<x-import component-from-global-scope="MatchUp.Chip" kind="input" size="s" icon="calendar-blank">sam. 17 oct. · soir</x-import>
+<a href="AI-01-Assistant.dc.html" class="mu-btn mu-btn--link mu-btn--s"><span class="mu-btn__content"><span class="mu-btn__label label">Modifier</span></span></a>
+</div>
+<p class="mu-assist__bubble body-l">Samedi soir, Arena Five a encore 3 créneaux : c’est le terrain vérifié le plus proche de toi (1,4 km). Je te propose 20h00 sur le Terrain 2.</p>
+<div class="ai-full">
+<x-import component-from-global-scope="MatchUp.AiSuggestionCard" dc-props="{{slotCard}}">
+<div style="display: flex; flex-direction: column; gap: 12px">
+<div class="ai-venue">
+<x-import component-from-global-scope="MatchUp.CourtArt" sport="football" variant="pattern" dc-props="{{thumb}}"></x-import>
+<span class="ai-venue__txt">
+<span class="label ai-ink">Arena Five · La Marsa</span>
+<span class="caption"><span class="ai-ok"><x-import component-from-global-scope="MatchUp.Icon" name="seal-check" weight="fill" size="{{i14}}"></x-import>Vérifié</span> · 4,7 (128 avis) · 1,4 km</span>
+</span>
+</div>
+<div class="ai-slots" role="radiogroup" aria-label="Créneaux libres samedi 17 octobre">
+<span class="ai-slot" role="radio" aria-checked="false"><span class="num-m">19h00</span><span class="caption ai-muted">Terrain 1</span></span>
+<span class="ai-slot is-on" role="radio" aria-checked="true"><span class="num-m">20h00</span><span class="caption ai-muted">Terrain 2</span></span>
+<span class="ai-slot" role="radio" aria-checked="false"><span class="num-m">22h00</span><span class="caption ai-muted">Terrain 3 · indoor</span></span>
+</div>
+<div class="ai-price">
+<span class="caption ai-muted">1 h · 150 DT le terrain</span>
+<span><span class="num-m ai-ink">15 DT</span> <span class="caption ai-muted">par joueur à 10</span></span>
+</div>
+</div>
+</x-import>
+</div>
+<p class="mu-assist__bubble body-l">Tu préfères rejoindre une partie déjà ouverte ? Il reste 2 places dimanche, au même endroit.</p>
+<div class="ai-full">
+<x-import component-from-global-scope="MatchUp.GameCard" dc-props="{{g1}}"></x-import>
+</div>
+<div class="ai-fit">
+<x-import component-from-global-scope="MatchUp.MatchFitScore" value="{{fit85}}" size="s" factors="{{fit85Factors}}"></x-import>
+<span class="caption ai-muted">Milieu recherché et terrain à 1,4 km</span>
+</div>
+<div class="ai-replies" role="group" aria-label="Affiner la recherche">
+<x-import component-from-global-scope="MatchUp.Chip" icon="clock">Moins cher avant 18h</x-import>
+<x-import component-from-global-scope="MatchUp.Chip" icon="sport-court">En indoor</x-import>
+<x-import component-from-global-scope="MatchUp.Chip" icon="calendar-blank">Plutôt dimanche</x-import>
+</div>
+<div class="ai-fb" role="group" aria-label="Ton avis sur cette réponse">
+<x-import component-from-global-scope="MatchUp.IconButton" icon="thumbs-up" label="Réponse utile" size="s"></x-import>
+<x-import component-from-global-scope="MatchUp.IconButton" icon="thumbs-down" label="Réponse pas utile" size="s"></x-import>
+<span class="ai-fb__note caption"><x-import component-from-global-scope="MatchUp.Icon" name="info" size="{{i14}}"></x-import>L’IA peut se tromper. Vérifie avant de confirmer.</span>
+</div>
+</div>
+</div>
+
+<div class="mu-takeover__footer">
+<form class="mu-assist__composer">
+<div class="mu-assist__field">
+<label for="ai02-input" class="mu-visually-hidden">Ton message à l’assistant</label>
+<input id="ai02-input" class="mu-assist__input body-l" placeholder="Demande à MatchUp…" autocomplete="off">
+<button type="button" class="mu-iconbtn mu-iconbtn--m mu-iconbtn--primary mu-assist__send" aria-label="Envoyer" disabled><x-import component-from-global-scope="MatchUp.Icon" name="arrow-up" size="{{i20}}"></x-import></button>
+</div>
+<p class="mu-assist__disclaimer caption">MatchUp ne réserve et ne paie rien sans ta confirmation.</p>
+</form>
+</div>
+</x-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":1392}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const at = (d, h, m) => new Date(2026, 9, d, h, m || 0);
+    return {
+      yes: true, no: false, i12: 12, i14: 14, i16: 16, i18: 18, i20: 20, i24: 24,
+      safe: { top: 44, bottom: 34 },
+      thumb: { style: { width: 48, height: 48, borderRadius: 'var(--radius-sm)', flex: 'none' } },
+      slotCard: {
+        context: 'Créneaux libres · sam. 17 oct.',
+        title: 'Terrain 2 · sam. 17 oct. · 20h00',
+        reason: 'tu joues le plus souvent vers 20h00 et le Terrain 2 est extérieur et éclairé.',
+        primaryAction: { label: 'Réserver 20h00', href: 'AI-03-Confirmation.dc.html', trailingIcon: 'arrow-right' },
+        secondaryAction: { label: 'Voir le terrain', href: 'VEN-01-Terrain.dc.html' },
+        showFeedback: false
+      },
+      g1: {
+        variant: 'compact', sport: 'football', gameType: 'mixte', venue: 'Arena Five', court: 'Terrain 2', place: 'La Marsa', distance: 1.4,
+        start: at(18, 20), spotsTotal: 10, spotsLeft: 2, price: 15, levelMin: 3, levelMax: 4.5,
+        players: [{ name: 'Skander T.', level: 4 }, { name: 'Hamza R.', level: 3.5 }, { name: 'Nour A.', level: 3 }, { name: 'Aziz H.', level: 4.5 }, { name: 'Omar D.', level: 3.5 }, { name: 'Salma G.', level: 3 }, { name: 'Lina F.', level: 3.5 }, { name: 'Ines M.', level: 4 }],
+        organiser: { name: 'Skander T.', reliability: 96 }, matchFit: 85, matchFitReason: 'Milieu recherché et terrain à 1,4 km',
+        href: 'GAM-01-Partie-ouverte.dc.html'
+      },
+      fit85: 85,
+      fit85Factors: [
+        { icon: 'gauge', label: 'Niveau proche', detail: 'Toi 3,0 · partie 3,0–4,5' },
+        { icon: 'users', label: 'Milieu recherché', detail: 'Ton poste au foot' },
+        { icon: 'map-pin', label: 'À 1,4 km', detail: 'Arena Five · La Marsa' }
+      ],
+    };
+  }
+}
+</script>
+</body>
+</html>

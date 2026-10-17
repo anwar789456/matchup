@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Catalogue · Matchs et réservations</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/matchup/tokens.css">
+<link rel="stylesheet" href="ds/matchup/components/bundle.css">
+<script src="ds/matchup/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+/* cat:shared — identical in NOT-04…06 */
+body{margin:0}
+a{color:var(--link)}
+.cat-root{position:relative; width:390px; box-sizing:border-box; overflow:hidden; display:flex; flex-direction:column; gap:var(--space-5); padding:40px var(--space-4) 24px var(--space-4); background:var(--bg); color:var(--text); font-family:var(--font-sans)}
+.cat-root > *{flex:none}
+.cat-head{display:flex; flex-direction:column; gap:var(--space-2)}
+.cat-legend{display:grid; grid-template-columns:repeat(3, 1fr); gap:var(--space-3); margin:0; padding:0; list-style:none}
+.cat-legend > li{display:flex; flex-direction:column; align-items:flex-start; gap:6px}
+.cat-prio{flex:none; display:inline-flex; align-items:center; gap:4px; height:20px; padding:0 var(--space-2); border-radius:var(--radius-full); white-space:nowrap}
+.cat-prio--normal{background:var(--surface); color:var(--text-secondary); box-shadow:inset 0 0 0 1px var(--border-strong)}
+.cat-prio--important{background:var(--warning-soft); color:var(--warning-text)}
+.cat-prio--urgent{background:var(--error-soft); color:var(--error-text)}
+.cat-group{display:flex; flex-direction:column; gap:var(--space-2); margin:0}
+.cat-group__title{margin:0; display:flex; align-items:baseline; justify-content:space-between; gap:var(--space-2)}
+.cat-list{margin:0; padding:0; list-style:none; background:var(--surface); border-radius:var(--radius-md); box-shadow:var(--elevation-1); overflow:hidden}
+.cat-entry{margin:0}
+.cat-entry__head{display:flex; align-items:center; gap:var(--space-2); height:28px; padding:0 var(--space-3) 0 var(--space-4); background:var(--surface-muted); box-shadow:inset 0 -1px 0 var(--border)}
+.cat-entry + .cat-entry .cat-entry__head{box-shadow:inset 0 1px 0 var(--border), inset 0 -1px 0 var(--border)}
+.cat-entry__num{flex:none; width:20px; color:var(--text-secondary)}
+.cat-entry__name{flex:1; min-width:0; margin:0; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; color:var(--text)}
+.cat-entry__cap{color:var(--text-secondary); font-weight:inherit}
+.cat-nav{display:flex; justify-content:space-between; gap:var(--space-2); padding-top:var(--space-3); box-shadow:inset 0 1px 0 var(--border)}
+/* /cat:shared */
+</style>
+</helmet>
+<div class="cat-root" style="height: 2056px">
+<header class="cat-head">
+<span class="overline" style="color: var(--text-secondary)">Notifications in-app · catalogue 1/3</span>
+<h1 class="h1" style="margin: 0">Matchs et réservations</h1>
+<p class="body" style="margin: 0; color: var(--text-secondary)">Chaque notification de la section 9.4, telle qu’elle s’affiche dans le centre. Le titre donne l’info, le corps dit quand, où et combien.</p>
+</header>
+<ul class="cat-legend" aria-label="Niveaux de priorité">
+<li><span class="cat-prio cat-prio--normal label-s">Normal</span><span class="caption" style="color: var(--text-secondary)">Pour info</span></li>
+<li><span class="cat-prio cat-prio--important label-s">Important</span><span class="caption" style="color: var(--text-secondary)">Action à faire</span></li>
+<li><span class="cat-prio cat-prio--urgent label-s">Urgent</span><span class="caption" style="color: var(--text-secondary)">Expire dans l’heure</span></li>
+</ul>
+<section class="cat-group" aria-labelledby="cat-g0">
+<div style="display: flex; flex-direction: column; gap: 2px">
+<h2 id="cat-g0" class="cat-group__title"><span class="h3">Matchs</span><span class="caption" style="color: var(--text-secondary)"><span class="num-xs" style="color: var(--text)">6</span> notifications</span></h2>
+</div>
+<ol class="cat-list">
+<li class="cat-entry">
+<div class="cat-entry__head"><span class="cat-entry__num num-xs">01</span><h3 class="cat-entry__name label">Partie complète<span class="cat-entry__cap caption"> · 10/10 joueurs</span></h3><span class="cat-prio cat-prio--normal label-s">Normal</span></div>
+<x-import component-from-global-scope="MatchUp.NotificationItem" dc-props="{{mFull}}"></x-import>
+</li>
+<li class="cat-entry">
+<div class="cat-entry__head"><span class="cat-entry__num num-xs">02</span><h3 class="cat-entry__name label">Un joueur a quitté<span class="cat-entry__cap caption"> · organisateur</span></h3><span class="cat-prio cat-prio--important label-s">Important</span></div>
+<x-import component-from-global-scope="MatchUp.NotificationItem" dc-props="{{mLeft}}"></x-import>
+</li>
+<li class="cat-entry">
+<div class="cat-entry__head"><span class="cat-entry__num num-xs">03</span><h3 class="cat-entry__name label">Rappel<span class="cat-entry__cap caption"> · 2 h avant le match</span></h3><span class="cat-prio cat-prio--normal label-s">Normal</span></div>
+<x-import component-from-global-scope="MatchUp.NotificationItem" dc-props="{{mRemind}}"></x-import>
+</li>
+<li class="cat-entry">
+<div class="cat-entry__head"><span class="cat-entry__num num-xs">04</span><h3 class="cat-entry__name label">Place libérée<span class="cat-entry__cap caption"> · 15 min pour réclamer</span></h3><span class="cat-prio cat-prio--urgent label-s">Urgent</span></div>
+<x-import component-from-global-scope="MatchUp.NotificationItem" dc-props="{{mSpot}}"></x-import>
+</li>
+<li class="cat-entry">
+<div class="cat-entry__head"><span class="cat-entry__num num-xs">05</span><h3 class="cat-entry__name label">Invitation<span class="cat-entry__cap caption"> · d’un autre joueur</span></h3><span class="cat-prio cat-prio--normal label-s">Normal</span></div>
+<x-import component-from-global-scope="MatchUp.NotificationItem" dc-props="{{mInvite}}"></x-import>
+</li>
+<li class="cat-entry">
+<div class="cat-entry__head"><span class="cat-entry__num num-xs">06</span><h3 class="cat-entry__name label">Noter tes coéquipiers<span class="cat-entry__cap caption"> · J+1</span></h3><span class="cat-prio cat-prio--normal label-s">Normal</span></div>
+<x-import component-from-global-scope="MatchUp.NotificationItem" dc-props="{{mRate}}"></x-import>
+</li>
+</ol>
+</section>
+<section class="cat-group" aria-labelledby="cat-g1">
+<div style="display: flex; flex-direction: column; gap: 2px">
+<h2 id="cat-g1" class="cat-group__title"><span class="h3">Réservations</span><span class="caption" style="color: var(--text-secondary)"><span class="num-xs" style="color: var(--text)">4</span> notifications</span></h2>
+</div>
+<ol class="cat-list">
+<li class="cat-entry">
+<div class="cat-entry__head"><span class="cat-entry__num num-xs">07</span><h3 class="cat-entry__name label">Confirmée<span class="cat-entry__cap caption"> · après paiement</span></h3><span class="cat-prio cat-prio--normal label-s">Normal</span></div>
+<x-import component-from-global-scope="MatchUp.NotificationItem" dc-props="{{bOk}}"></x-import>
+</li>
+<li class="cat-entry">
+<div class="cat-entry__head"><span class="cat-entry__num num-xs">08</span><h3 class="cat-entry__name label">Annulée par le terrain<span class="cat-entry__cap caption"> · remboursé</span></h3><span class="cat-prio cat-prio--normal label-s">Normal</span></div>
+<x-import component-from-global-scope="MatchUp.NotificationItem" dc-props="{{bCancel}}"></x-import>
+</li>
+<li class="cat-entry">
+<div class="cat-entry__head"><span class="cat-entry__num num-xs">09</span><h3 class="cat-entry__name label">Modifiée<span class="cat-entry__cap caption"> · court ou horaire</span></h3><span class="cat-prio cat-prio--important label-s">Important</span></div>
+<x-import component-from-global-scope="MatchUp.NotificationItem" dc-props="{{bMoved}}"></x-import>
+</li>
+<li class="cat-entry">
+<div class="cat-entry__head"><span class="cat-entry__num num-xs">10</span><h3 class="cat-entry__name label">Check-in réussi<span class="cat-entry__cap caption"> · QR scanné</span></h3><span class="cat-prio cat-prio--normal label-s">Normal</span></div>
+<x-import component-from-global-scope="MatchUp.NotificationItem" dc-props="{{bCheck}}"></x-import>
+</li>
+</ol>
+</section>
+<nav class="cat-nav" aria-label="Pages du catalogue">
+<span></span>
+<a href="NOT-05-Catalogue-paiements-tournois.dc.html" class="mu-btn mu-btn--tertiary mu-btn--s" style="margin-right: -8px"><span class="mu-btn__content"><span class="mu-btn__label label">Catalogue 2/3</span><x-import component-from-global-scope="MatchUp.Icon" name="arrow-right" size="{{i16}}"></x-import></span></a>
+</nav>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":2056}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const h = React.createElement, B = MatchUp.Button, F = React.Fragment;
+    return {
+      i14: 14, i16: 16,
+      mFull: { unread: true, swipeable: false, as: 'div', category: 'matches', sport: 'football', status: 'success', icon: 'users-three', time: '5 min', title: 'Ta partie est complète : 10/10', body: 'Foot 5v5 · Arena Five · dim. 18 oct. · 20h00. Arrive 10 min avant.', people: [{ name: 'Mariem K.' }, { name: 'Rami S.' }, { name: 'Skander T.' }, { name: 'Hamza R.' }, { name: 'Nour A.' }], href: 'GAM-01-Partie-ouverte.dc.html' },
+      mLeft: { priority: 'important', unread: true, swipeable: false, as: 'div', category: 'matches', sport: 'football', avatar: { name: 'Omar D.' }, time: '20 min', title: 'Omar D. a quitté ta partie', body: 'Mer. 21 oct. · 21h00 · Arena Five. Il reste 5 places à compléter.', href: 'MAT-05-Detail-reservation.dc.html', actions: h(B, { size: 's', leadingIcon: 'user-plus', href: 'BKG-03-Inviter-des-amis.dc.html' }, 'Inviter des joueurs') },
+      mRemind: { unread: true, swipeable: false, as: 'div', category: 'matches', sport: 'football', icon: 'clock', time: '2 h', title: 'Foot 5v5 à Arena Five dans 2 h', body: 'Dim. 18 oct. · 20h00 · Terrain 2. Arrive 10 min avant, chasubles fournies.', href: 'GAM-01-Partie-ouverte.dc.html', actions: h(B, { size: 's', variant: 'secondary', leadingIcon: 'navigation-arrow' }, 'Itinéraire') },
+      mSpot: { unread: true, swipeable: false, as: 'div', category: 'matches', sport: 'football', priority: 'urgent', time: '1 min', title: 'Une place s’est libérée', body: 'Foot 5v5 · Arena Five · dim. 18 oct. · 20h00. Ensuite, elle passe au suivant.', href: 'GAM-04-Place-disponible.dc.html', actions: h(B, { size: 's', countdown: '14:59', href: 'GAM-04-Place-disponible.dc.html' }, 'Réclamer la place') },
+      mInvite: { unread: true, swipeable: false, as: 'div', category: 'matches', sport: 'padel', avatar: { name: 'Mariem K.' }, time: '12 min', title: 'Mariem K. t’invite au padel', body: 'Smash Padel Club · ven. 23 oct. · 19h30 · 25 DT par personne.', href: 'MAT-01-A-venir.dc.html', actions: h(F, null, h(B, { size: 's', href: 'MAT-01-A-venir.dc.html' }, 'Accepter'), h(B, { size: 's', variant: 'secondary', href: 'MAT-01-A-venir.dc.html' }, 'Refuser')) },
+      mRate: { unread: true, swipeable: false, as: 'div', category: 'matches', sport: 'padel', time: 'sam.', title: 'Note tes coéquipiers du ven. 9 oct.', body: 'Padel · Smash Padel Club avec Mariem K., Ines M. et Nour A.', href: 'MAT-08-Evaluer-les-joueurs.dc.html', actions: h(B, { size: 's', variant: 'secondary', leadingIcon: 'star', href: 'MAT-08-Evaluer-les-joueurs.dc.html' }, 'Noter les joueurs') },
+      bOk: { unread: true, swipeable: false, as: 'div', category: 'bookings', status: 'success', time: '1 min', title: 'Réservation confirmée', body: 'Arena Five · Terrain 1 · mer. 21 oct. · 21h00. Réf. MU-48213.', href: 'MAT-05-Detail-reservation.dc.html', actions: h(B, { size: 's', variant: 'secondary', leadingIcon: 'qr-code', href: 'MAT-05-Detail-reservation.dc.html' }, 'Voir le QR code') },
+      bCancel: { unread: true, swipeable: false, as: 'div', category: 'bookings', status: 'error', icon: 'calendar-x', time: '35 min', title: 'Arena Five a annulé ta réservation', body: 'Terrain fermé pour travaux mer. 21 oct. 15 DT remboursés sur ton solde.', actions: h(B, { size: 's', variant: 'secondary', leadingIcon: 'magnifying-glass', href: 'EXP-03-Explorer-terrains.dc.html' }, 'Trouver un autre terrain') },
+      bMoved: { unread: true, swipeable: false, as: 'div', category: 'bookings', priority: 'important', time: '1 h', title: 'Ta réservation a été déplacée', body: 'Terrain 3 (indoor) au lieu du 1, même horaire. Réponds avant mar. 20 oct.', href: 'MAT-05-Detail-reservation.dc.html', actions: h(F, null, h(B, { size: 's' }, 'Accepter'), h(B, { size: 's', variant: 'secondary' }, 'Refuser')) },
+      bCheck: { unread: true, swipeable: false, as: 'div', category: 'bookings', status: 'success', icon: 'sign-in', time: '20h52', title: 'Check-in réussi à Arena Five', body: 'Terrain 1 · le terrain est à vous jusqu’à 22h00. Bon match !', href: 'MAT-05-Detail-reservation.dc.html' }
+    };
+  }
+}
+</script>
+</body>
+</html>

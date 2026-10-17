@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Catalogue · Entraînement, communauté, pros</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/matchup/tokens.css">
+<link rel="stylesheet" href="ds/matchup/components/bundle.css">
+<script src="ds/matchup/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+/* cat:shared — identical in NOT-04…06 */
+body{margin:0}
+a{color:var(--link)}
+.cat-root{position:relative; width:390px; box-sizing:border-box; overflow:hidden; display:flex; flex-direction:column; gap:var(--space-5); padding:40px var(--space-4) 24px var(--space-4); background:var(--bg); color:var(--text); font-family:var(--font-sans)}
+.cat-root > *{flex:none}
+.cat-head{display:flex; flex-direction:column; gap:var(--space-2)}
+.cat-legend{display:grid; grid-template-columns:repeat(3, 1fr); gap:var(--space-3); margin:0; padding:0; list-style:none}
+.cat-legend > li{display:flex; flex-direction:column; align-items:flex-start; gap:6px}
+.cat-prio{flex:none; display:inline-flex; align-items:center; gap:4px; height:20px; padding:0 var(--space-2); border-radius:var(--radius-full); white-space:nowrap}
+.cat-prio--normal{background:var(--surface); color:var(--text-secondary); box-shadow:inset 0 0 0 1px var(--border-strong)}
+.cat-prio--important{background:var(--warning-soft); color:var(--warning-text)}
+.cat-prio--urgent{background:var(--error-soft); color:var(--error-text)}
+.cat-group{display:flex; flex-direction:column; gap:var(--space-2); margin:0}
+.cat-group__title{margin:0; display:flex; align-items:baseline; justify-content:space-between; gap:var(--space-2)}
+.cat-list{margin:0; padding:0; list-style:none; background:var(--surface); border-radius:var(--radius-md); box-shadow:var(--elevation-1); overflow:hidden}
+.cat-entry{margin:0}
+.cat-entry__head{display:flex; align-items:center; gap:var(--space-2); height:28px; padding:0 var(--space-3) 0 var(--space-4); background:var(--surface-muted); box-shadow:inset 0 -1px 0 var(--border)}
+.cat-entry + .cat-entry .cat-entry__head{box-shadow:inset 0 1px 0 var(--border), inset 0 -1px 0 var(--border)}
+.cat-entry__num{flex:none; width:20px; color:var(--text-secondary)}
+.cat-entry__name{flex:1; min-width:0; margin:0; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; color:var(--text)}
+.cat-entry__cap{color:var(--text-secondary); font-weight:inherit}
+.cat-nav{display:flex; justify-content:space-between; gap:var(--space-2); padding-top:var(--space-3); box-shadow:inset 0 1px 0 var(--border)}
+/* /cat:shared */
+</style>
+</helmet>
+<div class="cat-root" style="height: 2380px">
+<header class="cat-head">
+<span class="overline" style="color: var(--text-secondary)">Notifications in-app · catalogue 3/3</span>
+<h1 class="h1" style="margin: 0">Entraînement, communauté, pros</h1>
+<p class="body" style="margin: 0; color: var(--text-secondary)">Ces modules sont dessinés plus tard : ces notifications fixent déjà le ton et la priorité de chacune.</p>
+</header>
+<ul class="cat-legend" aria-label="Niveaux de priorité">
+<li><span class="cat-prio cat-prio--normal label-s">Normal</span><span class="caption" style="color: var(--text-secondary)">Pour info</span></li>
+<li><span class="cat-prio cat-prio--important label-s">Important</span><span class="caption" style="color: var(--text-secondary)">Action à faire</span></li>
+<li><span class="cat-prio cat-prio--urgent label-s">Urgent</span><span class="caption" style="color: var(--text-secondary)">Expire dans l’heure</span></li>
+</ul>
+<section class="cat-group" aria-labelledby="cat-g0">
+<div style="display: flex; flex-direction: column; gap: 2px">
+<h2 id="cat-g0" class="cat-group__title"><span class="h3">Entraînement</span><span class="caption" style="color: var(--text-secondary)"><span class="num-xs" style="color: var(--text)">4</span> notifications</span></h2>
+</div>
+<ol class="cat-list">
+<li class="cat-entry">
+<div class="cat-entry__head"><span class="cat-entry__num num-xs">23</span><h3 class="cat-entry__name label">Nouveau plan IA<span class="cat-entry__cap caption"> · chaque lundi</span></h3><span class="cat-prio cat-prio--normal label-s">Normal</span></div>
+<x-import component-from-global-scope="MatchUp.NotificationItem" dc-props="{{eAi}}"></x-import>
+</li>
+<li class="cat-entry">
+<div class="cat-entry__head"><span class="cat-entry__num num-xs">24</span><h3 class="cat-entry__name label">Retour du coach<span class="cat-entry__cap caption"> · commentaire</span></h3><span class="cat-prio cat-prio--normal label-s">Normal</span></div>
+<x-import component-from-global-scope="MatchUp.NotificationItem" dc-props="{{eCoach}}"></x-import>
+</li>
+<li class="cat-entry">
+<div class="cat-entry__head"><span class="cat-entry__num num-xs">25</span><h3 class="cat-entry__name label">Nouvelle séance<span class="cat-entry__cap caption"> · programme suivi</span></h3><span class="cat-prio cat-prio--normal label-s">Normal</span></div>
+<x-import component-from-global-scope="MatchUp.NotificationItem" dc-props="{{eNew}}"></x-import>
+</li>
+<li class="cat-entry">
+<div class="cat-entry__head"><span class="cat-entry__num num-xs">26</span><h3 class="cat-entry__name label">Série en danger<span class="cat-entry__cap caption"> · le samedi</span></h3><span class="cat-prio cat-prio--important label-s">Important</span></div>
+<x-import component-from-global-scope="MatchUp.NotificationItem" dc-props="{{eStreak}}"></x-import>
+</li>
+</ol>
+</section>
+<section class="cat-group" aria-labelledby="cat-g1">
+<div style="display: flex; flex-direction: column; gap: 2px">
+<h2 id="cat-g1" class="cat-group__title"><span class="h3">Communauté</span><span class="caption" style="color: var(--text-secondary)"><span class="num-xs" style="color: var(--text)">4</span> notifications</span></h2>
+</div>
+<ol class="cat-list">
+<li class="cat-entry">
+<div class="cat-entry__head"><span class="cat-entry__num num-xs">27</span><h3 class="cat-entry__name label">Réponse à ton post<span class="cat-entry__cap caption"> · forum</span></h3><span class="cat-prio cat-prio--normal label-s">Normal</span></div>
+<x-import component-from-global-scope="MatchUp.NotificationItem" dc-props="{{cReply}}"></x-import>
+</li>
+<li class="cat-entry">
+<div class="cat-entry__head"><span class="cat-entry__num num-xs">28</span><h3 class="cat-entry__name label">Mention<span class="cat-entry__cap caption"> · @yassine.b</span></h3><span class="cat-prio cat-prio--normal label-s">Normal</span></div>
+<x-import component-from-global-scope="MatchUp.NotificationItem" dc-props="{{cMention}}"></x-import>
+</li>
+<li class="cat-entry">
+<div class="cat-entry__head"><span class="cat-entry__num num-xs">29</span><h3 class="cat-entry__name label">Meilleure réponse<span class="cat-entry__cap caption"> · par l’auteur</span></h3><span class="cat-prio cat-prio--normal label-s">Normal</span></div>
+<x-import component-from-global-scope="MatchUp.NotificationItem" dc-props="{{cBest}}"></x-import>
+</li>
+<li class="cat-entry">
+<div class="cat-entry__head"><span class="cat-entry__num num-xs">30</span><h3 class="cat-entry__name label">Contenu masqué<span class="cat-entry__cap caption"> · modération</span></h3><span class="cat-prio cat-prio--important label-s">Important</span></div>
+<x-import component-from-global-scope="MatchUp.NotificationItem" dc-props="{{cHidden}}"></x-import>
+</li>
+</ol>
+</section>
+<section class="cat-group" aria-labelledby="cat-g2">
+<div style="display: flex; flex-direction: column; gap: 2px">
+<h2 id="cat-g2" class="cat-group__title"><span class="h3">Espaces pro</span><span class="caption" style="color: var(--text-secondary)"><span class="num-xs" style="color: var(--text)">6</span> notifications</span></h2>
+<p class="caption" style="margin: 0; color: var(--text-secondary)">Reçues par le propriétaire, le coach ou l’organisateur.</p>
+</div>
+<ol class="cat-list">
+<li class="cat-entry">
+<div class="cat-entry__head"><span class="cat-entry__num num-xs">31</span><h3 class="cat-entry__name label">Nouvelle réservation<span class="cat-entry__cap caption"> · propriétaire</span></h3><span class="cat-prio cat-prio--normal label-s">Normal</span></div>
+<x-import component-from-global-scope="MatchUp.NotificationItem" dc-props="{{oBook}}"></x-import>
+</li>
+<li class="cat-entry">
+<div class="cat-entry__head"><span class="cat-entry__num num-xs">32</span><h3 class="cat-entry__name label">Annulation<span class="cat-entry__cap caption"> · créneau remis en vente</span></h3><span class="cat-prio cat-prio--normal label-s">Normal</span></div>
+<x-import component-from-global-scope="MatchUp.NotificationItem" dc-props="{{oCancel}}"></x-import>
+</li>
+<li class="cat-entry">
+<div class="cat-entry__head"><span class="cat-entry__num num-xs">33</span><h3 class="cat-entry__name label">No-show<span class="cat-entry__cap caption"> · aucun check-in</span></h3><span class="cat-prio cat-prio--important label-s">Important</span></div>
+<x-import component-from-global-scope="MatchUp.NotificationItem" dc-props="{{oNoShow}}"></x-import>
+</li>
+<li class="cat-entry">
+<div class="cat-entry__head"><span class="cat-entry__num num-xs">34</span><h3 class="cat-entry__name label">Nouvelle inscription<span class="cat-entry__cap caption"> · organisateur</span></h3><span class="cat-prio cat-prio--normal label-s">Normal</span></div>
+<x-import component-from-global-scope="MatchUp.NotificationItem" dc-props="{{oReg}}"></x-import>
+</li>
+<li class="cat-entry">
+<div class="cat-entry__head"><span class="cat-entry__num num-xs">35</span><h3 class="cat-entry__name label">Nouvel avis<span class="cat-entry__cap caption"> · propriétaire, coach</span></h3><span class="cat-prio cat-prio--normal label-s">Normal</span></div>
+<x-import component-from-global-scope="MatchUp.NotificationItem" dc-props="{{oReview}}"></x-import>
+</li>
+<li class="cat-entry">
+<div class="cat-entry__head"><span class="cat-entry__num num-xs">36</span><h3 class="cat-entry__name label">Versement envoyé<span class="cat-entry__cap caption"> · chaque mardi</span></h3><span class="cat-prio cat-prio--normal label-s">Normal</span></div>
+<x-import component-from-global-scope="MatchUp.NotificationItem" dc-props="{{oPayout}}"></x-import>
+</li>
+</ol>
+</section>
+<nav class="cat-nav" aria-label="Pages du catalogue">
+<a href="NOT-05-Catalogue-paiements-tournois.dc.html" class="mu-btn mu-btn--tertiary mu-btn--s" style="margin-left: -8px"><span class="mu-btn__content"><x-import component-from-global-scope="MatchUp.Icon" name="arrow-left" size="{{i16}}"></x-import><span class="mu-btn__label label">Catalogue 2/3</span></span></a>
+</nav>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":2380}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const h = React.createElement, B = MatchUp.Button, F = React.Fragment;
+    return {
+      i14: 14, i16: 16,
+      eAi: { unread: true, swipeable: false, as: 'div', category: 'training', icon: 'sparkle', time: '8h00', title: h(F, null, 'Ton plan de la semaine ', h(MatchUp.AiLabel, { size: 's' })), body: 'Recommandé car tes lobs restent courts : 3 séances de 20 min.', actions: h(B, { size: 's', variant: 'secondary' }, 'Voir et ajuster') },
+      eCoach: { unread: true, swipeable: false, as: 'div', category: 'training', avatar: { name: 'Karim J.' }, time: '1 h', title: 'Karim J. a commenté ta séance', body: '« Belle bandeja ! Garde le poignet ferme au contact. »' },
+      eNew: { unread: true, swipeable: false, as: 'div', category: 'training', time: 'mer.', thumbnail: { sport: 'padel', variant: 'pattern' }, title: 'Séance 3 disponible', body: 'Bandeja en 4 semaines · le placement au filet, 20 min.' },
+      eStreak: { unread: true, swipeable: false, as: 'div', category: 'training', priority: 'important', time: 'sam.', title: 'Ta série de 6 semaines en danger', body: 'Fais une séance avant dim. 23h59.', actions: h(B, { size: 's', leadingIcon: 'play-circle' }, 'Commencer une séance') },
+      cReply: { unread: true, swipeable: false, as: 'div', category: 'community', avatar: { name: 'Hamza R.' }, time: '5 min', title: 'Hamza R. a répondu à ton post', body: '« Compte sur moi, on vient à deux. »' },
+      cMention: { unread: true, swipeable: false, as: 'div', category: 'community', icon: 'at', avatar: { name: 'Ines M.' }, time: '40 min', title: 'Ines M. t’a mentionné', body: '« @yassine.b connaît Smash Padel. »' },
+      cBest: { unread: true, swipeable: false, as: 'div', category: 'community', icon: 'seal-check', avatar: { name: 'Skander T.' }, time: 'mar.', title: 'Skander T. a choisi ta réponse', body: 'Sur « Crampons pour synthétique ? »' },
+      cHidden: { unread: true, swipeable: false, as: 'div', category: 'community', priority: 'important', time: 'lun.', title: 'Ton commentaire est masqué', body: 'En cours de vérification (langage signalé). Réponse sous 24 h.', actions: h(F, null, h(B, { size: 's' }, 'Modifier'), h(B, { size: 's', variant: 'secondary' }, 'Demander une revue')) },
+      oBook: { unread: true, swipeable: false, as: 'div', category: 'bookings', status: 'success', time: '2 min', title: 'Nouvelle réservation · Terrain 1', body: 'Yassine B. · mer. 21 oct. · 21h00 · 150 DT, partagés à 10.' },
+      oCancel: { unread: true, swipeable: false, as: 'div', category: 'bookings', status: 'warning', icon: 'calendar-x', time: '1 h', title: 'Hamza R. a annulé · Terrain 2', body: 'Sam. 24 oct. · 19h00, plus de 24 h avant : 120 DT remboursés.' },
+      oNoShow: { unread: true, swipeable: false, as: 'div', category: 'bookings', priority: 'important', time: '17h15', title: 'Personne au Terrain 3 à 17h00', body: 'Réservation d’Omar D. Signale-la : sa fiabilité sera mise à jour.', actions: h(F, null, h(B, { size: 's' }, 'Signaler le no-show'), h(B, { size: 's', variant: 'secondary' }, 'Ignorer')) },
+      oReg: { unread: true, swipeable: false, as: 'div', category: 'tournaments', time: '30 min', people: [{ name: 'Skander T.' }, { name: 'Aziz H.' }], title: 'Nouvelle équipe inscrite', body: 'Skander T. & Aziz H. · Padel Masters Lac 2. Plus que 3 places.' },
+      oReview: { unread: true, swipeable: false, as: 'div', category: 'bookings', icon: 'star', avatar: { name: 'Mariem K.' }, time: 'hier', title: 'Mariem K. a laissé 5/5', body: '« Courts impeccables, éclairage parfait le soir. »' },
+      oPayout: { unread: true, swipeable: false, as: 'div', category: 'payments', status: 'success', icon: 'bank', time: 'mar.', title: 'Versement envoyé · 1 250 DT', body: 'Semaine du 5 au 11 oct. · compte •••• 7781, sous 2 jours.' }
+    };
+  }
+}
+</script>
+</body>
+</html>

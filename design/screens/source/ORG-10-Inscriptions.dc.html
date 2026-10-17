@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Inscriptions · Padel Masters Lac 2</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/matchup/tokens.css">
+<link rel="stylesheet" href="ds/matchup/components/bundle.css">
+<script src="ds/matchup/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0}
+a{color:var(--link)}
+.ins-root{position:relative; width:390px; box-sizing:border-box; overflow:hidden; display:flex; flex-direction:column; background:var(--bg); color:var(--text); font-family:var(--font-sans)}
+.ins-head{flex:none; display:flex; align-items:center; gap:var(--space-1); padding:52px var(--space-1) var(--space-2) var(--space-1)}
+.ins-head__txt{flex:1; min-width:0; display:flex; flex-direction:column}
+.ins-muted{color:var(--text-secondary)}
+.ins-m0{margin:0}
+.ins-body{display:flex; flex-direction:column; gap:var(--space-5); padding:var(--space-2) var(--space-4) var(--space-8) var(--space-4)}
+.ins-sum{display:flex; flex-direction:column; gap:var(--space-4); padding:var(--space-4)}
+.ins-sum__stats{display:grid; grid-template-columns:repeat(3, minmax(0, 1fr)); border-top:1px solid var(--border); padding-top:var(--space-3)}
+.ins-sum__stats > div{display:flex; flex-direction:column; gap:2px}
+.ins-sum__stats > div + div{padding-inline-start:var(--space-3); box-shadow:inset 1px 0 0 var(--border)}
+.ins-chips{display:flex; gap:var(--space-2); overflow-x:auto; margin:0 calc(-1 * var(--space-4)); padding:4px var(--space-4); scrollbar-width:none}
+.ins-chips::-webkit-scrollbar{display:none}
+.ins-chips > *{flex:none}
+.ins-meta{display:flex; align-items:center; justify-content:space-between; margin:calc(-1 * var(--space-2)) calc(-1 * var(--space-2)) calc(-1 * var(--space-2)) 0}
+.ins-sec{display:flex; flex-direction:column; gap:var(--space-2)}
+.ins-sec__title{margin:0; padding:var(--space-2) 0 var(--space-1) 0; color:var(--text-secondary)}
+.ins-card{display:flex; flex-direction:column; gap:var(--space-3); padding:var(--space-4)}
+.ins-card--warn{box-shadow:var(--elevation-1), inset 3px 0 0 var(--warning)}
+.ins-team{display:flex; align-items:center; gap:var(--space-3)}
+.ins-mono{flex:none; width:40px; height:40px; border-radius:var(--radius-sm); background:var(--padel-soft); color:var(--padel-text); display:grid; place-items:center}
+.ins-team__txt{flex:1; min-width:0; display:flex; flex-direction:column; gap:2px}
+.ins-players{margin:0; padding:var(--space-1) var(--space-3); list-style:none; display:flex; flex-direction:column; border-radius:var(--radius-sm); background:var(--surface-muted)}
+.ins-players li{display:flex; align-items:center; gap:var(--space-2); min-height:40px}
+.ins-players li + li{border-top:1px solid var(--border)}
+.ins-warn{display:flex; align-items:flex-start; gap:var(--space-2); margin:0; color:var(--warning-text)}
+.ins-warn > span:first-child{flex:none; display:flex; margin-top:1px}
+.ins-btns{display:grid; grid-template-columns:1fr 1fr; gap:var(--space-3)}
+.ins-done{display:flex; align-items:center; gap:var(--space-3); padding:var(--space-3) var(--space-2) var(--space-3) var(--space-4)}
+.ins-list{margin:0; padding:0; list-style:none; background:var(--surface); border-radius:var(--radius-md); box-shadow:var(--elevation-1); overflow:hidden}
+.ins-list li{display:flex; align-items:center; gap:var(--space-3); min-height:64px; padding:var(--space-2) var(--space-4)}
+.ins-list li + li{border-top:1px solid var(--border)}
+.ins-row__txt{flex:1; min-width:0; display:flex; flex-direction:column; gap:2px}
+.ins-one{white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+.ins-end{flex:none; display:flex; flex-direction:column; align-items:flex-end; gap:4px}
+</style>
+</helmet>
+<div class="ins-root" style="height: 1976px">
+<div class="ins-head">
+<a href="ORG-04-Mes-tournois.dc.html" class="mu-iconbtn mu-iconbtn--l mu-iconbtn--ghost" aria-label="Retour à mes tournois" style="color: var(--text)"><x-import component-from-global-scope="MatchUp.Icon" name="arrow-left" size="{{i24}}"></x-import></a>
+<div class="ins-head__txt"><h1 class="h3 ins-m0">Inscriptions</h1><span class="caption ins-muted">Padel Masters Lac 2 · sam. 24 – lun. 26 oct.</span></div>
+<x-import component-from-global-scope="MatchUp.IconButton" icon="download-simple" label="Exporter la liste des équipes" size="l" variant="ghost"></x-import>
+</div>
+
+<div class="ins-body">
+<section class="mu-card ins-sum" aria-label="Résumé des inscriptions">
+<x-import component-from-global-scope="MatchUp.ProgressBar" variant="segmented" value="{{twelve}}" max="{{sixteen}}" label="Équipes inscrites" value-label="12/16" hint="Encore 4 places · clôture mer. 21 oct. à 23h59"></x-import>
+<div class="ins-sum__stats">
+<div><span class="caption ins-muted">Encaissé</span><span class="num-m">1 440 DT</span></div>
+<div><span class="caption ins-muted">À valider</span><span class="num-m">{{pendingCount}}</span></div>
+<div><span class="caption ins-muted">Joueurs</span><span class="num-m">24</span></div>
+</div>
+</section>
+
+<x-import component-from-global-scope="MatchUp.SearchField" placeholder="Équipe ou joueur" label="Rechercher une équipe"></x-import>
+
+<div class="ins-chips" role="radiogroup" aria-label="Filtrer les équipes">
+<x-import component-from-global-scope="MatchUp.Chip" kind="choice" selected="{{yes}}" count="{{twelve}}">Toutes</x-import>
+<x-import component-from-global-scope="MatchUp.Chip" kind="choice" count="{{two}}">À valider</x-import>
+<x-import component-from-global-scope="MatchUp.Chip" kind="choice" count="{{ten}}">Validées</x-import>
+<x-import component-from-global-scope="MatchUp.Chip" kind="choice">Refusées</x-import>
+</div>
+
+<div class="ins-meta">
+<span class="label"><span class="num-s">12</span> équipes</span>
+<span style="display: flex; align-items: center">
+<x-import component-from-global-scope="MatchUp.Button" variant="tertiary" size="s" leading-icon="arrows-down-up">Les plus récentes</x-import>
+<x-import component-from-global-scope="MatchUp.IconButton" icon="check-square" label="Sélectionner plusieurs équipes" size="m"></x-import>
+</span>
+</div>
+
+<section class="ins-sec" aria-labelledby="ins-pend-t">
+<h2 id="ins-pend-t" class="overline ins-sec__title">À valider · {{pendingCount}}</h2>
+
+<sc-if value="{{sbOpen}}">
+<article class="mu-card ins-card" aria-labelledby="ins-sb">
+<div class="ins-team">
+<span class="ins-mono label">SB</span>
+<div class="ins-team__txt"><h3 id="ins-sb" class="label-l ins-m0">Smash Bros</h3><span class="caption ins-muted">Inscrite mer. 14 oct. · 18h20 · niveau moyen 4,0</span></div>
+<x-import component-from-global-scope="MatchUp.StatusBadge" status="paid" label="120 DT" size="s"></x-import>
+</div>
+<ul class="ins-players" aria-label="Joueurs de Smash Bros">
+<li><x-import component-from-global-scope="MatchUp.Avatar" name="Rami S." size="s"></x-import><span class="label" style="flex: 1">Rami S.</span><span class="caption ins-muted">Capitaine</span><x-import component-from-global-scope="MatchUp.LevelIndicator" level="{{l40}}" variant="badge" size="s"></x-import></li>
+<li><x-import component-from-global-scope="MatchUp.Avatar" name="Walid H." size="s"></x-import><span class="label" style="flex: 1">Walid H.</span><x-import component-from-global-scope="MatchUp.LevelIndicator" level="{{l40}}" variant="badge" size="s"></x-import></li>
+</ul>
+<div class="ins-btns">
+<x-import component-from-global-scope="MatchUp.Button" variant="secondary" on-click="{{askRefuseSb}}">Refuser</x-import>
+<x-import component-from-global-scope="MatchUp.Button" leading-icon="check" on-click="{{okSb}}">Valider</x-import>
+</div>
+</article>
+</sc-if>
+<sc-if value="{{sbDone}}">
+<div class="mu-card ins-done">
+<span class="ins-mono label">SB</span>
+<div class="ins-team__txt"><span class="label">Smash Bros</span><span class="caption ins-muted">{{sbNote}}</span></div>
+<x-import component-from-global-scope="MatchUp.StatusBadge" status="{{sbStatus}}" label="{{sbLabel}}" size="s"></x-import>
+<x-import component-from-global-scope="MatchUp.Button" variant="tertiary" size="s" on-click="{{undoSb}}">Annuler</x-import>
+</div>
+</sc-if>
+
+<sc-if value="{{lcOpen}}">
+<article class="mu-card ins-card ins-card--warn" aria-labelledby="ins-lc">
+<div class="ins-team">
+<span class="ins-mono label">LC</span>
+<div class="ins-team__txt"><h3 id="ins-lc" class="label-l ins-m0">Les Lions de Carthage</h3><span class="caption ins-muted">Inscrite jeu. 15 oct. · 21h05 · niveau moyen 5,3</span></div>
+<x-import component-from-global-scope="MatchUp.StatusBadge" status="paid" label="120 DT" size="s"></x-import>
+</div>
+<p class="ins-warn caption"><span><x-import component-from-global-scope="MatchUp.Icon" name="warning" weight="fill" size="{{i16}}"></x-import></span><span>Niveau moyen 5,3 : au-dessus de la fourchette du tournoi (3,5 – 5,0). Tu peux l’accepter quand même.</span></p>
+<ul class="ins-players" aria-label="Joueurs des Lions de Carthage">
+<li><x-import component-from-global-scope="MatchUp.Avatar" name="Youssef M." size="s"></x-import><span class="label" style="flex: 1">Youssef M.</span><span class="caption ins-muted">Capitaine</span><x-import component-from-global-scope="MatchUp.LevelIndicator" level="{{l55}}" variant="badge" size="s"></x-import></li>
+<li><x-import component-from-global-scope="MatchUp.Avatar" name="Hédi A." size="s"></x-import><span class="label" style="flex: 1">Hédi A.</span><x-import component-from-global-scope="MatchUp.LevelIndicator" level="{{l50}}" variant="badge" size="s"></x-import></li>
+</ul>
+<div class="ins-btns">
+<x-import component-from-global-scope="MatchUp.Button" variant="secondary" on-click="{{askRefuseLc}}">Refuser</x-import>
+<x-import component-from-global-scope="MatchUp.Button" leading-icon="check" on-click="{{okLc}}">Valider</x-import>
+</div>
+</article>
+</sc-if>
+<sc-if value="{{lcDone}}">
+<div class="mu-card ins-done">
+<span class="ins-mono label">LC</span>
+<div class="ins-team__txt"><span class="label">Les Lions de Carthage</span><span class="caption ins-muted">{{lcNote}}</span></div>
+<x-import component-from-global-scope="MatchUp.StatusBadge" status="{{lcStatus}}" label="{{lcLabel}}" size="s"></x-import>
+<x-import component-from-global-scope="MatchUp.Button" variant="tertiary" size="s" on-click="{{undoLc}}">Annuler</x-import>
+</div>
+</sc-if>
+<p class="caption ins-muted ins-m0" style="display: flex; gap: 6px; padding-top: 4px"><x-import component-from-global-scope="MatchUp.Icon" name="info" size="{{i16}}"></x-import><span>Une équipe refusée est remboursée en entier (120 DT) et prévenue avec ton message.</span></p>
+</section>
+
+<section class="ins-sec" aria-labelledby="ins-ok-t">
+<h2 id="ins-ok-t" class="overline ins-sec__title">Validées · 10</h2>
+<ul class="ins-list">
+<sc-for list="{{teams}}" as="t">
+<li>
+<span class="ins-mono label-s">{{t.mono}}</span>
+<span class="ins-row__txt"><span class="label ins-one">{{t.name}}</span><span class="caption ins-muted ins-one">{{t.players}}</span></span>
+<span class="ins-end"><x-import component-from-global-scope="MatchUp.LevelIndicator" level="{{t.level}}" variant="badge" size="s"></x-import><x-import component-from-global-scope="MatchUp.StatusBadge" status="paid" label="Payé" size="s"></x-import></span>
+</li>
+</sc-for>
+</ul>
+</section>
+</div>
+
+<sc-if value="{{dlgOpen}}">
+<x-import component-from-global-scope="MatchUp.Dialog" inline="{{yes}}" open="{{yes}}" placement="center" actions-layout="stack" tone="destructive" title="{{dlgTitle}}" description="Choisis un motif : il accompagne la notification envoyée au capitaine." consequence="{{dlgConsequence}}" consequence-icon="arrow-u-up-left" actions="{{dlgActions}}" on-close="{{closeDlg}}" safe-area="{{safe}}">
+<x-import component-from-global-scope="MatchUp.Radio.Group" aria-label="Motif du refus" value="{{reason}}" on-change="{{setReason}}">
+<x-import component-from-global-scope="MatchUp.Radio" value="niveau" label="Niveau hors fourchette"></x-import>
+<x-import component-from-global-scope="MatchUp.Radio" value="complet" label="Tournoi complet"></x-import>
+<x-import component-from-global-scope="MatchUp.Radio" value="autre" label="Autre raison"></x-import>
+</x-import>
+</x-import>
+</sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":1976}}'>
+class Component extends DCLogic {
+  state = { sb: null, lc: null, dlg: null, reason: 'niveau' };
+  renderVals() {
+    const h = React.createElement, M = MatchUp, s = this.state;
+    const T = (mono, name, players, level) => ({ mono, name, players, level });
+    const names = { sb: 'Smash Bros', lc: 'Les Lions de Carthage' };
+    const done = (v) => v === 'ok' ? { status: 'confirmed', label: 'Validée', note: 'Validée à l’instant · équipe prévenue' } : { status: 'refunded', label: 'Refusée', note: '120 DT en cours de remboursement' };
+    const sbD = done(s.sb), lcD = done(s.lc);
+    const pending = (s.sb ? 0 : 1) + (s.lc ? 0 : 1);
+    const close = () => this.setState({ dlg: null });
+    return {
+      yes: true, no: false, i16: 16, i20: 20, i24: 24, two: 2, ten: 10, twelve: 12, sixteen: 16, l40: 4, l50: 5, l55: 5.5,
+      safe: { bottom: 34 },
+      pendingCount: pending === 0 ? 'Aucune' : pending + (pending > 1 ? ' équipes' : ' équipe'),
+      sbOpen: !s.sb, sbDone: !!s.sb, sbStatus: sbD.status, sbLabel: sbD.label, sbNote: sbD.note,
+      lcOpen: !s.lc, lcDone: !!s.lc, lcStatus: lcD.status, lcLabel: lcD.label, lcNote: lcD.note,
+      okSb: () => this.setState({ sb: 'ok' }), okLc: () => this.setState({ lc: 'ok' }),
+      undoSb: () => this.setState({ sb: null }), undoLc: () => this.setState({ lc: null }),
+      askRefuseSb: () => this.setState({ dlg: 'sb', reason: 'complet' }), askRefuseLc: () => this.setState({ dlg: 'lc', reason: 'niveau' }),
+      dlgOpen: !!s.dlg, closeDlg: close,
+      dlgTitle: s.dlg ? 'Refuser ' + names[s.dlg] + ' ?' : '',
+      dlgConsequence: '120 DT remboursés en entier sur la carte du capitaine, sous 5 jours ouvrés.',
+      reason: s.reason, setReason: (v) => this.setState({ reason: v }),
+      dlgActions: h(React.Fragment, null,
+        h(M.Button, { variant: 'secondary', onClick: close }, 'Garder l’équipe'),
+        h(M.Button, { variant: 'destructive', onClick: () => this.setState({ [s.dlg]: 'ko', dlg: null }) }, 'Refuser et rembourser')),
+      teams: [
+        T('LF', 'Les Faucons', 'Yassine B. · Mariem K.', 3.8),
+        T('IN', 'Ines M. / Nour A.', 'Paire · inscrite sam. 3 oct.', 3.5),
+        T('SO', 'Skander T. / Omar D.', 'Paire · inscrite lun. 5 oct.', 3.5),
+        T('AS', 'Aziz H. / Salma G.', 'Paire · inscrite jeu. 8 oct.', 3.8),
+        T('BC', 'Bandeja Club', 'Aymen K. · Selim B.', 4.5),
+        T('GP', 'Gammarth Padel', 'Mehdi K. · Amel T.', 4),
+        T('VS', 'Vibora Sidi Bou', 'Sarra B. · Rim H.', 4.3),
+        T('DM', 'Duo Menzah', 'Yosra M. · Dorra K.', 3.8),
+        T('CS', 'Carthage Smash', 'Lina F. · Hamza R.', 4.5),
+        T('RS', 'Les Requins de Sousse', 'Fares N. · Bilel G.', 3.8)
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

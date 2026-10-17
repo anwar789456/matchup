@@ -1,0 +1,266 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Propriétaire · Aujourd’hui</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/matchup/tokens.css">
+<link rel="stylesheet" href="ds/matchup/components/bundle.css">
+<script src="ds/matchup/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+/* own:shared — identical in OWN-10…16 */
+body{margin:0}
+a{color:var(--link)}
+.own-head{position:relative; z-index:2; flex:none; display:flex; align-items:flex-end; gap:var(--space-1); padding:52px var(--space-2) var(--space-2) var(--space-4)}
+.own-head__txt{flex:1; min-width:0; display:flex; flex-direction:column; gap:2px}
+.own-role{display:flex; align-items:center; gap:6px; color:var(--text-secondary)}
+.own-role__icon{display:flex; color:var(--text)}
+.own-avatar{flex:none; width:48px; height:48px; display:grid; place-items:center; border-radius:var(--radius-full); text-decoration:none}
+.own-avatar:focus-visible{outline:none; box-shadow:var(--focus-ring)}
+.own-hot{position:absolute; display:block; border-radius:var(--radius-sm)}
+.own-hot:focus-visible{outline:none; box-shadow:var(--focus-ring)}
+.own-sec{display:flex; flex-direction:column; gap:var(--space-3)}
+.own-sec__head{display:flex; align-items:center; justify-content:space-between; gap:var(--space-3); min-height:32px}
+.own-sec__head .mu-btn{margin-inline-end:calc(-1 * var(--space-2))}
+.own-tag{flex:none; display:inline-flex; align-items:center; justify-content:center; min-width:28px; height:22px; padding:0 6px; box-sizing:border-box; border-radius:var(--radius-xs); background:var(--surface-muted); color:var(--text)}
+/* /own:shared */
+.o10-kpis{display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:var(--space-3)}
+.o10-kpis .mu-kpi{padding:var(--space-4)}
+.o10-now{display:flex; flex-direction:column; gap:var(--space-3); padding:var(--space-4); border-radius:var(--radius-md); background:var(--surface-inverse); color:var(--text-inverse)}
+.o10-now__row{display:flex; align-items:center; gap:var(--space-3)}
+.o10-now__court{flex:1; min-width:0; display:flex; flex-direction:column; gap:2px; padding:var(--space-3); border-radius:var(--radius-sm); background:color-mix(in srgb, var(--text-inverse) 8%, transparent)}
+.o10-now__muted{color:color-mix(in srgb, var(--text-inverse) 72%, transparent)}
+.o10-tl{margin:0; padding:0; list-style:none; display:flex; flex-direction:column}
+.o10-hour{display:grid; grid-template-columns:52px minmax(0,1fr); column-gap:var(--space-3); padding:var(--space-3) 0; border-top:1px solid var(--border)}
+.o10-hour:first-child{border-top:0; padding-top:0}
+.o10-hour__time{display:flex; flex-direction:column; gap:2px; padding-top:7px}
+.o10-hour__list{display:flex; flex-direction:column; gap:var(--space-2)}
+.o10-line{display:flex; align-items:center; gap:var(--space-2); min-height:36px; text-decoration:none; color:var(--text)}
+.o10-line__txt{flex:1; min-width:0; display:flex; flex-direction:column}
+.o10-line__name{white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+.o10-line--free .o10-tag-free{border:1px dashed var(--border-strong); background:transparent; color:var(--text-secondary)}
+.o10-line--past{color:var(--text-secondary)}
+.o10-nowmark{display:flex; align-items:center; gap:var(--space-2); color:var(--error-text); margin:var(--space-1) 0 var(--space-2) 0}
+.o10-nowmark::after{content:""; flex:1; height:2px; border-radius:2px; background:var(--error)}
+.o10-nowdot{width:8px; height:8px; border-radius:var(--radius-full); background:var(--error)}
+.o10-more{display:flex; align-items:center; gap:var(--space-3); min-height:48px; padding:0 var(--space-3); border-radius:var(--radius-sm); background:var(--surface-muted); text-decoration:none; color:var(--text)}
+.o10-review{display:flex; flex-direction:column; gap:var(--space-2); padding:var(--space-4) 0; border-top:1px solid var(--border)}
+.o10-review:first-of-type{border-top:0; padding-top:0}
+.o10-review__head{display:flex; align-items:center; gap:var(--space-3)}
+.o10-pay{display:flex; align-items:center; gap:var(--space-3); padding:var(--space-4); text-decoration:none; color:var(--text)}
+.o10-pay__icon{flex:none; width:40px; height:40px; border-radius:var(--radius-sm); display:grid; place-items:center; background:var(--success-soft); color:var(--success-text)}
+</style>
+</helmet>
+<div style="position: relative; width: 390px; height: 2304px; box-sizing: border-box; overflow: hidden; display: flex; flex-direction: column; background: var(--bg); color: var(--text); font-family: var(--font-sans)">
+
+<header class="own-head">
+<div class="own-head__txt">
+<span class="own-role caption"><span class="own-role__icon"><x-import component-from-global-scope="MatchUp.Icon" name="storefront" size="{{i16}}"></x-import></span>Espace propriétaire · Arena Five</span>
+<h1 class="h1" style="margin: 0">Aujourd’hui</h1>
+</div>
+<x-import component-from-global-scope="MatchUp.IconButton" icon="bell" label="Notifications, 2 non lues" size="l" variant="ghost" badge="{{n2}}"></x-import>
+<a href="PRF-06-Changer-de-role.dc.html" class="own-avatar" aria-label="Changer de rôle, Skander T., propriétaire"><x-import component-from-global-scope="MatchUp.Avatar" name="Skander T." size="s"></x-import></a>
+</header>
+
+<div style="display: flex; flex-direction: column; gap: 28px; padding: 4px 16px 150px 16px">
+
+<p class="body" style="margin: -12px 0 -4px 0; color: var(--text-secondary)">Ven. 16 oct. · <span class="num-s" style="color: var(--text)">18h00</span> · 6 matchs encore ce soir</p>
+
+<section aria-label="Chiffres du jour" class="o10-kpis">
+<x-import component-from-global-scope="MatchUp.KpiCard" label="Taux d’occupation" value="78 %" delta="{{d6}}" delta-format="points" period="vs ven. 9 oct."></x-import>
+<x-import component-from-global-scope="MatchUp.KpiCard" label="Revenus du jour" value="1 140" unit="DT" delta="{{d12}}" period="vs ven. 9 oct."></x-import>
+<x-import component-from-global-scope="MatchUp.KpiCard" label="Réservations" value="14" delta="{{d2}}" delta-format="number" period="vs ven. 9 oct."></x-import>
+<x-import component-from-global-scope="MatchUp.KpiCard" label="No-shows" value="1" delta="{{d0}}" delta-format="number" up-is-good="{{no}}" period="vs ven. 9 oct."></x-import>
+</section>
+
+<section aria-labelledby="o10-now-t" class="o10-now">
+<div style="display: flex; align-items: center; gap: 12px">
+<div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px">
+<h2 id="o10-now-t" class="caption o10-now__muted" style="margin: 0; display: flex; align-items: center; gap: 6px"><span class="o10-nowdot" aria-hidden="true"></span>Prochaine arrivée · 19h00</h2>
+<span class="label-l">Salma G. · Terrain 1</span>
+<span class="caption o10-now__muted">Partie publique · 8/10 joueurs</span>
+</div>
+<a href="OWN-20-Scanner.dc.html" class="mu-btn mu-btn--m" style="flex: none; background: var(--accent); color: var(--on-accent)"><span class="mu-btn__content"><x-import component-from-global-scope="MatchUp.Icon" name="qr-code" size="{{i20}}"></x-import><span class="mu-btn__label label">Scanner</span></span></a>
+</div>
+</section>
+
+<section aria-labelledby="o10-tl-t" class="own-sec">
+<div class="own-sec__head">
+<h2 id="o10-tl-t" class="h3" style="margin: 0">Programme du jour</h2>
+<a href="OWN-11-Planning.dc.html" class="mu-btn mu-btn--tertiary mu-btn--s"><span class="mu-btn__content"><span class="mu-btn__label label">Planning</span><x-import component-from-global-scope="MatchUp.Icon" name="caret-right" size="{{i16}}"></x-import></span></a>
+</div>
+<div class="mu-card" style="padding: 16px">
+<ul class="o10-tl">
+<li class="o10-hour">
+<div class="o10-hour__time"><span class="num-s" style="color: var(--text-secondary)">17h00</span></div>
+<div class="o10-hour__list">
+<a href="OWN-11-Planning.dc.html" class="o10-line o10-line--past">
+<span class="own-tag label-s">T1</span>
+<span class="o10-line__txt"><span class="label o10-line__name">Hamza R.</span><span class="caption">Privée · terminé</span></span>
+<x-import component-from-global-scope="MatchUp.StatusBadge" status="paid" label="Payé" size="s"></x-import>
+</a>
+<a href="OWN-24-No-show.dc.html" class="o10-line o10-line--past">
+<span class="own-tag label-s">T2</span>
+<span class="o10-line__txt"><span class="label o10-line__name">Rami S.</span><span class="caption">Personne au check-in</span></span>
+<x-import component-from-global-scope="MatchUp.StatusBadge" status="failed" label="No-show" size="s"></x-import>
+</a>
+</div>
+</li>
+<li class="o10-hour">
+<div class="o10-hour__time"><span class="num-s">18h00</span></div>
+<div class="o10-hour__list">
+<div class="o10-nowmark"><span class="o10-nowdot" aria-hidden="true"></span><span class="label-s">Maintenant</span></div>
+<a href="OWN-11-Planning.dc.html" class="o10-line">
+<span class="own-tag label-s">T1</span>
+<span class="o10-line__txt"><span class="label o10-line__name">Aziz H.</span><span class="caption" style="color: var(--text-secondary)">Privée · 10 joueurs</span></span>
+<x-import component-from-global-scope="MatchUp.StatusBadge" status="live" label="En cours" size="s"></x-import>
+</a>
+<a href="OWN-11-Planning.dc.html" class="o10-line">
+<span class="own-tag label-s">T2</span>
+<span class="o10-line__txt"><span class="label o10-line__name">Omar D.</span><span class="caption" style="color: var(--text-secondary)">Privée · 10 joueurs</span></span>
+<x-import component-from-global-scope="MatchUp.StatusBadge" status="live" label="En cours" size="s"></x-import>
+</a>
+<a href="OWN-11-Planning.dc.html" class="o10-line">
+<span class="own-tag label-s">T3</span>
+<span class="o10-line__txt"><span class="label o10-line__name" style="display: flex; align-items: center; gap: 4px"><x-import component-from-global-scope="MatchUp.Icon" name="lock-simple" size="{{i14}}"></x-import>Bloqué</span><span class="caption" style="color: var(--text-secondary)">Nettoyage du terrain indoor</span></span>
+</a>
+</div>
+</li>
+<li class="o10-hour">
+<div class="o10-hour__time"><span class="num-s">19h00</span></div>
+<div class="o10-hour__list">
+<a href="OWN-11-Planning.dc.html" class="o10-line">
+<span class="own-tag label-s">T1</span>
+<span class="o10-line__txt"><span class="label o10-line__name">Salma G.</span><span class="caption" style="color: var(--text-secondary)">Publique · 8/10 joueurs</span></span>
+<x-import component-from-global-scope="MatchUp.StatusBadge" status="confirmed" size="s"></x-import>
+</a>
+<a href="OWN-11-Planning.dc.html" class="o10-line">
+<span class="own-tag label-s">T3</span>
+<span class="o10-line__txt"><span class="label o10-line__name">Amel T.</span><span class="caption" style="color: var(--text-secondary)">Privée · 10 joueurs</span></span>
+<x-import component-from-global-scope="MatchUp.StatusBadge" status="confirmed" size="s"></x-import>
+</a>
+<a href="OWN-13-Bloquer-un-creneau.dc.html" class="o10-line o10-line--free">
+<span class="own-tag o10-tag-free label-s">T2</span>
+<span class="o10-line__txt"><span class="label o10-line__name" style="color: var(--text-secondary)">Libre</span><span class="caption" style="display: flex; align-items: center; gap: 4px; color: var(--text-secondary)"><span style="display: flex; color: var(--warning-text)"><x-import component-from-global-scope="MatchUp.Icon" name="lightning" weight="fill" size="{{i14}}"></x-import></span>150 DT · 15 DT /pers.</span></span>
+</a>
+</div>
+</li>
+<li class="o10-hour">
+<div class="o10-hour__time"><span class="num-s">20h00</span><span class="caption" style="color: var(--text-secondary)">– 23h00</span></div>
+<div class="o10-hour__list">
+<a href="OWN-11-Planning.dc.html" class="o10-more">
+<span style="flex: 1; min-width: 0; display: flex; flex-direction: column">
+<span class="label">8 réservations · 1 créneau libre</span>
+<span class="caption" style="display: flex; align-items: center; gap: 4px; color: var(--text-secondary)"><span style="display: flex; color: var(--warning-text)"><x-import component-from-global-scope="MatchUp.Icon" name="clock" weight="fill" size="{{i14}}"></x-import></span>2 paiements en attente</span>
+</span>
+<span style="display: flex; color: var(--text-secondary)"><x-import component-from-global-scope="MatchUp.Icon" name="caret-right" size="{{i20}}"></x-import></span>
+</a>
+</div>
+</li>
+</ul>
+</div>
+<p class="caption" style="margin: -4px 0 0 0; color: var(--text-secondary)">1 140 DT déjà encaissés · 900 DT en cours de paiement par les joueurs (dus 3 h avant chaque match).</p>
+</section>
+
+<section aria-label="Suggestion de l’IA">
+<x-import component-from-global-scope="MatchUp.AiSuggestionCard" context="Tarifs · Arena Five" title="Jeudi 14h–17h : 80 % de créneaux vides. Proposer −20 % ?" reason="sur tes 5 derniers jeudis, 36 créneaux sur 45 sont restés vides entre 14h et 17h." primary-action="{{apply}}" secondary-action="{{ignore}}">
+<div style="display: flex; flex-direction: column; gap: 8px">
+<div style="display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap">
+<span class="num-m" style="color: var(--text-secondary); text-decoration: line-through; text-decoration-thickness: 1.5px">120 DT</span>
+<span style="display: flex; align-self: center; color: var(--text-secondary)"><x-import component-from-global-scope="MatchUp.Icon" name="arrow-right" size="{{i16}}"></x-import></span>
+<span class="num-m" style="color: var(--text)">96 DT</span>
+<span class="caption" style="color: var(--text-secondary)">soit 9,600 DT /pers.</span>
+</div>
+<span class="caption" style="color: var(--text-secondary)">3 terrains · 9 créneaux · jeu. 22 oct. Les joueurs voient le prix barré. Rien ne change sans ta confirmation.</span>
+</div>
+</x-import>
+</section>
+
+<a href="OWN-25-Revenus.dc.html" class="mu-card mu-card--interactive o10-pay" aria-label="Revenus : prochain versement vers le lun. 19 oct.">
+<span class="o10-pay__icon"><x-import component-from-global-scope="MatchUp.Icon" name="bank" size="{{i20}}"></x-import></span>
+<span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px">
+<span class="label">Versement prévu vers le lun. 19 oct.</span>
+<span class="caption" style="color: var(--text-secondary)">Dernier : 1 250 DT · lun. 12 oct.</span>
+</span>
+<span style="display: flex; color: var(--text-secondary)"><x-import component-from-global-scope="MatchUp.Icon" name="caret-right" size="{{i20}}"></x-import></span>
+</a>
+
+<section aria-labelledby="o10-rev-t" class="own-sec">
+<div class="own-sec__head">
+<h2 id="o10-rev-t" class="h3" style="margin: 0">Derniers avis</h2>
+<a href="OWN-19-Avis.dc.html" class="mu-btn mu-btn--tertiary mu-btn--s"><span class="mu-btn__content"><span class="mu-btn__label label">Tous les avis</span><x-import component-from-global-scope="MatchUp.Icon" name="caret-right" size="{{i16}}"></x-import></span></a>
+</div>
+<div class="mu-card" style="padding: 16px; display: flex; flex-direction: column">
+<div style="display: flex; align-items: center; gap: 12px; padding-bottom: 16px; margin-bottom: 16px; border-bottom: 1px solid var(--border)">
+<span class="num-xl">4,7</span>
+<div style="display: flex; flex-direction: column; gap: 2px">
+<x-import component-from-global-scope="MatchUp.StarRating" read-only="{{yes}}" value="{{r47}}" size="{{s16}}" show-value="{{no}}"></x-import>
+<span class="caption" style="color: var(--text-secondary)">128 avis · 1 sans réponse</span>
+</div>
+</div>
+<article class="o10-review">
+<div class="o10-review__head">
+<x-import component-from-global-scope="MatchUp.Avatar" name="Omar D." size="s"></x-import>
+<div style="flex: 1; min-width: 0; display: flex; flex-direction: column">
+<span class="label">Omar D.</span>
+<span class="caption" style="color: var(--text-secondary)">Terrain 2 · jeu. 15 oct.</span>
+</div>
+<x-import component-from-global-scope="MatchUp.StarRating" read-only="{{yes}}" value="{{r3}}" size="{{s16}}" show-value="{{no}}"></x-import>
+</div>
+<p class="body" style="margin: 0">« Vestiaires à rafraîchir, l’eau chaude manquait après 21h. Le terrain reste top. »</p>
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 12px">
+<x-import component-from-global-scope="MatchUp.StatusBadge" status="pending" label="Sans réponse" size="s"></x-import>
+<a href="OWN-19-Avis.dc.html" class="mu-btn mu-btn--secondary mu-btn--s"><span class="mu-btn__content"><x-import component-from-global-scope="MatchUp.Icon" name="arrow-bend-up-left" size="{{i16}}"></x-import><span class="mu-btn__label label">Répondre</span></span></a>
+</div>
+</article>
+<article class="o10-review">
+<div class="o10-review__head">
+<x-import component-from-global-scope="MatchUp.Avatar" name="Mariem K." size="s"></x-import>
+<div style="flex: 1; min-width: 0; display: flex; flex-direction: column">
+<span class="label">Mariem K.</span>
+<span class="caption" style="color: var(--text-secondary)">Terrain 1 · mar. 13 oct.</span>
+</div>
+<x-import component-from-global-scope="MatchUp.StarRating" read-only="{{yes}}" value="{{r5}}" size="{{s16}}" show-value="{{no}}"></x-import>
+</div>
+<p class="body" style="margin: 0">« Gazon impeccable et éclairage parfait le soir. Accueil au top, on revient jeudi. »</p>
+<span class="caption" style="display: flex; align-items: center; gap: 6px; color: var(--text-secondary)"><span style="display: flex; color: var(--success-text)"><x-import component-from-global-scope="MatchUp.Icon" name="check-circle" weight="fill" size="{{i14}}"></x-import></span>Tu as répondu le mer. 14 oct.</span>
+</article>
+</div>
+</section>
+
+
+
+</div>
+
+<x-import component-from-global-scope="MatchUp.TabBar" items="{{tabs}}" value="jour" label="Navigation propriétaire" safe-area="{{sa}}" fab="{{yes}}" dc-props="{{tabStyle}}"></x-import>
+<a href="AI-07-Assistant-pro.dc.html" aria-label="Ouvrir l’assistant MatchUp" style="z-index: calc(var(--z-sticky) + 1); position: absolute; right: 16px; bottom: 114px; width: 56px; height: 56px; border-radius: var(--radius-full)"></a>
+<a href="OWN-16-Tarifs.dc.html" class="own-hot" aria-label="Appliquer : préparer la promo −20 % du jeudi dans les tarifs" style="left: 256px; top: 1536px; width: 101px; height: 40px; border-radius: var(--radius-md); z-index: 3"></a>
+<a href="AI-07-Assistant-pro.dc.html" class="own-hot" aria-label="Ouvrir l’assistant IA" style="right: 16px; bottom: 114px; width: 56px; height: 56px; border-radius: var(--radius-full); z-index: 5"></a>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":2304}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      yes: true, no: false, i14: 14, i16: 16, i20: 20, i24: 24, s16: 16, n2: 2, sa: 34,
+      d6: 6, d12: 12, d2: 2, d0: 0, r47: 4.7, r3: 3, r5: 5,
+      apply: { label: 'Appliquer' },
+      ignore: { label: 'Ignorer' },
+      tabs: [
+        { value: 'jour', label: 'Aujourd’hui', icon: 'house', href: 'OWN-10-Aujourdhui.dc.html' },
+        { value: 'planning', label: 'Planning', icon: 'calendar-blank', href: 'OWN-11-Planning.dc.html' },
+        { value: 'scan', label: 'Check-in', icon: 'qr-code', href: 'OWN-20-Scanner.dc.html' },
+        { value: 'resa', label: 'Réservations', icon: 'list-checks', href: 'OWN-14-Reservations.dc.html' },
+        { value: 'plus', label: 'Plus', icon: 'dots-three', href: 'OWN-15-Plus.dc.html' }
+      ],
+      tabStyle: { style: { position: 'absolute', left: 0, right: 0, bottom: 0 } }
+    };
+  }
+}
+</script>
+</body>
+</html>

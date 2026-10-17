@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Saisie du score · Court 2</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/matchup/tokens.css">
+<link rel="stylesheet" href="ds/matchup/components/bundle.css">
+<script src="ds/matchup/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0}
+a{color:var(--link)}
+.cs-root{position:relative; width:390px; height:844px; box-sizing:border-box; overflow:hidden; display:flex; flex-direction:column; background:var(--bg); color:var(--text); font-family:var(--font-sans)}
+.cs-head{flex:none; display:flex; align-items:center; gap:var(--space-1); padding:52px var(--space-4) var(--space-2) var(--space-1)}
+.cs-head__txt{flex:1; min-width:0; display:flex; flex-direction:column}
+.cs-muted{color:var(--text-secondary)}
+.cs-m0{margin:0}
+.cs-body{flex:1; min-height:0; display:flex; flex-direction:column; gap:var(--space-3); padding:var(--space-1) var(--space-4) var(--space-3) var(--space-4)}
+.cs-sets{display:grid; grid-template-columns:repeat(3, minmax(0, 1fr)); gap:var(--space-2)}
+.cs-set{display:flex; flex-direction:column; gap:2px; padding:var(--space-2) var(--space-3); border-radius:var(--radius-sm); background:var(--surface); box-shadow:inset 0 0 0 1px var(--border)}
+.cs-set.is-done{background:var(--surface-muted); box-shadow:none}
+.cs-set.is-current{box-shadow:inset 0 0 0 2px var(--primary)}
+.cs-set__val{display:flex; align-items:center; gap:4px}
+.cs-tiles{flex:1; min-height:0; display:grid; grid-template-columns:1fr 1fr; gap:var(--space-3); margin-top:var(--space-1)}
+.cs-tile.mu-btn{width:100%; height:100%; padding:var(--space-4) var(--space-3); border-radius:var(--radius-lg); white-space:normal; align-items:stretch; box-shadow:var(--elevation-2)}
+.cs-tile .mu-btn__content{width:100%; height:100%; align-items:stretch}
+.cs-tile .mu-btn__label{display:flex; flex-direction:column; align-items:stretch; justify-content:space-between; width:100%; height:100%; overflow:visible; text-align:start}
+.cs-tile__team{display:flex; flex-direction:column; gap:2px; min-height:56px}
+.cs-tile__players{opacity:0.72}
+.cs-tile__num{display:block; text-align:center; font-size:96px; line-height:96px}
+.cs-tile__plus{display:flex; align-items:center; justify-content:center; gap:var(--space-2); min-height:56px; border-radius:var(--radius-md); background:var(--surface); color:var(--text)}
+.cs-serve{display:inline-flex; align-items:center; gap:6px}
+.cs-serve::before{content:""; width:10px; height:10px; border-radius:var(--radius-full); background:var(--accent); box-shadow:0 0 0 1.5px var(--on-accent)}
+.cs-rule{margin:0; text-align:center; color:var(--text-secondary)}
+.cs-bar{flex:none; display:flex; flex-direction:column; gap:var(--space-2); padding:var(--space-2) var(--space-4) 34px var(--space-4); background:var(--surface); box-shadow:var(--elevation-2-up)}
+.cs-sync{display:flex; align-items:center; justify-content:center; gap:6px; min-height:24px; color:var(--text-secondary)}
+.cs-bar__btns{display:grid; grid-template-columns:1fr 1fr; gap:var(--space-3)}
+.cs-sheet{display:flex; flex-direction:column; gap:var(--space-4)}
+.cs-final{display:flex; flex-direction:column; gap:var(--space-1); padding:var(--space-4); border-radius:var(--radius-md); background:var(--surface-muted); text-align:center}
+.cs-final__sets{display:flex; justify-content:center; gap:var(--space-4)}
+.cs-next{margin:0; padding:0; list-style:none; display:flex; flex-direction:column; gap:var(--space-2)}
+.cs-next li{display:flex; align-items:flex-start; gap:var(--space-2)}
+.cs-next li > span:first-child{flex:none; display:flex; margin-top:1px; color:var(--success-text)}
+.cs-sheet__btns{display:flex; flex-direction:column; gap:var(--space-2)}
+</style>
+</helmet>
+<div class="cs-root">
+<div class="cs-head">
+<a href="ORG-12-Scores-en-direct.dc.html" class="mu-iconbtn mu-iconbtn--l mu-iconbtn--ghost" aria-label="Retour aux scores en direct" style="color: var(--text)"><x-import component-from-global-scope="MatchUp.Icon" name="arrow-left" size="{{i24}}"></x-import></a>
+<div class="cs-head__txt"><h1 class="h3 cs-m0">Court 2 · Poule B</h1><span class="caption cs-muted">Padel Masters Lac 2 · début 10h00</span></div>
+<x-import component-from-global-scope="MatchUp.StatusBadge" status="live"></x-import>
+</div>
+
+<div class="cs-body">
+<div class="cs-sets" role="list" aria-label="Sets">
+<sc-for list="{{setCells}}" as="c">
+<div class="cs-set {{c.cls}}" role="listitem">
+<span class="overline cs-muted">{{c.name}}</span>
+<span class="cs-set__val"><span class="num-m">{{c.score}}</span><span class="caption cs-muted">{{c.note}}</span></span>
+</div>
+</sc-for>
+</div>
+
+<div class="cs-tiles">
+<x-import component-from-global-scope="MatchUp.Button" class-name="cs-tile" size="xl" on-click="{{addA}}" disabled="{{done}}" aria-label="{{labelA}}">
+<span class="cs-tile__team"><span class="label-l">Les Faucons</span><span class="caption cs-tile__players">Yassine B. · Mariem K.</span></span>
+<span class="num-hero cs-tile__num">{{gA}}</span>
+<span class="cs-tile__plus label-l"><x-import component-from-global-scope="MatchUp.Icon" name="plus" size="{{i20}}"></x-import>1 jeu</span>
+</x-import>
+<x-import component-from-global-scope="MatchUp.Button" class-name="cs-tile" size="xl" on-click="{{addB}}" disabled="{{done}}" aria-label="{{labelB}}">
+<span class="cs-tile__team"><span class="label-l">Ines / Nour</span><span class="caption cs-tile__players">Ines M. · Nour A.</span></span>
+<span class="num-hero cs-tile__num">{{gB}}</span>
+<span class="cs-tile__plus label-l"><x-import component-from-global-scope="MatchUp.Icon" name="plus" size="{{i20}}"></x-import>1 jeu</span>
+</x-import>
+</div>
+
+<p class="cs-rule caption">Le set se clôt seul à 6 jeux avec 2 d’écart, ou à 7. Tu confirmes le score final avant l’envoi.</p>
+</div>
+
+<div class="cs-bar">
+<span class="cs-sync caption"><x-import component-from-global-scope="MatchUp.Icon" name="broadcast" size="{{i16}}"></x-import>{{syncText}}</span>
+<div class="cs-bar__btns">
+<x-import component-from-global-scope="MatchUp.Button" variant="secondary" size="xl" full-width="{{yes}}" leading-icon="arrow-counter-clockwise" aria-label="Annuler le dernier jeu" on-click="{{undo}}" disabled="{{noUndo}}">Annuler</x-import>
+<x-import component-from-global-scope="MatchUp.Button" variant="secondary" size="xl" full-width="{{yes}}" leading-icon="flag-checkered" on-click="{{openSheet}}">Terminer</x-import>
+</div>
+</div>
+
+<sc-if value="{{sheet}}">
+<x-import component-from-global-scope="MatchUp.BottomSheet" inline="{{yes}}" open="{{yes}}" height="auto" title="Confirmer le score final" on-close="{{closeSheet}}" safe-area="{{safe}}">
+<div class="cs-sheet">
+<sc-if value="{{done}}">
+<div class="cs-final">
+<span class="overline cs-muted">Vainqueur</span>
+<span class="h3">{{winner}}</span>
+<span class="cs-final__sets num-l">{{finalSets}}</span>
+</div>
+</sc-if>
+<sc-if value="{{notDone}}">
+<x-import component-from-global-scope="MatchUp.Banner" tone="warning" title="{{openSetTitle}}">Termine-le, ou indique l’abandon d’une équipe pour clore le match.</x-import>
+<x-import component-from-global-scope="MatchUp.Radio.Group" label="Que s’est-il passé ?" value="{{endReason}}" on-change="{{setEndReason}}">
+<x-import component-from-global-scope="MatchUp.Radio" value="ab-b" label="Abandon d’Ines / Nour" description="Les Faucons gagnent le match."></x-import>
+<x-import component-from-global-scope="MatchUp.Radio" value="ab-a" label="Abandon des Faucons" description="Ines / Nour gagnent le match."></x-import>
+</x-import>
+</sc-if>
+<ul class="cs-next">
+<li><span><x-import component-from-global-scope="MatchUp.Icon" name="check-circle" weight="fill" size="{{i16}}"></x-import></span><span class="body">Le classement de la poule B et le tableau se mettent à jour.</span></li>
+<li><span><x-import component-from-global-scope="MatchUp.Icon" name="check-circle" weight="fill" size="{{i16}}"></x-import></span><span class="body">Les 4 joueurs reçoivent le résultat et le récap IA.</span></li>
+<li><span><x-import component-from-global-scope="MatchUp.Icon" name="check-circle" weight="fill" size="{{i16}}"></x-import></span><span class="body">Tu peux encore corriger pendant 15 min.</span></li>
+</ul>
+<div class="cs-sheet__btns">
+<a href="ORG-12-Scores-en-direct.dc.html" class="mu-btn mu-btn--primary mu-btn--xl mu-btn--block"><span class="mu-btn__content"><x-import component-from-global-scope="MatchUp.Icon" name="check" size="{{i20}}"></x-import><span class="mu-btn__label label-l">Confirmer le score final</span></span></a>
+<x-import component-from-global-scope="MatchUp.Button" variant="tertiary" size="l" full-width="{{yes}}" on-click="{{fixScore}}">Corriger le score</x-import>
+</div>
+</div>
+</x-import>
+</sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  state = { sets: [[6, 4]], cur: [3, 2], hist: [{ sets: [[6, 4]], cur: [2, 2] }], done: false, sheet: false, endReason: 'ab-b' };
+  add(i) {
+    const s = this.state;
+    if (s.done) return;
+    const hist = s.hist.concat([{ sets: s.sets, cur: s.cur }]);
+    const cur = s.cur.slice(); cur[i] += 1;
+    const a = cur[i], b = cur[1 - i];
+    if ((a >= 6 && a - b >= 2) || a === 7) {
+      const sets = s.sets.concat([cur]);
+      const won = sets.filter((x) => (i === 0 ? x[0] > x[1] : x[1] > x[0])).length;
+      if (won === 2) { this.setState({ sets, cur: [0, 0], hist, done: true, sheet: true }); return; }
+      this.setState({ sets, cur: [0, 0], hist }); return;
+    }
+    this.setState({ cur, hist });
+  }
+  renderVals() {
+    const s = this.state;
+    const fmt = (x) => x[0] + '-' + x[1];
+    const setNo = s.sets.length + (s.done ? 0 : 1);
+    const cells = [0, 1, 2].map((k) => {
+      if (k < s.sets.length) {
+        const x = s.sets[k];
+        return { name: 'Set ' + (k + 1), score: fmt(x), note: x[0] > x[1] ? 'Faucons' : 'Ines / Nour', cls: 'is-done' };
+      }
+      if (k === s.sets.length && !s.done) return { name: 'Set ' + (k + 1), score: fmt(s.cur), note: 'en cours', cls: 'is-current' };
+      return { name: 'Set ' + (k + 1), score: '–', note: k === 2 ? 'si 1-1' : '', cls: '' };
+    });
+    const winsA = s.sets.filter((x) => x[0] > x[1]).length;
+    const last = s.hist.length ? s.hist[s.hist.length - 1] : null;
+    return {
+      yes: true, no: false, i16: 16, i20: 20, i24: 24, safe: { bottom: 34 },
+      setCells: cells,
+      gA: s.cur[0], gB: s.cur[1],
+      labelA: 'Ajouter un jeu aux Faucons, ' + s.cur[0] + ' jeux dans le set ' + setNo,
+      labelB: 'Ajouter un jeu à Ines et Nour, ' + s.cur[1] + ' jeux dans le set ' + setNo,
+      addA: () => this.add(0), addB: () => this.add(1),
+      done: s.done, notDone: !s.done,
+      noUndo: !last,
+      undo: () => { if (!last) return; this.setState({ sets: last.sets, cur: last.cur, hist: s.hist.slice(0, -1), done: false }); },
+      syncText: s.hist.length > 1 ? 'Envoyé en direct aux joueurs · à l’instant' : 'Envoyé en direct aux joueurs · il y a 12 s',
+      sheet: s.sheet,
+      openSheet: () => this.setState({ sheet: true }),
+      closeSheet: () => this.setState({ sheet: false }),
+      fixScore: () => {
+        if (s.done && last) this.setState({ sets: last.sets, cur: last.cur, hist: s.hist.slice(0, -1), done: false, sheet: false });
+        else this.setState({ sheet: false });
+      },
+      winner: winsA === 2 ? 'Les Faucons' : 'Ines M. / Nour A.',
+      finalSets: s.sets.map(fmt).join('  ·  '),
+      openSetTitle: 'Le set ' + setNo + ' n’est pas terminé (' + fmt(s.cur) + ')',
+      endReason: s.endReason, setEndReason: (v) => this.setState({ endReason: v })
+    };
+  }
+}
+</script>
+</body>
+</html>

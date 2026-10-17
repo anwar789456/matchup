@@ -1,0 +1,263 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Préférences de notifications</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/matchup/tokens.css">
+<link rel="stylesheet" href="ds/matchup/components/bundle.css">
+<script src="ds/matchup/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+/* set:shared — identical in SET-01…07 */
+body{margin:0}
+a{color:var(--link)}
+.set-body{flex:1; min-height:0; overflow:auto; display:flex; flex-direction:column; gap:var(--space-5); padding:var(--space-2) var(--space-4) 34px var(--space-4); box-sizing:border-box}
+.set-section{display:flex; flex-direction:column; gap:var(--space-2); margin:0}
+.set-section__title{margin:0; padding-inline:var(--space-4); color:var(--text-secondary)}
+.set-group{margin:0; padding:0; list-style:none; background:var(--surface); border-radius:var(--radius-md); box-shadow:var(--elevation-1); overflow:hidden}
+.set-group > li{position:relative}
+.set-group > li + li::before{content:""; position:absolute; top:0; inset-inline-start:64px; inset-inline-end:0; height:1px; background:var(--border); z-index:1}
+.set-row{position:relative; display:flex; align-items:center; gap:var(--space-3); min-height:56px; padding:var(--space-2) var(--space-4); box-sizing:border-box; color:var(--text); text-decoration:none; -webkit-tap-highlight-color:transparent; transition:background var(--duration-fast) var(--ease-enter)}
+a.set-row[href]{cursor:pointer}
+a.set-row[href]:hover{background:var(--surface-muted)}
+a.set-row[href]:active{background:var(--surface-muted)}
+a.set-row:focus-visible{outline:none; box-shadow:inset 0 0 0 2px var(--focus)}
+.set-row__icon{flex:none; width:36px; height:36px; border-radius:var(--radius-sm); background:var(--surface-muted); color:var(--text); display:grid; place-items:center}
+.set-row__text{flex:1 1 auto; min-width:0; display:flex; flex-direction:column; gap:2px}
+.set-row__desc{color:var(--text-secondary)}
+.set-row__value{flex:none; max-width:46%; color:var(--text-secondary); text-align:end; white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+.set-row__chev{flex:none; display:flex; color:var(--text-secondary); margin-inline-end:calc(-1 * var(--space-1))}
+.set-row--danger{color:var(--error-text)}
+.set-row--danger .set-row__icon{background:var(--error-soft); color:var(--error-text)}
+.set-row--control > .mu-switch{flex:1 1 auto; min-width:0}
+.set-card{background:var(--surface); border-radius:var(--radius-md); box-shadow:var(--elevation-1); padding:var(--space-4); display:flex; flex-direction:column; gap:var(--space-5)}
+.set-note{margin:0; padding-inline:var(--space-4); color:var(--text-secondary)}
+.set-body--bar{padding-bottom:var(--space-6)}
+.set-bar{position:relative; z-index:2; display:flex; flex-direction:column; gap:var(--space-3); padding:12px var(--space-4) 34px var(--space-4); background:var(--surface); box-shadow:var(--elevation-2-up)}
+.set-back{position:absolute; left:4px; top:48px; width:48px; height:48px; border-radius:var(--radius-full); z-index:2}
+.set-back:focus-visible{outline:none; box-shadow:var(--focus-ring)}
+/* /set:shared */
+.set-radios .mu-sel-group__items{gap:0}
+.set-radios .mu-radio{display:flex; align-items:center; min-height:56px; padding:var(--space-2) var(--space-4); box-sizing:border-box}
+.set-radios .mu-sel-group__items > :not(:first-child) > .mu-radio::before, .set-radios .mu-sel-group__items > .mu-radio:not(:first-child)::before{content:""; position:absolute; top:0; inset-inline-start:48px; inset-inline-end:0; height:1px; background:var(--border)}
+.set-radios .mu-radio:hover{background:var(--surface-muted)}
+/* not:prefs — the categories × channels matrix and the pause card */
+.not-pause{gap:var(--space-4)}
+.not-pause__head{display:flex; align-items:flex-start; gap:var(--space-3)}
+.not-pause__btns{display:grid; grid-template-columns:repeat(3, 1fr); gap:var(--space-2)}
+.not-pause__on{display:flex; align-items:center; gap:var(--space-2); padding:var(--space-2) var(--space-3); border-radius:var(--radius-sm); background:var(--warning-soft); color:var(--warning-text)}
+.not-cols{flex:none; display:flex}
+.not-col{width:44px; display:flex; flex-direction:column; align-items:center; gap:2px; color:var(--text-secondary); text-align:center}
+.not-cell{width:44px; min-height:44px; display:grid; place-items:center}
+.not-head{display:flex; align-items:flex-end; gap:var(--space-3); padding:var(--space-3) var(--space-3) var(--space-2) var(--space-4); background:var(--surface-muted)}
+.not-head__label{flex:1 1 auto; color:var(--text-secondary)}
+.set-row.not-mrow{padding-inline-end:var(--space-3); align-items:center}
+.not-mrow .set-row__desc{display:block}
+.not-lock{display:inline-flex; align-items:center; gap:4px; color:var(--text)}
+.not-cell--locked{position:relative}
+.not-cell__lock{position:absolute; left:9px; top:50%; margin-top:-6px; width:12px; height:12px; display:flex; color:var(--text-secondary); pointer-events:none}
+.not-locknote{display:flex; align-items:flex-start; gap:var(--space-2)}
+.not-locknote > :first-child{flex:none; display:flex; margin-top:0}
+</style>
+</helmet>
+<div style="position: relative; width: 390px; height: 1492px; box-sizing: border-box; overflow: hidden; display: flex; flex-direction: column; background: var(--bg); color: var(--text); font-family: var(--font-sans)">
+<x-import component-from-global-scope="MatchUp.TopAppBar" title="Notifications" on-back="{{noop}}" inset="{{inset}}"></x-import>
+<a href="SET-01-Parametres.dc.html" class="set-back" aria-label="Retour aux paramètres"></a>
+<div class="set-body">
+
+<section class="set-section" aria-labelledby="not-s-pause">
+<h2 id="not-s-pause" class="set-section__title overline">Pause</h2>
+<div class="set-card not-pause">
+<div class="not-pause__head">
+<span class="set-row__icon"><x-import component-from-global-scope="MatchUp.Icon" name="pause" size="{{i20}}"></x-import></span>
+<span class="set-row__text"><span class="label">Tout mettre en pause</span><span class="set-row__desc body">Plus de push ni d’email pendant la pause. Les alertes de paiement et de sécurité restent dans l’app.</span></span>
+</div>
+<sc-if value="{{notPaused}}">
+<div class="not-pause__btns" role="group" aria-label="Durée de la pause">
+<button type="button" class="mu-btn mu-btn--secondary mu-btn--m mu-btn--block" onclick="{{pause1}}"><span class="mu-btn__content"><span class="mu-btn__label label">1 h</span></span></button>
+<button type="button" class="mu-btn mu-btn--secondary mu-btn--m mu-btn--block" onclick="{{pause8}}"><span class="mu-btn__content"><span class="mu-btn__label label">8 h</span></span></button>
+<button type="button" class="mu-btn mu-btn--secondary mu-btn--m mu-btn--block" onclick="{{pause24}}"><span class="mu-btn__content"><span class="mu-btn__label label">24 h</span></span></button>
+</div>
+</sc-if>
+<sc-if value="{{paused}}">
+<p class="not-pause__on label" role="status" style="margin: 0"><x-import component-from-global-scope="MatchUp.Icon" name="bell-slash" size="{{i20}}"></x-import>{{pauseLabel}}</p>
+<button type="button" class="mu-btn mu-btn--secondary mu-btn--m mu-btn--block" onclick="{{resume}}"><span class="mu-btn__content"><x-import component-from-global-scope="MatchUp.Icon" name="bell-ringing" size="{{i20}}"></x-import><span class="mu-btn__label label">Reprendre maintenant</span></span></button>
+</sc-if>
+</div>
+</section>
+
+<section class="set-section" aria-labelledby="not-s-cat">
+<h2 id="not-s-cat" class="set-section__title overline">Par catégorie</h2>
+<ul class="set-group">
+<li class="not-head" aria-hidden="true">
+<span class="not-head__label label-s">Tu choisis où chaque catégorie te prévient.</span>
+<span class="not-cols">
+<span class="not-col"><x-import component-from-global-scope="MatchUp.Icon" name="bell" size="{{i16}}"></x-import><span class="label-s">In-app</span></span>
+<span class="not-col"><x-import component-from-global-scope="MatchUp.Icon" name="device-mobile" size="{{i16}}"></x-import><span class="label-s">Push</span></span>
+<span class="not-col"><x-import component-from-global-scope="MatchUp.Icon" name="envelope-simple" size="{{i16}}"></x-import><span class="label-s">Email</span></span>
+</span>
+</li>
+
+<li><div class="set-row not-mrow">
+<span class="set-row__icon"><x-import component-from-global-scope="MatchUp.Icon" name="sport-whistle" size="{{i20}}"></x-import></span>
+<span class="set-row__text"><span class="label">Matchs</span><span class="set-row__desc caption">Invitations, places libérées, rappels</span></span>
+<span class="not-cols">
+<span class="not-cell"><x-import component-from-global-scope="MatchUp.Switch" size="s" aria-label="Matchs dans l’app" checked="{{p.matchs.app}}" on-change="{{set.matchs.app}}"></x-import></span>
+<span class="not-cell"><x-import component-from-global-scope="MatchUp.Switch" size="s" aria-label="Matchs en push" checked="{{p.matchs.push}}" on-change="{{set.matchs.push}}"></x-import></span>
+<span class="not-cell"><x-import component-from-global-scope="MatchUp.Switch" size="s" aria-label="Matchs par email" checked="{{p.matchs.mail}}" on-change="{{set.matchs.mail}}"></x-import></span>
+</span>
+</div></li>
+
+<li><div class="set-row not-mrow">
+<span class="set-row__icon"><x-import component-from-global-scope="MatchUp.Icon" name="calendar-check" size="{{i20}}"></x-import></span>
+<span class="set-row__text"><span class="label">Réservations</span><span class="set-row__desc caption">Confirmations, annulations, check-in</span></span>
+<span class="not-cols">
+<span class="not-cell"><x-import component-from-global-scope="MatchUp.Switch" size="s" aria-label="Réservations dans l’app" checked="{{p.resa.app}}" on-change="{{set.resa.app}}"></x-import></span>
+<span class="not-cell"><x-import component-from-global-scope="MatchUp.Switch" size="s" aria-label="Réservations en push" checked="{{p.resa.push}}" on-change="{{set.resa.push}}"></x-import></span>
+<span class="not-cell"><x-import component-from-global-scope="MatchUp.Switch" size="s" aria-label="Réservations par email" checked="{{p.resa.mail}}" on-change="{{set.resa.mail}}"></x-import></span>
+</span>
+</div></li>
+
+<li><div class="set-row not-mrow">
+<span class="set-row__icon"><x-import component-from-global-scope="MatchUp.Icon" name="credit-card" size="{{i20}}"></x-import></span>
+<span class="set-row__text"><span class="label">Paiements</span><span class="set-row__desc caption">Parts à payer, reçus, remboursements</span><span class="not-lock label-s"><x-import component-from-global-scope="MatchUp.Icon" name="lock-simple" size="{{i14}}"></x-import>Toujours dans l’app</span></span>
+<span class="not-cols">
+<span class="not-cell not-cell--locked"><x-import component-from-global-scope="MatchUp.Switch" size="s" aria-label="Paiements dans l’app, toujours activé : obligatoire pour ton argent" checked="{{yes}}" disabled="{{yes}}"></x-import><span class="not-cell__lock" aria-hidden="true"><x-import component-from-global-scope="MatchUp.Icon" name="lock-simple" size="{{i12}}"></x-import></span></span>
+<span class="not-cell"><x-import component-from-global-scope="MatchUp.Switch" size="s" aria-label="Paiements en push" checked="{{p.pay.push}}" on-change="{{set.pay.push}}"></x-import></span>
+<span class="not-cell"><x-import component-from-global-scope="MatchUp.Switch" size="s" aria-label="Paiements par email" checked="{{p.pay.mail}}" on-change="{{set.pay.mail}}"></x-import></span>
+</span>
+</div></li>
+
+<li><div class="set-row not-mrow">
+<span class="set-row__icon"><x-import component-from-global-scope="MatchUp.Icon" name="sport-trophy" size="{{i20}}"></x-import></span>
+<span class="set-row__text"><span class="label">Tournois</span><span class="set-row__desc caption">Inscriptions, tableaux, résultats</span></span>
+<span class="not-cols">
+<span class="not-cell"><x-import component-from-global-scope="MatchUp.Switch" size="s" aria-label="Tournois dans l’app" checked="{{p.tour.app}}" on-change="{{set.tour.app}}"></x-import></span>
+<span class="not-cell"><x-import component-from-global-scope="MatchUp.Switch" size="s" aria-label="Tournois en push" checked="{{p.tour.push}}" on-change="{{set.tour.push}}"></x-import></span>
+<span class="not-cell"><x-import component-from-global-scope="MatchUp.Switch" size="s" aria-label="Tournois par email" checked="{{p.tour.mail}}" on-change="{{set.tour.mail}}"></x-import></span>
+</span>
+</div></li>
+
+<li><div class="set-row not-mrow">
+<span class="set-row__icon"><x-import component-from-global-scope="MatchUp.Icon" name="barbell" size="{{i20}}"></x-import></span>
+<span class="set-row__text"><span class="label">Entraînement</span><span class="set-row__desc caption">Plans IA, retours du coach, séances</span></span>
+<span class="not-cols">
+<span class="not-cell"><x-import component-from-global-scope="MatchUp.Switch" size="s" aria-label="Entraînement dans l’app" checked="{{p.train.app}}" on-change="{{set.train.app}}"></x-import></span>
+<span class="not-cell"><x-import component-from-global-scope="MatchUp.Switch" size="s" aria-label="Entraînement en push" checked="{{p.train.push}}" on-change="{{set.train.push}}"></x-import></span>
+<span class="not-cell"><x-import component-from-global-scope="MatchUp.Switch" size="s" aria-label="Entraînement par email" checked="{{p.train.mail}}" on-change="{{set.train.mail}}"></x-import></span>
+</span>
+</div></li>
+
+<li><div class="set-row not-mrow">
+<span class="set-row__icon"><x-import component-from-global-scope="MatchUp.Icon" name="users-three" size="{{i20}}"></x-import></span>
+<span class="set-row__text"><span class="label">Communauté</span><span class="set-row__desc caption">Réponses, mentions, modération</span></span>
+<span class="not-cols">
+<span class="not-cell"><x-import component-from-global-scope="MatchUp.Switch" size="s" aria-label="Communauté dans l’app" checked="{{p.comm.app}}" on-change="{{set.comm.app}}"></x-import></span>
+<span class="not-cell"><x-import component-from-global-scope="MatchUp.Switch" size="s" aria-label="Communauté en push" checked="{{p.comm.push}}" on-change="{{set.comm.push}}"></x-import></span>
+<span class="not-cell"><x-import component-from-global-scope="MatchUp.Switch" size="s" aria-label="Communauté par email" checked="{{p.comm.mail}}" on-change="{{set.comm.mail}}"></x-import></span>
+</span>
+</div></li>
+
+<li><div class="set-row not-mrow">
+<span class="set-row__icon"><x-import component-from-global-scope="MatchUp.Icon" name="shield-check" size="{{i20}}"></x-import></span>
+<span class="set-row__text"><span class="label">Sécurité</span><span class="set-row__desc caption">Connexions, mot de passe, appareils</span><span class="not-lock label-s"><x-import component-from-global-scope="MatchUp.Icon" name="lock-simple" size="{{i14}}"></x-import>Toujours dans l’app</span></span>
+<span class="not-cols">
+<span class="not-cell not-cell--locked"><x-import component-from-global-scope="MatchUp.Switch" size="s" aria-label="Sécurité dans l’app, toujours activé : obligatoire pour ton compte" checked="{{yes}}" disabled="{{yes}}"></x-import><span class="not-cell__lock" aria-hidden="true"><x-import component-from-global-scope="MatchUp.Icon" name="lock-simple" size="{{i12}}"></x-import></span></span>
+<span class="not-cell"><x-import component-from-global-scope="MatchUp.Switch" size="s" aria-label="Sécurité en push" checked="{{p.secu.push}}" on-change="{{set.secu.push}}"></x-import></span>
+<span class="not-cell"><x-import component-from-global-scope="MatchUp.Switch" size="s" aria-label="Sécurité par email" checked="{{p.secu.mail}}" on-change="{{set.secu.mail}}"></x-import></span>
+</span>
+</div></li>
+</ul>
+<p class="set-note caption not-locknote"><x-import component-from-global-scope="MatchUp.Icon" name="lock-simple" size="{{i16}}"></x-import><span>Toujours activé : obligatoire pour ton argent et ton compte. Tu peux quand même couper le push et l’email.</span></p>
+</section>
+
+<section class="set-section" aria-labelledby="not-s-calme">
+<h2 id="not-s-calme" class="set-section__title overline">Heures calmes</h2>
+<ul class="set-group">
+<li><div class="set-row set-row--control">
+<span class="set-row__icon"><x-import component-from-global-scope="MatchUp.Icon" name="moon" size="{{i20}}"></x-import></span>
+<x-import component-from-global-scope="MatchUp.Switch" label-position="start" label="Heures calmes" description="Aucun push la nuit. Tout t’attend dans l’app au réveil." checked="{{quiet}}" on-change="{{setQuiet}}"></x-import>
+</div></li>
+<sc-if value="{{quiet}}">
+<li><a class="set-row">
+<span class="set-row__icon"><x-import component-from-global-scope="MatchUp.Icon" name="moon-stars" size="{{i20}}"></x-import></span>
+<span class="set-row__text"><span class="label">Début</span></span>
+<span class="set-row__value body">23h00</span>
+<span class="set-row__chev"><x-import component-from-global-scope="MatchUp.Icon" name="caret-right" size="{{i20}}"></x-import></span>
+</a></li>
+<li><a class="set-row">
+<span class="set-row__icon"><x-import component-from-global-scope="MatchUp.Icon" name="sun" size="{{i20}}"></x-import></span>
+<span class="set-row__text"><span class="label">Fin</span></span>
+<span class="set-row__value body">08h00</span>
+<span class="set-row__chev"><x-import component-from-global-scope="MatchUp.Icon" name="caret-right" size="{{i20}}"></x-import></span>
+</a></li>
+</sc-if>
+</ul>
+<sc-if value="{{quiet}}">
+<p class="set-note caption">Tous les jours, heure de Tunis. Seul le push se tait : l’app et l’email ne changent pas.</p>
+</sc-if>
+</section>
+
+<section class="set-section" aria-labelledby="not-s-recap">
+<h2 id="not-s-recap" class="set-section__title overline">Récap par email</h2>
+<div class="set-group set-radios">
+<x-import component-from-global-scope="MatchUp.Radio.Group" aria-labelledby="not-s-recap" name="recap" value="{{digest}}" on-change="{{setDigest}}">
+<x-import component-from-global-scope="MatchUp.Radio" value="hebdo" label="Hebdo · dimanche 10h00" description="Tes matchs de la semaine et des parties près de chez toi."></x-import>
+<x-import component-from-global-scope="MatchUp.Radio" value="jamais" label="Jamais" description="Les reçus et les alertes de sécurité arrivent quand même."></x-import>
+</x-import>
+</div>
+</section>
+
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":1492}}'>
+class Component extends DCLogic {
+  state = {
+    prefs: {
+      matchs: { app: true, push: true, mail: false },
+      resa: { app: true, push: true, mail: true },
+      pay: { app: true, push: true, mail: true },
+      tour: { app: true, push: true, mail: false },
+      train: { app: true, push: false, mail: false },
+      comm: { app: true, push: false, mail: false },
+      secu: { app: true, push: true, mail: true }
+    },
+    pause: null,
+    quiet: true,
+    digest: 'hebdo'
+  };
+  renderVals() {
+    const prefs = this.state.prefs;
+    const set = {};
+    Object.keys(prefs).forEach((cat) => {
+      set[cat] = {};
+      ['app', 'push', 'mail'].forEach((ch) => {
+        set[cat][ch] = (v) => this.setState({ prefs: { ...this.state.prefs, [cat]: { ...this.state.prefs[cat], [ch]: v } } });
+      });
+    });
+    const until = { 1: 'jusqu’à 19h00', 8: 'jusqu’à 02h00', 24: 'jusqu’à sam. 17 oct. · 18h00' };
+    return {
+      yes: true, i12: 12, i14: 14, i16: 16, i20: 20, inset: 44, noop: () => {},
+      p: prefs, set,
+      paused: !!this.state.pause,
+      notPaused: !this.state.pause,
+      pauseLabel: this.state.pause ? 'En pause ' + until[this.state.pause] : '',
+      pause1: () => this.setState({ pause: 1 }),
+      pause8: () => this.setState({ pause: 8 }),
+      pause24: () => this.setState({ pause: 24 }),
+      resume: () => this.setState({ pause: null }),
+      quiet: this.state.quiet,
+      setQuiet: (v) => this.setState({ quiet: v }),
+      digest: this.state.digest,
+      setDigest: (v) => this.setState({ digest: v })
+    };
+  }
+}
+</script>
+</body>
+</html>

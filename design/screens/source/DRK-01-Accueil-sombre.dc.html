@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Accueil · sombre</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/matchup/tokens.css">
+<link rel="stylesheet" href="ds/matchup/components/bundle.css">
+<script src="ds/matchup/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0}
+a{color:var(--link)}
+.hom-rail{display:flex; gap:12px; overflow-x:auto; scroll-snap-type:x mandatory; scroll-padding-inline:16px; padding:4px 16px 8px 16px; scrollbar-width:none}
+.hom-rail::-webkit-scrollbar{display:none}
+.hom-rail > *{scroll-snap-align:start}
+.hom-row{display:flex; align-items:center; gap:12px; text-decoration:none; color:var(--text)}
+/* Dark-mode fixes (DRK-01). Scoped to [data-theme="dark"]: safe to paste into HOM-01 or into the design system, light mode unchanged. */
+/* D1 BookingCard QR button: the inverse icon button becomes a white disc, the brightest spot on the page. Light = ink disc = primary, so dark = primary (Volt fill, ink icon). */
+[data-theme="dark"] .mu-booking-card .mu-iconbtn--inverse{background:var(--primary); color:var(--on-primary)}
+/* D2 « Demande à MatchUp » sparkle: ai-500 on night-800 is only 3.6:1; use the dark AI text tone. */
+[data-theme="dark"] .hom-ask__ico{color:var(--ai-text)}
+/* D3 Quick-action icon tile: surface-muted (night-700) on a night-800 card is 1.1:1, the tile vanishes. Give it a hairline. */
+[data-theme="dark"] .hom-tile-ico{box-shadow:inset 0 0 0 1px var(--border)}
+/* D4 Imagery: full-saturation sport art glares on night surfaces. Dim slightly (white type stays well above 4.5:1). */
+[data-theme="dark"] .mu-venue-card__thumb, [data-theme="dark"] .mu-tournament-card__poster{filter:brightness(0.86) saturate(0.9)}
+</style>
+</helmet>
+<div data-theme="dark" style="position: relative; width: 390px; height: 2384px; box-sizing: border-box; overflow: hidden; background: var(--bg); color: var(--text); font-family: var(--font-sans)">
+<x-import component-from-global-scope="MatchUp.TopAppBar" variant="home" greeting="Salut Yassine" location="La Marsa" notifications="{{n3}}" user="{{me}}" inset="{{inset}}"></x-import>
+<a href="NOT-01-Centre-de-notifications.dc.html" aria-label="Notifications, 3 non lues" style="position: absolute; left: 288px; top: 48px; width: 48px; height: 48px; border-radius: var(--radius-full)"></a>
+<a href="PRF-05-Menu-du-compte.dc.html" aria-label="Ouvrir le menu du compte" style="position: absolute; left: 338px; top: 48px; width: 48px; height: 48px; border-radius: var(--radius-full)"></a>
+
+<div style="display: flex; flex-direction: column; gap: 28px; padding: 4px 0 136px 0">
+<div style="padding: 0 16px">
+<button type="button" aria-label="Demande à MatchUp, l’assistant IA" style="appearance: none; border: 0; margin: 0; width: 100%; font: inherit; text-align: start; cursor: pointer; display: flex; align-items: center; gap: 10px; min-height: 48px; padding: 0 16px; border-radius: var(--radius-full); background: var(--surface); box-shadow: inset 0 0 0 1.5px var(--ai-500), var(--elevation-1); color: var(--text-secondary)">
+<span class="hom-ask__ico" style="display: flex; color: var(--ai-500)"><x-import component-from-global-scope="MatchUp.Icon" name="sparkle" weight="fill" size="{{i20}}"></x-import></span>
+<span class="body-l" style="flex: 1">Demande à MatchUp…</span>
+</button>
+</div>
+
+<section aria-labelledby="hom-foryou" style="display: flex; flex-direction: column; gap: 8px">
+<div style="display: flex; align-items: center; justify-content: space-between; padding: 0 4px 0 16px">
+<div style="display: flex; align-items: center; gap: 8px">
+<h2 id="hom-foryou" class="h3" style="margin: 0">Parties pour toi</h2>
+<x-import component-from-global-scope="MatchUp.AiLabel" size="s"></x-import>
+</div>
+<a href="EXP-01-Explorer-parties.dc.html" class="mu-btn mu-btn--tertiary mu-btn--s"><span class="mu-btn__content"><span class="mu-btn__label label">Voir tout</span></span></a>
+</div>
+<p class="caption" style="margin: -4px 16px 0 16px; color: var(--text-secondary)">Choisies selon ton niveau, tes zones et tes soirs libres.</p>
+<div class="hom-rail">
+<div style="flex: none; width: 318px; display: flex"><x-import component-from-global-scope="MatchUp.GameCard" dc-props="{{g1}}"></x-import></div>
+<div style="flex: none; width: 318px; display: flex"><x-import component-from-global-scope="MatchUp.GameCard" dc-props="{{g2}}"></x-import></div>
+</div>
+</section>
+
+<section aria-label="Actions rapides" style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; padding: 0 16px">
+<a href="EXP-03-Explorer-terrains.dc.html" class="mu-card mu-card--interactive" style="display: flex; flex-direction: column; align-items: flex-start; gap: 12px; padding: 14px; box-sizing: border-box; text-decoration: none; color: var(--text)">
+<span class="hom-tile-ico" style="flex: none; width: 40px; height: 40px; border-radius: var(--radius-sm); background: var(--surface-muted); display: flex; align-items: center; justify-content: center"><x-import component-from-global-scope="MatchUp.Icon" name="sport-court" size="{{i24}}"></x-import></span>
+<span style="display: flex; flex-direction: column; gap: 2px">
+<span class="label">Réserver un terrain</span>
+<span class="caption" style="color: var(--text-secondary)">Paie ta part, pas tout le terrain</span>
+</span>
+</a>
+<a href="EXP-03-Explorer-terrains.dc.html" class="mu-card mu-card--interactive" style="display: flex; flex-direction: column; align-items: flex-start; gap: 12px; padding: 14px; box-sizing: border-box; text-decoration: none; color: var(--text)">
+<span style="flex: none; width: 40px; height: 40px; border-radius: var(--radius-sm); background: var(--accent); color: var(--on-accent); display: flex; align-items: center; justify-content: center"><x-import component-from-global-scope="MatchUp.Icon" name="plus" size="{{i24}}"></x-import></span>
+<span style="display: flex; flex-direction: column; gap: 2px">
+<span class="label">Créer une partie</span>
+<span class="caption" style="color: var(--text-secondary)">On complète avec des joueurs à ton niveau</span>
+</span>
+</a>
+</section>
+
+<section aria-labelledby="hom-next" style="display: flex; flex-direction: column; gap: 12px; padding: 0 16px">
+<div style="display: flex; align-items: center; justify-content: space-between; margin-right: -12px">
+<h2 id="hom-next" class="h3" style="margin: 0">Tes prochains matchs</h2>
+<a href="MAT-01-A-venir.dc.html" class="mu-btn mu-btn--tertiary mu-btn--s"><span class="mu-btn__content"><span class="mu-btn__label label">Mes matchs</span></span></a>
+</div>
+<a href="MAT-01-A-venir.dc.html" class="mu-card mu-card--interactive hom-row" style="padding: 12px 12px 12px 14px">
+<x-import component-from-global-scope="MatchUp.Avatar" name="Mariem K." size="m"></x-import>
+<span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px">
+<span class="label">Mariem K. t’invite au padel</span>
+<span class="caption" style="color: var(--text-secondary)">Smash Padel Club · ven. 23 oct. · 19h30 · 25 DT /pers.</span>
+</span>
+<span class="label-s" style="flex: none; padding: 2px 8px; border-radius: var(--radius-full); background: var(--accent); color: var(--on-accent)">Répondre</span>
+</a>
+<x-import component-from-global-scope="MatchUp.BookingCard" dc-props="{{b1}}"></x-import>
+<x-import component-from-global-scope="MatchUp.BookingCard" dc-props="{{b2}}"></x-import>
+</section>
+
+<section aria-labelledby="hom-venues" style="display: flex; flex-direction: column; gap: 12px; padding: 0 16px">
+<div style="display: flex; align-items: center; justify-content: space-between; margin-right: -12px">
+<h2 id="hom-venues" class="h3" style="margin: 0">Terrains près de toi</h2>
+<a href="EXP-03-Explorer-terrains.dc.html" class="mu-btn mu-btn--tertiary mu-btn--s"><span class="mu-btn__content"><span class="mu-btn__label label">Voir tout</span></span></a>
+</div>
+<x-import component-from-global-scope="MatchUp.VenueCard" dc-props="{{arena}}"></x-import>
+<x-import component-from-global-scope="MatchUp.VenueCard" dc-props="{{smash}}"></x-import>
+</section>
+
+<section aria-labelledby="hom-tour" style="display: flex; flex-direction: column; gap: 12px; padding: 0 16px">
+<div style="display: flex; flex-direction: column; gap: 2px">
+<h2 id="hom-tour" class="h3" style="margin: 0">Tournois près de chez toi</h2>
+<p class="caption" style="margin: 0; color: var(--text-secondary)">Inscris ton équipe avant qu’il soit complet.</p>
+</div>
+<x-import component-from-global-scope="MatchUp.TournamentCard" dc-props="{{tour}}"></x-import>
+</section>
+</div>
+
+<x-import component-from-global-scope="MatchUp.TabBar" items="{{tabs}}" value="accueil" safe-area="{{sa}}" fab="{{yes}}" dc-props="{{tabStyle}}"></x-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":2384}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const at = (d, h, m) => new Date(2026, 9, d, h, m || 0);
+    return {
+      yes: true, i20: 20, i24: 24, n3: 3, inset: 44, sa: 34,
+      me: { name: 'Yassine B.' },
+      tabs: [
+        { value: 'accueil', label: 'Accueil', icon: 'house', href: 'HOM-01-Accueil.dc.html' },
+        { value: 'explorer', label: 'Explorer', icon: 'compass', href: 'EXP-01-Explorer-parties.dc.html' },
+        { value: 'matchs', label: 'Mes matchs', icon: 'calendar-check', badge: 1, badgeLabel: '1 invitation', href: 'MAT-01-A-venir.dc.html' },
+        { value: 'entrainement', label: 'Entraînement', icon: 'barbell', href: 'ENT-01-Mon-entrainement.dc.html' },
+        { value: 'communaute', label: 'Communauté', icon: 'users-three', href: 'FRM-01-Communaute.dc.html' }
+      ],
+      tabStyle: { style: { position: 'absolute', left: 0, right: 0, bottom: 0 } },
+      g1: {
+        variant: 'featured', sport: 'football', gameType: 'mixte', venue: 'Arena Five', court: 'Terrain 2', place: 'La Marsa', distance: 1.4,
+        start: at(18, 20), spotsTotal: 10, spotsLeft: 2, price: 15, levelMin: 3, levelMax: 4.5,
+        players: [{ name: 'Skander T.', level: 4 }, { name: 'Hamza R.', level: 3.5 }, { name: 'Nour A.', level: 3 }, { name: 'Aziz H.', level: 4.5 }, { name: 'Omar D.', level: 3.5 }, { name: 'Salma G.', level: 3 }, { name: 'Lina F.', level: 3.5 }, { name: 'Ines M.', level: 4 }],
+        organiser: { name: 'Skander T.', reliability: 96 }, matchFit: 85, matchFitReason: 'Milieu recherché et terrain à 1,4 km',
+        href: 'GAM-01-Partie-ouverte.dc.html', style: { width: '100%' }
+      },
+      g2: {
+        variant: 'featured', sport: 'padel', gameType: 'mixte', venue: 'Smash Padel Club', court: 'Court 3', place: 'Lac 2', distance: 3.1,
+        start: at(16, 20), dateLabel: 'Ce soir', spotsTotal: 4, spotsLeft: 2, price: 25, levelMin: 3, levelMax: 4,
+        players: [{ name: 'Mariem K.', level: 4 }, { name: 'Ines M.', level: 3.5 }],
+        organiser: { name: 'Mariem K.', reliability: 98 }, matchFit: 92, matchFitReason: 'Côté gauche recherché et ton niveau (3,5)',
+        style: { width: '100%' }
+      },
+      b1: {
+        status: 'upcoming', sport: 'football', venue: 'Arena Five', court: 'Terrain 2', place: 'La Marsa',
+        start: at(18, 20), end: at(18, 21), share: 15,
+        players: [{ name: 'Skander T.' }, { name: 'Hamza R.' }, { name: 'Nour A.' }, { name: 'Aziz H.' }, { name: 'Omar D.' }, { name: 'Salma G.' }, { name: 'Lina F.' }, { name: 'Ines M.' }, { name: 'Yassine B.' }],
+        href: 'MAT-05-Detail-reservation.dc.html'
+      },
+      b2: {
+        variant: 'compact', status: 'upcoming', sport: 'football', venue: 'Arena Five', court: 'Terrain 1', place: 'La Marsa',
+        start: at(21, 21), end: at(21, 22), share: 15,
+        players: [{ name: 'Yassine B.' }, { name: 'Skander T.' }, { name: 'Hamza R.' }, { name: 'Aziz H.' }, { name: 'Omar D.' }, { name: 'Nour A.' }],
+        href: 'MAT-05-Detail-reservation.dc.html'
+      },
+      arena: {
+        name: 'Arena Five', sports: ['football'], place: 'La Marsa', distance: 1.4, rating: 4.7, reviews: 128, verified: true,
+        amenities: ['lighting', 'changing-rooms', 'showers', 'parking', 'cafe'], slots: ['19h00', '21h00', '22h00'],
+        pricePerPerson: 12, courtPrice: 120, href: 'VEN-01-Terrain.dc.html', variant: 'compact'
+      },
+      smash: {
+        name: 'Smash Padel Club', sports: ['padel'], place: 'Lac 2', distance: 3.1, rating: 4.8, reviews: 86, verified: true,
+        amenities: ['lighting', 'covered', 'changing-rooms', 'parking'], slots: ['18h30', '21h30', '23h00'],
+        pricePerPerson: 20, variant: 'compact'
+      },
+      hoop: {
+        name: 'Hoop Zone', sports: ['basketball'], place: 'Ennasr', distance: 6.2, rating: 4.5, reviews: 41,
+        amenities: ['lighting', 'covered', 'cafe'], pricePerPerson: 9, courtPrice: 90, variant: 'compact'
+      },
+      tour: {
+        sport: 'padel', name: 'Padel Masters Lac 2', start: at(24, 9), end: at(26, 9), venue: 'Smash Padel Club', place: 'Lac 2',
+        fee: 120, prize: 1500, teamsTotal: 16, teamsRegistered: 12, levelMin: 3.5, levelMax: 5
+      }
+    };
+  }
+}
+</script>
+</body>
+</html>

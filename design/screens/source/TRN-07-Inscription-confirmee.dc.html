@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Inscription confirmée</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/matchup/tokens.css">
+<link rel="stylesheet" href="ds/matchup/components/bundle.css">
+<script src="ds/matchup/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0}
+a{color:var(--link)}
+.ic-muted{color:var(--text-secondary)}
+.ic-m0{margin:0}
+.ic-hero{display:flex; flex-direction:column; align-items:center; gap:8px; text-align:center}
+.ic-hero__ico{width:72px; height:72px; border-radius:var(--radius-full); display:flex; align-items:center; justify-content:center; margin-bottom:4px; background:var(--success-soft); color:var(--success-text)}
+@keyframes ic-pop{from{transform:scale(0.6); opacity:0}to{transform:none; opacity:1}}
+@keyframes ic-draw{from{stroke-dashoffset:40}to{stroke-dashoffset:0}}
+.ic-check{animation:ic-pop var(--duration-slow) var(--ease-pop) both}
+.ic-check path{stroke-dasharray:40; animation:ic-draw var(--duration-slow) var(--ease-enter) 120ms both}
+@media (prefers-reduced-motion: reduce){.ic-check, .ic-check path{animation:none}}
+.ic-pass{display:flex; flex-direction:column; padding:0; overflow:hidden}
+.ic-pass__top{display:flex; align-items:center; gap:12px; padding:16px}
+.ic-perf{position:relative; height:0; margin:0 16px; border-top:1.5px dashed var(--border-strong)}
+.ic-perf::before,.ic-perf::after{content:""; position:absolute; top:-9px; width:16px; height:16px; border-radius:var(--radius-full); background:var(--bg)}
+.ic-perf::before{left:-25px}
+.ic-perf::after{right:-25px}
+.ic-match{display:grid; grid-template-columns:52px 1fr auto; gap:12px; align-items:center; min-height:64px; padding:10px 16px; text-decoration:none; color:var(--text)}
+.ic-match + .ic-match{border-top:1px solid var(--border)}
+.ic-match__d{display:flex; flex-direction:column; align-items:center; padding:6px 0; border-radius:var(--radius-sm); background:var(--padel-soft); color:var(--padel-text)}
+.ic-match:focus-visible{outline:none; box-shadow:var(--focus-ring)}
+.ic-tile{appearance:none; border:0; margin:0; font:inherit; cursor:pointer; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:var(--space-2); min-height:84px; padding:var(--space-3); border-radius:var(--radius-md); background:var(--surface); color:var(--text); box-shadow:var(--elevation-1), inset 0 0 0 1px var(--border); text-align:center; text-decoration:none}
+.ic-tile:focus-visible{outline:none; box-shadow:var(--focus-ring)}
+</style>
+</helmet>
+<div style="position: relative; width: 390px; height: 1216px; box-sizing: border-box; overflow: hidden; display: flex; flex-direction: column; background: var(--bg); color: var(--text); font-family: var(--font-sans)">
+<div style="flex: none; display: flex; align-items: center; gap: 4px; min-height: 48px; padding: 52px 16px 8px 8px">
+<a href="TRN-02-Detail-du-tournoi.dc.html" class="mu-iconbtn mu-iconbtn--l mu-iconbtn--ghost" aria-label="Fermer et revenir au tournoi" style="color: var(--text)"><x-import component-from-global-scope="MatchUp.Icon" name="x" size="{{i24}}"></x-import></a>
+<span style="flex: 1"></span>
+<x-import component-from-global-scope="MatchUp.StatusBadge" status="confirmed" label="Inscription confirmée" size="m"></x-import>
+</div>
+
+<div style="flex: 1; min-height: 0; display: flex; flex-direction: column; gap: 24px; padding: 12px 16px 160px 16px">
+<div class="ic-hero" role="status">
+<span class="ic-hero__ico ic-check" aria-hidden="true"><svg width="36" height="36" viewBox="0 0 36 36" fill="none"><path d="M8 18.5 L15 25.5 L28 11.5" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>
+<h1 class="h1 ic-m0">Ton équipe est inscrite !</h1>
+<p class="body-l ic-muted ic-m0">Tunis Padel Series a validé Les Faucons. Le tirage est fait : vous êtes en Poule B.</p>
+</div>
+
+<section class="mu-card ic-pass" aria-labelledby="ic-pass">
+<div class="ic-pass__top">
+<x-import component-from-global-scope="MatchUp.CourtArt" sport="padel" variant="poster" label="Affiche du Padel Masters Lac 2" dc-props="{{poster}}"></x-import>
+<div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px">
+<span class="overline ic-muted">Padel Masters Lac 2</span>
+<h2 id="ic-pass" class="h3 ic-m0">Les Faucons</h2>
+<span class="caption ic-muted">Smash Padel Club · 24–26 oct.</span>
+</div>
+<x-import component-from-global-scope="MatchUp.AvatarStack" people="{{pair}}" size="s" max="{{two}}" label="Yassine B. et Mariem K."></x-import>
+</div>
+<div class="ic-perf"></div>
+<div style="display: grid; grid-template-columns: repeat(3, 1fr); padding: 12px 16px 16px 16px; text-align: center">
+<span style="display: flex; flex-direction: column; gap: 2px"><span class="caption ic-muted">Poule</span><span class="num-l">B</span></span>
+<span style="display: flex; flex-direction: column; gap: 2px; border-inline: 1px solid var(--border)"><span class="caption ic-muted">Niveau moyen</span><span class="num-l">3,75</span></span>
+<span style="display: flex; flex-direction: column; gap: 2px"><span class="caption ic-muted">Payé</span><span class="num-l">120 DT</span></span>
+</div>
+</section>
+
+<section aria-labelledby="ic-cal" style="display: flex; flex-direction: column; gap: 12px">
+<div style="display: flex; align-items: baseline; justify-content: space-between; gap: 8px">
+<h2 id="ic-cal" class="h3 ic-m0">Ton calendrier de poule</h2>
+<span class="caption ic-muted">3 matchs garantis</span>
+</div>
+<div class="mu-card" style="padding: 4px 0 0 0; overflow: hidden">
+<a href="TRN-10-Match-en-direct.dc.html" class="ic-match" aria-label="Match 1, sam. 24 oct. à 10h00, Court 2, contre Ines M. et Nour A.">
+<span class="ic-match__d"><span class="overline">Sam.</span><span class="num-l">24</span></span>
+<span style="display: flex; flex-direction: column; gap: 2px; min-width: 0"><span class="label">contre Ines M. / Nour A.</span><span class="caption ic-muted"><span class="num-xs" style="color: var(--text)">10h00</span> · Court 2 · match 1</span></span>
+<span style="display: flex; color: var(--text-secondary)"><x-import component-from-global-scope="MatchUp.Icon" name="caret-right" size="{{i20}}"></x-import></span>
+</a>
+<div class="ic-match">
+<span class="ic-match__d"><span class="overline">Sam.</span><span class="num-l">24</span></span>
+<span style="display: flex; flex-direction: column; gap: 2px; min-width: 0"><span class="label">contre Skander T. / Omar D.</span><span class="caption ic-muted"><span class="num-xs" style="color: var(--text)">15h30</span> · Court 1 · match 2</span></span>
+<span></span>
+</div>
+<div class="ic-match">
+<span class="ic-match__d"><span class="overline">Dim.</span><span class="num-l">25</span></span>
+<span style="display: flex; flex-direction: column; gap: 2px; min-width: 0"><span class="label">contre Aziz H. / Salma G.</span><span class="caption ic-muted"><span class="num-xs" style="color: var(--text)">11h00</span> · Court 3 · match 3</span></span>
+<span></span>
+</div>
+<div class="ic-match" style="background: var(--surface-muted)">
+<span class="ic-match__d" style="background: var(--surface-inverse); color: var(--text-inverse)"><span class="overline">Lun.</span><span class="num-l">26</span></span>
+<span style="display: flex; flex-direction: column; gap: 2px; min-width: 0"><span class="label">Phase finale</span><span class="caption ic-muted">Dès <span class="num-xs" style="color: var(--text)">18h00</span> si vous finissez dans les 2 premiers</span></span>
+<span style="display: flex; color: var(--text-secondary)"><x-import component-from-global-scope="MatchUp.Icon" name="trophy" size="{{i20}}"></x-import></span>
+</div>
+</div>
+<p class="caption ic-m0" style="display: flex; align-items: flex-start; gap: 8px; padding: 10px 12px; border-radius: var(--radius-sm); background: var(--surface); box-shadow: inset 0 0 0 1px var(--border); color: var(--text-secondary)"><span style="display: flex; flex: none; color: var(--text)"><x-import component-from-global-scope="MatchUp.Icon" name="clock" size="{{i16}}"></x-import></span><span>Check-in à l’accueil 20 min avant ton premier match : <span class="label-s" style="color: var(--text)">sam. 24 oct. à 9h40</span>. Horaires confirmés la veille.</span></p>
+</section>
+
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px">
+<button type="button" class="ic-tile"><x-import component-from-global-scope="MatchUp.Icon" name="calendar-plus" size="{{i24}}"></x-import><span class="label">Ajouter les 3 matchs</span></button>
+<button type="button" class="ic-tile"><x-import component-from-global-scope="MatchUp.Icon" name="share-network" size="{{i24}}"></x-import><span class="label">Partager</span></button>
+</div>
+</div>
+
+<div style="position: absolute; left: 0; right: 0; bottom: 0; z-index: var(--z-sticky); padding: 12px 16px 34px 16px; background: var(--surface); box-shadow: var(--elevation-2-up); display: grid; grid-template-columns: 1fr 1fr; gap: 12px">
+<a href="TRN-08-Tableau.dc.html" class="mu-btn mu-btn--secondary mu-btn--xl mu-btn--block"><span class="mu-btn__content"><span class="mu-btn__label label-l">Le tableau</span></span></a>
+<a href="TRN-09-Poules-et-classement.dc.html" class="mu-btn mu-btn--primary mu-btn--xl mu-btn--block"><span class="mu-btn__content"><span class="mu-btn__label label-l">Les poules</span></span></a>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":1216}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      yes: true, i14: 14, i16: 16, i20: 20, i24: 24, two: 2,
+      pair: [{ name: 'Yassine B.' }, { name: 'Mariem K.' }],
+      poster: { style: { width: '48px', height: '64px', flex: 'none', borderRadius: 'var(--radius-sm)' } }
+    };
+  }
+}
+</script>
+</body>
+</html>

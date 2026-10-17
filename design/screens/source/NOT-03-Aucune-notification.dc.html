@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Aucune notification</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/matchup/tokens.css">
+<link rel="stylesheet" href="ds/matchup/components/bundle.css">
+<script src="ds/matchup/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+/* not:shared — identical in NOT-01…03 */
+body{margin:0}
+a{color:var(--link)}
+.not-root > *{flex:none}
+.not-chips{display:flex; gap:var(--space-2); overflow-x:auto; padding:6px var(--space-4); margin:-6px 0; scrollbar-width:none}
+.not-chips::-webkit-scrollbar{display:none}
+.not-chips > *{flex:none}
+.not-chip{position:relative; display:flex}
+.not-chip__hot{position:absolute; inset:-6px 0; border-radius:var(--radius-full); z-index:1}
+.not-chip__hot:focus-visible{outline:2px solid var(--focus); outline-offset:2px}
+.not-meta{display:flex; align-items:center; justify-content:space-between; gap:var(--space-2); min-height:40px; padding:0 var(--space-2) 0 var(--space-4)}
+.not-group{display:flex; flex-direction:column; margin:0}
+.not-group__title{margin:0; padding:var(--space-5) var(--space-4) var(--space-2) var(--space-4); color:var(--text-secondary); display:flex; align-items:center; gap:var(--space-2)}
+.not-list{margin:0; padding:0; list-style:none; background:var(--surface); box-shadow:inset 0 1px 0 var(--border), inset 0 -1px 0 var(--border)}
+.not-hot{position:absolute; display:block; border-radius:var(--radius-full); z-index:3}
+.not-hot:focus-visible{outline:2px solid var(--focus); outline-offset:2px}
+/* /not:shared */
+</style>
+</helmet>
+<div class="not-root" style="position: relative; width: 390px; height: 844px; box-sizing: border-box; overflow: hidden; display: flex; flex-direction: column; background: var(--bg); color: var(--text); font-family: var(--font-sans)">
+<x-import component-from-global-scope="MatchUp.TopAppBar" title="Notifications" on-back="{{noop}}" inset="{{inset}}" actions="{{barActions}}"></x-import>
+<a href="HOM-01-Accueil.dc.html" class="not-hot" aria-label="Retour à l’accueil" style="left: 4px; top: 48px; width: 48px; height: 48px"></a>
+<a href="NOT-10-Preferences.dc.html" class="not-hot" aria-label="Préférences de notification" style="left: 338px; top: 48px; width: 48px; height: 48px"></a>
+
+<div class="not-chips" role="radiogroup" aria-label="Filtrer les notifications" style="padding-top: 10px">
+<x-import component-from-global-scope="MatchUp.Chip" kind="choice" selected="{{yes}}">Tout</x-import>
+<x-import component-from-global-scope="MatchUp.Chip" kind="choice">Matchs</x-import>
+<x-import component-from-global-scope="MatchUp.Chip" kind="choice">Réservations</x-import>
+<x-import component-from-global-scope="MatchUp.Chip" kind="choice">Tournois</x-import>
+<x-import component-from-global-scope="MatchUp.Chip" kind="choice">Paiements</x-import>
+<x-import component-from-global-scope="MatchUp.Chip" kind="choice">Entraînement</x-import>
+<x-import component-from-global-scope="MatchUp.Chip" kind="choice">Communauté</x-import>
+</div>
+
+<main style="flex: 1 1 auto; min-height: 0; display: flex; flex-direction: column; justify-content: center; padding: 0 16px 120px 16px">
+<x-import component-from-global-scope="MatchUp.EmptyState" illustration="notifications" title="Tout est calme" description="Tu verras ici tes invitations, rappels de match et paiements dès qu’il se passe quelque chose." action="{{manage}}"></x-import>
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const h = React.createElement;
+    return {
+      yes: true, noop: () => {}, inset: 44,
+      barActions: [{ icon: 'gear-six', label: 'Préférences de notification' }],
+      manage: h(MatchUp.Button, { variant: 'secondary', leadingIcon: 'gear-six', href: 'NOT-10-Preferences.dc.html' }, 'Gérer mes notifications')
+    };
+  }
+}
+</script>
+</body>
+</html>

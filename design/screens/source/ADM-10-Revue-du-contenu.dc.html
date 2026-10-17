@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Admin · Revue du contenu</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/matchup/tokens.css">
+<link rel="stylesheet" href="ds/matchup/components/bundle.css">
+<script src="ds/matchup/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+/* adm:shared — identical in ADM-01…10 */
+body{margin:0}
+a{color:var(--link)}
+.adm-head{display:flex; align-items:flex-start; justify-content:space-between; gap:var(--space-3); padding:52px var(--space-2) var(--space-3) var(--space-4)}
+.adm-head__titles{flex:1; min-width:0; display:flex; flex-direction:column; align-items:flex-start; gap:var(--space-2)}
+.adm-head__title{margin:0}
+.adm-role{display:inline-flex; align-items:center; gap:var(--space-1); height:24px; padding:0 10px 0 8px; border-radius:var(--radius-full); background:var(--surface-inverse); color:var(--text-inverse)}
+.adm-me{flex:none; width:48px; height:48px; display:grid; place-items:center; border-radius:var(--radius-full); text-decoration:none}
+.adm-me:focus-visible,.adm-hot:focus-visible{outline:none; box-shadow:var(--focus-ring)}
+.adm-bar{display:flex; align-items:center; gap:var(--space-1); padding:52px var(--space-2) var(--space-2) var(--space-1)}
+.adm-bar__titles{flex:1; min-width:0; display:flex; flex-direction:column; gap:2px}
+.adm-sec{display:flex; flex-direction:column; gap:var(--space-2); margin:0}
+.adm-sec__head{display:flex; align-items:center; justify-content:space-between; gap:var(--space-2); min-height:32px}
+.adm-sec__title{margin:0; display:flex; align-items:center; gap:var(--space-2)}
+.adm-over{margin:0; color:var(--text-secondary)}
+.adm-muted{color:var(--text-secondary)}
+.adm-list{margin:0; padding:0; list-style:none; background:var(--surface); border-radius:var(--radius-md); box-shadow:var(--elevation-1); overflow:hidden}
+.adm-list > li{position:relative}
+.adm-list > li + li::before{content:""; position:absolute; top:0; inset-inline-start:var(--space-4); inset-inline-end:0; height:1px; background:var(--border); z-index:1}
+.adm-list--inset > li + li::before{inset-inline-start:68px}
+.adm-row{position:relative; display:flex; align-items:center; gap:var(--space-3); min-height:64px; padding:var(--space-3) var(--space-4); box-sizing:border-box; color:var(--text); text-decoration:none}
+a.adm-row:hover{background:var(--surface-muted)}
+a.adm-row:focus-visible{outline:none; box-shadow:inset 0 0 0 2px var(--focus)}
+.adm-row--top{align-items:flex-start}
+.adm-ico{flex:none; width:40px; height:40px; border-radius:var(--radius-sm); display:grid; place-items:center; background:var(--surface-muted); color:var(--text)}
+.adm-ico--error{background:var(--error-soft); color:var(--error-text)}
+.adm-ico--warning{background:var(--warning-soft); color:var(--warning-text)}
+.adm-ico--info{background:var(--info-soft); color:var(--info-text)}
+.adm-ico--ai{background:var(--ai-soft); color:var(--ai-text)}
+.adm-ico--success{background:var(--success-soft); color:var(--success-text)}
+.adm-txt{flex:1; min-width:0; display:flex; flex-direction:column; gap:2px}
+.adm-one{white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+.adm-two{display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden}
+.adm-end{flex:none; display:flex; flex-direction:column; align-items:flex-end; gap:4px; text-align:end}
+.adm-chev{flex:none; display:flex; color:var(--text-secondary); margin-inline-end:calc(-1 * var(--space-1))}
+.adm-chips{display:flex; gap:var(--space-2); overflow-x:auto; padding:6px var(--space-4); margin:-6px 0; scrollbar-width:none}
+.adm-chips::-webkit-scrollbar{display:none}
+.adm-chips > *{flex:none}
+.adm-meta{display:flex; align-items:center; justify-content:space-between; gap:var(--space-2); min-height:40px; padding:0 var(--space-2) 0 var(--space-4)}
+.adm-score{flex:none; width:76px; display:flex; flex-direction:column; align-items:flex-end; gap:4px}
+.adm-score__top{display:flex; align-items:baseline; gap:4px}
+.adm-score__track{width:100%; height:4px; border-radius:var(--radius-full); background:var(--surface-muted); overflow:hidden}
+.adm-score__fill{height:100%; border-radius:var(--radius-full)}
+.adm-score--high .adm-score__fill{background:var(--error)}
+.adm-score--high .adm-score__level{color:var(--error-text)}
+.adm-score--mid .adm-score__fill{background:var(--warning)}
+.adm-score--mid .adm-score__level{color:var(--warning-text)}
+.adm-score--low .adm-score__fill{background:var(--text-secondary)}
+.adm-score--low .adm-score__level{color:var(--text-secondary)}
+.adm-why{display:flex; align-items:center; gap:6px; color:var(--text-secondary)}
+.adm-stickybar{position:absolute; left:0; right:0; bottom:0; z-index:4; display:flex; gap:var(--space-3); padding:12px var(--space-4) 34px var(--space-4); background:var(--surface); box-shadow:var(--elevation-2-up)}
+.adm-hot{position:absolute; display:block; border-radius:var(--radius-full); z-index:5}
+/* /adm:shared */
+.rv-body{display:flex; flex-direction:column; gap:var(--space-4); padding-bottom:var(--space-4)}
+.rv-thread{display:flex; flex-direction:column; gap:var(--space-2); padding:var(--space-3); border-radius:var(--radius-md); background:var(--bg); box-shadow:inset 0 0 0 1px var(--border)}
+.rv-reply{display:flex; flex-direction:column; gap:var(--space-2); margin-inline-start:var(--space-4); padding-inline-start:var(--space-3); border-inline-start:2px solid var(--border-strong)}
+.rv-mark{background:var(--warning-soft); color:var(--text); border-radius:var(--radius-xs); padding:0 2px}
+.rv-ai{display:flex; flex-direction:column; gap:var(--space-2); padding:var(--space-3); border-radius:var(--radius-sm); background:var(--ai-soft); color:var(--ai-text)}
+.rv-ai p{margin:0}
+.rv-reps{margin:0; padding:0; list-style:none; display:flex; flex-direction:column; gap:6px}
+.rv-reps > li{display:flex; align-items:center; justify-content:space-between; gap:var(--space-2)}
+</style>
+</helmet>
+<div style="position: relative; width: 390px; height: 844px; box-sizing: border-box; overflow: hidden; background: var(--bg); color: var(--text); font-family: var(--font-sans)">
+
+<div aria-hidden="true">
+<header class="adm-head">
+<div class="adm-head__titles">
+<span class="adm-role label-s"><x-import component-from-global-scope="MatchUp.Icon" name="shield-check" size="{{i14}}" weight="fill"></x-import>Admin</span>
+<span class="adm-head__title h1">Modération</span>
+</div>
+<span class="adm-me"><x-import component-from-global-scope="MatchUp.Avatar" name="Leila M." size="s"></x-import></span>
+</header>
+<div style="padding: 8px 16px">
+<div class="mu-card" style="height: 400px"></div>
+</div>
+</div>
+
+<x-import component-from-global-scope="MatchUp.BottomSheet" inline="{{yes}}" open="{{yes}}" height="full" title="Revoir le commentaire" safe-area="{{safe}}" footer="{{footer}}" on-close="{{noop}}">
+<div class="rv-body">
+
+<section class="rv-thread" aria-label="Contexte">
+<span class="caption adm-muted adm-one">En réponse à Omar D. : « Les vissés c’est mieux, tout le monde sait ça… »</span>
+<div style="display: flex; align-items: center; gap: 8px">
+<x-import component-from-global-scope="MatchUp.Avatar" name="Yassine B." size="xs"></x-import>
+<span class="label">Yassine B.</span>
+<span class="caption adm-muted">18h14</span>
+<span style="flex: 1"></span>
+<x-import component-from-global-scope="MatchUp.StatusBadge" status="pending" label="Masqué" size="s"></x-import>
+</div>
+<p class="body-l" style="margin: 0">« T’as jamais mis les pieds sur un synthétique, <mark class="rv-mark">franchement t’es nul</mark>. Arrête de raconter n’importe quoi. »</p>
+</section>
+
+<section class="rv-ai" aria-labelledby="rv-ai-t">
+<div style="display: flex; align-items: center; gap: 8px">
+<x-import component-from-global-scope="MatchUp.AiLabel" size="s"></x-import>
+<span id="rv-ai-t" class="label-s" style="flex: 1">Toxicité · insulte légère</span>
+<span class="num-m">0,62</span>
+</div>
+<p class="body">Moquerie entre joueurs, sans menace ni haine. L’IA peut se tromper sur le ton entre amis.</p>
+</section>
+
+<section aria-label="Signalements" style="display: flex; flex-direction: column; gap: 2px">
+<span class="label">3 signalements · masqué au 3e</span>
+<span class="caption adm-muted">Propos insultants (2) · harcèlement (1) · auteur Fiable 96 %, jamais averti</span>
+</section>
+
+<div style="display: flex; flex-direction: column; gap: 8px">
+<x-import component-from-global-scope="MatchUp.Radio.Group" label="Ta décision" value="{{decision}}" on-change="{{setDecision}}">
+<x-import component-from-global-scope="MatchUp.Radio" value="approve" label="Approuver et republier"></x-import>
+<x-import component-from-global-scope="MatchUp.Radio" value="delete" label="Supprimer le commentaire"></x-import>
+<x-import component-from-global-scope="MatchUp.Radio" value="warn" label="Supprimer et avertir l’auteur"></x-import>
+<x-import component-from-global-scope="MatchUp.Radio" value="suspend" label="Suspendre l’auteur"></x-import>
+</x-import>
+</div>
+
+</div>
+</x-import>
+<a href="ADM-09-Moderation.dc.html" class="adm-hot" aria-label="Fermer et revenir à la file" style="z-index: calc(var(--z-sheet) + 1); left: 340px; top: 82px; width: 44px; height: 44px"></a>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(props) { super(props); this.state = { decision: 'warn' }; }
+  renderVals() {
+    const d = this.state.decision;
+    const h = React.createElement;
+    const cfg = {
+      approve: { label: 'Approuver et republier', variant: 'primary', href: 'ADM-09-Moderation.dc.html', c: 'Le commentaire réapparaît pour tout le monde et les 3 signalements sont classés.' },
+      delete: { label: 'Supprimer le commentaire', variant: 'destructive', href: 'ADM-09-Moderation.dc.html', c: 'Il disparaît pour tout le monde. Yassine B. reçoit la raison par notification.' },
+      warn: { label: 'Supprimer et avertir', variant: 'destructive', href: 'ADM-09-Moderation.dc.html', c: 'Supprimé pour tout le monde, et 1er avertissement pour Yassine B. Au 3e : suspension de 7 jours.' },
+      suspend: { label: 'Choisir la durée', variant: 'destructive', c: 'Le commentaire est supprimé. Tu choisis ensuite la durée et la raison de la suspension.' }
+    }[d];
+    return {
+      yes: true, i14: 14, i16: 16, i20: 20, i24: 24,
+      noop: () => {},
+      safe: { bottom: 34 },
+      decision: d,
+      setDecision: (v) => this.setState({ decision: v }),
+      footer: h('div', { style: { display: 'flex', flexDirection: 'column', gap: 10 } },
+        h('p', { className: 'body', role: 'status', style: { margin: 0, color: 'var(--text-secondary)' } }, cfg.c),
+        h(MatchUp.Button, { size: 'xl', fullWidth: true, variant: cfg.variant, href: cfg.href, as: cfg.href ? 'a' : 'button' }, cfg.label))
+    };
+  }
+}
+</script>
+</body>
+</html>

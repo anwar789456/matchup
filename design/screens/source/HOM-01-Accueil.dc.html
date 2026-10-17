@@ -22,6 +22,7 @@ a{color:var(--link)}
 </helmet>
 <div style="position: relative; width: 390px; height: 2384px; box-sizing: border-box; overflow: hidden; background: var(--bg); color: var(--text); font-family: var(--font-sans)">
 <x-import component-from-global-scope="MatchUp.TopAppBar" variant="home" greeting="Salut Yassine" location="La Marsa" notifications="{{n3}}" user="{{me}}" inset="{{inset}}"></x-import>
+<a href="NOT-01-Centre-de-notifications.dc.html" aria-label="Notifications, 3 non lues" style="position: absolute; left: 288px; top: 48px; width: 48px; height: 48px; border-radius: var(--radius-full)"></a>
 <a href="PRF-05-Menu-du-compte.dc.html" aria-label="Ouvrir le menu du compte" style="position: absolute; left: 338px; top: 48px; width: 48px; height: 48px; border-radius: var(--radius-full)"></a>
 
 <div style="display: flex; flex-direction: column; gap: 28px; padding: 4px 0 136px 0">
@@ -100,6 +101,7 @@ a{color:var(--link)}
 </div>
 
 <x-import component-from-global-scope="MatchUp.TabBar" items="{{tabs}}" value="accueil" safe-area="{{sa}}" fab="{{yes}}" dc-props="{{tabStyle}}"></x-import>
+<a href="AI-01-Assistant.dc.html" aria-label="Ouvrir l’assistant MatchUp" style="z-index: calc(var(--z-sticky) + 1); position: absolute; right: 16px; bottom: 114px; width: 56px; height: 56px; border-radius: var(--radius-full)"></a>
 </div>
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":2384}}'>
@@ -113,8 +115,8 @@ class Component extends DCLogic {
         { value: 'accueil', label: 'Accueil', icon: 'house', href: 'HOM-01-Accueil.dc.html' },
         { value: 'explorer', label: 'Explorer', icon: 'compass', href: 'EXP-01-Explorer-parties.dc.html' },
         { value: 'matchs', label: 'Mes matchs', icon: 'calendar-check', badge: 1, badgeLabel: '1 invitation', href: 'MAT-01-A-venir.dc.html' },
-        { value: 'entrainement', label: 'Entraînement', icon: 'barbell' },
-        { value: 'communaute', label: 'Communauté', icon: 'users-three' }
+        { value: 'entrainement', label: 'Entraînement', icon: 'barbell', href: 'ENT-01-Mon-entrainement.dc.html' },
+        { value: 'communaute', label: 'Communauté', icon: 'users-three', href: 'FRM-01-Communaute.dc.html' }
       ],
       tabStyle: { style: { position: 'absolute', left: 0, right: 0, bottom: 0 } },
       g1: {

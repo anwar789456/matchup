@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Propriétaire · Réservations</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/matchup/tokens.css">
+<link rel="stylesheet" href="ds/matchup/components/bundle.css">
+<script src="ds/matchup/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+/* own:shared — identical in OWN-10…16 */
+body{margin:0}
+a{color:var(--link)}
+.own-head{position:relative; z-index:2; flex:none; display:flex; align-items:flex-end; gap:var(--space-1); padding:52px var(--space-2) var(--space-2) var(--space-4)}
+.own-head__txt{flex:1; min-width:0; display:flex; flex-direction:column; gap:2px}
+.own-role{display:flex; align-items:center; gap:6px; color:var(--text-secondary)}
+.own-role__icon{display:flex; color:var(--text)}
+.own-avatar{flex:none; width:48px; height:48px; display:grid; place-items:center; border-radius:var(--radius-full); text-decoration:none}
+.own-avatar:focus-visible{outline:none; box-shadow:var(--focus-ring)}
+.own-hot{position:absolute; display:block; border-radius:var(--radius-sm)}
+.own-hot:focus-visible{outline:none; box-shadow:var(--focus-ring)}
+.own-sec{display:flex; flex-direction:column; gap:var(--space-3)}
+.own-sec__head{display:flex; align-items:center; justify-content:space-between; gap:var(--space-3); min-height:32px}
+.own-sec__head .mu-btn{margin-inline-end:calc(-1 * var(--space-2))}
+.own-tag{flex:none; display:inline-flex; align-items:center; justify-content:center; min-width:28px; height:22px; padding:0 6px; box-sizing:border-box; border-radius:var(--radius-xs); background:var(--surface-muted); color:var(--text)}
+/* /own:shared */
+.o14-chips{display:flex; gap:8px; overflow-x:auto; padding:6px 16px; margin:-6px 0; scrollbar-width:none}
+.o14-chips::-webkit-scrollbar{display:none}
+.o14-chips > *{flex:none}
+.o14-list{margin:0; padding:0 0 0 16px; list-style:none; display:flex; flex-direction:column; overflow:hidden}
+.o14-list > li + li .o14-row{box-shadow:inset 0 1px 0 var(--border)}
+.o14-row{display:flex; align-items:center; gap:12px; min-height:76px; padding:10px 16px 10px 0; box-sizing:border-box; text-decoration:none; color:var(--text)}
+.o14-row:hover{background:var(--surface-muted)}
+.o14-row--more{min-height:52px}
+.o14-time{flex:none; width:44px; display:flex; flex-direction:column}
+.o14-main{flex:1; min-width:0; display:flex; flex-direction:column; gap:2px}
+.o14-meta{display:flex; align-items:center; gap:4px; color:var(--text-secondary)}
+.o14-ell{white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+.o14-you{display:inline-block; margin-left:4px; padding:0 6px; border-radius:var(--radius-full); background:var(--surface-inverse); color:var(--text-inverse); vertical-align:1px}
+</style>
+</helmet>
+<div style="position: relative; width: 390px; height: 1440px; box-sizing: border-box; overflow: hidden; display: flex; flex-direction: column; background: var(--bg); color: var(--text); font-family: var(--font-sans)">
+
+<header class="own-head">
+<div class="own-head__txt">
+<span class="own-role caption"><span class="own-role__icon"><x-import component-from-global-scope="MatchUp.Icon" name="storefront" size="{{i16}}"></x-import></span>Espace propriétaire · Arena Five</span>
+<h1 class="h1" style="margin: 0">Réservations</h1>
+</div>
+<x-import component-from-global-scope="MatchUp.IconButton" icon="download-simple" label="Exporter les réservations (CSV)" size="l" variant="ghost"></x-import>
+<a href="PRF-06-Changer-de-role.dc.html" class="own-avatar" aria-label="Changer de rôle, Skander T., propriétaire"><x-import component-from-global-scope="MatchUp.Avatar" name="Skander T." size="s"></x-import></a>
+</header>
+
+<div style="flex: none; display: flex; flex-direction: column; gap: 12px; padding: 4px 0 12px 0">
+<div style="padding: 0 16px"><x-import component-from-global-scope="MatchUp.SearchField" label="Rechercher une réservation" placeholder="Nom, réf. MU-…, téléphone"></x-import></div>
+<div class="o14-chips" role="group" aria-label="Filtrer les réservations">
+<x-import component-from-global-scope="MatchUp.Chip" icon="sliders-horizontal">Filtres</x-import>
+<x-import component-from-global-scope="MatchUp.Chip" kind="choice" selected="{{yes}}" count="{{n38}}">À venir</x-import>
+<x-import component-from-global-scope="MatchUp.Chip" kind="choice" count="{{n3}}">Paiement en attente</x-import>
+<x-import component-from-global-scope="MatchUp.Chip" kind="choice">Terminées</x-import>
+<x-import component-from-global-scope="MatchUp.Chip" kind="choice">Annulées</x-import>
+<x-import component-from-global-scope="MatchUp.Chip" kind="choice">No-shows</x-import>
+</div>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 24px; padding: 4px 16px 184px 16px">
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 8px; margin: 0 -8px -12px 0">
+<p class="label" style="margin: 0"><span class="num-s">38</span> réservations à venir <span style="color: var(--text-secondary); font-weight: inherit">· 3 terrains</span></p>
+<button type="button" class="mu-btn mu-btn--tertiary mu-btn--s" aria-label="Trier par : date, la plus proche d’abord"><span class="mu-btn__content"><x-import component-from-global-scope="MatchUp.Icon" name="arrows-down-up" size="{{i16}}"></x-import><span class="mu-btn__label label">Date</span></span></button>
+</div>
+<section class="own-sec" aria-label="Ce soir · ven. 16 oct.">
+<div class="own-sec__head" style="min-height: 24px"><h2 class="overline" style="margin: 0; color: var(--text-secondary)">Ce soir · ven. 16 oct.</h2><span class="caption" style="color: var(--text-secondary)">10 à venir</span></div>
+<ul class="o14-list mu-card">
+<li><a href="OWN-12-Reservation.dc.html" class="o14-row" aria-label="19h00, T1, Salma G., Publique · 8/10, réf. MU-48190">
+<span class="o14-time"><span class="num-m">19h00</span><span class="caption" style="color: var(--text-secondary)">1 h</span></span>
+<span class="o14-main"><span class="label o14-ell">Salma G.</span><span class="caption o14-meta"><span class="own-tag label-s" style="height: 18px; min-width: 24px">T1</span><x-import component-from-global-scope="MatchUp.Icon" name="users-three" size="{{i14}}"></x-import><span class="o14-ell">Publique · 8/10</span></span><span class="caption" style="color: var(--text-secondary)"><span class="num-xs" style="color: var(--text)">MU-48190</span> · 150 DT</span></span>
+<x-import component-from-global-scope="MatchUp.StatusBadge" status="confirmed" size="s"></x-import>
+</a></li>
+<li><a href="OWN-12-Reservation.dc.html" class="o14-row" aria-label="19h00, T3, Amel T., Privée, réf. MU-48185">
+<span class="o14-time"><span class="num-m">19h00</span><span class="caption" style="color: var(--text-secondary)">1 h</span></span>
+<span class="o14-main"><span class="label o14-ell">Amel T.</span><span class="caption o14-meta"><span class="own-tag label-s" style="height: 18px; min-width: 24px">T3</span><x-import component-from-global-scope="MatchUp.Icon" name="lock-simple" size="{{i14}}"></x-import><span class="o14-ell">Privée</span></span><span class="caption" style="color: var(--text-secondary)"><span class="num-xs" style="color: var(--text)">MU-48185</span> · 150 DT</span></span>
+<x-import component-from-global-scope="MatchUp.StatusBadge" status="paid" size="s"></x-import>
+</a></li>
+<li><a href="OWN-12-Reservation.dc.html" class="o14-row" aria-label="20h00, T2, Ines M., Privée, réf. MU-48196">
+<span class="o14-time"><span class="num-m">20h00</span><span class="caption" style="color: var(--text-secondary)">1 h</span></span>
+<span class="o14-main"><span class="label o14-ell">Ines M.</span><span class="caption o14-meta"><span class="own-tag label-s" style="height: 18px; min-width: 24px">T2</span><x-import component-from-global-scope="MatchUp.Icon" name="lock-simple" size="{{i14}}"></x-import><span class="o14-ell">Privée</span></span><span class="caption" style="color: var(--text-secondary)"><span class="num-xs" style="color: var(--text)">MU-48196</span> · 135 / 150 DT</span></span>
+<x-import component-from-global-scope="MatchUp.StatusBadge" status="pending" label="9/10 payé" size="s"></x-import>
+</a></li>
+<li><a href="OWN-12-Reservation.dc.html" class="o14-row" aria-label="21h00, T1, Lina F., Privée, réf. MU-48201">
+<span class="o14-time"><span class="num-m">21h00</span><span class="caption" style="color: var(--text-secondary)">1 h</span></span>
+<span class="o14-main"><span class="label o14-ell">Lina F.</span><span class="caption o14-meta"><span class="own-tag label-s" style="height: 18px; min-width: 24px">T1</span><x-import component-from-global-scope="MatchUp.Icon" name="lock-simple" size="{{i14}}"></x-import><span class="o14-ell">Privée</span></span><span class="caption" style="color: var(--text-secondary)"><span class="num-xs" style="color: var(--text)">MU-48201</span> · 105 / 150 DT</span></span>
+<x-import component-from-global-scope="MatchUp.StatusBadge" status="pending" label="7/10 payé" size="s"></x-import>
+</a></li>
+<li><a href="OWN-11-Planning.dc.html" class="o14-row o14-row--more"><span class="label" style="flex: 1">Voir les 6 autres de ce soir</span><span style="display: flex; color: var(--text-secondary)"><x-import component-from-global-scope="MatchUp.Icon" name="caret-down" size="{{i20}}"></x-import></span></a></li>
+</ul>
+</section>
+<section class="own-sec" aria-label="Demain · sam. 17 oct.">
+<div class="own-sec__head" style="min-height: 24px"><h2 class="overline" style="margin: 0; color: var(--text-secondary)">Demain · sam. 17 oct.</h2><span class="caption" style="color: var(--text-secondary)">11 réservations</span></div>
+<ul class="o14-list mu-card">
+<li><a href="OWN-12-Reservation.dc.html" class="o14-row" aria-label="18h00, T2, Omar D., Privée, réf. MU-48164">
+<span class="o14-time"><span class="num-m">18h00</span><span class="caption" style="color: var(--text-secondary)">1 h</span></span>
+<span class="o14-main"><span class="label o14-ell">Omar D.</span><span class="caption o14-meta"><span class="own-tag label-s" style="height: 18px; min-width: 24px">T2</span><x-import component-from-global-scope="MatchUp.Icon" name="lock-simple" size="{{i14}}"></x-import><span class="o14-ell">Privée</span></span><span class="caption" style="color: var(--text-secondary)"><span class="num-xs" style="color: var(--text)">MU-48164</span> · 150 DT</span></span>
+<x-import component-from-global-scope="MatchUp.StatusBadge" status="paid" size="s"></x-import>
+</a></li>
+<li><a href="OWN-12-Reservation.dc.html" class="o14-row" aria-label="19h00, T1, Nour A., Publique · 10/10, réf. MU-48122">
+<span class="o14-time"><span class="num-m">19h00</span><span class="caption" style="color: var(--text-secondary)">1 h</span></span>
+<span class="o14-main"><span class="label o14-ell">Nour A.</span><span class="caption o14-meta"><span class="own-tag label-s" style="height: 18px; min-width: 24px">T1</span><x-import component-from-global-scope="MatchUp.Icon" name="users-three" size="{{i14}}"></x-import><span class="o14-ell">Publique · 10/10</span></span><span class="caption" style="color: var(--text-secondary)"><span class="num-xs" style="color: var(--text)">MU-48122</span> · Foot 5v5 femmes</span></span>
+<x-import component-from-global-scope="MatchUp.StatusBadge" status="full" size="s"></x-import>
+</a></li>
+<li><a href="OWN-12-Reservation.dc.html" class="o14-row" aria-label="21h00, T3, Aziz H., Privée, réf. MU-48207">
+<span class="o14-time"><span class="num-m">21h00</span><span class="caption" style="color: var(--text-secondary)">1 h</span></span>
+<span class="o14-main"><span class="label o14-ell">Aziz H.</span><span class="caption o14-meta"><span class="own-tag label-s" style="height: 18px; min-width: 24px">T3</span><x-import component-from-global-scope="MatchUp.Icon" name="lock-simple" size="{{i14}}"></x-import><span class="o14-ell">Privée</span></span><span class="caption" style="color: var(--text-secondary)"><span class="num-xs" style="color: var(--text)">MU-48207</span> · 60 / 150 DT</span></span>
+<x-import component-from-global-scope="MatchUp.StatusBadge" status="pending" label="4/10 payé" size="s"></x-import>
+</a></li>
+</ul>
+</section>
+<section class="own-sec" aria-label="Dim. 18 oct.">
+<div class="own-sec__head" style="min-height: 24px"><h2 class="overline" style="margin: 0; color: var(--text-secondary)">Dim. 18 oct.</h2><span class="caption" style="color: var(--text-secondary)">9 réservations</span></div>
+<ul class="o14-list mu-card">
+<li><a href="OWN-12-Reservation.dc.html" class="o14-row" aria-label="20h00, T2, Skander T., Publique · 8/10, réf. MU-48131">
+<span class="o14-time"><span class="num-m">20h00</span><span class="caption" style="color: var(--text-secondary)">1 h</span></span>
+<span class="o14-main"><span class="label o14-ell">Skander T. <span class="label-s o14-you">Toi</span></span><span class="caption o14-meta"><span class="own-tag label-s" style="height: 18px; min-width: 24px">T2</span><x-import component-from-global-scope="MatchUp.Icon" name="users-three" size="{{i14}}"></x-import><span class="o14-ell">Publique · 8/10</span></span><span class="caption" style="color: var(--text-secondary)"><span class="num-xs" style="color: var(--text)">MU-48131</span> · 150 DT</span></span>
+<x-import component-from-global-scope="MatchUp.StatusBadge" status="confirmed" size="s"></x-import>
+</a></li>
+</ul>
+</section>
+<section class="own-sec" aria-label="Mer. 21 oct.">
+<div class="own-sec__head" style="min-height: 24px"><h2 class="overline" style="margin: 0; color: var(--text-secondary)">Mer. 21 oct.</h2><span class="caption" style="color: var(--text-secondary)">6 réservations</span></div>
+<ul class="o14-list mu-card">
+<li><a href="OWN-12-Reservation.dc.html" class="o14-row" aria-label="21h00, T1, Yassine B., Publique · 6/10, réf. MU-48213">
+<span class="o14-time"><span class="num-m">21h00</span><span class="caption" style="color: var(--text-secondary)">1 h</span></span>
+<span class="o14-main"><span class="label o14-ell">Yassine B.</span><span class="caption o14-meta"><span class="own-tag label-s" style="height: 18px; min-width: 24px">T1</span><x-import component-from-global-scope="MatchUp.Icon" name="users-three" size="{{i14}}"></x-import><span class="o14-ell">Publique · 6/10</span></span><span class="caption" style="color: var(--text-secondary)"><span class="num-xs" style="color: var(--text)">MU-48213</span> · 90 / 150 DT</span></span>
+<x-import component-from-global-scope="MatchUp.StatusBadge" status="confirmed" size="s"></x-import>
+</a></li>
+</ul>
+</section>
+</div>
+
+<x-import component-from-global-scope="MatchUp.TabBar" items="{{tabs}}" value="resa" label="Navigation propriétaire" safe-area="{{sa}}" fab="{{yes}}" dc-props="{{tabStyle}}"></x-import>
+<a href="AI-07-Assistant-pro.dc.html" aria-label="Ouvrir l’assistant MatchUp" style="z-index: calc(var(--z-sticky) + 1); position: absolute; right: 16px; bottom: 114px; width: 56px; height: 56px; border-radius: var(--radius-full)"></a>
+<a href="AI-07-Assistant-pro.dc.html" class="own-hot" aria-label="Ouvrir l’assistant IA" style="right: 16px; bottom: 114px; width: 56px; height: 56px; border-radius: var(--radius-full); z-index: 5"></a>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":1440}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      yes: true, no: false, i14: 14, i16: 16, i20: 20, i24: 24, sa: 34, n38: 38, n3: 3,
+      tabs: [
+        { value: 'jour', label: 'Aujourd’hui', icon: 'house', href: 'OWN-10-Aujourdhui.dc.html' },
+        { value: 'planning', label: 'Planning', icon: 'calendar-blank', href: 'OWN-11-Planning.dc.html' },
+        { value: 'scan', label: 'Check-in', icon: 'qr-code', href: 'OWN-20-Scanner.dc.html' },
+        { value: 'resa', label: 'Réservations', icon: 'list-checks', href: 'OWN-14-Reservations.dc.html' },
+        { value: 'plus', label: 'Plus', icon: 'dots-three', href: 'OWN-15-Plus.dc.html' }
+      ],
+      tabStyle: { style: { position: 'absolute', left: 0, right: 0, bottom: 0 } }
+    };
+  }
+}
+</script>
+</body>
+</html>

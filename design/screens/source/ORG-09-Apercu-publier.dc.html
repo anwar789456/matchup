@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Nouveau tournoi · Aperçu</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/matchup/tokens.css">
+<link rel="stylesheet" href="ds/matchup/components/bundle.css">
+<script src="ds/matchup/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+/* org:wizard — identical in ORG-05…ORG-09 */
+body{margin:0}
+a{color:var(--link)}
+.wz-root{position:relative; width:390px; box-sizing:border-box; overflow:hidden; display:flex; flex-direction:column; background:var(--surface); color:var(--text); font-family:var(--font-sans)}
+.wz-head{flex:none; display:flex; align-items:center; gap:var(--space-1); padding:52px var(--space-1) 0 var(--space-1)}
+.wz-head__txt{flex:1; min-width:0; display:flex; flex-direction:column}
+.wz-head__txt .caption{color:var(--text-secondary)}
+.wz-steps{flex:none; padding:var(--space-2) var(--space-4) var(--space-4) var(--space-4); border-bottom:1px solid var(--border)}
+.wz-body{flex:1; min-height:0; display:flex; flex-direction:column; gap:var(--space-6); padding:var(--space-5) var(--space-4) var(--space-8) var(--space-4)}
+.wz-body > *{flex-shrink:0}
+.wz-intro{display:flex; flex-direction:column; gap:var(--space-1)}
+.wz-intro p{margin:0; color:var(--text-secondary)}
+.wz-field{display:flex; flex-direction:column; gap:var(--space-3)}
+.wz-field__label{margin:0}
+.wz-rule{height:1px; background:var(--border); margin:0}
+.wz-help{margin:0; display:flex; align-items:flex-start; gap:var(--space-2); color:var(--text-secondary)}
+.wz-help > span:first-child{flex:none; display:flex; margin-top:1px}
+.wz-bar{flex:none; position:relative; z-index:var(--z-sticky); display:flex; flex-direction:column; gap:var(--space-2); padding:var(--space-2) var(--space-4) 34px var(--space-4); background:var(--surface); box-shadow:var(--elevation-2-up)}
+.wz-draft{display:flex; align-items:center; justify-content:center; gap:6px; min-height:24px; color:var(--text-secondary)}
+.wz-actions{display:flex; gap:var(--space-3)}
+.wz-actions > .mu-btn--secondary{flex:none; width:112px}
+.wz-actions > .mu-btn--primary{flex:1}
+.wz-muted{color:var(--text-secondary)}
+.wz-m0{margin:0}
+/* /org:wizard */
+.pv-label{display:flex; align-items:center; gap:var(--space-2); color:var(--text-secondary)}
+.pv-recap{margin:0; padding:0; list-style:none; border-radius:var(--radius-md); box-shadow:inset 0 0 0 1px var(--border)}
+.pv-recap li{display:flex; align-items:flex-start; gap:var(--space-3); padding:var(--space-3) var(--space-2) var(--space-3) var(--space-4)}
+.pv-recap li + li{border-top:1px solid var(--border)}
+.pv-check{flex:none; display:flex; margin-top:2px; color:var(--success-text)}
+.pv-recap__txt{flex:1; min-width:0; display:flex; flex-direction:column; gap:2px}
+.pv-recap__txt .caption{color:var(--text-secondary)}
+.pv-confirm{padding:var(--space-3) var(--space-4); border-radius:var(--radius-md); background:var(--surface-muted)}
+</style>
+</helmet>
+<div class="wz-root" style="height: 1690px">
+<div class="wz-head">
+<a href="ORG-08-Creer-frais-prix.dc.html" class="mu-iconbtn mu-iconbtn--l mu-iconbtn--ghost" aria-label="Étape précédente" style="color: var(--text)"><x-import component-from-global-scope="MatchUp.Icon" name="arrow-left" size="{{i24}}"></x-import></a>
+<div class="wz-head__txt"><h1 class="label-l wz-m0">Coupe d’hiver padel</h1><span class="caption">Nouveau tournoi · Tunis Padel Series</span></div>
+<a href="ORG-04-Mes-tournois.dc.html" class="mu-btn mu-btn--tertiary mu-btn--m" aria-label="Quitter, le brouillon est enregistré"><span class="mu-btn__content"><span class="mu-btn__label label">Quitter</span></span></a>
+</div>
+<div class="wz-steps"><x-import component-from-global-scope="MatchUp.WizardStepper" variant="compact" label="Créer un tournoi" steps="{{steps}}" current="{{cur}}"></x-import></div>
+
+<div class="wz-body">
+<div class="wz-intro">
+<h2 class="h2 wz-m0">Vérifie avant de publier</h2>
+<p class="body">Voici ce que les joueurs verront dans Explorer.</p>
+</div>
+
+<div class="wz-field">
+<span class="overline pv-label"><x-import component-from-global-scope="MatchUp.Icon" name="eye" size="{{i16}}"></x-import>Aperçu joueur</span>
+<x-import component-from-global-scope="MatchUp.TournamentCard" dc-props="{{card}}"></x-import>
+</div>
+
+<div class="wz-field">
+<span class="label">Récapitulatif</span>
+<ul class="pv-recap">
+<li><span class="pv-check"><x-import component-from-global-scope="MatchUp.Icon" name="check-circle" weight="fill" size="{{i20}}"></x-import></span><span class="pv-recap__txt"><span class="label">Infos</span><span class="caption">Padel · mixte · niveau moyen 3,0 – 4,5</span></span><a href="ORG-05-Creer-infos.dc.html" class="mu-btn mu-btn--tertiary mu-btn--s" aria-label="Modifier les infos" style="flex: none"><span class="mu-btn__content"><span class="mu-btn__label label">Modifier</span></span></a></li>
+<li><span class="pv-check"><x-import component-from-global-scope="MatchUp.Icon" name="check-circle" weight="fill" size="{{i20}}"></x-import></span><span class="pv-recap__txt"><span class="label">Format et règles</span><span class="caption">4 poules de 4 puis phase finale · 2 sets gagnants, super tie-break</span></span><a href="ORG-06-Creer-format.dc.html" class="mu-btn mu-btn--tertiary mu-btn--s" aria-label="Modifier le format et les règles" style="flex: none"><span class="mu-btn__content"><span class="mu-btn__label label">Modifier</span></span></a></li>
+<li><span class="pv-check"><x-import component-from-global-scope="MatchUp.Icon" name="check-circle" weight="fill" size="{{i20}}"></x-import></span><span class="pv-recap__txt"><span class="label">Terrains et dates</span><span class="caption">Smash Padel Club · 4 courts · sam. 12 – dim. 13 déc. · clôture mer. 9 déc.</span></span><a href="ORG-07-Creer-terrains-dates.dc.html" class="mu-btn mu-btn--tertiary mu-btn--s" aria-label="Modifier les terrains et les dates" style="flex: none"><span class="mu-btn__content"><span class="mu-btn__label label">Modifier</span></span></a></li>
+<li><span class="pv-check"><x-import component-from-global-scope="MatchUp.Icon" name="check-circle" weight="fill" size="{{i20}}"></x-import></span><span class="pv-recap__txt"><span class="label">Frais et prix</span><span class="caption">100 DT par équipe · dotation 1 000 DT · validation manuelle</span></span><a href="ORG-08-Creer-frais-prix.dc.html" class="mu-btn mu-btn--tertiary mu-btn--s" aria-label="Modifier les frais et les prix" style="flex: none"><span class="mu-btn__content"><span class="mu-btn__label label">Modifier</span></span></a></li>
+</ul>
+</div>
+
+<x-import component-from-global-scope="MatchUp.Radio.Group" label="Qui peut le voir ?" value="{{vis}}" on-change="{{setVis}}">
+<x-import component-from-global-scope="MatchUp.Radio" value="public" label="Tout le monde" description="Visible dans Explorer par les joueurs de padel du Grand Tunis."></x-import>
+<x-import component-from-global-scope="MatchUp.Radio" value="lien" label="Sur invitation" description="Seules les personnes qui ont le lien peuvent s’inscrire."></x-import>
+</x-import>
+
+<x-import component-from-global-scope="MatchUp.Switch" label-position="start" label="Prévenir tes abonnés" description="Les 46 joueurs qui suivent Tunis Padel Series reçoivent une notification." default-checked="{{yes}}"></x-import>
+
+<x-import component-from-global-scope="MatchUp.Banner" tone="info" title="Après la première inscription">Le format et les frais ne peuvent plus changer. Les dates et les horaires restent modifiables : les équipes sont alors prévenues.</x-import>
+
+<div class="pv-confirm">
+<x-import component-from-global-scope="MatchUp.Checkbox" default-checked="{{yes}}" label="J’ai vérifié les dates, les frais et le règlement."></x-import>
+</div>
+</div>
+
+<div class="wz-bar">
+<span class="wz-draft caption"><x-import component-from-global-scope="MatchUp.Icon" name="cloud-check" size="{{i16}}"></x-import>Brouillon enregistré · à l’instant</span>
+<div class="wz-actions">
+<a href="ORG-08-Creer-frais-prix.dc.html" class="mu-btn mu-btn--secondary mu-btn--xl"><span class="mu-btn__content"><span class="mu-btn__label label-l">Retour</span></span></a>
+<a href="ORG-04-Mes-tournois.dc.html" class="mu-btn mu-btn--primary mu-btn--xl"><span class="mu-btn__content"><span class="mu-btn__label label-l">Publier le tournoi</span><x-import component-from-global-scope="MatchUp.Icon" name="check" size="{{i20}}"></x-import></span></a>
+</div>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":1690}}'>
+class Component extends DCLogic {
+  state = { vis: 'public' };
+  renderVals() {
+    const s = this.state || {};
+    return {
+      yes: true, no: false, i14: 14, i16: 16, i20: 20, i24: 24,
+      steps: [{ label: 'Infos' }, { label: 'Format & règles' }, { label: 'Terrains & dates' }, { label: 'Frais & prix' }, { label: 'Aperçu' }],
+      cur: 4,
+      vis: s.vis, setVis: (v) => this.setState({ vis: v }),
+      card: { sport: 'padel', name: 'Coupe d’hiver padel', start: new Date(2026, 11, 12, 9), end: new Date(2026, 11, 13, 9), venue: 'Smash Padel Club', place: 'Lac 2',
+        fee: 100, prize: 1000, teamsTotal: 16, teamsRegistered: 0, levelMin: 3, levelMax: 4.5 }
+    };
+  }
+}
+</script>
+</body>
+</html>

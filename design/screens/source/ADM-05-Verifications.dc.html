@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Admin · Vérifications</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/matchup/tokens.css">
+<link rel="stylesheet" href="ds/matchup/components/bundle.css">
+<script src="ds/matchup/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+/* adm:shared — identical in ADM-01…10 */
+body{margin:0}
+a{color:var(--link)}
+.adm-head{display:flex; align-items:flex-start; justify-content:space-between; gap:var(--space-3); padding:52px var(--space-2) var(--space-3) var(--space-4)}
+.adm-head__titles{flex:1; min-width:0; display:flex; flex-direction:column; align-items:flex-start; gap:var(--space-2)}
+.adm-head__title{margin:0}
+.adm-role{display:inline-flex; align-items:center; gap:var(--space-1); height:24px; padding:0 10px 0 8px; border-radius:var(--radius-full); background:var(--surface-inverse); color:var(--text-inverse)}
+.adm-me{flex:none; width:48px; height:48px; display:grid; place-items:center; border-radius:var(--radius-full); text-decoration:none}
+.adm-me:focus-visible,.adm-hot:focus-visible{outline:none; box-shadow:var(--focus-ring)}
+.adm-bar{display:flex; align-items:center; gap:var(--space-1); padding:52px var(--space-2) var(--space-2) var(--space-1)}
+.adm-bar__titles{flex:1; min-width:0; display:flex; flex-direction:column; gap:2px}
+.adm-sec{display:flex; flex-direction:column; gap:var(--space-2); margin:0}
+.adm-sec__head{display:flex; align-items:center; justify-content:space-between; gap:var(--space-2); min-height:32px}
+.adm-sec__title{margin:0; display:flex; align-items:center; gap:var(--space-2)}
+.adm-over{margin:0; color:var(--text-secondary)}
+.adm-muted{color:var(--text-secondary)}
+.adm-list{margin:0; padding:0; list-style:none; background:var(--surface); border-radius:var(--radius-md); box-shadow:var(--elevation-1); overflow:hidden}
+.adm-list > li{position:relative}
+.adm-list > li + li::before{content:""; position:absolute; top:0; inset-inline-start:var(--space-4); inset-inline-end:0; height:1px; background:var(--border); z-index:1}
+.adm-list--inset > li + li::before{inset-inline-start:68px}
+.adm-row{position:relative; display:flex; align-items:center; gap:var(--space-3); min-height:64px; padding:var(--space-3) var(--space-4); box-sizing:border-box; color:var(--text); text-decoration:none}
+a.adm-row:hover{background:var(--surface-muted)}
+a.adm-row:focus-visible{outline:none; box-shadow:inset 0 0 0 2px var(--focus)}
+.adm-row--top{align-items:flex-start}
+.adm-ico{flex:none; width:40px; height:40px; border-radius:var(--radius-sm); display:grid; place-items:center; background:var(--surface-muted); color:var(--text)}
+.adm-ico--error{background:var(--error-soft); color:var(--error-text)}
+.adm-ico--warning{background:var(--warning-soft); color:var(--warning-text)}
+.adm-ico--info{background:var(--info-soft); color:var(--info-text)}
+.adm-ico--ai{background:var(--ai-soft); color:var(--ai-text)}
+.adm-ico--success{background:var(--success-soft); color:var(--success-text)}
+.adm-txt{flex:1; min-width:0; display:flex; flex-direction:column; gap:2px}
+.adm-one{white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+.adm-two{display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden}
+.adm-end{flex:none; display:flex; flex-direction:column; align-items:flex-end; gap:4px; text-align:end}
+.adm-chev{flex:none; display:flex; color:var(--text-secondary); margin-inline-end:calc(-1 * var(--space-1))}
+.adm-chips{display:flex; gap:var(--space-2); overflow-x:auto; padding:6px var(--space-4); margin:-6px 0; scrollbar-width:none}
+.adm-chips::-webkit-scrollbar{display:none}
+.adm-chips > *{flex:none}
+.adm-meta{display:flex; align-items:center; justify-content:space-between; gap:var(--space-2); min-height:40px; padding:0 var(--space-2) 0 var(--space-4)}
+.adm-score{flex:none; width:76px; display:flex; flex-direction:column; align-items:flex-end; gap:4px}
+.adm-score__top{display:flex; align-items:baseline; gap:4px}
+.adm-score__track{width:100%; height:4px; border-radius:var(--radius-full); background:var(--surface-muted); overflow:hidden}
+.adm-score__fill{height:100%; border-radius:var(--radius-full)}
+.adm-score--high .adm-score__fill{background:var(--error)}
+.adm-score--high .adm-score__level{color:var(--error-text)}
+.adm-score--mid .adm-score__fill{background:var(--warning)}
+.adm-score--mid .adm-score__level{color:var(--warning-text)}
+.adm-score--low .adm-score__fill{background:var(--text-secondary)}
+.adm-score--low .adm-score__level{color:var(--text-secondary)}
+.adm-why{display:flex; align-items:center; gap:6px; color:var(--text-secondary)}
+.adm-stickybar{position:absolute; left:0; right:0; bottom:0; z-index:4; display:flex; gap:var(--space-3); padding:12px var(--space-4) 34px var(--space-4); background:var(--surface); box-shadow:var(--elevation-2-up)}
+.adm-hot{position:absolute; display:block; border-radius:var(--radius-full); z-index:5}
+/* /adm:shared */
+.vq-card{display:flex; flex-direction:column; gap:var(--space-3); padding:var(--space-4)}
+.vq-top{display:flex; align-items:flex-start; gap:var(--space-3)}
+.vq-docs{margin:0; padding:0; list-style:none; border-radius:var(--radius-sm); box-shadow:inset 0 0 0 1px var(--border)}
+.vq-docs > li{display:flex; align-items:center; gap:var(--space-3); min-height:52px; padding:var(--space-2) var(--space-2) var(--space-2) var(--space-3)}
+.vq-docs > li + li{border-top:1px solid var(--border)}
+.vq-file{flex:none; width:32px; height:32px; border-radius:var(--radius-xs); display:grid; place-items:center; background:var(--surface-muted); color:var(--text)}
+.vq-file--bad{background:var(--error-soft); color:var(--error-text)}
+.vq-ai{display:flex; flex-direction:column; gap:6px; padding:var(--space-3); border-radius:var(--radius-sm); background:var(--ai-soft); color:var(--ai-text)}
+.vq-ai__head{display:flex; align-items:center; gap:var(--space-2)}
+.vq-ai p{margin:0}
+.vq-actions{display:grid; grid-template-columns:1fr 1fr; gap:var(--space-3)}
+.vq-checks{display:flex; flex-wrap:wrap; gap:6px var(--space-3); margin:0; padding:0; list-style:none}
+.vq-checks > li{display:flex; align-items:center; gap:4px}
+.vq-ok{display:inline-flex; color:var(--success-text)}
+</style>
+</helmet>
+<div style="position: relative; width: 390px; height: 1816px; box-sizing: border-box; overflow: hidden; background: var(--bg); color: var(--text); font-family: var(--font-sans)">
+
+<header class="adm-head">
+<div class="adm-head__titles">
+<span class="adm-role label-s"><x-import component-from-global-scope="MatchUp.Icon" name="shield-check" size="{{i14}}" weight="fill"></x-import>Admin</span>
+<h1 class="adm-head__title h1">Vérifications</h1>
+<p class="body" style="margin: 0; color: var(--text-secondary)">3 demandes · la plus ancienne : lun. 12 oct.</p>
+</div>
+<a href="PRF-06-Changer-de-role.dc.html" class="adm-me" aria-label="Leila M., admin. Changer de rôle"><x-import component-from-global-scope="MatchUp.Avatar" name="Leila M." size="s"></x-import></a>
+</header>
+
+<div class="adm-chips" role="radiogroup" aria-label="Type de demande" style="padding-top: 4px">
+<x-import component-from-global-scope="MatchUp.Chip" kind="choice" selected="{{yes}}" count="{{n3}}">Tout</x-import>
+<x-import component-from-global-scope="MatchUp.Chip" kind="choice" count="{{n2}}">Coachs</x-import>
+<x-import component-from-global-scope="MatchUp.Chip" kind="choice" count="{{n1}}">Terrains</x-import>
+<x-import component-from-global-scope="MatchUp.Chip" kind="choice">Traitées</x-import>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 16px; padding: 20px 16px 180px 16px">
+
+<article class="mu-card vq-card" aria-labelledby="vq-karim">
+<div class="vq-top">
+<x-import component-from-global-scope="MatchUp.Avatar" name="Karim J." size="m"></x-import>
+<div class="adm-txt"><h2 id="vq-karim" class="label-l" style="margin: 0">Karim J.</h2><span class="caption adm-muted">Coach padel · Lac 2 · badge « Certifié FTT »</span><span class="caption adm-muted">Envoyé mer. 14 oct.</span></div>
+<x-import component-from-global-scope="MatchUp.StatusBadge" status="pending" label="À vérifier" size="s"></x-import>
+</div>
+<ul class="vq-docs">
+<li><span class="vq-file"><x-import component-from-global-scope="MatchUp.Icon" name="file-pdf" size="{{i20}}"></x-import></span><span class="adm-txt"><span class="label adm-one">Certificat FTT niveau 2</span><span class="caption adm-muted">PDF · 2 pages · 1,2 Mo</span></span><x-import component-from-global-scope="MatchUp.Button" variant="tertiary" size="s">Ouvrir</x-import></li>
+<li><span class="vq-file"><x-import component-from-global-scope="MatchUp.Icon" name="identification-card" size="{{i20}}"></x-import></span><span class="adm-txt"><span class="label adm-one">Carte d’identité</span><span class="caption adm-muted">2 photos · recto et verso</span></span><x-import component-from-global-scope="MatchUp.Button" variant="tertiary" size="s">Ouvrir</x-import></li>
+</ul>
+<div class="vq-ai">
+<div class="vq-ai__head"><x-import component-from-global-scope="MatchUp.AiLabel" size="s"></x-import><span class="label-s">Lecture du certificat</span></div>
+<p class="body">Nom, niveau 2 et validité (juin 2028) lus sur le document, identiques au profil.</p>
+<p class="caption">L’IA ne valide jamais seule : vérifie le tampon de la fédération.</p>
+</div>
+<div class="vq-actions">
+<x-import component-from-global-scope="MatchUp.Button" variant="secondary" size="l" full-width="{{yes}}">Refuser</x-import>
+<x-import component-from-global-scope="MatchUp.Button" size="l" full-width="{{yes}}" leading-icon="seal-check">Approuver</x-import>
+</div>
+</article>
+
+<article class="mu-card vq-card" aria-labelledby="vq-phm">
+<div class="vq-top">
+<x-import component-from-global-scope="MatchUp.CourtArt" sport="padel" variant="pattern" dc-props="{{thumb}}"></x-import>
+<div class="adm-txt"><h2 id="vq-phm" class="label-l" style="margin: 0">Padel House Menzah</h2><span class="caption adm-muted">Padel · Menzah 6 · Walid B.</span><span class="caption adm-muted">Envoyé lun. 12 oct.</span></div>
+<x-import component-from-global-scope="MatchUp.StatusBadge" status="pending" label="À vérifier" size="s"></x-import>
+</div>
+<div style="display: flex; flex-direction: column; gap: 8px">
+<span class="label-s adm-muted">4 pièces sur 4 fournies</span>
+<ul class="vq-checks body">
+<li><span class="vq-ok"><x-import component-from-global-scope="MatchUp.Icon" name="check-circle" size="{{i16}}" weight="fill"></x-import></span>Registre de commerce</li>
+<li><span class="vq-ok"><x-import component-from-global-scope="MatchUp.Icon" name="check-circle" size="{{i16}}" weight="fill"></x-import></span>CIN du gérant</li>
+<li><span class="vq-ok"><x-import component-from-global-scope="MatchUp.Icon" name="check-circle" size="{{i16}}" weight="fill"></x-import></span>RIB · BIAT •••• 88 02</li>
+<li><span class="vq-ok"><x-import component-from-global-scope="MatchUp.Icon" name="check-circle" size="{{i16}}" weight="fill"></x-import></span>6 photos</li>
+</ul>
+</div>
+<div class="vq-ai">
+<div class="vq-ai__head"><x-import component-from-global-scope="MatchUp.AiLabel" size="s"></x-import><span class="label-s">Contrôle des pièces</span></div>
+<p class="body">Adresse du registre identique à celle de la carte. Les photos montrent 3 courts de padel.</p>
+<p class="caption">À confirmer : l’IA ne peut pas savoir si le club est ouvert au public.</p>
+</div>
+<div class="vq-actions">
+<x-import component-from-global-scope="MatchUp.Button" variant="secondary" size="l" full-width="{{yes}}">Refuser</x-import>
+<x-import component-from-global-scope="MatchUp.Button" size="l" full-width="{{yes}}" leading-icon="seal-check">Approuver</x-import>
+</div>
+</article>
+
+<article class="mu-card vq-card" aria-labelledby="vq-sonia">
+<div class="vq-top">
+<x-import component-from-global-scope="MatchUp.Avatar" name="Sonia L." size="m"></x-import>
+<div class="adm-txt"><h2 id="vq-sonia" class="label-l" style="margin: 0">Sonia L.</h2><span class="caption adm-muted">Coach football · Ariana</span><span class="caption adm-muted">Envoyé jeu. 15 oct.</span></div>
+<x-import component-from-global-scope="MatchUp.StatusBadge" status="failed" label="Illisible" size="s"></x-import>
+</div>
+<ul class="vq-docs">
+<li><span class="vq-file vq-file--bad"><x-import component-from-global-scope="MatchUp.Icon" name="image" size="{{i20}}"></x-import></span><span class="adm-txt"><span class="label adm-one">Diplôme d’entraîneur</span><span class="caption" style="color: var(--error-text)">Photo floue · 0,4 Mo</span></span><x-import component-from-global-scope="MatchUp.Button" variant="tertiary" size="s">Ouvrir</x-import></li>
+</ul>
+<div class="vq-ai">
+<div class="vq-ai__head"><x-import component-from-global-scope="MatchUp.AiLabel" size="s"></x-import><span class="label-s">Lecture du diplôme</span></div>
+<p class="body">Nom et date de délivrance illisibles : la photo est floue et coupée en bas.</p>
+</div>
+<div class="vq-actions" style="grid-template-columns: 1fr">
+<x-import component-from-global-scope="MatchUp.Button" size="l" full-width="{{yes}}" leading-icon="envelope-simple">Demander une photo nette</x-import>
+<x-import component-from-global-scope="MatchUp.Button" variant="secondary" size="l" full-width="{{yes}}">Refuser la demande</x-import>
+</div>
+</article>
+
+<section class="adm-sec" aria-labelledby="vq-done" style="margin-top: 8px">
+<div class="adm-sec__head"><h2 id="vq-done" class="adm-sec__title h3">Traitées cette semaine</h2></div>
+<ul class="adm-list adm-list--inset">
+<li><div class="adm-row">
+<x-import component-from-global-scope="MatchUp.Avatar" name="Mehdi K." size="m"></x-import>
+<span class="adm-txt"><span class="label">Mehdi K.</span><span class="caption adm-muted">Coach basket · mar. 13 oct.</span></span>
+<x-import component-from-global-scope="MatchUp.StatusBadge" status="verified" size="s"></x-import>
+</div></li>
+<li><div class="adm-row">
+<x-import component-from-global-scope="MatchUp.CourtArt" sport="football" variant="pattern" dc-props="{{thumb}}"></x-import>
+<span class="adm-txt"><span class="label">Arena Five</span><span class="caption adm-muted">RIB vérifié · lun. 12 oct.</span></span>
+<x-import component-from-global-scope="MatchUp.StatusBadge" status="verified" size="s"></x-import>
+</div></li>
+</ul>
+</section>
+
+</div>
+
+<x-import component-from-global-scope="MatchUp.TabBar" items="{{tabs}}" value="verif" label="Navigation admin" safe-area="{{sa}}" fab="{{yes}}" dc-props="{{tabStyle}}"></x-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":1816}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      yes: true, i14: 14, i16: 16, i20: 20, i24: 24, sa: 34, n1: 1, n2: 2, n3: 3,
+      thumb: { style: { width: 40, height: 40, flex: 'none', borderRadius: 'var(--radius-sm)' } },
+      tabs: [
+        { value: 'vue', label: 'Vue', icon: 'gauge', href: 'ADM-01-Vue-d-ensemble.dc.html' },
+        { value: 'users', label: 'Utilisateurs', icon: 'users', href: 'ADM-02-Utilisateurs.dc.html' },
+        { value: 'verif', label: 'Vérifications', icon: 'seal-check', href: 'ADM-05-Verifications.dc.html' },
+        { value: 'modo', label: 'Modération', icon: 'flag', badge: 7, badgeLabel: '7 signalements', href: 'ADM-09-Moderation.dc.html' },
+        { value: 'finance', label: 'Finance', icon: 'chart-line-up', href: 'ADM-06-Finance.dc.html' }
+      ],
+      tabStyle: { style: { position: 'absolute', left: 0, right: 0, bottom: 0 } }
+    };
+  }
+}
+</script>
+</body>
+</html>

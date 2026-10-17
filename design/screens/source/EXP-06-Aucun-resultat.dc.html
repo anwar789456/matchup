@@ -81,6 +81,8 @@ a{color:var(--link)}
 
 
 <x-import component-from-global-scope="MatchUp.TabBar" items="{{tabs}}" value="explorer" safe-area="{{sa}}" fab="{{yes}}" dc-props="{{tabStyle}}"></x-import>
+<a href="TRN-01-Tournois.dc.html" aria-label="Tournois" style="position: absolute; left: 254px; top: 166px; width: 118px; height: 38px; z-index: 60; border-radius: var(--radius-sm)"></a>
+<a href="AI-01-Assistant.dc.html" aria-label="Ouvrir l’assistant MatchUp" style="z-index: calc(var(--z-sticky) + 1); position: absolute; right: 16px; bottom: 114px; width: 56px; height: 56px; border-radius: var(--radius-full)"></a>
 </div>
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
@@ -96,8 +98,8 @@ class Component extends DCLogic {
         { value: 'accueil', label: 'Accueil', icon: 'house', href: 'HOM-01-Accueil.dc.html' },
         { value: 'explorer', label: 'Explorer', icon: 'compass', href: 'EXP-01-Explorer-parties.dc.html' },
         { value: 'matchs', label: 'Mes matchs', icon: 'calendar-check', badge: 1, badgeLabel: '1 invitation', href: 'MAT-01-A-venir.dc.html' },
-        { value: 'entrainement', label: 'Entraînement', icon: 'barbell' },
-        { value: 'communaute', label: 'Communauté', icon: 'users-three' }
+        { value: 'entrainement', label: 'Entraînement', icon: 'barbell', href: 'ENT-01-Mon-entrainement.dc.html' },
+        { value: 'communaute', label: 'Communauté', icon: 'users-three', href: 'FRM-01-Communaute.dc.html' }
       ],
       tabStyle: { style: { position: 'absolute', left: 0, right: 0, bottom: 0 } }
     };

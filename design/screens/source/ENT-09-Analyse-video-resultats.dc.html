@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Analyse vidéo · résultats</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/matchup/tokens.css">
+<link rel="stylesheet" href="ds/matchup/components/bundle.css">
+<script src="ds/matchup/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0}
+a{color:var(--link)}
+.ent-player{position:relative; height:219px; border-radius:var(--radius-md); overflow:hidden; background:var(--night-900)}
+.ent-scrub{position:absolute; left:12px; right:12px; bottom:14px; height:4px; border-radius:var(--radius-full); background:rgba(255,255,255,.32)}
+.ent-scrub__fill{position:absolute; left:0; top:0; bottom:0; border-radius:var(--radius-full); background:var(--accent)}
+.ent-mark{position:absolute; top:-10px; width:24px; height:24px; margin-left:-12px; border-radius:var(--radius-full); background:var(--white); color:var(--ink-900); display:flex; align-items:center; justify-content:center; box-shadow:var(--elevation-2)}
+.ent-mark--on{background:var(--accent); color:var(--on-accent); box-shadow:0 0 0 3px rgba(198,241,53,.35)}
+.ent-tip{display:flex; flex-direction:column; gap:10px; padding:16px}
+.ent-tip--on{box-shadow:inset 0 0 0 2px var(--primary), var(--elevation-1)}
+.ent-ts{display:inline-flex; align-items:center; gap:6px; height:28px; padding:0 10px 0 4px; border-radius:var(--radius-full); background:var(--surface-muted); color:var(--text)}
+.ent-ts__n{width:20px; height:20px; border-radius:var(--radius-full); background:var(--primary); color:var(--on-primary); display:flex; align-items:center; justify-content:center}
+.ent-ex{display:flex; align-items:center; gap:10px; padding:10px 12px; border-radius:var(--radius-sm); background:var(--surface-muted); text-decoration:none; color:var(--text)}
+</style>
+</helmet>
+<div style="position: relative; width: 390px; height: 1848px; box-sizing: border-box; overflow: hidden; display: flex; flex-direction: column; background: var(--bg); color: var(--text); font-family: var(--font-sans)">
+<div style="flex: none; display: flex; align-items: center; gap: 4px; padding: 52px 16px 0 4px; min-height: 48px">
+<a href="ENT-08-Analyse-video.dc.html" class="mu-iconbtn mu-iconbtn--l mu-iconbtn--ghost" aria-label="Retour" style="color: var(--text)"><x-import component-from-global-scope="MatchUp.Icon" name="arrow-left" size="{{i24}}"></x-import></a>
+<span class="label-l" style="flex: 1">Analyse vidéo</span>
+<button type="button" class="mu-iconbtn mu-iconbtn--l mu-iconbtn--ghost" aria-label="Partager l’analyse" style="color: var(--text)"><x-import component-from-global-scope="MatchUp.Icon" name="share-network" size="{{i24}}"></x-import></button>
+</div>
+
+<main style="flex: 1; min-height: 0; display: flex; flex-direction: column; gap: 24px; padding: 8px 16px 24px 16px">
+<div style="display: flex; flex-direction: column; gap: 6px">
+<div style="display: flex; align-items: center; gap: 10px"><h1 class="h1" style="margin: 0">Ta bandeja</h1><x-import component-from-global-scope="MatchUp.AiLabel"></x-import></div>
+<p class="body" style="margin: 0; color: var(--text-secondary)">3 moments à revoir · vidéo du ven. 16 oct. · 0:42</p>
+</div>
+
+<section aria-label="Vidéo analysée" style="display: flex; flex-direction: column; gap: 10px">
+<div class="ent-player">
+<x-import component-from-global-scope="MatchUp.CourtArt" sport="padel" label="Ta vidéo de bandeja, image à 0:21" dc-props="{{playerArt}}"></x-import>
+<div style="position: absolute; inset: 0; background: var(--photo-scrim)"></div>
+<div style="position: absolute; top: 12px; left: 12px"><x-import component-from-global-scope="MatchUp.AiLabel" variant="media" size="s">IA · 3 moments</x-import></div>
+<button type="button" aria-label="Lire la vidéo depuis 0:21" style="position: absolute; left: 50%; top: 50%; width: 56px; height: 56px; margin: -36px 0 0 -28px; border: 0; padding: 0; border-radius: var(--radius-full); background: var(--white); color: var(--ink-900); display: flex; align-items: center; justify-content: center; box-shadow: var(--elevation-2); cursor: pointer"><x-import component-from-global-scope="MatchUp.Icon" name="play" weight="fill" size="{{i24}}"></x-import></button>
+<span class="num-xs" style="position: absolute; right: 12px; bottom: 28px; color: var(--white)">0:21 / 0:42</span>
+<div class="ent-scrub" role="slider" aria-label="Position de lecture" aria-valuemin="0" aria-valuemax="42" aria-valuenow="21" aria-valuetext="0:21 sur 0:42">
+<span class="ent-scrub__fill" style="width: 50%"></span>
+<span class="ent-mark num-xs" style="left: 19%" aria-label="Conseil 2 · 0:08">2</span>
+<span class="ent-mark ent-mark--on num-xs" style="left: 50%" aria-label="Conseil 1 · 0:21">1</span>
+<span class="ent-mark num-xs" style="left: 83%" aria-label="Conseil 3 · 0:35">3</span>
+</div>
+</div>
+<p class="caption" style="margin: 0; display: flex; align-items: center; gap: 6px; color: var(--text-secondary)"><x-import component-from-global-scope="MatchUp.Icon" name="hand-pointing" size="{{i14}}"></x-import>Touche un moment pour revoir le geste au ralenti.</p>
+</section>
+
+<x-import component-from-global-scope="MatchUp.AiTextBlock" title="Ce que l’IA a vu" meta="Analysé à 18h06 · confiance moyenne" value="{{summary}}" on-regenerate="{{noop}}" heading-level="{{two}}"></x-import>
+
+<section aria-labelledby="ent-tips" style="display: flex; flex-direction: column; gap: 12px">
+<h2 id="ent-tips" class="h3" style="margin: 0">3 conseils, par priorité</h2>
+
+<article class="mu-card ent-tip ent-tip--on" aria-current="true">
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 8px">
+<button type="button" class="ent-ts" style="border: 0; cursor: pointer" aria-label="Revoir à 0:21"><span class="ent-ts__n num-xs">1</span><x-import component-from-global-scope="MatchUp.Icon" name="play" weight="fill" size="{{i12}}"></x-import><span class="num-s">0:21</span></button>
+<span class="caption" style="color: var(--text-secondary)">En lecture</span>
+</div>
+<h3 class="label-l" style="margin: 0">Frappe devant l’épaule</h3>
+<p class="body" style="margin: 0; color: var(--text-secondary)">Le contact se fait derrière ta tête, la balle part longue et tape la vitre du fond. Avance le point d’impact d’environ 30 cm.</p>
+<a href="ENT-03-Detail-du-programme.dc.html" class="ent-ex"><span style="display: flex; color: var(--padel-text)"><x-import component-from-global-scope="MatchUp.Icon" name="barbell" size="{{i16}}"></x-import></span><span style="flex: 1; min-width: 0; display: flex; flex-direction: column"><span class="caption" style="color: var(--text-secondary)">Exercice conseillé</span><span class="label">Séance 2 · Le contact devant l’épaule</span></span><span style="display: flex; color: var(--text-secondary)"><x-import component-from-global-scope="MatchUp.Icon" name="caret-right" size="{{i16}}"></x-import></span></a>
+</article>
+
+<article class="mu-card ent-tip">
+<button type="button" class="ent-ts" style="border: 0; cursor: pointer; align-self: flex-start" aria-label="Revoir à 0:08"><span class="ent-ts__n num-xs">2</span><x-import component-from-global-scope="MatchUp.Icon" name="play" weight="fill" size="{{i12}}"></x-import><span class="num-s">0:08</span></button>
+<h3 class="label-l" style="margin: 0">Arme plus tôt</h3>
+<p class="body" style="margin: 0; color: var(--text-secondary)">Ta raquette monte après le rebond. Arme dès que le lob passe au-dessus de toi, épaule de profil.</p>
+<a href="ENT-03-Detail-du-programme.dc.html" class="ent-ex"><span style="display: flex; color: var(--padel-text)"><x-import component-from-global-scope="MatchUp.Icon" name="barbell" size="{{i16}}"></x-import></span><span style="flex: 1; min-width: 0; display: flex; flex-direction: column"><span class="caption" style="color: var(--text-secondary)">Exercice conseillé</span><span class="label">Armé face au grillage · 3 × 10</span></span><span style="display: flex; color: var(--text-secondary)"><x-import component-from-global-scope="MatchUp.Icon" name="caret-right" size="{{i16}}"></x-import></span></a>
+</article>
+
+<article class="mu-card ent-tip">
+<button type="button" class="ent-ts" style="border: 0; cursor: pointer; align-self: flex-start" aria-label="Revoir à 0:35"><span class="ent-ts__n num-xs">3</span><x-import component-from-global-scope="MatchUp.Icon" name="play" weight="fill" size="{{i12}}"></x-import><span class="num-s">0:35</span></button>
+<h3 class="label-l" style="margin: 0">Finis vers la grille latérale</h3>
+<p class="body" style="margin: 0; color: var(--text-secondary)">Ton geste s’arrête trop tôt. Accompagne la raquette vers le côté pour croiser ta bandeja.</p>
+<div class="ent-ex"><span style="display: flex; color: var(--ai-text)"><x-import component-from-global-scope="MatchUp.Icon" name="calendar-check" size="{{i16}}"></x-import></span><span style="flex: 1; min-width: 0; display: flex; flex-direction: column"><span class="caption" style="color: var(--text-secondary)">Ta prochaine séance du programme</span><span class="label">Séance 6 · Bandeja sous pression</span></span></div>
+</article>
+</section>
+
+<p class="caption" style="margin: 0; display: flex; align-items: flex-start; gap: 6px; color: var(--text-secondary)"><span style="display: flex; margin-top: 1px"><x-import component-from-global-scope="MatchUp.Icon" name="info" size="{{i14}}"></x-import></span>Confiance moyenne : la vidéo est filmée de trois quarts. Filme bien de côté pour un avis plus précis.</p>
+</main>
+
+<div style="flex: none; padding: 12px 16px 34px 16px; background: var(--surface); box-shadow: var(--elevation-2-up); display: flex; flex-direction: column; gap: 8px">
+<a href="ENT-07-Plan-IA.dc.html" class="mu-btn mu-btn--primary mu-btn--xl mu-btn--block"><span class="mu-btn__content"><x-import component-from-global-scope="MatchUp.Icon" name="calendar-plus" size="{{i20}}"></x-import><span class="mu-btn__label label-l">Ajouter les exercices à mon plan</span></span></a>
+<button type="button" class="mu-btn mu-btn--tertiary mu-btn--l mu-btn--block"><span class="mu-btn__content"><x-import component-from-global-scope="MatchUp.Icon" name="paper-plane-right" size="{{i20}}"></x-import><span class="mu-btn__label label-l">Demander l’avis de Karim J.</span></span></button>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":1848}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      yes: true, no: false, two: 2, i12: 12, i14: 14, i16: 16, i20: 20, i24: 24,
+      noop: () => {},
+      playerArt: { variant: 'photo', style: { position: 'absolute', inset: 0, width: '100%', height: '100%' } },
+      summary: 'Bons appuis et épaule bien de profil : la base de ta bandeja est là.\n\nTa balle part souvent longue, parce que le contact est trop en arrière et que ton geste s’arrête tôt. Commence par le conseil 1 : il corrige la moitié du problème.'
+    };
+  }
+}
+</script>
+</body>
+</html>

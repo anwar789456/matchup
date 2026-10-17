@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Organisateur · Mes tournois</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/matchup/tokens.css">
+<link rel="stylesheet" href="ds/matchup/components/bundle.css">
+<script src="ds/matchup/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+/* org:shell — identical in ORG-03, ORG-04, ORG-12, ORG-14 */
+body{margin:0}
+a{color:var(--link)}
+.org-root{position:relative; width:390px; box-sizing:border-box; overflow:hidden; background:var(--bg); color:var(--text); font-family:var(--font-sans)}
+.org-role{flex:none; white-space:nowrap; display:inline-flex; align-items:center; gap:var(--space-2); min-height:44px; margin-inline-start:var(--space-3); padding:0 var(--space-2) 0 0; border-radius:var(--radius-md); text-decoration:none; color:var(--text)}
+.org-role:focus-visible{outline:none; box-shadow:var(--focus-ring)}
+.org-role__tile{flex:none; width:32px; height:32px; border-radius:var(--radius-sm); background:var(--primary); color:var(--on-primary); display:grid; place-items:center}
+.org-role__txt{display:flex; flex-direction:column; line-height:1}
+.org-role__txt .caption{color:var(--text-secondary)}
+.org-role__caret{display:flex; color:var(--text-secondary)}
+.org-me{display:grid; place-items:center; width:48px; height:48px; border-radius:var(--radius-full); text-decoration:none}
+.org-me:focus-visible{outline:none; box-shadow:var(--focus-ring)}
+.org-muted{color:var(--text-secondary)}
+.org-m0{margin:0}
+.org-sec{display:flex; flex-direction:column; gap:var(--space-3); padding:0 var(--space-4)}
+.org-sec__head{display:flex; align-items:center; justify-content:space-between; gap:var(--space-3); min-height:32px; margin-inline-end:calc(-1 * var(--space-3))}
+.org-sec__title{margin:0}
+.org-ico{display:inline-flex; flex:none}
+/* /org:shell */
+.mt-card{display:flex; flex-direction:column; gap:var(--space-4); padding:var(--space-4)}
+.mt-top{display:flex; gap:var(--space-3); align-items:flex-start}
+.mt-top__txt{flex:1; min-width:0; display:flex; flex-direction:column; align-items:flex-start; gap:var(--space-1)}
+.mt-meta{display:flex; align-items:center; gap:6px; color:var(--text-secondary)}
+.mt-stats{display:grid; grid-template-columns:repeat(3, minmax(0, 1fr)); border-radius:var(--radius-sm); background:var(--surface-muted)}
+.mt-stats > div{display:flex; flex-direction:column; gap:2px; padding:var(--space-2) var(--space-3)}
+.mt-stats > div + div{box-shadow:inset 1px 0 0 var(--border)}
+.mt-actions{display:grid; grid-template-columns:repeat(2, minmax(0, 1fr)); gap:var(--space-2)}
+.mt-act{position:relative; display:flex; flex-direction:column; align-items:flex-start; gap:var(--space-2); min-height:56px; padding:var(--space-3); border-radius:var(--radius-md); box-shadow:inset 0 0 0 1px var(--border); text-decoration:none; color:var(--text); box-sizing:border-box}
+.mt-act:hover{background:var(--surface-muted)}
+.mt-act:focus-visible{outline:none; box-shadow:var(--focus-ring)}
+.mt-act__ico{flex:none; width:32px; height:32px; border-radius:var(--radius-sm); background:var(--surface-muted); display:grid; place-items:center}
+.mt-act__ico--ai{background:var(--ai-soft); color:var(--ai-text)}
+.mt-act__txt{flex:1; min-width:0; display:flex; flex-direction:column}
+.mt-badge{display:inline-flex; margin-inline-start:6px}
+.mt-steps{display:grid; grid-template-columns:repeat(5, 1fr); gap:var(--space-1)}
+.mt-steps span{height:4px; border-radius:var(--radius-xs); background:var(--border)}
+.mt-steps span.is-done{background:var(--primary)}
+.mt-steps span.is-current{background:linear-gradient(90deg, var(--primary) 50%, var(--border) 50%)}
+.mt-new{display:flex; align-items:center; gap:var(--space-3); padding:var(--space-4); border-radius:var(--radius-md); border:1.5px dashed var(--border-strong); text-decoration:none; color:var(--text)}
+.mt-new:focus-visible{outline:none; box-shadow:var(--focus-ring)}
+.mt-new__ico{flex:none; width:40px; height:40px; border-radius:var(--radius-sm); background:var(--accent); color:var(--on-accent); display:grid; place-items:center}
+.mt-past{display:flex; align-items:center; gap:var(--space-3); padding:var(--space-3) var(--space-4)}
+</style>
+</helmet>
+<div class="org-root" style="height: 1444px">
+<x-import component-from-global-scope="MatchUp.TopAppBar" variant="large" title="Tournois" leading="{{role}}" actions="{{barActions}}" inset="{{inset}}"></x-import>
+
+<div style="display: flex; flex-direction: column; gap: 28px; padding: 4px 0 160px 0">
+
+<section aria-labelledby="mt-live-t" class="org-sec">
+<div class="org-sec__head"><h2 id="mt-live-t" class="overline org-sec__title org-muted">En cours · 2</h2></div>
+
+<article class="mu-card mt-card" aria-labelledby="mt-masters">
+<div class="mt-top">
+<x-import component-from-global-scope="MatchUp.CourtArt" sport="padel" variant="poster" label="Affiche du tournoi Padel Masters Lac 2" dc-props="{{poster}}"></x-import>
+<div class="mt-top__txt">
+<x-import component-from-global-scope="MatchUp.StatusBadge" status="confirmed" label="Inscriptions ouvertes" size="s"></x-import>
+<h3 id="mt-masters" class="label-l org-m0">Padel Masters Lac 2</h3>
+<span class="caption mt-meta"><x-import component-from-global-scope="MatchUp.Icon" name="calendar-blank" size="{{i14}}"></x-import>sam. 24 – lun. 26 oct.</span>
+<span class="caption mt-meta"><x-import component-from-global-scope="MatchUp.Icon" name="map-pin" size="{{i14}}"></x-import>Smash Padel Club · Lac 2</span>
+</div>
+</div>
+<x-import component-from-global-scope="MatchUp.ProgressBar" variant="segmented" value="{{twelve}}" max="{{sixteen}}" label="Équipes inscrites" value-label="12/16" hint="Clôture mer. 21 oct. · encore 4 places"></x-import>
+<div class="mt-stats">
+<div><span class="caption org-muted">Encaissé</span><span class="num-m">1 440 DT</span></div>
+<div><span class="caption org-muted">À valider</span><span class="num-m" style="color: var(--warning-text)">2 équipes</span></div>
+<div><span class="caption org-muted">Planning</span><span class="label" style="display: inline-flex; align-items: center; gap: 4px; color: var(--success-text)"><x-import component-from-global-scope="MatchUp.Icon" name="check-circle" weight="fill" size="{{i14}}"></x-import>Publié</span></div>
+</div>
+<nav class="mt-actions" aria-label="Gérer Padel Masters Lac 2">
+<a href="ORG-10-Inscriptions.dc.html" class="mt-act"><span class="mt-act__ico"><x-import component-from-global-scope="MatchUp.Icon" name="users-three" size="{{i20}}"></x-import></span><span class="mt-act__txt"><span class="label" style="display: flex; align-items: center; white-space: nowrap">Inscriptions<span class="mt-badge"><x-import component-from-global-scope="MatchUp.Counter" value="{{two}}" label="2 à valider"></x-import></span></span><span class="caption org-muted">12 équipes</span></span></a>
+<a href="ORG-11-Generateur-IA.dc.html" class="mt-act"><span class="mt-act__ico mt-act__ico--ai"><x-import component-from-global-scope="MatchUp.Icon" name="sparkle" weight="fill" size="{{i20}}"></x-import></span><span class="mt-act__txt"><span class="label">Planning IA</span><span class="caption org-muted">Poules et horaires</span></span></a>
+<a href="ORG-12-Scores-en-direct.dc.html" class="mt-act"><span class="mt-act__ico"><x-import component-from-global-scope="MatchUp.Icon" name="broadcast" size="{{i20}}"></x-import></span><span class="mt-act__txt"><span class="label">Scores</span><span class="caption org-muted">sam. 24 oct.</span></span></a>
+<a href="ORG-14-Annonce.dc.html" class="mt-act"><span class="mt-act__ico"><x-import component-from-global-scope="MatchUp.Icon" name="megaphone" size="{{i20}}"></x-import></span><span class="mt-act__txt"><span class="label">Annonce</span><span class="caption org-muted">Aux 24 joueurs inscrits</span></span></a>
+</nav>
+<a href="TRN-02-Detail-du-tournoi.dc.html" class="mu-btn mu-btn--tertiary mu-btn--m mu-btn--block"><span class="mu-btn__content"><x-import component-from-global-scope="MatchUp.Icon" name="eye" size="{{i20}}"></x-import><span class="mu-btn__label label">Voir la page des joueurs</span></span></a>
+</article>
+
+<article class="mu-card mt-card" aria-labelledby="mt-winter">
+<div class="mt-top">
+<x-import component-from-global-scope="MatchUp.CourtArt" sport="padel" variant="pattern" label="Pas encore d’affiche" dc-props="{{poster}}"></x-import>
+<div class="mt-top__txt">
+<x-import component-from-global-scope="MatchUp.StatusBadge" status="draft" label="Brouillon · pas visible" size="s"></x-import>
+<h3 id="mt-winter" class="label-l org-m0">Coupe d’hiver padel</h3>
+<span class="caption mt-meta"><x-import component-from-global-scope="MatchUp.Icon" name="calendar-blank" size="{{i14}}"></x-import>sam. 12 – dim. 13 déc.</span>
+<span class="caption mt-meta"><x-import component-from-global-scope="MatchUp.Icon" name="cloud-check" size="{{i14}}"></x-import>Enregistré il y a 2 h</span>
+</div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 8px">
+<div class="mt-steps" aria-hidden="true"><span class="is-done"></span><span class="is-done"></span><span class="is-current"></span><span></span><span></span></div>
+<span class="caption org-muted">Étape 3 sur 5 · Terrains &amp; dates · Suivant : Frais &amp; prix</span>
+</div>
+<div style="display: flex; gap: 12px">
+<button type="button" class="mu-btn mu-btn--secondary mu-btn--m" style="flex: none"><span class="mu-btn__content"><x-import component-from-global-scope="MatchUp.Icon" name="trash" size="{{i20}}"></x-import><span class="mu-btn__label label">Supprimer</span></span></button>
+<a href="ORG-07-Creer-terrains-dates.dc.html" class="mu-btn mu-btn--primary mu-btn--m" style="flex: 1"><span class="mu-btn__content"><span class="mu-btn__label label">Reprendre</span><x-import component-from-global-scope="MatchUp.Icon" name="arrow-right" size="{{i20}}"></x-import></span></a>
+</div>
+</article>
+
+<a href="ORG-05-Creer-infos.dc.html" class="mt-new">
+<span class="mt-new__ico"><x-import component-from-global-scope="MatchUp.Icon" name="plus" size="{{i24}}"></x-import></span>
+<span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px">
+<span class="label-l">Créer un tournoi</span>
+<span class="caption org-muted">Poules ou élimination directe : 5 étapes, brouillon enregistré à chaque étape.</span>
+</span>
+<span class="org-ico org-muted"><x-import component-from-global-scope="MatchUp.Icon" name="caret-right" size="{{i20}}"></x-import></span>
+</a>
+</section>
+
+<section aria-labelledby="mt-past-t" class="org-sec">
+<div class="org-sec__head"><h2 id="mt-past-t" class="overline org-sec__title org-muted">Terminés · 1</h2></div>
+<div class="mu-card mt-past">
+<x-import component-from-global-scope="MatchUp.CourtArt" sport="padel" variant="pattern" dc-props="{{thumb}}"></x-import>
+<div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px">
+<span class="label">Padel Cup Lac 2</span>
+<span class="caption org-muted">mars 2026 · 16 équipes</span>
+<span class="caption" style="display: inline-flex; align-items: center; gap: 4px"><x-import component-from-global-scope="MatchUp.Icon" name="trophy" size="{{i14}}"></x-import>Gagnée par Bandeja Club</span>
+</div>
+<x-import component-from-global-scope="MatchUp.IconButton" icon="copy" label="Dupliquer Padel Cup Lac 2" variant="secondary" size="m"></x-import>
+</div>
+</section>
+</div>
+
+<a href="AI-07-Assistant-pro.dc.html" aria-label="Assistant MatchUp" style="z-index: calc(var(--z-sticky) + 1); position: absolute; right: 16px; bottom: 114px; width: 56px; height: 56px; border-radius: var(--radius-full); "></a>
+<x-import component-from-global-scope="MatchUp.TabBar" items="{{tabs}}" value="tournois" label="Navigation organisateur" safe-area="{{sa}}" fab="{{yes}}" dc-props="{{tabStyle}}"></x-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":1444}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const h = React.createElement, M = MatchUp;
+    return {
+      yes: true, no: false, i14: 14, i16: 16, i20: 20, i24: 24, inset: 44, sa: 34, two: 2, twelve: 12, sixteen: 16,
+      role: h('a', { href: 'PRF-06-Changer-de-role.dc.html', className: 'org-role', 'aria-label': 'Espace organisateur, Tunis Padel Series. Changer de rôle' },
+        h('span', { className: 'org-role__tile label-s' }, 'TS'),
+        h('span', { className: 'org-role__txt' }, h('span', { className: 'caption' }, 'Espace organisateur'), h('span', { className: 'label' }, 'Tunis Padel Series')),
+        h('span', { className: 'org-role__caret' }, h(M.Icon, { name: 'caret-down', size: 16 }))),
+      barActions: [
+        h('a', { href: 'ORG-05-Creer-infos.dc.html', className: 'mu-iconbtn mu-iconbtn--l mu-iconbtn--ghost', 'aria-label': 'Créer un tournoi', style: { color: 'var(--text)' } }, h(M.Icon, { name: 'plus', size: 24 })),
+        h('a', { href: 'PRF-06-Changer-de-role.dc.html', className: 'org-me', 'aria-label': 'Mon compte, Sami C. Changer de rôle' }, h(M.Avatar, { name: 'Sami C.', size: 's' }))
+      ],
+      poster: { style: { width: 72, height: 96, borderRadius: 'var(--radius-sm)', flex: 'none' } },
+      thumb: { style: { width: 48, height: 48, borderRadius: 'var(--radius-sm)', flex: 'none' } },
+      tabs: [
+        { value: 'tableau', label: 'Tableau', icon: 'house', href: 'ORG-03-Tableau-de-bord.dc.html' },
+        { value: 'tournois', label: 'Tournois', icon: 'trophy', href: 'ORG-04-Mes-tournois.dc.html' },
+        { value: 'scores', label: 'Scores', icon: 'broadcast', href: 'ORG-12-Scores-en-direct.dc.html' },
+        { value: 'annonces', label: 'Annonces', icon: 'megaphone', href: 'ORG-14-Annonce.dc.html' }
+      ],
+      tabStyle: { style: { position: 'absolute', left: 0, right: 0, bottom: 0 } }
+    };
+  }
+}
+</script>
+</body>
+</html>

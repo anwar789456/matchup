@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Nouveau post</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/matchup/tokens.css">
+<link rel="stylesheet" href="ds/matchup/components/bundle.css">
+<script src="ds/matchup/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0}
+a{color:var(--link)}
+.frm-head{flex:none; display:flex; align-items:center; gap:4px; min-height:48px; padding:52px 16px 8px 8px; background:var(--surface)}
+.frm-field{display:flex; flex-direction:column; gap:8px}
+.frm-chips{display:flex; gap:var(--space-2); overflow-x:auto; padding:6px var(--space-4); margin:-6px calc(-1 * var(--space-4)); scrollbar-width:none}
+.frm-chips::-webkit-scrollbar{display:none}
+.frm-chips > *{flex:none}
+.frm-similar{display:flex; flex-direction:column; gap:8px; margin-top:-8px; padding:12px; border-radius:var(--radius-md); background:var(--surface-muted); box-shadow:inset 0 0 0 1px var(--border)}
+.frm-similar__head{display:flex; align-items:flex-start; gap:8px}
+</style>
+</helmet>
+<div style="position: relative; width: 390px; height: 1532px; box-sizing: border-box; overflow: hidden; display: flex; flex-direction: column; background: var(--surface); color: var(--text); font-family: var(--font-sans)">
+<div class="frm-head">
+<a href="FRM-01-Communaute.dc.html" class="mu-iconbtn mu-iconbtn--l mu-iconbtn--ghost" aria-label="Fermer sans publier" style="color: var(--text)"><x-import component-from-global-scope="MatchUp.Icon" name="x" size="{{i24}}"></x-import></a>
+<h1 class="h3" style="flex: 1; min-width: 0; margin: 0">Nouveau post</h1>
+<span class="caption" style="display: inline-flex; align-items: center; gap: 4px; color: var(--text-secondary)"><x-import component-from-global-scope="MatchUp.Icon" name="check-circle" size="{{i16}}"></x-import>Brouillon enregistré</span>
+</div>
+
+<div style="flex: 1; min-height: 0; display: flex; flex-direction: column; gap: 24px; padding: 12px 16px 140px 16px">
+
+<div class="frm-field">
+<span class="label">Catégorie et sport</span>
+<div class="frm-chips" role="radiogroup" aria-label="Catégorie du post">
+<x-import component-from-global-scope="MatchUp.Chip" kind="choice" icon="lightbulb" selected="{{yes}}">Conseils &amp; technique</x-import>
+<x-import component-from-global-scope="MatchUp.Chip" kind="choice" icon="t-shirt">Équipement</x-import>
+<x-import component-from-global-scope="MatchUp.Chip" kind="choice" icon="sport-court">Terrains</x-import>
+<x-import component-from-global-scope="MatchUp.Chip" kind="choice" icon="sport-trophy">Tournois</x-import>
+<x-import component-from-global-scope="MatchUp.Chip" kind="choice" icon="chats-circle">Discussions libres</x-import>
+</div>
+<div class="frm-chips" role="radiogroup" aria-label="Sport du post" style="margin-top: 2px">
+<x-import component-from-global-scope="MatchUp.Chip" kind="choice" icon="sport-padel" selected="{{yes}}">Padel</x-import>
+<x-import component-from-global-scope="MatchUp.Chip" kind="choice" icon="sport-football">Football</x-import>
+<x-import component-from-global-scope="MatchUp.Chip" kind="choice" icon="sport-basketball">Basket</x-import>
+<x-import component-from-global-scope="MatchUp.Chip" kind="choice">Tous les sports</x-import>
+</div>
+</div>
+
+<x-import component-from-global-scope="MatchUp.TextField" label="Titre" default-value="Bandeja croisée : vous visez où sur la vitre ?" max-length="{{t120}}" counter="{{yes}}" state="focus"></x-import>
+
+<section class="frm-similar" aria-labelledby="frm-sim-t" aria-live="polite">
+<div class="frm-similar__head">
+<span style="display: flex; padding-top: 2px; color: var(--text-secondary)"><x-import component-from-global-scope="MatchUp.Icon" name="chats-circle" size="{{i20}}"></x-import></span>
+<div style="flex: 1; min-width: 0; display: flex; flex-direction: column">
+<h2 id="frm-sim-t" class="label" style="margin: 0">Discussions similaires</h2>
+<span class="caption" style="color: var(--text-secondary)">Ta question a peut-être déjà des réponses.</span>
+</div>
+<x-import component-from-global-scope="MatchUp.IconButton" icon="x" label="Masquer les discussions similaires" size="s" variant="ghost"></x-import>
+</div>
+<x-import component-from-global-scope="MatchUp.ForumPostCard" dc-props="{{sim1}}"></x-import>
+<x-import component-from-global-scope="MatchUp.ForumPostCard" dc-props="{{sim2}}"></x-import>
+</section>
+
+<x-import component-from-global-scope="MatchUp.RichTextEditor" label="Message" default-value="{{body}}" max-length="{{t2000}}" min-rows="{{five}}" max-rows="{{r10}}" tools="{{tools}}" helper="Reste précis : niveau, côté, ce que tu as déjà essayé."></x-import>
+
+<x-import component-from-global-scope="MatchUp.FileUpload" variant="grid" label="Images" optional="{{yes}}" files="{{files}}" max-files="{{four}}" cover-label="{{nullv}}" hint="JPG, PNG · 10 Mo max" on-remove="{{noop}}"></x-import>
+
+<x-import component-from-global-scope="MatchUp.TagInput" label="Tags" value="{{tags}}" on-change="{{setTags}}" max="{{five}}" suggestions="{{popular}}" ai-suggestions="{{aiTags}}" ai-reason="D’après ton titre et ton texte" helper="Les tags aident les joueurs à trouver ton post."></x-import>
+
+<p class="caption" style="margin: -8px 0 0 0; display: flex; gap: 6px; color: var(--text-secondary)"><x-import component-from-global-scope="MatchUp.Icon" name="shield-check" size="{{i16}}"></x-import><span>Respecte les <span class="label-s" style="text-decoration: underline; color: var(--text)">règles de la communauté</span> : pas d’insultes, pas de pub. Les messages signalés sont relus par la modération.</span></p>
+</div>
+
+<div style="position: absolute; left: 0; right: 0; bottom: 0; z-index: var(--z-sticky); padding: 12px 16px 34px 16px; background: var(--surface); box-shadow: var(--elevation-2-up); display: grid; grid-template-columns: 1fr 2fr; gap: 12px">
+<button type="button" class="mu-btn mu-btn--secondary mu-btn--xl mu-btn--block"><span class="mu-btn__content"><span class="mu-btn__label label-l">Aperçu</span></span></button>
+<a href="FRM-01-Communaute.dc.html" class="mu-btn mu-btn--primary mu-btn--xl mu-btn--block"><span class="mu-btn__content"><x-import component-from-global-scope="MatchUp.Icon" name="paper-plane-right" size="{{i20}}"></x-import><span class="mu-btn__label label-l">Publier</span></span></a>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":1532}}'>
+class Component extends DCLogic {
+  state = { tags: ['Padel', 'Bandeja'] };
+  renderVals() {
+    return {
+      yes: true, no: false, nullv: null, noop: () => {}, i16: 16, i20: 20, i24: 24, t120: 120, t2000: 2000, five: 5, four: 4, r10: 10,
+      tools: ['bold', 'italic', 'ul', 'ol', 'quote', 'link', 'image'],
+      body: '<p>Je travaille la bandeja avec le programme de Karim J. (séance 5 : <b>bandeja croisée</b>). En coup droit croisé ça passe, mais dès que je veux sortir la balle vers la vitre latérale, elle reste au centre.</p><ul><li>Vous visez le coin vitre de fond + grille ?</li><li>Vous frappez plus tôt, devant le corps ?</li></ul><p>Je suis à 3,5, côté gauche. Merci !</p>',
+      files: [{ id: 'f1', name: 'bandeja-court2.jpg', sport: 'padel', status: 'done' }],
+      tags: this.state.tags,
+      setTags: (t) => this.setState({ tags: t }),
+      popular: ['Padel', 'Bandeja', 'Technique', 'Vitre', 'Côté gauche', 'Lac 2', 'Débutants bienvenus'],
+      aiTags: ['Technique', 'Vitre', 'Côté gauche'],
+      sim1: {
+        variant: 'compact', category: 'technique', sport: 'padel',
+        title: 'Bandeja : je n’arrive pas à la placer croisée',
+        author: { name: 'Ines M.', level: 4 }, time: 'il y a 2 h', votes: 15, replies: 8
+      },
+      sim2: {
+        variant: 'compact', category: 'technique', sport: 'padel', bestAnswer: true,
+        title: 'Bandeja ou vibora : laquelle sur une balle haute ?',
+        author: { name: 'Mariem K.', level: 4 }, time: '2 oct.', votes: 32, replies: 14
+      }
+    };
+  }
+}
+</script>
+</body>
+</html>

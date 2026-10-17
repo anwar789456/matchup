@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Checkout Premium</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/matchup/tokens.css">
+<link rel="stylesheet" href="ds/matchup/components/bundle.css">
+<script src="ds/matchup/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0}
+a{color:var(--link)}
+.sub-body > *{flex-shrink:0}
+.sub-card{display:flex; flex-direction:column; gap:var(--space-4); padding:var(--space-4); border-radius:var(--radius-md); background:var(--surface); box-shadow:var(--elevation-1), inset 0 0 0 1px var(--border)}
+.sub-sec{display:flex; flex-direction:column; gap:var(--space-3)}
+.sub-crown{flex:none; width:44px; height:44px; border-radius:var(--radius-sm); display:grid; place-items:center; background:var(--ink-900); color:var(--volt-400)}
+.sub-tl{display:flex; flex-direction:column; margin:0; padding:0; list-style:none}
+.sub-tl li{position:relative; display:grid; grid-template-columns:24px minmax(0,1fr) auto; column-gap:var(--space-3); padding-bottom:var(--space-4)}
+.sub-tl li:last-child{padding-bottom:0}
+.sub-tl li::before{content:""; position:absolute; left:11px; top:22px; bottom:2px; width:2px; border-radius:1px; background:var(--border)}
+.sub-tl li:last-child::before{display:none}
+.sub-tl__dot{width:24px; height:24px; border-radius:var(--radius-full); display:grid; place-items:center; background:var(--surface-muted); color:var(--text-secondary); box-shadow:inset 0 0 0 1px var(--border)}
+.sub-tl__dot--now{background:var(--accent); color:var(--on-accent); box-shadow:none}
+.sub-brand{flex:none; display:inline-flex; align-items:center; justify-content:center; width:44px; height:28px; box-sizing:border-box; border-radius:var(--radius-xs); background:var(--surface); color:var(--text); box-shadow:inset 0 0 0 1.5px var(--text); letter-spacing:0.04em}
+.sub-cards{display:flex; flex-direction:column; padding:4px 16px; border-radius:var(--radius-md); background:var(--surface); box-shadow:var(--elevation-1), inset 0 0 0 1px var(--border)}
+.sub-cards .mu-radio{padding-block:14px; align-items:center}
+.sub-cards .sc-host-x + .sc-host-x .mu-radio{border-top:1px solid var(--border)}
+.sub-cards .mu-radio__text{flex:1; min-width:0}
+.sub-cards .mu-radio__label{display:block}
+.sub-cardrow{display:flex; align-items:center; gap:12px; width:100%}
+.sub-cardrow__txt{flex:1; min-width:0; display:flex; flex-direction:column; gap:2px}
+.sub-tag{display:inline-flex; align-items:center; gap:4px; padding:2px 8px; border-radius:var(--radius-full); background:var(--surface-muted); color:var(--text-secondary); white-space:nowrap}
+.sub-add{display:flex; align-items:center; gap:12px; min-height:56px; border-top:1px solid var(--border); text-decoration:none; color:var(--text)}
+.sub-add__ico{flex:none; width:44px; height:28px; box-sizing:border-box; border-radius:var(--radius-xs); box-shadow:inset 0 0 0 1.5px var(--border-strong); display:flex; align-items:center; justify-content:center; color:var(--text-secondary)}
+.sub-add:focus-visible{outline:none; box-shadow:var(--focus-ring); border-radius:var(--radius-sm)}
+.sub-check{display:flex; gap:var(--space-2); align-items:flex-start}
+.sub-check > span:first-child{flex:none; display:flex; color:var(--success-text); margin-top:2px}
+</style>
+</helmet>
+<div style="position: relative; width: 390px; height: 1388px; box-sizing: border-box; display: flex; flex-direction: column; background: var(--bg); color: var(--text); font-family: var(--font-sans)">
+<div style="display: flex; align-items: center; gap: 8px; padding: 52px 16px 8px 8px; background: var(--bg)">
+<a href="SUB-01-Offres.dc.html" class="mu-iconbtn mu-iconbtn--l mu-iconbtn--ghost" aria-label="Retour aux offres" style="color: var(--text)"><x-import component-from-global-scope="MatchUp.Icon" name="arrow-left" size="{{i24}}"></x-import></a>
+<span class="label-l" style="flex: 1">Paiement</span>
+<span class="caption" style="display: inline-flex; align-items: center; gap: 4px; color: var(--text-secondary)"><x-import component-from-global-scope="MatchUp.Icon" name="lock-simple" size="{{i16}}"></x-import>Sécurisé</span>
+</div>
+<x-import component-from-global-scope="MatchUp.Banner" variant="ribbon">carte <span class="num-xs">4242 4242 4242 4242</span></x-import>
+
+<div class="sub-body" style="flex: 1; min-height: 0; overflow: auto; display: flex; flex-direction: column; gap: 28px; padding: 20px 16px 24px 16px">
+<div style="display: flex; flex-direction: column; gap: 6px">
+<h1 class="h2" style="margin: 0">Démarre ton essai Premium</h1>
+<p class="body" style="margin: 0; color: var(--text-secondary)">14 jours pour tout essayer. Tu ne paies rien aujourd’hui.</p>
+</div>
+
+<div class="sub-card">
+<div style="display: flex; align-items: center; gap: 12px">
+<span class="sub-crown"><x-import component-from-global-scope="MatchUp.Icon" name="crown-simple" weight="fill" size="{{i24}}"></x-import></span>
+<div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px">
+<span class="label-l">MatchUp Premium</span>
+<span class="caption" style="color: var(--text-secondary)">Joueur · sans engagement</span>
+</div>
+<a href="SUB-01-Offres.dc.html" class="mu-btn mu-btn--tertiary mu-btn--s"><span class="mu-btn__content"><span class="mu-btn__label label">Modifier</span></span></a>
+</div>
+<x-import component-from-global-scope="MatchUp.SegmentedControl" label="Période de facturation" options="{{periods}}" value="{{period}}" on-change="{{setPeriod}}" full-width="{{yes}}"></x-import>
+<div style="height: 1px; background: var(--border)"></div>
+<ol class="sub-tl" aria-label="Ce que tu paies et quand">
+<li>
+<span class="sub-tl__dot sub-tl__dot--now"><x-import component-from-global-scope="MatchUp.Icon" name="check" weight="bold" size="{{i14}}"></x-import></span>
+<span style="display: flex; flex-direction: column; gap: 2px"><span class="label">Aujourd’hui · essai gratuit</span><span class="caption" style="color: var(--text-secondary)">Tout Premium débloqué pendant 14 jours</span></span>
+<span class="num-s">0 DT</span>
+</li>
+<li>
+<span class="sub-tl__dot"><x-import component-from-global-scope="MatchUp.Icon" name="bell-ringing" size="{{i14}}"></x-import></span>
+<span style="display: flex; flex-direction: column; gap: 2px"><span class="label">mar. 27 oct. · rappel</span><span class="caption" style="color: var(--text-secondary)">On te prévient 3 jours avant, par notification et email</span></span>
+<span></span>
+</li>
+<li>
+<span class="sub-tl__dot"><x-import component-from-global-scope="MatchUp.Icon" name="credit-card" size="{{i14}}"></x-import></span>
+<span style="display: flex; flex-direction: column; gap: 2px"><span class="label">ven. 30 oct. · 1er prélèvement</span><span class="caption" style="color: var(--text-secondary)">{{renewNote}}</span></span>
+<span class="num-s">{{chargeAmt}}</span>
+</li>
+</ol>
+<div style="display: flex; align-items: baseline; justify-content: space-between; gap: 12px; padding: 12px 16px; margin: 0 -4px; border-radius: var(--radius-sm); background: var(--surface-muted)">
+<span class="label-l">À payer aujourd’hui</span>
+<span class="num-l">0 DT</span>
+</div>
+</div>
+
+<section class="sub-sec" aria-labelledby="sub-pay-t">
+<div style="display: flex; flex-direction: column; gap: 4px">
+<h2 id="sub-pay-t" class="h3" style="margin: 0">Carte pour après l’essai</h2>
+<p class="body" style="margin: 0; color: var(--text-secondary)">Rien n’est débité aujourd’hui : ta banque peut juste afficher une vérification à 0 DT.</p>
+</div>
+<div class="sub-cards">
+<x-import component-from-global-scope="MatchUp.Radio.Group" aria-label="Carte enregistrée" name="carte" value="{{card}}" on-change="{{setCard}}">
+<x-import component-from-global-scope="MatchUp.Radio" value="visa"><span class="sub-cardrow"><span class="sub-brand label-s" aria-hidden="true">VISA</span><span class="sub-cardrow__txt"><span class="label">Visa •••• 4242</span><span class="caption" style="color: var(--text-secondary)">Expire 08/27</span></span><span class="sub-tag label-s">Par défaut</span></span></x-import>
+<x-import component-from-global-scope="MatchUp.Radio" value="mc"><span class="sub-cardrow"><span class="sub-brand label-s" aria-hidden="true">MC</span><span class="sub-cardrow__txt"><span class="label">Mastercard •••• 5454</span><span class="caption" style="display: inline-flex; align-items: center; gap: 4px; color: var(--warning-text)"><x-import component-from-global-scope="MatchUp.Icon" name="warning" weight="fill" size="{{i14}}"></x-import>Expire le mois prochain (11/26)</span></span></span></x-import>
+</x-import>
+<a href="PAY-03-Nouvelle-carte.dc.html" class="sub-add"><span class="sub-add__ico"><x-import component-from-global-scope="MatchUp.Icon" name="plus" size="{{i16}}"></x-import></span><span class="label" style="flex: 1">Ajouter une carte</span><span style="display: flex; color: var(--text-secondary)"><x-import component-from-global-scope="MatchUp.Icon" name="caret-right" size="{{i20}}"></x-import></span></a>
+</div>
+<sc-if value="{{isMc}}">
+<x-import component-from-global-scope="MatchUp.Banner" tone="warning" icon="credit-card" title="Cette carte expire avant ton 2e prélèvement">Le 30 nov., le paiement échouerait. Choisis ta Visa ou mets cette carte à jour.</x-import>
+</sc-if>
+</section>
+
+<section class="sub-sec" aria-label="Sans engagement">
+<div class="sub-check"><span><x-import component-from-global-scope="MatchUp.Icon" name="check-circle" weight="fill" size="{{i20}}"></x-import></span><span class="body"><span class="label">Résiliable à tout moment</span> en 2 étapes depuis ton compte, sans frais.</span></div>
+<div class="sub-check"><span><x-import component-from-global-scope="MatchUp.Icon" name="check-circle" weight="fill" size="{{i20}}"></x-import></span><span class="body"><span class="label">Rappel 3 jours avant</span> le premier prélèvement : tu as le temps de décider.</span></div>
+</section>
+
+<div style="padding-top: 4px; border-top: 1px solid var(--border)">
+<x-import component-from-global-scope="MatchUp.Checkbox" label="J’accepte les conditions d’abonnement" description="{{consent}}" checked="{{agree}}" on-change="{{setAgree}}" error="{{agreeErr}}"></x-import>
+</div>
+</div>
+
+<div style="padding: 12px 16px 34px 16px; background: var(--surface); box-shadow: var(--elevation-2-up); display: flex; flex-direction: column; gap: 8px">
+<sc-if value="{{agree}}">
+<a href="SUB-03-Bienvenue-Premium.dc.html" class="mu-btn mu-btn--primary mu-btn--xl mu-btn--block"><span class="mu-btn__content"><span class="mu-btn__label label-l">Commencer l’essai gratuit</span><span class="mu-btn__price num-m">0 DT</span></span></a>
+</sc-if>
+<sc-if value="{{notAgree}}">
+<button type="button" class="mu-btn mu-btn--primary mu-btn--xl mu-btn--block" onclick="{{tryStart}}"><span class="mu-btn__content"><span class="mu-btn__label label-l">Commencer l’essai gratuit</span><span class="mu-btn__price num-m">0 DT</span></span></button>
+</sc-if>
+<div style="display: flex; flex-direction: column; align-items: center; gap: 2px; text-align: center">
+<span class="caption" style="color: var(--text)">{{barNote}}</span>
+<span class="caption" style="display: inline-flex; align-items: center; gap: 4px; color: var(--text-secondary)"><x-import component-from-global-scope="MatchUp.Icon" name="lock-simple" size="{{i14}}"></x-import>Paiement sécurisé par Stripe</span>
+</div>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":1388}}'>
+class Component extends DCLogic {
+  state = { period: 'month', card: 'visa', agree: false, err: false };
+  renderVals() {
+    const s = this.state;
+    const y = s.period === 'year';
+    const amt = y ? '190 DT' : '19 DT';
+    const cardName = s.card === 'visa' ? 'Visa •••• 4242' : 'Mastercard •••• 5454';
+    return {
+      yes: true, i14: 14, i16: 16, i20: 20, i24: 24,
+      period: s.period, card: s.card, agree: s.agree, notAgree: !s.agree, isMc: s.card === 'mc',
+      agreeErr: s.err && !s.agree ? 'Coche cette case pour démarrer l’essai.' : undefined,
+      periods: [{ value: 'month', label: 'Mensuel · 19 DT' }, { value: 'year', label: 'Annuel · 190 DT', badge: '−17 %' }],
+      setPeriod: (v) => this.setState({ period: v }),
+      setCard: (v) => this.setState({ card: v }),
+      setAgree: (v) => this.setState({ agree: v, err: false }),
+      tryStart: () => this.setState({ err: true }),
+      chargeAmt: amt,
+      renewNote: y ? 'Sur ta carte, puis chaque année le 30 oct.' : 'Sur ta carte, puis chaque mois le 30',
+      consent: 'J’autorise MatchUp à prélever ' + amt + (y ? ' par an' : ' par mois') + ' sur ma ' + cardName + ' à partir du ven. 30 oct. 2026, jusqu’à ce que je résilie.',
+      barNote: 'Puis ' + amt + (y ? '/an' : '/mois') + ' dès le ven. 30 oct. · résiliable à tout moment'
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Assistant · erreur</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/matchup/tokens.css">
+<link rel="stylesheet" href="ds/matchup/components/bundle.css">
+<script src="ds/matchup/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0}
+a{color:var(--link)}
+.ai-root{position:relative; width:390px; box-sizing:border-box; overflow:hidden; background:var(--bg); color:var(--text); font-family:var(--font-sans)}
+.ai-close{color:var(--text)}
+.ai-who{display:flex; flex-direction:column; gap:0}
+.ai-who .caption{color:var(--text-secondary)}
+.ai-thread{flex:1; min-height:0; overflow:hidden; display:flex; flex-direction:column; gap:20px; padding:12px 16px 8px 16px}
+.ai-thread--end{justify-content:flex-end; gap:16px; -webkit-mask-image:linear-gradient(to bottom, transparent 0, #000 32px); mask-image:linear-gradient(to bottom, transparent 0, #000 32px)}
+.ai-thread > *{flex-shrink:0}
+.ai-day{align-self:center; margin:0; color:var(--text-secondary)}
+.ai-me{align-self:flex-end; max-width:78%; margin:0; padding:10px 16px; border-radius:var(--radius-lg) var(--radius-xs) var(--radius-lg) var(--radius-lg); background:var(--primary); color:var(--on-primary)}
+.ai-turn{display:flex; flex-direction:column; align-items:flex-start; gap:10px}
+.ai-turn > .ai-full{align-self:stretch}
+.ai-turn .mu-assist__bubble{max-width:92%}
+.ai-heard{display:flex; flex-wrap:wrap; align-items:center; gap:6px}
+.ai-heard__lead{color:var(--text-secondary); margin-inline-end:2px}
+.ai-ink{color:var(--text)}
+.ai-muted{color:var(--text-secondary)}
+.ai-m0{margin:0}
+.ai-ok{display:inline-flex; align-items:center; gap:3px; color:var(--success-text)}
+.ai-venue{display:flex; align-items:center; gap:12px}
+.ai-venue__txt{flex:1; min-width:0; display:flex; flex-direction:column; gap:2px}
+.ai-slots{display:grid; grid-template-columns:repeat(3, 1fr); gap:8px}
+.ai-slot{display:flex; flex-direction:column; align-items:center; padding:8px 4px; border-radius:var(--radius-sm); background:var(--surface); box-shadow:inset 0 0 0 1px var(--border-control); color:var(--text); text-align:center}
+.ai-slot.is-on{background:var(--accent); color:var(--on-accent); box-shadow:inset 0 0 0 1.5px var(--text)}
+.ai-slot.is-on .ai-muted{color:var(--on-accent)}
+.ai-price{display:flex; align-items:baseline; justify-content:space-between; gap:12px; padding-top:10px; border-top:1px solid var(--border)}
+.ai-fit{display:flex; align-items:center; gap:8px; margin-top:-2px}
+.ai-replies{display:flex; flex-wrap:wrap; gap:8px}
+.ai-fb{display:flex; align-items:center; gap:2px; margin-inline-start:-6px; color:var(--text-secondary)}
+.ai-fb__note{display:inline-flex; align-items:center; gap:4px; margin-inline-start:6px}
+.ai-root .mu-takeover__footer{border-top:1px solid var(--border); background:var(--bg)}
+.ai-overline{margin:0; color:var(--text-secondary)}
+.ai-err{display:flex; flex-direction:column; gap:12px; max-width:92%; padding:14px 16px; border-radius:var(--radius-xs) var(--radius-lg) var(--radius-lg) var(--radius-lg); background:var(--surface); box-shadow:inset 0 0 0 1px var(--border-strong)}
+.ai-err__head{display:flex; align-items:center; gap:8px; color:var(--error-text)}
+.ai-err__head .label-l{color:var(--text)}
+.ai-err__actions{display:flex; flex-wrap:wrap; gap:8px}
+.ai-err__keep{display:flex; align-items:center; gap:6px; margin:0; color:var(--text-secondary)}
+.ai-link{display:inline-flex; align-items:center; gap:4px}
+.ai-root .mu-banner{flex:none}
+</style>
+</helmet>
+<div class="ai-root" style="height: 844px">
+<x-import component-from-global-scope="MatchUp.Takeover" inline="{{yes}}" open="{{yes}}" closable="{{no}}" safe-area="{{safe}}" label="Assistant MatchUp" class-name="mu-takeover--assistant">
+<div class="mu-takeover__bar">
+<div class="mu-takeover__bar-start"><span class="mu-assist__id"><span class="mu-assist__mark" aria-hidden="true"><x-import component-from-global-scope="MatchUp.Icon" name="sparkle" weight="fill" size="{{i18}}"></x-import></span><span class="label-l">Assistant MatchUp</span></span></div>
+<div class="mu-takeover__bar-end"><a href="HOM-01-Accueil.dc.html" class="mu-iconbtn mu-iconbtn--m mu-iconbtn--ghost ai-close" aria-label="Fermer l’assistant"><x-import component-from-global-scope="MatchUp.Icon" name="x" size="{{i20}}"></x-import></a></div>
+</div>
+
+<x-import component-from-global-scope="MatchUp.Banner" variant="strip" tone="warning" icon="wifi-slash" title="Connexion instable">L’assistant revient dès que le réseau est rétabli.</x-import>
+<div class="ai-thread ai-thread--end" aria-live="polite">
+<p class="ai-me body-l">Pourquoi j’ai 3,5 au padel ?</p>
+<div class="ai-turn">
+<div class="mu-assist__from"><span class="mu-assist__avatar" aria-hidden="true"><x-import component-from-global-scope="MatchUp.Icon" name="sparkle" weight="fill" size="{{i14}}"></x-import></span><span class="label-s">MatchUp</span><span class="mu-assist__ia label-s"><x-import component-from-global-scope="MatchUp.Icon" name="sparkle" weight="fill" size="{{i12}}"></x-import>IA</span></div>
+<p class="mu-assist__bubble body-l">Ton 3,5 vient surtout de tes 18 matchs et de 9 avis de coéquipiers. Il a pris +0,2 en 30 jours.</p>
+<div class="ai-fb" role="group" aria-label="Ton avis sur cette réponse">
+<x-import component-from-global-scope="MatchUp.IconButton" icon="thumbs-up" label="Réponse utile" size="s" pressed="{{yes}}"></x-import>
+<span class="ai-fb__note caption">Merci pour ton retour · L’IA peut se tromper.</span>
+</div>
+</div>
+<p class="ai-me body-l">Quel programme pour améliorer mon service ?</p>
+<div class="ai-turn">
+<div class="mu-assist__from"><span class="mu-assist__avatar" aria-hidden="true"><x-import component-from-global-scope="MatchUp.Icon" name="sparkle" weight="fill" size="{{i14}}"></x-import></span><span class="label-s">MatchUp</span><span class="mu-assist__ia label-s"><x-import component-from-global-scope="MatchUp.Icon" name="sparkle" weight="fill" size="{{i12}}"></x-import>IA</span></div>
+<div class="ai-err" role="alert">
+<div class="ai-err__head"><x-import component-from-global-scope="MatchUp.Icon" name="warning-circle" weight="fill" size="{{i20}}"></x-import><span class="label-l">Je n’ai pas pu répondre</span></div>
+<p class="body ai-m0">La connexion a été coupée pendant ma recherche. Ton message est gardé et aucune action n’a été faite.</p>
+<div class="ai-err__actions">
+<x-import component-from-global-scope="MatchUp.Button" variant="primary" size="s" leading-icon="arrows-clockwise">Réessayer</x-import>
+<a href="ENT-02-Programmes.dc.html" class="mu-btn mu-btn--secondary mu-btn--s"><span class="mu-btn__content"><span class="mu-btn__label label">Voir les programmes</span></span></a>
+</div>
+</div>
+</div>
+</div>
+
+<div class="mu-takeover__footer">
+<form class="mu-assist__composer">
+<div class="mu-assist__field">
+<label for="ai06-input" class="mu-visually-hidden">Ton message à l’assistant</label>
+<input id="ai06-input" class="mu-assist__input body-l" placeholder="Demande à MatchUp…" autocomplete="off">
+<button type="button" class="mu-iconbtn mu-iconbtn--m mu-iconbtn--primary mu-assist__send" aria-label="Envoyer" disabled><x-import component-from-global-scope="MatchUp.Icon" name="arrow-up" size="{{i20}}"></x-import></button>
+</div>
+<p class="mu-assist__disclaimer caption">MatchUp ne réserve et ne paie rien sans ta confirmation.</p>
+</form>
+</div>
+</x-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const at = (d, h, m) => new Date(2026, 9, d, h, m || 0);
+    return {
+      yes: true, no: false, i12: 12, i14: 14, i16: 16, i18: 18, i20: 20, i24: 24,
+      safe: { top: 44, bottom: 34 },
+      thumb: { style: { width: 48, height: 48, borderRadius: 'var(--radius-sm)', flex: 'none' } },
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Accueil · arabe</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/matchup/tokens.css">
+<link rel="stylesheet" href="ds/matchup/components/bundle.css">
+<script src="ds/matchup/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0}
+a{color:var(--link)}
+.hom-rail{display:flex; gap:12px; overflow-x:auto; scroll-snap-type:x mandatory; scroll-padding-inline:16px; padding:4px 16px 8px 16px; scrollbar-width:none}
+.hom-rail::-webkit-scrollbar{display:none}
+.hom-rail > *{scroll-snap-align:start}
+/* rtl: numeric runs that must read left to right (ranges, times) */
+.rtl-ltr{direction:ltr; unicode-bidi:isolate; display:inline-block}
+</style>
+</helmet>
+<div dir="rtl" lang="ar" style="position: relative; width: 390px; height: 1540px; box-sizing: border-box; overflow: hidden; background: var(--bg); color: var(--text); font-family: var(--font-arabic)">
+<x-import component-from-global-scope="MatchUp.TopAppBar" variant="home" greeting="أهلاً ياسين" location="المرسى" location-label="منطقتك: المرسى. تغيير" notifications="{{n3}}" user="{{me}}" inset="{{inset}}"></x-import>
+<a href="NOT-01-Centre-de-notifications.dc.html" aria-label="الإشعارات، 3 غير مقروءة" style="position: absolute; left: 54px; top: 48px; width: 48px; height: 48px; border-radius: var(--radius-full)"></a>
+<a href="PRF-05-Menu-du-compte.dc.html" aria-label="فتح قائمة الحساب" style="position: absolute; left: 4px; top: 48px; width: 48px; height: 48px; border-radius: var(--radius-full)"></a>
+
+<div style="display: flex; flex-direction: column; gap: 28px; padding: 4px 0 136px 0">
+<div style="padding: 0 16px">
+<a href="AI-01-Assistant.dc.html" aria-label="اسأل مساعد MatchUp الذكي" style="width: 100%; box-sizing: border-box; text-decoration: none; display: flex; align-items: center; gap: 10px; min-height: 48px; padding: 0 16px; border-radius: var(--radius-full); background: var(--surface); box-shadow: inset 0 0 0 1.5px var(--ai-500), var(--elevation-1); color: var(--text-secondary)">
+<span style="display: flex; color: var(--ai-500)"><x-import component-from-global-scope="MatchUp.Icon" name="sparkle" weight="fill" size="{{i20}}"></x-import></span>
+<span class="body-l" style="flex: 1">اسأل مساعد MatchUp…</span>
+</a>
+</div>
+
+<section aria-labelledby="hom-foryou" style="display: flex; flex-direction: column; gap: 8px">
+<div style="display: flex; align-items: center; justify-content: space-between; padding: 0 16px 0 4px">
+<div style="display: flex; align-items: center; gap: 8px">
+<h2 id="hom-foryou" class="h3" style="margin: 0">مباريات تناسبك</h2>
+<x-import component-from-global-scope="MatchUp.AiLabel" size="s" sr-label="اقتراح من الذكاء الاصطناعي">ذكاء اصطناعي</x-import>
+</div>
+<a href="EXP-01-Explorer-parties.dc.html" class="mu-btn mu-btn--tertiary mu-btn--s"><span class="mu-btn__content"><span class="mu-btn__label label">عرض الكل</span></span></a>
+</div>
+<p class="caption" style="margin: -4px 16px 0 16px; color: var(--text-secondary)">اخترناها حسب مستواك ومناطقك وأمسياتك الحرّة.</p>
+<div class="hom-rail">
+
+<div style="flex: none; width: 318px; display: flex">
+<article class="mu-card mu-card--interactive mu-cards mu-game-card mu-game-card--featured mu-cards--football" aria-labelledby="rtl-g1" style="width: 100%">
+<div class="mu-game-card__media">
+<x-import component-from-global-scope="MatchUp.CourtArt" sport="football" variant="photo" label="ملعب كرة قدم تحت الأضواء، Arena Five" dc-props="{{artAbs}}"><span class="mu-cards-scrim" aria-hidden="true"></span></x-import>
+<div class="mu-game-card__over">
+<div class="mu-game-card__over-top">
+<x-import component-from-global-scope="MatchUp.Chip" kind="sport" sport="football" size="s">كرة القدم</x-import>
+<span class="overline mu-game-card__eyebrow">مباريات تناسبك</span>
+</div>
+<div class="mu-game-card__over-bottom"><span class="num-xl">20:00</span><span class="label">الأحد 18 أكتوبر</span></div>
+</div>
+</div>
+<div class="mu-game-card__body">
+<div class="mu-game-card__id">
+<h3 id="rtl-g1" class="mu-cards-title h3"><a class="mu-cards-link" href="GAM-01-Partie-ouverte.dc.html">Arena Five · الملعب 2</a></h3>
+<p class="mu-cards-meta body"><x-import component-from-global-scope="MatchUp.Icon" name="map-pin" size="{{i16}}"></x-import><span>المرسى · 1,4 كم · مختلطة</span></p>
+<span class="mu-cards-org caption"><span>ينظّمها <span class="mu-cards-org__name label-s">سكندر ت.</span></span><span class="mu-cards-org__rel"><x-import component-from-global-scope="MatchUp.Icon" name="shield-check" weight="fill" size="{{i14}}"></x-import><span>موثوق 96%</span></span></span>
+</div>
+<p class="mu-game-card__why caption"><span class="mu-cards-fit"><x-import component-from-global-scope="MatchUp.Icon" name="sparkle" weight="fill" size="{{i14}}"></x-import><span class="label-s">متوافقة بنسبة 85%</span></span><span>مطلوب لاعب وسط، والملعب على بُعد 1,4 كم</span></p>
+<dl class="mu-cards-strip mu-cards-strip--l">
+<div class="mu-cards-strip__cell"><dt class="mu-cards-strip__label overline"><span>الأماكن</span></dt><dd class="mu-cards-strip__value"><span class="mu-cards-num"><span class="num-l">2</span><span class="mu-cards-num__unit label">شاغران</span></span></dd><dd class="mu-cards-strip__sub"><span class="mu-cards-spots mu-cards-spots--football" aria-hidden="true"><i class="is-on"></i><i class="is-on"></i><i class="is-on"></i><i class="is-on"></i><i class="is-on"></i><i class="is-on"></i><i class="is-on"></i><i class="is-on"></i><i></i><i></i></span></dd></div>
+<div class="mu-cards-strip__cell"><dt class="mu-cards-strip__label overline"><span>السعر</span></dt><dd class="mu-cards-strip__value"><span class="mu-cards-num"><span class="num-l">15</span><span class="mu-cards-num__unit label">د.ت</span></span></dd><dd class="mu-cards-strip__sub caption">للاعب الواحد</dd></div>
+<div class="mu-cards-strip__cell"><dt class="mu-cards-strip__label overline"><span>المستوى</span></dt><dd class="mu-cards-strip__value"><span class="mu-cards-num"><span class="num-l rtl-ltr">3,0–4,5</span></span></dd><dd class="mu-cards-strip__sub caption">متوسط</dd></div>
+</dl>
+<div class="mu-game-card__foot">
+<span class="mu-game-card__who"><x-import component-from-global-scope="MatchUp.AvatarStack" size="xs" max="{{four}}" people="{{g1People}}" label="8 لاعبين مسجّلين"></x-import><span class="caption mu-cards-muted">8 مسجّلين</span></span>
+<a href="GAM-01-Partie-ouverte.dc.html" class="mu-btn mu-btn--primary mu-btn--m mu-cards-action"><span class="mu-btn__content"><span class="mu-btn__label label">انضمّ</span></span></a>
+</div>
+</div>
+</article>
+</div>
+
+<div style="flex: none; width: 318px; display: flex">
+<article class="mu-card mu-card--interactive mu-cards mu-game-card mu-game-card--featured mu-cards--padel" aria-labelledby="rtl-g2" style="width: 100%">
+<div class="mu-game-card__media">
+<x-import component-from-global-scope="MatchUp.CourtArt" sport="padel" variant="photo" label="ملعب بادل تحت الأضواء، Smash Padel Club" dc-props="{{artAbs}}"><span class="mu-cards-scrim" aria-hidden="true"></span></x-import>
+<div class="mu-game-card__over">
+<div class="mu-game-card__over-top">
+<x-import component-from-global-scope="MatchUp.Chip" kind="sport" sport="padel" size="s">بادل</x-import>
+<span class="overline mu-game-card__eyebrow">مباريات تناسبك</span>
+</div>
+<div class="mu-game-card__over-bottom"><span class="num-xl">20:00</span><span class="label">الليلة</span></div>
+</div>
+</div>
+<div class="mu-game-card__body">
+<div class="mu-game-card__id">
+<h3 id="rtl-g2" class="mu-cards-title h3"><span class="mu-cards-link">Smash Padel Club · الملعب 3</span></h3>
+<p class="mu-cards-meta body"><x-import component-from-global-scope="MatchUp.Icon" name="map-pin" size="{{i16}}"></x-import><span>البحيرة 2 · 3,1 كم · مختلطة</span></p>
+<span class="mu-cards-org caption"><span>تنظّمها <span class="mu-cards-org__name label-s">مريم ك.</span></span><span class="mu-cards-org__rel"><x-import component-from-global-scope="MatchUp.Icon" name="shield-check" weight="fill" size="{{i14}}"></x-import><span>موثوقة 98%</span></span></span>
+</div>
+<p class="mu-game-card__why caption"><span class="mu-cards-fit"><x-import component-from-global-scope="MatchUp.Icon" name="sparkle" weight="fill" size="{{i14}}"></x-import><span class="label-s">متوافقة بنسبة 92%</span></span><span>مطلوب لاعب للجهة اليسرى، ومستواك 3,5</span></p>
+<dl class="mu-cards-strip mu-cards-strip--l">
+<div class="mu-cards-strip__cell"><dt class="mu-cards-strip__label overline"><span>الأماكن</span></dt><dd class="mu-cards-strip__value"><span class="mu-cards-num"><span class="num-l">2</span><span class="mu-cards-num__unit label">شاغران</span></span></dd><dd class="mu-cards-strip__sub"><span class="mu-cards-spots mu-cards-spots--padel" aria-hidden="true"><i class="is-on"></i><i class="is-on"></i><i></i><i></i></span></dd></div>
+<div class="mu-cards-strip__cell"><dt class="mu-cards-strip__label overline"><span>السعر</span></dt><dd class="mu-cards-strip__value"><span class="mu-cards-num"><span class="num-l">25</span><span class="mu-cards-num__unit label">د.ت</span></span></dd><dd class="mu-cards-strip__sub caption">للاعب الواحد</dd></div>
+<div class="mu-cards-strip__cell"><dt class="mu-cards-strip__label overline"><span>المستوى</span></dt><dd class="mu-cards-strip__value"><span class="mu-cards-num"><span class="num-l rtl-ltr">3,0–4,0</span></span></dd><dd class="mu-cards-strip__sub caption">متوسط</dd></div>
+</dl>
+<div class="mu-game-card__foot">
+<span class="mu-game-card__who"><x-import component-from-global-scope="MatchUp.AvatarStack" size="xs" people="{{g2People}}" label="لاعبتان مسجّلتان"></x-import><span class="caption mu-cards-muted">2 مسجّلتان</span></span>
+<span class="mu-btn mu-btn--primary mu-btn--m mu-cards-action"><span class="mu-btn__content"><span class="mu-btn__label label">انضمّ</span></span></span>
+</div>
+</div>
+</article>
+</div>
+</div>
+</section>
+
+<section aria-label="إجراءات سريعة" style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; padding: 0 16px">
+<a href="EXP-03-Explorer-terrains.dc.html" class="mu-card mu-card--interactive" style="display: flex; flex-direction: column; align-items: flex-start; gap: 12px; padding: 14px; box-sizing: border-box; text-decoration: none; color: var(--text)">
+<span style="flex: none; width: 40px; height: 40px; border-radius: var(--radius-sm); background: var(--surface-muted); display: flex; align-items: center; justify-content: center"><x-import component-from-global-scope="MatchUp.Icon" name="sport-court" size="{{i24}}"></x-import></span>
+<span style="display: flex; flex-direction: column; gap: 2px"><span class="label">احجز ملعبًا</span><span class="caption" style="color: var(--text-secondary)">ادفع حصّتك فقط، لا ثمن الملعب كاملًا</span></span>
+</a>
+<a href="EXP-03-Explorer-terrains.dc.html" class="mu-card mu-card--interactive" style="display: flex; flex-direction: column; align-items: flex-start; gap: 12px; padding: 14px; box-sizing: border-box; text-decoration: none; color: var(--text)">
+<span style="flex: none; width: 40px; height: 40px; border-radius: var(--radius-sm); background: var(--accent); color: var(--on-accent); display: flex; align-items: center; justify-content: center"><x-import component-from-global-scope="MatchUp.Icon" name="plus" size="{{i24}}"></x-import></span>
+<span style="display: flex; flex-direction: column; gap: 2px"><span class="label">أنشئ مباراة</span><span class="caption" style="color: var(--text-secondary)">نُكمل العدد بلاعبين في مستواك</span></span>
+</a>
+</section>
+
+<section aria-labelledby="hom-next" style="display: flex; flex-direction: column; gap: 12px; padding: 0 16px">
+<div style="display: flex; align-items: center; justify-content: space-between; margin-inline-end: -12px">
+<h2 id="hom-next" class="h3" style="margin: 0">مبارياتك القادمة</h2>
+<a href="MAT-01-A-venir.dc.html" class="mu-btn mu-btn--tertiary mu-btn--s"><span class="mu-btn__content"><span class="mu-btn__label label">مبارياتي</span></span></a>
+</div>
+<a href="MAT-01-A-venir.dc.html" class="mu-card mu-card--interactive" style="display: flex; align-items: center; gap: 12px; padding: 12px 14px 12px 12px; text-decoration: none; color: var(--text)">
+<x-import component-from-global-scope="MatchUp.Avatar" name="مريم ك." size="m"></x-import>
+<span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px">
+<span class="label">مريم ك. تدعوك إلى مباراة بادل</span>
+<span class="caption" style="color: var(--text-secondary)">Smash Padel Club · الجمعة 23 أكتوبر · <span class="num-xs">19:30</span> · 25 د.ت للفرد</span>
+</span>
+<span class="label-s" style="flex: none; padding: 2px 10px; border-radius: var(--radius-full); background: var(--accent); color: var(--on-accent)">ردّ</span>
+</a>
+<article class="mu-card mu-card--interactive mu-cards mu-booking-card mu-booking-card--compact is-upcoming" aria-labelledby="rtl-b1">
+<span class="mu-cards-cal mu-cards-cal--s mu-cards-tint--football" aria-hidden="true"><span class="overline">الأحد</span><span class="num-m">18</span><span class="overline">أكتوبر</span></span>
+<div class="mu-booking-card__main">
+<h3 id="rtl-b1" class="mu-cards-title label"><a class="mu-cards-link" href="MAT-05-Detail-reservation.dc.html">Arena Five · الملعب 2</a></h3>
+<p class="mu-cards-meta caption"><span class="num-xs mu-cards-strong rtl-ltr">20:00 – 21:00</span><span>· المرسى</span></p>
+<div class="mu-booking-card__line"><x-import component-from-global-scope="MatchUp.StatusBadge" status="confirmed" size="s" label="مؤكَّد"></x-import><span class="label-s mu-cards-muted">15 د.ت مدفوعة</span></div>
+</div>
+<x-import component-from-global-scope="MatchUp.IconButton" icon="qr-code" label="عرض رمز QR" variant="inverse" class-name="mu-cards-action"></x-import>
+</article>
+<article class="mu-card mu-card--interactive mu-cards mu-booking-card mu-booking-card--compact is-upcoming" aria-labelledby="rtl-b2">
+<span class="mu-cards-cal mu-cards-cal--s mu-cards-tint--football" aria-hidden="true"><span class="overline">الأربعاء</span><span class="num-m">21</span><span class="overline">أكتوبر</span></span>
+<div class="mu-booking-card__main">
+<h3 id="rtl-b2" class="mu-cards-title label"><a class="mu-cards-link" href="MAT-05-Detail-reservation.dc.html">Arena Five · الملعب 1</a></h3>
+<p class="mu-cards-meta caption"><span class="num-xs mu-cards-strong rtl-ltr">21:00 – 22:00</span><span>· المرسى</span></p>
+<div class="mu-booking-card__line"><x-import component-from-global-scope="MatchUp.StatusBadge" status="confirmed" size="s" label="مؤكَّد"></x-import><span class="label-s mu-cards-muted">15 د.ت مدفوعة</span></div>
+</div>
+<x-import component-from-global-scope="MatchUp.IconButton" icon="qr-code" label="عرض رمز QR" variant="inverse" class-name="mu-cards-action"></x-import>
+</article>
+</section>
+</div>
+
+<a href="AI-01-Assistant.dc.html" aria-label="فتح مساعد MatchUp" style="z-index: calc(var(--z-sticky) + 1); position: absolute; left: 16px; bottom: 114px; width: 56px; height: 56px; border-radius: var(--radius-full); "></a>
+<x-import component-from-global-scope="MatchUp.TabBar" items="{{tabs}}" value="accueil" label="التنقّل الرئيسي" safe-area="{{sa}}" fab="{{yes}}" dc-props="{{tabStyle}}"></x-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":1540}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      yes: true, artAbs: { className: 'mu-cards-art', style: { position: 'absolute', inset: 0, width: '100%', height: '100%' } }, i14: 14, i16: 16, i20: 20, i24: 24, n3: 3, inset: 44, sa: 34, four: 4,
+      me: { name: 'ياسين ب.' },
+      g1People: ['سكندر ت.', 'حمزة ر.', 'نور ع.', 'عزيز ح.', 'عمر د.', 'سلمى ق.', 'لينا ف.', 'إيناس م.'].map((name) => ({ name })),
+      g2People: [{ name: 'مريم ك.' }, { name: 'إيناس م.' }],
+      tabs: [
+        { value: 'accueil', label: 'الرئيسية', icon: 'house', href: 'HOM-01-Accueil.dc.html' },
+        { value: 'explorer', label: 'استكشف', icon: 'compass', href: 'EXP-01-Explorer-parties.dc.html' },
+        { value: 'matchs', label: 'مبارياتي', icon: 'calendar-check', badge: 1, badgeLabel: 'دعوة واحدة', href: 'MAT-01-A-venir.dc.html' },
+        { value: 'entrainement', label: 'التدريب', icon: 'barbell', href: 'ENT-01-Mon-entrainement.dc.html' },
+        { value: 'communaute', label: 'المجتمع', icon: 'users-three', href: 'FRM-01-Communaute.dc.html' }
+      ],
+      tabStyle: { style: { position: 'absolute', left: 0, right: 0, bottom: 0 } }
+    };
+  }
+}
+</script>
+</body>
+</html>

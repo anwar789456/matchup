@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Nouveau tournoi · Infos</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/matchup/tokens.css">
+<link rel="stylesheet" href="ds/matchup/components/bundle.css">
+<script src="ds/matchup/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+/* org:wizard — identical in ORG-05…ORG-09 */
+body{margin:0}
+a{color:var(--link)}
+.wz-root{position:relative; width:390px; box-sizing:border-box; overflow:hidden; display:flex; flex-direction:column; background:var(--surface); color:var(--text); font-family:var(--font-sans)}
+.wz-head{flex:none; display:flex; align-items:center; gap:var(--space-1); padding:52px var(--space-1) 0 var(--space-1)}
+.wz-head__txt{flex:1; min-width:0; display:flex; flex-direction:column}
+.wz-head__txt .caption{color:var(--text-secondary)}
+.wz-steps{flex:none; padding:var(--space-2) var(--space-4) var(--space-4) var(--space-4); border-bottom:1px solid var(--border)}
+.wz-body{flex:1; min-height:0; display:flex; flex-direction:column; gap:var(--space-6); padding:var(--space-5) var(--space-4) var(--space-8) var(--space-4)}
+.wz-body > *{flex-shrink:0}
+.wz-intro{display:flex; flex-direction:column; gap:var(--space-1)}
+.wz-intro p{margin:0; color:var(--text-secondary)}
+.wz-field{display:flex; flex-direction:column; gap:var(--space-3)}
+.wz-field__label{margin:0}
+.wz-rule{height:1px; background:var(--border); margin:0}
+.wz-help{margin:0; display:flex; align-items:flex-start; gap:var(--space-2); color:var(--text-secondary)}
+.wz-help > span:first-child{flex:none; display:flex; margin-top:1px}
+.wz-bar{flex:none; position:relative; z-index:var(--z-sticky); display:flex; flex-direction:column; gap:var(--space-2); padding:var(--space-2) var(--space-4) 34px var(--space-4); background:var(--surface); box-shadow:var(--elevation-2-up)}
+.wz-draft{display:flex; align-items:center; justify-content:center; gap:6px; min-height:24px; color:var(--text-secondary)}
+.wz-actions{display:flex; gap:var(--space-3)}
+.wz-actions > .mu-btn--secondary{flex:none; width:112px}
+.wz-actions > .mu-btn--primary{flex:1}
+.wz-muted{color:var(--text-secondary)}
+.wz-m0{margin:0}
+/* /org:wizard */
+.inf-poster{display:flex; gap:var(--space-4); align-items:center}
+.inf-poster__txt{flex:1; min-width:0; display:flex; flex-direction:column; align-items:flex-start; gap:var(--space-2)}
+.inf-poster__name{position:absolute; left:8px; right:8px; bottom:8px; color:var(--white); display:flex; flex-direction:column}
+</style>
+</helmet>
+<div class="wz-root" style="height: 1420px">
+<div class="wz-head">
+<a href="ORG-04-Mes-tournois.dc.html" class="mu-iconbtn mu-iconbtn--l mu-iconbtn--ghost" aria-label="Retour à mes tournois" style="color: var(--text)"><x-import component-from-global-scope="MatchUp.Icon" name="arrow-left" size="{{i24}}"></x-import></a>
+<div class="wz-head__txt"><h1 class="label-l wz-m0">Nouveau tournoi</h1><span class="caption">Tunis Padel Series</span></div>
+<a href="ORG-04-Mes-tournois.dc.html" class="mu-btn mu-btn--tertiary mu-btn--m" aria-label="Quitter, le brouillon est enregistré"><span class="mu-btn__content"><span class="mu-btn__label label">Quitter</span></span></a>
+</div>
+<div class="wz-steps"><x-import component-from-global-scope="MatchUp.WizardStepper" variant="compact" label="Créer un tournoi" steps="{{steps}}" current="{{cur}}"></x-import></div>
+
+<div class="wz-body">
+<div class="wz-intro">
+<h2 class="h2 wz-m0">Les infos de base</h2>
+<p class="body">C’est ce que les joueurs voient en premier dans Explorer.</p>
+</div>
+
+<x-import component-from-global-scope="MatchUp.TextField" label="Nom du tournoi" default-value="Coupe d’hiver padel" max-length="{{forty}}" counter="{{yes}}" helper="Court et facile à retenir : il apparaît sur l’affiche."></x-import>
+
+<div class="wz-field">
+<span class="label">Affiche</span>
+<div class="inf-poster">
+<x-import component-from-global-scope="MatchUp.CourtArt" sport="padel" variant="poster" label="Affiche générée : court de padel, 12–13 déc." dc-props="{{poster}}"><span class="inf-poster__name"><span class="num-l">12–13</span><span class="overline">déc.</span></span></x-import>
+<div class="inf-poster__txt">
+<span class="body wz-muted">Générée selon le sport et les dates. Tu peux importer la tienne (JPG ou PNG, format 3:4).</span>
+<button type="button" class="mu-btn mu-btn--secondary mu-btn--s"><span class="mu-btn__content"><x-import component-from-global-scope="MatchUp.Icon" name="upload-simple" size="{{i16}}"></x-import><span class="mu-btn__label label">Importer une affiche</span></span></button>
+</div>
+</div>
+</div>
+
+<div class="wz-rule"></div>
+
+<x-import component-from-global-scope="MatchUp.ChoiceCard.Group" label="Sport" type="radio" columns="{{three}}" value="{{sport}}" on-change="{{setSport}}">
+<x-import component-from-global-scope="MatchUp.ChoiceCard" value="football" sport="football" layout="tile"></x-import>
+<x-import component-from-global-scope="MatchUp.ChoiceCard" value="padel" sport="padel" layout="tile"></x-import>
+<x-import component-from-global-scope="MatchUp.ChoiceCard" value="basketball" sport="basketball" layout="tile"></x-import>
+</x-import>
+
+<div class="wz-field">
+<span class="label">Catégorie</span>
+<x-import component-from-global-scope="MatchUp.SegmentedControl" label="Catégorie" full-width="{{yes}}" value="{{cat}}" on-change="{{setCat}}" options="{{cats}}"></x-import>
+</div>
+
+<div class="wz-field">
+<x-import component-from-global-scope="MatchUp.RangeSlider" label="Niveau moyen des équipes" min="{{one}}" max="{{seven}}" step="{{half}}" page-step="{{bandStep}}" default-value="{{lvl}}" format="{{fmtLevel}}" bands="{{bands}}" min-label="Niveau minimum" max-label="Niveau maximum"></x-import>
+<p class="wz-help caption"><span><x-import component-from-global-scope="MatchUp.Icon" name="info" size="{{i16}}"></x-import></span><span>Une équipe hors fourchette peut quand même s’inscrire : tu la valides ou la refuses à la main.</span></p>
+</div>
+
+<div class="wz-rule"></div>
+
+<x-import component-from-global-scope="MatchUp.TextField" label="Présentation" multiline="{{yes}}" rows="{{four}}" max-length="{{fivehundred}}" counter="{{yes}}" default-value="Le tournoi de fin d’année de Tunis Padel Series : deux jours de padel au Lac 2, sur les courts couverts s’il pleut. Poules le samedi, phase finale le dimanche. Balles fournies, ambiance garantie."></x-import>
+</div>
+
+<div class="wz-bar">
+<span class="wz-draft caption"><x-import component-from-global-scope="MatchUp.Icon" name="cloud-check" size="{{i16}}"></x-import>Brouillon enregistré · à l’instant</span>
+<div class="wz-actions">
+<a href="ORG-06-Creer-format.dc.html" class="mu-btn mu-btn--primary mu-btn--xl"><span class="mu-btn__content"><span class="mu-btn__label label-l">Continuer</span><x-import component-from-global-scope="MatchUp.Icon" name="arrow-right" size="{{i20}}"></x-import></span></a>
+</div>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":1420}}'>
+class Component extends DCLogic {
+  state = { sport: 'padel', cat: 'mixte' };
+  renderVals() {
+    const s = this.state;
+    return {
+      yes: true, no: false, i16: 16, i20: 20, i24: 24, one: 1, three: 3, four: 4, seven: 7, forty: 40, fivehundred: 500, half: 0.5, bandStep: 1.5,
+      steps: [{ label: 'Infos' }, { label: 'Format & règles' }, { label: 'Terrains & dates' }, { label: 'Frais & prix' }, { label: 'Aperçu' }],
+      cur: 0,
+      poster: { style: { width: 96, height: 128, borderRadius: 'var(--radius-sm)', flex: 'none', position: 'relative' } },
+      sport: s.sport, setSport: (v) => this.setState({ sport: v }),
+      cat: s.cat, setCat: (v) => this.setState({ cat: v }),
+      cats: [{ value: 'mixte', label: 'Mixte' }, { value: 'femmes', label: 'Femmes' }, { value: 'hommes', label: 'Hommes' }],
+      lvl: [3, 4.5],
+      fmtLevel: (v) => v.toFixed(1).replace('.', ','),
+      bands: [{ from: 1, to: 2.5, label: 'Débutant' }, { from: 2.5, to: 4, label: 'Intermédiaire' }, { from: 4, to: 5.5, label: 'Avancé' }, { from: 5.5, to: 7, label: 'Expert' }]
+    };
+  }
+}
+</script>
+</body>
+</html>

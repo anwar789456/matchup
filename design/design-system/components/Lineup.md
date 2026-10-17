@@ -15,7 +15,7 @@ Who plays where in an open game — a 5 v 5 pitch, a padel 2 v 2 court or a bask
 | `basketball` | 200 : 188, 3 v 3 half-court | Meneur · Ailier · Pivot | A left of the key, B right (mirrored) |
 
 - **Header**: title `label-l` (« Composition »), min height `control-s`; counter « 8/10 » in `num-m` + « 2 places libres » `label-s` `text-secondary`, or a StatusBadge S « Complet » when full.
-- **Court**: `<sport>` fill (the same in both themes, like a photo), `radius-md`, `elevation-1`; 2px `court-line` markings, padel glass and net, basketball paint.
+- **Court**: `<sport>` fill, night-lit in dark mode (see Dark mode), `radius-md`, `elevation-1`; 2px `court-line` markings, padel glass and net, basketball paint.
 - **Team tag**: pinned to its half — 24 high, `radius-full`, `surface`, `elevation-1`: `t-shirt` 14 (fill) in `text-secondary` · name `label-s` · « 4/5 » `num-xs` after a 1px `border-strong` rule.
 - **Player**: Avatar with its level badge and a 2px `surface` ring; name pill `space-1` below — `label-s` on `surface`, `elevation-1`, max 96 with ellipsis. Organiser or captain: a 22px `surface-inverse` disc with `crown` (fill) at the avatar's top corner.
 - **You**: a 3px `accent` ring outside a 2px `surface` gap, and the pill reads « Toi » in `on-accent` on `accent`.
@@ -51,11 +51,14 @@ Who plays where in an open game — a 5 v 5 pitch, a padel 2 v 2 court or a bask
 ## Do / Don't
 - Do keep free positions visible after registrations close — the gaps tell the story.
 - Do go through payment from `onJoin`; a tap never joins silently.
-- Don't recolour courts by theme or use Volt for anyone but the signed-in player.
+- Don't use other colours for courts than their sport colour (night-lit in dark), or Volt for anyone but the signed-in player.
 - Don't make the compact court a control — the card around it opens the lobby.
 
 ## Props (web preview)
 `sport` · `teams` · `variant` · `title` · `onJoin` · `disabled` · `skeleton` · `avatarSize` · `showCounter` · `slotState` (preview only). See `index.d.ts`.
+
+## Dark mode
+The pitch is night-lit in dark mode: sport colour mixed 68 % with `night-900` (Flutter: `Color.lerp(sportColor, night900, 0.32)`), so it never glares.
 
 ## Flutter
 `MuLineup(sport: MuSport.football, teams: [MuLineupTeam(name: 'Blancs', players: [...])], variant: MuLineupVariant.full, onJoin: (team, slot, position) => …, disabled: false, loading: false)` — an `AspectRatio` + `LayoutBuilder` `Stack`: a `CustomPaint` court on the same 200-unit geometry, then each position `Positioned` at its fraction of the court and centred on the avatar. Free positions are an `InkWell` with a dashed `CustomPaint` ring in `Semantics(button: true, label: …)`; the drop-in is a `TweenAnimationBuilder` on `Cubic(0.34, 1.56, 0.64, 1)` (`ease-pop`). Wrap the court in `Directionality(textDirection: TextDirection.ltr)` so it never mirrors.

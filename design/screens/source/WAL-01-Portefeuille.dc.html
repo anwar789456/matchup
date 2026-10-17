@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Portefeuille</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/matchup/tokens.css">
+<link rel="stylesheet" href="ds/matchup/components/bundle.css">
+<script src="ds/matchup/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0}
+a{color:var(--link)}
+.wal-bal{position:relative; overflow:hidden; display:flex; flex-direction:column; gap:var(--space-4); padding:var(--space-5); border-radius:var(--radius-lg); background:var(--surface-inverse); color:var(--text-inverse); box-shadow:var(--elevation-2)}
+.wal-bal__ring{position:absolute; border-radius:var(--radius-full); border:1.5px solid color-mix(in srgb, var(--text-inverse) 12%, transparent); pointer-events:none}
+.wal-bal__line{position:absolute; top:0; bottom:0; width:0; border-left:1.5px solid color-mix(in srgb, var(--text-inverse) 12%, transparent); pointer-events:none}
+.wal-bal__muted{color:color-mix(in srgb, var(--text-inverse) 72%, transparent)}
+.wal-cta{background:var(--accent); color:var(--on-accent)}
+.wal-cta:hover{background:var(--accent); filter:brightness(0.96)}
+.wal-sec{display:flex; flex-direction:column; gap:var(--space-3)}
+.wal-chips{display:flex; gap:var(--space-2); overflow-x:auto; margin:0 -16px; padding:2px 16px 4px 16px; scrollbar-width:none}
+.wal-chips::-webkit-scrollbar{display:none}
+.wal-group{display:flex; flex-direction:column; gap:var(--space-2)}
+.wal-group__t{margin:0; padding-inline:var(--space-1); color:var(--text-secondary)}
+.wal-link{display:flex; align-items:center; gap:var(--space-3); padding:var(--space-3) var(--space-3) var(--space-3) var(--space-4); text-decoration:none; color:var(--text)}
+.wal-link__ico{flex:none; width:40px; height:40px; border-radius:var(--radius-full); display:flex; align-items:center; justify-content:center}
+.wal-link__txt{flex:1; min-width:0; display:flex; flex-direction:column; gap:2px}
+.wal-chev{flex:none; display:flex; color:var(--text-secondary)}
+</style>
+</helmet>
+<div style="position: relative; width: 390px; height: 1308px; box-sizing: border-box; overflow: hidden; display: flex; flex-direction: column; background: var(--bg); color: var(--text); font-family: var(--font-sans)">
+
+<div style="display: flex; align-items: center; gap: 4px; padding: 52px 16px 8px 8px">
+<a href="PRF-05-Menu-du-compte.dc.html" class="mu-iconbtn mu-iconbtn--l mu-iconbtn--ghost" aria-label="Retour au menu du compte" style="color: var(--text)"><x-import component-from-global-scope="MatchUp.Icon" name="arrow-left" size="{{i24}}"></x-import></a>
+<h1 class="h3" style="flex: 1; margin: 0">Portefeuille</h1>
+</div>
+
+<div style="flex: 1; min-height: 0; display: flex; flex-direction: column; gap: 28px; padding: 8px 16px 32px 16px">
+
+<div style="display: flex; flex-direction: column; gap: 16px">
+<section class="wal-bal" aria-label="Solde MatchUp : 30 DT">
+<span class="wal-bal__ring" style="right: -86px; top: -40px; width: 220px; height: 220px"></span>
+<span class="wal-bal__ring" style="right: 26px; top: 72px; width: 6px; height: 6px; background: color-mix(in srgb, var(--text-inverse) 16%, transparent); border: 0"></span>
+<span class="wal-bal__line" style="right: 28px"></span>
+<div style="position: relative; display: flex; flex-direction: column; gap: 4px">
+<span class="overline wal-bal__muted" style="display: flex; align-items: center; gap: 6px"><x-import component-from-global-scope="MatchUp.Icon" name="wallet" size="{{i16}}"></x-import>Solde MatchUp</span>
+<span><span class="num-hero">30</span><span class="num-l"> DT</span></span>
+<span class="caption wal-bal__muted">Paie tes parts en un tap. Tes remboursements arrivent ici.</span>
+</div>
+<a href="WAL-02-Recharger.dc.html" class="mu-btn mu-btn--primary mu-btn--l mu-btn--block wal-cta" style="position: relative"><span class="mu-btn__content"><x-import component-from-global-scope="MatchUp.Icon" name="plus" size="{{i20}}"></x-import><span class="mu-btn__label label-l">Recharger</span></span></a>
+</section>
+
+<div class="mu-card" style="display: flex; flex-direction: column; padding: 0; overflow: hidden">
+<a href="WAL-05-Statut-du-remboursement.dc.html" class="wal-link">
+<span class="wal-link__ico" style="background: var(--info-soft); color: var(--info-text)"><x-import component-from-global-scope="MatchUp.Icon" name="arrow-u-up-left" size="{{i20}}"></x-import></span>
+<span class="wal-link__txt"><span class="label">Remboursement demandé · 9 DT</span><span class="caption" style="display: flex; align-items: center; gap: 6px; color: var(--text-secondary)"><x-import component-from-global-scope="MatchUp.StatusBadge" status="pending" size="s" label="En cours d’examen"></x-import>Hoop Zone</span></span>
+<span class="wal-chev"><x-import component-from-global-scope="MatchUp.Icon" name="caret-right" size="{{i20}}"></x-import></span>
+</a>
+<a href="WAL-04-Demande-de-remboursement.dc.html" class="wal-link" style="border-top: 1px solid var(--border)">
+<span class="wal-link__ico" style="background: var(--surface-muted); color: var(--text)"><x-import component-from-global-scope="MatchUp.Icon" name="receipt" size="{{i20}}"></x-import></span>
+<span class="wal-link__txt"><span class="label">Demander un remboursement</span><span class="caption" style="color: var(--text-secondary)">Terrain fermé, match annulé…</span></span>
+<span class="wal-chev"><x-import component-from-global-scope="MatchUp.Icon" name="caret-right" size="{{i20}}"></x-import></span>
+</a>
+</div>
+</div>
+
+<section class="wal-sec" aria-labelledby="wal-hist">
+<div style="display: flex; flex-direction: column; gap: 4px">
+<h2 id="wal-hist" class="h3" style="margin: 0">Historique</h2>
+<p class="caption" style="margin: 0; color: var(--text-secondary)">Les paiements par carte sont listés pour ton suivi, sans toucher à ton solde.</p>
+</div>
+<div class="wal-chips" role="group" aria-label="Filtrer l’historique">
+<x-import component-from-global-scope="MatchUp.Chip" size="s" selected="{{fAll}}" on-click="{{toAll}}">Tout</x-import>
+<x-import component-from-global-scope="MatchUp.Chip" size="s" selected="{{fPay}}" on-click="{{toPay}}">Paiements</x-import>
+<x-import component-from-global-scope="MatchUp.Chip" size="s" selected="{{fRef}}" on-click="{{toRef}}">Remboursements</x-import>
+<x-import component-from-global-scope="MatchUp.Chip" size="s" selected="{{fTop}}" on-click="{{toTop}}">Recharges</x-import>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 20px">
+<sc-if value="{{showPay}}">
+<div class="wal-group">
+<h3 class="wal-group__t overline">Aujourd’hui</h3>
+<div class="mu-card">
+<x-import component-from-global-scope="MatchUp.TransactionRow" chevron="{{no}}" category="booking" sport="football" label="Part · Arena Five, mer. 21 oct." meta="ven. 16 oct. · 18h02 · Carte •••• 4242" amount="{{m15}}" href="SUB-09-Facture-PDF.dc.html"></x-import>
+</div>
+</div>
+</sc-if>
+
+<div class="wal-group">
+<h3 class="wal-group__t overline">Octobre 2026</h3>
+<div class="mu-card">
+<sc-if value="{{showRef}}"><x-import component-from-global-scope="MatchUp.TransactionRow" chevron="{{no}}" category="refund" label="Remboursement · Arena Five" meta="ven. 9 oct. · partie annulée" amount="{{p15}}" on-click="{{noop}}"></x-import></sc-if>
+<sc-if value="{{showPay}}"><x-import component-from-global-scope="MatchUp.TransactionRow" chevron="{{no}}" category="booking" sport="padel" label="Part · Smash Padel Club" meta="ven. 9 oct. · Solde MatchUp" amount="{{m20}}" on-click="{{noop}}"></x-import></sc-if>
+<sc-if value="{{showPay}}"><x-import component-from-global-scope="MatchUp.TransactionRow" chevron="{{no}}" category="booking" sport="football" label="Part · Arena Five" meta="mar. 6 oct. · Solde MatchUp" amount="{{m15}}" status="refunded" on-click="{{noop}}"></x-import></sc-if>
+<sc-if value="{{showTop}}"><x-import component-from-global-scope="MatchUp.TransactionRow" chevron="{{no}}" category="topup" label="Recharge" meta="lun. 5 oct. · Carte Visa •••• 4242" amount="{{p50}}" on-click="{{noop}}"></x-import></sc-if>
+<sc-if value="{{showPay}}"><x-import component-from-global-scope="MatchUp.TransactionRow" chevron="{{no}}" category="booking" sport="football" label="Part · Arena Five" meta="sam. 3 oct. · Carte •••• 4242" amount="{{m15}}" on-click="{{noop}}"></x-import></sc-if>
+</div>
+</div>
+
+<sc-if value="{{showPay}}">
+<div class="wal-group">
+<h3 class="wal-group__t overline">Septembre 2026</h3>
+<div class="mu-card">
+<x-import component-from-global-scope="MatchUp.TransactionRow" chevron="{{no}}" category="booking" sport="basketball" label="Part · Hoop Zone" meta="dim. 27 sept. · Carte •••• 4242" amount="{{m9}}" href="WAL-05-Statut-du-remboursement.dc.html"></x-import>
+</div>
+</div>
+</sc-if>
+</div>
+<p class="caption" style="margin: 0; text-align: center; color: var(--text-secondary)">C’est tout ton historique.</p>
+</section>
+
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":1308}}'>
+class Component extends DCLogic {
+  state = { f: 'all' };
+  renderVals() {
+    const f = this.state.f;
+    const set = (v) => () => this.setState({ f: v });
+    return {
+      yes: true, no: false, i16: 16, i20: 20, i24: 24,
+      m15: -15, m20: -20, m9: -9, p15: 15, p50: 50,
+      noop: () => {},
+      fAll: f === 'all', fPay: f === 'pay', fRef: f === 'ref', fTop: f === 'top',
+      toAll: set('all'), toPay: set('pay'), toRef: set('ref'), toTop: set('top'),
+      showPay: f === 'all' || f === 'pay',
+      showRef: f === 'all' || f === 'ref',
+      showTop: f === 'all' || f === 'top'
+    };
+  }
+}
+</script>
+</body>
+</html>

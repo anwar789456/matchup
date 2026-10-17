@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Email · Rappel de match</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/matchup/tokens.css">
+<link rel="stylesheet" href="ds/matchup/components/bundle.css">
+<script src="ds/matchup/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0}
+a{color:var(--link)}
+.eml-app{padding:52px 4px 0 4px; background:var(--surface); box-shadow:inset 0 -1px 0 var(--border)}
+.eml-app__tool{display:flex; width:44px; height:44px; align-items:center; justify-content:center}
+.eml-band{display:flex; align-items:center; justify-content:space-between; gap:var(--space-4); padding:var(--space-5); background:var(--ink-900); border-bottom:4px solid var(--volt-400)}
+.eml-hero{display:flex; flex-direction:column; gap:var(--space-3); padding:var(--space-8) var(--space-5) 0 var(--space-5)}
+.eml-fiche{margin:var(--space-6) var(--space-5) 0 var(--space-5); border-radius:var(--radius-md); background:var(--surface); box-shadow:inset 0 0 0 1px var(--border); overflow:hidden}
+.eml-fiche__head{display:flex; flex-direction:column; gap:var(--space-3); padding:var(--space-4); background:var(--surface-muted)}
+.eml-row{display:flex; gap:var(--space-3); padding:var(--space-3) var(--space-4); border-top:1px solid var(--border)}
+.eml-row__k{flex:none; width:92px; margin:0; padding-top:2px; color:var(--text-secondary)}
+.eml-lines{display:flex; flex-direction:column; gap:var(--space-2); padding:var(--space-3) var(--space-4); border-top:1px solid var(--border)}
+.eml-line{display:flex; align-items:baseline; justify-content:space-between; gap:var(--space-3)}
+.eml-line > :last-child{flex:none; white-space:nowrap}
+.eml-row__v{flex:1; min-width:0; margin:0; color:var(--text)}
+.eml-cta{display:flex; flex-direction:column; align-items:stretch; gap:var(--space-2); padding:var(--space-6) var(--space-5) 0 var(--space-5)}
+.eml-sec{display:flex; flex-direction:column; gap:var(--space-3); padding:var(--space-8) var(--space-5) 0 var(--space-5)}
+.eml-sign{margin:0; padding:var(--space-8) var(--space-5); color:var(--text)}
+.eml-link{display:inline-flex; align-items:center; gap:var(--space-2); min-height:44px; color:var(--link); text-decoration:underline; text-underline-offset:3px}
+.eml-item{display:flex; gap:var(--space-3); align-items:flex-start}
+.eml-tile{flex:none; display:flex; align-items:center; justify-content:center; width:40px; height:40px; border-radius:var(--radius-sm); background:var(--surface-muted); color:var(--text)}
+.eml-foot{max-width:var(--email); margin:0 auto; display:flex; flex-direction:column; gap:var(--space-3); padding:var(--space-6) var(--space-5) var(--space-10) var(--space-5)}
+</style>
+</helmet>
+<div class="eml-root" style="position: relative; width: 390px; height: 1820px; box-sizing: border-box; overflow: hidden; background: var(--bg); color: var(--text); font-family: var(--font-sans)">
+<header class="eml-app" aria-label="Application mail · lecture du message">
+<div style="display: flex; align-items: center; justify-content: space-between; height: 44px">
+<span style="display: flex; align-items: center; gap: 2px; color: var(--text-secondary)"><x-import component-from-global-scope="MatchUp.Icon" name="caret-left" size="{{i24}}"></x-import><span class="body-l">Boîte de réception</span></span>
+<span style="display: flex; align-items: center; color: var(--text-secondary)"><span class="eml-app__tool" aria-label="Marquer comme non lu"><x-import component-from-global-scope="MatchUp.Icon" name="envelope-simple" size="{{i24}}"></x-import></span><span class="eml-app__tool" aria-label="Supprimer"><x-import component-from-global-scope="MatchUp.Icon" name="trash" size="{{i24}}"></x-import></span><span class="eml-app__tool" aria-label="Plus d’actions"><x-import component-from-global-scope="MatchUp.Icon" name="dots-three" size="{{i24}}"></x-import></span></span>
+</div>
+<div style="display: flex; flex-direction: column; gap: 16px; padding: 12px 12px 16px 12px">
+<p class="h3" style="margin: 0">Demain 20h00 : foot à Arena Five</p>
+<div style="display: flex; align-items: center; gap: 12px">
+<x-import component-from-global-scope="MatchUp.Logo" variant="icon" height="{{senderH}}" title="MatchUp"></x-import>
+<div style="flex: 1; min-width: 0; display: flex; flex-direction: column">
+<div style="display: flex; align-items: baseline; justify-content: space-between; gap: 8px"><span class="label-l">MatchUp</span><span class="caption" style="color: var(--text-secondary)">10:00</span></div>
+<span class="caption" style="display: flex; align-items: center; gap: 2px; color: var(--text-secondary)">à moi <x-import component-from-global-scope="MatchUp.Icon" name="caret-down" size="{{i16}}"></x-import></span>
+</div>
+</div>
+</div>
+</header>
+<main aria-label="Email de MatchUp" style="background: var(--bg)">
+<article style="max-width: var(--email); margin: 0 auto; background: var(--surface)">
+<div class="eml-band">
+<x-import component-from-global-scope="MatchUp.Logo" tone="dark" height="{{logoH}}"></x-import>
+<span class="overline" style="color: var(--ink-300)">Rappel de match</span>
+</div>
+<div class="eml-hero">
+<h1 class="h1" style="margin: 0">Demain 20h00, foot à Arena Five</h1>
+<p class="body-l" style="margin: 0; color: var(--text)">Salut Yassine, tout est prêt pour dimanche soir. Voici l’essentiel pour arriver à l’heure.</p>
+</div>
+<section class="eml-fiche" aria-label="Ta partie">
+<div class="eml-fiche__head">
+<div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap"><x-import component-from-global-scope="MatchUp.Chip" kind="sport" sport="football" size="s"></x-import><x-import component-from-global-scope="MatchUp.StatusBadge" status="confirmed" size="s" label="Tu joues"></x-import></div>
+<div style="display: flex; flex-direction: column; gap: 4px">
+<p class="h2" style="margin: 0">Football 5v5 mixte</p>
+<span class="body-l" style="color: var(--text-secondary)">Arena Five · Terrain 2 · La Marsa</span>
+<div style="display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap"><span class="overline" style="color: var(--text-secondary)">dim. 18 oct.</span><span class="num-xl">20h00 – 21h00</span></div>
+</div>
+</div>
+<div class="eml-row"><p class="eml-row__k body">Joueurs</p><div class="eml-row__v body-l"><div style="display: flex; flex-direction: column; gap: 8px"><span><span class="label-l">9/10</span> · 1 place libre</span><x-import component-from-global-scope="MatchUp.AvatarStack" people="{{team9}}" max="{{five}}" size="s" label="9 joueurs inscrits"></x-import></div></div></div>
+<div class="eml-row"><p class="eml-row__k body">Organisé par</p><div class="eml-row__v body-l">Skander T. · Fiable 96 %</div></div>
+<div class="eml-row"><p class="eml-row__k body">Ta part</p><div class="eml-row__v body-l"><span class="label-l">15 DT</span> · payée</div></div>
+<div class="eml-row"><p class="eml-row__k body">Adresse</p><div class="eml-row__v body-l">Route de la Corniche, La Marsa · 1,4 km</div></div>
+</section>
+<div class="eml-cta">
+<a href="GAM-05-Tu-es-inscrit.dc.html" class="mu-btn mu-btn--primary mu-btn--xl mu-btn--block"><span class="mu-btn__content"><span class="mu-btn__label label-l">Voir la partie</span></span></a>
+<div style="display: flex; flex-wrap: wrap; justify-content: center; column-gap: 24px"><a class="eml-link label-l"><x-import component-from-global-scope="MatchUp.Icon" name="navigation-arrow" size="{{i20}}"></x-import><span>Itinéraire</span></a></div>
+</div>
+<section class="eml-sec">
+<div style="display: flex; align-items: center; gap: 8px"><h2 class="h3" style="margin: 0">Avant de partir</h2></div>
+<div class="eml-item"><span class="eml-tile"><x-import component-from-global-scope="MatchUp.Icon" name="clock" size="{{i24}}"></x-import></span><div style="display: flex; flex-direction: column; gap: 2px; padding-top: 2px"><span class="body-l" style="color: var(--text)">Arrive 10 min avant, à 19h50.</span></div></div>
+<div class="eml-item"><span class="eml-tile"><x-import component-from-global-scope="MatchUp.Icon" name="t-shirt" size="{{i24}}"></x-import></span><div style="display: flex; flex-direction: column; gap: 2px; padding-top: 2px"><span class="body-l" style="color: var(--text)">Chasubles fournies sur place.</span></div></div>
+<div class="eml-item"><span class="eml-tile"><x-import component-from-global-scope="MatchUp.Icon" name="sneaker-move" size="{{i24}}"></x-import></span><div style="display: flex; flex-direction: column; gap: 2px; padding-top: 2px"><span class="body-l" style="color: var(--text)">Terrain synthétique : crampons moulés ou baskets.</span></div></div>
+</section>
+<section class="eml-sec">
+<div style="display: flex; align-items: center; gap: 8px"><h2 class="h3" style="margin: 0">Tu ne peux plus venir ?</h2></div>
+<p class="body-l" style="margin: 0; color: var(--text)">Annule gratuitement jusqu’à ce soir, sam. 17 oct. · 20h00 : tes 15 DT reviennent sur ton solde et ta place est proposée à un autre joueur. Ta fiabilité ne bouge pas.</p>
+<div><a href="MAT-07-Quitter-la-partie.dc.html" class="eml-link label-l"><span>Quitter la partie</span></a></div>
+</section>
+<p class="eml-sign body-l">À très vite sur le terrain,<br>L’équipe MatchUp</p>
+</article>
+<footer class="eml-foot">
+<div style="display: flex; align-items: center; gap: 8px"><x-import component-from-global-scope="MatchUp.Logo" variant="icon" height="{{footH}}" title=""></x-import><span class="label">Joue. Réserve. Progresse.</span></div>
+<p class="body" style="margin: 0">Tu reçois cet email car tu es inscrit à cette partie.</p>
+<div style="display: flex; flex-wrap: wrap; column-gap: 24px"><a href="NOT-10-Preferences.dc.html" class="eml-link label">Gérer mes notifications</a><a class="eml-link label">Se désabonner</a></div>
+<p class="caption" style="margin: 0; color: var(--text-secondary)">MatchUp · Tunis, Tunisie · contact@matchup.tn<br>Conditions d’utilisation · Confidentialité · © 2026 MatchUp</p>
+</footer>
+</main>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":1820}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      yes: true, no: false, i16: 16, i20: 20, i24: 24, i32: 32, senderH: 40, logoH: 24, footH: 24, qrLogoH: 34,
+      team9: [{ name: 'Skander T.' }, { name: 'Hamza R.' }, { name: 'Nour A.' }, { name: 'Aziz H.' }, { name: 'Omar D.' }, { name: 'Salma G.' }, { name: 'Lina F.' }, { name: 'Ines M.' }, { name: 'Yassine B.' }], five: 5
+    };
+  }
+}
+</script>
+</body>
+</html>

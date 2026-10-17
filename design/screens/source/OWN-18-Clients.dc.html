@@ -1,0 +1,340 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Clients</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/matchup/tokens.css">
+<link rel="stylesheet" href="ds/matchup/components/bundle.css">
+<script src="ds/matchup/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+/* own:sub — identical in OWN-17, 18, 19, 25 */
+body{margin:0}
+a{color:var(--link)}
+.own-back{position:absolute; left:4px; top:48px; width:48px; height:48px; border-radius:var(--radius-full); z-index:2}
+.own-back:focus-visible{outline:none; box-shadow:var(--focus-ring)}
+.own-body{flex:1; min-height:0; display:flex; flex-direction:column; gap:var(--space-5); padding:var(--space-2) var(--space-4) var(--space-8) var(--space-4)}
+.own-sec{color:var(--text-secondary)}
+.own-t{margin:0; padding-inline:var(--space-1); color:var(--text-secondary)}
+.own-row{display:flex; align-items:center; gap:var(--space-3)}
+/* /own:sub */
+.cli-chips{display:flex; gap:var(--space-2); overflow-x:auto; margin:0 -16px; padding:2px 16px 4px 16px; scrollbar-width:none}
+.cli-chips::-webkit-scrollbar{display:none}
+.cli-list{margin:0; padding:0; list-style:none; overflow:hidden}
+.cli-li + .cli-li{border-top:1px solid var(--border)}
+.cli-row{appearance:none; border:0; margin:0; width:100%; font:inherit; color:var(--text); text-align:start; cursor:pointer; background:transparent; display:flex; align-items:center; gap:var(--space-3); min-height:72px; padding:var(--space-3) var(--space-3) var(--space-3) var(--space-4); box-sizing:border-box; transition:background var(--duration-fast) var(--ease-enter)}
+.cli-row:hover{background:var(--surface-muted)}
+.cli-row:focus-visible{outline:none; box-shadow:inset 0 0 0 2px var(--focus)}
+.cli-row__txt{flex:1; min-width:0; display:flex; flex-direction:column; gap:3px}
+.cli-row__name{display:flex; align-items:center; gap:var(--space-2); flex-wrap:wrap}
+.cli-ns{display:inline-flex; align-items:center; gap:4px; padding:1px 8px; border-radius:var(--radius-full); background:var(--warning-soft); color:var(--warning-text)}
+.cli-new{display:inline-flex; align-items:center; gap:4px; padding:1px 8px; border-radius:var(--radius-full); background:var(--info-soft); color:var(--info-text)}
+.cli-chev{flex:none; display:flex}
+.cli-det{display:flex; flex-direction:column; gap:var(--space-4); padding:0 var(--space-4) var(--space-4) var(--space-4)}
+.cli-stats{display:grid; grid-template-columns:repeat(3, 1fr); border-radius:var(--radius-sm); background:var(--surface-muted)}
+.cli-stats > div{display:flex; flex-direction:column; gap:2px; padding:var(--space-2) var(--space-3)}
+.cli-stats > div + div{border-inline-start:1px solid var(--border)}
+.cli-dl{margin:0; display:flex; flex-direction:column; gap:var(--space-2)}
+.cli-dl > div{display:flex; align-items:center; justify-content:space-between; gap:var(--space-3)}
+.cli-dl dd{margin:0; text-align:end}
+.cli-acts{display:grid; grid-template-columns:1fr 1fr; gap:var(--space-3)}
+</style>
+</helmet>
+<div style="position: relative; width: 390px; height: 1184px; box-sizing: border-box; overflow: hidden; display: flex; flex-direction: column; background: var(--bg); color: var(--text); font-family: var(--font-sans)">
+<x-import component-from-global-scope="MatchUp.TopAppBar" title="Clients" subtitle="Espace propriétaire · Arena Five" on-back="{{noop}}" back-label="Retour à Plus" actions="{{barActions}}" inset="{{inset}}"></x-import>
+<a href="OWN-15-Plus.dc.html" class="own-back" aria-label="Retour à Plus"></a>
+
+<div class="own-body" style="gap: 16px">
+<x-import component-from-global-scope="MatchUp.SearchField" label="Rechercher un client" placeholder="Nom, téléphone ou n° de réservation"></x-import>
+
+<div class="cli-chips" role="group" aria-label="Filtrer les clients">
+<x-import component-from-global-scope="MatchUp.Chip" size="s" selected="{{f.all}}" count="{{n.all}}" on-click="{{to.all}}">Tous</x-import>
+<x-import component-from-global-scope="MatchUp.Chip" size="s" selected="{{f.reg}}" count="{{n.reg}}" on-click="{{to.reg}}">Habitués</x-import>
+<x-import component-from-global-scope="MatchUp.Chip" size="s" selected="{{f.new}}" count="{{n.new}}" on-click="{{to.new}}">Nouveaux</x-import>
+<x-import component-from-global-scope="MatchUp.Chip" size="s" selected="{{f.ns}}" count="{{n.ns}}" on-click="{{to.ns}}">Avec no-show</x-import>
+</div>
+
+<section aria-labelledby="cli-t" style="display: flex; flex-direction: column; gap: 8px">
+<div class="own-row" style="justify-content: space-between">
+<h2 id="cli-t" class="overline own-t">286 clients · par visites</h2>
+<span class="caption own-sec">depuis le 19 sept.</span>
+</div>
+<ul class="mu-card cli-list">
+<sc-if value="{{show.hamza}}">
+<li class="cli-li">
+<button type="button" class="cli-row" aria-expanded="{{exp.hamza}}" onclick="{{tog.hamza}}">
+<x-import component-from-global-scope="MatchUp.Avatar" name="Hamza R." size="m"></x-import>
+<span class="cli-row__txt">
+<span class="cli-row__name"><span class="label-l">Hamza R.</span></span>
+<span class="caption own-sec"><span class="num-xs" style="color: var(--text)">23</span> visites · <span class="num-xs" style="color: var(--text)">345 DT</span> · aujourd’hui · 17h00</span>
+</span>
+<span class="cli-chev own-sec"><x-import component-from-global-scope="MatchUp.Icon" name="{{chev.hamza}}" size="{{i20}}"></x-import></span>
+</button>
+<sc-if value="{{exp.hamza}}">
+<div class="cli-det">
+<div class="cli-stats">
+<div><span class="num-l">23</span><span class="caption own-sec">visites</span></div>
+<div><span class="num-l">345 DT</span><span class="caption own-sec">dépensés</span></div>
+<div><span class="num-l" style="color: var(--text)">0</span><span class="caption own-sec">no-show</span></div>
+</div>
+<dl class="cli-dl">
+<div><dt class="body own-sec">Fiabilité MatchUp</dt><dd><x-import component-from-global-scope="MatchUp.ReliabilityBadge" score="{{r.hamza}}" size="s"></x-import></dd></div>
+<div><dt class="body own-sec">Créneau préféré</dt><dd class="body">Terrain 1 · jeu. 17h</dd></div>
+<div><dt class="body own-sec">Premier match ici</dt><dd class="body">sam. 19 sept.</dd></div>
+</dl>
+<div class="cli-acts">
+<a href="OWN-14-Reservations.dc.html" class="mu-btn mu-btn--secondary mu-btn--m mu-btn--block"><span class="mu-btn__content"><x-import component-from-global-scope="MatchUp.Icon" name="list-checks" size="{{i16}}"></x-import><span class="mu-btn__label label">Réservations</span></span></a>
+<button type="button" class="mu-btn mu-btn--secondary mu-btn--m mu-btn--block"><span class="mu-btn__content"><x-import component-from-global-scope="MatchUp.Icon" name="chat-circle-dots" size="{{i16}}"></x-import><span class="mu-btn__label label">Message</span></span></button>
+</div>
+</div>
+</sc-if>
+</li>
+</sc-if>
+<sc-if value="{{show.yassine}}">
+<li class="cli-li">
+<button type="button" class="cli-row" aria-expanded="{{exp.yassine}}" onclick="{{tog.yassine}}">
+<x-import component-from-global-scope="MatchUp.Avatar" name="Yassine B." size="m"></x-import>
+<span class="cli-row__txt">
+<span class="cli-row__name"><span class="label-l">Yassine B.</span></span>
+<span class="caption own-sec"><span class="num-xs" style="color: var(--text)">14</span> visites · <span class="num-xs" style="color: var(--text)">210 DT</span> · prochaine · mer. 21 oct.</span>
+</span>
+<span class="cli-chev own-sec"><x-import component-from-global-scope="MatchUp.Icon" name="{{chev.yassine}}" size="{{i20}}"></x-import></span>
+</button>
+<sc-if value="{{exp.yassine}}">
+<div class="cli-det">
+<div class="cli-stats">
+<div><span class="num-l">14</span><span class="caption own-sec">visites</span></div>
+<div><span class="num-l">210 DT</span><span class="caption own-sec">dépensés</span></div>
+<div><span class="num-l" style="color: var(--text)">0</span><span class="caption own-sec">no-show</span></div>
+</div>
+<dl class="cli-dl">
+<div><dt class="body own-sec">Fiabilité MatchUp</dt><dd><x-import component-from-global-scope="MatchUp.ReliabilityBadge" score="{{r.yassine}}" size="s"></x-import></dd></div>
+<div><dt class="body own-sec">Créneau préféré</dt><dd class="body">Terrain 1 · mer. 21h</dd></div>
+<div><dt class="body own-sec">Premier match ici</dt><dd class="body">dim. 20 sept.</dd></div>
+</dl>
+<div class="cli-acts">
+<a href="OWN-14-Reservations.dc.html" class="mu-btn mu-btn--secondary mu-btn--m mu-btn--block"><span class="mu-btn__content"><x-import component-from-global-scope="MatchUp.Icon" name="list-checks" size="{{i16}}"></x-import><span class="mu-btn__label label">Réservations</span></span></a>
+<button type="button" class="mu-btn mu-btn--secondary mu-btn--m mu-btn--block"><span class="mu-btn__content"><x-import component-from-global-scope="MatchUp.Icon" name="chat-circle-dots" size="{{i16}}"></x-import><span class="mu-btn__label label">Message</span></span></button>
+</div>
+</div>
+</sc-if>
+</li>
+</sc-if>
+<sc-if value="{{show.omar}}">
+<li class="cli-li">
+<button type="button" class="cli-row" aria-expanded="{{exp.omar}}" onclick="{{tog.omar}}">
+<x-import component-from-global-scope="MatchUp.Avatar" name="Omar D." size="m"></x-import>
+<span class="cli-row__txt">
+<span class="cli-row__name"><span class="label-l">Omar D.</span><span class="cli-ns label-s"><x-import component-from-global-scope="MatchUp.Icon" name="user-minus" size="{{i14}}"></x-import>2 no-shows</span></span>
+<span class="caption own-sec"><span class="num-xs" style="color: var(--text)">11</span> visites · <span class="num-xs" style="color: var(--text)">165 DT</span> · aujourd’hui · 18h00</span>
+</span>
+<span class="cli-chev own-sec"><x-import component-from-global-scope="MatchUp.Icon" name="{{chev.omar}}" size="{{i20}}"></x-import></span>
+</button>
+<sc-if value="{{exp.omar}}">
+<div class="cli-det">
+<div class="cli-stats">
+<div><span class="num-l">11</span><span class="caption own-sec">visites</span></div>
+<div><span class="num-l">165 DT</span><span class="caption own-sec">dépensés</span></div>
+<div><span class="num-l" style="color: var(--warning-text)">2</span><span class="caption own-sec">no-show</span></div>
+</div>
+<dl class="cli-dl">
+<div><dt class="body own-sec">Fiabilité MatchUp</dt><dd><x-import component-from-global-scope="MatchUp.ReliabilityBadge" score="{{r.omar}}" size="s"></x-import></dd></div>
+<div><dt class="body own-sec">Créneau préféré</dt><dd class="body">Terrain 2 · ven. 18h</dd></div>
+<div><dt class="body own-sec">Premier match ici</dt><dd class="body">sam. 19 sept.</dd></div>
+</dl>
+<div class="cli-acts">
+<a href="OWN-14-Reservations.dc.html" class="mu-btn mu-btn--secondary mu-btn--m mu-btn--block"><span class="mu-btn__content"><x-import component-from-global-scope="MatchUp.Icon" name="list-checks" size="{{i16}}"></x-import><span class="mu-btn__label label">Réservations</span></span></a>
+<button type="button" class="mu-btn mu-btn--secondary mu-btn--m mu-btn--block"><span class="mu-btn__content"><x-import component-from-global-scope="MatchUp.Icon" name="chat-circle-dots" size="{{i16}}"></x-import><span class="mu-btn__label label">Message</span></span></button>
+</div>
+</div>
+</sc-if>
+</li>
+</sc-if>
+<sc-if value="{{show.nour}}">
+<li class="cli-li">
+<button type="button" class="cli-row" aria-expanded="{{exp.nour}}" onclick="{{tog.nour}}">
+<x-import component-from-global-scope="MatchUp.Avatar" name="Nour A." size="m"></x-import>
+<span class="cli-row__txt">
+<span class="cli-row__name"><span class="label-l">Nour A.</span></span>
+<span class="caption own-sec"><span class="num-xs" style="color: var(--text)">9</span> visites · <span class="num-xs" style="color: var(--text)">135 DT</span> · dim. 11 oct.</span>
+</span>
+<span class="cli-chev own-sec"><x-import component-from-global-scope="MatchUp.Icon" name="{{chev.nour}}" size="{{i20}}"></x-import></span>
+</button>
+<sc-if value="{{exp.nour}}">
+<div class="cli-det">
+<div class="cli-stats">
+<div><span class="num-l">9</span><span class="caption own-sec">visites</span></div>
+<div><span class="num-l">135 DT</span><span class="caption own-sec">dépensés</span></div>
+<div><span class="num-l" style="color: var(--text)">0</span><span class="caption own-sec">no-show</span></div>
+</div>
+<dl class="cli-dl">
+<div><dt class="body own-sec">Fiabilité MatchUp</dt><dd><x-import component-from-global-scope="MatchUp.ReliabilityBadge" score="{{r.nour}}" size="s"></x-import></dd></div>
+<div><dt class="body own-sec">Créneau préféré</dt><dd class="body">Terrain 2 · dim. 20h</dd></div>
+<div><dt class="body own-sec">Premier match ici</dt><dd class="body">dim. 20 sept.</dd></div>
+</dl>
+<div class="cli-acts">
+<a href="OWN-14-Reservations.dc.html" class="mu-btn mu-btn--secondary mu-btn--m mu-btn--block"><span class="mu-btn__content"><x-import component-from-global-scope="MatchUp.Icon" name="list-checks" size="{{i16}}"></x-import><span class="mu-btn__label label">Réservations</span></span></a>
+<button type="button" class="mu-btn mu-btn--secondary mu-btn--m mu-btn--block"><span class="mu-btn__content"><x-import component-from-global-scope="MatchUp.Icon" name="chat-circle-dots" size="{{i16}}"></x-import><span class="mu-btn__label label">Message</span></span></button>
+</div>
+</div>
+</sc-if>
+</li>
+</sc-if>
+<sc-if value="{{show.aziz}}">
+<li class="cli-li">
+<button type="button" class="cli-row" aria-expanded="{{exp.aziz}}" onclick="{{tog.aziz}}">
+<x-import component-from-global-scope="MatchUp.Avatar" name="Aziz H." size="m"></x-import>
+<span class="cli-row__txt">
+<span class="cli-row__name"><span class="label-l">Aziz H.</span><span class="cli-ns label-s"><x-import component-from-global-scope="MatchUp.Icon" name="user-minus" size="{{i14}}"></x-import>1 no-show</span></span>
+<span class="caption own-sec"><span class="num-xs" style="color: var(--text)">8</span> visites · <span class="num-xs" style="color: var(--text)">120 DT</span> · sam. 3 oct.</span>
+</span>
+<span class="cli-chev own-sec"><x-import component-from-global-scope="MatchUp.Icon" name="{{chev.aziz}}" size="{{i20}}"></x-import></span>
+</button>
+<sc-if value="{{exp.aziz}}">
+<div class="cli-det">
+<div class="cli-stats">
+<div><span class="num-l">8</span><span class="caption own-sec">visites</span></div>
+<div><span class="num-l">120 DT</span><span class="caption own-sec">dépensés</span></div>
+<div><span class="num-l" style="color: var(--warning-text)">1</span><span class="caption own-sec">no-show</span></div>
+</div>
+<dl class="cli-dl">
+<div><dt class="body own-sec">Fiabilité MatchUp</dt><dd><x-import component-from-global-scope="MatchUp.ReliabilityBadge" score="{{r.aziz}}" size="s"></x-import></dd></div>
+<div><dt class="body own-sec">Créneau préféré</dt><dd class="body">Terrain 2 · dim. 20h</dd></div>
+<div><dt class="body own-sec">Premier match ici</dt><dd class="body">dim. 27 sept.</dd></div>
+</dl>
+<div class="cli-acts">
+<a href="OWN-14-Reservations.dc.html" class="mu-btn mu-btn--secondary mu-btn--m mu-btn--block"><span class="mu-btn__content"><x-import component-from-global-scope="MatchUp.Icon" name="list-checks" size="{{i16}}"></x-import><span class="mu-btn__label label">Réservations</span></span></a>
+<button type="button" class="mu-btn mu-btn--secondary mu-btn--m mu-btn--block"><span class="mu-btn__content"><x-import component-from-global-scope="MatchUp.Icon" name="chat-circle-dots" size="{{i16}}"></x-import><span class="mu-btn__label label">Message</span></span></button>
+</div>
+</div>
+</sc-if>
+</li>
+</sc-if>
+<sc-if value="{{show.ines}}">
+<li class="cli-li">
+<button type="button" class="cli-row" aria-expanded="{{exp.ines}}" onclick="{{tog.ines}}">
+<x-import component-from-global-scope="MatchUp.Avatar" name="Ines M." size="m"></x-import>
+<span class="cli-row__txt">
+<span class="cli-row__name"><span class="label-l">Ines M.</span></span>
+<span class="caption own-sec"><span class="num-xs" style="color: var(--text)">6</span> visites · <span class="num-xs" style="color: var(--text)">90 DT</span> · dim. 11 oct.</span>
+</span>
+<span class="cli-chev own-sec"><x-import component-from-global-scope="MatchUp.Icon" name="{{chev.ines}}" size="{{i20}}"></x-import></span>
+</button>
+<sc-if value="{{exp.ines}}">
+<div class="cli-det">
+<div class="cli-stats">
+<div><span class="num-l">6</span><span class="caption own-sec">visites</span></div>
+<div><span class="num-l">90 DT</span><span class="caption own-sec">dépensés</span></div>
+<div><span class="num-l" style="color: var(--text)">0</span><span class="caption own-sec">no-show</span></div>
+</div>
+<dl class="cli-dl">
+<div><dt class="body own-sec">Fiabilité MatchUp</dt><dd><x-import component-from-global-scope="MatchUp.ReliabilityBadge" score="{{r.ines}}" size="s"></x-import></dd></div>
+<div><dt class="body own-sec">Créneau préféré</dt><dd class="body">Terrain 1 · sam. 19h</dd></div>
+<div><dt class="body own-sec">Premier match ici</dt><dd class="body">sam. 26 sept.</dd></div>
+</dl>
+<div class="cli-acts">
+<a href="OWN-14-Reservations.dc.html" class="mu-btn mu-btn--secondary mu-btn--m mu-btn--block"><span class="mu-btn__content"><x-import component-from-global-scope="MatchUp.Icon" name="list-checks" size="{{i16}}"></x-import><span class="mu-btn__label label">Réservations</span></span></a>
+<button type="button" class="mu-btn mu-btn--secondary mu-btn--m mu-btn--block"><span class="mu-btn__content"><x-import component-from-global-scope="MatchUp.Icon" name="chat-circle-dots" size="{{i16}}"></x-import><span class="mu-btn__label label">Message</span></span></button>
+</div>
+</div>
+</sc-if>
+</li>
+</sc-if>
+<sc-if value="{{show.salma}}">
+<li class="cli-li">
+<button type="button" class="cli-row" aria-expanded="{{exp.salma}}" onclick="{{tog.salma}}">
+<x-import component-from-global-scope="MatchUp.Avatar" name="Salma G." size="m"></x-import>
+<span class="cli-row__txt">
+<span class="cli-row__name"><span class="label-l">Salma G.</span></span>
+<span class="caption own-sec"><span class="num-xs" style="color: var(--text)">5</span> visites · <span class="num-xs" style="color: var(--text)">60 DT</span> · mar. 13 oct.</span>
+</span>
+<span class="cli-chev own-sec"><x-import component-from-global-scope="MatchUp.Icon" name="{{chev.salma}}" size="{{i20}}"></x-import></span>
+</button>
+<sc-if value="{{exp.salma}}">
+<div class="cli-det">
+<div class="cli-stats">
+<div><span class="num-l">5</span><span class="caption own-sec">visites</span></div>
+<div><span class="num-l">60 DT</span><span class="caption own-sec">dépensés</span></div>
+<div><span class="num-l" style="color: var(--text)">0</span><span class="caption own-sec">no-show</span></div>
+</div>
+<dl class="cli-dl">
+<div><dt class="body own-sec">Fiabilité MatchUp</dt><dd><x-import component-from-global-scope="MatchUp.ReliabilityBadge" score="{{r.salma}}" size="s"></x-import></dd></div>
+<div><dt class="body own-sec">Créneau préféré</dt><dd class="body">Terrain 1 · sam. 19h</dd></div>
+<div><dt class="body own-sec">Premier match ici</dt><dd class="body">sam. 3 oct.</dd></div>
+</dl>
+<div class="cli-acts">
+<a href="OWN-14-Reservations.dc.html" class="mu-btn mu-btn--secondary mu-btn--m mu-btn--block"><span class="mu-btn__content"><x-import component-from-global-scope="MatchUp.Icon" name="list-checks" size="{{i16}}"></x-import><span class="mu-btn__label label">Réservations</span></span></a>
+<button type="button" class="mu-btn mu-btn--secondary mu-btn--m mu-btn--block"><span class="mu-btn__content"><x-import component-from-global-scope="MatchUp.Icon" name="chat-circle-dots" size="{{i16}}"></x-import><span class="mu-btn__label label">Message</span></span></button>
+</div>
+</div>
+</sc-if>
+</li>
+</sc-if>
+<sc-if value="{{show.lina}}">
+<li class="cli-li">
+<button type="button" class="cli-row" aria-expanded="{{exp.lina}}" onclick="{{tog.lina}}">
+<x-import component-from-global-scope="MatchUp.Avatar" name="Lina F." size="m"></x-import>
+<span class="cli-row__txt">
+<span class="cli-row__name"><span class="label-l">Lina F.</span><span class="cli-new label-s"><x-import component-from-global-scope="MatchUp.Icon" name="user-plus" size="{{i14}}"></x-import>Nouveau</span></span>
+<span class="caption own-sec"><span class="num-xs" style="color: var(--text)">1</span> visite · <span class="num-xs" style="color: var(--text)">12 DT</span> · mar. 13 oct.</span>
+</span>
+<span class="cli-chev own-sec"><x-import component-from-global-scope="MatchUp.Icon" name="{{chev.lina}}" size="{{i20}}"></x-import></span>
+</button>
+<sc-if value="{{exp.lina}}">
+<div class="cli-det">
+<div class="cli-stats">
+<div><span class="num-l">1</span><span class="caption own-sec">visites</span></div>
+<div><span class="num-l">12 DT</span><span class="caption own-sec">dépensés</span></div>
+<div><span class="num-l" style="color: var(--text)">0</span><span class="caption own-sec">no-show</span></div>
+</div>
+<dl class="cli-dl">
+<div><dt class="body own-sec">Fiabilité MatchUp</dt><dd><x-import component-from-global-scope="MatchUp.ReliabilityBadge" score="{{r.lina}}" size="s"></x-import></dd></div>
+<div><dt class="body own-sec">Créneau préféré</dt><dd class="body">Terrain 1 · mar. 20h</dd></div>
+<div><dt class="body own-sec">Premier match ici</dt><dd class="body">mar. 13 oct.</dd></div>
+</dl>
+<div class="cli-acts">
+<a href="OWN-14-Reservations.dc.html" class="mu-btn mu-btn--secondary mu-btn--m mu-btn--block"><span class="mu-btn__content"><x-import component-from-global-scope="MatchUp.Icon" name="list-checks" size="{{i16}}"></x-import><span class="mu-btn__label label">Réservations</span></span></a>
+<button type="button" class="mu-btn mu-btn--secondary mu-btn--m mu-btn--block"><span class="mu-btn__content"><x-import component-from-global-scope="MatchUp.Icon" name="chat-circle-dots" size="{{i16}}"></x-import><span class="mu-btn__label label">Message</span></span></button>
+</div>
+</div>
+</sc-if>
+</li>
+</sc-if>
+</ul>
+<button type="button" class="mu-btn mu-btn--secondary mu-btn--m mu-btn--block" style="margin-top: 4px"><span class="mu-btn__content"><span class="mu-btn__label label">Afficher 20 clients de plus</span></span></button>
+<p class="caption own-sec" style="margin: 4px 8px 0 8px; text-align: center">Tu vois la fiabilité MatchUp de tes clients et ce qu’ils ont payé chez toi, rien d’autre.</p>
+</section>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":1184}}'>
+class Component extends DCLogic {
+  state = { f: 'all', open: 'hamza' };
+  renderVals() {
+    const keys = ['hamza', 'yassine', 'omar', 'nour', 'aziz', 'ines', 'salma', 'lina'];
+    const tags = { hamza: ['reg'], yassine: ['reg'], omar: ['ns', 'reg'], nour: ['reg'], aziz: ['ns', 'reg'], ines: [], salma: [], lina: ['new'] };
+    const f = this.state.f, open = this.state.open;
+    const map = (fn) => keys.reduce((o, k) => (o[k] = fn(k), o), {});
+    const filt = ['all', 'reg', 'new', 'ns'];
+    return {
+      yes: true, no: false, i14: 14, i16: 16, i20: 20, i24: 24, inset: 44,
+      noop: () => {},
+      barActions: [{ icon: 'sort-ascending', label: 'Trier les clients' }],
+      f: filt.reduce((o, k) => (o[k] = f === k, o), {}),
+      to: filt.reduce((o, k) => (o[k] = () => this.setState({ f: k }), o), {}),
+      n: { all: 286, reg: 64, new: 48, ns: 9 },
+      show: map((k) => f === 'all' || tags[k].indexOf(f) !== -1),
+      exp: map((k) => open === k),
+      chev: map((k) => (open === k ? 'caret-up' : 'caret-down')),
+      tog: map((k) => () => this.setState({ open: this.state.open === k ? null : k })),
+      r: { hamza: 98, yassine: 96, omar: 82, nour: 97, aziz: 91, ines: 95, salma: 94, lina: 92 }
+    };
+  }
+}
+</script>
+</body>
+</html>

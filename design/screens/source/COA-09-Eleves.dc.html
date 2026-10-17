@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Coach · Élèves</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/matchup/tokens.css">
+<link rel="stylesheet" href="ds/matchup/components/bundle.css">
+<script src="ds/matchup/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+/* coa:shared — identical in COA-04…12 */
+body{margin:0}
+a{color:var(--link)}
+.coa-head{display:flex; align-items:flex-start; justify-content:space-between; gap:var(--space-3); padding:52px var(--space-4) 0 var(--space-4)}
+.coa-head__text{flex:1; min-width:0; display:flex; flex-direction:column; align-items:flex-start; gap:var(--space-2)}
+.coa-head__actions{flex:none; display:flex; align-items:center; gap:var(--space-1); margin-inline-end:calc(-1 * var(--space-1))}
+.coa-role{display:inline-flex; align-items:center; gap:6px; padding:3px 10px 3px 8px; border-radius:var(--radius-full); background:var(--surface); box-shadow:inset 0 0 0 1px var(--border); color:var(--text)}
+.coa-me{position:relative; display:flex; border-radius:var(--radius-full); text-decoration:none; color:inherit}
+.coa-me::before{content:""; position:absolute; inset:-4px}
+.coa-me:focus-visible{outline:none; box-shadow:var(--focus-ring)}
+.coa-sec{display:flex; flex-direction:column; gap:var(--space-3); padding:0 var(--space-4)}
+.coa-sec__head{display:flex; align-items:center; justify-content:space-between; gap:var(--space-3); min-height:32px; margin-inline-end:calc(-1 * var(--space-3))}
+.coa-sec__title{margin:0; display:flex; align-items:center; gap:var(--space-2)}
+.coa-list{margin:0; padding:0; list-style:none; background:var(--surface); border-radius:var(--radius-md); box-shadow:var(--elevation-1); overflow:hidden}
+.coa-list > li{position:relative}
+.coa-list > li + li::before{content:""; position:absolute; top:0; inset-inline-start:68px; inset-inline-end:0; height:1px; background:var(--border); z-index:1}
+.coa-row{position:relative; display:flex; align-items:center; gap:var(--space-3); min-height:64px; padding:var(--space-3) var(--space-4); box-sizing:border-box; color:var(--text); text-decoration:none}
+a.coa-row:hover{background:var(--surface-muted)}
+a.coa-row:focus-visible{outline:none; box-shadow:inset 0 0 0 2px var(--focus)}
+.coa-row__text{flex:1; min-width:0; display:flex; flex-direction:column; gap:2px}
+.coa-row__sub{color:var(--text-secondary); white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+.coa-chev{flex:none; display:flex; color:var(--text-secondary); margin-inline-end:calc(-1 * var(--space-1))}
+.coa-pill{flex:none; display:inline-flex; align-items:center; gap:4px; padding:2px 10px; border-radius:var(--radius-full); background:var(--accent); color:var(--on-accent)}
+.coa-muted{color:var(--text-secondary)}
+.coa-hot{position:absolute; display:block; border-radius:var(--radius-full); z-index:3}
+.coa-hot:focus-visible{outline:2px solid var(--focus); outline-offset:2px}
+/* /coa:shared */
+.stu-chips{display:flex; gap:var(--space-2); overflow-x:auto; padding:2px var(--space-4); scrollbar-width:none}
+.stu-chips::-webkit-scrollbar{display:none}
+.stu-chips > *{flex:none}
+.stu-meta{display:flex; align-items:center; justify-content:space-between; gap:var(--space-2); min-height:40px; padding:0 var(--space-2) 0 var(--space-4)}
+.stu-row{min-height:76px}
+.stu-row .coa-row__text{gap:3px}
+.stu-act{display:flex; align-items:center; gap:6px; color:var(--text-secondary); white-space:nowrap}
+.stu-late{color:var(--warning-text); display:inline-flex; align-items:center; gap:4px}
+</style>
+</helmet>
+<div style="position: relative; width: 390px; height: 844px; box-sizing: border-box; overflow: hidden; display: flex; flex-direction: column; background: var(--bg); color: var(--text); font-family: var(--font-sans)">
+
+<header class="coa-head">
+<div class="coa-head__text">
+<span class="coa-role label-s"><x-import component-from-global-scope="MatchUp.Icon" name="sport-whistle" size="{{i16}}"></x-import>Espace coach</span>
+<h1 class="h1" style="margin: 0; display: flex; align-items: baseline; gap: 8px">Élèves <span class="num-l coa-muted">38</span></h1>
+</div>
+<div class="coa-head__actions" style="margin-top: 36px">
+<a href="PRF-06-Changer-de-role.dc.html" class="coa-me" aria-label="Karim J. · changer de rôle"><x-import component-from-global-scope="MatchUp.Avatar" name="Karim J." size="m"></x-import></a>
+</div>
+</header>
+
+<div style="padding: 12px 16px 12px 16px">
+<x-import component-from-global-scope="MatchUp.SearchField" label="Rechercher un élève" placeholder="Rechercher un élève" size="l" on-filters="{{noop}}" filter-count="{{zero}}"></x-import>
+</div>
+<div class="stu-chips" role="radiogroup" aria-label="Filtrer les élèves">
+<x-import component-from-global-scope="MatchUp.Chip" kind="choice" selected="{{yes}}" count="{{c38}}">Tous</x-import>
+<x-import component-from-global-scope="MatchUp.Chip" kind="choice" count="{{c3}}">En retard</x-import>
+<x-import component-from-global-scope="MatchUp.Chip" kind="choice" count="{{c24}}">Actifs cette semaine</x-import>
+<x-import component-from-global-scope="MatchUp.Chip" kind="choice" count="{{c6}}">Terminé</x-import>
+</div>
+
+<div class="stu-meta" style="margin-top: 6px">
+<span class="caption coa-muted">2 programmes · 52 inscriptions</span>
+<button type="button" class="mu-btn mu-btn--tertiary mu-btn--s"><span class="mu-btn__content"><x-import component-from-global-scope="MatchUp.Icon" name="arrows-down-up" size="{{i16}}"></x-import><span class="mu-btn__label label">Activité récente</span></span></button>
+</div>
+
+<div style="flex: 1; min-height: 0; overflow: hidden; padding: 0 16px 120px 16px">
+<ul class="coa-list">
+<li><a href="COA-10-Detail-eleve.dc.html" class="coa-row stu-row">
+<x-import component-from-global-scope="MatchUp.Avatar" name="Yassine B." size="m" level="{{lv35}}"></x-import>
+<span class="coa-row__text"><span class="label">Yassine B.</span><span class="coa-row__sub caption">Bandeja en 4 semaines · séance 5/12</span><span class="stu-act caption"><x-import component-from-global-scope="MatchUp.Icon" name="video-camera" size="{{i14}}"></x-import>Vidéo envoyée · il y a 55 min</span></span>
+<x-import component-from-global-scope="MatchUp.ProgressRing" value="{{p42}}" size="{{r48}}" format="percent" label="Progression de Yassine B."></x-import>
+</a></li>
+<li><div class="coa-row stu-row">
+<x-import component-from-global-scope="MatchUp.Avatar" name="Mariem K." size="m" level="{{lv4}}"></x-import>
+<span class="coa-row__text"><span class="label">Mariem K.</span><span class="coa-row__sub caption">Bandeja en 4 semaines · séance 9/12</span><span class="stu-act caption">Séance faite hier</span></span>
+<x-import component-from-global-scope="MatchUp.ProgressRing" value="{{p75}}" size="{{r48}}" format="percent" label="Progression de Mariem K."></x-import>
+</div></li>
+<li><div class="coa-row stu-row">
+<x-import component-from-global-scope="MatchUp.Avatar" name="Lina F." size="m" level="{{lv35}}"></x-import>
+<span class="coa-row__text"><span class="label">Lina F.</span><span class="coa-row__sub caption">Service et retour · séance 1/10</span><span class="stu-act caption"><span class="stu-late"><x-import component-from-global-scope="MatchUp.Icon" name="warning-circle" size="{{i14}}"></x-import>En retard</span>· rien depuis 12 jours</span></span>
+<x-import component-from-global-scope="MatchUp.ProgressRing" value="{{p10}}" size="{{r48}}" format="percent" tone="warning" label="Progression de Lina F."></x-import>
+</div></li>
+<li><div class="coa-row stu-row">
+<x-import component-from-global-scope="MatchUp.Avatar" name="Ines M." size="m" level="{{lv4}}"></x-import>
+<span class="coa-row__text"><span class="label">Ines M.</span><span class="coa-row__sub caption">Bandeja en 4 semaines · séance 3/12</span><span class="stu-act caption">Séance faite mer. 14 oct.</span></span>
+<x-import component-from-global-scope="MatchUp.ProgressRing" value="{{p25}}" size="{{r48}}" format="percent" label="Progression d’Ines M."></x-import>
+</div></li>
+<li><div class="coa-row stu-row">
+<x-import component-from-global-scope="MatchUp.Avatar" name="Nour A." size="m" level="{{lv3}}"></x-import>
+<span class="coa-row__text"><span class="label">Nour A.</span><span class="coa-row__sub caption">Bandeja en 4 semaines · séance 7/12</span><span class="stu-act caption">Séance faite mar. 13 oct.</span></span>
+<x-import component-from-global-scope="MatchUp.ProgressRing" value="{{p58}}" size="{{r48}}" format="percent" label="Progression de Nour A."></x-import>
+</div></li>
+<li><div class="coa-row stu-row">
+<x-import component-from-global-scope="MatchUp.Avatar" name="Rami S." size="m" level="{{lv35}}"></x-import>
+<span class="coa-row__text"><span class="label">Rami S.</span><span class="coa-row__sub caption">Service et retour · 10/10 séances</span><span class="stu-act caption" style="color: var(--success-text)"><x-import component-from-global-scope="MatchUp.Icon" name="check-circle" size="{{i14}}"></x-import>Terminé le dim. 11 oct.</span></span>
+<x-import component-from-global-scope="MatchUp.ProgressRing" value="{{p100}}" size="{{r48}}" format="percent" label="Progression de Rami S."></x-import>
+</div></li>
+</ul>
+</div>
+
+<x-import component-from-global-scope="MatchUp.TabBar" items="{{tabs}}" value="eleves" label="Navigation de l’espace coach" safe-area="{{sa}}" dc-props="{{tabStyle}}"></x-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      yes: true, no: false, i14: 14, i16: 16, i20: 20, i24: 24, sa: 34, zero: 0, r48: 48,
+      c38: 38, c3: 3, c24: 24, c6: 6,
+      lv3: 3, lv35: 3.5, lv4: 4,
+      p42: 42, p75: 75, p10: 10, p25: 25, p58: 58, p100: 100,
+      noop: () => {},
+      tabs: [
+        { value: 'tableau', label: 'Tableau', icon: 'house', href: 'COA-04-Tableau-de-bord.dc.html' },
+        { value: 'programmes', label: 'Programmes', icon: 'clipboard-text', href: 'COA-05-Programmes.dc.html' },
+        { value: 'eleves', label: 'Élèves', icon: 'users', href: 'COA-09-Eleves.dc.html' },
+        { value: 'revenus', label: 'Revenus', icon: 'coins', href: 'COA-12-Revenus.dc.html' }
+      ],
+      tabStyle: { style: { position: 'absolute', left: 0, right: 0, bottom: 0 } }
+    };
+  }
+}
+</script>
+</body>
+</html>

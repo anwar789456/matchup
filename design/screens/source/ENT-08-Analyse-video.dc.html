@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Analyse vidéo</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/matchup/tokens.css">
+<link rel="stylesheet" href="ds/matchup/components/bundle.css">
+<script src="ds/matchup/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0}
+a{color:var(--link)}
+.ent-wrap{display:flex; flex-wrap:wrap; gap:8px}
+.ent-tip{display:flex; align-items:center; gap:10px}
+.ent-tip__icon{flex:none; width:32px; height:32px; border-radius:var(--radius-full); background:var(--surface-muted); display:flex; align-items:center; justify-content:center; color:var(--text)}
+.ent-hot{position:absolute; display:block; border-radius:var(--radius-md)}
+.ent-hot:focus-visible{outline:2px solid var(--focus); outline-offset:2px}
+</style>
+</helmet>
+<div style="position: relative; width: 390px; height: 1364px; box-sizing: border-box; overflow: hidden; display: flex; flex-direction: column; background: var(--surface); color: var(--text); font-family: var(--font-sans)">
+<div style="flex: none; display: flex; align-items: center; gap: 4px; padding: 52px 16px 0 4px; min-height: 48px">
+<a href="ENT-01-Mon-entrainement.dc.html" class="mu-iconbtn mu-iconbtn--l mu-iconbtn--ghost" aria-label="Retour" style="color: var(--text)"><x-import component-from-global-scope="MatchUp.Icon" name="arrow-left" size="{{i24}}"></x-import></a>
+<span style="flex: 1"></span>
+<span class="label-s" style="display: inline-flex; align-items: center; height: 24px; padding: 0 10px; border-radius: var(--radius-full); background: var(--info-soft); color: var(--info-text)">Bêta</span>
+</div>
+
+<main style="flex: 1; min-height: 0; display: flex; flex-direction: column; gap: 24px; padding: 8px 16px 24px 16px">
+<div style="display: flex; flex-direction: column; gap: 8px">
+<div style="display: flex; align-items: center; gap: 10px">
+<h1 class="h1" style="margin: 0">Analyse vidéo</h1>
+<x-import component-from-global-scope="MatchUp.AiLabel"></x-import>
+</div>
+<p class="body-l" style="margin: 0; color: var(--text-secondary)">Envoie 30 s de ton geste : l’IA le compare à un geste de référence et te donne 3 conseils, avec le moment exact.</p>
+</div>
+
+<section aria-labelledby="ent-move" style="display: flex; flex-direction: column; gap: 10px">
+<h2 id="ent-move" class="label-l" style="margin: 0">Quel geste ?</h2>
+<div class="ent-wrap" role="radiogroup" aria-labelledby="ent-move">
+<x-import component-from-global-scope="MatchUp.Chip" kind="choice" selected="{{yes}}">Bandeja</x-import>
+<x-import component-from-global-scope="MatchUp.Chip" kind="choice">Víbora</x-import>
+<x-import component-from-global-scope="MatchUp.Chip" kind="choice">Service</x-import>
+<x-import component-from-global-scope="MatchUp.Chip" kind="choice">Volée</x-import>
+<x-import component-from-global-scope="MatchUp.Chip" kind="choice">Smash</x-import>
+</div>
+</section>
+
+<x-import component-from-global-scope="MatchUp.FileUpload" label="Ta vidéo" title="Filme ou choisis une vidéo" hint="MP4, MOV · 60 s · 100 Mo max" accept="video/mp4,video/quicktime" max-size="{{maxSize}}" helper="Filme de côté à 3 m, corps entier dans le cadre." files="{{files}}" on-remove="{{noop}}"></x-import>
+
+<section class="mu-card" aria-labelledby="ent-proc" aria-live="polite" style="position: relative; display: flex; flex-direction: column; gap: 14px; padding: 16px; box-shadow: inset 0 0 0 1.5px var(--ai-soft), var(--elevation-1)">
+<div style="display: flex; align-items: center; gap: 12px">
+<span style="position: relative; flex: none; width: 96px; height: 60px; border-radius: var(--radius-sm); overflow: hidden">
+<x-import component-from-global-scope="MatchUp.CourtArt" sport="padel" dc-props="{{thumbArt}}"></x-import>
+<span class="num-xs" style="position: absolute; right: 6px; bottom: 4px; color: var(--white)">0:42</span>
+</span>
+<span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px">
+<h2 id="ent-proc" class="label-l" style="margin: 0">Bandeja · 0:42</h2>
+<span class="caption" style="color: var(--text-secondary)">Filmée ven. 16 oct. · Smash Padel Club</span>
+</span>
+</div>
+<x-import component-from-global-scope="MatchUp.AiShimmer" variant="steps" steps="{{steps}}" current="{{two}}" label="L’IA analyse ta bandeja"></x-import>
+<p class="caption" style="margin: 0; display: flex; align-items: center; gap: 6px; color: var(--text-secondary)"><x-import component-from-global-scope="MatchUp.Icon" name="clock" size="{{i14}}"></x-import>Encore 1 min environ. Tu peux quitter cet écran, on te prévient.</p>
+</section>
+
+<div style="display: flex; flex-direction: column; gap: 10px; padding-top: 16px; border-top: 1px solid var(--border)">
+<x-import component-from-global-scope="MatchUp.Switch" label-position="start" label="Partager le résultat avec Karim J." description="Ton coach pourra commenter. Désactivé par défaut."></x-import>
+<p class="caption" style="margin: 0; display: flex; align-items: center; gap: 6px; color: var(--text-secondary)"><x-import component-from-global-scope="MatchUp.Icon" name="lock-simple" size="{{i14}}"></x-import>Ta vidéo reste privée et est supprimée après 30 jours.</p>
+</div>
+</main>
+
+<div style="flex: none; padding: 12px 16px 34px 16px; background: var(--surface); box-shadow: var(--elevation-2-up); display: grid; grid-template-columns: 1fr 1.4fr; gap: 12px">
+<button type="button" class="mu-btn mu-btn--tertiary mu-btn--xl mu-btn--block"><span class="mu-btn__content"><span class="mu-btn__label label-l">Annuler</span></span></button>
+<a href="ENT-01-Mon-entrainement.dc.html" class="mu-btn mu-btn--secondary mu-btn--xl mu-btn--block"><span class="mu-btn__content"><span class="mu-btn__label label-l">Me prévenir</span></span></a>
+</div>
+<a href="ENT-09-Analyse-video-resultats.dc.html" class="ent-hot" aria-label="Voir le résultat de l’analyse" style="left: 16px; top: 708px; width: 358px; height: 376px"></a>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":1364}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      yes: true, no: false, two: 2, i14: 14, i16: 16, i20: 20, i24: 24, maxSize: 104857600,
+      noop: () => {},
+      thumbArt: { variant: 'photo', style: { position: 'absolute', inset: 0, width: '100%', height: '100%' } },
+      files: [{ id: 'v1', name: 'bandeja-ven16.mp4', size: 19293798, type: 'video/mp4', status: 'done' }],
+      steps: ['Vidéo envoyée', 'Détection de ta bandeja', 'Comparaison à la référence', 'Rédaction de tes 3 conseils']
+    };
+  }
+}
+</script>
+</body>
+</html>

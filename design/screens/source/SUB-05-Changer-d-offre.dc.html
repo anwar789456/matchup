@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Changer d’offre</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/matchup/tokens.css">
+<link rel="stylesheet" href="ds/matchup/components/bundle.css">
+<script src="ds/matchup/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0}
+a{color:var(--link)}
+.sub-body > *{flex-shrink:0}
+.sub-tag{display:inline-flex; align-self:flex-start; width:max-content; align-items:center; gap:4px; padding:2px 8px; border-radius:var(--radius-full)}
+.sub-tag--ok{background:var(--success-soft); color:var(--success-text)}
+.sub-tag--muted{background:var(--surface-muted); color:var(--text-secondary); box-shadow:inset 0 0 0 1px var(--border)}
+.sub-prev{display:flex; flex-direction:column; border-radius:var(--radius-md); background:var(--surface); box-shadow:var(--elevation-1), inset 0 0 0 1px var(--border); overflow:hidden}
+.sub-prev__row{display:flex; align-items:center; justify-content:space-between; gap:var(--space-3); min-height:44px; padding:var(--space-2) var(--space-4); box-sizing:border-box}
+.sub-prev__row + .sub-prev__row{border-top:1px solid var(--border)}
+.sub-strike{color:var(--text-secondary); text-decoration:line-through; text-decoration-thickness:1.5px}
+</style>
+</helmet>
+<div style="position: relative; width: 390px; height: 844px; box-sizing: border-box; overflow: hidden; display: flex; flex-direction: column; background: var(--surface); color: var(--text); font-family: var(--font-sans)">
+<div style="display: flex; align-items: center; gap: 8px; padding: 52px 16px 0 8px">
+<a href="SUB-04-Abonnement.dc.html" class="mu-iconbtn mu-iconbtn--l mu-iconbtn--ghost" aria-label="Retour à l’abonnement" style="color: var(--text)"><x-import component-from-global-scope="MatchUp.Icon" name="arrow-left" size="{{i24}}"></x-import></a>
+<span class="label-l">Changer d’offre</span>
+</div>
+
+<div class="sub-body" style="flex: 1; min-height: 0; overflow: auto; display: flex; flex-direction: column; gap: 20px; padding: 12px 16px 20px 16px">
+<div style="display: flex; flex-direction: column; gap: 6px">
+<h1 class="h2" style="margin: 0">Mensuel ou annuel ?</h1>
+<p class="body" style="margin: 0; color: var(--text-secondary)">Ton essai continue jusqu’au ven. 30 oct. Le changement compte à partir de là.</p>
+</div>
+
+<x-import component-from-global-scope="MatchUp.ChoiceCard.Group" aria-label="Période de facturation de Premium" name="periode" value="{{plan}}" on-change="{{setPlan}}">
+<x-import component-from-global-scope="MatchUp.ChoiceCard" value="month" icon="calendar-blank" title="Mensuel · 19 DT/mois" description="Sans engagement, résiliable chaque mois.">
+<span class="sub-tag sub-tag--muted label-s" style="margin-top: 8px">Ton offre actuelle</span>
+</x-import>
+<x-import component-from-global-scope="MatchUp.ChoiceCard" value="year" icon="calendar-check" title="Annuel · 190 DT/an" description="Soit 15,833 DT/mois : 2 mois offerts.">
+<span class="sub-tag sub-tag--ok label-s" style="margin-top: 8px"><x-import component-from-global-scope="MatchUp.Icon" name="gift" size="{{i14}}"></x-import>−17 %</span>
+</x-import>
+</x-import>
+
+<section style="display: flex; flex-direction: column; gap: 12px" aria-labelledby="sub-prev-t">
+<h2 id="sub-prev-t" class="label-l" style="margin: 0">{{prevTitle}}</h2>
+<div class="sub-prev">
+<div class="sub-prev__row"><span class="body" style="color: var(--text-secondary)">Aujourd’hui</span><span class="num-s">0 DT</span></div>
+<div class="sub-prev__row"><span class="body" style="color: var(--text-secondary)">Le ven. 30 oct.</span><span style="display: flex; align-items: baseline; gap: 8px"><span class="num-s">{{firstAmt}}</span><sc-if value="{{isYear}}"><span class="caption" style="color: var(--text-secondary)">au lieu de 19 DT</span></sc-if></span></div>
+<div class="sub-prev__row"><span class="body" style="color: var(--text-secondary)">Ensuite</span><span class="label">{{thenText}}</span></div>
+<sc-if value="{{isYear}}">
+<div class="sub-prev__row" style="background: var(--success-soft); color: var(--success-text)"><span class="label" style="display: flex; align-items: center; gap: 8px"><x-import component-from-global-scope="MatchUp.Icon" name="piggy-bank" size="{{i20}}"></x-import>Tu économises 38 DT par an</span><span class="caption">vs 12 × 19 DT</span></div>
+</sc-if>
+</div>
+<p class="caption" style="margin: 0; display: flex; gap: 6px; align-items: flex-start; color: var(--text-secondary)"><span style="display: flex; flex: none"><x-import component-from-global-scope="MatchUp.Icon" name="info" size="{{i16}}"></x-import></span><span>{{note}}</span></p>
+</section>
+</div>
+
+<div style="padding: 12px 16px 34px 16px; background: var(--surface); box-shadow: var(--elevation-2-up); display: flex; flex-direction: column; gap: 4px">
+<sc-if value="{{isYear}}">
+<a href="SUB-04-Abonnement.dc.html" class="mu-btn mu-btn--primary mu-btn--xl mu-btn--block"><span class="mu-btn__content"><span class="mu-btn__label label-l">Passer à l’annuel</span></span></a>
+</sc-if>
+<sc-if value="{{isMonth}}">
+<a href="SUB-04-Abonnement.dc.html" class="mu-btn mu-btn--primary mu-btn--xl mu-btn--block"><span class="mu-btn__content"><span class="mu-btn__label label-l">Garder le mensuel</span></span></a>
+</sc-if>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  state = { plan: 'year' };
+  renderVals() {
+    const y = this.state.plan === 'year';
+    return {
+      yes: true, i14: 14, i16: 16, i20: 20, i24: 24,
+      plan: this.state.plan, isYear: y, isMonth: !y,
+      setPlan: (v) => this.setState({ plan: v }),
+      prevTitle: y ? 'Ce que tu paieras avec l’annuel' : 'Rien ne change',
+      firstAmt: y ? '190 DT' : '19 DT',
+      thenText: y ? '190 DT chaque 30 oct.' : '19 DT chaque mois, le 30',
+      note: y ? 'Sur ta Visa •••• 4242. Tu peux revenir au mensuel jusqu’au 30 oct., sans frais.'
+              : 'Sur ta Visa •••• 4242. Tu peux passer à l’annuel à tout moment.'
+    };
+  }
+}
+</script>
+</body>
+</html>

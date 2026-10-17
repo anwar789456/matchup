@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Assistant · aucun résultat</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/matchup/tokens.css">
+<link rel="stylesheet" href="ds/matchup/components/bundle.css">
+<script src="ds/matchup/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0}
+a{color:var(--link)}
+.ai-root{position:relative; width:390px; box-sizing:border-box; overflow:hidden; background:var(--bg); color:var(--text); font-family:var(--font-sans)}
+.ai-close{color:var(--text)}
+.ai-who{display:flex; flex-direction:column; gap:0}
+.ai-who .caption{color:var(--text-secondary)}
+.ai-thread{flex:1; min-height:0; overflow:hidden; display:flex; flex-direction:column; gap:20px; padding:12px 16px 8px 16px}
+.ai-thread--end{justify-content:flex-end; gap:16px; -webkit-mask-image:linear-gradient(to bottom, transparent 0, #000 32px); mask-image:linear-gradient(to bottom, transparent 0, #000 32px)}
+.ai-thread > *{flex-shrink:0}
+.ai-day{align-self:center; margin:0; color:var(--text-secondary)}
+.ai-me{align-self:flex-end; max-width:78%; margin:0; padding:10px 16px; border-radius:var(--radius-lg) var(--radius-xs) var(--radius-lg) var(--radius-lg); background:var(--primary); color:var(--on-primary)}
+.ai-turn{display:flex; flex-direction:column; align-items:flex-start; gap:10px}
+.ai-turn > .ai-full{align-self:stretch}
+.ai-turn .mu-assist__bubble{max-width:92%}
+.ai-heard{display:flex; flex-wrap:wrap; align-items:center; gap:6px}
+.ai-heard__lead{color:var(--text-secondary); margin-inline-end:2px}
+.ai-ink{color:var(--text)}
+.ai-muted{color:var(--text-secondary)}
+.ai-m0{margin:0}
+.ai-ok{display:inline-flex; align-items:center; gap:3px; color:var(--success-text)}
+.ai-venue{display:flex; align-items:center; gap:12px}
+.ai-venue__txt{flex:1; min-width:0; display:flex; flex-direction:column; gap:2px}
+.ai-slots{display:grid; grid-template-columns:repeat(3, 1fr); gap:8px}
+.ai-slot{display:flex; flex-direction:column; align-items:center; padding:8px 4px; border-radius:var(--radius-sm); background:var(--surface); box-shadow:inset 0 0 0 1px var(--border-control); color:var(--text); text-align:center}
+.ai-slot.is-on{background:var(--accent); color:var(--on-accent); box-shadow:inset 0 0 0 1.5px var(--text)}
+.ai-slot.is-on .ai-muted{color:var(--on-accent)}
+.ai-price{display:flex; align-items:baseline; justify-content:space-between; gap:12px; padding-top:10px; border-top:1px solid var(--border)}
+.ai-fit{display:flex; align-items:center; gap:8px; margin-top:-2px}
+.ai-replies{display:flex; flex-wrap:wrap; gap:8px}
+.ai-fb{display:flex; align-items:center; gap:2px; margin-inline-start:-6px; color:var(--text-secondary)}
+.ai-fb__note{display:inline-flex; align-items:center; gap:4px; margin-inline-start:6px}
+.ai-root .mu-takeover__footer{border-top:1px solid var(--border); background:var(--bg)}
+.ai-overline{margin:0; color:var(--text-secondary)}
+.ai-mini{display:flex; align-items:center; gap:12px; padding:12px}
+.ai-mini__txt{flex:1; min-width:0; display:flex; flex-direction:column; gap:2px}
+.ai-mini__price{flex:none; display:flex; flex-direction:column; align-items:flex-end}
+.ai-found{display:flex; align-items:center; gap:6px; margin:0; color:var(--text-secondary)}
+.ai-typing{display:inline-flex; align-items:center; gap:4px; padding:12px 16px; border-radius:var(--radius-xs) var(--radius-lg) var(--radius-lg) var(--radius-lg); background:var(--ai-soft)}
+.ai-typing i{width:6px; height:6px; border-radius:var(--radius-full); background:var(--ai-text); opacity:.35; animation:ai-dot 1.2s var(--ease-move) infinite}
+.ai-typing i:nth-child(2){animation-delay:.15s}
+.ai-typing i:nth-child(3){animation-delay:.3s}
+@keyframes ai-dot{0%,60%,100%{opacity:.35; transform:none}30%{opacity:1; transform:translateY(-3px)}}
+@media (prefers-reduced-motion: reduce){.ai-typing i{animation:none; opacity:.6}}
+.ai-alert{display:flex; align-items:center; gap:12px; padding:12px 12px 12px 14px}
+.ai-alert__ico{flex:none; width:40px; height:40px; border-radius:var(--radius-full); display:flex; align-items:center; justify-content:center; background:var(--surface-muted); color:var(--text)}
+.ai-alert__txt{flex:1; min-width:0; display:flex; flex-direction:column; gap:2px}
+.ai-none{display:flex; align-items:center; gap:8px; margin:0; padding:10px 12px; border-radius:var(--radius-sm); background:var(--surface); box-shadow:inset 0 0 0 1px var(--border); color:var(--text)}
+.ai-none > span:first-child{display:inline-flex; flex:none; color:var(--text-secondary)}
+</style>
+</helmet>
+<div class="ai-root" style="height: 1444px">
+<x-import component-from-global-scope="MatchUp.Takeover" inline="{{yes}}" open="{{yes}}" closable="{{no}}" safe-area="{{safe}}" label="Assistant MatchUp" class-name="mu-takeover--assistant">
+<div class="mu-takeover__bar">
+<div class="mu-takeover__bar-start"><span class="mu-assist__id"><span class="mu-assist__mark" aria-hidden="true"><x-import component-from-global-scope="MatchUp.Icon" name="sparkle" weight="fill" size="{{i18}}"></x-import></span><span class="label-l">Assistant MatchUp</span></span></div>
+<div class="mu-takeover__bar-end"><a href="HOM-01-Accueil.dc.html" class="mu-iconbtn mu-iconbtn--m mu-iconbtn--ghost ai-close" aria-label="Fermer l’assistant"><x-import component-from-global-scope="MatchUp.Icon" name="x" size="{{i20}}"></x-import></a></div>
+</div>
+
+<div class="ai-thread" aria-live="polite">
+<p class="ai-day caption">Aujourd’hui · 18h02</p>
+<p class="ai-me body-l">Trouve-moi une partie de padel demain soir</p>
+
+<div class="ai-turn">
+<div class="mu-assist__from"><span class="mu-assist__avatar" aria-hidden="true"><x-import component-from-global-scope="MatchUp.Icon" name="sparkle" weight="fill" size="{{i14}}"></x-import></span><span class="label-s">MatchUp</span><span class="mu-assist__ia label-s"><x-import component-from-global-scope="MatchUp.Icon" name="sparkle" weight="fill" size="{{i12}}"></x-import>IA</span></div>
+<div class="ai-heard" role="group" aria-label="Ce que l’assistant a compris">
+<span class="ai-heard__lead caption">J’ai compris</span>
+<x-import component-from-global-scope="MatchUp.Chip" kind="input" size="s" icon="sport-padel">Padel</x-import>
+<x-import component-from-global-scope="MatchUp.Chip" kind="input" size="s" icon="calendar-blank">sam. 17 oct. · 18h–23h</x-import>
+<x-import component-from-global-scope="MatchUp.Chip" kind="input" size="s" icon="gauge">Niveau 3,0–4,0</x-import>
+<x-import component-from-global-scope="MatchUp.Chip" kind="input" size="s" icon="map-pin">10 km</x-import>
+<a href="AI-01-Assistant.dc.html" class="mu-btn mu-btn--link mu-btn--s"><span class="mu-btn__content"><span class="mu-btn__label label">Modifier</span></span></a>
+</div>
+<p class="ai-none body ai-full"><span><x-import component-from-global-scope="MatchUp.Icon" name="magnifying-glass" size="{{i20}}"></x-import></span><span><span class="label">Aucune partie ouverte</span> demain soir à ton niveau, à moins de 10 km.</span></p>
+<p class="mu-assist__bubble body-l">Pas de partie à rejoindre, mais un court est libre à 19h30. Je peux créer ta partie et proposer les 3 places à des joueurs de ton niveau.</p>
+<div class="ai-full">
+<x-import component-from-global-scope="MatchUp.AiSuggestionCard" dc-props="{{createCard}}">
+<div style="display: flex; flex-direction: column; gap: 12px">
+<div class="ai-venue">
+<x-import component-from-global-scope="MatchUp.CourtArt" sport="padel" variant="pattern" dc-props="{{thumb}}"></x-import>
+<span class="ai-venue__txt">
+<span class="label ai-ink">Smash Padel Club · Court 1</span>
+<span class="caption"><span class="ai-ok"><x-import component-from-global-scope="MatchUp.Icon" name="seal-check" weight="fill" size="{{i14}}"></x-import>Vérifié</span> · Lac 2 · 3,1 km · indoor</span>
+</span>
+</div>
+<div class="ai-price">
+<span class="caption ai-muted">1h30 · 100 DT le court</span>
+<span><span class="num-m ai-ink">25 DT</span> <span class="caption ai-muted">par joueur à 4</span></span>
+</div>
+</div>
+</x-import>
+</div>
+<p class="mu-assist__bubble body-l">Ou ce soir : une partie à ton niveau a encore 2 places.</p>
+<div class="ai-full">
+<x-import component-from-global-scope="MatchUp.GameCard" dc-props="{{g2}}"></x-import>
+</div>
+<div class="ai-fit">
+<x-import component-from-global-scope="MatchUp.MatchFitScore" value="{{fit92}}" size="s" factors="{{fit92Factors}}"></x-import>
+<span class="caption ai-muted">Côté gauche recherché · toi 3,5</span>
+</div>
+<div class="mu-card ai-alert ai-full">
+<span class="ai-alert__ico"><x-import component-from-global-scope="MatchUp.Icon" name="bell-ringing" size="{{i20}}"></x-import></span>
+<span class="ai-alert__txt"><span class="label">Préviens-moi si ça s’ouvre</span><span class="caption ai-muted">Padel · sam. 17 oct. · soir · 3,0–4,0</span></span>
+<x-import component-from-global-scope="MatchUp.Button" variant="secondary" size="s">Activer</x-import>
+</div>
+<div class="ai-replies" role="group" aria-label="Élargir la recherche">
+<x-import component-from-global-scope="MatchUp.Chip" icon="map-pin">Élargir à 15 km</x-import>
+<x-import component-from-global-scope="MatchUp.Chip" icon="calendar-blank">Dimanche soir</x-import>
+<x-import component-from-global-scope="MatchUp.Chip" icon="gauge">Niveau 2,5–4,5</x-import>
+</div>
+<div class="ai-fb" role="group" aria-label="Ton avis sur cette réponse">
+<x-import component-from-global-scope="MatchUp.IconButton" icon="thumbs-up" label="Réponse utile" size="s"></x-import>
+<x-import component-from-global-scope="MatchUp.IconButton" icon="thumbs-down" label="Réponse pas utile" size="s"></x-import>
+<span class="ai-fb__note caption"><x-import component-from-global-scope="MatchUp.Icon" name="info" size="{{i14}}"></x-import>L’IA peut se tromper. Vérifie avant de confirmer.</span>
+</div>
+</div>
+</div>
+
+<div class="mu-takeover__footer">
+<form class="mu-assist__composer">
+<div class="mu-assist__field">
+<label for="ai05-input" class="mu-visually-hidden">Ton message à l’assistant</label>
+<input id="ai05-input" class="mu-assist__input body-l" placeholder="Demande à MatchUp…" autocomplete="off">
+<button type="button" class="mu-iconbtn mu-iconbtn--m mu-iconbtn--primary mu-assist__send" aria-label="Envoyer" disabled><x-import component-from-global-scope="MatchUp.Icon" name="arrow-up" size="{{i20}}"></x-import></button>
+</div>
+<p class="mu-assist__disclaimer caption">MatchUp ne réserve et ne paie rien sans ta confirmation.</p>
+</form>
+</div>
+</x-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":1444}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const at = (d, h, m) => new Date(2026, 9, d, h, m || 0);
+    return {
+      yes: true, no: false, i12: 12, i14: 14, i16: 16, i18: 18, i20: 20, i24: 24,
+      safe: { top: 44, bottom: 34 },
+      thumb: { style: { width: 48, height: 48, borderRadius: 'var(--radius-sm)', flex: 'none' } },
+      createCard: {
+        context: 'Court libre · sam. 17 oct. · 19h30',
+        title: 'Crée ta partie demain à 19h30',
+        reason: 'tu as gagné 6-4 6-3 dans ce club le 9 oct. et le court est libre à ton heure habituelle.',
+        primaryAction: { label: 'Créer la partie', trailingIcon: 'arrow-right' },
+        showFeedback: false
+      },
+      g2: {
+        variant: 'compact', sport: 'padel', gameType: 'mixte', venue: 'Smash Padel Club', court: 'Court 3', place: 'Lac 2', distance: 3.1,
+        start: at(16, 20), dateLabel: 'Ce soir', spotsTotal: 4, spotsLeft: 2, price: 25, levelMin: 3, levelMax: 4,
+        players: [{ name: 'Mariem K.', level: 4 }, { name: 'Ines M.', level: 3.5 }],
+        organiser: { name: 'Mariem K.', reliability: 98 }, matchFit: 92, matchFitReason: 'Côté gauche recherché et ton niveau (3,5)'
+      },
+      fit92: 92,
+      fit92Factors: [
+        { icon: 'gauge', label: 'Niveau proche', detail: 'Toi 3,5 · partie 3,0–4,0' },
+        { icon: 'users', label: 'Côté gauche recherché', detail: 'Ton côté au padel' },
+        { icon: 'handshake', label: 'A déjà joué avec Mariem K.', detail: 'Victoire 6-4 6-3 le 9 oct.' }
+      ],
+    };
+  }
+}
+</script>
+</body>
+</html>

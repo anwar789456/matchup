@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Récap IA du match</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/matchup/tokens.css">
+<link rel="stylesheet" href="ds/matchup/components/bundle.css">
+<script src="ds/matchup/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0}
+a{color:var(--link)}
+.rc-muted{color:var(--text-secondary)}
+.rc-m0{margin:0}
+.rc-sec{display:flex; flex-direction:column; gap:12px}
+.rc-head{display:flex; align-items:baseline; justify-content:space-between; gap:8px}
+.rc-story{position:relative; overflow:hidden; display:flex; flex-direction:column; gap:16px; padding:20px; border-radius:var(--radius-lg); background:var(--bg); color:var(--text); box-shadow:var(--elevation-2)}
+.rc-story::before{content:""; position:absolute; right:-60px; top:-60px; width:220px; height:220px; border-radius:var(--radius-full); border:28px solid color-mix(in srgb, var(--accent) 18%, transparent)}
+.rc-story::after{content:""; position:absolute; left:-110px; bottom:-120px; width:180px; height:180px; border-radius:var(--radius-full); border:1.5px solid var(--border-strong)}
+.rc-story > *{position:relative}
+.rc-big{text-transform:uppercase; letter-spacing:0.02em; color:var(--accent)}
+.rc-sets{display:flex; gap:8px}
+.rc-set{display:flex; flex-direction:column; align-items:center; min-width:64px; padding:8px 10px; border-radius:var(--radius-sm); background:var(--surface-elevated)}
+.rc-share{appearance:none; border:0; margin:0; font:inherit; cursor:pointer; display:flex; flex-direction:column; align-items:center; gap:6px; padding:0; background:none; color:var(--text)}
+.rc-share__ico{width:52px; height:52px; border-radius:var(--radius-full); background:var(--surface); box-shadow:var(--elevation-1), inset 0 0 0 1px var(--border); display:flex; align-items:center; justify-content:center}
+</style>
+</helmet>
+<div style="position: relative; width: 390px; height: 1368px; box-sizing: border-box; overflow: hidden; display: flex; flex-direction: column; background: var(--bg); color: var(--text); font-family: var(--font-sans)">
+<header style="flex: none; display: flex; align-items: center; gap: 4px; padding: 52px 8px 8px 8px">
+<a href="TRN-10-Match-en-direct.dc.html" class="mu-iconbtn mu-iconbtn--l mu-iconbtn--ghost" aria-label="Retour au match" style="color: var(--text)"><x-import component-from-global-scope="MatchUp.Icon" name="arrow-left" size="{{i24}}"></x-import></a>
+<span style="flex: 1; min-width: 0; display: flex; flex-direction: column">
+<span class="label-l">Résumé du match</span>
+<span class="caption rc-muted">Poule B · match 1 · sam. 24 oct.</span>
+</span>
+<x-import component-from-global-scope="MatchUp.StatusBadge" status="confirmed" label="Score validé" size="s"></x-import>
+<span style="width: 8px"></span>
+</header>
+
+<main style="flex: 1; min-height: 0; display: flex; flex-direction: column; gap: 24px; padding: 4px 16px 180px 16px">
+<x-import component-from-global-scope="MatchUp.Scoreboard" sport="padel" status="final" date="sam. 24 oct." venue="Smash Padel Club · Court 2" teams="{{teams}}" sets="{{sets}}"></x-import>
+
+<x-import component-from-global-scope="MatchUp.AiTextBlock" title="Résumé du match" meta="Généré à 11h02" default-value="{{recap}}" on-regenerate="{{noop}}"></x-import>
+
+<section class="rc-sec" aria-labelledby="rc-prev">
+<div class="rc-head">
+<h2 id="rc-prev" class="h3 rc-m0">Aperçu du partage</h2>
+<span class="caption rc-muted">image 1080 × 1350</span>
+</div>
+<div data-theme="dark" class="rc-story" role="img" aria-label="Carte à partager : victoire des Faucons 6-4 6-3 contre Ines M. et Nour A., Padel Masters Lac 2, Poule B.">
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 8px">
+<span class="overline rc-muted">Padel Masters Lac 2 · Poule B</span>
+<x-import component-from-global-scope="MatchUp.Logo" variant="icon" height="{{logoH}}" title="MatchUp"></x-import>
+</div>
+<div style="display: flex; flex-direction: column; gap: 6px">
+<span class="rc-big score">Victoire</span>
+<span class="h3">Les Faucons</span>
+<span class="body rc-muted">Yassine B. &amp; Mariem K. contre Ines M. &amp; Nour A.</span>
+</div>
+<div class="rc-sets">
+<span class="rc-set"><span class="overline rc-muted">Set 1</span><span class="num-xl">6-4</span></span>
+<span class="rc-set"><span class="overline rc-muted">Set 2</span><span class="num-xl">6-3</span></span>
+<span class="rc-set" style="background: transparent; box-shadow: inset 0 0 0 1px var(--border-strong)"><span class="overline rc-muted">Durée</span><span class="num-xl">58’</span></span>
+</div>
+<span class="caption rc-muted">Smash Padel Club · sam. 24 oct. · matchup.tn</span>
+</div>
+</section>
+
+<section aria-label="Partager" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px">
+<button type="button" class="rc-share"><span class="rc-share__ico"><x-import component-from-global-scope="MatchUp.Icon" name="whatsapp-logo" size="{{i24}}"></x-import></span><span class="caption">WhatsApp</span></button>
+<button type="button" class="rc-share"><span class="rc-share__ico"><x-import component-from-global-scope="MatchUp.Icon" name="download-simple" size="{{i24}}"></x-import></span><span class="caption">Enregistrer</span></button>
+<button type="button" class="rc-share"><span class="rc-share__ico"><x-import component-from-global-scope="MatchUp.Icon" name="link" size="{{i24}}"></x-import></span><span class="caption">Copier le lien</span></button>
+<a href="FRM-02-Nouveau-post.dc.html" class="rc-share" style="text-decoration: none"><span class="rc-share__ico"><x-import component-from-global-scope="MatchUp.Icon" name="users-three" size="{{i24}}"></x-import></span><span class="caption">Communauté</span></a>
+</section>
+</main>
+
+<div style="position: absolute; left: 0; right: 0; bottom: 0; z-index: var(--z-sticky); padding: 12px 16px 34px 16px; background: var(--surface); box-shadow: var(--elevation-2-up); display: flex; flex-direction: column; gap: 8px">
+<p class="caption rc-m0 rc-muted" style="text-align: center">Rien n’est publié sans toi. Tu peux modifier le texte avant.</p>
+<button type="button" class="mu-btn mu-btn--primary mu-btn--xl mu-btn--block"><span class="mu-btn__content"><x-import component-from-global-scope="MatchUp.Icon" name="share-network" size="{{i20}}"></x-import><span class="mu-btn__label label-l">Partager le résumé</span></span></button>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":1368}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      yes: true, i20: 20, i24: 24, logoH: 32, noop: () => {},
+      teams: [
+        { name: 'Les Faucons', short: 'LF', players: [{ name: 'Yassine B.' }, { name: 'Mariem K.' }], you: true },
+        { name: 'Ines M. / Nour A.', short: 'IN', players: [{ name: 'Ines M.' }, { name: 'Nour A.' }] }
+      ],
+      sets: [[6, 4], [6, 3]],
+      recap: 'Victoire 6-4 6-3 contre Ines M. et Nour A. en 58 min. Le premier set s’est joué sur un break de Yassine à 5-4, puis Mariem a fait la différence dans le deuxième avec deux breaks.\n\nLes Faucons lancent leur Poule B avec 2 points. Prochain match à 15h30 sur le Court 1, contre Skander T. et Omar D.'
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Assistant · espace propriétaire</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/matchup/tokens.css">
+<link rel="stylesheet" href="ds/matchup/components/bundle.css">
+<script src="ds/matchup/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0}
+a{color:var(--link)}
+.ai-root{position:relative; width:390px; box-sizing:border-box; overflow:hidden; background:var(--bg); color:var(--text); font-family:var(--font-sans)}
+.ai-close{color:var(--text)}
+.ai-who{display:flex; flex-direction:column; gap:0}
+.ai-who .caption{color:var(--text-secondary)}
+.ai-thread{flex:1; min-height:0; overflow:hidden; display:flex; flex-direction:column; gap:20px; padding:12px 16px 8px 16px}
+.ai-thread--end{justify-content:flex-end; gap:16px; -webkit-mask-image:linear-gradient(to bottom, transparent 0, #000 32px); mask-image:linear-gradient(to bottom, transparent 0, #000 32px)}
+.ai-thread > *{flex-shrink:0}
+.ai-day{align-self:center; margin:0; color:var(--text-secondary)}
+.ai-me{align-self:flex-end; max-width:78%; margin:0; padding:10px 16px; border-radius:var(--radius-lg) var(--radius-xs) var(--radius-lg) var(--radius-lg); background:var(--primary); color:var(--on-primary)}
+.ai-turn{display:flex; flex-direction:column; align-items:flex-start; gap:10px}
+.ai-turn > .ai-full{align-self:stretch}
+.ai-turn .mu-assist__bubble{max-width:92%}
+.ai-heard{display:flex; flex-wrap:wrap; align-items:center; gap:6px}
+.ai-heard__lead{color:var(--text-secondary); margin-inline-end:2px}
+.ai-ink{color:var(--text)}
+.ai-muted{color:var(--text-secondary)}
+.ai-m0{margin:0}
+.ai-ok{display:inline-flex; align-items:center; gap:3px; color:var(--success-text)}
+.ai-venue{display:flex; align-items:center; gap:12px}
+.ai-venue__txt{flex:1; min-width:0; display:flex; flex-direction:column; gap:2px}
+.ai-slots{display:grid; grid-template-columns:repeat(3, 1fr); gap:8px}
+.ai-slot{display:flex; flex-direction:column; align-items:center; padding:8px 4px; border-radius:var(--radius-sm); background:var(--surface); box-shadow:inset 0 0 0 1px var(--border-control); color:var(--text); text-align:center}
+.ai-slot.is-on{background:var(--accent); color:var(--on-accent); box-shadow:inset 0 0 0 1.5px var(--text)}
+.ai-slot.is-on .ai-muted{color:var(--on-accent)}
+.ai-price{display:flex; align-items:baseline; justify-content:space-between; gap:12px; padding-top:10px; border-top:1px solid var(--border)}
+.ai-fit{display:flex; align-items:center; gap:8px; margin-top:-2px}
+.ai-replies{display:flex; flex-wrap:wrap; gap:8px}
+.ai-fb{display:flex; align-items:center; gap:2px; margin-inline-start:-6px; color:var(--text-secondary)}
+.ai-fb__note{display:inline-flex; align-items:center; gap:4px; margin-inline-start:6px}
+.ai-root .mu-takeover__footer{border-top:1px solid var(--border); background:var(--bg)}
+.ai-overline{margin:0; color:var(--text-secondary)}
+.ai-root .mu-chart{box-shadow:var(--elevation-1)}
+</style>
+</helmet>
+<div class="ai-root" style="height: 1416px">
+<x-import component-from-global-scope="MatchUp.Takeover" inline="{{yes}}" open="{{yes}}" closable="{{no}}" safe-area="{{safe}}" label="Assistant MatchUp" class-name="mu-takeover--assistant">
+<div class="mu-takeover__bar">
+<div class="mu-takeover__bar-start"><span class="mu-assist__id"><span class="mu-assist__mark" aria-hidden="true"><x-import component-from-global-scope="MatchUp.Icon" name="sparkle" weight="fill" size="{{i18}}"></x-import></span><span class="ai-who"><span class="label-l">Assistant MatchUp</span><span class="caption">Espace propriétaire · Arena Five</span></span></span></div>
+<div class="mu-takeover__bar-end"><a href="OWN-10-Aujourdhui.dc.html" class="mu-iconbtn mu-iconbtn--m mu-iconbtn--ghost ai-close" aria-label="Fermer l’assistant"><x-import component-from-global-scope="MatchUp.Icon" name="x" size="{{i20}}"></x-import></a></div>
+</div>
+
+<div class="ai-thread" aria-live="polite">
+<p class="ai-day caption">Aujourd’hui · 18h05</p>
+<p class="ai-me body-l">Quels créneaux sont les moins remplis cette semaine ?</p>
+
+<div class="ai-turn">
+<div class="mu-assist__from"><span class="mu-assist__avatar" aria-hidden="true"><x-import component-from-global-scope="MatchUp.Icon" name="sparkle" weight="fill" size="{{i14}}"></x-import></span><span class="label-s">MatchUp</span><span class="mu-assist__ia label-s"><x-import component-from-global-scope="MatchUp.Icon" name="sparkle" weight="fill" size="{{i12}}"></x-import>IA</span></div>
+<div class="ai-heard" role="group" aria-label="Ce que l’assistant a compris">
+<span class="ai-heard__lead caption">J’ai compris</span>
+<x-import component-from-global-scope="MatchUp.Chip" kind="input" size="s" icon="storefront">Arena Five · 3 terrains</x-import>
+<x-import component-from-global-scope="MatchUp.Chip" kind="input" size="s" icon="calendar-blank">lun. 12 → dim. 18 oct.</x-import>
+<a href="AI-07-Assistant-pro.dc.html" class="mu-btn mu-btn--link mu-btn--s"><span class="mu-btn__content"><span class="mu-btn__label label">Modifier</span></span></a>
+</div>
+<p class="mu-assist__bubble body-l">Les après-midi de semaine. Le plus vide : jeudi 14h–17h, rempli à 20 % seulement sur tes 3 terrains. Le soir, tu es au-dessus de 85 % tous les jours.</p>
+<div class="ai-full">
+<x-import component-from-global-scope="MatchUp.BarChart" dc-props="{{chart}}"></x-import>
+</div>
+<div class="ai-full">
+<x-import component-from-global-scope="MatchUp.AiSuggestionCard" dc-props="{{priceCard}}">
+<div style="display: flex; flex-direction: column; gap: 8px">
+<div style="display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap">
+<span class="num-m ai-muted" style="text-decoration: line-through; text-decoration-thickness: 1.5px">120 DT</span>
+<span style="display: inline-flex; align-self: center; color: var(--text-secondary)"><x-import component-from-global-scope="MatchUp.Icon" name="arrow-right" size="{{i16}}"></x-import></span>
+<span class="num-m ai-ink">96 DT</span>
+<span class="caption ai-muted">par terrain · 9 créneaux · jeu. 22 oct.</span>
+</div>
+<span class="body ai-muted">Soit 9,600 DT par joueur à 10. Les joueurs voient le prix barré. Rien ne change sans ta confirmation.</span>
+</div>
+</x-import>
+</div>
+<div class="ai-replies" role="group" aria-label="Questions suivantes">
+<x-import component-from-global-scope="MatchUp.Chip" icon="calendar-blank">Et la semaine prochaine ?</x-import>
+<x-import component-from-global-scope="MatchUp.Chip" icon="sport-court">Détail par terrain</x-import>
+</div>
+<div class="ai-fb" role="group" aria-label="Ton avis sur cette réponse">
+<x-import component-from-global-scope="MatchUp.IconButton" icon="thumbs-up" label="Réponse utile" size="s"></x-import>
+<x-import component-from-global-scope="MatchUp.IconButton" icon="thumbs-down" label="Réponse pas utile" size="s"></x-import>
+<span class="ai-fb__note caption"><x-import component-from-global-scope="MatchUp.Icon" name="info" size="{{i14}}"></x-import>L’IA peut se tromper. Vérifie dans ton planning.</span>
+</div>
+</div>
+</div>
+
+<div class="mu-takeover__footer">
+<form class="mu-assist__composer">
+<div class="mu-assist__field">
+<label for="ai07-input" class="mu-visually-hidden">Ton message à l’assistant</label>
+<input id="ai07-input" class="mu-assist__input body-l" placeholder="Demande à MatchUp…" autocomplete="off">
+<button type="button" class="mu-iconbtn mu-iconbtn--m mu-iconbtn--primary mu-assist__send" aria-label="Envoyer" disabled><x-import component-from-global-scope="MatchUp.Icon" name="arrow-up" size="{{i20}}"></x-import></button>
+</div>
+<p class="mu-assist__disclaimer caption">MatchUp ne réserve et ne paie rien sans ta confirmation.</p>
+</form>
+</div>
+</x-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":1416}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const at = (d, h, m) => new Date(2026, 9, d, h, m || 0);
+    return {
+      yes: true, no: false, i12: 12, i14: 14, i16: 16, i18: 18, i20: 20, i24: 24,
+      safe: { top: 44, bottom: 34 },
+      thumb: { style: { width: 48, height: 48, borderRadius: 'var(--radius-sm)', flex: 'none' } },
+      chart: {
+        title: 'Créneaux les plus vides', subtitle: 'Taux de remplissage · lun. 12 → dim. 18 oct.',
+        orientation: 'horizontal', format: 'percent', categoryLabel: 'Créneau',
+        categories: ['Jeu. 14h–17h', 'Mar. 14h–17h', 'Lun. 10h–13h', 'Mer. 8h–11h'],
+        series: [{ id: 'fill', label: 'Taux de remplissage', data: [20, 33, 38, 42] }]
+      },
+      priceCard: {
+        context: 'Tarifs · Arena Five',
+        title: 'Jeudi 14h–17h : 80 % de créneaux vides. Proposer −20 % ?',
+        reason: '4 de tes 5 derniers jeudis après-midi sont restés presque vides, alors que tes soirs sont pleins.',
+        primaryAction: { label: 'Préparer l’offre', href: 'OWN-16-Tarifs.dc.html' },
+        secondaryAction: { label: 'Ignorer' },
+        showFeedback: false
+      },
+    };
+  }
+}
+</script>
+</body>
+</html>

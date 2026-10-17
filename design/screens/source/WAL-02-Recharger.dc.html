@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Recharger mon solde</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/matchup/tokens.css">
+<link rel="stylesheet" href="ds/matchup/components/bundle.css">
+<script src="ds/matchup/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0}
+a{color:var(--link)}
+.top-amt{display:flex; flex-direction:column; align-items:center; gap:var(--space-2); padding:var(--space-6) var(--space-4) var(--space-5); border-radius:var(--radius-lg); background:var(--surface-muted); text-align:center}
+.top-flow{display:inline-flex; align-items:center; gap:var(--space-2); padding:4px 12px; border-radius:var(--radius-full); background:var(--surface); box-shadow:inset 0 0 0 1px var(--border); color:var(--text-secondary)}
+.top-chips{display:flex; flex-wrap:wrap; justify-content:center; gap:var(--space-2)}
+.top-sec{display:flex; flex-direction:column; gap:var(--space-3)}
+.top-brand{flex:none; display:inline-flex; align-items:center; justify-content:center; width:44px; height:28px; box-sizing:border-box; border-radius:var(--radius-xs); background:var(--surface); box-shadow:inset 0 0 0 1.5px var(--text); color:var(--text); letter-spacing:0.04em}
+.top-why{display:flex; flex-direction:column; gap:var(--space-3); margin:0; padding:0; list-style:none}
+.top-why li{display:flex; align-items:flex-start; gap:var(--space-3)}
+.top-why__ico{flex:none; width:32px; height:32px; border-radius:var(--radius-full); background:var(--surface-muted); color:var(--text); display:flex; align-items:center; justify-content:center}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; box-sizing: border-box; overflow: hidden; display: flex; flex-direction: column; background: var(--surface); color: var(--text); font-family: var(--font-sans)">
+
+<div style="display: flex; align-items: center; gap: 4px; padding: 52px 16px 4px 8px">
+<a href="WAL-01-Portefeuille.dc.html" class="mu-iconbtn mu-iconbtn--l mu-iconbtn--ghost" aria-label="Retour au portefeuille" style="color: var(--text)"><x-import component-from-global-scope="MatchUp.Icon" name="arrow-left" size="{{i24}}"></x-import></a>
+<h1 class="h3" style="flex: 1; margin: 0">Recharger mon solde</h1>
+</div>
+
+<div style="flex: 1; min-height: 0; overflow: auto; display: flex; flex-direction: column; gap: 24px; padding: 12px 16px 24px 16px">
+
+<section class="top-amt" aria-labelledby="top-q">
+<h2 id="top-q" class="label" style="margin: 0; color: var(--text-secondary)">Combien veux-tu ajouter ?</h2>
+<span aria-live="polite"><span class="num-hero">{{amount}}</span><span class="num-l"> DT</span></span>
+<span class="top-flow caption">Solde <span class="num-xs" style="color: var(--text)">30 DT</span><x-import component-from-global-scope="MatchUp.Icon" name="arrow-right" size="{{i14}}"></x-import>après recharge <span class="num-xs" style="color: var(--text)">{{after}} DT</span></span>
+<div class="top-chips" role="radiogroup" aria-label="Montant" style="margin-top: 12px">
+<x-import component-from-global-scope="MatchUp.Chip" kind="choice" selected="{{s20}}" on-click="{{to20}}" role="radio" aria-checked="{{s20}}">20 DT</x-import>
+<x-import component-from-global-scope="MatchUp.Chip" kind="choice" selected="{{s50}}" on-click="{{to50}}" role="radio" aria-checked="{{s50}}">50 DT</x-import>
+<x-import component-from-global-scope="MatchUp.Chip" kind="choice" selected="{{s100}}" on-click="{{to100}}" role="radio" aria-checked="{{s100}}">100 DT</x-import>
+<x-import component-from-global-scope="MatchUp.Chip" kind="choice" icon="pencil-simple" selected="{{sOther}}" on-click="{{toOther}}" role="radio" aria-checked="{{sOther}}">Autre montant</x-import>
+</div>
+<sc-if value="{{sOther}}">
+<div style="width: 100%; margin-top: 8px; text-align: start">
+<x-import component-from-global-scope="MatchUp.TextField" label="Montant" suffix="DT" inputmode="numeric" value="{{otherStr}}" on-change="{{setOther}}" helper="Entre 10 et 500 DT"></x-import>
+</div>
+</sc-if>
+</section>
+
+<section class="top-sec" aria-labelledby="top-pay">
+<div style="display: flex; align-items: center; justify-content: space-between">
+<h2 id="top-pay" class="h3" style="margin: 0">Payer avec</h2>
+</div>
+<a href="WAL-03-Recharge-checkout.dc.html" class="mu-card mu-card--interactive" style="display: flex; align-items: center; gap: 12px; padding: 14px 12px 14px 16px; text-decoration: none; color: var(--text)">
+<span class="top-brand label-s">VISA</span>
+<span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px"><span class="label">Visa •••• 4242</span><span class="caption" style="color: var(--text-secondary)">Par défaut · expire 08/27</span></span>
+<span class="label" style="color: var(--text)">Changer</span>
+</a>
+</section>
+
+<ul class="top-why" aria-label="Pourquoi recharger">
+<li><span class="top-why__ico"><x-import component-from-global-scope="MatchUp.Icon" name="lightning" size="{{i16}}"></x-import></span><span style="display: flex; flex-direction: column; gap: 2px"><span class="label">Ta part payée en un tap</span><span class="caption" style="color: var(--text-secondary)">Sans ressortir ta carte à chaque partie.</span></span></li>
+<li><span class="top-why__ico"><x-import component-from-global-scope="MatchUp.Icon" name="arrow-u-up-left" size="{{i16}}"></x-import></span><span style="display: flex; flex-direction: column; gap: 2px"><span class="label">Remboursements plus rapides</span><span class="caption" style="color: var(--text-secondary)">Ils arrivent sur ton solde plutôt qu’en 5 à 10 jours sur ta carte.</span></span></li>
+<li><span class="top-why__ico"><x-import component-from-global-scope="MatchUp.Icon" name="seal-check" size="{{i16}}"></x-import></span><span style="display: flex; flex-direction: column; gap: 2px"><span class="label">Aucun frais de recharge</span><span class="caption" style="color: var(--text-secondary)">Tu paies exactement le montant choisi.</span></span></li>
+</ul>
+
+</div>
+
+<div style="padding: 12px 16px 34px 16px; background: var(--surface); box-shadow: var(--elevation-2-up)">
+<a href="WAL-03-Recharge-checkout.dc.html" class="mu-btn mu-btn--primary mu-btn--xl mu-btn--block"><span class="mu-btn__content"><span class="mu-btn__label label-l">Continuer</span><span class="mu-btn__dot" aria-hidden="true">·</span><span class="mu-btn__price num-m">{{amount}} DT</span></span></a>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  state = { pick: 50, other: '' };
+  renderVals() {
+    const s = this.state;
+    const isOther = s.pick === 'other';
+    const n = isOther ? (parseInt(s.other, 10) || 0) : s.pick;
+    return {
+      yes: true, i14: 14, i16: 16, i20: 20, i24: 24,
+      amount: n, after: 30 + n,
+      s20: s.pick === 20, s50: s.pick === 50, s100: s.pick === 100, sOther: isOther,
+      to20: () => this.setState({ pick: 20 }), to50: () => this.setState({ pick: 50 }),
+      to100: () => this.setState({ pick: 100 }), toOther: () => this.setState({ pick: 'other', other: s.other || '75' }),
+      otherStr: s.other,
+      setOther: (v) => this.setState({ other: String(v).replace(/[^0-9]/g, '').slice(0, 3) })
+    };
+  }
+}
+</script>
+</body>
+</html>

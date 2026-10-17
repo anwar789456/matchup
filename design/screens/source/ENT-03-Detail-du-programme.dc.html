@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Détail du programme</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/matchup/tokens.css">
+<link rel="stylesheet" href="ds/matchup/components/bundle.css">
+<script src="ds/matchup/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0}
+a{color:var(--link)}
+.ent-sec{display:flex; flex-direction:column; gap:12px}
+.ent-sec__head{display:flex; align-items:center; justify-content:space-between; gap:8px; min-height:32px}
+.ent-fact{display:flex; flex-direction:column; gap:2px; padding:12px 12px 14px 12px; min-width:0}
+.ent-fact + .ent-fact{border-inline-start:1px solid var(--border)}
+.ent-li{display:flex; align-items:flex-start; gap:10px}
+.ent-li__icon{flex:none; display:flex; margin-top:2px; color:var(--success-text)}
+.ent-week{display:flex; flex-direction:column; border-radius:var(--radius-md); background:var(--surface); box-shadow:var(--elevation-1); overflow:hidden}
+.ent-week__head{display:flex; align-items:center; gap:12px; padding:14px 16px; min-height:44px; box-sizing:border-box}
+.ent-week + .ent-week{margin-top:0}
+.ent-week__num{flex:none; width:36px; height:36px; border-radius:var(--radius-sm); background:var(--padel-soft); color:var(--padel-text); display:flex; align-items:center; justify-content:center}
+.ent-drills{margin:0; padding:4px 12px 4px 12px; list-style:none; display:flex; flex-direction:column; gap:0; border-radius:var(--radius-sm); background:var(--surface-muted)}
+.ent-drill{display:flex; align-items:center; gap:10px; padding:8px 0}
+.ent-drill + .ent-drill{border-top:1px solid var(--border)}
+.ent-premium{display:inline-flex; align-items:center; gap:4px; height:24px; padding:0 10px; border-radius:var(--radius-full); background:var(--accent); color:var(--on-accent); white-space:nowrap}
+.ent-bar{display:grid; grid-template-columns:24px 1fr 28px; align-items:center; gap:8px}
+.ent-hot{position:absolute; display:block; border-radius:var(--radius-full)}
+.ent-hot:focus-visible{outline:2px solid var(--focus); outline-offset:2px}
+</style>
+</helmet>
+<div style="position: relative; width: 390px; height: 2308px; box-sizing: border-box; overflow: hidden; background: var(--bg); color: var(--text); font-family: var(--font-sans)">
+
+<x-import component-from-global-scope="MatchUp.CourtArt" sport="padel" label="Court de padel éclairé, aperçu du programme" dc-props="{{heroArt}}"></x-import>
+<div style="position: absolute; left: 16px; top: 112px; display: flex; align-items: center; gap: 8px; height: 32px; padding: 0 12px 0 6px; border-radius: var(--radius-full); background: var(--white); color: var(--ink-900); box-shadow: var(--elevation-2)">
+<span style="width: 22px; height: 22px; border-radius: var(--radius-full); background: var(--ink-900); color: var(--white); display: flex; align-items: center; justify-content: center"><x-import component-from-global-scope="MatchUp.Icon" name="play" weight="fill" size="{{i12}}"></x-import></span>
+<span class="label-s">Voir l’aperçu</span><span class="num-xs">1:30</span>
+</div>
+<x-import component-from-global-scope="MatchUp.TopAppBar" variant="media" title="Programme" inset="{{inset}}" on-back="{{noop}}" actions="{{barActions}}" dc-props="{{barStyle}}"></x-import>
+<a href="ENT-02-Programmes.dc.html" class="ent-hot" aria-label="Retour au catalogue" style="left: 6px; top: 50px; width: 44px; height: 44px"></a>
+
+<main style="position: absolute; left: 0; right: 0; top: 160px; bottom: 0; border-radius: var(--radius-lg) var(--radius-lg) 0 0; background: var(--bg); padding: 20px 16px 0 16px; display: flex; flex-direction: column; gap: 28px">
+
+<section aria-labelledby="ent-title" style="display: flex; flex-direction: column; gap: 16px">
+<div style="display: flex; flex-direction: column; gap: 8px">
+<div style="display: flex; flex-wrap: wrap; align-items: center; gap: 8px">
+<x-import component-from-global-scope="MatchUp.Chip" kind="sport" sport="padel" size="s"></x-import>
+<x-import component-from-global-scope="MatchUp.Chip" kind="level" size="s" icon="gauge">Niveau 3,0 – 4,5</x-import>
+</div>
+<h1 id="ent-title" class="h1" style="margin: 0">Bandeja en 4 semaines</h1>
+<div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap">
+<x-import component-from-global-scope="MatchUp.StarRating" value="{{rating}}" read-only="{{yes}}" size="{{s16}}" count="{{n64}}"></x-import>
+<span class="caption" style="color: var(--text-secondary)">· Coach Karim J.</span>
+</div>
+</div>
+
+<div class="mu-card" role="group" aria-label="Le programme en bref" style="display: grid; grid-template-columns: 1fr 1fr 1.1fr; padding: 0">
+<div class="ent-fact">
+<span class="overline" style="color: var(--text-secondary)">Durée</span>
+<span class="num-xl">4 sem.</span>
+<span class="caption" style="color: var(--text-secondary)">3 par semaine</span>
+</div>
+<div class="ent-fact">
+<span class="overline" style="color: var(--text-secondary)">Séances</span>
+<span class="num-xl">12</span>
+<span class="caption" style="color: var(--text-secondary)">20–30 min</span>
+</div>
+<div class="ent-fact">
+<span class="overline" style="color: var(--text-secondary)">Pour toi</span>
+<span class="num-xl">0 DT</span>
+<span class="caption" style="color: var(--text-secondary)">au lieu de 45 DT</span>
+</div>
+</div>
+
+<div class="mu-card" style="display: flex; flex-direction: column; gap: 10px; padding: 16px; box-shadow: inset 0 0 0 1.5px var(--accent), var(--elevation-1)">
+<span style="display: flex"><span class="ent-premium label-s"><x-import component-from-global-scope="MatchUp.Icon" name="crown-simple" weight="fill" size="{{i14}}"></x-import>Inclus dans Premium</span></span>
+<p class="body" style="margin: 0">Ton essai Premium est actif : tu suis les 12 séances sans payer le programme.</p>
+<p class="caption" style="margin: 0; color: var(--text-secondary)">Essai gratuit jusqu’au ven. 30 oct., puis 19 DT/mois, résiliable à tout moment. Sans Premium, le programme coûte 45 DT en une fois.</p>
+</div>
+</section>
+
+<section class="ent-sec" aria-labelledby="ent-about">
+<h2 id="ent-about" class="h3" style="margin: 0">À propos</h2>
+<p class="body-l" style="margin: 0; color: var(--text-secondary)">La bandeja, c’est le coup qui te garde au filet quand l’adversaire te lobe. En 4 semaines, Karim t’apprend à la placer croisée, à la jouer en déplacement et à la choisir au bon moment.</p>
+<ul style="margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 8px">
+<li class="ent-li"><span class="ent-li__icon"><x-import component-from-global-scope="MatchUp.Icon" name="check-circle" weight="fill" size="{{i18}}"></x-import></span><span class="body">Armer tôt, épaule de profil</span></li>
+<li class="ent-li"><span class="ent-li__icon"><x-import component-from-global-scope="MatchUp.Icon" name="check-circle" weight="fill" size="{{i18}}"></x-import></span><span class="body">Frapper devant l’épaule, poignet ferme</span></li>
+<li class="ent-li"><span class="ent-li__icon"><x-import component-from-global-scope="MatchUp.Icon" name="check-circle" weight="fill" size="{{i18}}"></x-import></span><span class="body">Placer croisé vers la grille ou le long de la ligne</span></li>
+<li class="ent-li"><span class="ent-li__icon"><x-import component-from-global-scope="MatchUp.Icon" name="check-circle" weight="fill" size="{{i18}}"></x-import></span><span class="body">Enchaîner vers le filet sans perdre ta place</span></li>
+</ul>
+<p class="caption" style="margin: 0; display: flex; align-items: center; gap: 6px; color: var(--text-secondary)"><x-import component-from-global-scope="MatchUp.Icon" name="tennis-ball" size="{{i16}}"></x-import>Il te faut : ta raquette, 10 balles et un court. Seul ou à deux.</p>
+</section>
+
+<section class="ent-sec" aria-labelledby="ent-curr">
+<div class="ent-sec__head">
+<h2 id="ent-curr" class="h3" style="margin: 0">Le programme</h2>
+<span class="caption" style="color: var(--text-secondary)"><span class="num-xs">4</span> semaines · <span class="num-xs">12</span> séances</span>
+</div>
+
+<div class="ent-week">
+<div class="ent-week__head" aria-expanded="true">
+<span class="ent-week__num num-m">1</span>
+<span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px"><span class="label-l">Les bases du geste</span><span class="caption" style="color: var(--text-secondary)">3 séances · 1 h 05 au total</span></span>
+<span style="display: flex; color: var(--text-secondary)"><x-import component-from-global-scope="MatchUp.Icon" name="caret-up" size="{{i20}}"></x-import></span>
+</div>
+<div style="display: flex; flex-direction: column; gap: 8px; padding: 0 12px 12px 12px">
+<x-import component-from-global-scope="MatchUp.LessonCard" dc-props="{{s1}}"></x-import>
+<ol class="ent-drills" aria-label="Exercices de la séance 1">
+<li class="ent-drill"><span class="num-xs" style="flex: none; width: 16px; color: var(--text-secondary)">1</span><span class="body" style="flex: 1">Prise continentale et armé</span><span class="caption" style="color: var(--text-secondary)">3 min</span></li>
+<li class="ent-drill"><span class="num-xs" style="flex: none; width: 16px; color: var(--text-secondary)">2</span><span class="body" style="flex: 1">Armé face au grillage, sans balle</span><span class="caption" style="color: var(--text-secondary)">3 × 10</span></li>
+<li class="ent-drill"><span class="num-xs" style="flex: none; width: 16px; color: var(--text-secondary)">3</span><span class="body" style="flex: 1">Bandeja sur balle lancée</span><span class="caption" style="color: var(--text-secondary)">3 × 12</span></li>
+</ol>
+<x-import component-from-global-scope="MatchUp.LessonCard" dc-props="{{s2}}"></x-import>
+<x-import component-from-global-scope="MatchUp.LessonCard" dc-props="{{s3}}"></x-import>
+</div>
+</div>
+
+<div class="ent-week">
+<div class="ent-week__head">
+<span class="ent-week__num num-m">2</span>
+<span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px"><span class="label-l">Bandeja croisée</span><span class="caption" style="color: var(--text-secondary)">Viser la grille · Croisée · Sous pression</span></span>
+<span style="display: flex; color: var(--text-secondary)"><x-import component-from-global-scope="MatchUp.Icon" name="caret-down" size="{{i20}}"></x-import></span>
+</div>
+</div>
+<div class="ent-week">
+<div class="ent-week__head">
+<span class="ent-week__num num-m">3</span>
+<span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px"><span class="label-l">En déplacement</span><span class="caption" style="color: var(--text-secondary)">Pas chassés · Lob court · Montée au filet</span></span>
+<span style="display: flex; color: var(--text-secondary)"><x-import component-from-global-scope="MatchUp.Icon" name="caret-down" size="{{i20}}"></x-import></span>
+</div>
+</div>
+<div class="ent-week">
+<div class="ent-week__head">
+<span class="ent-week__num num-m">4</span>
+<span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px"><span class="label-l">Le bon coup au bon moment</span><span class="caption" style="color: var(--text-secondary)">Bandeja ou víbora · Jeu à deux · Test filmé</span></span>
+<span style="display: flex; color: var(--text-secondary)"><x-import component-from-global-scope="MatchUp.Icon" name="caret-down" size="{{i20}}"></x-import></span>
+</div>
+</div>
+</section>
+
+<section class="ent-sec" aria-labelledby="ent-coach">
+<h2 id="ent-coach" class="h3" style="margin: 0">Ton coach</h2>
+<x-import component-from-global-scope="MatchUp.CoachCard" dc-props="{{coach}}"></x-import>
+<p class="caption" style="margin: -4px 0 0 0; display: flex; align-items: center; gap: 6px; color: var(--text-secondary)"><span style="display: flex; color: var(--success-text)"><x-import component-from-global-scope="MatchUp.Icon" name="certificate" size="{{i16}}"></x-import></span>Certifié FTT niveau 2 · diplôme vérifié par MatchUp</p>
+</section>
+
+<section class="ent-sec" aria-labelledby="ent-reviews">
+<div class="ent-sec__head">
+<h2 id="ent-reviews" class="h3" style="margin: 0">Avis des élèves</h2>
+<button type="button" class="mu-btn mu-btn--tertiary mu-btn--s" style="margin-inline-end: -8px"><span class="mu-btn__content"><span class="mu-btn__label label">Voir les 64 avis</span></span></button>
+</div>
+<div class="mu-card" style="display: flex; gap: 20px; align-items: center; padding: 16px">
+<div style="flex: none; display: flex; flex-direction: column; align-items: center; gap: 4px">
+<span class="num-hero" style="line-height: 1">4,9</span>
+<x-import component-from-global-scope="MatchUp.StarRating" value="{{rating}}" read-only="{{yes}}" size="{{s16}}" show-value="{{no}}"></x-import>
+<span class="caption" style="color: var(--text-secondary)">64 avis</span>
+</div>
+<div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 6px" aria-label="Répartition des notes">
+<div class="ent-bar"><span class="num-xs" style="color: var(--text-secondary)">5 ★</span><x-import component-from-global-scope="MatchUp.ProgressBar" value="{{d5}}" max="{{n64}}" size="s" show-value="{{no}}" aria-label="5 étoiles : 57 avis"></x-import><span class="num-xs" style="text-align: end">57</span></div>
+<div class="ent-bar"><span class="num-xs" style="color: var(--text-secondary)">4 ★</span><x-import component-from-global-scope="MatchUp.ProgressBar" value="{{d4}}" max="{{n64}}" size="s" show-value="{{no}}" aria-label="4 étoiles : 6 avis"></x-import><span class="num-xs" style="text-align: end">6</span></div>
+<div class="ent-bar"><span class="num-xs" style="color: var(--text-secondary)">3 ★</span><x-import component-from-global-scope="MatchUp.ProgressBar" value="{{d3}}" max="{{n64}}" size="s" show-value="{{no}}" aria-label="3 étoiles : 1 avis"></x-import><span class="num-xs" style="text-align: end">1</span></div>
+<div class="ent-bar"><span class="num-xs" style="color: var(--text-secondary)">2 ★</span><x-import component-from-global-scope="MatchUp.ProgressBar" value="{{d0}}" max="{{n64}}" size="s" show-value="{{no}}" aria-label="2 étoiles : 0 avis"></x-import><span class="num-xs" style="text-align: end">0</span></div>
+<div class="ent-bar"><span class="num-xs" style="color: var(--text-secondary)">1 ★</span><x-import component-from-global-scope="MatchUp.ProgressBar" value="{{d0}}" max="{{n64}}" size="s" show-value="{{no}}" aria-label="1 étoile : 0 avis"></x-import><span class="num-xs" style="text-align: end">0</span></div>
+</div>
+</div>
+<article class="mu-card" style="display: flex; flex-direction: column; gap: 8px; padding: 16px">
+<div style="display: flex; align-items: center; gap: 10px">
+<x-import component-from-global-scope="MatchUp.Avatar" name="Rami S." size="s"></x-import>
+<span style="flex: 1; min-width: 0; display: flex; flex-direction: column"><span class="label">Rami S.</span><span class="caption" style="color: var(--text-secondary)">Programme terminé · il y a 5 jours</span></span>
+<x-import component-from-global-scope="MatchUp.StarRating" value="{{v5}}" read-only="{{yes}}" size="{{s16}}" show-value="{{no}}"></x-import>
+</div>
+<p class="body" style="margin: 0">Fini en 4 semaines pile. La semaine 3 sur les déplacements change tout : je ne recule plus en marche arrière.</p>
+</article>
+</section>
+</main>
+
+<div style="position: absolute; left: 0; right: 0; bottom: 0; z-index: var(--z-sticky); padding: 12px 16px 34px 16px; background: var(--surface); box-shadow: var(--elevation-2-up); display: flex; flex-direction: column; gap: 10px">
+<p class="caption" style="margin: 0; display: flex; align-items: center; justify-content: center; gap: 6px; color: var(--text-secondary)"><span style="display: flex; color: var(--text)"><x-import component-from-global-scope="MatchUp.Icon" name="crown-simple" weight="fill" size="{{i16}}"></x-import></span><span><span class="num-xs" style="color: var(--text)">0 DT</span> · inclus dans ton essai Premium · sans engagement</span></p>
+<a href="ENT-01-Mon-entrainement.dc.html" class="mu-btn mu-btn--primary mu-btn--xl mu-btn--block"><span class="mu-btn__content"><span class="mu-btn__label label-l">S’inscrire au programme</span></span></a>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":2308}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      yes: true, no: false, i12: 12, i14: 14, i16: 16, i18: 18, i20: 20, i24: 24, inset: 44, s16: 16,
+      rating: 4.9, n64: 64, d5: 57, d4: 6, d3: 1, d0: 0, v5: 5,
+      noop: () => {},
+      heroArt: { variant: 'photo', style: { position: 'absolute', top: 0, left: 0, right: 0, height: '192px' } },
+      barStyle: { style: { position: 'absolute', top: 0, left: 0, right: 0, zIndex: 2 } },
+      barActions: [{ icon: 'bookmark-simple', label: 'Enregistrer le programme' }, { icon: 'share-network', label: 'Partager le programme' }],
+      s1: { index: 1, title: 'Prise et armé', duration: 20, drills: 3, sport: 'padel', variant: 'compact' },
+      s2: { index: 2, title: 'Le contact devant l’épaule', duration: 22, drills: 4, sport: 'padel', variant: 'compact' },
+      s3: { index: 3, title: 'Bandeja long de ligne', duration: 23, drills: 4, sport: 'padel', variant: 'compact' },
+      coach: { name: 'Karim J.', sport: 'padel', city: 'Lac 2', specialties: ['Bandeja', 'Service', 'Placement'], rating: 4.9, reviews: 64, students: 38, languages: ['FR', 'AR'], variant: 'compact' }
+    };
+  }
+}
+</script>
+</body>
+</html>

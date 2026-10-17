@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Scanner</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/matchup/tokens.css">
+<link rel="stylesheet" href="ds/matchup/components/bundle.css">
+<script src="ds/matchup/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0}
+a{color:var(--link)}
+@keyframes own-scanline{0%{transform:translateY(0)}50%{transform:translateY(212px)}100%{transform:translateY(0)}}
+@media (prefers-reduced-motion: reduce){.own-scan__line{animation:none!important}}
+.own-cam{position:absolute; inset:0; overflow:hidden; background:radial-gradient(120% 70% at 18% 8%, color-mix(in srgb, var(--warning) 22%, transparent), transparent 55%), radial-gradient(90% 60% at 100% 100%, color-mix(in srgb, var(--padel) 16%, transparent), transparent 60%), linear-gradient(180deg, var(--night-800), var(--ink-900) 62%, var(--night-900))}
+.own-cam__shelf{position:absolute; left:-40px; right:-40px; top:612px; height:260px; border-radius:40% 40% 0 0 / 18px 18px 0 0; background:linear-gradient(180deg, color-mix(in srgb, var(--ink-500) 34%, transparent), color-mix(in srgb, var(--ink-900) 92%, transparent)); filter:blur(2px)}
+.own-cam__lamp{position:absolute; left:38px; top:88px; width:120px; height:120px; border-radius:var(--radius-full); background:color-mix(in srgb, var(--warning) 34%, transparent); filter:blur(36px)}
+.own-cam__hand{position:absolute; left:142px; top:330px; width:150px; height:250px; border-radius:72px 72px 60px 60px; background:linear-gradient(160deg, color-mix(in srgb, var(--warning-text) 46%, var(--ink-700)), color-mix(in srgb, var(--warning-text) 22%, var(--ink-900))); transform:rotate(-7deg); filter:blur(3px)}
+.own-cam__phone{position:absolute; left:118px; top:210px; width:156px; height:300px; padding:9px; box-sizing:border-box; border-radius:30px; background:var(--ink-900); box-shadow:0 0 0 2px color-mix(in srgb, var(--ink-300) 40%, transparent), 0 24px 48px color-mix(in srgb, var(--ink-900) 70%, transparent); transform:rotate(-6deg); filter:blur(0.6px)}
+.own-cam__screen{width:100%; height:100%; border-radius:22px; background:var(--white); display:flex; flex-direction:column; align-items:center; gap:8px; padding:20px 12px; box-sizing:border-box}
+.own-cam__bar{height:6px; border-radius:var(--radius-full); background:var(--ink-100)}
+.own-scan{position:absolute; left:65px; top:198px; width:260px; height:260px; border-radius:var(--radius-lg); box-shadow:0 0 0 999px color-mix(in srgb, var(--ink-900) 62%, transparent)}
+.own-scan__c{position:absolute; width:44px; height:44px; border:0 solid var(--accent)}
+.own-scan__c--tl{left:-2px; top:-2px; border-top-width:5px; border-left-width:5px; border-top-left-radius:var(--radius-lg)}
+.own-scan__c--tr{right:-2px; top:-2px; border-top-width:5px; border-right-width:5px; border-top-right-radius:var(--radius-lg)}
+.own-scan__c--bl{left:-2px; bottom:-2px; border-bottom-width:5px; border-left-width:5px; border-bottom-left-radius:var(--radius-lg)}
+.own-scan__c--br{right:-2px; bottom:-2px; border-bottom-width:5px; border-right-width:5px; border-bottom-right-radius:var(--radius-lg)}
+.own-scan__line{position:absolute; left:20px; right:20px; top:22px; height:2px; border-radius:var(--radius-full); background:var(--accent); box-shadow:0 0 12px 2px color-mix(in srgb, var(--accent) 55%, transparent); animation:own-scanline 2.4s var(--ease-move) infinite}
+.own-glass{background:color-mix(in srgb, var(--ink-900) 64%, transparent); -webkit-backdrop-filter:blur(14px); backdrop-filter:blur(14px); box-shadow:inset 0 0 0 1px color-mix(in srgb, var(--white) 14%, transparent); color:var(--white)}
+.own-ctl{appearance:none; border:0; margin:0; font:inherit; cursor:pointer; display:inline-flex; align-items:center; justify-content:center; gap:8px; height:48px; padding:0 18px; border-radius:var(--radius-full); text-decoration:none; transition:transform var(--duration-fast) var(--ease-enter)}
+.own-ctl:active{transform:scale(var(--scale-press))}
+.own-ctl:focus-visible{outline:none; box-shadow:var(--focus-ring)}
+.own-ctl.is-on{background:var(--accent); color:var(--on-accent); box-shadow:none}
+.own-muted{color:color-mix(in srgb, var(--white) 72%, transparent)}
+.own-next{position:absolute; left:16px; right:16px; top:600px; display:flex; align-items:center; gap:12px; padding:10px 12px 10px 12px; border-radius:var(--radius-md); text-decoration:none}
+.own-next__ico{flex:none; width:40px; height:40px; border-radius:var(--radius-sm); display:grid; place-items:center; background:var(--football-soft); color:var(--football-text)}
+.own-hot{position:absolute; display:block; border-radius:var(--radius-full)}
+.own-hot:focus-visible{outline:none; box-shadow:var(--focus-ring)}
+</style>
+</helmet>
+<div data-theme="dark" style="position: relative; width: 390px; height: 844px; box-sizing: border-box; overflow: hidden; background: var(--night-900); color: var(--white); font-family: var(--font-sans)">
+
+<div class="own-cam" role="img" aria-label="Aperçu de la caméra arrière : un joueur présente le QR code de sa réservation">
+<div class="own-cam__lamp"></div>
+<div class="own-cam__shelf"></div>
+<div class="own-cam__hand"></div>
+<div class="own-cam__phone">
+<div class="own-cam__screen">
+<div class="own-cam__bar" style="width: 64px"></div>
+<div class="own-cam__bar" style="width: 96px; height: 10px; background: var(--ink-300)"></div>
+<svg viewBox="-2 -2 29 29" width="118" height="118" aria-hidden="true" style="display: block; margin-top: 6px"><path fill="currentColor" style="color: var(--ink-900)" d="M0 0h1v1h-1zM1 0h1v1h-1zM2 0h1v1h-1zM3 0h1v1h-1zM4 0h1v1h-1zM5 0h1v1h-1zM6 0h1v1h-1zM8 0h1v1h-1zM10 0h1v1h-1zM11 0h1v1h-1zM12 0h1v1h-1zM13 0h1v1h-1zM15 0h1v1h-1zM16 0h1v1h-1zM18 0h1v1h-1zM19 0h1v1h-1zM20 0h1v1h-1zM21 0h1v1h-1zM22 0h1v1h-1zM23 0h1v1h-1zM24 0h1v1h-1zM0 1h1v1h-1zM6 1h1v1h-1zM9 1h1v1h-1zM14 1h1v1h-1zM18 1h1v1h-1zM24 1h1v1h-1zM0 2h1v1h-1zM2 2h1v1h-1zM3 2h1v1h-1zM4 2h1v1h-1zM6 2h1v1h-1zM8 2h1v1h-1zM10 2h1v1h-1zM13 2h1v1h-1zM15 2h1v1h-1zM16 2h1v1h-1zM18 2h1v1h-1zM20 2h1v1h-1zM21 2h1v1h-1zM22 2h1v1h-1zM24 2h1v1h-1zM0 3h1v1h-1zM2 3h1v1h-1zM3 3h1v1h-1zM4 3h1v1h-1zM6 3h1v1h-1zM8 3h1v1h-1zM9 3h1v1h-1zM11 3h1v1h-1zM13 3h1v1h-1zM14 3h1v1h-1zM15 3h1v1h-1zM18 3h1v1h-1zM20 3h1v1h-1zM21 3h1v1h-1zM22 3h1v1h-1zM24 3h1v1h-1zM0 4h1v1h-1zM2 4h1v1h-1zM3 4h1v1h-1zM4 4h1v1h-1zM6 4h1v1h-1zM8 4h1v1h-1zM9 4h1v1h-1zM10 4h1v1h-1zM12 4h1v1h-1zM13 4h1v1h-1zM14 4h1v1h-1zM16 4h1v1h-1zM18 4h1v1h-1zM20 4h1v1h-1zM21 4h1v1h-1zM22 4h1v1h-1zM24 4h1v1h-1zM0 5h1v1h-1zM6 5h1v1h-1zM11 5h1v1h-1zM12 5h1v1h-1zM15 5h1v1h-1zM18 5h1v1h-1zM24 5h1v1h-1zM0 6h1v1h-1zM1 6h1v1h-1zM2 6h1v1h-1zM3 6h1v1h-1zM4 6h1v1h-1zM5 6h1v1h-1zM6 6h1v1h-1zM8 6h1v1h-1zM10 6h1v1h-1zM12 6h1v1h-1zM14 6h1v1h-1zM16 6h1v1h-1zM18 6h1v1h-1zM19 6h1v1h-1zM20 6h1v1h-1zM21 6h1v1h-1zM22 6h1v1h-1zM23 6h1v1h-1zM24 6h1v1h-1zM8 7h1v1h-1zM9 7h1v1h-1zM11 7h1v1h-1zM15 7h1v1h-1zM16 7h1v1h-1zM0 8h1v1h-1zM2 8h1v1h-1zM6 8h1v1h-1zM8 8h1v1h-1zM9 8h1v1h-1zM10 8h1v1h-1zM12 8h1v1h-1zM13 8h1v1h-1zM14 8h1v1h-1zM16 8h1v1h-1zM17 8h1v1h-1zM18 8h1v1h-1zM19 8h1v1h-1zM22 8h1v1h-1zM23 8h1v1h-1zM5 9h1v1h-1zM7 9h1v1h-1zM8 9h1v1h-1zM11 9h1v1h-1zM15 9h1v1h-1zM18 9h1v1h-1zM19 9h1v1h-1zM20 9h1v1h-1zM21 9h1v1h-1zM22 9h1v1h-1zM24 9h1v1h-1zM0 10h1v1h-1zM3 10h1v1h-1zM4 10h1v1h-1zM6 10h1v1h-1zM8 10h1v1h-1zM9 10h1v1h-1zM11 10h1v1h-1zM13 10h1v1h-1zM15 10h1v1h-1zM16 10h1v1h-1zM20 10h1v1h-1zM21 10h1v1h-1zM24 10h1v1h-1zM1 11h1v1h-1zM2 11h1v1h-1zM3 11h1v1h-1zM5 11h1v1h-1zM8 11h1v1h-1zM9 11h1v1h-1zM14 11h1v1h-1zM15 11h1v1h-1zM18 11h1v1h-1zM19 11h1v1h-1zM20 11h1v1h-1zM22 11h1v1h-1zM24 11h1v1h-1zM3 12h1v1h-1zM5 12h1v1h-1zM6 12h1v1h-1zM8 12h1v1h-1zM9 12h1v1h-1zM11 12h1v1h-1zM15 12h1v1h-1zM19 12h1v1h-1zM20 12h1v1h-1zM22 12h1v1h-1zM24 12h1v1h-1zM3 13h1v1h-1zM5 13h1v1h-1zM8 13h1v1h-1zM10 13h1v1h-1zM11 13h1v1h-1zM12 13h1v1h-1zM15 13h1v1h-1zM18 13h1v1h-1zM21 13h1v1h-1zM22 13h1v1h-1zM24 13h1v1h-1zM2 14h1v1h-1zM3 14h1v1h-1zM4 14h1v1h-1zM5 14h1v1h-1zM6 14h1v1h-1zM7 14h1v1h-1zM9 14h1v1h-1zM10 14h1v1h-1zM16 14h1v1h-1zM17 14h1v1h-1zM18 14h1v1h-1zM20 14h1v1h-1zM21 14h1v1h-1zM24 14h1v1h-1zM1 15h1v1h-1zM5 15h1v1h-1zM10 15h1v1h-1zM13 15h1v1h-1zM15 15h1v1h-1zM20 15h1v1h-1zM21 15h1v1h-1zM23 15h1v1h-1zM24 15h1v1h-1zM0 16h1v1h-1zM1 16h1v1h-1zM5 16h1v1h-1zM6 16h1v1h-1zM7 16h1v1h-1zM9 16h1v1h-1zM12 16h1v1h-1zM15 16h1v1h-1zM16 16h1v1h-1zM17 16h1v1h-1zM18 16h1v1h-1zM19 16h1v1h-1zM20 16h1v1h-1zM22 16h1v1h-1zM23 16h1v1h-1zM8 17h1v1h-1zM10 17h1v1h-1zM13 17h1v1h-1zM15 17h1v1h-1zM16 17h1v1h-1zM20 17h1v1h-1zM22 17h1v1h-1zM23 17h1v1h-1zM24 17h1v1h-1zM0 18h1v1h-1zM1 18h1v1h-1zM2 18h1v1h-1zM3 18h1v1h-1zM4 18h1v1h-1zM5 18h1v1h-1zM6 18h1v1h-1zM8 18h1v1h-1zM11 18h1v1h-1zM15 18h1v1h-1zM16 18h1v1h-1zM18 18h1v1h-1zM20 18h1v1h-1zM22 18h1v1h-1zM23 18h1v1h-1zM24 18h1v1h-1zM0 19h1v1h-1zM6 19h1v1h-1zM8 19h1v1h-1zM9 19h1v1h-1zM11 19h1v1h-1zM13 19h1v1h-1zM15 19h1v1h-1zM16 19h1v1h-1zM20 19h1v1h-1zM21 19h1v1h-1zM23 19h1v1h-1zM0 20h1v1h-1zM2 20h1v1h-1zM3 20h1v1h-1zM4 20h1v1h-1zM6 20h1v1h-1zM11 20h1v1h-1zM12 20h1v1h-1zM15 20h1v1h-1zM16 20h1v1h-1zM17 20h1v1h-1zM18 20h1v1h-1zM19 20h1v1h-1zM20 20h1v1h-1zM21 20h1v1h-1zM22 20h1v1h-1zM24 20h1v1h-1zM0 21h1v1h-1zM2 21h1v1h-1zM3 21h1v1h-1zM4 21h1v1h-1zM6 21h1v1h-1zM11 21h1v1h-1zM14 21h1v1h-1zM16 21h1v1h-1zM17 21h1v1h-1zM18 21h1v1h-1zM20 21h1v1h-1zM22 21h1v1h-1zM23 21h1v1h-1zM24 21h1v1h-1zM0 22h1v1h-1zM2 22h1v1h-1zM3 22h1v1h-1zM4 22h1v1h-1zM6 22h1v1h-1zM16 22h1v1h-1zM17 22h1v1h-1zM18 22h1v1h-1zM22 22h1v1h-1zM23 22h1v1h-1zM24 22h1v1h-1zM0 23h1v1h-1zM6 23h1v1h-1zM8 23h1v1h-1zM9 23h1v1h-1zM10 23h1v1h-1zM12 23h1v1h-1zM15 23h1v1h-1zM17 23h1v1h-1zM18 23h1v1h-1zM20 23h1v1h-1zM22 23h1v1h-1zM23 23h1v1h-1zM24 23h1v1h-1zM0 24h1v1h-1zM1 24h1v1h-1zM2 24h1v1h-1zM3 24h1v1h-1zM4 24h1v1h-1zM5 24h1v1h-1zM6 24h1v1h-1zM8 24h1v1h-1zM9 24h1v1h-1zM10 24h1v1h-1zM11 24h1v1h-1zM15 24h1v1h-1zM16 24h1v1h-1zM17 24h1v1h-1zM20 24h1v1h-1zM21 24h1v1h-1zM24 24h1v1h-1z"></path></svg>
+<div class="own-cam__bar" style="width: 72px; height: 8px; background: var(--ink-300)"></div>
+<div class="own-cam__bar" style="width: 110px; margin-top: auto; height: 24px; border-radius: var(--radius-sm); background: var(--ink-900)"></div>
+</div>
+</div>
+</div>
+
+<div class="own-scan" aria-hidden="true">
+<span class="own-scan__c own-scan__c--tl"></span>
+<span class="own-scan__c own-scan__c--tr"></span>
+<span class="own-scan__c own-scan__c--bl"></span>
+<span class="own-scan__c own-scan__c--br"></span>
+<span class="own-scan__line"></span>
+</div>
+<a href="OWN-21-Check-in-valide.dc.html" class="own-hot" aria-label="QR code détecté : afficher le résultat du check-in" style="left: 65px; top: 198px; width: 260px; height: 260px; border-radius: var(--radius-lg)"></a>
+
+<header style="position: absolute; left: 0; right: 0; top: 0; display: flex; align-items: center; gap: 12px; padding: 52px 8px 0 16px">
+<div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px">
+<span class="caption own-muted" style="display: flex; align-items: center; gap: 6px"><x-import component-from-global-scope="MatchUp.Icon" name="storefront" size="{{i16}}"></x-import>Espace propriétaire · Arena Five</span>
+<h1 class="h1" style="margin: 0">Check-in</h1>
+</div>
+<a href="PRF-06-Changer-de-role.dc.html" class="own-hot" aria-label="Skander T. · changer de rôle" style="position: relative; text-decoration: none; flex: none; width: 48px; height: 48px; display: grid; place-items: center"><x-import component-from-global-scope="MatchUp.Avatar" name="Skander T." size="s"></x-import></a>
+</header>
+
+<div style="position: absolute; left: 16px; right: 16px; top: 136px; display: flex; justify-content: center">
+<p class="label-l own-glass" style="margin: 0; padding: 8px 16px; border-radius: var(--radius-full); display: flex; align-items: center; gap: 8px"><x-import component-from-global-scope="MatchUp.Icon" name="qr-code" size="{{i20}}"></x-import>Vise le QR code du joueur</p>
+</div>
+
+<p class="caption own-muted" style="position: absolute; left: 16px; right: 16px; top: 474px; margin: 0; text-align: center">Le scan part tout seul dès que le code est net.</p>
+
+<div style="position: absolute; left: 16px; right: 16px; top: 512px; display: flex; justify-content: center; gap: 12px">
+<button type="button" class="{{torchClass}}" aria-pressed="{{torch}}" onclick="{{toggleTorch}}"><x-import component-from-global-scope="MatchUp.Icon" name="flashlight" weight="{{torchW}}" size="{{i20}}"></x-import><span class="label">{{torchLabel}}</span></button>
+<button type="button" class="own-ctl own-glass" onclick="{{openManual}}"><x-import component-from-global-scope="MatchUp.Icon" name="keyboard" size="{{i20}}"></x-import><span class="label">Saisir le code</span></button>
+</div>
+
+<p class="caption own-muted" style="position: absolute; left: 16px; right: 16px; top: 572px; margin: 0; text-align: center">La caméra ne s’ouvre pas ? <a href="STA-05-Permission-camera.dc.html" class="label-s" style="color: var(--white); text-decoration: underline; text-underline-offset: 3px">Autoriser l’accès</a></p>
+
+<a href="OWN-11-Planning.dc.html" class="own-next own-glass" aria-label="Prochain créneau : 21h00, Terrain 1, réservation de Yassine B. Ouvrir le planning">
+<span class="own-next__ico"><x-import component-from-global-scope="MatchUp.Icon" name="sport-football" size="{{i20}}"></x-import></span>
+<span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px">
+<span class="overline own-muted">Prochain créneau</span>
+<span class="label">Terrain 1 · Yassine B.</span>
+<span class="caption own-muted">mer. 21 oct. · 10 joueurs</span>
+</span>
+<span class="num-l" style="flex: none">21h00</span>
+<span style="flex: none; display: flex" class="own-muted"><x-import component-from-global-scope="MatchUp.Icon" name="caret-right" size="{{i20}}"></x-import></span>
+</a>
+
+<x-import component-from-global-scope="MatchUp.TabBar" label="Navigation propriétaire" items="{{tabs}}" value="scan" safe-area="{{sa}}" fab="{{yes}}" dc-props="{{tabStyle}}"></x-import>
+<a href="AI-07-Assistant-pro.dc.html" class="own-hot" aria-label="Ouvrir l’assistant MatchUp" style="left: 318px; top: 674px; width: 56px; height: 56px; z-index: calc(var(--z-sticky) + 1)"></a>
+
+<sc-if value="{{manual}}">
+<x-import component-from-global-scope="MatchUp.BottomSheet" inline="{{yes}}" open="{{yes}}" height="auto" safe-area="{{safe}}" title="Saisir le code" on-close="{{closeManual}}">
+<div style="display: flex; flex-direction: column; gap: 16px">
+<p class="body" style="margin: 0; color: var(--text-secondary)">Le code est écrit sous le QR, dans le billet du joueur.</p>
+<x-import component-from-global-scope="MatchUp.TextField" label="Code de réservation" prefix="MU-" default-value="48213" inputmode="numeric" helper="5 chiffres. Ex. : MU-48213" autocomplete="off"></x-import>
+<a href="OWN-21-Check-in-valide.dc.html" class="mu-btn mu-btn--primary mu-btn--xl mu-btn--block"><span class="mu-btn__content"><span class="mu-btn__label label-l">Vérifier le code</span></span></a>
+</div>
+</x-import>
+</sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  state = { torch: false, manual: false };
+  renderVals() {
+    const t = this.state.torch;
+    return {
+      yes: true, no: false, i16: 16, i20: 20, i24: 24, sa: 34,
+      safe: { bottom: 34 },
+      torch: t ? 'true' : 'false',
+      torchClass: t ? 'own-ctl own-glass is-on' : 'own-ctl own-glass',
+      torchW: t ? 'fill' : 'regular',
+      torchLabel: t ? 'Lampe allumée' : 'Lampe',
+      toggleTorch: () => this.setState({ torch: !this.state.torch }),
+      manual: this.state.manual,
+      openManual: () => this.setState({ manual: true }),
+      closeManual: () => this.setState({ manual: false }),
+      tabs: [
+        { value: 'jour', label: 'Aujourd’hui', icon: 'house', href: 'OWN-10-Aujourdhui.dc.html' },
+        { value: 'planning', label: 'Planning', icon: 'calendar-blank', href: 'OWN-11-Planning.dc.html' },
+        { value: 'scan', label: 'Check-in', icon: 'qr-code', href: 'OWN-20-Scanner.dc.html' },
+        { value: 'resa', label: 'Réservations', icon: 'list-checks', href: 'OWN-14-Reservations.dc.html' },
+        { value: 'plus', label: 'Plus', icon: 'dots-three', href: 'OWN-15-Plus.dc.html' }
+      ],
+      tabStyle: { style: { position: 'absolute', left: 0, right: 0, bottom: 0 } }
+    };
+  }
+}
+</script>
+</body>
+</html>

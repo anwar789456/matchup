@@ -46,5 +46,8 @@ A booking in « Mes réservations » — tear-off calendar tile, status, a strip
 ## Props (web preview)
 `variant` · `status` · `sport` · `venue` · `court` · `place` · `start` · `end` · `share` · `payBefore` · `refund` · `players` · `onShowQr` · `onDirections` · `onMore` · `onPay` · `onRate` · `onRebook` · `href` · `onOpen` · `skeleton` · `state`. See `index.d.ts`.
 
+## Dark mode
+The QR shortcut button uses the dark primary (Volt fill, ink icon), never a white disc.
+
 ## Flutter
 `MuBookingCard(booking: MuBooking, variant: MuBookingCardVariant.standard, onShowQr:, onDirections:, onMore:, onPay:, onRate:, onRebook:, onTap:, loading:)` — `MuCardSurface` with a `Row(MuCalendarTile, Expanded(Column))` header, the shared `MuScoreboardStrip` and a footer `Row` of `MuAvatarStack` + `MuButton`/`MuIconButton`. Status drives the badge, strip cell and actions from one `switch`.

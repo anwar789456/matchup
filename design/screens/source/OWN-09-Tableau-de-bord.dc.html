@@ -50,7 +50,7 @@ a{color:var(--link)}
 <span style="flex: none; display: inline-flex; color: var(--success-text)"><x-import component-from-global-scope="MatchUp.Icon" name="check-circle" size="{{i24}}" weight="fill"></x-import></span>
 <div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px">
 <span class="body" style="color: var(--text-secondary)">Adresse et terrains</span>
-<span class="caption" style="color: var(--text-secondary)">12 rue Hédi Nouira, La Marsa · 3 terrains Football 5</span>
+<span class="caption" style="color: var(--text-secondary)">Route de la Corniche, La Marsa · 3 terrains Football 5</span>
 </div>
 <a href="OWN-02-Adresse.dc.html" class="mu-btn mu-btn--tertiary mu-btn--s" aria-label="Modifier l’adresse et les terrains" style="flex: none"><span class="mu-btn__content"><span class="mu-btn__label label">Modifier</span></span></a>
 </li><li style="display: flex; align-items: center; gap: var(--space-3); min-height: 52px; padding-block: var(--space-2); border-bottom: 1px solid var(--border); ">
@@ -86,7 +86,7 @@ a{color:var(--link)}
 <div style="display: flex; align-items: baseline; justify-content: space-between; gap: var(--space-3)"><h2 class="h3" style="margin: 0">Réservations du jour</h2><span class="caption" style="color: var(--text-secondary)">mer. 14 oct.</span></div>
 <div style="flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center">
 <x-import component-from-global-scope="MatchUp.EmptyState" compact="{{yes}}" illustration="bookings" title="Aucune réservation pour l’instant" description="Publie ton premier créneau : il apparaîtra aux joueurs de La Marsa."></x-import>
-<x-import component-from-global-scope="MatchUp.Button" size="m" variant="secondary" leading-icon="calendar-dots">Ouvrir le planning</x-import>
+<a href="OWN-11-Planning.dc.html" class="mu-btn mu-btn--secondary mu-btn--m" style="text-decoration: none"><span class="mu-btn__content"><x-import component-from-global-scope="MatchUp.Icon" name="calendar-dots" size="{{i20}}"></x-import><span class="mu-btn__label label">Ouvrir le planning</span></span></a>
 </div>
 </section></div><div class="db-kpis" style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--space-6)"><x-import component-from-global-scope="MatchUp.KpiCard" label="Taux d’occupation" value="—" note="Calculé dès ta première réservation"></x-import><x-import component-from-global-scope="MatchUp.KpiCard" label="Revenus du jour" value="0" note="Aucun paiement encaissé" unit="DT"></x-import><x-import component-from-global-scope="MatchUp.KpiCard" label="Réservations" value="0" note="Pas encore de comparaison"></x-import><x-import component-from-global-scope="MatchUp.KpiCard" label="Note moyenne" value="—" note="Après les premiers avis des joueurs"></x-import></div>
 </main>

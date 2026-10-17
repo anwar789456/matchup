@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Discussion · Crampons</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/matchup/tokens.css">
+<link rel="stylesheet" href="ds/matchup/components/bundle.css">
+<script src="ds/matchup/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+/* frm:thread — shared by FRM-03, FRM-04, FRM-05 */
+body{margin:0}
+a{color:var(--link)}
+.frm-head{flex:none; display:flex; align-items:center; gap:4px; min-height:48px; padding:52px 8px 8px 8px; background:var(--surface)}
+.frm-post{display:flex; flex-direction:column; gap:14px; padding:8px 16px 16px 16px; background:var(--surface)}
+.frm-eyebrow{display:flex; align-items:center; gap:8px; color:var(--text-secondary)}
+.frm-who{display:flex; align-items:center; gap:10px}
+.frm-who__txt{flex:1; min-width:0; display:flex; flex-direction:column}
+.frm-tags{display:flex; flex-wrap:wrap; gap:4px 12px; color:var(--text-secondary)}
+.frm-acts{display:flex; align-items:center; gap:8px; flex-wrap:wrap; padding-top:12px; border-top:1px solid var(--border)}
+.frm-vote{display:inline-flex; align-items:center; gap:2px; padding:2px; border-radius:var(--radius-full); background:var(--surface-muted); box-shadow:inset 0 0 0 1px var(--border)}
+.frm-vote__n{min-width:24px; text-align:center}
+.frm-best{display:flex; flex-direction:column; gap:12px; margin:0 16px; padding:14px 16px 12px 16px; border-radius:var(--radius-md); background:var(--surface); box-shadow:var(--elevation-1), inset 0 0 0 1.5px var(--success)}
+.frm-best__flag{display:flex; align-items:center; gap:6px; color:var(--success-text)}
+.frm-sec{display:flex; flex-direction:column; gap:16px; padding:16px; background:var(--surface)}
+.frm-sec__head{display:flex; align-items:center; justify-content:space-between; gap:12px}
+.frm-c{display:flex; gap:10px}
+.frm-c__body{flex:1; min-width:0; display:flex; flex-direction:column; gap:4px}
+.frm-c__meta{display:flex; align-items:center; gap:6px; flex-wrap:wrap; color:var(--text-secondary)}
+.frm-c__text{margin:0}
+.frm-c__acts{display:flex; align-items:center; gap:2px; margin-inline-start:-8px; color:var(--text-secondary)}
+.frm-mini{appearance:none; border:0; margin:0; background:none; font:inherit; cursor:pointer; display:inline-flex; align-items:center; gap:4px; min-height:36px; padding:0 8px; border-radius:var(--radius-full); color:var(--text-secondary); text-decoration:none}
+.frm-mini:hover{background:var(--surface-muted); color:var(--text)}
+.frm-mini:focus-visible{outline:none; box-shadow:var(--focus-ring)}
+.frm-mini.is-on{color:var(--text)}
+.frm-mini.is-on .frm-mini__ico{background:var(--accent); color:var(--on-accent)}
+.frm-mini__ico{display:inline-flex; align-items:center; justify-content:center; width:24px; height:24px; border-radius:var(--radius-full)}
+.frm-replies{display:flex; flex-direction:column; gap:16px; margin-inline-start:19px; padding-inline-start:29px; border-inline-start:2px solid var(--border)}
+.frm-op{display:inline-flex; align-items:center; padding:0 6px; border-radius:var(--radius-xs); background:var(--surface-muted); box-shadow:inset 0 0 0 1px var(--border); color:var(--text)}
+.frm-masked{display:flex; align-items:flex-start; gap:10px; padding:12px; border-radius:var(--radius-md); border:1px dashed var(--border-strong); background:var(--surface-muted)}
+.frm-masked__ico{flex:none; width:32px; height:32px; border-radius:var(--radius-full); display:flex; align-items:center; justify-content:center; background:var(--surface); box-shadow:inset 0 0 0 1px var(--border); color:var(--text-secondary)}
+.frm-composer{position:absolute; left:0; right:0; bottom:0; z-index:var(--z-sticky); display:flex; align-items:center; gap:10px; padding:10px 12px 34px 16px; background:var(--surface); box-shadow:var(--elevation-2-up)}
+.frm-composer__field{flex:1; min-width:0; display:flex; align-items:center; min-height:44px; padding:0 16px; border-radius:var(--radius-full); background:var(--surface-muted); box-shadow:inset 0 0 0 1px var(--border); color:var(--text-secondary); text-decoration:none}
+.frm-hot{position:absolute; display:block; border-radius:var(--radius-full); z-index:3}
+.frm-hot:focus-visible{outline:2px solid var(--focus); outline-offset:2px}
+/* /frm:thread */
+</style>
+</helmet>
+<div style="position: relative; width: 390px; height: 1932px; box-sizing: border-box; overflow: hidden; display: flex; flex-direction: column; gap: 8px; background: var(--bg); color: var(--text); font-family: var(--font-sans)">
+
+<div style="display: flex; flex-direction: column; background: var(--surface)">
+<div class="frm-head">
+<a href="FRM-01-Communaute.dc.html" class="mu-iconbtn mu-iconbtn--l mu-iconbtn--ghost" aria-label="Retour à la communauté" style="color: var(--text)"><x-import component-from-global-scope="MatchUp.Icon" name="arrow-left" size="{{i24}}"></x-import></a>
+<span class="label-l" style="flex: 1; min-width: 0">Discussion</span>
+<x-import component-from-global-scope="MatchUp.IconButton" icon="bell" label="Suivre la discussion" variant="ghost"></x-import>
+<x-import component-from-global-scope="MatchUp.IconButton" icon="share-network" label="Partager la discussion" variant="ghost"></x-import>
+<x-import component-from-global-scope="MatchUp.IconButton" icon="dots-three" label="Plus d’options : signaler, copier le lien" variant="ghost"></x-import>
+</div>
+
+<article class="frm-post" aria-labelledby="frm-title">
+<div class="frm-eyebrow">
+<x-import component-from-global-scope="MatchUp.Icon" name="t-shirt" size="{{i16}}"></x-import>
+<span class="overline">Équipement</span>
+<x-import component-from-global-scope="MatchUp.Chip" kind="sport" sport="football" size="s">Football</x-import>
+</div>
+<h1 id="frm-title" class="h2" style="margin: 0">Crampons pour synthétique ?</h1>
+<div class="frm-who">
+<x-import component-from-global-scope="MatchUp.Avatar" name="Skander T." size="m" level="{{l40}}"></x-import>
+<div class="frm-who__txt">
+<span class="label">Skander T.</span>
+<span class="caption" style="color: var(--text-secondary)">Football 4,0 · Avancé · il y a 2 j</span>
+</div>
+<x-import component-from-global-scope="MatchUp.ToggleButton" size="s" icon="user-plus" on-label="Suivi">Suivre</x-import>
+</div>
+<div style="display: flex; flex-direction: column; gap: 10px">
+<p class="body-l" style="margin: 0">Je joue deux fois par semaine à Arena Five, sur le synthétique. Mes crampons vissés glissent quand le gazon est sec et me tirent sur les genoux en fin de match.</p>
+<p class="body-l" style="margin: 0">Moulés, stabilisés (TF) ou autre chose ? Budget autour de <span class="num-s">200 DT</span>.</p>
+</div>
+<div class="frm-tags label-s"><span>#crampons</span><span>#synthétique</span><span>#lamarsa</span></div>
+<div class="frm-acts">
+<div class="frm-vote" role="group" aria-label="Votes sur le post">
+<x-import component-from-global-scope="MatchUp.IconButton" icon="arrow-fat-up" label="Voter pour" size="s" pressed="{{yes}}"></x-import>
+<span class="frm-vote__n num-s" aria-live="polite">19</span>
+<x-import component-from-global-scope="MatchUp.IconButton" icon="arrow-fat-down" label="Voter contre" size="s"></x-import>
+</div>
+<x-import component-from-global-scope="MatchUp.Chip" kind="filter" icon="thumbs-up" count="{{c12}}" selected="{{yes}}" size="s">Utile</x-import>
+<x-import component-from-global-scope="MatchUp.Chip" kind="filter" icon="handshake" count="{{c4}}" size="s">Merci</x-import>
+<span class="caption" style="margin-inline-start: auto; display: inline-flex; align-items: center; gap: 4px; color: var(--text-secondary)"><x-import component-from-global-scope="MatchUp.Icon" name="chat-circle" size="{{i16}}"></x-import><span class="num-xs">8</span></span>
+</div>
+</article>
+</div>
+
+<section class="frm-best" aria-labelledby="frm-best-t">
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 8px">
+<h2 id="frm-best-t" class="frm-best__flag label" style="margin: 0"><x-import component-from-global-scope="MatchUp.Icon" name="check-circle" weight="fill" size="{{i20}}"></x-import>Meilleure réponse</h2>
+<span class="caption" style="color: var(--text-secondary)">choisie par Skander T.</span>
+</div>
+<div class="frm-c">
+<x-import component-from-global-scope="MatchUp.Avatar" name="Yassine B." size="m" level="{{l30}}"></x-import>
+<div class="frm-c__body">
+<div class="frm-c__meta caption"><span class="label-s" style="color: var(--text)">Yassine B.</span><span>· toi · il y a 2 j</span></div>
+<p class="frm-c__text body">Prends des stabilisés (TF) ou des moulés courts (AG). Les vissés, c’est pour l’herbe naturelle : sur synthétique ils accrochent trop et tirent sur les genoux. À Arena Five, les AG passent très bien, même quand c’est sec.</p>
+<div class="frm-c__acts">
+<button type="button" class="frm-mini is-on" aria-pressed="true" aria-label="Voter pour, 24 votes"><span class="frm-mini__ico"><x-import component-from-global-scope="MatchUp.Icon" name="arrow-fat-up" weight="fill" size="{{i16}}"></x-import></span><span class="num-xs">24</span></button>
+<button type="button" class="frm-mini"><span class="frm-mini__ico"><x-import component-from-global-scope="MatchUp.Icon" name="thumbs-up" size="{{i16}}"></x-import></span><span class="label-s">Utile · 9</span></button>
+<button type="button" class="frm-mini"><span class="frm-mini__ico"><x-import component-from-global-scope="MatchUp.Icon" name="arrow-bend-up-left" size="{{i16}}"></x-import></span><span class="label-s">Répondre</span></button>
+</div>
+</div>
+</div>
+</section>
+
+<section class="frm-sec" aria-labelledby="frm-rep-t" style="padding-bottom: 120px">
+<div class="frm-sec__head">
+<h2 id="frm-rep-t" class="h3" style="margin: 0">8 réponses</h2>
+<button type="button" class="mu-btn mu-btn--tertiary mu-btn--s" style="margin-inline-end: -8px"><span class="mu-btn__content"><span class="mu-btn__label label">Les plus utiles</span><x-import component-from-global-scope="MatchUp.Icon" name="caret-down" size="{{i16}}"></x-import></span></button>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 16px">
+<div class="frm-c">
+<x-import component-from-global-scope="MatchUp.Avatar" name="Hamza R." size="m" level="{{l35}}"></x-import>
+<div class="frm-c__body">
+<div class="frm-c__meta caption"><span class="label-s" style="color: var(--text)">Hamza R.</span><span>· il y a 2 j</span></div>
+<p class="frm-c__text body">J’ai pris des AG à <span class="num-xs">180 DT</span> il y a 6 mois. Zéro glisse à Arena Five, même le dimanche soir quand le terrain est arrosé.</p>
+<div class="frm-c__acts">
+<button type="button" class="frm-mini" aria-pressed="false" aria-label="Voter pour, 9 votes"><span class="frm-mini__ico"><x-import component-from-global-scope="MatchUp.Icon" name="arrow-fat-up" size="{{i16}}"></x-import></span><span class="num-xs">9</span></button>
+<button type="button" class="frm-mini"><span class="frm-mini__ico"><x-import component-from-global-scope="MatchUp.Icon" name="arrow-bend-up-left" size="{{i16}}"></x-import></span><span class="label-s">Répondre</span></button>
+</div>
+</div>
+</div>
+<div class="frm-replies">
+<div class="frm-c">
+<x-import component-from-global-scope="MatchUp.Avatar" name="Skander T." size="s"></x-import>
+<div class="frm-c__body">
+<div class="frm-c__meta caption"><span class="label-s" style="color: var(--text)">Skander T.</span><span class="frm-op label-s">Auteur</span><span>· il y a 2 j</span></div>
+<p class="frm-c__text body">Tu les as prises où ? Je passe en ville samedi.</p>
+<div class="frm-c__acts">
+<button type="button" class="frm-mini" aria-label="Voter pour, 2 votes"><span class="frm-mini__ico"><x-import component-from-global-scope="MatchUp.Icon" name="arrow-fat-up" size="{{i16}}"></x-import></span><span class="num-xs">2</span></button>
+<button type="button" class="frm-mini"><span class="frm-mini__ico"><x-import component-from-global-scope="MatchUp.Icon" name="arrow-bend-up-left" size="{{i16}}"></x-import></span><span class="label-s">Répondre</span></button>
+</div>
+</div>
+</div>
+<div class="frm-c">
+<x-import component-from-global-scope="MatchUp.Avatar" name="Hamza R." size="s"></x-import>
+<div class="frm-c__body">
+<div class="frm-c__meta caption"><span class="label-s" style="color: var(--text)">Hamza R.</span><span>· hier</span></div>
+<p class="frm-c__text body"><span class="label" style="color: var(--link)">@skander.t</span> Au centre-ville, rue de Marseille. Essaie-les avec tes chaussettes de match, ça taille petit.</p>
+<div class="frm-c__acts">
+<button type="button" class="frm-mini" aria-label="Voter pour, 3 votes"><span class="frm-mini__ico"><x-import component-from-global-scope="MatchUp.Icon" name="arrow-fat-up" size="{{i16}}"></x-import></span><span class="num-xs">3</span></button>
+<button type="button" class="frm-mini"><span class="frm-mini__ico"><x-import component-from-global-scope="MatchUp.Icon" name="arrow-bend-up-left" size="{{i16}}"></x-import></span><span class="label-s">Répondre</span></button>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 16px; padding-top: 16px; border-top: 1px solid var(--border)">
+<div class="frm-c">
+<x-import component-from-global-scope="MatchUp.Avatar" name="Aziz H." size="m" level="{{l45}}"></x-import>
+<div class="frm-c__body">
+<div class="frm-c__meta caption"><span class="label-s" style="color: var(--text)">Aziz H.</span><span>· hier</span></div>
+<p class="frm-c__text body">Les TF, c’est top sur synthétique sec, mais ça glisse sous la pluie. Si tu joues aussi en extérieur l’hiver, garde des AG.</p>
+<div class="frm-c__acts">
+<button type="button" class="frm-mini" aria-label="Voter pour, 6 votes"><span class="frm-mini__ico"><x-import component-from-global-scope="MatchUp.Icon" name="arrow-fat-up" size="{{i16}}"></x-import></span><span class="num-xs">6</span></button>
+<button type="button" class="frm-mini"><span class="frm-mini__ico"><x-import component-from-global-scope="MatchUp.Icon" name="arrow-bend-up-left" size="{{i16}}"></x-import></span><span class="label-s">Répondre</span></button>
+</div>
+</div>
+</div>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 16px; padding-top: 16px; border-top: 1px solid var(--border)">
+<div class="frm-c">
+<x-import component-from-global-scope="MatchUp.Avatar" name="Omar D." size="m" level="{{l35}}"></x-import>
+<div class="frm-c__body">
+<div class="frm-c__meta caption"><span class="label-s" style="color: var(--text)">Omar D.</span><span>· hier</span></div>
+<p class="frm-c__text body">Les vissés c’est mieux, tout le monde sait ça. Les moulés c’est pour les débutants.</p>
+<div class="frm-c__acts">
+<button type="button" class="frm-mini" aria-label="Voter pour, moins 3 votes"><span class="frm-mini__ico"><x-import component-from-global-scope="MatchUp.Icon" name="arrow-fat-up" size="{{i16}}"></x-import></span><span class="num-xs">−3</span></button>
+<a href="FRM-03-Message-a-revoir.dc.html" class="frm-mini"><span class="frm-mini__ico"><x-import component-from-global-scope="MatchUp.Icon" name="arrow-bend-up-left" size="{{i16}}"></x-import></span><span class="label-s">Répondre</span></a>
+</div>
+</div>
+</div>
+<div class="frm-replies">
+<div class="frm-masked" role="note" aria-label="Message masqué par la modération">
+<span class="frm-masked__ico"><x-import component-from-global-scope="MatchUp.Icon" name="eye-slash" size="{{i16}}"></x-import></span>
+<div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px">
+<span class="label">Masqué par la modération · en cours de vérification</span>
+<span class="caption" style="color: var(--text-secondary)">Ta réponse à Omar D. · seul toi vois ce message. Réponse de la modération sous 24 h.</span>
+<button type="button" class="mu-btn mu-btn--link mu-btn--s" style="align-self: flex-start; margin-top: 4px"><span class="mu-btn__content"><span class="mu-btn__label label">Pourquoi ?</span></span></button>
+</div>
+</div>
+</div>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 16px; padding-top: 16px; border-top: 1px solid var(--border)">
+<div class="frm-c">
+<x-import component-from-global-scope="MatchUp.Avatar" name="Bons Plans" size="m"></x-import>
+<div class="frm-c__body">
+<div class="frm-c__meta caption"><span class="label-s" style="color: var(--text)">Bons Plans Sport TN</span><span>· il y a 3 h</span></div>
+<p class="frm-c__text body">Vends crampons pas cher, toutes marques, livraison partout en Tunisie. Écris-moi en privé !!</p>
+<div class="frm-c__acts">
+<button type="button" class="frm-mini" aria-label="Voter pour, 0 vote"><span class="frm-mini__ico"><x-import component-from-global-scope="MatchUp.Icon" name="arrow-fat-up" size="{{i16}}"></x-import></span><span class="num-xs">0</span></button>
+<button type="button" class="frm-mini"><span class="frm-mini__ico"><x-import component-from-global-scope="MatchUp.Icon" name="arrow-bend-up-left" size="{{i16}}"></x-import></span><span class="label-s">Répondre</span></button>
+<a href="FRM-05-Signaler.dc.html" class="frm-mini" aria-label="Plus d’options : signaler ce commentaire" style="margin-inline-start: auto"><span class="frm-mini__ico"><x-import component-from-global-scope="MatchUp.Icon" name="dots-three" size="{{i16}}"></x-import></span></a>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<div class="frm-composer">
+<x-import component-from-global-scope="MatchUp.Avatar" name="Yassine B." size="s"></x-import>
+<a href="FRM-03-Message-a-revoir.dc.html" class="frm-composer__field body">Réponds à Skander T.…</a>
+<x-import component-from-global-scope="MatchUp.IconButton" icon="paper-plane-right" label="Envoyer" variant="primary" disabled="{{yes}}"></x-import>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":1932}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      yes: true, no: false, i16: 16, i20: 20, i24: 24,
+      l30: 3, l35: 3.5, l40: 4, l45: 4.5, c12: 12, c4: 4, c3: 3
+    };
+  }
+}
+</script>
+</body>
+</html>

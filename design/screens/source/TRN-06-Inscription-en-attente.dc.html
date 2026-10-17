@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Inscription en attente</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/matchup/tokens.css">
+<link rel="stylesheet" href="ds/matchup/components/bundle.css">
+<script src="ds/matchup/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0}
+a{color:var(--link)}
+.ia-muted{color:var(--text-secondary)}
+.ia-m0{margin:0}
+.ia-hero{display:flex; flex-direction:column; align-items:center; gap:8px; text-align:center}
+.ia-hero__ico{width:72px; height:72px; border-radius:var(--radius-full); display:flex; align-items:center; justify-content:center; margin-bottom:4px; background:var(--warning-soft); color:var(--warning-text)}
+.ia-tl{margin:0; padding:0; list-style:none; display:flex; flex-direction:column}
+.ia-tl li{display:grid; grid-template-columns:28px 1fr auto; column-gap:12px; position:relative; padding-bottom:18px}
+.ia-tl li:last-child{padding-bottom:0}
+.ia-tl li:not(:last-child)::before{content:""; position:absolute; left:13px; top:30px; bottom:2px; width:2px; border-radius:2px; background:var(--border)}
+.ia-tl li.is-done:not(:last-child)::before{background:var(--success)}
+.ia-tl__dot{width:28px; height:28px; border-radius:var(--radius-full); box-sizing:border-box; display:flex; align-items:center; justify-content:center}
+.ia-tl__txt{display:flex; flex-direction:column; gap:2px; padding-top:4px}
+.ia-tile{appearance:none; border:0; margin:0; font:inherit; cursor:pointer; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:var(--space-2); min-height:84px; padding:var(--space-3); border-radius:var(--radius-md); background:var(--surface); color:var(--text); box-shadow:var(--elevation-1), inset 0 0 0 1px var(--border); text-align:center; text-decoration:none}
+.ia-tile:focus-visible{outline:none; box-shadow:var(--focus-ring)}
+.ia-note{display:flex; gap:12px; align-items:flex-start}
+.ia-note__ico{flex:none; width:20px; height:20px; display:flex; align-items:center; justify-content:center; color:var(--text-secondary)}
+</style>
+</helmet>
+<div style="position: relative; width: 390px; height: 1296px; box-sizing: border-box; overflow: hidden; display: flex; flex-direction: column; background: var(--bg); color: var(--text); font-family: var(--font-sans)">
+<div style="flex: none; display: flex; align-items: center; gap: 4px; min-height: 48px; padding: 52px 16px 8px 8px">
+<a href="TRN-02-Detail-du-tournoi.dc.html" class="mu-iconbtn mu-iconbtn--l mu-iconbtn--ghost" aria-label="Fermer et revenir au tournoi" style="color: var(--text)"><x-import component-from-global-scope="MatchUp.Icon" name="x" size="{{i24}}"></x-import></a>
+<span style="flex: 1"></span>
+<x-import component-from-global-scope="MatchUp.StatusBadge" status="pending" label="En attente de validation" size="m"></x-import>
+</div>
+
+<div style="flex: 1; min-height: 0; display: flex; flex-direction: column; gap: 24px; padding: 12px 16px 160px 16px">
+<div class="ia-hero" role="status">
+<span class="ia-hero__ico" aria-hidden="true"><x-import component-from-global-scope="MatchUp.Icon" name="hourglass-medium" size="{{i40}}"></x-import></span>
+<h1 class="h1 ia-m0">Inscription envoyée</h1>
+<p class="body-l ia-muted ia-m0">Les Faucons attendent la validation de Tunis Padel Series, en général sous 48 h. On te prévient dès que c’est fait.</p>
+</div>
+
+<x-import component-from-global-scope="MatchUp.TeamCard" dc-props="{{team}}"></x-import>
+
+<section class="mu-card" aria-labelledby="ia-steps" style="display: flex; flex-direction: column; gap: 16px; padding: 16px">
+<div style="display: flex; align-items: baseline; justify-content: space-between; gap: 8px">
+<h2 id="ia-steps" class="label-l ia-m0">Où en est ton inscription</h2>
+<span class="caption ia-muted">Padel Masters Lac 2</span>
+</div>
+<ol class="ia-tl">
+<li class="is-done">
+<span class="ia-tl__dot" style="background: var(--success-soft); color: var(--success-text)"><x-import component-from-global-scope="MatchUp.Icon" name="check" size="{{i16}}"></x-import></span>
+<span class="ia-tl__txt"><span class="label">Équipe créée</span><span class="caption ia-muted">Les Faucons · capitaine : toi</span></span>
+<span class="num-xs ia-muted" style="padding-top: 6px">18h04</span>
+</li>
+<li class="is-done">
+<span class="ia-tl__dot" style="background: var(--success-soft); color: var(--success-text)"><x-import component-from-global-scope="MatchUp.Icon" name="check" size="{{i16}}"></x-import></span>
+<span class="ia-tl__txt"><span class="label">Inscription payée · 120 DT</span><span class="caption ia-muted">Visa •••• 4242 · reçu envoyé par email</span></span>
+<span class="num-xs ia-muted" style="padding-top: 6px">18h05</span>
+</li>
+<li class="is-done">
+<span class="ia-tl__dot" style="background: var(--success-soft); color: var(--success-text)"><x-import component-from-global-scope="MatchUp.Icon" name="check" size="{{i16}}"></x-import></span>
+<span class="ia-tl__txt"><span class="label">Mariem K. a rejoint l’équipe</span><span class="caption ia-muted">Niveau moyen de la paire : 3,75</span></span>
+<span class="num-xs ia-muted" style="padding-top: 6px">18h11</span>
+</li>
+<li>
+<span class="ia-tl__dot" style="background: var(--warning-soft); color: var(--warning-text); box-shadow: 0 0 0 4px var(--surface), 0 0 0 6px var(--warning-soft)"><x-import component-from-global-scope="MatchUp.Icon" name="hourglass-medium" size="{{i16}}"></x-import></span>
+<span class="ia-tl__txt"><span class="label">Validation par l’organisateur</span><span class="caption ia-muted">Sami C. vérifie le niveau et les places</span></span>
+<span class="label-s" style="padding-top: 6px; color: var(--warning-text)">En cours</span>
+</li>
+<li>
+<span class="ia-tl__dot" style="box-shadow: inset 0 0 0 2px var(--border-strong); color: var(--text-secondary)"><x-import component-from-global-scope="MatchUp.Icon" name="flag-checkered" size="{{i14}}"></x-import></span>
+<span class="ia-tl__txt"><span class="label ia-muted">Tirage des poules</span><span class="caption ia-muted">jeu. 22 oct. · ton calendrier arrive par notification</span></span>
+<span></span>
+</li>
+</ol>
+</section>
+
+<section class="mu-card" aria-label="Si l’équipe est refusée" style="display: flex; flex-direction: column; gap: 14px; padding: 16px">
+<div class="ia-note">
+<span class="ia-note__ico" style="color: var(--success-text)"><x-import component-from-global-scope="MatchUp.Icon" name="shield-check" weight="fill" size="{{i20}}"></x-import></span>
+<span style="display: flex; flex-direction: column; gap: 2px"><span class="label">Refusée ? Tu es remboursé</span><span class="caption ia-muted">Les 120 DT reviennent en entier sur ton solde MatchUp, avec la raison du refus.</span></span>
+</div>
+<div class="ia-note">
+<span class="ia-note__ico"><x-import component-from-global-scope="MatchUp.Icon" name="calendar-x" size="{{i20}}"></x-import></span>
+<span style="display: flex; flex-direction: column; gap: 2px"><span class="label">Désinscription gratuite</span><span class="caption ia-muted">Jusqu’au mer. 21 oct. · 23h59, depuis la page du tournoi.</span></span>
+</div>
+</section>
+
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px">
+<button type="button" class="ia-tile"><x-import component-from-global-scope="MatchUp.Icon" name="calendar-plus" size="{{i24}}"></x-import><span class="label">Bloquer le 24–26 oct.</span></button>
+<button type="button" class="ia-tile"><x-import component-from-global-scope="MatchUp.Icon" name="share-network" size="{{i24}}"></x-import><span class="label">Partager</span></button>
+</div>
+</div>
+
+<div style="position: absolute; left: 0; right: 0; bottom: 0; z-index: var(--z-sticky); padding: 12px 16px 34px 16px; background: var(--surface); box-shadow: var(--elevation-2-up); display: flex; flex-direction: column; gap: 8px">
+<a href="TRN-07-Inscription-confirmee.dc.html" class="mu-btn mu-btn--primary mu-btn--xl mu-btn--block"><span class="mu-btn__content"><span class="mu-btn__label label-l">Terminé</span></span></a>
+<a href="TRN-02-Detail-du-tournoi.dc.html" class="mu-btn mu-btn--tertiary mu-btn--m mu-btn--block"><span class="mu-btn__content"><span class="mu-btn__label label">Voir le tournoi</span></span></a>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":1296}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      yes: true, i14: 14, i16: 16, i20: 20, i24: 24, i40: 40,
+      team: {
+        variant: 'compact', sport: 'padel', name: 'Les Faucons', monogram: 'LF', place: 'La Marsa',
+        captain: { name: 'Yassine B.', level: 3.5 }, members: [{ name: 'Yassine B.', level: 3.5 }, { name: 'Mariem K.', level: 4 }],
+        capacity: 2, levelAvg: 3.75, wins: 0, losses: 0, status: 'captain'
+      }
+    };
+  }
+}
+</script>
+</body>
+</html>

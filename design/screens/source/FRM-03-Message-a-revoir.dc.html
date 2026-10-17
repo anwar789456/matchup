@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Message à revoir</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/matchup/tokens.css">
+<link rel="stylesheet" href="ds/matchup/components/bundle.css">
+<script src="ds/matchup/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+/* frm:thread — shared by FRM-03, FRM-04, FRM-05 */
+body{margin:0}
+a{color:var(--link)}
+.frm-head{flex:none; display:flex; align-items:center; gap:4px; min-height:48px; padding:52px 8px 8px 8px; background:var(--surface)}
+.frm-post{display:flex; flex-direction:column; gap:14px; padding:8px 16px 16px 16px; background:var(--surface)}
+.frm-eyebrow{display:flex; align-items:center; gap:8px; color:var(--text-secondary)}
+.frm-who{display:flex; align-items:center; gap:10px}
+.frm-who__txt{flex:1; min-width:0; display:flex; flex-direction:column}
+.frm-tags{display:flex; flex-wrap:wrap; gap:4px 12px; color:var(--text-secondary)}
+.frm-acts{display:flex; align-items:center; gap:8px; flex-wrap:wrap; padding-top:12px; border-top:1px solid var(--border)}
+.frm-vote{display:inline-flex; align-items:center; gap:2px; padding:2px; border-radius:var(--radius-full); background:var(--surface-muted); box-shadow:inset 0 0 0 1px var(--border)}
+.frm-vote__n{min-width:24px; text-align:center}
+.frm-best{display:flex; flex-direction:column; gap:12px; margin:0 16px; padding:14px 16px 12px 16px; border-radius:var(--radius-md); background:var(--surface); box-shadow:var(--elevation-1), inset 0 0 0 1.5px var(--success)}
+.frm-best__flag{display:flex; align-items:center; gap:6px; color:var(--success-text)}
+.frm-sec{display:flex; flex-direction:column; gap:16px; padding:16px; background:var(--surface)}
+.frm-sec__head{display:flex; align-items:center; justify-content:space-between; gap:12px}
+.frm-c{display:flex; gap:10px}
+.frm-c__body{flex:1; min-width:0; display:flex; flex-direction:column; gap:4px}
+.frm-c__meta{display:flex; align-items:center; gap:6px; flex-wrap:wrap; color:var(--text-secondary)}
+.frm-c__text{margin:0}
+.frm-c__acts{display:flex; align-items:center; gap:2px; margin-inline-start:-8px; color:var(--text-secondary)}
+.frm-mini{appearance:none; border:0; margin:0; background:none; font:inherit; cursor:pointer; display:inline-flex; align-items:center; gap:4px; min-height:36px; padding:0 8px; border-radius:var(--radius-full); color:var(--text-secondary); text-decoration:none}
+.frm-mini:hover{background:var(--surface-muted); color:var(--text)}
+.frm-mini:focus-visible{outline:none; box-shadow:var(--focus-ring)}
+.frm-mini.is-on{color:var(--text)}
+.frm-mini.is-on .frm-mini__ico{background:var(--accent); color:var(--on-accent)}
+.frm-mini__ico{display:inline-flex; align-items:center; justify-content:center; width:24px; height:24px; border-radius:var(--radius-full)}
+.frm-replies{display:flex; flex-direction:column; gap:16px; margin-inline-start:19px; padding-inline-start:29px; border-inline-start:2px solid var(--border)}
+.frm-op{display:inline-flex; align-items:center; padding:0 6px; border-radius:var(--radius-xs); background:var(--surface-muted); box-shadow:inset 0 0 0 1px var(--border); color:var(--text)}
+.frm-masked{display:flex; align-items:flex-start; gap:10px; padding:12px; border-radius:var(--radius-md); border:1px dashed var(--border-strong); background:var(--surface-muted)}
+.frm-masked__ico{flex:none; width:32px; height:32px; border-radius:var(--radius-full); display:flex; align-items:center; justify-content:center; background:var(--surface); box-shadow:inset 0 0 0 1px var(--border); color:var(--text-secondary)}
+.frm-composer{position:absolute; left:0; right:0; bottom:0; z-index:var(--z-sticky); display:flex; align-items:center; gap:10px; padding:10px 12px 34px 16px; background:var(--surface); box-shadow:var(--elevation-2-up)}
+.frm-composer__field{flex:1; min-width:0; display:flex; align-items:center; min-height:44px; padding:0 16px; border-radius:var(--radius-full); background:var(--surface-muted); box-shadow:inset 0 0 0 1px var(--border); color:var(--text-secondary); text-decoration:none}
+.frm-hot{position:absolute; display:block; border-radius:var(--radius-full); z-index:3}
+.frm-hot:focus-visible{outline:2px solid var(--focus); outline-offset:2px}
+.frm-flag{background:var(--warning-soft); color:var(--warning-text); box-shadow:0 1.5px 0 var(--warning); border-radius:2px; padding:0 2px}
+.frm-quote{margin:0; padding:10px 12px; border-inline-start:3px solid var(--border-strong); border-radius:var(--radius-xs); background:var(--bg)}
+/* /frm:thread */
+</style>
+</helmet>
+<div style="position: relative; width: 390px; height: 844px; box-sizing: border-box; overflow: hidden; display: flex; flex-direction: column; background: var(--bg); color: var(--text); font-family: var(--font-sans)">
+<div aria-hidden="true" style="display: flex; flex-direction: column; flex: 1; min-height: 0">
+<div class="frm-head">
+<span class="mu-iconbtn mu-iconbtn--l mu-iconbtn--ghost" style="color: var(--text)"><x-import component-from-global-scope="MatchUp.Icon" name="arrow-left" size="{{i24}}"></x-import></span>
+<span class="label-l" style="flex: 1; min-width: 0">Discussion</span>
+</div>
+<div style="display: flex; flex-direction: column; gap: 4px; padding: 4px 16px 16px 16px; background: var(--surface)">
+<span class="overline" style="color: var(--text-secondary)">Équipement · Skander T.</span>
+<span class="h3">Crampons pour synthétique ?</span>
+</div>
+<div class="frm-sec" style="margin-top: 8px; flex: 1">
+<div class="frm-c">
+<x-import component-from-global-scope="MatchUp.Avatar" name="Omar D." size="m" level="{{l35}}"></x-import>
+<div class="frm-c__body">
+<div class="frm-c__meta caption"><span class="label-s" style="color: var(--text)">Omar D.</span><span>· hier</span></div>
+<p class="frm-c__text body">Les vissés c’est mieux, tout le monde sait ça. Les moulés c’est pour les débutants.</p>
+</div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 8px; padding: 12px; border-radius: var(--radius-md); box-shadow: inset 0 0 0 2px var(--focus); background: var(--surface)">
+<span class="caption" style="color: var(--text-secondary)">Réponse à <span class="label-s" style="color: var(--text)">Omar D.</span></span>
+<p class="body-l" style="margin: 0">T’as jamais mis les pieds sur un synthétique, <mark class="frm-flag">franchement t’es nul</mark>. Arrête de raconter n’importe quoi.</p>
+</div>
+</div>
+</div>
+
+<x-import component-from-global-scope="MatchUp.Dialog" inline="{{yes}}" open="{{yes}}" placement="bottom" tone="warning" icon="{{nullv}}" safe-area="{{safeBottom}}" title="Ce message pourrait blesser. Le modifier avant de publier ?" consequence-icon="eye-slash" consequence="Publié tel quel, il peut être masqué le temps qu’un modérateur le relise." on-close="{{noop}}">
+<div style="display: flex; flex-direction: column; gap: 16px">
+<div style="display: flex; flex-direction: column; gap: 6px"><span class="caption" style="color: var(--text-secondary)">Ta réponse à Omar D. · pas encore publiée</span><p class="frm-quote body">T’as jamais mis les pieds sur un synthétique, <mark class="frm-flag">franchement t’es nul</mark>. Arrête de raconter n’importe quoi.</p></div>
+<x-import component-from-global-scope="MatchUp.AiSuggestionCard" context="Reformulation" title="Une version plus posée" reason="elle garde ton conseil sans viser Omar." primary-action="{{useAi}}" show-feedback="{{yes}}" dismissible="{{yes}}"><span class="body" style="color: var(--text)">« Sur synthétique, les vissés accrochent trop et tirent sur les genoux. Essaie des AG ou des TF, tu verras la différence. »</span></x-import>
+<div style="display: flex; flex-direction: column; gap: 12px">
+<a href="FRM-04-Discussion.dc.html" class="mu-btn mu-btn--secondary mu-btn--l mu-btn--block"><span class="mu-btn__content"><span class="mu-btn__label label-l">Publier quand même</span></span></a>
+<button type="button" class="mu-btn mu-btn--primary mu-btn--l mu-btn--block"><span class="mu-btn__content"><x-import component-from-global-scope="MatchUp.Icon" name="pencil-simple" size="{{i20}}"></x-import><span class="mu-btn__label label-l">Modifier mon message</span></span></button>
+</div>
+</div>
+</x-import>
+<a href="FRM-04-Discussion.dc.html" aria-label="Fermer et revenir à la discussion" style="position: absolute; left: 0; right: 0; top: 0; height: 60px; z-index: 401"></a>
+<a href="FRM-04-Discussion.dc.html" aria-label="Fermer" style="position: absolute; left: 327px; top: 76px; width: 44px; height: 44px; border-radius: var(--radius-full); z-index: 401"></a>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      yes: true, no: false, nullv: null, noop: () => {}, i16: 16, i20: 20, i24: 24, l35: 3.5,
+      safeBottom: { bottom: 34 },
+      useAi: { label: 'Utiliser cette version', variant: 'secondary', leadingIcon: 'arrows-clockwise' }
+    };
+  }
+}
+</script>
+</body>
+</html>

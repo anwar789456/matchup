@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Propriétaire · Bloquer un créneau</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/matchup/tokens.css">
+<link rel="stylesheet" href="ds/matchup/components/bundle.css">
+<script src="ds/matchup/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+/* own:shared — identical in OWN-10…16 */
+body{margin:0}
+a{color:var(--link)}
+.own-head{position:relative; z-index:2; flex:none; display:flex; align-items:flex-end; gap:var(--space-1); padding:52px var(--space-2) var(--space-2) var(--space-4)}
+.own-head__txt{flex:1; min-width:0; display:flex; flex-direction:column; gap:2px}
+.own-role{display:flex; align-items:center; gap:6px; color:var(--text-secondary)}
+.own-role__icon{display:flex; color:var(--text)}
+.own-avatar{flex:none; width:48px; height:48px; display:grid; place-items:center; border-radius:var(--radius-full); text-decoration:none}
+.own-avatar:focus-visible{outline:none; box-shadow:var(--focus-ring)}
+.own-hot{position:absolute; display:block; border-radius:var(--radius-sm)}
+.own-hot:focus-visible{outline:none; box-shadow:var(--focus-ring)}
+.own-sec{display:flex; flex-direction:column; gap:var(--space-3)}
+.own-sec__head{display:flex; align-items:center; justify-content:space-between; gap:var(--space-3); min-height:32px}
+.own-sec__head .mu-btn{margin-inline-end:calc(-1 * var(--space-2))}
+.own-tag{flex:none; display:inline-flex; align-items:center; justify-content:center; min-width:28px; height:22px; padding:0 6px; box-sizing:border-box; border-radius:var(--radius-xs); background:var(--surface-muted); color:var(--text)}
+/* /own:shared */
+/* own:planning — identical in OWN-11, OWN-12, OWN-13 */
+.pl-wrap{position:relative; flex:1; min-height:0; overflow:auto; background:var(--surface); box-shadow:inset 0 1px 0 var(--border)}
+.pl-grid{display:grid; grid-template-columns:48px repeat(3, minmax(104px, 1fr)); column-gap:4px; row-gap:4px; padding:0 8px 120px 0; min-width:100%; box-sizing:border-box}
+.pl-corner, .pl-court{position:sticky; top:0; z-index:2; background:var(--surface); box-shadow:0 1px 0 var(--border)}
+.pl-corner{left:0; z-index:3}
+.pl-court{display:flex; flex-direction:column; justify-content:center; gap:0; height:48px; padding:0 4px}
+.pl-court__name{display:flex; align-items:center; gap:4px}
+.pl-time{position:sticky; left:0; z-index:1; background:var(--surface); display:flex; justify-content:flex-end; padding:2px 6px 0 0; color:var(--text-secondary)}
+.pl-early{grid-column:2 / -1; display:flex; align-items:center; gap:6px; height:32px; padding:0 8px; border-radius:var(--radius-xs); color:var(--text-secondary); background:var(--surface-muted)}
+.pl-cell{position:relative; display:flex; flex-direction:column; justify-content:center; gap:1px; height:60px; padding:0 8px; box-sizing:border-box; border-radius:var(--radius-xs); text-decoration:none; color:var(--text); overflow:hidden; min-width:0}
+.pl-cell > span{white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+.pl-cell__meta{display:flex; align-items:center; gap:3px; color:var(--text-secondary)}
+.pl-cell--booked{background:var(--surface); box-shadow:inset 0 0 0 1px var(--border-strong), inset 3px 0 0 var(--football)}
+.pl-cell--public{background:var(--football-soft); box-shadow:inset 3px 0 0 var(--football)}
+.pl-cell--past{background:var(--surface-muted); color:var(--text-secondary); box-shadow:inset 0 0 0 1px var(--border)}
+.pl-cell--noshow{background:var(--error-soft); color:var(--error-text); box-shadow:inset 0 0 0 1px color-mix(in srgb, var(--error) 30%, transparent)}
+.pl-cell--noshow .pl-cell__meta{color:var(--error-text)}
+.pl-cell--blocked{background:repeating-linear-gradient(135deg, var(--surface) 0 6px, var(--surface-muted) 6px 7px, var(--border-strong) 7px 8px, var(--surface-muted) 8px 9px); box-shadow:inset 0 0 0 1px var(--border-strong); color:var(--text-secondary)}
+.pl-cell--free{background:transparent; box-shadow:none; border:1px dashed var(--border-strong); color:var(--text-secondary)}
+.pl-cell--sel{box-shadow:inset 0 0 0 2px var(--text), inset 3px 0 0 var(--football)}
+.pl-chip{align-self:flex-start; display:flex; flex-direction:column; padding:2px 6px; border-radius:var(--radius-xs); background:var(--surface)}
+.pl-live{display:inline-block; width:6px; height:6px; border-radius:var(--radius-full); background:var(--error); flex:none}
+.pl-now{grid-column:1 / -1; position:relative; height:0; z-index:1}
+.pl-now__line{position:absolute; left:44px; right:0; top:-3px; height:2px; background:var(--error); border-radius:2px}
+.pl-now__dot{position:absolute; left:40px; top:-6px; width:8px; height:8px; border-radius:var(--radius-full); background:var(--error)}
+.pl-legend{display:flex; flex-wrap:wrap; align-items:center; gap:4px 12px; color:var(--text-secondary)}
+.pl-legend > span{display:flex; align-items:center; gap:5px}
+.pl-key{width:14px; height:10px; border-radius:2px; box-sizing:border-box}
+/* /own:planning */
+.o13-group{display:flex; flex-direction:column; gap:12px; padding:14px 0; border-bottom:1px solid var(--border)}
+.o13-wrap{display:flex; flex-wrap:wrap; gap:8px}
+.o13-bar{position:absolute; z-index:calc(var(--z-sheet) + 1); left:0; right:0; bottom:0; display:flex; gap:12px; padding:12px 16px 34px 16px; background:var(--surface-elevated); box-shadow:var(--elevation-2-up)}
+
+</style>
+</helmet>
+<div style="position: relative; width: 390px; height: 844px; box-sizing: border-box; overflow: hidden; display: flex; flex-direction: column; background: var(--bg); color: var(--text); font-family: var(--font-sans)">
+
+<header class="own-head">
+<div class="own-head__txt">
+<span class="own-role caption"><span class="own-role__icon"><x-import component-from-global-scope="MatchUp.Icon" name="storefront" size="{{i16}}"></x-import></span>Espace propriétaire · Arena Five</span>
+<h1 class="h1" style="margin: 0">Planning</h1>
+</div>
+<a href="OWN-13-Bloquer-un-creneau.dc.html" class="mu-btn mu-btn--secondary mu-btn--s" style="margin-bottom: 8px"><span class="mu-btn__content"><x-import component-from-global-scope="MatchUp.Icon" name="lock-simple" size="{{i16}}"></x-import><span class="mu-btn__label label">Bloquer</span></span></a>
+<a href="PRF-06-Changer-de-role.dc.html" class="own-avatar" aria-label="Changer de rôle, Skander T., propriétaire"><x-import component-from-global-scope="MatchUp.Avatar" name="Skander T." size="s"></x-import></a>
+</header>
+
+<div style="flex: none; display: flex; flex-direction: column; gap: 10px; padding: 4px 16px 10px 16px">
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 12px">
+<x-import component-from-global-scope="MatchUp.SegmentedControl" size="s" label="Vue du planning" options="{{views}}" value="day"></x-import>
+<span class="caption" style="color: var(--text-secondary); text-align: end"><span class="label-s" style="color: var(--text)">14 réservations</span> · 78 % · 1 bloqué</span>
+</div>
+<x-import component-from-global-scope="MatchUp.DatePicker" variant="strip" label="Jour du planning" today="{{today}}" default-value="{{today}}" start-date="{{start}}" min-date="{{start}}" days="{{d14}}" bleed="{{b16}}"></x-import>
+<div class="pl-legend caption" aria-label="Légende">
+<span><span class="pl-key" style="background: var(--surface); box-shadow: inset 0 0 0 1px var(--border-strong), inset 3px 0 0 var(--football)"></span>Privée</span>
+<span><span class="pl-key" style="background: var(--football-soft); box-shadow: inset 3px 0 0 var(--football)"></span>Publique</span>
+<span><span class="pl-key" style="border: 1px dashed var(--border-strong)"></span>Libre</span>
+<span><span class="pl-key" style="background: repeating-linear-gradient(135deg, var(--surface) 0 2px, var(--border-strong) 2px 3px); box-shadow: inset 0 0 0 1px var(--border-strong)"></span>Bloqué</span>
+<span><span style="display: flex; color: var(--warning-text)"><x-import component-from-global-scope="MatchUp.Icon" name="lightning" weight="fill" size="{{i12}}"></x-import></span>Pointe</span>
+<span style="flex-basis: 100%"><span style="display: flex; color: var(--text)"><x-import component-from-global-scope="MatchUp.Icon" name="hand-pointing" size="{{i14}}"></x-import></span>Appui long sur un créneau libre pour le bloquer</span>
+</div>
+</div>
+
+<div class="pl-wrap" role="region" aria-label="Planning du ven. 16 oct., terrains en colonnes, heures en lignes">
+<div class="pl-grid" role="grid" aria-label="Planning Arena Five, vendredi 16 octobre">
+<div class="pl-corner"></div>
+<div class="pl-court" role="columnheader"><span class="pl-court__name label">Terrain 1</span><span class="caption" style="color: var(--text-secondary)">Extérieur</span></div>
+<div class="pl-court" role="columnheader"><span class="pl-court__name label">Terrain 2</span><span class="caption" style="color: var(--text-secondary)">Extérieur</span></div>
+<div class="pl-court" role="columnheader"><span class="pl-court__name label">Terrain 3<span style="display: flex; color: var(--text-secondary)"><x-import component-from-global-scope="MatchUp.Icon" name="umbrella" size="{{i14}}"></x-import></span></span><span class="caption" style="color: var(--text-secondary)">Indoor</span></div>
+
+<div class="pl-time num-xs" style="padding-top: 8px">08h</div>
+<div class="pl-early caption"><x-import component-from-global-scope="MatchUp.Icon" name="caret-down" size="{{i14}}"></x-import>08h00 – 17h00 · aucune réservation</div>
+
+<div class="pl-time num-xs">17h</div>
+<a href="OWN-12-Reservation.dc.html" class="pl-cell pl-cell--past" aria-label="Terrain 1, 17h00, Hamza R., terminé, payé"><span class="label-s">Hamza R.</span><span class="pl-cell__meta caption"><x-import component-from-global-scope="MatchUp.Icon" name="check-circle" size="{{i12}}"></x-import>Terminé</span></a>
+<a href="OWN-24-No-show.dc.html" class="pl-cell pl-cell--noshow" aria-label="Terrain 2, 17h00, Rami S., no-show"><span class="label-s">Rami S.</span><span class="pl-cell__meta caption"><x-import component-from-global-scope="MatchUp.Icon" name="prohibit" size="{{i12}}"></x-import>No-show</span></a>
+<a href="OWN-13-Bloquer-un-creneau.dc.html" class="pl-cell pl-cell--free" style="opacity: 0.6" aria-label="Terrain 3, 17h00, créneau passé, libre"><span class="caption">Libre</span></a>
+
+<div class="pl-now" aria-label="Maintenant, 18h00"><span class="pl-now__line"></span><span class="pl-now__dot"></span></div>
+<div class="pl-time num-xs" style="color: var(--error-text)">18h</div>
+<a href="OWN-12-Reservation.dc.html" class="pl-cell pl-cell--booked" aria-label="Terrain 1, 18h00, Aziz H., en cours"><span class="label-s">Aziz H.</span><span class="pl-cell__meta caption"><span class="pl-live"></span>En cours</span></a>
+<a href="OWN-12-Reservation.dc.html" class="pl-cell pl-cell--booked" aria-label="Terrain 2, 18h00, Omar D., en cours"><span class="label-s">Omar D.</span><span class="pl-cell__meta caption"><span class="pl-live"></span>En cours</span></a>
+<a href="OWN-13-Bloquer-un-creneau.dc.html" class="pl-cell pl-cell--blocked" aria-label="Terrain 3, 18h00, bloqué : nettoyage"><span class="pl-chip"><span class="label-s" style="display: flex; align-items: center; gap: 4px; color: var(--text)"><x-import component-from-global-scope="MatchUp.Icon" name="lock-simple" size="{{i12}}"></x-import>Bloqué</span><span class="caption">Nettoyage</span></span></a>
+
+<div class="pl-time num-xs">19h</div>
+<a href="OWN-12-Reservation.dc.html" class="pl-cell pl-cell--public" aria-label="Terrain 1, 19h00, partie publique de Salma G., 8 sur 10"><span class="label-s">Salma G.</span><span class="pl-cell__meta caption"><x-import component-from-global-scope="MatchUp.Icon" name="users-three" size="{{i12}}"></x-import>8/10 joueurs</span></a>
+<a href="OWN-13-Bloquer-un-creneau.dc.html" class="pl-cell pl-cell--free" aria-label="Terrain 2, 19h00, libre, 150 DT, appui long pour bloquer"><span class="caption">Libre</span><span class="pl-cell__meta caption"><span style="display: flex; color: var(--warning-text)"><x-import component-from-global-scope="MatchUp.Icon" name="lightning" weight="fill" size="{{i12}}"></x-import></span><span class="num-xs">150 DT</span></span></a>
+<a href="OWN-12-Reservation.dc.html" class="pl-cell pl-cell--booked" aria-label="Terrain 3, 19h00, Amel T."><span class="label-s">Amel T.</span><span class="pl-cell__meta caption">Privée · payé</span></a>
+
+<div class="pl-time num-xs">20h</div>
+<a href="OWN-12-Reservation.dc.html" class="pl-cell pl-cell--booked" aria-label="Terrain 1, 20h00, Nour A."><span class="label-s">Nour A.</span><span class="pl-cell__meta caption">Privée · payé</span></a>
+<a href="OWN-12-Reservation.dc.html" class="pl-cell pl-cell--booked" aria-label="Terrain 2, 20h00, Ines M., 9 sur 10 payé"><span class="label-s">Ines M.</span><span class="pl-cell__meta caption"><span style="display: flex; color: var(--warning-text)"><x-import component-from-global-scope="MatchUp.Icon" name="clock" weight="fill" size="{{i12}}"></x-import></span>9/10 payé</span></a>
+<a href="OWN-12-Reservation.dc.html" class="pl-cell pl-cell--booked" aria-label="Terrain 3, 20h00, Dorra K."><span class="label-s">Dorra K.</span><span class="pl-cell__meta caption">Privée · payé</span></a>
+
+<div class="pl-time num-xs">21h</div>
+<a href="OWN-12-Reservation.dc.html" class="pl-cell pl-cell--booked" aria-label="Terrain 1, 21h00, Lina F., 7 sur 10 payé"><span class="label-s">Lina F.</span><span class="pl-cell__meta caption"><span style="display: flex; color: var(--warning-text)"><x-import component-from-global-scope="MatchUp.Icon" name="clock" weight="fill" size="{{i12}}"></x-import></span>7/10 payé</span></a>
+<a href="OWN-12-Reservation.dc.html" class="pl-cell pl-cell--booked" aria-label="Terrain 2, 21h00, Sarra B."><span class="label-s">Sarra B.</span><span class="pl-cell__meta caption">Privée · payé</span></a>
+<a href="OWN-12-Reservation.dc.html" class="pl-cell pl-cell--public" aria-label="Terrain 3, 21h00, partie publique de Yosra M., 6 sur 10"><span class="label-s">Yosra M.</span><span class="pl-cell__meta caption"><x-import component-from-global-scope="MatchUp.Icon" name="users-three" size="{{i12}}"></x-import>6/10 joueurs</span></a>
+
+<div class="pl-time num-xs">22h</div>
+<a href="OWN-13-Bloquer-un-creneau.dc.html" class="pl-cell pl-cell--free" aria-label="Terrain 1, 22h00, libre, 150 DT, appui long pour bloquer"><span class="caption">Libre</span><span class="pl-cell__meta caption"><span style="display: flex; color: var(--warning-text)"><x-import component-from-global-scope="MatchUp.Icon" name="lightning" weight="fill" size="{{i12}}"></x-import></span><span class="num-xs">150 DT</span></span></a>
+<a href="OWN-12-Reservation.dc.html" class="pl-cell pl-cell--booked" aria-label="Terrain 2, 22h00, Mariem K."><span class="label-s">Mariem K.</span><span class="pl-cell__meta caption">Privée · payé</span></a>
+<a href="OWN-12-Reservation.dc.html" class="pl-cell pl-cell--booked" aria-label="Terrain 3, 22h00, Rim H."><span class="label-s">Rim H.</span><span class="pl-cell__meta caption">Privée · payé</span></a>
+
+<div class="pl-time num-xs">23h</div>
+<a href="OWN-13-Bloquer-un-creneau.dc.html" class="pl-cell pl-cell--free" aria-label="Terrain 1, 23h00, libre, 120 DT"><span class="caption">Libre</span><span class="pl-cell__meta caption num-xs">120 DT</span></a>
+<a href="OWN-13-Bloquer-un-creneau.dc.html" class="pl-cell pl-cell--free" aria-label="Terrain 2, 23h00, libre, 120 DT"><span class="caption">Libre</span><span class="pl-cell__meta caption num-xs">120 DT</span></a>
+<a href="OWN-13-Bloquer-un-creneau.dc.html" class="pl-cell pl-cell--free" aria-label="Terrain 3, 23h00, libre, 120 DT"><span class="caption">Libre</span><span class="pl-cell__meta caption num-xs">120 DT</span></a>
+</div>
+</div>
+
+<x-import component-from-global-scope="MatchUp.TabBar" items="{{tabs}}" value="planning" label="Navigation propriétaire" safe-area="{{sa}}" fab="{{yes}}" dc-props="{{tabStyle}}"></x-import>
+<x-import component-from-global-scope="MatchUp.BottomSheet" inline="{{yes}}" open="{{yes}}" height="full" title="Bloquer un créneau" safe-area="{{safe}}">
+<div style="display: flex; flex-direction: column; padding-bottom: 60px">
+<section class="o13-group" aria-labelledby="o13-courts" style="padding-top: 0">
+<h3 id="o13-courts" class="label" style="margin: 0">Terrains</h3>
+<div class="o13-wrap">
+<x-import component-from-global-scope="MatchUp.Chip">Terrain 1</x-import>
+<x-import component-from-global-scope="MatchUp.Chip" selected="{{yes}}">Terrain 2</x-import>
+<x-import component-from-global-scope="MatchUp.Chip" icon="umbrella">Terrain 3</x-import>
+</div>
+</section>
+<section class="o13-group" aria-labelledby="o13-date">
+<h3 id="o13-date" class="label" style="margin: 0">Jour</h3>
+<x-import component-from-global-scope="MatchUp.DatePicker" variant="strip" label="Jour à bloquer" today="{{today}}" default-value="{{day}}" start-date="{{today}}" days="{{d14}}" bleed="{{b16}}"></x-import>
+</section>
+<section class="o13-group" aria-labelledby="o13-time">
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 12px">
+<h3 id="o13-time" class="label" style="margin: 0">Plage horaire</h3>
+<x-import component-from-global-scope="MatchUp.Switch" size="s" label="Toute la journée"></x-import>
+</div>
+<div style="display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr); gap: 12px">
+<x-import component-from-global-scope="MatchUp.Select" label="De" options="{{hours}}" default-value="09:00"></x-import>
+<x-import component-from-global-scope="MatchUp.Select" label="À" options="{{hours2}}" default-value="12:00"></x-import>
+</div>
+<p class="caption" style="margin: 0; display: flex; align-items: center; gap: 6px; color: var(--success-text)"><x-import component-from-global-scope="MatchUp.Icon" name="check-circle" weight="fill" size="{{i16}}"></x-import><span>3 h · 3 créneaux · aucune réservation touchée</span></p>
+</section>
+<section class="o13-group" aria-labelledby="o13-why">
+<h3 id="o13-why" class="label" style="margin: 0">Raison</h3>
+<div class="o13-wrap" role="radiogroup" aria-labelledby="o13-why">
+<x-import component-from-global-scope="MatchUp.Chip" kind="choice" icon="plant" selected="{{yes}}">Entretien</x-import>
+<x-import component-from-global-scope="MatchUp.Chip" kind="choice" icon="calendar-star">Événement privé</x-import>
+<x-import component-from-global-scope="MatchUp.Chip" kind="choice" icon="trophy">Tournoi</x-import>
+<x-import component-from-global-scope="MatchUp.Chip" kind="choice" icon="cloud-sun">Météo</x-import>
+<x-import component-from-global-scope="MatchUp.Chip" kind="choice">Autre</x-import>
+</div>
+<x-import component-from-global-scope="MatchUp.TextField" label="Note interne" optional="{{yes}}" default-value="Regarnissage du gazon et brossage" helper="Visible par ton équipe seulement."></x-import>
+</section>
+<section class="o13-group" style="border-bottom: 0; padding-bottom: 0">
+<x-import component-from-global-scope="MatchUp.Switch" label-position="start" icon="repeat" label="Répéter chaque semaine" description="Tous les lundis, de 09h00 à 12h00"></x-import>
+<p class="caption" style="margin: 0; display: flex; align-items: flex-start; gap: 8px; color: var(--text-secondary)"><span style="display: flex"><x-import component-from-global-scope="MatchUp.Icon" name="info" size="{{i16}}"></x-import></span><span>Les joueurs voient « Indisponible » sur ces créneaux. Tu peux les débloquer à tout moment depuis le planning.</span></p>
+</section>
+</div>
+</x-import>
+<a href="OWN-11-Planning.dc.html" class="own-hot" aria-label="Fermer sans bloquer" style="z-index: calc(var(--z-sheet) + 1); left: 340px; top: 98px; width: 44px; height: 44px; border-radius: var(--radius-full)"></a>
+<div class="o13-bar">
+<a href="OWN-11-Planning.dc.html" class="mu-btn mu-btn--secondary mu-btn--xl" style="flex: none"><span class="mu-btn__content"><span class="mu-btn__label label-l">Annuler</span></span></a>
+<a href="OWN-11-Planning.dc.html" class="mu-btn mu-btn--primary mu-btn--xl" style="flex: 1"><span class="mu-btn__content"><x-import component-from-global-scope="MatchUp.Icon" name="lock-simple" size="{{i20}}"></x-import><span class="mu-btn__label label-l">Bloquer 3 créneaux</span></span></a>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      yes: true, no: false, i12: 12, i14: 14, i16: 16, i20: 20, i24: 24, sa: 34, d14: 14, b16: 16,
+      today: new Date(2026, 9, 16), start: new Date(2026, 9, 16),
+      day: new Date(2026, 9, 19), safe: { bottom: 34 },
+      hours: [{ value: '08:00', label: '08h00' }, { value: '09:00', label: '09h00' }, { value: '10:00', label: '10h00' }, { value: '11:00', label: '11h00' }, { value: '12:00', label: '12h00' }, { value: '13:00', label: '13h00' }, { value: '14:00', label: '14h00' }, { value: '15:00', label: '15h00' }, { value: '16:00', label: '16h00' }, { value: '17:00', label: '17h00' }, { value: '18:00', label: '18h00' }, { value: '19:00', label: '19h00' }, { value: '20:00', label: '20h00' }, { value: '21:00', label: '21h00' }, { value: '22:00', label: '22h00' }, { value: '23:00', label: '23h00' }],
+      hours2: [{ value: '09:00', label: '09h00' }, { value: '10:00', label: '10h00' }, { value: '11:00', label: '11h00' }, { value: '12:00', label: '12h00' }, { value: '13:00', label: '13h00' }, { value: '14:00', label: '14h00' }, { value: '15:00', label: '15h00' }, { value: '16:00', label: '16h00' }, { value: '17:00', label: '17h00' }, { value: '18:00', label: '18h00' }, { value: '19:00', label: '19h00' }, { value: '20:00', label: '20h00' }, { value: '21:00', label: '21h00' }, { value: '22:00', label: '22h00' }, { value: '23:00', label: '23h00' }, { value: '00:00', label: '00h00' }],
+      views: [{ value: 'day', label: 'Jour' }, { value: 'week', label: 'Semaine' }],
+      tabs: [
+        { value: 'jour', label: 'Aujourd’hui', icon: 'house', href: 'OWN-10-Aujourdhui.dc.html' },
+        { value: 'planning', label: 'Planning', icon: 'calendar-blank', href: 'OWN-11-Planning.dc.html' },
+        { value: 'scan', label: 'Check-in', icon: 'qr-code', href: 'OWN-20-Scanner.dc.html' },
+        { value: 'resa', label: 'Réservations', icon: 'list-checks', href: 'OWN-14-Reservations.dc.html' },
+        { value: 'plus', label: 'Plus', icon: 'dots-three', href: 'OWN-15-Plus.dc.html' }
+      ],
+      tabStyle: { style: { position: 'absolute', left: 0, right: 0, bottom: 0 } }
+    };
+  }
+}
+</script>
+</body>
+</html>

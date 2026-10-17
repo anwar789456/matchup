@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Admin · Omar D.</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/matchup/tokens.css">
+<link rel="stylesheet" href="ds/matchup/components/bundle.css">
+<script src="ds/matchup/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+/* adm:shared — identical in ADM-01…10 */
+body{margin:0}
+a{color:var(--link)}
+.adm-head{display:flex; align-items:flex-start; justify-content:space-between; gap:var(--space-3); padding:52px var(--space-2) var(--space-3) var(--space-4)}
+.adm-head__titles{flex:1; min-width:0; display:flex; flex-direction:column; align-items:flex-start; gap:var(--space-2)}
+.adm-head__title{margin:0}
+.adm-role{display:inline-flex; align-items:center; gap:var(--space-1); height:24px; padding:0 10px 0 8px; border-radius:var(--radius-full); background:var(--surface-inverse); color:var(--text-inverse)}
+.adm-me{flex:none; width:48px; height:48px; display:grid; place-items:center; border-radius:var(--radius-full); text-decoration:none}
+.adm-me:focus-visible,.adm-hot:focus-visible{outline:none; box-shadow:var(--focus-ring)}
+.adm-bar{display:flex; align-items:center; gap:var(--space-1); padding:52px var(--space-2) var(--space-2) var(--space-1)}
+.adm-bar__titles{flex:1; min-width:0; display:flex; flex-direction:column; gap:2px}
+.adm-sec{display:flex; flex-direction:column; gap:var(--space-2); margin:0}
+.adm-sec__head{display:flex; align-items:center; justify-content:space-between; gap:var(--space-2); min-height:32px}
+.adm-sec__title{margin:0; display:flex; align-items:center; gap:var(--space-2)}
+.adm-over{margin:0; color:var(--text-secondary)}
+.adm-muted{color:var(--text-secondary)}
+.adm-list{margin:0; padding:0; list-style:none; background:var(--surface); border-radius:var(--radius-md); box-shadow:var(--elevation-1); overflow:hidden}
+.adm-list > li{position:relative}
+.adm-list > li + li::before{content:""; position:absolute; top:0; inset-inline-start:var(--space-4); inset-inline-end:0; height:1px; background:var(--border); z-index:1}
+.adm-list--inset > li + li::before{inset-inline-start:68px}
+.adm-row{position:relative; display:flex; align-items:center; gap:var(--space-3); min-height:64px; padding:var(--space-3) var(--space-4); box-sizing:border-box; color:var(--text); text-decoration:none}
+a.adm-row:hover{background:var(--surface-muted)}
+a.adm-row:focus-visible{outline:none; box-shadow:inset 0 0 0 2px var(--focus)}
+.adm-row--top{align-items:flex-start}
+.adm-ico{flex:none; width:40px; height:40px; border-radius:var(--radius-sm); display:grid; place-items:center; background:var(--surface-muted); color:var(--text)}
+.adm-ico--error{background:var(--error-soft); color:var(--error-text)}
+.adm-ico--warning{background:var(--warning-soft); color:var(--warning-text)}
+.adm-ico--info{background:var(--info-soft); color:var(--info-text)}
+.adm-ico--ai{background:var(--ai-soft); color:var(--ai-text)}
+.adm-ico--success{background:var(--success-soft); color:var(--success-text)}
+.adm-txt{flex:1; min-width:0; display:flex; flex-direction:column; gap:2px}
+.adm-one{white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+.adm-two{display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden}
+.adm-end{flex:none; display:flex; flex-direction:column; align-items:flex-end; gap:4px; text-align:end}
+.adm-chev{flex:none; display:flex; color:var(--text-secondary); margin-inline-end:calc(-1 * var(--space-1))}
+.adm-chips{display:flex; gap:var(--space-2); overflow-x:auto; padding:6px var(--space-4); margin:-6px 0; scrollbar-width:none}
+.adm-chips::-webkit-scrollbar{display:none}
+.adm-chips > *{flex:none}
+.adm-meta{display:flex; align-items:center; justify-content:space-between; gap:var(--space-2); min-height:40px; padding:0 var(--space-2) 0 var(--space-4)}
+.adm-score{flex:none; width:76px; display:flex; flex-direction:column; align-items:flex-end; gap:4px}
+.adm-score__top{display:flex; align-items:baseline; gap:4px}
+.adm-score__track{width:100%; height:4px; border-radius:var(--radius-full); background:var(--surface-muted); overflow:hidden}
+.adm-score__fill{height:100%; border-radius:var(--radius-full)}
+.adm-score--high .adm-score__fill{background:var(--error)}
+.adm-score--high .adm-score__level{color:var(--error-text)}
+.adm-score--mid .adm-score__fill{background:var(--warning)}
+.adm-score--mid .adm-score__level{color:var(--warning-text)}
+.adm-score--low .adm-score__fill{background:var(--text-secondary)}
+.adm-score--low .adm-score__level{color:var(--text-secondary)}
+.adm-why{display:flex; align-items:center; gap:6px; color:var(--text-secondary)}
+.adm-stickybar{position:absolute; left:0; right:0; bottom:0; z-index:4; display:flex; gap:var(--space-3); padding:12px var(--space-4) 34px var(--space-4); background:var(--surface); box-shadow:var(--elevation-2-up)}
+.adm-hot{position:absolute; display:block; border-radius:var(--radius-full); z-index:5}
+/* /adm:shared */
+.ud-stats{display:grid; grid-template-columns:repeat(4, minmax(0, 1fr)); border-top:1px solid var(--border)}
+.ud-stat{display:flex; flex-direction:column; align-items:flex-start; gap:2px; padding:var(--space-3) var(--space-3) var(--space-3) var(--space-4)}
+.ud-stat + .ud-stat{box-shadow:inset 1px 0 0 var(--border)}
+.ud-time{margin:0; padding:var(--space-2) 0; list-style:none; background:var(--surface); border-radius:var(--radius-md); box-shadow:var(--elevation-1)}
+.ud-time > li{position:relative; display:flex; gap:var(--space-3); padding:var(--space-2) var(--space-4)}
+.ud-time > li::before{content:""; position:absolute; inset-inline-start:calc(var(--space-4) + 15px); top:44px; bottom:-8px; width:2px; background:var(--border)}
+.ud-time > li:last-child::before{display:none}
+.ud-dot{position:relative; z-index:1; flex:none; width:32px; height:32px; border-radius:var(--radius-full); display:grid; place-items:center; background:var(--surface-muted); color:var(--text)}
+.ud-dot--error{background:var(--error-soft); color:var(--error-text)}
+.ud-dl{margin:0; display:flex; flex-direction:column}
+.ud-dl > div{display:flex; align-items:center; gap:var(--space-3); min-height:48px; padding:0 var(--space-4); border-top:1px solid var(--border)}
+.ud-dl dt{flex:none; width:96px; color:var(--text-secondary)}
+.ud-dl dd{margin:0; flex:1; min-width:0; display:flex; align-items:center; justify-content:flex-end; gap:6px; text-align:end}
+</style>
+</helmet>
+<div style="position: relative; width: 390px; height: 2040px; box-sizing: border-box; overflow: hidden; background: var(--bg); color: var(--text); font-family: var(--font-sans)">
+
+<div class="adm-bar">
+<a href="ADM-02-Utilisateurs.dc.html" class="mu-iconbtn mu-iconbtn--l mu-iconbtn--ghost" aria-label="Retour aux utilisateurs" style="color: var(--text)"><x-import component-from-global-scope="MatchUp.Icon" name="arrow-left" size="{{i24}}"></x-import></a>
+<div class="adm-bar__titles"><span class="label-l">Fiche utilisateur</span><span class="caption adm-muted">Admin · ID U-20417</span></div>
+<x-import component-from-global-scope="MatchUp.IconButton" icon="dots-three-vertical" label="Plus d’actions" size="l"></x-import>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 24px; padding: 8px 16px 132px 16px">
+
+<section class="mu-card" aria-label="Profil" style="padding: 0; overflow: hidden">
+<div style="display: flex; align-items: center; gap: 16px; padding: 20px 16px 16px 16px">
+<x-import component-from-global-scope="MatchUp.Avatar" name="Omar D." size="l" level="{{lv35}}"></x-import>
+<div style="flex: 1; min-width: 0; display: flex; flex-direction: column; align-items: flex-start; gap: 4px">
+<h1 class="h2" style="margin: 0">Omar D.</h1>
+<span class="body adm-muted">@omar.d · Joueur · La Marsa</span>
+<div style="display: flex; flex-wrap: wrap; gap: 6px; margin-top: 2px">
+<x-import component-from-global-scope="MatchUp.StatusBadge" status="failed" label="Signalé" size="s"></x-import>
+<x-import component-from-global-scope="MatchUp.ReliabilityBadge" score="{{r92}}" size="s"></x-import>
+</div>
+</div>
+</div>
+<div class="ud-stats">
+<div class="ud-stat"><span class="num-l">25</span><span class="caption adm-muted">matchs</span></div>
+<div class="ud-stat"><span class="num-l" style="color: var(--error-text)">2</span><span class="caption adm-muted">no-shows</span></div>
+<div class="ud-stat"><span class="num-l">1</span><span class="caption adm-muted">signalement</span></div>
+<div class="ud-stat"><span class="num-l">345</span><span class="caption adm-muted">DT payés</span></div>
+</div>
+<dl class="ud-dl">
+<div><dt class="body">Email</dt><dd class="body"><span class="adm-one">omar.d@email.tn</span><x-import component-from-global-scope="MatchUp.StatusBadge" status="verified" label="Vérifié" icon-only="{{yes}}" size="s"></x-import></dd></div>
+<div><dt class="body">Téléphone</dt><dd class="body"><span class="num-s">+216 22 456 789</span><x-import component-from-global-scope="MatchUp.StatusBadge" status="verified" label="Vérifié" icon-only="{{yes}}" size="s"></x-import></dd></div>
+<div><dt class="body">Niveau</dt><dd class="body"><span class="adm-muted" style="display: inline-flex; color: var(--football-text)"><x-import component-from-global-scope="MatchUp.Icon" name="sport-football" size="{{i16}}"></x-import></span>3,5 · Intermédiaire</dd></div>
+<div><dt class="body">Inscrit</dt><dd class="body">mar. 10 mars 2026 · Google</dd></div>
+</dl>
+</section>
+
+<x-import component-from-global-scope="MatchUp.Banner" tone="warning" icon="calendar-x" title="2 no-shows en 3 semaines">Sa fiabilité est passée de 100 % à 92 %. Aucun avertissement envoyé pour l’instant.</x-import>
+
+<section class="adm-sec" aria-labelledby="ud-rep">
+<div class="adm-sec__head"><h2 id="ud-rep" class="adm-sec__title h3">Signalement ouvert</h2><span class="caption adm-muted">1 sur 1</span></div>
+<article class="mu-card" style="display: flex; flex-direction: column; gap: 12px; padding: 16px">
+<div style="display: flex; align-items: center; gap: 12px">
+<x-import component-from-global-scope="MatchUp.Avatar" name="Skander T." size="s"></x-import>
+<div class="adm-txt"><span class="label">Signalé par Skander T.</span><span class="caption adm-muted">Organisateur · ven. 9 oct. · 10h14</span></div>
+<x-import component-from-global-scope="MatchUp.StatusBadge" status="pending" label="Ouvert" size="s"></x-import>
+</div>
+<div style="display: flex; flex-direction: column; gap: 6px; padding: 12px; border-radius: var(--radius-sm); background: var(--bg)">
+<span class="label-s adm-muted">No-show répété · Foot 5v5 · Arena Five · jeu. 8 oct. · 21h00</span>
+<p class="body" style="margin: 0">« Deuxième fois qu’il ne vient pas sans prévenir. On a joué à 9. »</p>
+</div>
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px">
+<x-import component-from-global-scope="MatchUp.Button" variant="secondary" size="m" full-width="{{yes}}">Classer</x-import>
+<x-import component-from-global-scope="MatchUp.Button" variant="secondary" size="m" full-width="{{yes}}" leading-icon="chat-centered-text">Répondre</x-import>
+</div>
+</article>
+</section>
+
+<section class="adm-sec" aria-labelledby="ud-act">
+<div class="adm-sec__head"><h2 id="ud-act" class="adm-sec__title h3">Activité récente</h2><span class="caption adm-muted">30 jours</span></div>
+<ol class="ud-time">
+<li><span class="ud-dot"><x-import component-from-global-scope="MatchUp.Icon" name="calendar-check" size="{{i16}}"></x-import></span><span class="adm-txt"><span class="label">Réservation privée · Arena Five, Terrain 2</span><span class="caption adm-muted">ven. 16 oct. · 18h00 · en cours</span></span></li>
+<li><span class="ud-dot"><x-import component-from-global-scope="MatchUp.Icon" name="star" size="{{i16}}"></x-import></span><span class="adm-txt"><span class="label">Avis 3/5 sur Arena Five</span><span class="caption adm-muted">jeu. 15 oct. · « Vestiaires à rafraîchir »</span></span></li>
+<li><span class="ud-dot"><x-import component-from-global-scope="MatchUp.Icon" name="user-plus" size="{{i16}}"></x-import></span><span class="adm-txt"><span class="label">A rejoint la partie de Yassine B.</span><span class="caption adm-muted">mar. 13 oct. · pour mer. 21 oct. · 21h00 · payé</span></span></li>
+<li><span class="ud-dot"><x-import component-from-global-scope="MatchUp.Icon" name="user-plus" size="{{i16}}"></x-import></span><span class="adm-txt"><span class="label">A rejoint le Foot 5v5 de Skander T.</span><span class="caption adm-muted">lun. 12 oct. · pour dim. 18 oct. · 20h00 · payé</span></span></li>
+<li><span class="ud-dot ud-dot--error"><x-import component-from-global-scope="MatchUp.Icon" name="calendar-x" size="{{i16}}"></x-import></span><span class="adm-txt"><span class="label">No-show · Foot 5v5, Arena Five</span><span class="caption adm-muted">jeu. 8 oct. · 21h00 · Terrain 1 · signalé</span></span></li>
+<li><span class="ud-dot ud-dot--error"><x-import component-from-global-scope="MatchUp.Icon" name="calendar-x" size="{{i16}}"></x-import></span><span class="adm-txt"><span class="label">No-show · Foot 5v5, Arena Five</span><span class="caption adm-muted">sam. 26 sept. · 20h00 · Terrain 2</span></span></li>
+</ol>
+</section>
+
+<section class="adm-sec" aria-labelledby="ud-pay">
+<div class="adm-sec__head"><h2 id="ud-pay" class="adm-sec__title h3">Paiements</h2><span class="caption adm-muted">Visa •••• 7310</span></div>
+<div class="mu-card" style="overflow: hidden">
+<x-import component-from-global-scope="MatchUp.TransactionRow" category="booking" sport="football" label="Réservation · Arena Five, T2" meta="ven. 16 oct. · 18h00 · Carte •••• 7310" amount="{{m150}}"></x-import>
+<x-import component-from-global-scope="MatchUp.TransactionRow" category="booking" sport="football" label="Part · Arena Five, mer. 21 oct." meta="mar. 13 oct. · Portefeuille" amount="{{m15}}"></x-import>
+<x-import component-from-global-scope="MatchUp.TransactionRow" category="booking" sport="football" label="Part · Arena Five, dim. 18 oct." meta="lun. 12 oct. · Carte •••• 7310" amount="{{m15}}"></x-import>
+<x-import component-from-global-scope="MatchUp.TransactionRow" category="booking" sport="football" label="Part · Arena Five, jeu. 8 oct." meta="No-show · non remboursée" amount="{{m15}}"></x-import>
+<x-import component-from-global-scope="MatchUp.TransactionRow" category="topup" label="Recharge du solde" meta="sam. 3 oct. · Carte •••• 7310" amount="{{p50}}"></x-import>
+</div>
+</section>
+
+<section class="adm-sec" aria-labelledby="ud-hist">
+<h2 id="ud-hist" class="adm-sec__title h3">Sanctions</h2>
+<div class="mu-card" style="display: flex; align-items: center; gap: 12px; padding: 16px">
+<span class="adm-ico adm-ico--success"><x-import component-from-global-scope="MatchUp.Icon" name="shield-check" size="{{i20}}"></x-import></span>
+<span class="adm-txt"><span class="label">Aucune sanction</span><span class="caption adm-muted">Ni avertissement ni suspension depuis son inscription.</span></span>
+</div>
+</section>
+
+</div>
+
+<div class="adm-stickybar">
+<button type="button" class="mu-btn mu-btn--secondary mu-btn--xl" style="flex: 1"><span class="mu-btn__content"><x-import component-from-global-scope="MatchUp.Icon" name="warning" size="{{i20}}"></x-import><span class="mu-btn__label label-l">Avertir</span></span></button>
+<a href="ADM-04-Suspendre.dc.html" class="mu-btn mu-btn--destructive mu-btn--xl" style="flex: 1"><span class="mu-btn__content"><x-import component-from-global-scope="MatchUp.Icon" name="prohibit" size="{{i20}}"></x-import><span class="mu-btn__label label-l">Suspendre</span></span></a>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":2040}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return { yes: true, i14: 14, i16: 16, i20: 20, i24: 24, lv35: 3.5, r92: 92, m150: -150, m15: -15, p50: 50 };
+  }
+}
+</script>
+</body>
+</html>

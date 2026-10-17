@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Nouveau tournoi · Format et règles</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/matchup/tokens.css">
+<link rel="stylesheet" href="ds/matchup/components/bundle.css">
+<script src="ds/matchup/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+/* org:wizard — identical in ORG-05…ORG-09 */
+body{margin:0}
+a{color:var(--link)}
+.wz-root{position:relative; width:390px; box-sizing:border-box; overflow:hidden; display:flex; flex-direction:column; background:var(--surface); color:var(--text); font-family:var(--font-sans)}
+.wz-head{flex:none; display:flex; align-items:center; gap:var(--space-1); padding:52px var(--space-1) 0 var(--space-1)}
+.wz-head__txt{flex:1; min-width:0; display:flex; flex-direction:column}
+.wz-head__txt .caption{color:var(--text-secondary)}
+.wz-steps{flex:none; padding:var(--space-2) var(--space-4) var(--space-4) var(--space-4); border-bottom:1px solid var(--border)}
+.wz-body{flex:1; min-height:0; display:flex; flex-direction:column; gap:var(--space-6); padding:var(--space-5) var(--space-4) var(--space-8) var(--space-4)}
+.wz-body > *{flex-shrink:0}
+.wz-intro{display:flex; flex-direction:column; gap:var(--space-1)}
+.wz-intro p{margin:0; color:var(--text-secondary)}
+.wz-field{display:flex; flex-direction:column; gap:var(--space-3)}
+.wz-field__label{margin:0}
+.wz-rule{height:1px; background:var(--border); margin:0}
+.wz-help{margin:0; display:flex; align-items:flex-start; gap:var(--space-2); color:var(--text-secondary)}
+.wz-help > span:first-child{flex:none; display:flex; margin-top:1px}
+.wz-bar{flex:none; position:relative; z-index:var(--z-sticky); display:flex; flex-direction:column; gap:var(--space-2); padding:var(--space-2) var(--space-4) 34px var(--space-4); background:var(--surface); box-shadow:var(--elevation-2-up)}
+.wz-draft{display:flex; align-items:center; justify-content:center; gap:6px; min-height:24px; color:var(--text-secondary)}
+.wz-actions{display:flex; gap:var(--space-3)}
+.wz-actions > .mu-btn--secondary{flex:none; width:112px}
+.wz-actions > .mu-btn--primary{flex:1}
+.wz-muted{color:var(--text-secondary)}
+.wz-m0{margin:0}
+/* /org:wizard */
+.fmt-sum{display:flex; flex-direction:column; gap:var(--space-3); padding:var(--space-4); border-radius:var(--radius-md); background:var(--surface-muted)}
+.fmt-flow{display:flex; align-items:center; gap:2px; flex-wrap:wrap}
+.fmt-node{display:inline-flex; align-items:center; gap:6px; padding:4px 8px; border-radius:var(--radius-full); background:var(--surface); box-shadow:inset 0 0 0 1px var(--border); color:var(--text)}
+.fmt-node--end{background:var(--accent); color:var(--on-accent); box-shadow:none}
+.fmt-arrow{display:flex; color:var(--text-secondary)}
+.fmt-days{display:grid; grid-template-columns:1fr 1fr; gap:var(--space-3)}
+.fmt-days > div{display:flex; flex-direction:column; gap:2px}
+.fmt-switches{display:flex; flex-direction:column}
+.fmt-switches > * + *{border-top:1px solid var(--border)}
+.fmt-switches .mu-switch{padding-block:var(--space-2)}
+</style>
+</helmet>
+<div class="wz-root" style="height: 1640px">
+<div class="wz-head">
+<a href="ORG-05-Creer-infos.dc.html" class="mu-iconbtn mu-iconbtn--l mu-iconbtn--ghost" aria-label="Étape précédente" style="color: var(--text)"><x-import component-from-global-scope="MatchUp.Icon" name="arrow-left" size="{{i24}}"></x-import></a>
+<div class="wz-head__txt"><h1 class="label-l wz-m0">Coupe d’hiver padel</h1><span class="caption">Nouveau tournoi · Tunis Padel Series</span></div>
+<a href="ORG-04-Mes-tournois.dc.html" class="mu-btn mu-btn--tertiary mu-btn--m" aria-label="Quitter, le brouillon est enregistré"><span class="mu-btn__content"><span class="mu-btn__label label">Quitter</span></span></a>
+</div>
+<div class="wz-steps"><x-import component-from-global-scope="MatchUp.WizardStepper" variant="compact" label="Créer un tournoi" steps="{{steps}}" current="{{cur}}"></x-import></div>
+
+<div class="wz-body">
+<div class="wz-intro">
+<h2 class="h2 wz-m0">Format et règles</h2>
+<p class="body">Tu peux tout modifier tant qu’aucune équipe n’est inscrite.</p>
+</div>
+
+<x-import component-from-global-scope="MatchUp.ChoiceCard.Group" label="Format" type="radio" value="{{fmt}}" on-change="{{setFmt}}">
+<x-import component-from-global-scope="MatchUp.ChoiceCard" value="poules" icon="squares-four" title="Poules + phase finale" description="Les 2 premiers de chaque poule passent en phase finale. 3 matchs garantis par équipe."></x-import>
+<x-import component-from-global-scope="MatchUp.ChoiceCard" value="ko" icon="list-numbers" title="Élimination directe" description="Un match perdu et c’est fini. Plus court, 1 seul match garanti."></x-import>
+</x-import>
+
+<x-import component-from-global-scope="MatchUp.Stepper" layout="inline" label="Nombre d’équipes" min="{{eight}}" max="{{thirtytwo}}" step="{{four}}" value="{{teams}}" on-change="{{setTeams}}" helper="{{teamsHelper}}" decrement-label="Retirer 4 équipes" increment-label="Ajouter 4 équipes"></x-import>
+
+<div class="fmt-sum" aria-label="Déroulé du tournoi">
+<span class="overline wz-muted">Déroulé</span>
+<div class="fmt-flow label-s">
+<span class="fmt-node">{{poolsLabel}}</span><span class="fmt-arrow"><x-import component-from-global-scope="MatchUp.Icon" name="caret-right" size="{{i14}}"></x-import></span>
+<span class="fmt-node">Quarts</span><span class="fmt-arrow"><x-import component-from-global-scope="MatchUp.Icon" name="caret-right" size="{{i14}}"></x-import></span>
+<span class="fmt-node">Demies</span><span class="fmt-arrow"><x-import component-from-global-scope="MatchUp.Icon" name="caret-right" size="{{i14}}"></x-import></span>
+<span class="fmt-node fmt-node--end"><x-import component-from-global-scope="MatchUp.Icon" name="trophy" weight="fill" size="{{i14}}"></x-import>Finale</span>
+</div>
+<div class="fmt-days">
+<div><span class="label">Samedi</span><span class="caption wz-muted"><span class="num-xs">24</span> matchs de poule</span></div>
+<div><span class="label">Dimanche</span><span class="caption wz-muted"><span class="num-xs">8</span> matchs de phase finale</span></div>
+</div>
+</div>
+
+<div class="wz-rule"></div>
+
+<h3 class="h3 wz-m0">Règles du jeu</h3>
+
+<x-import component-from-global-scope="MatchUp.Radio.Group" label="Score d’un match" value="{{score}}" on-change="{{setScore}}">
+<x-import component-from-global-scope="MatchUp.Radio" value="sets" label="2 sets gagnants, super tie-break au 3e" description="Environ 1 h. Le format des circuits amateurs."></x-import>
+<x-import component-from-global-scope="MatchUp.Radio" value="nine" label="1 set de 9 jeux" description="Environ 40 min. Pratique quand le planning est serré."></x-import>
+</x-import>
+
+<div class="fmt-switches">
+<x-import component-from-global-scope="MatchUp.Switch" label-position="start" label="Point en or à 40-40" description="Pas d’avantage : le point suivant gagne le jeu." default-checked="{{yes}}"></x-import>
+<x-import component-from-global-scope="MatchUp.Switch" label-position="start" label="Match pour la 3e place" description="Utile si tu récompenses tout le podium." default-checked="{{yes}}"></x-import>
+<x-import component-from-global-scope="MatchUp.Switch" label-position="start" label="Balles fournies" description="Une boîte neuve par match, affichée sur la page du tournoi." default-checked="{{yes}}"></x-import>
+</div>
+
+<x-import component-from-global-scope="MatchUp.Select" label="Retard" options="{{lateOpts}}" default-value="15" helper="Au-delà, l’équipe adverse gagne par forfait (6-0 6-0)."></x-import>
+
+<p class="wz-help caption"><span><x-import component-from-global-scope="MatchUp.Icon" name="info" size="{{i16}}"></x-import></span><span>Égalité en poule : confrontation directe, puis différence de sets, puis différence de jeux.</span></p>
+</div>
+
+<div class="wz-bar">
+<span class="wz-draft caption"><x-import component-from-global-scope="MatchUp.Icon" name="cloud-check" size="{{i16}}"></x-import>Brouillon enregistré · à l’instant</span>
+<div class="wz-actions">
+<a href="ORG-05-Creer-infos.dc.html" class="mu-btn mu-btn--secondary mu-btn--xl"><span class="mu-btn__content"><span class="mu-btn__label label-l">Retour</span></span></a>
+<a href="ORG-07-Creer-terrains-dates.dc.html" class="mu-btn mu-btn--primary mu-btn--xl"><span class="mu-btn__content"><span class="mu-btn__label label-l">Continuer</span><x-import component-from-global-scope="MatchUp.Icon" name="arrow-right" size="{{i20}}"></x-import></span></a>
+</div>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":1640}}'>
+class Component extends DCLogic {
+  state = { fmt: 'poules', teams: 16, score: 'sets' };
+  renderVals() {
+    const s = this.state || {};
+    return {
+      yes: true, no: false, i14: 14, i16: 16, i20: 20, i24: 24,
+      steps: [{ label: 'Infos' }, { label: 'Format & règles' }, { label: 'Terrains & dates' }, { label: 'Frais & prix' }, { label: 'Aperçu' }],
+      cur: 1,
+      four: 4, eight: 8, thirtytwo: 32,
+      fmt: s.fmt, setFmt: (v) => this.setState({ fmt: v }),
+      teams: s.teams, setTeams: (v) => this.setState({ teams: v }),
+      teamsHelper: (n) => (n / 4) + ' poules de 4 · ' + (n / 4 * 6 + 8) + ' matchs au total',
+      poolsLabel: (s.teams / 4) + ' poules',
+      score: s.score, setScore: (v) => this.setState({ score: v }),
+      lateOpts: [{ value: '10', label: 'Forfait après 10 min' }, { value: '15', label: 'Forfait après 15 min' }, { value: '20', label: 'Forfait après 20 min' }]
+    };
+  }
+}
+</script>
+</body>
+</html>

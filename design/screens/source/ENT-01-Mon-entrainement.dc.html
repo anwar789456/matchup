@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Mon entraînement</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/matchup/tokens.css">
+<link rel="stylesheet" href="ds/matchup/components/bundle.css">
+<script src="ds/matchup/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0}
+a{color:var(--link)}
+.ent-sec{display:flex; flex-direction:column; gap:12px; padding:0 16px}
+.ent-sec__head{display:flex; align-items:center; justify-content:space-between; gap:8px; min-height:32px; margin-inline-end:-12px}
+.ent-week{display:grid; grid-template-columns:repeat(7, minmax(0, 1fr)); gap:4px}
+.ent-day{display:flex; flex-direction:column; align-items:center; gap:6px; padding:8px 0 10px 0; border-radius:var(--radius-sm)}
+.ent-day__dot{width:28px; height:28px; box-sizing:border-box; border-radius:var(--radius-full); display:flex; align-items:center; justify-content:center}
+.ent-day--done .ent-day__dot{background:var(--accent); color:var(--on-accent)}
+.ent-day--today{background:var(--surface-muted); box-shadow:inset 0 0 0 1.5px var(--accent)}
+.ent-day--today .ent-day__dot{border:2px dashed var(--accent); color:var(--accent)}
+.ent-day--rest .ent-day__dot{border:1.5px solid var(--border)}
+.ent-premium{display:inline-flex; align-items:center; gap:4px; height:20px; padding:0 8px; border-radius:var(--radius-full); background:var(--accent); color:var(--on-accent); white-space:nowrap}
+.ent-rail{display:flex; gap:12px; overflow-x:auto; padding:2px 16px 8px 16px; scrollbar-width:none}
+.ent-rail::-webkit-scrollbar{display:none}
+.ent-hot{position:absolute; display:block; border-radius:var(--radius-full)}
+.ent-hot:focus-visible{outline:2px solid var(--focus); outline-offset:2px}
+</style>
+</helmet>
+<div style="position: relative; width: 390px; height: 1748px; box-sizing: border-box; overflow: hidden; background: var(--bg); color: var(--text); font-family: var(--font-sans)">
+<x-import component-from-global-scope="MatchUp.TopAppBar" variant="large" title="Entraînement" collapsed="{{yes}}" scrolled="{{no}}" inset="{{inset}}" actions="{{barActions}}"></x-import>
+<a href="ENT-08-Analyse-video.dc.html" class="ent-hot" aria-label="Analyser une vidéo" style="left: 290px; top: 48px; width: 48px; height: 48px"></a>
+<a href="ENT-02-Programmes.dc.html" class="ent-hot" aria-label="Chercher un programme" style="left: 338px; top: 48px; width: 48px; height: 48px"></a>
+
+<div style="display: flex; flex-direction: column; gap: 28px; padding: 8px 0 140px 0">
+
+<section aria-labelledby="ent-week-t" style="padding: 0 16px">
+<div data-theme="dark" class="mu-card" style="display: flex; flex-direction: column; gap: 16px; padding: 16px; background: var(--surface-elevated); color: var(--text); box-shadow: var(--elevation-2)">
+<div style="display: flex; align-items: flex-start; justify-content: space-between; gap: 12px">
+<div style="display: flex; flex-direction: column; gap: 4px">
+<h2 id="ent-week-t" class="overline" style="margin: 0; color: var(--text-secondary)">Ta semaine · 12 – 18 oct.</h2>
+<div style="display: flex; align-items: center; gap: 8px">
+<span style="display: flex; color: var(--accent)"><x-import component-from-global-scope="MatchUp.Icon" name="fire" weight="fill" size="{{i28}}"></x-import></span>
+<span class="num-xl" style="color: var(--text)">6</span>
+<span class="label-l" style="color: var(--text)">semaines de suite</span>
+</div>
+</div>
+<div style="flex: none; text-align: end; display: flex; flex-direction: column; gap: 2px">
+<span><span class="num-l">2</span><span class="num-s" style="color: var(--text-secondary)">/3</span></span>
+<span class="caption" style="color: var(--text-secondary)">séances</span>
+</div>
+</div>
+<ol class="ent-week" aria-label="Séances de la semaine" style="margin: 0; padding: 0; list-style: none">
+<li class="ent-day ent-day--done" aria-label="Lundi 12 octobre : séance faite"><span class="label-s" style="color: var(--text-secondary)">lun.</span><span class="ent-day__dot"><x-import component-from-global-scope="MatchUp.Icon" name="check" weight="bold" size="{{i16}}"></x-import></span><span class="num-xs">12</span></li>
+<li class="ent-day" aria-label="Mardi 13 octobre : repos"><span class="label-s" style="color: var(--text-secondary)">mar.</span><span class="ent-day__dot"></span><span class="num-xs" style="color: var(--text-secondary)">13</span></li>
+<li class="ent-day ent-day--done" aria-label="Mercredi 14 octobre : séance faite"><span class="label-s" style="color: var(--text-secondary)">mer.</span><span class="ent-day__dot"><x-import component-from-global-scope="MatchUp.Icon" name="check" weight="bold" size="{{i16}}"></x-import></span><span class="num-xs">14</span></li>
+<li class="ent-day" aria-label="Jeudi 15 octobre : repos"><span class="label-s" style="color: var(--text-secondary)">jeu.</span><span class="ent-day__dot"></span><span class="num-xs" style="color: var(--text-secondary)">15</span></li>
+<li class="ent-day ent-day--today" aria-label="Aujourd’hui, vendredi 16 octobre : séance 5 à faire"><span class="label-s">auj.</span><span class="ent-day__dot"><span class="num-xs">5</span></span><span class="num-xs">16</span></li>
+<li class="ent-day" aria-label="Samedi 17 octobre : repos"><span class="label-s" style="color: var(--text-secondary)">sam.</span><span class="ent-day__dot"></span><span class="num-xs" style="color: var(--text-secondary)">17</span></li>
+<li class="ent-day" aria-label="Dimanche 18 octobre : repos"><span class="label-s" style="color: var(--text-secondary)">dim.</span><span class="ent-day__dot"></span><span class="num-xs" style="color: var(--text-secondary)">18</span></li>
+</ol>
+<p class="body" style="margin: 0; color: var(--text-secondary)">Fais la séance 5 aujourd’hui pour valider ta <span style="color: var(--text)">7e semaine</span>.</p>
+</div>
+</section>
+
+<section class="ent-sec" aria-labelledby="ent-today-t">
+<div class="ent-sec__head">
+<div style="display: flex; flex-direction: column; gap: 2px">
+<h2 id="ent-today-t" class="h3" style="margin: 0">À faire aujourd’hui</h2>
+<p class="caption" style="margin: 0; color: var(--text-secondary)">Bandeja en 4 semaines · Coach Karim J.</p>
+</div>
+</div>
+<x-import component-from-global-scope="MatchUp.LessonCard" dc-props="{{today}}"></x-import>
+</section>
+
+<section class="ent-sec" aria-labelledby="ent-prog-t">
+<div class="ent-sec__head">
+<h2 id="ent-prog-t" class="h3" style="margin: 0">Mes programmes</h2>
+<a href="ENT-02-Programmes.dc.html" class="mu-btn mu-btn--tertiary mu-btn--s"><span class="mu-btn__content"><span class="mu-btn__label label">Catalogue</span></span></a>
+</div>
+<a href="ENT-03-Detail-du-programme.dc.html" class="mu-card mu-card--interactive" style="display: flex; align-items: center; gap: 16px; padding: 16px; text-decoration: none; color: var(--text)">
+<x-import component-from-global-scope="MatchUp.ProgressRing" value="{{five}}" max="{{twelve}}" size="{{r72}}" unit="séances" label="Programme Bandeja en 4 semaines"></x-import>
+<span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 4px">
+<span class="overline" style="color: var(--text-secondary)">Semaine 2 sur 4 · <span class="num-xs" style="color: var(--text)">42 %</span></span>
+<span class="label-l">Bandeja en 4 semaines</span>
+<span class="caption" style="color: var(--text-secondary)">Coach Karim J. · 3 séances par semaine</span>
+<span style="display: flex; margin-top: 2px"><span class="ent-premium label-s"><x-import component-from-global-scope="MatchUp.Icon" name="crown-simple" weight="fill" size="{{i14}}"></x-import>Inclus dans Premium</span></span>
+</span>
+<span style="flex: none; display: flex; color: var(--text-secondary)"><x-import component-from-global-scope="MatchUp.Icon" name="caret-right" size="{{i20}}"></x-import></span>
+</a>
+</section>
+
+<section class="ent-sec" aria-label="Plan d’entraînement IA">
+<x-import component-from-global-scope="MatchUp.AiSuggestionCard" context="Plan d’entraînement" title="Crée ton plan de la semaine" reason="tu es dispo lun., mer. et sam. soir et tes 3 derniers avis de coéquipiers parlent de ton placement au filet." primary-action="{{aiPrimary}}" secondary-action="{{aiSecondary}}">
+<span style="display: flex; flex-direction: column; gap: 8px">
+<span class="body" style="color: var(--text-secondary)">3 séances courtes autour de ton programme Bandeja, calées sur tes matchs et ton tournoi. Rien n’est ajouté à ton agenda sans ta validation.</span>
+<span class="caption" style="display: flex; align-items: center; gap: 6px; color: var(--text-secondary)"><span style="display: flex; color: var(--text)"><x-import component-from-global-scope="MatchUp.Icon" name="crown-simple" weight="fill" size="{{i14}}"></x-import></span>Inclus dans ton essai Premium · jusqu’au ven. 30 oct.</span>
+</span>
+</x-import>
+</section>
+
+<section class="ent-sec" aria-label="Analyse vidéo">
+<a href="ENT-08-Analyse-video.dc.html" class="mu-card mu-card--interactive" style="display: flex; align-items: center; gap: 12px; padding: 12px; text-decoration: none; color: var(--text)">
+<span style="position: relative; flex: none; width: 72px; height: 72px; border-radius: var(--radius-sm); overflow: hidden">
+<x-import component-from-global-scope="MatchUp.CourtArt" sport="padel" dc-props="{{thumbArt}}"></x-import>
+<span style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center"><span style="width: 32px; height: 32px; border-radius: var(--radius-full); background: var(--white); color: var(--ink-900); display: flex; align-items: center; justify-content: center; box-shadow: var(--elevation-2)"><x-import component-from-global-scope="MatchUp.Icon" name="video-camera" weight="fill" size="{{i16}}"></x-import></span></span>
+</span>
+<span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 4px">
+<span style="display: flex; align-items: center; gap: 8px"><span class="label-l">Analyse ta bandeja</span><x-import component-from-global-scope="MatchUp.AiLabel" size="s"></x-import></span>
+<span class="caption" style="color: var(--text-secondary)">Filme 30 s de jeu : l’IA repère ce qui coince et te donne 3 conseils, avec le moment exact.</span>
+</span>
+<span style="flex: none; display: flex; color: var(--text-secondary)"><x-import component-from-global-scope="MatchUp.Icon" name="caret-right" size="{{i20}}"></x-import></span>
+</a>
+</section>
+
+<section aria-labelledby="ent-more-t" style="display: flex; flex-direction: column; gap: 8px">
+<div class="ent-sec__head" style="padding: 0 16px; margin-inline-end: 0; padding-inline-end: 4px">
+<div style="display: flex; flex-direction: column; gap: 2px">
+<h2 id="ent-more-t" class="h3" style="margin: 0">Pour progresser</h2>
+<p class="caption" style="margin: 0; color: var(--text-secondary)">Padel et foot, à ton niveau.</p>
+</div>
+<a href="ENT-02-Programmes.dc.html" class="mu-btn mu-btn--tertiary mu-btn--s"><span class="mu-btn__content"><span class="mu-btn__label label">Voir tout</span></span></a>
+</div>
+<div style="display: flex; flex-direction: column; gap: 12px; padding: 0 16px">
+<x-import component-from-global-scope="MatchUp.ProgramCard" dc-props="{{pService}}"></x-import>
+<x-import component-from-global-scope="MatchUp.ProgramCard" dc-props="{{pEndurance}}"></x-import>
+</div>
+</section>
+</div>
+
+<x-import component-from-global-scope="MatchUp.TabBar" items="{{tabs}}" value="entrainement" safe-area="{{sa}}" fab="{{yes}}" dc-props="{{tabStyle}}"></x-import>
+<a href="AI-01-Assistant.dc.html" aria-label="Ouvrir l’assistant MatchUp" style="z-index: calc(var(--z-sticky) + 1); position: absolute; right: 16px; bottom: 114px; width: 56px; height: 56px; border-radius: var(--radius-full)"></a>
+<a href="ENT-06-Plan-IA-objectifs.dc.html" class="ent-hot" aria-label="Créer mon plan de la semaine" style="left: 192px; top: 1140px; width: 166px; height: 44px; border-radius: var(--radius-md)"></a>
+<a href="AI-01-Assistant.dc.html" class="ent-hot" aria-label="Ouvrir l’assistant MatchUp" style="left: 318px; bottom: 112px; width: 56px; height: 56px"></a>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":1748}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const karim = { name: 'Karim J.', verified: true };
+    return {
+      yes: true, no: false, i14: 14, i16: 16, i20: 20, i24: 24, i28: 28, inset: 44, sa: 34,
+      five: 5, twelve: 12, r72: 72,
+      barActions: [{ icon: 'video-camera', label: 'Analyser une vidéo' }, { icon: 'magnifying-glass', label: 'Chercher un programme' }],
+      today: { index: 5, title: 'Bandeja croisée', duration: 22, drills: 4, sport: 'padel', status: 'current', downloaded: true, href: 'ENT-04-Seance.dc.html' },
+      aiPrimary: { label: 'Créer mon plan', trailingIcon: 'arrow-right' },
+      aiSecondary: { label: 'Plus tard' },
+      thumbArt: { variant: 'photo', style: { position: 'absolute', inset: 0, width: '100%', height: '100%' } },
+      pService: { title: 'Service et retour', coach: karim, sport: 'padel', level: 3.5, weeks: 3, sessions: 9, minutesPerDay: 20, rating: 4.8, reviews: 29, price: 30, variant: 'compact' },
+      pEndurance: { title: 'Endurance foot 5v5', coach: { name: 'Sonia L.', verified: true }, sport: 'football', level: 3, weeks: 6, sessions: 18, minutesPerDay: 30, rating: 4.7, reviews: 41, price: 60, variant: 'compact' },
+      tabs: [
+        { value: 'accueil', label: 'Accueil', icon: 'house', href: 'HOM-01-Accueil.dc.html' },
+        { value: 'explorer', label: 'Explorer', icon: 'compass', href: 'EXP-01-Explorer-parties.dc.html' },
+        { value: 'matchs', label: 'Mes matchs', icon: 'calendar-check', badge: 1, badgeLabel: '1 invitation', href: 'MAT-01-A-venir.dc.html' },
+        { value: 'entrainement', label: 'Entraînement', icon: 'barbell', href: 'ENT-01-Mon-entrainement.dc.html' },
+        { value: 'communaute', label: 'Communauté', icon: 'users-three', href: 'FRM-01-Communaute.dc.html' }
+      ],
+      tabStyle: { style: { position: 'absolute', left: 0, right: 0, bottom: 0 } }
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Terrains</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/matchup/tokens.css">
+<link rel="stylesheet" href="ds/matchup/components/bundle.css">
+<script src="ds/matchup/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+/* own:sub — identical in OWN-17, 18, 19, 25 */
+body{margin:0}
+a{color:var(--link)}
+.own-back{position:absolute; left:4px; top:48px; width:48px; height:48px; border-radius:var(--radius-full); z-index:2}
+.own-back:focus-visible{outline:none; box-shadow:var(--focus-ring)}
+.own-body{flex:1; min-height:0; display:flex; flex-direction:column; gap:var(--space-5); padding:var(--space-2) var(--space-4) var(--space-8) var(--space-4)}
+.own-sec{color:var(--text-secondary)}
+.own-t{margin:0; padding-inline:var(--space-1); color:var(--text-secondary)}
+.own-row{display:flex; align-items:center; gap:var(--space-3)}
+/* /own:sub */
+.crt{display:flex; flex-direction:column; padding:0; overflow:hidden}
+.crt__top{display:flex; align-items:flex-start; gap:var(--space-3); padding:var(--space-4) var(--space-4) var(--space-3) var(--space-4)}
+.crt__art{flex:none; width:72px; height:72px; border-radius:var(--radius-sm); overflow:hidden}
+.crt__stats{display:grid; grid-template-columns:repeat(3, 1fr); margin:0 var(--space-4); border-radius:var(--radius-sm); background:var(--surface-muted)}
+.crt__stats > div{display:flex; flex-direction:column; gap:2px; padding:var(--space-2) var(--space-3)}
+.crt__stats > div + div{border-inline-start:1px solid var(--border)}
+.crt__acts{display:flex; align-items:center; gap:var(--space-1); padding:var(--space-2) var(--space-2) var(--space-2) var(--space-2); margin-top:var(--space-3); border-top:1px solid var(--border)}
+.crt__acts .mu-btn{flex:1}
+.crt__note{display:flex; align-items:center; gap:var(--space-2); margin:var(--space-3) var(--space-4) 0 var(--space-4); padding:var(--space-2) var(--space-3); border-radius:var(--radius-sm); background:var(--warning-soft); color:var(--warning-text)}
+.crt-add{display:flex; align-items:center; gap:var(--space-3); padding:var(--space-4); border-radius:var(--radius-md); border:1.5px dashed var(--border-strong); color:var(--text); text-decoration:none; background:transparent}
+.crt-add__ico{flex:none; width:44px; height:44px; border-radius:var(--radius-sm); display:grid; place-items:center; background:var(--accent); color:var(--on-accent)}
+</style>
+</helmet>
+<div style="position: relative; width: 390px; height: 1236px; box-sizing: border-box; overflow: hidden; display: flex; flex-direction: column; background: var(--bg); color: var(--text); font-family: var(--font-sans)">
+<x-import component-from-global-scope="MatchUp.TopAppBar" title="Terrains" subtitle="Espace propriétaire · Arena Five" on-back="{{noop}}" back-label="Retour à Plus" actions="{{barActions}}" inset="{{inset}}"></x-import>
+<a href="OWN-15-Plus.dc.html" class="own-back" aria-label="Retour à Plus"></a>
+
+<div class="own-body">
+
+<div class="mu-card" style="display: grid; grid-template-columns: repeat(3, 1fr); padding: 0">
+<div style="display: flex; flex-direction: column; gap: 2px; padding: 12px 16px">
+<span class="num-l">3</span><span class="caption own-sec">terrains actifs</span>
+</div>
+<div style="display: flex; flex-direction: column; gap: 2px; padding: 12px 16px; border-inline-start: 1px solid var(--border)">
+<span class="num-l">78 %</span><span class="caption own-sec">occupés · 7 j</span>
+</div>
+<div style="display: flex; flex-direction: column; gap: 2px; padding: 12px 16px; border-inline-start: 1px solid var(--border)">
+<span class="num-l">8h–00h</span><span class="caption own-sec">tous les jours</span>
+</div>
+</div>
+
+<section aria-labelledby="crt-list" style="display: flex; flex-direction: column; gap: 12px">
+<div class="own-row" style="justify-content: space-between">
+<h2 id="crt-list" class="overline own-t">Tes terrains</h2>
+<span class="caption own-sec">Masqué = plus réservable</span>
+</div>
+
+<article class="mu-card crt" aria-labelledby="crt-t1">
+<div class="crt__top">
+<x-import component-from-global-scope="MatchUp.CourtArt" sport="football" variant="photo" label="Terrain 1, gazon synthétique éclairé" dc-props="{{art}}"></x-import>
+<div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 6px">
+<h3 id="crt-t1" class="h3" style="margin: 0">Terrain 1</h3>
+<span style="display: flex"><x-import component-from-global-scope="MatchUp.Chip" kind="sport" sport="football" size="s">Football 5v5</x-import></span>
+<span class="caption own-sec">Synthétique · Extérieur · Éclairé</span>
+</div>
+<span style="flex: none; display: flex; flex-direction: column; align-items: center; gap: 4px"><x-import component-from-global-scope="MatchUp.Switch" default-checked="{{yes}}" size="s" aria-label="Terrain 1 visible et réservable"></x-import><span class="label-s own-sec">Visible</span></span>
+</div>
+<div class="crt__stats">
+<div><span class="caption own-sec">Creuses</span><span><span class="num-s">120 DT</span><span class="caption own-sec"> /h</span></span></div>
+<div><span class="caption own-sec">18h–23h</span><span><span class="num-s">150 DT</span><span class="caption own-sec"> /h</span></span></div>
+<div><span class="caption own-sec">Occupé · 7 j</span><span class="num-s">84 %</span></div>
+</div>
+<div class="crt__acts">
+<button type="button" class="mu-btn mu-btn--tertiary mu-btn--s"><span class="mu-btn__content"><x-import component-from-global-scope="MatchUp.Icon" name="pencil-simple" size="{{i16}}"></x-import><span class="mu-btn__label label">Modifier</span></span></button>
+<a href="OWN-13-Bloquer-un-creneau.dc.html" class="mu-btn mu-btn--tertiary mu-btn--s"><span class="mu-btn__content"><x-import component-from-global-scope="MatchUp.Icon" name="calendar-x" size="{{i16}}"></x-import><span class="mu-btn__label label">Bloquer</span></span></a>
+<a href="OWN-11-Planning.dc.html" class="mu-btn mu-btn--tertiary mu-btn--s"><span class="mu-btn__content"><x-import component-from-global-scope="MatchUp.Icon" name="calendar-blank" size="{{i16}}"></x-import><span class="mu-btn__label label">Planning</span></span></a>
+</div>
+</article>
+
+<article class="mu-card crt" aria-labelledby="crt-t2">
+<div class="crt__top">
+<x-import component-from-global-scope="MatchUp.CourtArt" sport="football" variant="photo" label="Terrain 2, gazon synthétique éclairé" dc-props="{{art}}"></x-import>
+<div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 6px">
+<h3 id="crt-t2" class="h3" style="margin: 0">Terrain 2</h3>
+<span style="display: flex"><x-import component-from-global-scope="MatchUp.Chip" kind="sport" sport="football" size="s">Football 5v5</x-import></span>
+<span class="caption own-sec">Synthétique · Extérieur · Éclairé</span>
+</div>
+<span style="flex: none; display: flex; flex-direction: column; align-items: center; gap: 4px"><x-import component-from-global-scope="MatchUp.Switch" default-checked="{{yes}}" size="s" aria-label="Terrain 2 visible et réservable"></x-import><span class="label-s own-sec">Visible</span></span>
+</div>
+<div class="crt__stats">
+<div><span class="caption own-sec">Creuses</span><span><span class="num-s">120 DT</span><span class="caption own-sec"> /h</span></span></div>
+<div><span class="caption own-sec">18h–23h</span><span><span class="num-s">150 DT</span><span class="caption own-sec"> /h</span></span></div>
+<div><span class="caption own-sec">Occupé · 7 j</span><span class="num-s">79 %</span></div>
+</div>
+<p class="crt__note caption" style="margin-bottom: 0"><x-import component-from-global-scope="MatchUp.Icon" name="warning" size="{{i16}}"></x-import><span>Entretien du gazon · jeu. 22 oct. · 8h–12h, créneaux bloqués</span></p>
+<div class="crt__acts">
+<button type="button" class="mu-btn mu-btn--tertiary mu-btn--s"><span class="mu-btn__content"><x-import component-from-global-scope="MatchUp.Icon" name="pencil-simple" size="{{i16}}"></x-import><span class="mu-btn__label label">Modifier</span></span></button>
+<a href="OWN-13-Bloquer-un-creneau.dc.html" class="mu-btn mu-btn--tertiary mu-btn--s"><span class="mu-btn__content"><x-import component-from-global-scope="MatchUp.Icon" name="calendar-x" size="{{i16}}"></x-import><span class="mu-btn__label label">Bloquer</span></span></a>
+<a href="OWN-11-Planning.dc.html" class="mu-btn mu-btn--tertiary mu-btn--s"><span class="mu-btn__content"><x-import component-from-global-scope="MatchUp.Icon" name="calendar-blank" size="{{i16}}"></x-import><span class="mu-btn__label label">Planning</span></span></a>
+</div>
+</article>
+
+<article class="mu-card crt" aria-labelledby="crt-t3">
+<div class="crt__top">
+<x-import component-from-global-scope="MatchUp.CourtArt" sport="football" variant="pattern" label="Terrain 3, salle couverte" dc-props="{{art}}"></x-import>
+<div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 6px">
+<h3 id="crt-t3" class="h3" style="margin: 0">Terrain 3</h3>
+<span style="display: flex"><x-import component-from-global-scope="MatchUp.Chip" kind="sport" sport="football" size="s">Football 5v5</x-import></span>
+<span class="caption own-sec">Synthétique · Intérieur</span>
+</div>
+<span style="flex: none; display: flex; flex-direction: column; align-items: center; gap: 4px"><x-import component-from-global-scope="MatchUp.Switch" default-checked="{{yes}}" size="s" aria-label="Terrain 3 visible et réservable"></x-import><span class="label-s own-sec">Visible</span></span>
+</div>
+<div class="crt__stats">
+<div><span class="caption own-sec">Creuses</span><span><span class="num-s">120 DT</span><span class="caption own-sec"> /h</span></span></div>
+<div><span class="caption own-sec">18h–23h</span><span><span class="num-s">150 DT</span><span class="caption own-sec"> /h</span></span></div>
+<div><span class="caption own-sec">Occupé · 7 j</span><span class="num-s">71 %</span></div>
+</div>
+<div class="crt__acts">
+<button type="button" class="mu-btn mu-btn--tertiary mu-btn--s"><span class="mu-btn__content"><x-import component-from-global-scope="MatchUp.Icon" name="pencil-simple" size="{{i16}}"></x-import><span class="mu-btn__label label">Modifier</span></span></button>
+<a href="OWN-13-Bloquer-un-creneau.dc.html" class="mu-btn mu-btn--tertiary mu-btn--s"><span class="mu-btn__content"><x-import component-from-global-scope="MatchUp.Icon" name="calendar-x" size="{{i16}}"></x-import><span class="mu-btn__label label">Bloquer</span></span></a>
+<a href="OWN-11-Planning.dc.html" class="mu-btn mu-btn--tertiary mu-btn--s"><span class="mu-btn__content"><x-import component-from-global-scope="MatchUp.Icon" name="calendar-blank" size="{{i16}}"></x-import><span class="mu-btn__label label">Planning</span></span></a>
+</div>
+</article>
+</section>
+
+<button type="button" class="crt-add" style="font: inherit; text-align: start; cursor: pointer; width: 100%">
+<span class="crt-add__ico"><x-import component-from-global-scope="MatchUp.Icon" name="plus" size="{{i24}}"></x-import></span>
+<span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px">
+<span class="label-l">Ajouter un terrain</span>
+<span class="caption own-sec">Sport, surface, éclairage, puis ses horaires et tarifs. Ton plan Pro n’a pas de limite de terrains.</span>
+</span>
+</button>
+
+<a href="OWN-16-Tarifs.dc.html" class="mu-card" style="display: flex; align-items: center; gap: 12px; padding: 14px 12px 14px 16px; text-decoration: none; color: var(--text)">
+<span style="flex: none; width: 36px; height: 36px; border-radius: var(--radius-sm); background: var(--surface-muted); display: grid; place-items: center"><x-import component-from-global-scope="MatchUp.Icon" name="tag" size="{{i20}}"></x-import></span>
+<span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px">
+<span class="label">Tarifs et heures de pointe</span>
+<span class="caption own-sec">Prix par terrain, dates spéciales · 15 DT /pers. à 10 en soirée</span>
+</span>
+<span class="own-sec" style="flex: none; display: flex"><x-import component-from-global-scope="MatchUp.Icon" name="caret-right" size="{{i20}}"></x-import></span>
+</a>
+
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":1236}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      yes: true, no: false, i16: 16, i20: 20, i24: 24, inset: 44,
+      noop: () => {},
+      barActions: [{ icon: 'plus', label: 'Ajouter un terrain' }],
+      art: { style: { width: 72, height: 72, borderRadius: 'var(--radius-sm)', flex: 'none' } }
+    };
+  }
+}
+</script>
+</body>
+</html>

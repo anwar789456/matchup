@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Push Android</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/matchup/tokens.css">
+<link rel="stylesheet" href="ds/matchup/components/bundle.css">
+<script src="ds/matchup/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0}
+a{color:var(--link)}
+/* Generic Android-style notification shade — drawn in markup, no OS trademarks */
+.and-root{position:relative; width:390px; height:844px; box-sizing:border-box; overflow:hidden; font-family:var(--font-sans); color:var(--white);
+  background:
+    radial-gradient(80% 50% at 85% 10%, color-mix(in srgb, var(--ink-500) 60%, transparent), transparent 70%),
+    radial-gradient(70% 50% at 10% 90%, color-mix(in srgb, var(--ink-700) 90%, transparent), transparent 70%),
+    linear-gradient(200deg, var(--night-700), var(--night-900))}
+.and-shade{position:absolute; inset:0; display:flex; flex-direction:column; padding:52px 12px 0 12px; box-sizing:border-box;
+  background:color-mix(in srgb, var(--night-900) 82%, transparent); -webkit-backdrop-filter:blur(28px); backdrop-filter:blur(28px)}
+.and-top{display:flex; align-items:flex-end; justify-content:space-between; padding:0 8px}
+.and-clock{display:flex; align-items:baseline; gap:10px}
+.and-clock__time{margin:0; color:var(--white)}
+.and-clock__date{margin:0; color:var(--ink-300)}
+.and-gear{display:flex; width:40px; height:40px; align-items:center; justify-content:center; border-radius:var(--radius-full); color:var(--ink-100)}
+.and-tiles{display:flex; gap:10px; margin-top:14px}
+.and-tile{flex:1 1 0; height:48px; border-radius:var(--radius-full); display:flex; align-items:center; justify-content:center; background:var(--night-700); color:var(--ink-100)}
+.and-tile--on{background:var(--ink-100); color:var(--ink-900)}
+.and-bright{position:relative; height:36px; margin-top:8px; border-radius:var(--radius-full); background:var(--night-700); overflow:hidden}
+.and-bright__fill{position:absolute; left:0; top:0; bottom:0; width:62%; border-radius:var(--radius-full); background:var(--ink-300); display:flex; align-items:center; padding-left:12px; box-sizing:border-box; color:var(--ink-900)}
+.and-list{display:flex; flex-direction:column; gap:3px; margin-top:16px}
+.and-card{position:relative; display:block; padding:12px 14px 14px 14px; background:var(--night-700); color:var(--white); text-decoration:none; border-radius:var(--radius-sm)}
+.and-card:first-child{border-top-left-radius:var(--radius-lg); border-top-right-radius:var(--radius-lg)}
+.and-card:last-child{border-bottom-left-radius:var(--radius-lg); border-bottom-right-radius:var(--radius-lg)}
+.and-head{display:flex; align-items:center; gap:6px; min-height:24px; color:var(--ink-300)}
+.and-small{flex:none; width:24px; height:24px; border-radius:var(--radius-full); background:var(--volt-400); display:grid; place-items:center}
+.and-small > .mu-logo{display:block}
+.and-head__app{color:var(--ink-100)}
+.and-dot{color:var(--ink-400)}
+.and-chrono{display:inline-flex; align-items:center; gap:3px; padding:0 6px; border-radius:var(--radius-full); background:var(--error); color:var(--white)}
+.and-exp{margin-inline-start:auto; flex:none; width:28px; height:24px; border-radius:var(--radius-full); background:var(--night-800); display:grid; place-items:center; color:var(--ink-100)}
+.and-content{display:flex; align-items:flex-start; gap:12px; margin-top:6px; padding-inline-start:30px}
+.and-text{flex:1 1 auto; min-width:0; display:flex; flex-direction:column; gap:2px}
+.and-title{color:var(--white)}
+.and-body{color:var(--ink-300)}
+.and-body--1{white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+.and-actions{display:flex; gap:8px; margin-top:12px; padding-inline-start:30px}
+.and-act{display:inline-flex; align-items:center; justify-content:center; gap:6px; height:40px; padding:0 16px; border-radius:var(--radius-full); text-decoration:none; white-space:nowrap}
+.and-act--primary{background:var(--volt-400); color:var(--ink-900)}
+.and-act--ghost{background:var(--night-800); color:var(--ink-100)}
+.and-act:focus-visible{outline:2px solid var(--volt-400); outline-offset:2px}
+.and-group{background:var(--night-700); padding:12px 14px 4px 14px}
+.and-child{display:flex; align-items:flex-start; gap:12px; padding:10px 0 12px 30px; color:var(--white); text-decoration:none; position:relative}
+.and-child + .and-child::before{content:""; position:absolute; top:0; left:30px; right:0; height:1px; background:color-mix(in srgb, var(--ink-300) 18%, transparent)}
+.and-child__row{display:flex; align-items:baseline; gap:6px}
+.and-child__row > .and-title{min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
+.and-child__time{flex:none; color:var(--ink-400)}
+.and-foot{display:flex; justify-content:flex-end; gap:8px; margin-top:12px}
+.and-pill{display:inline-flex; align-items:center; height:36px; padding:0 16px; border-radius:var(--radius-full); background:var(--night-700); color:var(--ink-100); text-decoration:none}
+.and-pill:focus-visible{outline:2px solid var(--volt-400); outline-offset:2px}
+.and-handle{position:absolute; left:50%; bottom:10px; width:40px; height:4px; margin-left:-20px; border-radius:var(--radius-full); background:var(--ink-400)}
+</style>
+</helmet>
+<div class="and-root">
+<div class="and-shade" aria-label="Volet de notifications Android avec 5 notifications MatchUp">
+
+<div class="and-top">
+<div class="and-clock">
+<p class="and-clock__time num-xl">18:00</p>
+<p class="and-clock__date label">ven. 16 octobre</p>
+</div>
+<span class="and-gear" aria-hidden="true"><x-import component-from-global-scope="MatchUp.Icon" name="gear-six" size="{{i20}}"></x-import></span>
+</div>
+
+<div class="and-tiles" aria-hidden="true">
+<span class="and-tile and-tile--on"><x-import component-from-global-scope="MatchUp.Icon" name="wifi-high" size="{{i20}}"></x-import></span>
+<span class="and-tile"><x-import component-from-global-scope="MatchUp.Icon" name="moon" size="{{i20}}"></x-import></span>
+<span class="and-tile"><x-import component-from-global-scope="MatchUp.Icon" name="flashlight" size="{{i20}}"></x-import></span>
+<span class="and-tile"><x-import component-from-global-scope="MatchUp.Icon" name="bell-slash" size="{{i20}}"></x-import></span>
+</div>
+<div class="and-bright" aria-hidden="true"><span class="and-bright__fill"><x-import component-from-global-scope="MatchUp.Icon" name="sun-dim" size="{{i20}}"></x-import></span></div>
+
+<div class="and-list">
+
+<div class="and-card">
+<a href="GAM-04-Place-disponible.dc.html" aria-label="MatchUp, maintenant, 14:59 restantes : une place s’est libérée" style="display: block; color: inherit; text-decoration: none">
+<span class="and-head">
+<span class="and-small"><x-import component-from-global-scope="MatchUp.Logo" variant="icon" tone="mono-ink" height="{{small}}"></x-import></span>
+<span class="and-head__app label-s">MatchUp</span><span class="and-dot caption">•</span><span class="caption">maintenant</span>
+<span class="and-chrono label-s"><x-import component-from-global-scope="MatchUp.Icon" name="hourglass-medium" size="{{i14}}"></x-import>14:59</span>
+<span class="and-exp"><x-import component-from-global-scope="MatchUp.Icon" name="caret-up" size="{{i16}}"></x-import></span>
+</span>
+<span class="and-content">
+<span class="and-text">
+<span class="and-title label">Une place s’est libérée</span>
+<span class="and-body body">Foot 5v5 · dim. 18 oct. · 20h00 à Arena Five, Terrain 2 · 15 DT /pers. Sans réponse, elle passe au suivant.</span>
+</span>
+</span>
+</a>
+<span class="and-actions">
+<a href="GAM-04-Place-disponible.dc.html" class="and-act and-act--primary label">Réclamer la place</a>
+<a class="and-act and-act--ghost label" aria-label="Ignorer cette notification">Ignorer</a>
+</span>
+</div>
+
+<div class="and-group" role="group" aria-label="3 notifications MatchUp regroupées">
+<span class="and-head">
+<span class="and-small"><x-import component-from-global-scope="MatchUp.Logo" variant="icon" tone="mono-ink" height="{{small}}"></x-import></span>
+<span class="and-head__app label-s">MatchUp</span><span class="and-dot caption">•</span><span class="caption">3 nouvelles</span>
+<span class="and-exp"><x-import component-from-global-scope="MatchUp.Icon" name="caret-up" size="{{i16}}"></x-import></span>
+</span>
+<a href="MAT-01-A-venir.dc.html" class="and-child">
+<span class="and-text">
+<span class="and-child__row"><span class="and-title label">Mariem K. t’invite au padel</span><span class="and-child__time caption">4 min</span></span>
+<span class="and-body body">Smash Padel Club · ven. 23 oct. · 19h30&nbsp;· 25&nbsp;DT&nbsp;/pers.</span>
+</span>
+<x-import component-from-global-scope="MatchUp.Avatar" name="Mariem K." size="m"></x-import>
+</a>
+<a href="PAY-01-Checkout.dc.html" class="and-child">
+<span class="and-text">
+<span class="and-child__row"><span class="and-title label">Ta part de 15 DT est en attente</span><span class="and-child__time caption">15 min</span></span>
+<span class="and-body and-body--1 body">À payer avant mer. 21 oct. · 18h00.</span>
+</span>
+</a>
+<a href="MAT-05-Detail-reservation.dc.html" class="and-child">
+<span class="and-text">
+<span class="and-child__row"><span class="and-title label">Nour A. et 2 autres ont rejoint ta partie</span><span class="and-child__time caption">40 min</span></span>
+<span class="and-body and-body--1 body">Arena Five · mer. 21 oct. · 6/10 joueurs</span>
+</span>
+</a>
+</div>
+
+<a href="MAT-05-Detail-reservation.dc.html" class="and-card" aria-label="MatchUp, il y a 2 h : rappel de ton foot du mercredi">
+<span class="and-head">
+<span class="and-small"><x-import component-from-global-scope="MatchUp.Logo" variant="icon" tone="mono-ink" height="{{small}}"></x-import></span>
+<span class="and-head__app label-s">MatchUp</span><span class="and-dot caption">•</span><span class="caption">il y a 2 h</span>
+<span class="and-exp"><x-import component-from-global-scope="MatchUp.Icon" name="caret-down" size="{{i16}}"></x-import></span>
+</span>
+<span class="and-content">
+<span class="and-text">
+<span class="and-title label">Rappel : Foot 5v5 mer. 21 oct. · 21h00</span>
+<span class="and-body and-body--1 body">Arena Five, Terrain 1 · encore 4 places.</span>
+</span>
+</span>
+</a>
+
+</div>
+
+<div class="and-foot">
+<a href="NOT-10-Preferences.dc.html" class="and-pill label">Gérer</a>
+<a class="and-pill label">Tout effacer</a>
+</div>
+
+<span class="and-handle" aria-hidden="true"></span>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() { return { yes: true, i14: 14, i16: 16, i20: 20, small: 16 }; }
+}
+</script>
+</body>
+</html>

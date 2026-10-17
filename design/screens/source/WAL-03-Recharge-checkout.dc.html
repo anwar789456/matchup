@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Paiement de la recharge</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/matchup/tokens.css">
+<link rel="stylesheet" href="ds/matchup/components/bundle.css">
+<script src="ds/matchup/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0}
+a{color:var(--link)}
+.pay-root{position:relative; width:390px; box-sizing:border-box; display:flex; flex-direction:column; overflow:hidden; background:var(--bg); color:var(--text); font-family:var(--font-sans)}
+.pay-head{flex:none; display:flex; align-items:center; gap:4px; min-height:48px; padding:52px 16px 8px 8px}
+.pay-head__title{flex:1; min-width:0; margin:0}
+.pay-head__aside{display:inline-flex; align-items:center; gap:4px; color:var(--text-secondary)}
+.pay-ribbon{flex:none}
+.pay-body{flex:1; min-height:0; display:flex; flex-direction:column; gap:28px; padding:20px 16px 160px 16px}
+.pay-body > *{flex-shrink:0}
+.pay-sec{display:flex; flex-direction:column; gap:12px}
+.pay-sec__head{display:flex; align-items:baseline; justify-content:space-between; gap:12px}
+.pay-sec__title{margin:0}
+.pay-muted{color:var(--text-secondary)}
+.pay-m0{margin:0}
+.pay-ico{display:inline-flex; flex:none}
+
+/* summary ticket */
+.pay-sum{display:flex; flex-direction:column; padding:0; overflow:hidden}
+.pay-sum__top{display:flex; align-items:center; gap:12px; padding:16px}
+.pay-sum__thumb{flex:none; width:48px; height:48px; border-radius:var(--radius-sm); background:var(--accent); color:var(--on-accent); display:flex; align-items:center; justify-content:center}
+.pay-sum__txt{flex:1; min-width:0; display:flex; flex-direction:column; gap:2px}
+.pay-perf{position:relative; height:0; margin:0 16px; border-top:1.5px dashed var(--border-strong)}
+.pay-perf::before,.pay-perf::after{content:""; position:absolute; top:-9px; width:16px; height:16px; border-radius:var(--radius-full); background:var(--bg)}
+.pay-perf::before{left:-25px}
+.pay-perf::after{right:-25px}
+.pay-sum__toggle{appearance:none; border:0; margin:0; width:100%; background:none; font:inherit; cursor:pointer; text-align:start; display:flex; align-items:center; gap:8px; min-height:52px; padding:0 16px; color:var(--text)}
+.pay-sum__toggle:focus-visible{outline:none; box-shadow:var(--focus-ring); border-radius:var(--radius-md)}
+.pay-sum__toggle .pay-grow{flex:1}
+.pay-dl{margin:0; display:flex; flex-direction:column; padding:0 16px 8px 16px}
+.pay-dl > div{display:flex; align-items:flex-start; justify-content:space-between; gap:16px; padding:11px 0; border-top:1px solid var(--border)}
+.pay-dl dt{flex:none; color:var(--text-secondary)}
+.pay-dl dd{margin:0; text-align:end}
+
+/* payment methods */
+.pay-methods{display:flex; flex-direction:column; padding:4px 16px}
+.pay-methods .mu-radio{padding-block:14px; align-items:center}
+.pay-methods .mu-radio + .mu-radio{border-top:1px solid var(--border)}
+.pay-methods .mu-radio__text{flex:1; min-width:0}
+.pay-methods .mu-radio__label{display:block}
+.pay-card{display:flex; align-items:center; gap:12px; width:100%}
+.pay-card__txt{flex:1; min-width:0; display:flex; flex-direction:column; gap:2px}
+.pay-brand{flex:none; display:inline-flex; align-items:center; justify-content:center; width:44px; height:28px; box-sizing:border-box; border-radius:var(--radius-xs); background:var(--surface); box-shadow:inset 0 0 0 1.5px var(--text); color:var(--text); letter-spacing:0.04em}
+.pay-tag{display:inline-flex; align-items:center; gap:4px; padding:2px 8px; border-radius:var(--radius-full); background:var(--surface-muted); color:var(--text-secondary); white-space:nowrap}
+.pay-warn{display:inline-flex; align-items:center; gap:4px; color:var(--warning-text)}
+.pay-add{display:flex; align-items:center; gap:12px; min-height:56px; border-top:1px solid var(--border); text-decoration:none; color:var(--text)}
+.pay-add__ico{flex:none; width:44px; height:28px; box-sizing:border-box; border-radius:var(--radius-xs); box-shadow:inset 0 0 0 1.5px var(--border-strong); display:flex; align-items:center; justify-content:center; color:var(--text-secondary)}
+.pay-add:focus-visible{outline:none; box-shadow:var(--focus-ring); border-radius:var(--radius-sm)}
+
+/* express wallets */
+.pay-or{display:flex; align-items:center; gap:12px; color:var(--text-secondary)}
+.pay-or::before,.pay-or::after{content:""; flex:1; height:1px; background:var(--border)}
+.pay-xp{display:grid; grid-template-columns:1fr 1fr; gap:12px}
+.pay-xp__btn{appearance:none; border:0; margin:0; cursor:pointer; height:var(--control-l); border-radius:var(--radius-md); background:var(--ink-900); color:var(--white); box-shadow:inset 0 0 0 1px var(--border-strong); font:inherit}
+.pay-xp__btn:focus-visible{outline:none; box-shadow:var(--focus-ring)}
+
+/* totals */
+.pay-tot{display:flex; flex-direction:column; gap:10px; padding:16px; border-radius:var(--radius-md); background:var(--surface-muted)}
+.pay-line{display:flex; align-items:baseline; justify-content:space-between; gap:12px}
+.pay-rule{height:1px; background:var(--border); margin:2px 0}
+
+/* good to know */
+.pay-pol{display:flex; flex-direction:column; gap:12px; padding:16px}
+.pay-tier{display:flex; align-items:flex-start; gap:10px}
+.pay-tier > span:last-child{flex:1; display:flex; flex-direction:column}
+
+/* sticky pay bar */
+.pay-bar{position:absolute; left:0; right:0; bottom:0; z-index:var(--z-sticky); padding:12px 16px 34px 16px; background:var(--surface); box-shadow:var(--elevation-2-up); display:flex; flex-direction:column; gap:8px}
+.pay-secure{display:flex; align-items:center; justify-content:center; gap:6px; margin:0; color:var(--text-secondary)}
+</style>
+</helmet>
+<div class="pay-root" style="height: 1340px; background: var(--bg)">
+<div class="pay-head">
+<a href="WAL-02-Recharger.dc.html" class="mu-iconbtn mu-iconbtn--l mu-iconbtn--ghost" aria-label="Retour au choix du montant" style="color: var(--text)"><x-import component-from-global-scope="MatchUp.Icon" name="arrow-left" size="{{i24}}"></x-import></a>
+<h1 class="pay-head__title h3">Paiement</h1>
+<span class="pay-head__aside caption"><x-import component-from-global-scope="MatchUp.Icon" name="lock-simple" size="{{i16}}"></x-import>Sécurisé</span>
+</div>
+<div class="pay-ribbon"><x-import component-from-global-scope="MatchUp.Banner" variant="ribbon">carte <span class="num-xs">4242 4242 4242 4242</span></x-import></div>
+<div class="pay-body">
+
+<section class="mu-card pay-sum" aria-label="Ta commande">
+<div class="pay-sum__top">
+<span class="pay-sum__thumb"><x-import component-from-global-scope="MatchUp.Icon" name="wallet" size="{{i24}}"></x-import></span>
+<div class="pay-sum__txt">
+<span class="overline pay-muted">Portefeuille MatchUp</span>
+<span class="label-l">Recharge du solde · 50 DT</span>
+<span class="caption pay-muted">Crédité dès le paiement · sans frais</span>
+</div>
+</div>
+<div class="pay-perf" aria-hidden="true"></div>
+<button type="button" class="pay-sum__toggle" aria-expanded="{{openStr}}" onclick="{{toggle}}"><span class="label pay-grow">{{toggleLabel}}</span><span class="num-m">50 DT</span><x-import component-from-global-scope="MatchUp.Icon" name="{{caret}}" size="{{i20}}"></x-import></button>
+<sc-if value="{{open}}">
+<dl class="pay-dl">
+<div><dt class="body">Solde actuel</dt><dd class="num-s">30 DT</dd></div>
+<div><dt class="body">Recharge</dt><dd class="num-s">+50 DT</dd></div>
+<div><dt class="body">Nouveau solde</dt><dd class="num-s">80 DT</dd></div>
+</dl>
+</sc-if>
+</section>
+
+<section class="pay-sec" aria-labelledby="pay-pm">
+<h2 id="pay-pm" class="h3 pay-sec__title">Moyen de paiement</h2>
+<div class="mu-card pay-methods">
+<x-import component-from-global-scope="MatchUp.Radio.Group" aria-label="Carte enregistrée" value="{{card}}" on-change="{{setCard}}">
+<x-import component-from-global-scope="MatchUp.Radio" value="visa"><span class="pay-card"><span class="pay-brand label-s">VISA</span><span class="pay-card__txt"><span class="label">Visa •••• 4242</span><span class="caption pay-muted">Expire 08/27</span></span><span class="pay-tag label-s">Par défaut</span></span></x-import>
+<x-import component-from-global-scope="MatchUp.Radio" value="mc"><span class="pay-card"><span class="pay-brand label-s">MC</span><span class="pay-card__txt"><span class="label">Mastercard •••• 5454</span><span class="caption pay-warn"><x-import component-from-global-scope="MatchUp.Icon" name="warning" weight="fill" size="{{i14}}"></x-import>Expire le mois prochain (11/26)</span></span></span></x-import>
+</x-import>
+<a href="PAY-03-Nouvelle-carte.dc.html" class="pay-add"><span class="pay-add__ico"><x-import component-from-global-scope="MatchUp.Icon" name="plus" size="{{i16}}"></x-import></span><span class="label" style="flex: 1">Ajouter une carte</span><span class="pay-muted" style="display: flex"><x-import component-from-global-scope="MatchUp.Icon" name="caret-right" size="{{i20}}"></x-import></span></a>
+</div>
+<div class="pay-or caption">ou en un geste</div>
+<div class="pay-xp">
+<button type="button" class="pay-xp__btn label-l" aria-label="Payer 50 DT avec Apple Pay">Apple Pay</button>
+<button type="button" class="pay-xp__btn label-l" aria-label="Payer 50 DT avec Google Pay">Google Pay</button>
+</div>
+</section>
+
+<section class="pay-tot" aria-label="Total">
+<div class="pay-line"><span class="body pay-muted">Recharge du solde</span><span class="num-s">50 DT</span></div>
+<div class="pay-line"><span class="body pay-muted">Frais de recharge</span><span class="label" style="color: var(--success-text)">Offerts</span></div>
+<div class="pay-rule"></div>
+<div class="pay-line" style="align-items: center"><span class="label-l">Total à payer</span><span class="num-l">50 DT</span></div>
+</section>
+
+<section class="pay-sec" aria-labelledby="pay-know">
+<h2 id="pay-know" class="h3 pay-sec__title">Bon à savoir</h2>
+<div class="mu-card pay-pol">
+<div class="pay-tier"><span class="pay-ico" style="color: var(--success-text)"><x-import component-from-global-scope="MatchUp.Icon" name="check-circle" weight="fill" size="{{i20}}"></x-import></span><span><span class="label">Disponible tout de suite</span><span class="caption pay-muted">Ton solde passe de 30 DT à 80 DT dès que le paiement est accepté.</span></span></div>
+<div class="pay-tier"><span class="pay-ico" style="color: var(--success-text)"><x-import component-from-global-scope="MatchUp.Icon" name="check-circle" weight="fill" size="{{i20}}"></x-import></span><span><span class="label">Ton solde n’expire pas</span><span class="caption pay-muted">Il sert pour tes parts, réservations et inscriptions aux tournois.</span></span></div>
+<div class="pay-tier"><span class="pay-ico" style="color: var(--info-text)"><x-import component-from-global-scope="MatchUp.Icon" name="receipt" weight="fill" size="{{i20}}"></x-import></span><span><span class="label">Reçu par email</span><span class="caption pay-muted">Envoyé à yassine.b@email.tn et disponible dans ton portefeuille.</span></span></div>
+</div>
+</section>
+
+<div class="pay-terms">
+<x-import component-from-global-scope="MatchUp.Checkbox" checked="{{terms}}" on-change="{{setTerms}}">J’accepte les <span class="label" style="text-decoration: underline">conditions du solde MatchUp</span>.</x-import>
+</div>
+</div>
+<div class="pay-bar">
+<a href="PAY-06-Paiement-en-cours.dc.html" class="mu-btn mu-btn--primary mu-btn--xl mu-btn--block"><span class="mu-btn__content"><span class="mu-btn__label label-l">Payer</span><span class="mu-btn__price num-m">50 DT</span></span></a>
+<p class="pay-secure caption"><x-import component-from-global-scope="MatchUp.Icon" name="lock-simple" size="{{i16}}"></x-import><span>Paiement sécurisé par Stripe</span></p>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":1340}}'>
+class Component extends DCLogic {
+  state = { card: 'visa', terms: false, open: false };
+  renderVals() {
+    const s = this.state;
+    return {
+      yes: true, no: false, i14: 14, i16: 16, i20: 20, i24: 24,
+      card: s.card, terms: s.terms, open: s.open,
+      openStr: s.open ? 'true' : 'false',
+      toggleLabel: s.open ? 'Masquer le détail' : 'Voir le détail',
+      caret: s.open ? 'caret-up' : 'caret-down',
+      toggle: () => this.setState({ open: !s.open }),
+      setCard: (v) => this.setState({ card: v }),
+      setTerms: (v) => this.setState({ terms: v })
+    };
+  }
+}
+</script>
+</body>
+</html>

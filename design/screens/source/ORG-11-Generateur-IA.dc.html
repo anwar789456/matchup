@@ -1,0 +1,229 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Planning IA · Padel Masters Lac 2</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/matchup/tokens.css">
+<link rel="stylesheet" href="ds/matchup/components/bundle.css">
+<script src="ds/matchup/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0}
+a{color:var(--link)}
+.gen-root{position:relative; width:390px; box-sizing:border-box; overflow:hidden; display:flex; flex-direction:column; background:var(--bg); color:var(--text); font-family:var(--font-sans)}
+.gen-head{flex:none; display:flex; align-items:center; gap:var(--space-1); padding:52px var(--space-1) var(--space-2) var(--space-1)}
+.gen-head__txt{flex:1; min-width:0; display:flex; flex-direction:column}
+.gen-muted{color:var(--text-secondary)}
+.gen-m0{margin:0}
+.gen-body{flex:1; min-height:0; display:flex; flex-direction:column; gap:var(--space-6); padding:var(--space-2) var(--space-4) var(--space-8) var(--space-4)}
+.gen-body > *{flex-shrink:0}
+.gen-card{display:flex; flex-direction:column; gap:var(--space-4); padding:var(--space-4)}
+.gen-card__head{display:flex; align-items:center; justify-content:space-between; gap:var(--space-3)}
+.gen-rule{height:1px; background:var(--border)}
+.gen-slots{display:flex; flex-direction:column; gap:var(--space-2)}
+.gen-slot{display:flex; align-items:center; gap:var(--space-3); min-height:48px; padding:0 var(--space-1) 0 var(--space-3); border-radius:var(--radius-sm); background:var(--surface-muted)}
+.gen-slot__txt{flex:1; min-width:0; display:flex; align-items:baseline; gap:var(--space-2)}
+.gen-note{margin:0; display:flex; align-items:flex-start; gap:var(--space-2); color:var(--text-secondary)}
+.gen-note > span:first-child{flex:none; display:flex; margin-top:1px}
+.gen-res{display:flex; flex-direction:column; gap:var(--space-4)}
+.gen-res__head{display:flex; flex-direction:column; gap:var(--space-1)}
+.gen-res__title{display:flex; align-items:center; gap:var(--space-2)}
+.gen-stats{display:grid; grid-template-columns:repeat(3, minmax(0, 1fr)); border-radius:var(--radius-md); background:var(--surface); box-shadow:var(--elevation-1)}
+.gen-stats > div{display:flex; flex-direction:column; gap:2px; padding:var(--space-3)}
+.gen-stats > div + div{box-shadow:inset 1px 0 0 var(--border)}
+.gen-why{display:flex; gap:var(--space-2); padding:var(--space-2) var(--space-3); border-radius:var(--radius-sm); background:var(--ai-soft); color:var(--ai-text)}
+.gen-why > span:first-child{flex:none; display:flex; margin-top:2px}
+.gen-list{display:flex; flex-direction:column}
+.gen-time{display:flex; align-items:center; gap:var(--space-2); padding:var(--space-4) 0 var(--space-2) 0; color:var(--text-secondary)}
+.gen-time::after{content:""; flex:1; height:1px; background:var(--border)}
+.gen-row{position:relative; display:flex; align-items:center; gap:var(--space-2); min-height:60px; margin-bottom:var(--space-2); padding:var(--space-2) var(--space-3) var(--space-2) 0; border-radius:var(--radius-md); background:var(--surface); box-shadow:var(--elevation-1); box-sizing:border-box}
+.gen-grip{flex:none; width:36px; align-self:stretch; display:grid; place-items:center; color:var(--text-secondary); cursor:grab}
+.gen-court{flex:none; min-width:36px; height:28px; padding:0 6px; box-sizing:border-box; border-radius:var(--radius-xs); background:var(--surface-muted); display:grid; place-items:center}
+.gen-court.is-covered{background:var(--padel-soft); color:var(--padel-text)}
+.gen-row__txt{flex:1; min-width:0; display:flex; flex-direction:column; gap:2px}
+.gen-one{white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+.gen-tbd{color:var(--text-secondary); font-style:italic}
+.gen-row.is-lifted{transform:translateX(6px) rotate(-1.2deg); box-shadow:var(--elevation-3), inset 0 0 0 2px var(--primary)}
+.gen-row.is-lifted .gen-grip{color:var(--text); cursor:grabbing}
+.gen-drop{display:flex; align-items:center; justify-content:center; gap:var(--space-2); min-height:60px; margin-bottom:var(--space-2); border-radius:var(--radius-md); border:1.5px dashed var(--border-strong); color:var(--text-secondary); box-sizing:border-box}
+.gen-hint{display:flex; align-items:flex-start; gap:6px; margin:0 0 var(--space-3) 0; padding:0 var(--space-2); color:var(--success-text)}
+.gen-hint > span:first-child{flex:none; display:flex; margin-top:1px}
+.gen-more{appearance:none; border:0; font:inherit; width:100%; text-align:start; cursor:pointer; display:flex; align-items:center; gap:var(--space-3); min-height:52px; margin-bottom:var(--space-2); padding:0 var(--space-3) 0 var(--space-4); border-radius:var(--radius-md); background:var(--surface); box-shadow:inset 0 0 0 1px var(--border); color:var(--text)}
+.gen-more__txt{flex:1; min-width:0; display:flex; align-items:baseline; gap:var(--space-2)}
+.gen-fb{display:flex; align-items:center; gap:var(--space-2); padding-top:var(--space-2); border-top:1px solid var(--border)}
+.gen-bar{flex:none; position:relative; z-index:var(--z-sticky); display:flex; flex-direction:column; gap:var(--space-2); padding:var(--space-2) var(--space-4) 34px var(--space-4); background:var(--surface); box-shadow:var(--elevation-2-up)}
+.gen-bar__note{display:flex; align-items:center; justify-content:center; gap:6px; min-height:24px; color:var(--text-secondary)}
+.gen-bar__btns{display:flex; gap:var(--space-3)}
+.gen-bar__btns > :first-child{flex:none}
+.gen-bar__btns > :last-child{flex:1; min-width:0}
+</style>
+</helmet>
+<div class="gen-root" style="height: 2084px">
+<div class="gen-head">
+<a href="ORG-04-Mes-tournois.dc.html" class="mu-iconbtn mu-iconbtn--l mu-iconbtn--ghost" aria-label="Retour à mes tournois" style="color: var(--text)"><x-import component-from-global-scope="MatchUp.Icon" name="arrow-left" size="{{i24}}"></x-import></a>
+<div class="gen-head__txt"><h1 class="h3 gen-m0">Planning des poules</h1><span class="caption gen-muted">Padel Masters Lac 2 · 16 équipes · 4 poules</span></div>
+</div>
+
+<div class="gen-body">
+<section class="mu-card gen-card" aria-labelledby="gen-c-t">
+<div class="gen-card__head"><h2 id="gen-c-t" class="label-l gen-m0">Tes contraintes</h2><span class="caption gen-muted">Smash Padel Club</span></div>
+<x-import component-from-global-scope="MatchUp.Stepper" layout="inline" size="s" label="Courts disponibles" min="{{one}}" max="{{four}}" value="{{courts}}" on-change="{{setCourts}}" helper="{{courtsHelper}}" decrement-label="Retirer un court" increment-label="Ajouter un court"></x-import>
+<div class="gen-rule"></div>
+<div class="gen-slots">
+<span class="label">Créneaux des poules</span>
+<div class="gen-slot"><span class="gen-slot__txt"><span class="label">sam. 24 oct.</span><span class="num-s">9h00 – 20h00</span></span><x-import component-from-global-scope="MatchUp.IconButton" icon="pencil-simple" label="Modifier le créneau du samedi" size="s"></x-import></div>
+<div class="gen-slot"><span class="gen-slot__txt"><span class="label">dim. 25 oct.</span><span class="num-s">9h00 – 18h00</span></span><x-import component-from-global-scope="MatchUp.IconButton" icon="pencil-simple" label="Modifier le créneau du dimanche" size="s"></x-import></div>
+</div>
+<div class="gen-rule"></div>
+<x-import component-from-global-scope="MatchUp.Stepper" layout="inline" size="s" label="Repos entre 2 matchs" min="{{zero}}" max="{{ninety}}" step="{{fifteen}}" value="{{rest}}" on-change="{{setRest}}" format="{{fmtMin}}" helper="Minimum pour une même équipe" decrement-label="Réduire le repos de 15 min" increment-label="Allonger le repos de 15 min"></x-import>
+<p class="gen-note caption"><span><x-import component-from-global-scope="MatchUp.Icon" name="lock-simple" size="{{i16}}"></x-import></span><span>Phase finale fixée au lun. 26 oct. dès 18h00. Matchs d’1 h, échauffement compris.</span></p>
+</section>
+
+<sc-if value="{{regen}}">
+<x-import component-from-global-scope="MatchUp.AiShimmer" variant="steps" label="L’IA refait le planning" steps="{{regenSteps}}" current="{{one}}"></x-import>
+</sc-if>
+
+<sc-if value="{{ready}}">
+<section class="gen-res" aria-labelledby="gen-r-t">
+<div class="gen-res__head">
+<div class="gen-res__title"><x-import component-from-global-scope="MatchUp.AiLabel"></x-import><h2 id="gen-r-t" class="h2 gen-m0">Planning proposé</h2></div>
+<span class="caption gen-muted">Généré à 18h04 · 1 match déplacé par toi · rien n’est encore publié</span>
+</div>
+
+<div class="gen-stats" aria-label="Résumé du planning">
+<div><span class="caption gen-muted">Matchs</span><span class="num-m">24</span></div>
+<div><span class="caption gen-muted">Repos mini</span><span class="num-m">1 h 30</span></div>
+<div><span class="caption gen-muted">Conflits</span><span class="label" style="display: inline-flex; align-items: center; gap: 4px; color: var(--success-text)"><x-import component-from-global-scope="MatchUp.Icon" name="check-circle" weight="fill" size="{{i16}}"></x-import>Aucun</span></div>
+</div>
+
+<p class="gen-why body gen-m0"><span><x-import component-from-global-scope="MatchUp.Icon" name="lightbulb" weight="fill" size="{{i18}}"></x-import></span><span><span class="label">Recommandé car</span> chaque équipe joue 2 matchs le samedi et 1 le dimanche matin, avec au moins 1 h 30 de repos, et les 4 places « À désigner » jouent le plus tard possible.</span></p>
+
+<x-import component-from-global-scope="MatchUp.SegmentedControl" label="Jour" full-width="{{yes}}" value="{{day}}" on-change="{{setDay}}" options="{{days}}"></x-import>
+
+<div class="gen-list" role="list" aria-label="{{dayLabel}}">
+<sc-for list="{{items}}" as="it">
+<sc-if value="{{it.isHead}}"><div class="gen-time overline" role="presentation"><span class="num-xs">{{it.time}}</span></div></sc-if>
+<sc-if value="{{it.isRow}}">
+<div class="gen-row {{it.cls}}" role="listitem">
+<span class="gen-grip" aria-label="Déplacer le match {{it.a}} contre {{it.b}}"><x-import component-from-global-scope="MatchUp.Icon" name="dots-six-vertical" size="{{i20}}"></x-import></span>
+<span class="gen-court label-s {{it.courtCls}}" title="{{it.courtTitle}}">{{it.court}}</span>
+<span class="gen-row__txt"><span class="label">{{it.a}} – {{it.b}}</span><span class="caption gen-muted gen-one">{{it.meta}}</span></span>
+</div>
+</sc-if>
+<sc-if value="{{it.isDrop}}">
+<div class="gen-drop caption"><x-import component-from-global-scope="MatchUp.Icon" name="arrow-u-up-left" size="{{i16}}"></x-import>Court 3 · 10h00 libéré</div>
+</sc-if>
+<sc-if value="{{it.isHint}}">
+<p class="gen-hint caption"><span><x-import component-from-global-scope="MatchUp.Icon" name="check-circle" weight="fill" size="{{i16}}"></x-import></span><span>Vers 13h00 · Court 3 : le repos reste respecté pour les 2 équipes.</span></p>
+</sc-if>
+<sc-if value="{{it.isMore}}">
+<button type="button" class="gen-more"><span class="gen-more__txt"><span class="num-s">{{it.time}}</span><span class="body gen-muted gen-one">{{it.label}}</span></span><x-import component-from-global-scope="MatchUp.Icon" name="caret-down" size="{{i20}}"></x-import></button>
+</sc-if>
+</sc-for>
+</div>
+
+<div class="gen-fb">
+<x-import component-from-global-scope="MatchUp.IconButton" icon="thumbs-up" label="Planning utile" size="s"></x-import>
+<x-import component-from-global-scope="MatchUp.IconButton" icon="thumbs-down" label="Planning à revoir" size="s"></x-import>
+<span class="caption gen-muted" style="flex: 1">L’IA peut se tromper. Vérifie les horaires avant de publier.</span>
+</div>
+</section>
+</sc-if>
+</div>
+
+<div class="gen-bar">
+<span class="gen-bar__note caption"><x-import component-from-global-scope="MatchUp.Icon" name="lock-simple" size="{{i16}}"></x-import>Rien n’est envoyé aux équipes avant ta confirmation.</span>
+<div class="gen-bar__btns">
+<div><x-import component-from-global-scope="MatchUp.Button" variant="secondary" size="xl" leading-icon="arrows-clockwise" on-click="{{doRegen}}">Régénérer</x-import></div>
+<div><x-import component-from-global-scope="MatchUp.Button" size="xl" full-width="{{yes}}" on-click="{{askPublish}}">Publier</x-import></div>
+</div>
+</div>
+
+<sc-if value="{{dlgOpen}}">
+<x-import component-from-global-scope="MatchUp.Dialog" inline="{{yes}}" open="{{yes}}" placement="center" actions-layout="stack" tone="neutral" icon="calendar-check" title="Publier le planning ?" description="24 matchs de poule le sam. 24 et le dim. 25 oct., puis la phase finale le lun. 26 oct. dès 18h00." consequence="Les 12 équipes inscrites reçoivent leur calendrier par notification et par email. Les 4 places « À désigner » sont complétées à la clôture." consequence-icon="bell" actions="{{dlgActions}}" on-close="{{closeDlg}}"></x-import>
+</sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":2084}}'>
+class Component extends DCLogic {
+  state = { courts: 4, rest: 30, day: 'sam', regen: false, dlg: false };
+  renderVals() {
+    const h = React.createElement, M = MatchUp, s = this.state;
+    const TBD = 'À désigner';
+    const head = (time) => ({ isHead: true, time });
+    const row = (court, a, b, poule, extra) => Object.assign({
+      isRow: true, court: 'C' + court, courtTitle: 'Court ' + court + (court <= 2 ? ' · couvert' : ''), courtCls: court <= 2 ? 'is-covered' : '',
+      a, b, meta: poule + ' · Court ' + court + (court <= 2 ? ' · couvert' : ''), cls: ''
+    }, extra || {});
+    const more = (time, label) => ({ isMore: true, time, label });
+    const sam = [
+      head('9h00'),
+      row(1, 'Bandeja Club', 'Gammarth Padel', 'Poule A'),
+      row(2, 'Smash Bros', TBD, 'Poule A'),
+      row(3, 'Vibora Sidi Bou', 'Duo Menzah', 'Poule C'),
+      row(4, 'Les Lions de Carthage', TBD, 'Poule C'),
+      head('10h00'),
+      row(1, 'Skander T. / Omar D.', 'Aziz H. / Salma G.', 'Poule B'),
+      row(2, 'Les Faucons', 'Ines M. / Nour A.', 'Poule B'),
+      { isDrop: true },
+      row(3, 'Carthage Smash', 'Les Requins de Sousse', 'Poule D', { cls: 'is-lifted', meta: 'Poule D · tu le déplaces' }),
+      { isHint: true },
+      row(4, TBD, TBD, 'Poule D'),
+      more('11h30', '4 matchs · poules A et C'),
+      more('13h00', '2 matchs · poule D'),
+      more('15h30', '2 matchs · poule B')
+    ];
+    const dim = [
+      head('9h00'),
+      row(1, 'Bandeja Club', TBD, 'Poule A'),
+      row(2, 'Gammarth Padel', 'Smash Bros', 'Poule A'),
+      row(3, 'Vibora Sidi Bou', TBD, 'Poule C'),
+      row(4, 'Duo Menzah', 'Les Lions de Carthage', 'Poule C'),
+      head('11h00'),
+      row(1, 'Carthage Smash', TBD, 'Poule D'),
+      row(2, 'Les Requins de Sousse', TBD, 'Poule D'),
+      row(3, 'Les Faucons', 'Aziz H. / Salma G.', 'Poule B'),
+      row(4, 'Ines M. / Nour A.', 'Skander T. / Omar D.', 'Poule B')
+    ];
+    const lun = [
+      head('18h00 · quarts'),
+      row(1, '1er poule A', '2e poule B', 'Quart 1'),
+      row(2, '1er poule B', '2e poule A', 'Quart 2'),
+      row(3, '1er poule C', '2e poule D', 'Quart 3'),
+      row(4, '1er poule D', '2e poule C', 'Quart 4'),
+      head('19h30 · demies'),
+      row(1, 'Vainqueur QF 1', 'Vainqueur QF 3', 'Demie 1'),
+      row(2, 'Vainqueur QF 2', 'Vainqueur QF 4', 'Demie 2'),
+      head('21h00 · finales'),
+      row(1, 'Vainqueur demie 1', 'Vainqueur demie 2', 'Finale'),
+      row(2, 'Perdant demie 1', 'Perdant demie 2', 'Match pour la 3e place')
+    ];
+    const lists = { sam, dim, lun };
+    const close = () => this.setState({ dlg: false });
+    return {
+      yes: true, no: false, i16: 16, i18: 18, i20: 20, i24: 24, zero: 0, one: 1, four: 4, fifteen: 15, ninety: 90,
+      courts: s.courts, setCourts: (v) => this.setState({ courts: v }),
+      courtsHelper: (n) => n === 4 ? 'Courts 1 à 4 · dont 2 couverts' : 'Courts 1 à ' + n,
+      rest: s.rest, setRest: (v) => this.setState({ rest: v }),
+      fmtMin: (v) => v + ' min',
+      regen: s.regen, ready: !s.regen,
+      regenSteps: ['Lecture des contraintes', 'Répartition des matchs', 'Vérification du repos'],
+      doRegen: () => { this.setState({ regen: true }); setTimeout(() => this.setState({ regen: false }), 2600); },
+      day: s.day, setDay: (v) => this.setState({ day: v }),
+      days: [{ value: 'sam', label: 'Sam. 24', badge: 16 }, { value: 'dim', label: 'Dim. 25', badge: 8 }, { value: 'lun', label: 'Lun. 26', badge: 8 }],
+      dayLabel: { sam: 'Matchs du samedi 24 octobre', dim: 'Matchs du dimanche 25 octobre', lun: 'Phase finale du lundi 26 octobre' }[s.day],
+      items: lists[s.day],
+      dlgOpen: s.dlg, askPublish: () => this.setState({ dlg: true }), closeDlg: close,
+      dlgActions: h(React.Fragment, null,
+        h(M.Button, { variant: 'secondary', onClick: close }, 'Revoir le planning'),
+        h(M.Button, { href: 'ORG-04-Mes-tournois.dc.html', leadingIcon: 'check' }, 'Publier le planning'))
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Résilier · raison</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/matchup/tokens.css">
+<link rel="stylesheet" href="ds/matchup/components/bundle.css">
+<script src="ds/matchup/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0}
+a{color:var(--link)}
+.sub-body > *{flex-shrink:0}
+.sub-reasons .sc-host-x + .sc-host-x .mu-radio{border-top:1px solid var(--border)}
+.sub-keep{display:flex; flex-direction:column; gap:var(--space-2); padding:var(--space-3) var(--space-4); border-radius:var(--radius-md); background:var(--surface-muted)}
+.sub-keep__row{display:flex; gap:var(--space-2); align-items:flex-start}
+.sub-keep__row > span:first-child{flex:none; display:flex; margin-top:1px; color:var(--text-secondary)}
+</style>
+</helmet>
+<div style="position: relative; width: 390px; height: 844px; box-sizing: border-box; overflow: hidden; display: flex; flex-direction: column; background: var(--surface); color: var(--text); font-family: var(--font-sans)">
+<div style="display: flex; align-items: center; gap: 8px; padding: 52px 16px 0 8px">
+<a href="SUB-04-Abonnement.dc.html" class="mu-iconbtn mu-iconbtn--l mu-iconbtn--ghost" aria-label="Retour à l’abonnement" style="color: var(--text)"><x-import component-from-global-scope="MatchUp.Icon" name="arrow-left" size="{{i24}}"></x-import></a>
+<div style="flex: 1; min-width: 0"><x-import component-from-global-scope="MatchUp.StepIndicator" step="{{one}}" total="{{two}}" title="Résilier Premium"></x-import></div>
+</div>
+
+<div class="sub-body" style="flex: 1; min-height: 0; overflow: auto; display: flex; flex-direction: column; gap: 20px; padding: 16px 16px 20px 16px">
+<div style="display: flex; flex-direction: column; gap: 6px">
+<h1 class="h2" style="margin: 0">Pourquoi tu veux résilier ?</h1>
+<p class="body" style="margin: 0; color: var(--text-secondary)">Facultatif. Ta réponse nous aide à améliorer Premium.</p>
+</div>
+
+<x-import component-from-global-scope="MatchUp.Radio.Group" aria-label="Raison de la résiliation" name="raison" value="{{reason}}" on-change="{{setReason}}" class="sub-reasons">
+<x-import component-from-global-scope="MatchUp.Radio" value="prix" label="Trop cher"></x-import>
+<x-import component-from-global-scope="MatchUp.Radio" value="peu" label="Je ne joue pas assez"></x-import>
+<x-import component-from-global-scope="MatchUp.Radio" value="fonction" label="Il manque une fonctionnalité"></x-import>
+<x-import component-from-global-scope="MatchUp.Radio" value="autre" label="Autre"></x-import>
+</x-import>
+
+<x-import component-from-global-scope="MatchUp.TextField" label="Tu veux en dire plus ?" optional="{{yes}}" multiline="{{yes}}" rows="{{two}}" max-length="{{max}}" counter="{{yes}}" placeholder="Ex. : je joue surtout l’été"></x-import>
+
+<div class="sub-keep" aria-label="Si tu résilies">
+<span class="label">Si tu résilies</span>
+<div class="sub-keep__row"><span><x-import component-from-global-scope="MatchUp.Icon" name="crown-simple" size="{{i16}}"></x-import></span><span class="caption">Premium reste actif jusqu’au <span class="label-s">ven. 30 oct.</span></span></div>
+<div class="sub-keep__row"><span><x-import component-from-global-scope="MatchUp.Icon" name="credit-card" size="{{i16}}"></x-import></span><span class="caption">Aucun prélèvement sur ta Visa •••• 4242</span></div>
+<div class="sub-keep__row"><span><x-import component-from-global-scope="MatchUp.Icon" name="check-circle" size="{{i16}}"></x-import></span><span class="caption">Tes matchs, ton niveau et ton solde de 30 DT restent</span></div>
+</div>
+</div>
+
+<div style="padding: 12px 16px 34px 16px; background: var(--surface); box-shadow: var(--elevation-2-up); display: flex; flex-direction: column; gap: 4px">
+<a href="SUB-07-Offre-de-retention.dc.html" class="mu-btn mu-btn--primary mu-btn--xl mu-btn--block"><span class="mu-btn__content"><span class="mu-btn__label label-l">Continuer</span></span></a>
+<a href="SUB-04-Abonnement.dc.html" class="mu-btn mu-btn--tertiary mu-btn--l mu-btn--block"><span class="mu-btn__content"><span class="mu-btn__label label-l">Garder Premium</span></span></a>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  state = { reason: 'prix' };
+  renderVals() {
+    return {
+      yes: true, one: 1, two: 2, max: 280, i16: 16, i20: 20, i24: 24,
+      reason: this.state.reason,
+      setReason: (v) => this.setState({ reason: v })
+    };
+  }
+}
+</script>
+</body>
+</html>

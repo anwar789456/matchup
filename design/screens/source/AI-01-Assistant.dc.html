@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Assistant</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/matchup/tokens.css">
+<link rel="stylesheet" href="ds/matchup/components/bundle.css">
+<script src="ds/matchup/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0}
+a{color:var(--link)}
+.ai-root .mu-assist__field > .mu-iconbtn:not(.mu-assist__send){display:none}
+.ai-ctx{position:absolute; left:16px; right:16px; top:452px; z-index:var(--z-takeover); display:flex; flex-direction:column; gap:12px; padding:16px; box-sizing:border-box}
+.ai-ctx__head{display:flex; align-items:center; justify-content:space-between; gap:8px}
+.ai-ctx__grid{display:grid; grid-template-columns:1fr 1fr; gap:12px 12px; margin:0; padding:0; list-style:none}
+.ai-ctx__grid li{display:flex; align-items:flex-start; gap:8px; min-width:0}
+.ai-ctx__ico{flex:none; width:32px; height:32px; border-radius:var(--radius-full); display:flex; align-items:center; justify-content:center; background:var(--surface-muted); color:var(--text)}
+.ai-ctx__txt{display:flex; flex-direction:column; gap:0; min-width:0}
+.ai-ctx__txt .caption{color:var(--text-secondary)}
+.ai-ctx__note{display:flex; align-items:center; gap:6px; margin:0; padding-top:12px; border-top:1px solid var(--border); color:var(--text-secondary)}
+.ai-hot{position:absolute; left:16px; height:40px; border-radius:var(--radius-full); z-index:var(--z-takeover)}
+</style>
+</helmet>
+<div class="ai-root" style="position: relative; width: 390px; height: 844px; box-sizing: border-box; overflow: hidden; background: var(--bg); color: var(--text); font-family: var(--font-sans)">
+<x-import component-from-global-scope="MatchUp.Takeover.Assistant" inline="{{yes}}" open="{{yes}}" safe-area="{{safe}}" greeting="Salut Yassine ! Je trouve des parties à ton niveau, je réserve des terrains et je te conseille des programmes. Je te dis toujours pourquoi, et rien n’est réservé ni payé sans ta confirmation." suggestions="{{sugg}}" on-close="{{noop}}" on-suggestion="{{noop}}" on-send="{{noop}}"></x-import>
+<a href="HOM-01-Accueil.dc.html" aria-label="Fermer l’assistant" class="ai-hot" style="left: 338px; top: 50px; width: 44px; height: 44px"></a>
+<a href="AI-04-Reflexion.dc.html" aria-label="Trouve-moi une partie de padel demain soir" class="ai-hot" style="top: 316px; width: 337px"></a>
+<a href="AI-02-Resultats.dc.html" aria-label="Réserve un terrain à La Marsa samedi" class="ai-hot" style="top: 356px; width: 289px"></a>
+<a href="AI-06-Erreur.dc.html" aria-label="Quel programme pour améliorer mon service ?" class="ai-hot" style="top: 396px; width: 357px"></a>
+
+<section class="mu-card ai-ctx" aria-labelledby="ai01-ctx">
+<div class="ai-ctx__head">
+<h2 id="ai01-ctx" class="overline" style="margin: 0; color: var(--text-secondary)">Ce que j’utilise pour te répondre</h2>
+<a href="PRF-04-Modifier-le-profil.dc.html" class="mu-btn mu-btn--link mu-btn--s"><span class="mu-btn__content"><span class="mu-btn__label label">Modifier</span></span></a>
+</div>
+<ul class="ai-ctx__grid">
+<li><span class="ai-ctx__ico"><x-import component-from-global-scope="MatchUp.Icon" name="gauge" size="{{i18}}"></x-import></span><span class="ai-ctx__txt"><span class="label">Padel 3,5</span><span class="caption">Foot 3,0</span></span></li>
+<li><span class="ai-ctx__ico"><x-import component-from-global-scope="MatchUp.Icon" name="map-pin" size="{{i18}}"></x-import></span><span class="ai-ctx__txt"><span class="label">La Marsa</span><span class="caption">10 km · ta zone</span></span></li>
+<li><span class="ai-ctx__ico"><x-import component-from-global-scope="MatchUp.Icon" name="calendar-check" size="{{i18}}"></x-import></span><span class="ai-ctx__txt"><span class="label">Lun., mer., sam.</span><span class="caption">Tes soirs libres</span></span></li>
+<li><span class="ai-ctx__ico"><x-import component-from-global-scope="MatchUp.Icon" name="wallet" size="{{i18}}"></x-import></span><span class="ai-ctx__txt"><span class="label">Solde 30 DT</span><span class="caption">Si tu confirmes</span></span></li>
+</ul>
+<p class="ai-ctx__note caption"><x-import component-from-global-scope="MatchUp.Icon" name="lock-simple" size="{{i14}}"></x-import>Tes conversations restent privées, visibles par toi seul.</p>
+</section>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      yes: true, i14: 14, i18: 18,
+      noop: () => {},
+      safe: { top: 44, bottom: 34 },
+      sugg: ['Trouve-moi une partie de padel demain soir', 'Réserve un terrain à La Marsa samedi', 'Quel programme pour améliorer mon service ?']
+    };
+  }
+}
+</script>
+</body>
+</html>

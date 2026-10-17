@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Plan IA</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/matchup/tokens.css">
+<link rel="stylesheet" href="ds/matchup/components/bundle.css">
+<script src="ds/matchup/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0}
+a{color:var(--link)}
+.ent-cal{display:grid; grid-template-columns:repeat(7, minmax(0, 1fr)); gap:4px; margin:0; padding:0; list-style:none}
+.ent-cal__day{display:flex; flex-direction:column; align-items:center; gap:6px}
+.ent-cal__slot{width:100%; height:92px; box-sizing:border-box; border-radius:var(--radius-sm); display:flex; flex-direction:column; align-items:center; justify-content:flex-start; gap:4px; padding:8px 2px}
+.ent-cal__slot--free{box-shadow:inset 0 0 0 1px var(--border); background:var(--surface)}
+.ent-cal__slot--prog{background:var(--padel-soft); color:var(--padel-text)}
+.ent-cal__slot--ai{background:var(--ai-soft); color:var(--ai-text)}
+.ent-cal__slot--match{background:var(--football-soft); color:var(--football-text)}
+.ent-cal__slot--tour{background:var(--warning-soft); color:var(--warning-text)}
+.ent-sess{display:grid; grid-template-columns:52px 1fr; gap:12px; padding:14px 16px 14px 12px}
+.ent-sess__when{display:flex; flex-direction:column; align-items:center; gap:0; padding-top:2px}
+.ent-sess + .ent-sess{border-top:1px solid var(--border)}
+.ent-tag{display:inline-flex; align-items:center; gap:4px; height:22px; padding:0 8px; border-radius:var(--radius-full)}
+.ent-why{display:flex; gap:10px; padding:12px; border-radius:var(--radius-sm); background:var(--ai-soft); color:var(--ai-text)}
+.ent-thumb{appearance:none; border:0; margin:0; padding:0; width:40px; height:40px; border-radius:var(--radius-full); background:transparent; color:var(--text-secondary); display:flex; align-items:center; justify-content:center; cursor:pointer}
+</style>
+</helmet>
+<div style="position: relative; width: 390px; height: 1444px; box-sizing: border-box; overflow: hidden; display: flex; flex-direction: column; background: var(--bg); color: var(--text); font-family: var(--font-sans)">
+<div style="flex: none; display: flex; align-items: center; gap: 4px; padding: 52px 16px 0 4px; min-height: 48px">
+<a href="ENT-06-Plan-IA-objectifs.dc.html" class="mu-iconbtn mu-iconbtn--l mu-iconbtn--ghost" aria-label="Retour aux objectifs" style="color: var(--text)"><x-import component-from-global-scope="MatchUp.Icon" name="arrow-left" size="{{i24}}"></x-import></a>
+<span class="label-l" style="flex: 1">Plan d’entraînement</span>
+<x-import component-from-global-scope="MatchUp.AiLabel"></x-import>
+</div>
+
+<main style="flex: 1; min-height: 0; display: flex; flex-direction: column; gap: 24px; padding: 12px 16px 24px 16px">
+<div style="display: flex; flex-direction: column; gap: 6px">
+<h1 class="h2" style="margin: 0">Ta semaine du 19 au 25 oct.</h1>
+<p class="body" style="margin: 0; color: var(--text-secondary)">Placement + endurance · intensité modérée · 3 séances le soir, allégées avant ton tournoi</p>
+</div>
+
+<section class="mu-card" aria-label="Calendrier de la semaine" style="display: flex; flex-direction: column; gap: 12px; padding: 12px">
+<ol class="ent-cal">
+<li class="ent-cal__day"><span class="label-s" style="color: var(--text-secondary)">lun.</span><span class="num-s">19</span><span class="ent-cal__slot ent-cal__slot--prog" aria-label="Séance 6 du programme à 19h00"><x-import component-from-global-scope="MatchUp.Icon" name="sport-padel" size="{{i16}}"></x-import><span class="num-xs">19h00</span><span class="label-s" style="font-size: 10px; line-height: 12px">Bandeja</span></span></li>
+<li class="ent-cal__day"><span class="label-s" style="color: var(--text-secondary)">mar.</span><span class="num-s" style="color: var(--text-secondary)">20</span><span class="ent-cal__slot ent-cal__slot--free" aria-label="Repos"></span></li>
+<li class="ent-cal__day"><span class="label-s" style="color: var(--text-secondary)">mer.</span><span class="num-s">21</span><span class="ent-cal__slot ent-cal__slot--ai" style="height: 44px; padding-top: 6px" aria-label="Séance légère à 18h30"><x-import component-from-global-scope="MatchUp.Icon" name="crosshair" size="{{i14}}"></x-import><span class="num-xs">18h30</span></span><span class="ent-cal__slot ent-cal__slot--match" style="height: 44px; margin-top: -2px; padding-top: 6px" aria-label="Match de foot à 21h00"><x-import component-from-global-scope="MatchUp.Icon" name="sport-football" size="{{i14}}"></x-import><span class="num-xs">21h00</span></span></li>
+<li class="ent-cal__day"><span class="label-s" style="color: var(--text-secondary)">jeu.</span><span class="num-s" style="color: var(--text-secondary)">22</span><span class="ent-cal__slot ent-cal__slot--free" aria-label="Repos"></span></li>
+<li class="ent-cal__day"><span class="label-s" style="color: var(--text-secondary)">ven.</span><span class="num-s" style="color: var(--text-secondary)">23</span><span class="ent-cal__slot ent-cal__slot--free" aria-label="Repos"></span></li>
+<li class="ent-cal__day"><span class="label-s" style="color: var(--text-secondary)">sam.</span><span class="num-s">24</span><span class="ent-cal__slot ent-cal__slot--tour" style="height: 44px; padding-top: 6px" aria-label="Tournoi Padel Masters Lac 2, matchs à 10h00 et 15h30"><x-import component-from-global-scope="MatchUp.Icon" name="trophy" size="{{i14}}"></x-import><span class="label-s" style="font-size: 10px; line-height: 12px">Tournoi</span></span><span class="ent-cal__slot ent-cal__slot--ai" style="height: 44px; margin-top: -2px; padding-top: 6px" aria-label="Récupération 10 min à 19h00"><x-import component-from-global-scope="MatchUp.Icon" name="heart" size="{{i14}}"></x-import><span class="num-xs">19h00</span></span></li>
+<li class="ent-cal__day"><span class="label-s" style="color: var(--text-secondary)">dim.</span><span class="num-s">25</span><span class="ent-cal__slot ent-cal__slot--tour" aria-label="Tournoi Padel Masters Lac 2, match à 11h00"><x-import component-from-global-scope="MatchUp.Icon" name="trophy" size="{{i16}}"></x-import><span class="num-xs">11h00</span><span class="label-s" style="font-size: 10px; line-height: 12px">Tournoi</span></span></li>
+</ol>
+<div style="display: flex; flex-wrap: wrap; gap: 12px; padding: 0 4px">
+<span class="caption" style="display: flex; align-items: center; gap: 6px; color: var(--text-secondary)"><span style="width: 10px; height: 10px; border-radius: 3px; background: var(--padel-soft); box-shadow: inset 0 0 0 1.5px var(--padel-text)"></span>Programme</span>
+<span class="caption" style="display: flex; align-items: center; gap: 6px; color: var(--text-secondary)"><span style="width: 10px; height: 10px; border-radius: 3px; background: var(--ai-soft); box-shadow: inset 0 0 0 1.5px var(--ai-text)"></span>Proposé par l’IA</span>
+<span class="caption" style="display: flex; align-items: center; gap: 6px; color: var(--text-secondary)"><span style="width: 10px; height: 10px; border-radius: 3px; background: var(--football-soft); box-shadow: inset 0 0 0 1.5px var(--football-text)"></span>Match prévu</span>
+<span class="caption" style="display: flex; align-items: center; gap: 6px; color: var(--text-secondary)"><span style="width: 10px; height: 10px; border-radius: 3px; background: var(--warning-soft); box-shadow: inset 0 0 0 1.5px var(--warning-text)"></span>Tournoi</span>
+</div>
+</section>
+
+<section aria-labelledby="ent-sessions" style="display: flex; flex-direction: column; gap: 12px">
+<h2 id="ent-sessions" class="h3" style="margin: 0">Tes 3 séances</h2>
+<div class="mu-card" style="padding: 0">
+<div class="ent-sess">
+<div class="ent-sess__when"><span class="overline" style="color: var(--text-secondary)">lun.</span><span class="num-l">19</span></div>
+<div style="display: flex; flex-direction: column; gap: 6px; min-width: 0">
+<span style="display: flex"><span class="ent-tag label-s" style="background: var(--padel-soft); color: var(--padel-text)"><x-import component-from-global-scope="MatchUp.Icon" name="barbell" size="{{i14}}"></x-import>Ton programme</span></span>
+<span class="label-l">Séance 6 · Bandeja sous pression</span>
+<span class="caption" style="color: var(--text-secondary)"><span class="num-xs" style="color: var(--text)">19h00</span> · 20 min · 4 exercices · Coach Karim J.</span>
+</div>
+</div>
+<div class="ent-sess">
+<div class="ent-sess__when"><span class="overline" style="color: var(--text-secondary)">mer.</span><span class="num-l">21</span></div>
+<div style="display: flex; flex-direction: column; gap: 6px; min-width: 0">
+<span style="display: flex"><span class="ent-tag label-s" style="background: var(--ai-soft); color: var(--ai-text)"><x-import component-from-global-scope="MatchUp.Icon" name="crosshair" size="{{i14}}"></x-import>Placement · légère</span></span>
+<span class="label-l">Placement au filet, sans sauter</span>
+<span class="caption" style="color: var(--text-secondary)"><span class="num-xs" style="color: var(--text)">18h30</span> · 20 min · 3 exercices · avancée à 18h30 car tu joues à Arena Five à <span class="num-xs" style="color: var(--text)">21h00</span></span>
+</div>
+</div>
+<div class="ent-sess">
+<div class="ent-sess__when"><span class="overline" style="color: var(--text-secondary)">sam.</span><span class="num-l">24</span></div>
+<div style="display: flex; flex-direction: column; gap: 6px; min-width: 0">
+<span style="display: flex"><span class="ent-tag label-s" style="background: var(--ai-soft); color: var(--ai-text)"><x-import component-from-global-scope="MatchUp.Icon" name="heart" size="{{i14}}"></x-import>Récupération · 10 min</span></span>
+<span class="label-l">Étirements après le tournoi</span>
+<span class="caption" style="color: var(--text-secondary)"><span class="num-xs" style="color: var(--text)">19h00</span> · 10 min · jambes et épaules, après tes matchs de <span class="num-xs" style="color: var(--text)">10h00</span> et <span class="num-xs" style="color: var(--text)">15h30</span></span>
+</div>
+</div>
+</div>
+</section>
+
+<section class="mu-card" aria-labelledby="ent-why-t" style="display: flex; flex-direction: column; gap: 12px; padding: 16px">
+<div style="display: flex; align-items: center; gap: 8px">
+<h2 id="ent-why-t" class="label-l" style="margin: 0; flex: 1">Pourquoi ce plan</h2>
+<span class="caption" style="color: var(--text-secondary)">Généré à <span class="num-xs">18h02</span></span>
+</div>
+<div class="ent-why">
+<span style="flex: none; display: flex; margin-top: 2px"><x-import component-from-global-scope="MatchUp.Icon" name="lightbulb" weight="fill" size="{{i16}}"></x-import></span>
+<p class="body" style="margin: 0"><span class="label">Recommandé car</span> ton placement au filet revient dans 3 de tes 9 avis de coéquipiers : 2 séances dessus, dont la séance 6 de ton programme, et allégé avant ton tournoi du week-end : samedi, 10 min de récupération seulement. L’endurance revient la semaine prochaine.</p>
+</div>
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 8px">
+<span class="caption" style="color: var(--text-secondary)">L’IA peut se tromper. Ajuste ce qui ne te va pas.</span>
+<span style="display: flex; gap: 0; margin-inline-end: -8px">
+<button type="button" class="ent-thumb" aria-label="Ce plan me convient"><x-import component-from-global-scope="MatchUp.Icon" name="thumbs-up" size="{{i20}}"></x-import></button>
+<button type="button" class="ent-thumb" aria-label="Ce plan ne me convient pas"><x-import component-from-global-scope="MatchUp.Icon" name="thumbs-down" size="{{i20}}"></x-import></button>
+</span>
+</div>
+</section>
+</main>
+
+<div style="flex: none; padding: 12px 16px 34px 16px; background: var(--surface); box-shadow: var(--elevation-2-up); display: flex; flex-direction: column; gap: 10px">
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px">
+<button type="button" class="mu-btn mu-btn--secondary mu-btn--l mu-btn--block"><span class="mu-btn__content"><x-import component-from-global-scope="MatchUp.Icon" name="arrows-clockwise" size="{{i20}}"></x-import><span class="mu-btn__label label-l">Régénérer</span></span></button>
+<a href="ENT-06-Plan-IA-objectifs.dc.html" class="mu-btn mu-btn--secondary mu-btn--l mu-btn--block"><span class="mu-btn__content"><x-import component-from-global-scope="MatchUp.Icon" name="pencil-simple" size="{{i20}}"></x-import><span class="mu-btn__label label-l">Modifier</span></span></a>
+</div>
+<a href="ENT-01-Mon-entrainement.dc.html" class="mu-btn mu-btn--primary mu-btn--xl mu-btn--block"><span class="mu-btn__content"><x-import component-from-global-scope="MatchUp.Icon" name="check" weight="bold" size="{{i20}}"></x-import><span class="mu-btn__label label-l">Accepter le plan</span></span></a>
+<p class="caption" style="margin: 0; text-align: center; color: var(--text-secondary)">Ajoute 3 séances à ton agenda, avec un rappel 1 h avant.</p>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":1444}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return { yes: true, no: false, i14: 14, i16: 16, i20: 20, i24: 24 };
+  }
+}
+</script>
+</body>
+</html>

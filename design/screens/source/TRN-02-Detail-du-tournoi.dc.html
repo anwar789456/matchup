@@ -1,0 +1,252 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Détail du tournoi</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/matchup/tokens.css">
+<link rel="stylesheet" href="ds/matchup/components/bundle.css">
+<script src="ds/matchup/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0}
+a{color:var(--link)}
+.trn-sec{display:flex; flex-direction:column; gap:12px}
+.trn-sec__head{display:flex; align-items:center; justify-content:space-between; gap:8px; min-height:32px}
+.trn-fact{display:flex; flex-direction:column; gap:2px; padding:12px 12px 14px 12px; min-width:0}
+.trn-fact + .trn-fact{border-inline-start:1px solid var(--border)}
+.trn-muted{color:var(--text-secondary)}
+.trn-m0{margin:0}
+.trn-pod{display:grid; grid-template-columns:1fr 1.15fr 1fr; align-items:end; gap:8px}
+.trn-pod__col{display:flex; flex-direction:column; align-items:center; gap:8px}
+.trn-pod__step{width:100%; box-sizing:border-box; display:flex; flex-direction:column; align-items:center; justify-content:flex-start; gap:2px; padding:8px 4px; border-radius:var(--radius-sm) var(--radius-sm) 0 0; background:var(--surface-muted); box-shadow:inset 0 1px 0 var(--border)}
+.trn-pod__ico{width:40px; height:40px; border-radius:var(--radius-full); display:flex; align-items:center; justify-content:center; background:var(--surface-muted); color:var(--text)}
+.trn-flow{margin:0; padding:0; list-style:none; display:flex; flex-direction:column}
+.trn-flow li{display:grid; grid-template-columns:32px 1fr; column-gap:12px; position:relative; padding-bottom:16px}
+.trn-flow li:last-child{padding-bottom:0}
+.trn-flow li:not(:last-child)::before{content:""; position:absolute; left:15px; top:34px; bottom:2px; width:2px; border-radius:2px; background:var(--border)}
+.trn-flow__n{width:32px; height:32px; border-radius:var(--radius-full); display:flex; align-items:center; justify-content:center; background:var(--surface-muted); color:var(--text)}
+.trn-cal{display:grid; grid-template-columns:56px 1fr; gap:12px; align-items:center; padding:9px 0}
+.trn-cal + .trn-cal{border-top:1px solid var(--border)}
+.trn-cal__d{display:flex; flex-direction:column; align-items:center; padding:6px 0; border-radius:var(--radius-sm); background:var(--padel-soft); color:var(--padel-text)}
+.trn-rule{display:flex; align-items:flex-start; gap:12px}
+.trn-rule__icon{flex:none; width:20px; height:20px; color:var(--text-secondary); display:flex; align-items:center; justify-content:center}
+.trn-team{display:flex; align-items:center; gap:12px; min-height:56px}
+.trn-team + .trn-team{border-top:1px solid var(--border)}
+.trn-step{display:grid; grid-template-columns:20px 1fr auto; column-gap:12px; align-items:start}
+.trn-step__dot{width:12px; height:12px; margin:4px; border-radius:var(--radius-full); box-sizing:border-box}
+.trn-pill{white-space:nowrap}
+.trn-hot{position:absolute; display:block; border-radius:var(--radius-full)}
+.trn-hot:focus-visible{outline:2px solid var(--focus); outline-offset:2px}
+</style>
+</helmet>
+<div style="position: relative; width: 390px; height: 2400px; box-sizing: border-box; overflow: hidden; background: var(--bg); color: var(--text); font-family: var(--font-sans)">
+
+<x-import component-from-global-scope="MatchUp.CourtArt" sport="padel" label="Courts de padel du Smash Padel Club, Lac 2, éclairés le soir" dc-props="{{heroArt}}"></x-import>
+<div style="position: absolute; left: 16px; right: 16px; top: 108px; display: flex; align-items: center; justify-content: space-between">
+<div data-theme="dark" class="trn-pill" style="display: flex; align-items: center; height: 32px; padding: 0 12px; border-radius: var(--radius-full); background: var(--surface-elevated); color: var(--text); box-shadow: var(--elevation-2)">
+<x-import component-from-global-scope="MatchUp.Countdown" format="relative" size="s" label="Clôture" seconds="{{closes}}" running="{{no}}"></x-import>
+</div>
+<x-import component-from-global-scope="MatchUp.StatusBadge" status="confirmed" label="Inscriptions ouvertes" size="m"></x-import>
+</div>
+<x-import component-from-global-scope="MatchUp.TopAppBar" variant="media" title="Tournoi" inset="{{inset}}" on-back="{{noop}}" actions="{{barActions}}" dc-props="{{barStyle}}"></x-import>
+<a href="TRN-01-Tournois.dc.html" class="trn-hot" aria-label="Retour aux tournois" style="left: 6px; top: 50px; width: 44px; height: 44px"></a>
+
+<main style="position: absolute; left: 0; right: 0; top: 156px; bottom: 0; border-radius: var(--radius-lg) var(--radius-lg) 0 0; background: var(--bg); padding: 20px 16px 0 16px; display: flex; flex-direction: column; gap: 24px">
+
+<section aria-labelledby="trn-title" style="display: flex; flex-direction: column; gap: 16px">
+<div style="display: flex; flex-direction: column; gap: 8px">
+<div style="display: flex; flex-wrap: wrap; align-items: center; gap: 8px">
+<x-import component-from-global-scope="MatchUp.Chip" kind="sport" sport="padel" size="s">Padel · paires</x-import>
+<x-import component-from-global-scope="MatchUp.Chip" kind="level" size="s" icon="gauge">Niveau 3,5 – 5,0</x-import>
+</div>
+<h1 id="trn-title" class="h1 trn-m0">Padel Masters Lac 2</h1>
+<p class="body trn-m0 trn-muted">Poules + phase finale · par <span class="label" style="color: var(--text)">Tunis Padel Series</span></p>
+</div>
+
+<div class="mu-card" role="group" aria-label="L’essentiel du tournoi" style="display: grid; grid-template-columns: 1.1fr 1.05fr 0.85fr; padding: 0">
+<div class="trn-fact">
+<span class="overline trn-muted">Sam. → lun.</span>
+<span class="num-xl">24–26</span>
+<span class="caption trn-muted">octobre · 3 jours</span>
+</div>
+<div class="trn-fact">
+<span class="overline trn-muted">Inscription</span>
+<span class="num-xl">120 DT</span>
+<span class="caption trn-muted">par équipe de 2</span>
+</div>
+<div class="trn-fact">
+<span class="overline trn-muted">Places</span>
+<span class="num-xl" style="color: var(--warning-text)">4</span>
+<span class="caption trn-muted">12/16 inscrites</span>
+</div>
+</div>
+
+<p class="body-l trn-m0">16 paires, trois matchs de poule garantis, puis une soirée de phase finale sous les projecteurs du Smash Padel Club.</p>
+</section>
+
+<section class="trn-sec" aria-labelledby="trn-prize">
+<div class="trn-sec__head">
+<h2 id="trn-prize" class="h3 trn-m0">Dotation</h2>
+<span class="label"><span class="num-m">1 500</span> <span class="num-s">DT</span> <span class="caption trn-muted">au total</span></span>
+</div>
+<div class="mu-card" style="padding: 16px 16px 0 16px; display: flex; flex-direction: column; gap: 12px">
+<div class="trn-pod" role="list" aria-label="Prix par place">
+<div class="trn-pod__col" role="listitem">
+<span class="trn-pod__ico"><x-import component-from-global-scope="MatchUp.Icon" name="medal" size="{{i20}}"></x-import></span>
+<div class="trn-pod__step" style="height: 66px"><span class="overline trn-muted">2e</span><span><span class="num-l">450</span><span class="num-s"> DT</span></span></div>
+</div>
+<div class="trn-pod__col" role="listitem">
+<span class="trn-pod__ico" style="width: 48px; height: 48px; background: var(--accent); color: var(--on-accent)"><x-import component-from-global-scope="MatchUp.Icon" name="trophy" weight="fill" size="{{i24}}"></x-import></span>
+<div class="trn-pod__step" style="height: 84px; background: var(--surface-inverse); box-shadow: none; color: var(--text-inverse)"><span class="overline" style="opacity: 0.72">1re</span><span><span class="num-xl">800</span><span class="num-s"> DT</span></span></div>
+</div>
+<div class="trn-pod__col" role="listitem">
+<span class="trn-pod__ico"><x-import component-from-global-scope="MatchUp.Icon" name="medal-military" size="{{i20}}"></x-import></span>
+<div class="trn-pod__step" style="height: 52px"><span class="overline trn-muted">3e</span><span><span class="num-l">250</span><span class="num-s"> DT</span></span></div>
+</div>
+</div>
+</div>
+</section>
+
+<section class="trn-sec" aria-labelledby="trn-format">
+<h2 id="trn-format" class="h3 trn-m0">Format</h2>
+<div class="mu-card" style="padding: 16px">
+<ol class="trn-flow">
+<li><span class="trn-flow__n"><x-import component-from-global-scope="MatchUp.Icon" name="users-four" size="{{i16}}"></x-import></span><span style="display: flex; flex-direction: column; gap: 2px; padding-top: 5px"><span class="label">4 poules de 4, puis phase finale à 8</span><span class="caption trn-muted">Les 2 premières paires de chaque poule jouent quarts, demies et finale.</span></span></li>
+<li><span class="trn-flow__n" style="background: var(--accent); color: var(--on-accent)"><x-import component-from-global-scope="MatchUp.Icon" name="tennis-ball" size="{{i16}}"></x-import></span><span style="display: flex; flex-direction: column; gap: 2px; padding-top: 5px"><span class="label">2 sets gagnants</span><span class="caption trn-muted">Super tie-break en 10 points à la place du 3e set.</span></span></li>
+</ol>
+</div>
+</section>
+
+<section class="trn-sec" aria-labelledby="trn-cal">
+<div class="trn-sec__head">
+<h2 id="trn-cal" class="h3 trn-m0">Calendrier</h2>
+<span class="caption trn-muted">Smash Padel Club</span>
+</div>
+<div class="mu-card" style="padding: 4px 16px">
+<div class="trn-cal">
+<span class="trn-cal__d"><span class="overline">Sam.</span><span class="num-l">24</span></span>
+<span style="display: flex; flex-direction: column; gap: 2px"><span class="label">Poules · journées 1 et 2</span><span class="caption trn-muted"><span class="num-xs">9h00 – 20h00</span> · 4 courts</span></span>
+</div>
+<div class="trn-cal">
+<span class="trn-cal__d"><span class="overline">Dim.</span><span class="num-l">25</span></span>
+<span style="display: flex; flex-direction: column; gap: 2px"><span class="label">Poules · journée 3</span><span class="caption trn-muted"><span class="num-xs">9h00 – 18h00</span> · classement final</span></span>
+</div>
+<div class="trn-cal">
+<span class="trn-cal__d" style="background: var(--surface-inverse); color: var(--text-inverse)"><span class="overline">Lun.</span><span class="num-l">26</span></span>
+<span style="display: flex; flex-direction: column; gap: 2px"><span class="label">Phase finale</span><span class="caption trn-muted">Dès <span class="num-xs">18h00</span> · finale vers <span class="num-xs">21h30</span></span></span>
+</div>
+</div>
+<p class="caption trn-m0 trn-muted" style="display: flex; align-items: center; gap: 6px"><x-import component-from-global-scope="MatchUp.Icon" name="calendar-check" size="{{i16}}"></x-import>Inscriptions jusqu’au mer. 21 oct. · tirage le jeu. 22 oct.</p>
+</section>
+
+<section class="trn-sec" aria-labelledby="trn-teams">
+<div class="trn-sec__head">
+<h2 id="trn-teams" class="h3 trn-m0">Équipes inscrites</h2>
+<span class="caption trn-muted"><span class="num-xs" style="color: var(--text)">12/16</span> · tu connais 8 joueurs</span>
+</div>
+<div class="mu-card" style="padding: 4px 16px 12px 16px">
+<sc-for list="{{teams}}" as="t">
+<div class="trn-team">
+<x-import component-from-global-scope="MatchUp.AvatarStack" people="{{t.people}}" size="s" max="{{two}}" label="{{t.name}}"></x-import>
+<span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px"><span class="label">{{t.name}}</span><span class="caption trn-muted">{{t.meta}}</span></span>
+<span class="num-s">{{t.level}}</span>
+</div>
+</sc-for>
+<button type="button" class="mu-btn mu-btn--secondary mu-btn--m mu-btn--block" style="margin-top: 8px"><span class="mu-btn__content"><span class="mu-btn__label label">Voir les 12 équipes</span></span></button>
+</div>
+</section>
+
+<section class="trn-sec" aria-labelledby="trn-rules">
+<h2 id="trn-rules" class="h3 trn-m0">Règles et annulation</h2>
+<div class="mu-card" style="display: flex; flex-direction: column; gap: 16px; padding: 16px">
+<div class="trn-rule">
+<span class="trn-rule__icon"><x-import component-from-global-scope="MatchUp.Icon" name="gauge" size="{{i20}}"></x-import></span>
+<span style="display: flex; flex-direction: column; gap: 2px"><span class="label">Niveau moyen de la paire : 3,5 à 5,0</span><span class="caption trn-muted">Calculé avec le niveau MatchUp de chaque joueur au moment de l’inscription.</span></span>
+</div>
+<div class="trn-rule">
+<span class="trn-rule__icon"><x-import component-from-global-scope="MatchUp.Icon" name="clock" size="{{i20}}"></x-import></span>
+<span style="display: flex; flex-direction: column; gap: 2px"><span class="label">Check-in 20 min avant ton 1er match</span><span class="caption trn-muted">Balles neuves fournies à chaque match, arbitrage par l’organisateur.</span></span>
+</div>
+<div style="height: 1px; background: var(--border)"></div>
+<div style="display: flex; flex-direction: column; gap: 12px" role="list" aria-label="Remboursement selon la date d’annulation">
+<div class="trn-step" role="listitem">
+<span class="trn-step__dot" style="background: var(--success)"></span>
+<span style="display: flex; flex-direction: column; gap: 2px"><span class="label">Jusqu’au mer. 21 oct. · <span class="num-s">23h59</span></span><span class="caption trn-muted">Désinscription gratuite</span></span>
+<span class="num-s" style="color: var(--success-text)">120 DT</span>
+</div>
+<div class="trn-step" role="listitem">
+<span class="trn-step__dot" style="border: 2px solid var(--border-strong)"></span>
+<span style="display: flex; flex-direction: column; gap: 2px"><span class="label">Après le tirage des poules</span><span class="caption trn-muted">Non remboursable</span></span>
+<span class="num-s trn-muted">0 DT</span>
+</div>
+</div>
+<p class="caption trn-m0 trn-muted">Remboursé en entier sur ton solde MatchUp si l’organisateur refuse ton équipe ou annule le tournoi.</p>
+</div>
+</section>
+
+<section class="trn-sec" aria-labelledby="trn-place">
+<h2 id="trn-place" class="h3 trn-m0">Lieu et organisateur</h2>
+<div class="mu-card" style="padding: 0; overflow: hidden">
+<div style="display: flex; gap: 12px; padding: 12px">
+<div style="flex: none; width: 96px; height: 96px; border-radius: var(--radius-sm); overflow: hidden">
+<x-import component-from-global-scope="MatchUp.MapView" interactive="{{no}}" venues="{{venues}}" default-selected-id="smash" center="{{mapCenter}}" zoom="{{mapZoom}}" height="{{mapH}}" view-toggle="{{no}}" user="{{nobody}}" label="Smash Padel Club sur la carte, Lac 2" dc-props="{{mapStyle}}"></x-import>
+</div>
+<div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 4px">
+<span style="display: flex; align-items: center; gap: 8px"><span class="label-l">Smash Padel Club</span><x-import component-from-global-scope="MatchUp.StatusBadge" status="verified" size="s"></x-import></span>
+<span class="caption trn-muted">Lac 2 · <span class="num-xs" style="color: var(--text)">3,1 km</span> · 4 courts dont 2 indoor</span>
+<span class="caption" style="display: flex; align-items: center; gap: 4px; color: var(--text-secondary)"><span style="display: flex; color: var(--warning)"><x-import component-from-global-scope="MatchUp.Icon" name="star" weight="fill" size="{{i14}}"></x-import></span><span class="num-xs" style="color: var(--text)">4,8</span> (86 avis)</span>
+<span style="display: flex; align-items: center; gap: 4px; margin-top: 4px; margin-inline-start: -4px">
+<button type="button" class="mu-btn mu-btn--secondary mu-btn--s"><span class="mu-btn__content"><x-import component-from-global-scope="MatchUp.Icon" name="navigation-arrow" size="{{i16}}"></x-import><span class="mu-btn__label label">Itinéraire</span></span></button>
+</span>
+</div>
+</div>
+<div style="height: 1px; margin: 0 12px; background: var(--border)"></div>
+<div style="display: flex; align-items: center; gap: 12px; padding: 12px">
+<x-import component-from-global-scope="MatchUp.Avatar" name="Tunis Padel Series" size="m"></x-import>
+<span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px">
+<span class="caption trn-muted">Organisateur</span>
+<span class="label-l">Tunis Padel Series</span>
+<span class="caption trn-muted">Sami C. · responsable</span>
+</span>
+<button type="button" class="mu-btn mu-btn--tertiary mu-btn--s"><span class="mu-btn__content"><x-import component-from-global-scope="MatchUp.Icon" name="chat-circle-dots" size="{{i16}}"></x-import><span class="mu-btn__label label">Contacter</span></span></button>
+</div>
+</div>
+</section>
+
+</main>
+
+<div style="position: absolute; left: 0; right: 0; bottom: 0; z-index: var(--z-sticky); padding: 12px 16px 34px 16px; background: var(--surface); box-shadow: var(--elevation-2-up); display: flex; flex-direction: column; gap: 10px">
+<p class="caption" style="margin: 0; display: flex; align-items: center; justify-content: center; gap: 6px; color: var(--text-secondary)"><span style="display: flex; color: var(--success-text)"><x-import component-from-global-scope="MatchUp.Icon" name="shield-check" weight="fill" size="{{i16}}"></x-import></span>Désinscription gratuite jusqu’au mer. 21 oct.</p>
+<a href="TRN-04-Creer-l-equipe.dc.html" class="mu-btn mu-btn--primary mu-btn--xl mu-btn--block"><span class="mu-btn__content"><span class="mu-btn__label label-l">Inscrire mon équipe</span><span class="mu-btn__dot" aria-hidden="true">·</span><span class="mu-btn__price num-m">120 DT</span></span></a>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":2400}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const P = (a, b) => [{ name: a }, { name: b }];
+    return {
+      yes: true, no: false, i14: 14, i16: 16, i20: 20, i24: 24, inset: 44, two: 2,
+      closes: (5 * 24 + 6) * 3600, mapZoom: 1.4, mapH: 96, nobody: null,
+      noop: () => {},
+      heroArt: { style: { position: 'absolute', top: 0, left: 0, right: 0, height: '188px' } },
+      barStyle: { style: { position: 'absolute', top: 0, left: 0, right: 0, zIndex: 2 } },
+      barActions: [{ icon: 'share-network', label: 'Partager le tournoi' }, { icon: 'bookmark-simple', label: 'Enregistrer le tournoi' }],
+      teams: [
+        { name: 'Skander T. / Omar D.', meta: 'Tes coéquipiers du foot à Arena Five', level: '3,5', people: P('Skander T.', 'Omar D.') },
+        { name: 'Ines M. / Nour A.', meta: 'Tes adversaires du 9 oct.', level: '3,5', people: P('Ines M.', 'Nour A.') },
+        { name: 'Hamza R. / Lina F.', meta: 'Lac 2 · inscrits hier', level: '3,5', people: P('Hamza R.', 'Lina F.') }
+      ],
+      venues: [{ id: 'smash', name: 'Smash Padel Club', sport: 'padel', lat: 36.8380, lng: 10.2390, area: 'Lac 2', distance: '3,1 km', rating: 4.8, reviews: 86, priceFrom: 20 }],
+      mapCenter: { lat: 36.8380, lng: 10.2390 },
+      mapStyle: { style: { borderRadius: 0, boxShadow: 'none' } }
+    };
+  }
+}
+</script>
+</body>
+</html>

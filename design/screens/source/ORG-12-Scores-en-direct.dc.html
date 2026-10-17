@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Organisateur · Scores en direct</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/matchup/tokens.css">
+<link rel="stylesheet" href="ds/matchup/components/bundle.css">
+<script src="ds/matchup/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+/* org:shell — identical in ORG-03, ORG-04, ORG-12, ORG-14 */
+body{margin:0}
+a{color:var(--link)}
+.org-root{position:relative; width:390px; box-sizing:border-box; overflow:hidden; background:var(--bg); color:var(--text); font-family:var(--font-sans)}
+.org-role{flex:none; white-space:nowrap; display:inline-flex; align-items:center; gap:var(--space-2); min-height:44px; margin-inline-start:var(--space-3); padding:0 var(--space-2) 0 0; border-radius:var(--radius-md); text-decoration:none; color:var(--text)}
+.org-role:focus-visible{outline:none; box-shadow:var(--focus-ring)}
+.org-role__tile{flex:none; width:32px; height:32px; border-radius:var(--radius-sm); background:var(--primary); color:var(--on-primary); display:grid; place-items:center}
+.org-role__txt{display:flex; flex-direction:column; line-height:1}
+.org-role__txt .caption{color:var(--text-secondary)}
+.org-role__caret{display:flex; color:var(--text-secondary)}
+.org-me{display:grid; place-items:center; width:48px; height:48px; border-radius:var(--radius-full); text-decoration:none}
+.org-me:focus-visible{outline:none; box-shadow:var(--focus-ring)}
+.org-muted{color:var(--text-secondary)}
+.org-m0{margin:0}
+.org-sec{display:flex; flex-direction:column; gap:var(--space-3); padding:0 var(--space-4)}
+.org-sec__head{display:flex; align-items:center; justify-content:space-between; gap:var(--space-3); min-height:32px; margin-inline-end:calc(-1 * var(--space-3))}
+.org-sec__title{margin:0}
+.org-ico{display:inline-flex; flex:none}
+/* /org:shell */
+.sc-ctx{display:flex; align-items:center; justify-content:space-between; gap:var(--space-3); margin-top:-4px; padding:0 var(--space-4)}
+.sc-chips{display:flex; gap:var(--space-2); overflow-x:auto; padding:4px var(--space-4); scrollbar-width:none}
+.sc-chips::-webkit-scrollbar{display:none}
+.sc-chips > *{flex:none}
+.sc-list{display:flex; flex-direction:column; gap:var(--space-2)}
+.sc-live{display:inline-flex; align-items:center; gap:6px; color:var(--error-text)}
+.sc-dot{width:8px; height:8px; border-radius:var(--radius-full); background:var(--live, var(--error))}
+.sc-mine{position:relative}
+.sc-mine__tag{position:absolute; top:-8px; right:12px; z-index:1; display:inline-flex; align-items:center; gap:4px; padding:2px 8px; border-radius:var(--radius-full); background:var(--accent); color:var(--on-accent)}
+</style>
+</helmet>
+<div class="org-root" style="height: 2140px">
+<x-import component-from-global-scope="MatchUp.TopAppBar" variant="large" title="Scores en direct" leading="{{role}}" actions="{{barActions}}" inset="{{inset}}"></x-import>
+
+<div style="display: flex; flex-direction: column; gap: 24px; padding: 0 0 160px 0">
+<div class="sc-ctx">
+<x-import component-from-global-scope="MatchUp.Chip" icon="trophy" trailing-icon="caret-down" aria-haspopup="dialog">Padel Masters Lac 2</x-import>
+<span class="caption org-muted">sam. 24 oct. · <span class="num-xs">10h40</span></span>
+</div>
+
+<div class="sc-chips" role="radiogroup" aria-label="Filtrer les matchs" style="margin-top: -8px">
+<x-import component-from-global-scope="MatchUp.Chip" kind="choice" selected="{{yes}}" count="{{n16}}">Aujourd’hui</x-import>
+<x-import component-from-global-scope="MatchUp.Chip" kind="choice" count="{{n4}}">En direct</x-import>
+<x-import component-from-global-scope="MatchUp.Chip" kind="choice" count="{{n8}}">À venir</x-import>
+<x-import component-from-global-scope="MatchUp.Chip" kind="choice" count="{{n4}}">Terminés</x-import>
+</div>
+
+<div class="org-sec">
+<x-import component-from-global-scope="MatchUp.Banner" tone="warning" icon="clock-countdown" title="Court 4 : pas de score depuis 25 min" action="{{bannerAction}}">Les Aigles de Sfax – Marsa Vibora · dernière saisie à 10h15.</x-import>
+</div>
+
+<section aria-labelledby="sc-live-t" class="org-sec">
+<div class="org-sec__head" style="margin-inline-end: 0">
+<h2 id="sc-live-t" class="h3 org-sec__title sc-live"><span class="sc-dot" aria-hidden="true"></span>En direct · 4</h2>
+<span class="caption org-muted">Touche un match pour saisir</span>
+</div>
+<div class="sc-list">
+<div class="sc-mine"><span class="sc-mine__tag label-s"><x-import component-from-global-scope="MatchUp.Icon" name="pencil-simple" size="{{i14}}"></x-import>Tu saisis</span><x-import component-from-global-scope="MatchUp.MatchCard" dc-props="{{live2}}"></x-import></div>
+<x-import component-from-global-scope="MatchUp.MatchCard" dc-props="{{live1}}"></x-import>
+<x-import component-from-global-scope="MatchUp.MatchCard" dc-props="{{live3}}"></x-import>
+<x-import component-from-global-scope="MatchUp.MatchCard" dc-props="{{live4}}"></x-import>
+</div>
+</section>
+
+<section aria-labelledby="sc-next-t" class="org-sec">
+<div class="org-sec__head" style="margin-inline-end: 0"><h2 id="sc-next-t" class="h3 org-sec__title">À venir · 11h30</h2><span class="caption org-muted">Appel des équipes à 11h10</span></div>
+<div class="sc-list">
+<x-import component-from-global-scope="MatchUp.MatchCard" dc-props="{{next1}}"></x-import>
+<x-import component-from-global-scope="MatchUp.MatchCard" dc-props="{{next2}}"></x-import>
+<x-import component-from-global-scope="MatchUp.MatchCard" dc-props="{{next3}}"></x-import>
+<x-import component-from-global-scope="MatchUp.MatchCard" dc-props="{{next4}}"></x-import>
+</div>
+</section>
+
+<section aria-labelledby="sc-done-t" class="org-sec">
+<div class="org-sec__head" style="margin-inline-end: 0"><h2 id="sc-done-t" class="h3 org-sec__title">Terminés · 4</h2><span class="caption org-muted">Scores confirmés</span></div>
+<div class="sc-list">
+<x-import component-from-global-scope="MatchUp.MatchCard" dc-props="{{done1}}"></x-import>
+<x-import component-from-global-scope="MatchUp.MatchCard" dc-props="{{done2}}"></x-import>
+<x-import component-from-global-scope="MatchUp.MatchCard" dc-props="{{done3}}"></x-import>
+<x-import component-from-global-scope="MatchUp.MatchCard" dc-props="{{done4}}"></x-import>
+</div>
+</section>
+</div>
+
+<a href="AI-07-Assistant-pro.dc.html" aria-label="Assistant MatchUp" style="z-index: calc(var(--z-sticky) + 1); position: absolute; right: 16px; bottom: 114px; width: 56px; height: 56px; border-radius: var(--radius-full); "></a>
+<x-import component-from-global-scope="MatchUp.TabBar" items="{{tabs}}" value="scores" label="Navigation organisateur" safe-area="{{sa}}" fab="{{yes}}" dc-props="{{tabStyle}}"></x-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":2140}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const h = React.createElement, M = MatchUp;
+    const T = (name, shortName, monogram, sets) => ({ name, shortName, monogram, sets });
+    const base = { variant: 'compact', sport: 'padel', competition: 'Padel Masters Lac 2' };
+    const live = (round, court, a, b, cur, href) => Object.assign({}, base, { round, court, status: 'live', currentSet: cur, teams: [a, b], href });
+    const next = (round, court, a, b) => Object.assign({}, base, { round, court, status: 'upcoming', start: new Date(2026, 9, 24, 11, 30), teams: [a, b] });
+    const done = (round, court, a, b) => Object.assign({}, base, { round, court, status: 'final', teams: [a, b] });
+    return {
+      yes: true, no: false, i14: 14, i16: 16, i20: 20, i24: 24, inset: 44, sa: 34, n4: 4, n8: 8, n16: 16,
+      role: h('a', { href: 'PRF-06-Changer-de-role.dc.html', className: 'org-role', 'aria-label': 'Espace organisateur, Tunis Padel Series. Changer de rôle' },
+        h('span', { className: 'org-role__tile label-s' }, 'TS'),
+        h('span', { className: 'org-role__txt' }, h('span', { className: 'caption' }, 'Espace organisateur'), h('span', { className: 'label' }, 'Tunis Padel Series')),
+        h('span', { className: 'org-role__caret' }, h(M.Icon, { name: 'caret-down', size: 16 }))),
+      barActions: [
+        { icon: 'bell', label: 'Notifications, 2 non lues', badge: 2 },
+        h('a', { href: 'PRF-06-Changer-de-role.dc.html', className: 'org-me', 'aria-label': 'Mon compte, Sami C. Changer de rôle' }, h(M.Avatar, { name: 'Sami C.', size: 's' }))
+      ],
+      bannerAction: { label: 'Appeler le court 4', icon: 'phone' },
+      live2: live('Poule B', 'Court 2', T('Les Faucons', 'Faucons', 'LF', [6, 3]), T('Ines M. / Nour A.', 'Ines / Nour', 'IN', [4, 2]), 1, 'ORG-13-Saisie-du-score.dc.html'),
+      live1: live('Poule B', 'Court 1', T('Skander T. / Omar D.', 'Skander / Omar', 'SO', [4, 2]), T('Aziz H. / Salma G.', 'Aziz / Salma', 'AS', [6, 3]), 1),
+      live3: live('Poule D', 'Court 3', T('Carthage Smash', 'Carthage', 'CS', [5]), T('Les Requins de Sousse', 'Requins', 'RS', [4]), 0),
+      live4: live('Poule D', 'Court 4', T('Les Aigles de Sfax', 'Aigles', 'AS', [6, 0]), T('Marsa Vibora', 'Marsa Vibora', 'MV', [2, 1]), 1),
+      next1: next('Poule A', 'Court 1', T('Bandeja Club', 'Bandeja', 'BC'), T('Smash Bros', 'Smash B.', 'SB')),
+      next2: next('Poule A', 'Court 2', T('Gammarth Padel', 'Gammarth', 'GP'), T('Ariana Padel Crew', 'Ariana', 'AP')),
+      next3: next('Poule C', 'Court 3', T('Vibora Sidi Bou', 'Vibora', 'VS'), T('Les Lions de Carthage', 'Lions', 'LC')),
+      next4: next('Poule C', 'Court 4', T('Duo Menzah', 'Menzah', 'DM'), T('Duo Ennasr', 'Ennasr', 'DE')),
+      done1: done('Poule A', 'Court 1', T('Bandeja Club', 'Bandeja', 'BC', [6, 6]), T('Gammarth Padel', 'Gammarth', 'GP', [3, 4])),
+      done2: done('Poule A', 'Court 2', T('Smash Bros', 'Smash Bros', 'SB', [6, 7]), T('Ariana Padel Crew', 'Ariana', 'AP', [4, 6])),
+      done3: done('Poule C', 'Court 3', T('Vibora Sidi Bou', 'Vibora', 'VS', [4, 6, 6]), T('Duo Menzah', 'Menzah', 'DM', [6, 3, 4])),
+      done4: done('Poule C', 'Court 4', T('Les Lions de Carthage', 'Lions', 'LC', [6, 6]), T('Duo Ennasr', 'Ennasr', 'DE', [1, 2])),
+      tabs: [
+        { value: 'tableau', label: 'Tableau', icon: 'house', href: 'ORG-03-Tableau-de-bord.dc.html' },
+        { value: 'tournois', label: 'Tournois', icon: 'trophy', href: 'ORG-04-Mes-tournois.dc.html' },
+        { value: 'scores', label: 'Scores', icon: 'broadcast', href: 'ORG-12-Scores-en-direct.dc.html' },
+        { value: 'annonces', label: 'Annonces', icon: 'megaphone', href: 'ORG-14-Annonce.dc.html' }
+      ],
+      tabStyle: { style: { position: 'absolute', left: 0, right: 0, bottom: 0 } }
+    };
+  }
+}
+</script>
+</body>
+</html>

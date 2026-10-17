@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Revenus</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/matchup/tokens.css">
+<link rel="stylesheet" href="ds/matchup/components/bundle.css">
+<script src="ds/matchup/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+/* own:sub — identical in OWN-17, 18, 19, 25 */
+body{margin:0}
+a{color:var(--link)}
+.own-back{position:absolute; left:4px; top:48px; width:48px; height:48px; border-radius:var(--radius-full); z-index:2}
+.own-back:focus-visible{outline:none; box-shadow:var(--focus-ring)}
+.own-body{flex:1; min-height:0; display:flex; flex-direction:column; gap:var(--space-5); padding:var(--space-2) var(--space-4) var(--space-8) var(--space-4)}
+.own-sec{color:var(--text-secondary)}
+.own-t{margin:0; padding-inline:var(--space-1); color:var(--text-secondary)}
+.own-row{display:flex; align-items:center; gap:var(--space-3)}
+/* /own:sub */
+.rv-next{position:relative; overflow:hidden; display:flex; flex-direction:column; gap:var(--space-4); padding:var(--space-5); border-radius:var(--radius-lg); background:var(--ink-900); color:var(--white); box-shadow:inset 0 0 0 1px color-mix(in srgb, var(--white) 8%, transparent), var(--elevation-2)}
+.rv-next__ring{position:absolute; border-radius:var(--radius-full); border:1.5px solid color-mix(in srgb, var(--white) 12%, transparent); pointer-events:none}
+.rv-muted{color:color-mix(in srgb, var(--white) 72%, transparent)}
+.rv-next__meta{position:relative; display:grid; grid-template-columns:1fr 1fr; gap:var(--space-3); padding-top:var(--space-3); border-top:1px solid color-mix(in srgb, var(--white) 16%, transparent)}
+.rv-kpis{display:grid; grid-template-columns:1fr 1fr; gap:var(--space-3)}
+.rv-kpis .mu-kpi{padding:var(--space-4)}
+.rv-split{display:flex; gap:var(--space-5)}
+.rv-split > div{display:flex; flex-direction:column; gap:2px}
+.rv-key{display:inline-flex; align-items:center; gap:6px}
+.rv-group{display:flex; flex-direction:column; gap:var(--space-2)}
+.rv-link{display:flex; align-items:center; gap:var(--space-3); padding:var(--space-3) var(--space-3) var(--space-3) var(--space-4); text-decoration:none; color:var(--text); background:transparent; border:0; width:100%; font:inherit; text-align:start; cursor:pointer}
+.rv-link__ico{flex:none; width:40px; height:40px; border-radius:var(--radius-full); display:grid; place-items:center; background:var(--surface-muted); color:var(--text)}
+</style>
+</helmet>
+<div style="position: relative; width: 390px; height: 1620px; box-sizing: border-box; overflow: hidden; display: flex; flex-direction: column; background: var(--bg); color: var(--text); font-family: var(--font-sans)">
+<x-import component-from-global-scope="MatchUp.TopAppBar" title="Revenus" subtitle="Espace propriétaire · Arena Five" on-back="{{noop}}" back-label="Retour à Plus" actions="{{barActions}}" inset="{{inset}}"></x-import>
+<a href="OWN-15-Plus.dc.html" class="own-back" aria-label="Retour à Plus"></a>
+
+<div class="own-body">
+
+<section class="rv-next" aria-labelledby="rv-next-t">
+<span class="rv-next__ring" style="right: -90px; top: -60px; width: 230px; height: 230px"></span>
+<span class="rv-next__ring" style="right: -30px; top: 0; width: 110px; height: 110px"></span>
+<div style="position: relative; display: flex; flex-direction: column; gap: 4px">
+<h2 id="rv-next-t" class="overline rv-muted" style="margin: 0; display: flex; align-items: center; gap: 6px"><x-import component-from-global-scope="MatchUp.Icon" name="bank" size="{{i16}}"></x-import>Prochain versement · estimé</h2>
+<span><span class="num-hero">1 410</span><span class="num-l"> DT</span></span>
+<span class="body rv-muted">Lun. 19 oct. sur Attijari bank •••• 1234</span>
+</div>
+<div class="rv-next__meta">
+<div style="display: flex; flex-direction: column; gap: 2px"><span class="caption rv-muted">Déjà encaissé</span><span class="num-m">1 020 DT</span><span class="caption rv-muted">du 12 au 16 oct.</span></div>
+<div style="display: flex; flex-direction: column; gap: 2px"><span class="caption rv-muted">Encore attendu</span><span class="num-m">≈ 390 DT</span><span class="caption rv-muted">sam. 17 et dim. 18 oct.</span></div>
+</div>
+</section>
+
+<x-import component-from-global-scope="MatchUp.SegmentedControl" options="{{periods}}" value="{{period}}" on-change="{{setPeriod}}" full-width="{{yes}}" label="Période"></x-import>
+
+<div class="rv-kpis">
+<x-import component-from-global-scope="MatchUp.KpiCard" label="Revenus · 30 j" value="26 740" unit="DT" delta="{{d14}}" period="vs 30 j avant"></x-import>
+<x-import component-from-global-scope="MatchUp.KpiCard" label="Réservations" value="312" delta="{{d28}}" delta-format="number" period="vs 30 j avant"></x-import>
+</div>
+
+<x-import component-from-global-scope="MatchUp.LineChart" title="Revenus par jour" subtitle="Arena Five · 3 terrains · en ligne et sur place, en DT" x="{{days}}" series="{{series}}" format="DT" height="{{h220}}">
+</x-import>
+
+<div class="mu-card" style="display: flex; flex-direction: column; gap: 12px; padding: 16px 20px">
+<span class="label">D’où viennent les 26 740 DT</span>
+<x-import component-from-global-scope="MatchUp.ProgressBar" value="{{online}}" max="{{total}}" size="l" show-value="{{no}}" aria-label="17 % payés en ligne"></x-import>
+<div class="rv-split">
+<div><span class="rv-key caption own-sec"><span style="width: 10px; height: 10px; border-radius: 2px; background: var(--primary)"></span>Payé en ligne · 17 %</span><span class="num-m">4 610 DT</span><span class="caption own-sec">versé chaque lundi</span></div>
+<div><span class="rv-key caption own-sec"><span style="width: 10px; height: 10px; border-radius: 2px; background: var(--surface-muted); box-shadow: inset 0 0 0 1px var(--border-strong)"></span>Encaissé sur place · 83 %</span><span class="num-m">22 130 DT</span><span class="caption own-sec">noté à l’accueil</span></div>
+</div>
+</div>
+
+<section class="rv-group" aria-labelledby="rv-pay-t">
+<div class="own-row" style="justify-content: space-between">
+<h2 id="rv-pay-t" class="h3" style="margin: 0">Versements</h2>
+<span class="caption own-sec">chaque lundi</span>
+</div>
+<div class="mu-card" style="padding: 0; overflow: hidden">
+<x-import component-from-global-scope="MatchUp.TransactionRow" chevron="{{no}}" category="payout" label="Prévu · lun. 19 oct." meta="Paiements du 12 au 18 oct." amount="{{p1410}}" status="pending"></x-import>
+<x-import component-from-global-scope="MatchUp.TransactionRow" category="payout" label="Versé · lun. 12 oct." meta="VR-2026-0412 · •••• 1234" amount="{{p1250}}" on-click="{{noop}}"></x-import>
+<x-import component-from-global-scope="MatchUp.TransactionRow" category="payout" label="Versé · lun. 5 oct." meta="VR-2026-0398 · •••• 1234" amount="{{p1080}}" on-click="{{noop}}"></x-import>
+<x-import component-from-global-scope="MatchUp.TransactionRow" category="payout" label="Versé · lun. 28 sept." meta="VR-2026-0383 · •••• 1234" amount="{{p940}}" on-click="{{noop}}"></x-import>
+</div>
+</section>
+
+<div class="mu-card" style="padding: 0; overflow: hidden">
+<button type="button" class="rv-link">
+<span class="rv-link__ico"><x-import component-from-global-scope="MatchUp.Icon" name="file-pdf" size="{{i20}}"></x-import></span>
+<span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px"><span class="label">Télécharger le relevé d’octobre</span><span class="caption own-sec">PDF pour ta comptabilité · TVA détaillée</span></span>
+<span class="own-sec" style="display: flex"><x-import component-from-global-scope="MatchUp.Icon" name="download-simple" size="{{i20}}"></x-import></span>
+</button>
+<button type="button" class="rv-link" style="border-top: 1px solid var(--border)">
+<span class="rv-link__ico"><x-import component-from-global-scope="MatchUp.Icon" name="bank" size="{{i20}}"></x-import></span>
+<span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px"><span class="label">Compte de versement</span><span class="caption own-sec">Arena Five SARL · Attijari bank •••• 1234</span></span>
+<span class="own-sec" style="display: flex"><x-import component-from-global-scope="MatchUp.Icon" name="caret-right" size="{{i20}}"></x-import></span>
+</button>
+</div>
+
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":1620}}'>
+class Component extends DCLogic {
+  state = { period: '30' };
+  renderVals() {
+    const data = [740, 920, 1150, 1010, 660, 670, 690, 790, 940, 1160, 1040, 620, 700, 810, 770, 990, 1220, 1180, 700, 720, 850, 780, 1100, 1210, 1120, 660, 730, 860, 810, 1140];
+    return {
+      yes: true, no: false, i16: 16, i20: 20, i24: 24, inset: 44, h220: 220, last: 29,
+      d14: 14, d28: 28, online: 4610, total: 26740,
+      p1410: 1410, p1250: 1250, p1080: 1080, p940: 940,
+      noop: () => {},
+      barActions: [{ icon: 'download-simple', label: 'Exporter les revenus' }],
+      periods: [{ value: '7', label: '7 jours' }, { value: '30', label: '30 jours' }, { value: '12', label: '12 mois' }],
+      period: this.state.period,
+      setPeriod: (v) => this.setState({ period: v }),
+      days: data.map((_, i) => new Date(2026, 8, 17 + i)),
+      series: [{ id: 'rev', label: 'Revenus', data: data, color: 'chart-1' }]
+    };
+  }
+}
+</script>
+</body>
+</html>

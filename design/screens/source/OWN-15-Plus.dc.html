@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Propriétaire · Plus</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/matchup/tokens.css">
+<link rel="stylesheet" href="ds/matchup/components/bundle.css">
+<script src="ds/matchup/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+/* own:shared — identical in OWN-10…16 */
+body{margin:0}
+a{color:var(--link)}
+.own-head{position:relative; z-index:2; flex:none; display:flex; align-items:flex-end; gap:var(--space-1); padding:52px var(--space-2) var(--space-2) var(--space-4)}
+.own-head__txt{flex:1; min-width:0; display:flex; flex-direction:column; gap:2px}
+.own-role{display:flex; align-items:center; gap:6px; color:var(--text-secondary)}
+.own-role__icon{display:flex; color:var(--text)}
+.own-avatar{flex:none; width:48px; height:48px; display:grid; place-items:center; border-radius:var(--radius-full); text-decoration:none}
+.own-avatar:focus-visible{outline:none; box-shadow:var(--focus-ring)}
+.own-hot{position:absolute; display:block; border-radius:var(--radius-sm)}
+.own-hot:focus-visible{outline:none; box-shadow:var(--focus-ring)}
+.own-sec{display:flex; flex-direction:column; gap:var(--space-3)}
+.own-sec__head{display:flex; align-items:center; justify-content:space-between; gap:var(--space-3); min-height:32px}
+.own-sec__head .mu-btn{margin-inline-end:calc(-1 * var(--space-2))}
+.own-tag{flex:none; display:inline-flex; align-items:center; justify-content:center; min-width:28px; height:22px; padding:0 6px; box-sizing:border-box; border-radius:var(--radius-xs); background:var(--surface-muted); color:var(--text)}
+/* /own:shared */
+.o15-section{display:flex; flex-direction:column; gap:var(--space-2); margin:0}
+.o15-section__title{margin:0; padding-inline:var(--space-4); color:var(--text-secondary)}
+.o15-group{margin:0; padding:0; list-style:none; background:var(--surface); border-radius:var(--radius-md); box-shadow:var(--elevation-1); overflow:hidden}
+.o15-group > li{position:relative}
+.o15-group > li + li::before{content:""; position:absolute; top:0; inset-inline-start:64px; inset-inline-end:0; height:1px; background:var(--border); z-index:1}
+.o15-row{position:relative; width:100%; appearance:none; border:0; margin:0; font:inherit; text-align:start; background:transparent; cursor:pointer; display:flex; align-items:center; gap:var(--space-3); min-height:56px; padding:var(--space-2) var(--space-4); box-sizing:border-box; color:var(--text); text-decoration:none}
+.o15-row:hover{background:var(--surface-muted)}
+.o15-row:focus-visible{outline:none; box-shadow:inset 0 0 0 2px var(--focus)}
+.o15-row__icon{flex:none; width:36px; height:36px; border-radius:var(--radius-sm); background:var(--surface-muted); color:var(--text); display:grid; place-items:center}
+.o15-row__text{flex:1 1 auto; min-width:0; display:flex; flex-direction:column; gap:2px}
+.o15-row__desc{color:var(--text-secondary)}
+.o15-row__value{flex:none; max-width:48%; color:var(--text-secondary); text-align:end; white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+.o15-row__chev{flex:none; display:flex; color:var(--text-secondary); margin-inline-end:calc(-1 * var(--space-1))}
+.o15-row--danger{color:var(--error-text)}
+.o15-row--danger .o15-row__icon{background:var(--error-soft); color:var(--error-text)}
+.o15-dot{flex:none; width:8px; height:8px; border-radius:var(--radius-full); background:var(--error)}
+.o15-me{display:flex; flex-direction:column; gap:var(--space-4); padding:var(--space-4)}
+.o15-plan{display:flex; align-items:center; gap:var(--space-3); padding:var(--space-3); border-radius:var(--radius-sm); background:var(--surface-muted)}
+</style>
+</helmet>
+<div style="position: relative; width: 390px; height: 1212px; box-sizing: border-box; overflow: hidden; display: flex; flex-direction: column; background: var(--bg); color: var(--text); font-family: var(--font-sans)">
+
+<header class="own-head">
+<div class="own-head__txt">
+<span class="own-role caption"><span class="own-role__icon"><x-import component-from-global-scope="MatchUp.Icon" name="storefront" size="{{i16}}"></x-import></span>Espace propriétaire · Arena Five</span>
+<h1 class="h1" style="margin: 0">Plus</h1>
+</div>
+<x-import component-from-global-scope="MatchUp.IconButton" icon="bell" label="Notifications, 2 non lues" size="l" variant="ghost" badge="{{n2}}"></x-import>
+</header>
+
+<div style="display: flex; flex-direction: column; gap: 20px; padding: 8px 16px 180px 16px">
+<section class="mu-card o15-me" aria-label="Mon compte propriétaire">
+<div style="display: flex; align-items: center; gap: 12px">
+<x-import component-from-global-scope="MatchUp.Avatar" name="Skander T." size="l"></x-import>
+<div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px">
+<span class="label-l">Skander T.</span>
+<span class="caption" style="color: var(--text-secondary)">Arena Five · Route de la Corniche, La Marsa</span>
+<span style="display: flex; margin-top: 4px"><x-import component-from-global-scope="MatchUp.StatusBadge" status="verified" label="Terrain vérifié" size="s"></x-import></span>
+</div>
+</div>
+<div class="o15-plan">
+<span style="flex: none; width: 36px; height: 36px; border-radius: var(--radius-sm); display: grid; place-items: center; background: var(--accent); color: var(--on-accent)"><x-import component-from-global-scope="MatchUp.Icon" name="crown-simple" weight="fill" size="{{i20}}"></x-import></span>
+<div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px">
+<span class="label">Plan Pro · essai gratuit</span>
+<span class="caption" style="color: var(--text-secondary)">Jusqu’au mer. 28 oct., puis 149 DT/mois. Rappel 3 jours avant.</span>
+</div>
+</div>
+</section>
+
+<section class="o15-section" aria-labelledby="o15-act"><h2 id="o15-act" class="o15-section__title overline">Mon complexe</h2><ul class="o15-group">
+<li><a href="OWN-17-Terrains.dc.html" class="o15-row"><span class="o15-row__icon"><x-import component-from-global-scope="MatchUp.Icon" name="sport-court" size="{{i20}}"></x-import></span><span class="o15-row__text"><span class="label">Terrains</span></span><span class="o15-row__value body">3 terrains</span><span class="o15-row__chev"><x-import component-from-global-scope="MatchUp.Icon" name="caret-right" size="{{i20}}"></x-import></span></a></li>
+<li><a href="OWN-16-Tarifs.dc.html" class="o15-row"><span class="o15-row__icon"><x-import component-from-global-scope="MatchUp.Icon" name="tag" size="{{i20}}"></x-import></span><span class="o15-row__text"><span class="label">Tarifs</span></span><span class="o15-row__value body">120 – 150 DT /h</span><span class="o15-row__chev"><x-import component-from-global-scope="MatchUp.Icon" name="caret-right" size="{{i20}}"></x-import></span></a></li>
+<li><a href="OWN-18-Clients.dc.html" class="o15-row"><span class="o15-row__icon"><x-import component-from-global-scope="MatchUp.Icon" name="users" size="{{i20}}"></x-import></span><span class="o15-row__text"><span class="label">Clients</span></span><span class="o15-row__value body">Habitués, no-shows</span><span class="o15-row__chev"><x-import component-from-global-scope="MatchUp.Icon" name="caret-right" size="{{i20}}"></x-import></span></a></li>
+<li><a href="OWN-19-Avis.dc.html" class="o15-row"><span class="o15-row__icon"><x-import component-from-global-scope="MatchUp.Icon" name="star" size="{{i20}}"></x-import></span><span class="o15-row__text"><span class="label">Avis</span></span><span class="o15-dot" aria-label="1 avis sans réponse"></span><span class="o15-row__value body">4,7 · 128 avis</span><span class="o15-row__chev"><x-import component-from-global-scope="MatchUp.Icon" name="caret-right" size="{{i20}}"></x-import></span></a></li>
+</ul></section>
+
+<section class="o15-section" aria-labelledby="o15-money"><h2 id="o15-money" class="o15-section__title overline">Argent</h2><ul class="o15-group">
+<li><a href="OWN-25-Revenus.dc.html" class="o15-row"><span class="o15-row__icon"><x-import component-from-global-scope="MatchUp.Icon" name="coins" size="{{i20}}"></x-import></span><span class="o15-row__text"><span class="label">Revenus</span></span><span class="o15-row__value body">Versement lun. 19 oct.</span><span class="o15-row__chev"><x-import component-from-global-scope="MatchUp.Icon" name="caret-right" size="{{i20}}"></x-import></span></a></li>
+<li><button type="button" class="o15-row"><span class="o15-row__icon"><x-import component-from-global-scope="MatchUp.Icon" name="crown-simple" size="{{i20}}"></x-import></span><span class="o15-row__text"><span class="label">Abonnement</span></span><span class="o15-row__value body">Pro · essai</span><span class="o15-row__chev"><x-import component-from-global-scope="MatchUp.Icon" name="caret-right" size="{{i20}}"></x-import></span></button></li>
+</ul></section>
+
+<section class="o15-section" aria-labelledby="o15-acc"><h2 id="o15-acc" class="o15-section__title overline">Compte</h2><ul class="o15-group">
+<li><a href="SET-01-Parametres.dc.html" class="o15-row"><span class="o15-row__icon"><x-import component-from-global-scope="MatchUp.Icon" name="gear-six" size="{{i20}}"></x-import></span><span class="o15-row__text"><span class="label">Paramètres</span></span><span class="o15-row__value body">Compte, sécurité</span><span class="o15-row__chev"><x-import component-from-global-scope="MatchUp.Icon" name="caret-right" size="{{i20}}"></x-import></span></a></li>
+<li><a href="PRF-06-Changer-de-role.dc.html" class="o15-row"><span class="o15-row__icon"><x-import component-from-global-scope="MatchUp.Icon" name="user-switch" size="{{i20}}"></x-import></span><span class="o15-row__text"><span class="label">Changer de rôle</span></span><span class="o15-row__value body">2 rôles</span><span class="o15-row__chev"><x-import component-from-global-scope="MatchUp.Icon" name="caret-right" size="{{i20}}"></x-import></span></a></li>
+<li><button type="button" class="o15-row"><span class="o15-row__icon"><x-import component-from-global-scope="MatchUp.Icon" name="lifebuoy" size="{{i20}}"></x-import></span><span class="o15-row__text"><span class="label">Aide et support</span></span><span class="o15-row__value body">+216 71 234 567</span><span class="o15-row__chev"><x-import component-from-global-scope="MatchUp.Icon" name="caret-right" size="{{i20}}"></x-import></span></button></li>
+</ul></section>
+
+<button type="button" class="mu-card o15-row" style="border-radius: var(--radius-md)"><span class="o15-row__icon"><x-import component-from-global-scope="MatchUp.Icon" name="sign-out" size="{{i20}}"></x-import></span><span class="o15-row__text"><span class="label">Se déconnecter</span></span></button>
+</div>
+
+<x-import component-from-global-scope="MatchUp.TabBar" items="{{tabs}}" value="plus" label="Navigation propriétaire" safe-area="{{sa}}" fab="{{yes}}" dc-props="{{tabStyle}}"></x-import>
+<a href="AI-07-Assistant-pro.dc.html" aria-label="Ouvrir l’assistant MatchUp" style="z-index: calc(var(--z-sticky) + 1); position: absolute; right: 16px; bottom: 114px; width: 56px; height: 56px; border-radius: var(--radius-full)"></a>
+<a href="AI-07-Assistant-pro.dc.html" class="own-hot" aria-label="Ouvrir l’assistant IA" style="right: 16px; bottom: 114px; width: 56px; height: 56px; border-radius: var(--radius-full); z-index: 5"></a>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":1212}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      yes: true, no: false, i14: 14, i16: 16, i20: 20, i24: 24, sa: 34, n2: 2,
+      tabs: [
+        { value: 'jour', label: 'Aujourd’hui', icon: 'house', href: 'OWN-10-Aujourdhui.dc.html' },
+        { value: 'planning', label: 'Planning', icon: 'calendar-blank', href: 'OWN-11-Planning.dc.html' },
+        { value: 'scan', label: 'Check-in', icon: 'qr-code', href: 'OWN-20-Scanner.dc.html' },
+        { value: 'resa', label: 'Réservations', icon: 'list-checks', href: 'OWN-14-Reservations.dc.html' },
+        { value: 'plus', label: 'Plus', icon: 'dots-three', href: 'OWN-15-Plus.dc.html' }
+      ],
+      tabStyle: { style: { position: 'absolute', left: 0, right: 0, bottom: 0 } }
+    };
+  }
+}
+</script>
+</body>
+</html>

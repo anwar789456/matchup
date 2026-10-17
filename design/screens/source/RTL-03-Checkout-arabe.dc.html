@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Paiement · arabe</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/matchup/tokens.css">
+<link rel="stylesheet" href="ds/matchup/components/bundle.css">
+<script src="ds/matchup/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0}
+a{color:var(--link)}
+.pay-root{position:relative; width:390px; box-sizing:border-box; display:flex; flex-direction:column; overflow:hidden; background:var(--bg); color:var(--text); font-family:var(--font-sans)}
+.pay-head{flex:none; display:flex; align-items:center; gap:4px; min-height:48px; padding:52px 16px 8px 8px}
+.pay-head__title{flex:1; min-width:0; margin:0}
+.pay-head__aside{display:inline-flex; align-items:center; gap:4px; color:var(--text-secondary)}
+.pay-ribbon{flex:none}
+.pay-body{flex:1; min-height:0; display:flex; flex-direction:column; gap:28px; padding:20px 16px 160px 16px}
+.pay-body > *{flex-shrink:0}
+.pay-sec{display:flex; flex-direction:column; gap:12px}
+.pay-sec__head{display:flex; align-items:baseline; justify-content:space-between; gap:12px}
+.pay-sec__title{margin:0}
+.pay-muted{color:var(--text-secondary)}
+.pay-ink{color:var(--text)}
+.pay-m0{margin:0}
+.pay-ico{display:inline-flex; flex:none}
+
+/* summary ticket */
+.pay-sum{display:flex; flex-direction:column; padding:0; overflow:hidden}
+.pay-sum__top{display:flex; align-items:center; gap:12px; padding:16px}
+.pay-sum__txt{flex:1; min-width:0; display:flex; flex-direction:column; gap:2px}
+.pay-perf{position:relative; height:0; margin:0 16px; border-top:1.5px dashed var(--border-strong)}
+.pay-perf::before,.pay-perf::after{content:""; position:absolute; top:-9px; width:16px; height:16px; border-radius:var(--radius-full); background:var(--bg)}
+.pay-perf::before{left:-25px}
+.pay-perf::after{right:-25px}
+.pay-sum__toggle{appearance:none; border:0; margin:0; width:100%; background:none; font:inherit; cursor:pointer; text-align:start; display:flex; align-items:center; gap:8px; min-height:52px; padding:0 16px; text-decoration:none; color:var(--text)}
+.pay-sum__toggle:focus-visible{outline:none; box-shadow:var(--focus-ring); border-radius:var(--radius-md)}
+.pay-sum__toggle .pay-grow{flex:1}
+.pay-dl{margin:0; display:flex; flex-direction:column; padding:0 16px 8px 16px}
+.pay-dl > div{display:flex; align-items:flex-start; justify-content:space-between; gap:16px; padding:11px 0; border-top:1px solid var(--border)}
+.pay-dl dt{flex:none; color:var(--text-secondary)}
+.pay-dl dd{margin:0; text-align:end; display:flex; flex-direction:column; align-items:flex-end; gap:2px}
+.pay-split{display:flex; flex-direction:column; gap:8px; margin:4px 16px 16px 16px; padding:12px; border-radius:var(--radius-sm); background:var(--surface-muted)}
+.pay-split__bar{display:grid; grid-template-columns:repeat(10, 1fr); gap:3px}
+.pay-split__bar span{height:8px; border-radius:var(--radius-full); background:var(--border)}
+.pay-split__bar span.is-me{background:var(--accent); box-shadow:inset 0 0 0 1.5px var(--text)}
+.pay-split__bar span.is-paid{background:var(--text-secondary)}
+.pay-split__legend{display:flex; flex-wrap:wrap; gap:4px 12px}
+.pay-split__legend span{display:inline-flex; align-items:center; gap:6px}
+.pay-split__legend i{display:inline-block; width:10px; height:10px; border-radius:var(--radius-full)}
+
+/* promo */
+.pay-promo{display:flex; align-items:flex-start; gap:8px}
+.pay-promo > :first-child{flex:1; min-width:0}
+.pay-promo__btn{flex:none; margin-top:28px}
+
+/* payment methods */
+.pay-methods{display:flex; flex-direction:column; padding:4px 16px}
+.pay-methods .mu-radio{padding-block:14px; align-items:center}
+.pay-methods .mu-radio + .mu-radio{border-top:1px solid var(--border)}
+.pay-methods .mu-radio__text{flex:1; min-width:0}
+.pay-methods .mu-radio__label{display:block}
+.pay-card{display:flex; align-items:center; gap:12px; width:100%}
+.pay-card__txt{flex:1; min-width:0; display:flex; flex-direction:column; gap:2px}
+.pay-brand{flex:none; display:inline-flex; align-items:center; justify-content:center; width:44px; height:28px; box-sizing:border-box; border-radius:var(--radius-xs); background:var(--surface); box-shadow:inset 0 0 0 1.5px var(--text); color:var(--text); letter-spacing:0.04em}
+.pay-brand--s{width:36px; height:22px}
+.pay-brand--wallet{background:var(--surface-muted); box-shadow:inset 0 0 0 1px var(--border)}
+.pay-tag{display:inline-flex; align-items:center; gap:4px; padding:2px 8px; border-radius:var(--radius-full); background:var(--surface-muted); color:var(--text-secondary); white-space:nowrap}
+.pay-warn{display:inline-flex; align-items:center; gap:4px; color:var(--warning-text)}
+.pay-ok{display:inline-flex; align-items:center; gap:4px; color:var(--success-text)}
+.pay-err{display:inline-flex; align-items:center; gap:4px; color:var(--error-text)}
+.pay-add{display:flex; align-items:center; gap:12px; min-height:56px; border-top:1px solid var(--border); text-decoration:none; color:var(--text)}
+.pay-add__ico{flex:none; width:44px; height:28px; box-sizing:border-box; border-radius:var(--radius-xs); box-shadow:inset 0 0 0 1.5px var(--border-strong); display:flex; align-items:center; justify-content:center; color:var(--text-secondary)}
+.pay-add:focus-visible{outline:none; box-shadow:var(--focus-ring); border-radius:var(--radius-sm)}
+
+/* express wallets */
+.pay-or{display:flex; align-items:center; gap:12px; color:var(--text-secondary)}
+.pay-or::before,.pay-or::after{content:""; flex:1; height:1px; background:var(--border)}
+.pay-xp{display:grid; grid-template-columns:1fr 1fr; gap:12px}
+.pay-xp__btn{appearance:none; border:0; margin:0; cursor:pointer; height:var(--control-l); border-radius:var(--radius-md); background:var(--ink-900); color:var(--white); box-shadow:inset 0 0 0 1px var(--border-strong); font:inherit}
+.pay-xp__btn:focus-visible{outline:none; box-shadow:var(--focus-ring)}
+
+/* totals */
+.pay-tot{display:flex; flex-direction:column; gap:10px; padding:16px; border-radius:var(--radius-md); background:var(--surface); box-shadow:var(--elevation-1), inset 0 0 0 1px var(--border)}
+.pay-line{display:flex; align-items:baseline; justify-content:space-between; gap:12px}
+.pay-rule{height:1px; background:var(--border); margin:2px 0}
+
+/* policy */
+.pay-pol{display:flex; flex-direction:column; gap:12px; padding:16px}
+.pay-pol__bar{display:grid; grid-template-columns:1.3fr 1fr 1fr; gap:4px}
+.pay-pol__bar span{height:6px}
+.pay-tier{display:flex; align-items:flex-start; gap:10px}
+.pay-tier > span:last-child{flex:1; display:flex; flex-direction:column}
+
+/* sticky pay bar */
+.pay-bar{position:absolute; left:0; right:0; bottom:0; z-index:var(--z-sticky); padding:12px 16px 34px 16px; background:var(--surface); box-shadow:var(--elevation-2-up); display:flex; flex-direction:column; gap:8px}
+.pay-secure{display:flex; align-items:center; justify-content:center; gap:6px; margin:0; color:var(--text-secondary)}
+
+/* payment element zone */
+.pay-pe{position:relative; margin-top:12px; display:flex; flex-direction:column; gap:16px; padding:28px 16px 16px 16px; border-radius:var(--radius-md); border:1.5px dashed var(--border-strong); background:var(--surface)}
+.pay-pe__legend{position:absolute; top:-11px; left:12px; display:inline-flex; align-items:center; gap:6px; padding:2px 8px; border-radius:var(--radius-full); background:var(--bg); color:var(--text-secondary); box-shadow:inset 0 0 0 1px var(--border)}
+.pay-pe__brands{display:flex; align-items:center; gap:6px}
+.pay-pe__row{display:grid; grid-template-columns:1fr 1fr; gap:12px}
+
+/* state hero (result / error screens) */
+.pay-hero{display:flex; flex-direction:column; align-items:center; gap:8px; text-align:center}
+.pay-hero__ico{width:72px; height:72px; border-radius:var(--radius-full); display:flex; align-items:center; justify-content:center; margin-bottom:4px}
+@keyframes pay-pop{from{transform:scale(0.6); opacity:0}to{transform:none; opacity:1}}
+@keyframes pay-draw{from{stroke-dashoffset:40}to{stroke-dashoffset:0}}
+.pay-check{animation:pay-pop var(--duration-slow) var(--ease-pop) both}
+.pay-check path{stroke-dasharray:40; animation:pay-draw var(--duration-slow) var(--ease-enter) 120ms both}
+@media (prefers-reduced-motion: reduce){.pay-check, .pay-check path{animation:none}}
+.pay-steps{margin:0; padding:0; list-style:none; display:flex; flex-direction:column; gap:12px}
+.pay-steps li{display:flex; gap:12px; align-items:flex-start}
+.pay-steps__n{flex:none; width:24px; height:24px; border-radius:var(--radius-full); display:flex; align-items:center; justify-content:center; background:var(--surface); box-shadow:inset 0 0 0 1px var(--border-strong); color:var(--text)}
+.pay-tile{appearance:none; border:0; margin:0; font:inherit; cursor:pointer; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:var(--space-2); min-height:84px; padding:var(--space-3); border-radius:var(--radius-md); background:var(--surface); color:var(--text); box-shadow:var(--elevation-1), inset 0 0 0 1px var(--border); text-align:center; text-decoration:none}
+.pay-tile:focus-visible{outline:none; box-shadow:var(--focus-ring)}
+.pay-hot{position:absolute; display:block; z-index:calc(var(--z-takeover) + 1); border-radius:var(--radius-md)}
+.pay-hot:focus-visible{outline:2px solid var(--focus); outline-offset:2px}
+/* rtl: numeric runs that must read left to right (card numbers, codes, ranges) */
+.rtl-ltr{direction:ltr; unicode-bidi:isolate; display:inline-block}
+.pay-pol__bar span:first-child{border-start-start-radius:var(--radius-full); border-end-start-radius:var(--radius-full)}
+.pay-pol__bar span:last-child{border-start-end-radius:var(--radius-full); border-end-end-radius:var(--radius-full)}
+</style>
+</helmet>
+<div class="pay-root" dir="rtl" lang="ar" style="height: 1564px; background: var(--bg); font-family: var(--font-arabic)">
+<div class="pay-head">
+<a href="BKG-04-Recapitulatif.dc.html" class="mu-iconbtn mu-iconbtn--l mu-iconbtn--ghost" aria-label="رجوع إلى الملخّص" style="color: var(--text)"><x-import component-from-global-scope="MatchUp.Icon" name="arrow-left" size="{{i24}}"></x-import></a>
+<h1 class="pay-head__title h3">الدفع</h1>
+<span class="pay-head__aside caption"><x-import component-from-global-scope="MatchUp.Icon" name="lock-simple" size="{{i16}}"></x-import>دفع آمن</span>
+</div>
+<div class="pay-ribbon"><x-import component-from-global-scope="MatchUp.Banner" variant="ribbon" title="وضع الاختبار">بطاقة <span class="num-xs rtl-ltr">4242 4242 4242 4242</span></x-import></div>
+<div class="pay-body">
+<section class="mu-card pay-sum" aria-label="طلبك">
+<div class="pay-sum__top">
+<x-import component-from-global-scope="MatchUp.CourtArt" sport="football" variant="pattern" dc-props="{{thumb}}"></x-import>
+<div class="pay-sum__txt">
+<span class="overline pay-muted">حصّتك · الحجز <span class="rtl-ltr">MU-48213</span></span>
+<span class="label-l">Arena Five · الملعب 1</span>
+<span class="caption pay-muted">الأربعاء 21 أكتوبر · <span class="num-xs rtl-ltr">21:00 – 22:00</span> · كرة قدم خماسية</span>
+</div>
+</div>
+<div class="pay-perf" aria-hidden="true"></div>
+<a href="PAY-02-Checkout-detail.dc.html" class="pay-sum__toggle" aria-label="عرض تفاصيل الطلب" aria-expanded="false"><span class="label pay-grow">عرض التفاصيل</span><span><span class="num-m">15</span><span class="label"> د.ت</span></span><x-import component-from-global-scope="MatchUp.Icon" name="caret-down" size="{{i20}}"></x-import></a>
+</section>
+<section class="pay-sec" aria-label="التخفيضات">
+<div class="pay-promo"><x-import component-from-global-scope="MatchUp.TextField" label="رمز التخفيض (اختياري)" leading-icon="tag" placeholder="مثال: BIENVENUE10"></x-import><button type="button" class="mu-btn mu-btn--secondary mu-btn--l pay-promo__btn"><span class="mu-btn__content"><span class="mu-btn__label label-l">تطبيق</span></span></button></div>
+<div class="mu-card" style="padding: 6px 16px">
+<x-import component-from-global-scope="MatchUp.Switch" label-position="start" icon="wallet" label="استعمل رصيدي" description="30 د.ت متاحة" checked="{{wallet}}" on-change="{{setWallet}}"></x-import>
+</div>
+</section>
+<section class="pay-sec" aria-labelledby="pay-pm">
+<h2 id="pay-pm" class="h3 pay-sec__title">طريقة الدفع</h2>
+<div class="mu-card pay-methods">
+<x-import component-from-global-scope="MatchUp.Radio.Group" aria-label="بطاقة محفوظة" value="{{card}}" on-change="{{setCard}}">
+<x-import component-from-global-scope="MatchUp.Radio" value="visa"><span class="pay-card"><span class="pay-brand label-s" style="font-family: var(--font-sans)">VISA</span><span class="pay-card__txt"><span class="label"><bdi class="rtl-ltr">Visa •••• 4242</bdi></span><span class="caption pay-muted">تنتهي في <span class="rtl-ltr">08/27</span></span></span><span class="pay-tag label-s">الافتراضية</span></span></x-import>
+<x-import component-from-global-scope="MatchUp.Radio" value="mc"><span class="pay-card"><span class="pay-brand label-s" style="font-family: var(--font-sans)">MC</span><span class="pay-card__txt"><span class="label"><bdi class="rtl-ltr">Mastercard •••• 5454</bdi></span><span class="caption pay-warn"><x-import component-from-global-scope="MatchUp.Icon" name="warning" weight="fill" size="{{i14}}"></x-import>تنتهي الشهر المقبل · <bdi class="rtl-ltr">11/26</bdi></span></span></span></x-import>
+</x-import>
+<a href="PAY-03-Nouvelle-carte.dc.html" class="pay-add"><span class="pay-add__ico"><x-import component-from-global-scope="MatchUp.Icon" name="plus" size="{{i16}}"></x-import></span><span class="label" style="flex: 1">إضافة بطاقة</span><span class="pay-muted" style="display: flex"><x-import component-from-global-scope="MatchUp.Icon" name="caret-right" size="{{i20}}"></x-import></span></a>
+</div>
+<sc-if value="{{wallet}}"><p class="caption pay-muted pay-m0" style="display: flex; gap: 6px"><x-import component-from-global-scope="MatchUp.Icon" name="info" size="{{i16}}"></x-import><span>رصيدك يغطّي المبلغ كاملًا: لن تُخصَم أي قيمة من بطاقتك.</span></p></sc-if>
+<div class="pay-or caption">أو بلمسة واحدة</div>
+<div class="pay-xp">
+<button type="button" class="pay-xp__btn label-l" aria-label="ادفع 15 د.ت عبر Apple Pay" style="font-family: var(--font-sans)">Apple Pay</button>
+<button type="button" class="pay-xp__btn label-l" aria-label="ادفع 15 د.ت عبر Google Pay" style="font-family: var(--font-sans)">Google Pay</button>
+</div>
+</section>
+<section class="pay-tot" aria-label="المجموع">
+<div class="pay-line"><span class="body pay-muted">حصّتك · لاعب واحد من 10</span><span><span class="num-s">15</span><span class="caption"> د.ت</span></span></div>
+<div class="pay-line"><span class="body pay-muted">رسوم الخدمة</span><span class="label" style="color: var(--success-text)">مجانية</span></div>
+<div class="pay-rule"></div>
+<div class="pay-line" style="align-items: center"><span class="label-l">{{totalLabel}}</span><span><span class="num-l">{{totalAmt}}</span><span class="label"> د.ت</span></span></div>
+<sc-if value="{{wallet}}"><p class="caption pay-ok pay-m0"><x-import component-from-global-scope="MatchUp.Icon" name="wallet" size="{{i14}}"></x-import>تُخصم من رصيدك في MatchUp · يتبقّى لك 15 د.ت</p></sc-if>
+</section>
+<section class="pay-sec" aria-labelledby="pay-pol">
+<div class="pay-sec__head"><h2 id="pay-pol" class="h3 pay-sec__title">إذا ألغيت</h2><span class="caption pay-muted">سياسة Arena Five</span></div>
+<div class="mu-card pay-pol">
+<div class="pay-pol__bar" aria-hidden="true"><span style="background: var(--success)"></span><span style="background: var(--warning)"></span><span style="background: var(--error)"></span></div>
+<div class="pay-tier"><span class="pay-ico" style="color: var(--success-text)"><x-import component-from-global-scope="MatchUp.Icon" name="check-circle" weight="fill" size="{{i20}}"></x-import></span><span><span class="label">مجاني حتى الثلاثاء 20 أكتوبر · <span class="num-xs">21:00</span></span><span class="caption pay-muted">يُسترجَع المبلغ كاملًا إلى رصيدك في MatchUp</span></span></div>
+<div class="pay-tier"><span class="pay-ico" style="color: var(--warning-text)"><x-import component-from-global-scope="MatchUp.Icon" name="clock" weight="fill" size="{{i20}}"></x-import></span><span><span class="label">استرجاع 50% حتى الأربعاء 21 أكتوبر · <span class="num-xs">15:00</span></span><span class="caption pay-muted">بين 24 و6 ساعات قبل المباراة</span></span></div>
+<div class="pay-tier"><span class="pay-ico" style="color: var(--error-text)"><x-import component-from-global-scope="MatchUp.Icon" name="x-circle" weight="fill" size="{{i20}}"></x-import></span><span><span class="label">لا استرجاع بعد ذلك</span><span class="caption pay-muted">إلا إذا ألغى Arena Five الحجز: يُسترجَع المبلغ كاملًا</span></span></div>
+</div>
+</section>
+<div class="pay-terms">
+<x-import component-from-global-scope="MatchUp.Checkbox" checked="{{terms}}" on-change="{{setTerms}}">أوافق على <span class="label" style="text-decoration: underline">شروط الحجز</span> وعلى سياسة الإلغاء الخاصة بهذا الملعب.</x-import>
+</div>
+</div>
+<div class="pay-bar">
+<a href="PAY-06-Paiement-en-cours.dc.html" class="mu-btn mu-btn--primary mu-btn--xl mu-btn--block"><span class="mu-btn__content"><span class="mu-btn__label label-l">ادفع</span><span class="mu-btn__price"><span class="num-m">15</span><span class="label"> د.ت</span></span></span></a>
+<p class="pay-secure caption"><x-import component-from-global-scope="MatchUp.Icon" name="lock-simple" size="{{i16}}"></x-import><span>دفع آمن عبر Stripe</span></p>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":1564}}'>
+class Component extends DCLogic {
+  state = { card: 'visa', wallet: false, terms: false };
+  renderVals() {
+    const s = this.state;
+    return {
+      yes: true, no: false, i14: 14, i16: 16, i20: 20, i24: 24,
+      thumb: { style: { width: 48, height: 48, borderRadius: 'var(--radius-sm)', flex: 'none' } },
+      card: s.card, wallet: s.wallet, terms: s.terms,
+      setCard: (v) => this.setState({ card: v }),
+      setWallet: (v) => this.setState({ wallet: v }),
+      setTerms: (v) => this.setState({ terms: v }),
+      totalLabel: s.wallet ? 'المبلغ المخصوم من البطاقة' : 'المبلغ الإجمالي',
+      totalAmt: s.wallet ? '0' : '15'
+    };
+  }
+}
+</script>
+</body>
+</html>

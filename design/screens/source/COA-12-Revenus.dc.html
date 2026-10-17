@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Coach · Revenus</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/matchup/tokens.css">
+<link rel="stylesheet" href="ds/matchup/components/bundle.css">
+<script src="ds/matchup/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+/* coa:shared — identical in COA-04…12 */
+body{margin:0}
+a{color:var(--link)}
+.coa-head{display:flex; align-items:flex-start; justify-content:space-between; gap:var(--space-3); padding:52px var(--space-4) 0 var(--space-4)}
+.coa-head__text{flex:1; min-width:0; display:flex; flex-direction:column; align-items:flex-start; gap:var(--space-2)}
+.coa-head__actions{flex:none; display:flex; align-items:center; gap:var(--space-1); margin-inline-end:calc(-1 * var(--space-1))}
+.coa-role{display:inline-flex; align-items:center; gap:6px; padding:3px 10px 3px 8px; border-radius:var(--radius-full); background:var(--surface); box-shadow:inset 0 0 0 1px var(--border); color:var(--text)}
+.coa-me{position:relative; display:flex; border-radius:var(--radius-full); text-decoration:none; color:inherit}
+.coa-me::before{content:""; position:absolute; inset:-4px}
+.coa-me:focus-visible{outline:none; box-shadow:var(--focus-ring)}
+.coa-sec{display:flex; flex-direction:column; gap:var(--space-3); padding:0 var(--space-4)}
+.coa-sec__head{display:flex; align-items:center; justify-content:space-between; gap:var(--space-3); min-height:32px; margin-inline-end:calc(-1 * var(--space-3))}
+.coa-sec__title{margin:0; display:flex; align-items:center; gap:var(--space-2)}
+.coa-list{margin:0; padding:0; list-style:none; background:var(--surface); border-radius:var(--radius-md); box-shadow:var(--elevation-1); overflow:hidden}
+.coa-list > li{position:relative}
+.coa-list > li + li::before{content:""; position:absolute; top:0; inset-inline-start:68px; inset-inline-end:0; height:1px; background:var(--border); z-index:1}
+.coa-row{position:relative; display:flex; align-items:center; gap:var(--space-3); min-height:64px; padding:var(--space-3) var(--space-4); box-sizing:border-box; color:var(--text); text-decoration:none}
+a.coa-row:hover{background:var(--surface-muted)}
+a.coa-row:focus-visible{outline:none; box-shadow:inset 0 0 0 2px var(--focus)}
+.coa-row__text{flex:1; min-width:0; display:flex; flex-direction:column; gap:2px}
+.coa-row__sub{color:var(--text-secondary); white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+.coa-chev{flex:none; display:flex; color:var(--text-secondary); margin-inline-end:calc(-1 * var(--space-1))}
+.coa-pill{flex:none; display:inline-flex; align-items:center; gap:4px; padding:2px 10px; border-radius:var(--radius-full); background:var(--accent); color:var(--on-accent)}
+.coa-muted{color:var(--text-secondary)}
+.coa-hot{position:absolute; display:block; border-radius:var(--radius-full); z-index:3}
+.coa-hot:focus-visible{outline:2px solid var(--focus); outline-offset:2px}
+/* /coa:shared */
+.rev-hero{display:flex; flex-direction:column; gap:var(--space-4); padding:var(--space-5) var(--space-4) var(--space-4) var(--space-4)}
+.rev-delta{display:inline-flex; align-items:center; gap:4px; color:var(--success-text)}
+.rev-sum{display:flex; flex-direction:column; padding:var(--space-1) var(--space-3); border-radius:var(--radius-sm); background:var(--surface-muted)}
+.rev-sum > div{display:flex; align-items:center; justify-content:space-between; gap:var(--space-3); min-height:36px}
+.rev-sum > div + div{border-top:1px solid var(--border)}
+.rev-pay{display:flex; flex-direction:column; gap:var(--space-3); padding:var(--space-4)}
+.rev-pay__row{display:flex; align-items:center; gap:var(--space-3)}
+.rev-ico{flex:none; width:40px; height:40px; border-radius:var(--radius-sm); background:var(--accent); color:var(--on-accent); display:flex; align-items:center; justify-content:center}
+.rev-tx{margin:0; padding:0; list-style:none; background:var(--surface); border-radius:var(--radius-md); box-shadow:var(--elevation-1); overflow:hidden}
+.rev-tx > li + li{border-top:1px solid var(--border)}
+</style>
+</helmet>
+<div style="position: relative; width: 390px; height: 2108px; box-sizing: border-box; overflow: hidden; background: var(--bg); color: var(--text); font-family: var(--font-sans)">
+
+<header class="coa-head">
+<div class="coa-head__text">
+<span class="coa-role label-s"><x-import component-from-global-scope="MatchUp.Icon" name="sport-whistle" size="{{i16}}"></x-import>Espace coach</span>
+<h1 class="h1" style="margin: 0">Revenus</h1>
+</div>
+<div class="coa-head__actions" style="margin-top: 36px">
+<a href="PRF-06-Changer-de-role.dc.html" class="coa-me" aria-label="Karim J. · changer de rôle"><x-import component-from-global-scope="MatchUp.Avatar" name="Karim J." size="m"></x-import></a>
+</div>
+</header>
+
+<div style="display: flex; flex-direction: column; gap: 24px; padding: 16px 16px 132px 16px">
+
+<x-import component-from-global-scope="MatchUp.SegmentedControl" label="Période" options="{{periods}}" value="{{period}}" on-change="{{setPeriod}}" full-width="{{yes}}"></x-import>
+
+<section class="mu-card rev-hero" aria-labelledby="rev-h">
+<div style="display: flex; flex-direction: column; gap: 4px">
+<h2 id="rev-h" class="overline coa-muted" style="margin: 0">Octobre · au ven. 16 oct.</h2>
+<span><span class="num-hero">2 340</span><span class="num-l coa-muted"> DT</span></span>
+<span class="caption" style="display: flex; align-items: center; gap: 8px"><span class="rev-delta num-s"><x-import component-from-global-scope="MatchUp.Icon" name="trend-up" size="{{i16}}"></x-import>+18 %</span><span class="coa-muted">vs sept. à la même date · net</span></span>
+</div>
+<div class="rev-sum" aria-label="Détail du mois">
+<div><span class="body coa-muted">Ventes et part Premium</span><span class="num-s">2 600 DT</span></div>
+<div><span class="body coa-muted">Commission MatchUp · 10 %</span><span class="num-s">−260 DT</span></div>
+<div><span class="label">Tes revenus nets</span><span class="num-m">2 340 DT</span></div>
+</div>
+</section>
+
+<section class="mu-card rev-pay" aria-labelledby="rev-p">
+<div class="rev-pay__row">
+<span class="rev-ico"><x-import component-from-global-scope="MatchUp.Icon" name="bank" size="{{i20}}"></x-import></span>
+<div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px">
+<h2 id="rev-p" class="label" style="margin: 0">Prochain versement</h2>
+<span class="caption coa-muted">lun. 19 oct. · BIAT •••• 0457</span>
+</div>
+<span style="white-space: nowrap"><span class="num-l">612</span><span class="num-xs coa-muted"> DT</span></span>
+</div>
+<p class="caption coa-muted" style="margin: 0; display: flex; align-items: center; gap: 6px; padding-top: 12px; border-top: 1px solid var(--border)"><span style="flex: none; display: flex; color: var(--success-text)"><x-import component-from-global-scope="MatchUp.Icon" name="check-circle" size="{{i14}}"></x-import></span><span>Dernier : <span class="num-xs" style="color: var(--text)">548 DT</span> le lun. 12 oct. · VR-2026-0418</span></p>
+</section>
+
+<x-import component-from-global-scope="MatchUp.BarChart" title="Revenus nets · 6 mois" subtitle="Après commission · octobre en cours" categories="{{months}}" series="{{monthly}}" format="DT" unit-label="DT nets" height="{{h220}}" category-label="Mois"></x-import>
+
+<x-import component-from-global-scope="MatchUp.BarChart" orientation="horizontal" title="Par source · octobre" subtitle="Revenus nets du 1er au 16 oct." categories="{{sources}}" series="{{bySource}}" format="DT" category-label="Source"></x-import>
+
+<section class="coa-sec" style="padding: 0" aria-labelledby="rev-t">
+<div class="coa-sec__head"><h2 id="rev-t" class="coa-sec__title h3">Dernières opérations</h2><button type="button" class="mu-btn mu-btn--tertiary mu-btn--s"><span class="mu-btn__content"><span class="mu-btn__label label">Tout voir</span></span></button></div>
+<ul class="rev-tx">
+<li><x-import component-from-global-scope="MatchUp.TransactionRow" category="booking" sport="padel" label="Vente · Bandeja" meta="Ines M. · ven. 16 oct. · 17h20" amount="{{t1}}" chevron="{{no}}"></x-import></li>
+<li><x-import component-from-global-scope="MatchUp.TransactionRow" category="booking" sport="padel" label="Vente · Service et retour" meta="Hamza R. · jeu. 15 oct. · 21h04" amount="{{t2}}" chevron="{{no}}"></x-import></li>
+<li><x-import component-from-global-scope="MatchUp.TransactionRow" category="subscription" label="Part Premium · Bandeja" meta="9 abonnés · semaine du 5 oct." amount="{{t3}}" chevron="{{no}}"></x-import></li>
+<li><x-import component-from-global-scope="MatchUp.TransactionRow" category="refund" label="Remboursement" meta="Omar D. · Service et retour · 13 oct." amount="{{t4}}" chevron="{{no}}"></x-import></li>
+<li><x-import component-from-global-scope="MatchUp.TransactionRow" category="booking" sport="padel" label="Vente · Bandeja" meta="Salma G. · lun. 12 oct. · 9h12" amount="{{t1}}" chevron="{{no}}"></x-import></li>
+</ul>
+</section>
+
+<section class="coa-sec" style="padding: 0" aria-labelledby="rev-s">
+<h2 id="rev-s" class="overline coa-muted" style="margin: 0 4px">Réglages</h2>
+<ul class="coa-list">
+<li><a class="coa-row" style="min-height: 56px">
+<span style="flex: none; width: 36px; height: 36px; border-radius: var(--radius-sm); background: var(--surface-muted); display: flex; align-items: center; justify-content: center"><x-import component-from-global-scope="MatchUp.Icon" name="bank" size="{{i20}}"></x-import></span>
+<span class="coa-row__text"><span class="label">Coordonnées bancaires</span><span class="coa-row__sub caption">BIAT •••• 0457 · versements chaque lundi</span></span>
+<span class="coa-chev"><x-import component-from-global-scope="MatchUp.Icon" name="caret-right" size="{{i20}}"></x-import></span>
+</a></li>
+<li><a class="coa-row" style="min-height: 56px">
+<span style="flex: none; width: 36px; height: 36px; border-radius: var(--radius-sm); background: var(--surface-muted); display: flex; align-items: center; justify-content: center"><x-import component-from-global-scope="MatchUp.Icon" name="crown-simple" size="{{i20}}"></x-import></span>
+<span class="coa-row__text"><span class="label">Abonnement Coach</span><span class="coa-row__sub caption">39 DT/mois · renouvelé le 1er nov.</span></span>
+<span class="coa-chev"><x-import component-from-global-scope="MatchUp.Icon" name="caret-right" size="{{i20}}"></x-import></span>
+</a></li>
+<li><a class="coa-row" style="min-height: 56px">
+<span style="flex: none; width: 36px; height: 36px; border-radius: var(--radius-sm); background: var(--surface-muted); display: flex; align-items: center; justify-content: center"><x-import component-from-global-scope="MatchUp.Icon" name="receipt" size="{{i20}}"></x-import></span>
+<span class="coa-row__text"><span class="label">Relevés mensuels</span><span class="coa-row__sub caption">PDF · dernier : septembre 2026</span></span>
+<span class="coa-chev"><x-import component-from-global-scope="MatchUp.Icon" name="caret-right" size="{{i20}}"></x-import></span>
+</a></li>
+</ul>
+</section>
+
+</div>
+
+<x-import component-from-global-scope="MatchUp.TabBar" items="{{tabs}}" value="revenus" label="Navigation de l’espace coach" safe-area="{{sa}}" dc-props="{{tabStyle}}"></x-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":2108}}'>
+class Component extends DCLogic {
+  state = { period: 'mois' };
+  renderVals() {
+    const m = (s, l) => ({ short: s, label: l });
+    return {
+      yes: true, no: false, i14: 14, i16: 16, i20: 20, i24: 24, sa: 34, h220: 220,
+      periods: [{ value: 'mois', label: 'Ce mois' }, { value: 'six', label: '6 mois' }, { value: 'an', label: '2026' }],
+      period: this.state.period, setPeriod: (v) => this.setState({ period: v }),
+      months: [m('mai', 'mai 2026'), m('juin', 'juin 2026'), m('juil.', 'juillet 2026'), m('août', 'août 2026'), m('sept.', 'septembre 2026'), m('oct.', 'octobre 2026 (en cours)')],
+      monthly: [{ id: 'net', label: 'Revenus nets', data: [620, 980, 1240, 1510, 1980, 2340] }],
+      sources: ['Bandeja en 4 semaines', 'Service et retour', 'Part Premium'],
+      bySource: [{ id: 'src', label: 'Revenus nets', data: [1620, 540, 180] }],
+      t1: 40.5, t2: 27, t3: 45, t4: -27,
+      tabs: [
+        { value: 'tableau', label: 'Tableau', icon: 'house', href: 'COA-04-Tableau-de-bord.dc.html' },
+        { value: 'programmes', label: 'Programmes', icon: 'clipboard-text', href: 'COA-05-Programmes.dc.html' },
+        { value: 'eleves', label: 'Élèves', icon: 'users', href: 'COA-09-Eleves.dc.html' },
+        { value: 'revenus', label: 'Revenus', icon: 'coins', href: 'COA-12-Revenus.dc.html' }
+      ],
+      tabStyle: { style: { position: 'absolute', left: 0, right: 0, bottom: 0 } }
+    };
+  }
+}
+</script>
+</body>
+</html>

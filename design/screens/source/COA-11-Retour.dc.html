@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Coach · Retour vidéo</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/matchup/tokens.css">
+<link rel="stylesheet" href="ds/matchup/components/bundle.css">
+<script src="ds/matchup/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+/* coa:shared — identical in COA-04…12 */
+body{margin:0}
+a{color:var(--link)}
+.coa-head{display:flex; align-items:flex-start; justify-content:space-between; gap:var(--space-3); padding:52px var(--space-4) 0 var(--space-4)}
+.coa-head__text{flex:1; min-width:0; display:flex; flex-direction:column; align-items:flex-start; gap:var(--space-2)}
+.coa-head__actions{flex:none; display:flex; align-items:center; gap:var(--space-1); margin-inline-end:calc(-1 * var(--space-1))}
+.coa-role{display:inline-flex; align-items:center; gap:6px; padding:3px 10px 3px 8px; border-radius:var(--radius-full); background:var(--surface); box-shadow:inset 0 0 0 1px var(--border); color:var(--text)}
+.coa-me{position:relative; display:flex; border-radius:var(--radius-full); text-decoration:none; color:inherit}
+.coa-me::before{content:""; position:absolute; inset:-4px}
+.coa-me:focus-visible{outline:none; box-shadow:var(--focus-ring)}
+.coa-sec{display:flex; flex-direction:column; gap:var(--space-3); padding:0 var(--space-4)}
+.coa-sec__head{display:flex; align-items:center; justify-content:space-between; gap:var(--space-3); min-height:32px; margin-inline-end:calc(-1 * var(--space-3))}
+.coa-sec__title{margin:0; display:flex; align-items:center; gap:var(--space-2)}
+.coa-list{margin:0; padding:0; list-style:none; background:var(--surface); border-radius:var(--radius-md); box-shadow:var(--elevation-1); overflow:hidden}
+.coa-list > li{position:relative}
+.coa-list > li + li::before{content:""; position:absolute; top:0; inset-inline-start:68px; inset-inline-end:0; height:1px; background:var(--border); z-index:1}
+.coa-row{position:relative; display:flex; align-items:center; gap:var(--space-3); min-height:64px; padding:var(--space-3) var(--space-4); box-sizing:border-box; color:var(--text); text-decoration:none}
+a.coa-row:hover{background:var(--surface-muted)}
+a.coa-row:focus-visible{outline:none; box-shadow:inset 0 0 0 2px var(--focus)}
+.coa-row__text{flex:1; min-width:0; display:flex; flex-direction:column; gap:2px}
+.coa-row__sub{color:var(--text-secondary); white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+.coa-chev{flex:none; display:flex; color:var(--text-secondary); margin-inline-end:calc(-1 * var(--space-1))}
+.coa-pill{flex:none; display:inline-flex; align-items:center; gap:4px; padding:2px 10px; border-radius:var(--radius-full); background:var(--accent); color:var(--on-accent)}
+.coa-muted{color:var(--text-secondary)}
+.coa-hot{position:absolute; display:block; border-radius:var(--radius-full); z-index:3}
+.coa-hot:focus-visible{outline:2px solid var(--focus); outline-offset:2px}
+/* /coa:shared */
+.fb-top{display:flex; align-items:center; gap:var(--space-1); padding:52px var(--space-4) 0 var(--space-2)}
+.fb-player{position:relative; border-radius:var(--radius-md); overflow:hidden; display:flex; background:var(--ink-900)}
+.fb-player__over{position:absolute; inset:0; display:flex; flex-direction:column; justify-content:space-between; padding:var(--space-3); z-index:1; background:linear-gradient(180deg, transparent 50%, color-mix(in srgb, var(--ink-900) 80%, transparent) 100%)}
+.fb-time{align-self:flex-start; padding:2px 8px; border-radius:var(--radius-full); background:color-mix(in srgb, var(--ink-900) 72%, transparent); color:var(--white)}
+.fb-play{position:absolute; left:50%; top:50%; transform:translate(-50%, -50%); width:56px; height:56px; border-radius:var(--radius-full); background:var(--white); color:var(--ink-900); display:flex; align-items:center; justify-content:center; box-shadow:var(--elevation-2); z-index:2; border:0; cursor:pointer}
+.fb-scrub{position:relative; height:24px; direction:ltr}
+.fb-scrub__track{position:absolute; left:0; right:0; top:10px; height:4px; border-radius:var(--radius-full); background:color-mix(in srgb, var(--white) 30%, transparent)}
+.fb-scrub__done{position:absolute; left:0; top:10px; height:4px; border-radius:var(--radius-full); background:var(--accent)}
+.fb-mark{position:absolute; top:6px; width:12px; height:12px; margin-left:-6px; border-radius:var(--radius-full); background:var(--white); box-shadow:0 0 0 2px var(--ink-900)}
+.fb-mark--on{top:3px; width:18px; height:18px; margin-left:-9px; background:var(--accent)}
+.fb-ctrl{display:flex; align-items:center; justify-content:space-between; gap:var(--space-2); direction:ltr}
+.fb-list{margin:0; padding:0; list-style:none; display:flex; flex-direction:column; gap:var(--space-2)}
+.fb-c{display:flex; align-items:flex-start; gap:var(--space-3); padding:var(--space-3) var(--space-2) var(--space-3) var(--space-3)}
+.fb-ts{flex:none; display:inline-flex; align-items:center; gap:4px; min-width:52px; justify-content:center; padding:4px 8px; border-radius:var(--radius-full); background:var(--surface-muted); box-shadow:inset 0 0 0 1px var(--border)}
+.fb-ts--on{background:var(--accent); color:var(--on-accent); box-shadow:none}
+.fb-edit{display:flex; flex-direction:column; gap:var(--space-3); padding:var(--space-3)}
+.fb-ai{display:flex; align-items:center; gap:var(--space-3); padding:var(--space-3); border-radius:var(--radius-md); background:var(--ai-soft)}
+</style>
+</helmet>
+<div style="position: relative; width: 390px; height: 1592px; box-sizing: border-box; overflow: hidden; background: var(--bg); color: var(--text); font-family: var(--font-sans)">
+
+<header class="fb-top">
+<a href="COA-10-Detail-eleve.dc.html" class="mu-iconbtn mu-iconbtn--l mu-iconbtn--ghost" aria-label="Retour à la fiche de Yassine B." style="color: var(--text)"><x-import component-from-global-scope="MatchUp.Icon" name="arrow-left" size="{{i24}}"></x-import></a>
+<div style="flex: 1; min-width: 0; display: flex; flex-direction: column">
+<span class="label-l">Retour à Yassine B.</span>
+<span class="caption coa-muted">Bandeja · 0:42 · séance 4 · Bandeja en 4 semaines</span>
+</div>
+</header>
+
+<div style="display: flex; flex-direction: column; gap: 24px; padding: 12px 16px 172px 16px">
+
+<section style="display: flex; flex-direction: column; gap: 8px" aria-label="Vidéo de Yassine B.">
+<div class="fb-player">
+<x-import component-from-global-scope="MatchUp.CourtArt" sport="padel" variant="photo" label="Vidéo de Yassine B. : bandeja sur le court 3 de Smash Padel Club" dc-props="{{video}}"></x-import>
+<button type="button" class="fb-play" aria-label="Lire la vidéo"><x-import component-from-global-scope="MatchUp.Icon" name="play" weight="fill" size="{{i24}}"></x-import></button>
+<div class="fb-player__over">
+<span class="fb-time num-xs">0:18 / 0:42</span>
+<div class="fb-scrub" role="slider" tabindex="0" aria-label="Position dans la vidéo" aria-valuemin="0" aria-valuemax="42" aria-valuenow="18" aria-valuetext="0:18 sur 0:42, 3 commentaires">
+<span class="fb-scrub__track"></span>
+<span class="fb-scrub__done" style="width: 43%"></span>
+<span class="fb-mark" style="left: 19%" title="0:08"></span>
+<span class="fb-mark fb-mark--on" style="left: 43%" title="0:18"></span>
+<span class="fb-mark" style="left: 74%" title="0:31"></span>
+</div>
+</div>
+</div>
+<div class="fb-ctrl">
+<button type="button" class="mu-btn mu-btn--tertiary mu-btn--s"><span class="mu-btn__content"><x-import component-from-global-scope="MatchUp.Icon" name="skip-back" size="{{i16}}"></x-import><span class="mu-btn__label label">−1 image</span></span></button>
+<x-import component-from-global-scope="MatchUp.SegmentedControl" label="Vitesse de lecture" size="s" options="{{speeds}}" value="{{speed}}" on-change="{{setSpeed}}"></x-import>
+<button type="button" class="mu-btn mu-btn--tertiary mu-btn--s"><span class="mu-btn__content"><span class="mu-btn__label label">+1 image</span><x-import component-from-global-scope="MatchUp.Icon" name="skip-forward" size="{{i16}}"></x-import></span></button>
+</div>
+</section>
+
+<section class="coa-sec" style="padding: 0" aria-labelledby="fb-c">
+<div class="coa-sec__head"><h2 id="fb-c" class="coa-sec__title h3">Commentaires horodatés</h2><span class="caption coa-muted" style="margin-inline-end: 12px"><span class="num-xs" style="color: var(--text)">3</span> sur la vidéo</span></div>
+<ol class="fb-list">
+<li class="mu-card fb-c">
+<span class="fb-ts num-xs"><x-import component-from-global-scope="MatchUp.Icon" name="play" weight="fill" size="{{i12}}"></x-import>0:08</span>
+<p class="body" style="flex: 1; min-width: 0; margin: 0">Bonne préparation : raquette haute, derrière la tête. Garde-la comme ça.</p>
+<button type="button" class="mu-iconbtn mu-iconbtn--s mu-iconbtn--ghost" aria-label="Options du commentaire à 0:08" style="color: var(--text-secondary)"><x-import component-from-global-scope="MatchUp.Icon" name="dots-three-vertical" size="{{i16}}"></x-import></button>
+</li>
+<li class="mu-card fb-edit" style="box-shadow: var(--elevation-1), inset 0 0 0 2px var(--primary)">
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 8px">
+<span class="fb-ts fb-ts--on num-xs"><x-import component-from-global-scope="MatchUp.Icon" name="play" weight="fill" size="{{i12}}"></x-import>0:18</span>
+<span class="caption coa-muted">Commentaire à la position actuelle</span>
+</div>
+<x-import component-from-global-scope="MatchUp.TextField" label="Ton commentaire à 0:18" multiline="{{yes}}" rows="{{two}}" max-length="{{cMax}}" counter="{{yes}}" default-value="Tu frappes trop tôt : laisse descendre la balle à hauteur d’épaule, puis accompagne vers la grille."></x-import>
+<div style="display: flex; justify-content: flex-end; gap: 8px">
+<button type="button" class="mu-btn mu-btn--tertiary mu-btn--s"><span class="mu-btn__content"><span class="mu-btn__label label">Annuler</span></span></button>
+<button type="button" class="mu-btn mu-btn--secondary mu-btn--s"><span class="mu-btn__content"><x-import component-from-global-scope="MatchUp.Icon" name="check" size="{{i16}}"></x-import><span class="mu-btn__label label">Enregistrer</span></span></button>
+</div>
+</li>
+<li class="mu-card fb-c">
+<span class="fb-ts num-xs"><x-import component-from-global-scope="MatchUp.Icon" name="play" weight="fill" size="{{i12}}"></x-import>0:31</span>
+<p class="body" style="flex: 1; min-width: 0; margin: 0">La balle part au centre. Ouvre un peu plus le tamis et vise la grille côté gauche pour la croiser.</p>
+<button type="button" class="mu-iconbtn mu-iconbtn--s mu-iconbtn--ghost" aria-label="Options du commentaire à 0:31" style="color: var(--text-secondary)"><x-import component-from-global-scope="MatchUp.Icon" name="dots-three-vertical" size="{{i16}}"></x-import></button>
+</li>
+</ol>
+<div class="fb-ai">
+<x-import component-from-global-scope="MatchUp.AiLabel" size="s"></x-import>
+<span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px"><span class="label">0:39 · bon replacement au filet</span><span class="caption" style="color: var(--text)">Repéré par l’analyse vidéo de Yassine. À toi de valider.</span></span>
+<button type="button" class="mu-btn mu-btn--secondary mu-btn--s"><span class="mu-btn__content"><x-import component-from-global-scope="MatchUp.Icon" name="plus" size="{{i16}}"></x-import><span class="mu-btn__label label">Ajouter</span></span></button>
+</div>
+</section>
+
+<section aria-label="Message général">
+<x-import component-from-global-scope="MatchUp.RichTextEditor" label="Message général" tools="{{tools}}" default-value="{{msg}}" max-length="{{mMax}}" min-rows="{{four}}" helper="Affiché au-dessus de tes commentaires, dans la séance de Yassine."></x-import>
+</section>
+
+<div class="mu-card" style="padding: 4px 16px">
+<x-import component-from-global-scope="MatchUp.Switch" label="Demander une nouvelle vidéo" description="Après la séance 5 · Bandeja croisée" label-position="start" checked="{{ask}}" on-change="{{setAsk}}"></x-import>
+</div>
+</div>
+
+<div style="position: absolute; left: 0; right: 0; bottom: 0; z-index: 2; display: flex; flex-direction: column; gap: 8px; padding: 12px 16px 34px 16px; background: var(--surface); box-shadow: var(--elevation-2-up)">
+<a href="COA-10-Detail-eleve.dc.html" class="mu-btn mu-btn--primary mu-btn--xl mu-btn--block"><span class="mu-btn__content"><x-import component-from-global-scope="MatchUp.Icon" name="paper-plane-right" size="{{i20}}"></x-import><span class="mu-btn__label label-l">Envoyer le retour</span></span></a>
+<span class="caption coa-muted" style="text-align: center">Yassine reçoit la notification « Retour du coach ».</span>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":1592}}'>
+class Component extends DCLogic {
+  state = { speed: '05', ask: true };
+  renderVals() {
+    return {
+      yes: true, no: false, i12: 12, i14: 14, i16: 16, i20: 20, i24: 24, two: 2, four: 4, cMax: 280, mMax: 2000,
+      video: { style: { width: '100%', aspectRatio: '16 / 10' } },
+      speeds: [{ value: '05', label: '0,5×' }, { value: '1', label: '1×' }],
+      speed: this.state.speed, setSpeed: (v) => this.setState({ speed: v }),
+      ask: this.state.ask, setAsk: (v) => this.setState({ ask: v }),
+      tools: ['bold', 'italic', 'ul'],
+      msg: '<p>Belle progression, Yassine ! La trajectoire est là, il reste le <b>timing</b>.</p><ul><li>Laisse descendre la balle avant de frapper.</li><li>Vise la grille latérale, pas le centre.</li></ul><p>Refais l’exercice 3 de la séance 5 au ralenti avant de passer à la vitesse match.</p>'
+    };
+  }
+}
+</script>
+</body>
+</html>

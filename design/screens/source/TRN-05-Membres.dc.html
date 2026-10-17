@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Membres de l’équipe</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/matchup/tokens.css">
+<link rel="stylesheet" href="ds/matchup/components/bundle.css">
+<script src="ds/matchup/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0}
+a{color:var(--link)}
+.tm-muted{color:var(--text-secondary)}
+.tm-m0{margin:0}
+.tm-slot{display:flex; align-items:center; gap:12px; min-height:56px; padding:8px 0}
+.tm-slot + .tm-slot{border-top:1px solid var(--border)}
+.tm-crown{display:inline-flex; align-items:center; gap:4px; padding:2px 8px; border-radius:var(--radius-full); background:var(--accent); color:var(--on-accent)}
+.tm-row{display:flex; align-items:center; gap:12px; min-height:64px; padding:8px 0}
+.tm-row + .tm-row{border-top:1px solid var(--border)}
+.tm-ok{display:flex; align-items:center; gap:8px; padding:10px 12px; border-radius:var(--radius-sm); background:var(--success-soft); color:var(--success-text)}
+.tm-share{display:flex; flex-direction:column; gap:var(--space-3); padding:var(--space-4); border-radius:var(--radius-md); background:var(--surface-muted)}
+.tm-link{display:flex; align-items:center; gap:var(--space-2); min-height:44px; padding:0 var(--space-3); border-radius:var(--radius-sm); background:var(--surface); box-shadow:inset 0 0 0 1px var(--border); color:var(--text-secondary)}
+.tm-ai{display:flex; flex-direction:column; gap:4px; padding:16px 16px 8px 16px; border-radius:var(--radius-md); background:var(--surface); box-shadow:inset 0 0 0 1px var(--ai-soft), var(--elevation-1)}
+.tm-why{color:var(--ai-text)}
+</style>
+</helmet>
+<div style="width: 390px; height: 1288px; box-sizing: border-box; overflow: hidden; display: flex; flex-direction: column; background: var(--surface); color: var(--text); font-family: var(--font-sans)">
+<div style="display: flex; align-items: center; gap: 8px; padding: 52px 16px 0 8px">
+<a href="TRN-04-Creer-l-equipe.dc.html" class="mu-iconbtn mu-iconbtn--l mu-iconbtn--ghost" aria-label="Retour" style="color: var(--text)"><x-import component-from-global-scope="MatchUp.Icon" name="arrow-left" size="{{i24}}"></x-import></a>
+<div style="flex: 1; min-width: 0"><x-import component-from-global-scope="MatchUp.StepIndicator" step="{{two}}" total="{{three}}" title="Membres"></x-import></div>
+</div>
+<div style="flex: 1; min-height: 0; overflow: auto; display: flex; flex-direction: column; gap: 20px; padding: 16px 16px 24px 16px">
+<div style="display: flex; flex-direction: column; gap: 4px">
+<h1 class="h2 tm-m0">Ajoute ton partenaire</h1>
+<p class="body tm-m0 tm-muted">Padel en paire : il te faut 1 partenaire. Niveau moyen de la paire entre 3,5 et 5,0.</p>
+</div>
+
+<section class="mu-card" aria-labelledby="tm-team" style="display: flex; flex-direction: column; gap: 4px; padding: 12px 16px 16px 16px">
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 8px; min-height: 32px">
+<h2 id="tm-team" class="label-l tm-m0">Les Faucons</h2>
+<span class="caption tm-muted"><span class="num-xs" style="color: var(--text)">2/2</span> joueurs</span>
+</div>
+<div class="tm-slot">
+<x-import component-from-global-scope="MatchUp.Avatar" name="Yassine B." size="m" level="{{l35}}"></x-import>
+<span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px">
+<span style="display: flex; align-items: center; gap: 8px"><span class="label">Yassine B. · toi</span><span class="tm-crown label-s"><x-import component-from-global-scope="MatchUp.Icon" name="crown" weight="fill" size="{{i14}}"></x-import>Capitaine</span></span>
+<span class="caption tm-muted">Côté gauche</span>
+</span>
+</div>
+<div class="tm-slot">
+<x-import component-from-global-scope="MatchUp.Avatar" name="Mariem K." size="m" level="{{l40}}"></x-import>
+<span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px">
+<span class="label">Mariem K.</span>
+<span class="caption tm-muted">Côté droit</span>
+</span>
+<x-import component-from-global-scope="MatchUp.StatusBadge" status="pending" label="Invitation envoyée" size="s"></x-import>
+</div>
+<div class="tm-ok caption" role="status"><x-import component-from-global-scope="MatchUp.Icon" name="check-circle" weight="fill" size="{{i16}}"></x-import><span>Niveau moyen <span class="num-xs">3,75</span> : dans la fourchette du tournoi.</span></div>
+</section>
+
+<x-import component-from-global-scope="MatchUp.SearchField" size="l" label="Chercher un joueur" placeholder="Nom, @pseudo ou numéro"></x-import>
+
+<section class="tm-ai" aria-labelledby="tm-sugg">
+<div style="display: flex; align-items: center; gap: 8px">
+<h2 id="tm-sugg" class="label-l tm-m0">Partenaires suggérés</h2>
+<x-import component-from-global-scope="MatchUp.AiLabel" size="s"></x-import>
+</div>
+<p class="caption tm-m0 tm-muted">Recommandés car proches de ton niveau, de ton côté ou déjà partenaires. Pas encore inscrits.</p>
+<div style="display: flex; flex-direction: column; margin-top: 4px">
+<div class="tm-row">
+<x-import component-from-global-scope="MatchUp.Avatar" name="Mariem K." size="m" level="{{l40}}"></x-import>
+<span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px">
+<span class="label">Mariem K.</span>
+<span class="caption tm-why">Victoire 6-4 6-3 ensemble le 9 oct.</span>
+</span>
+<button type="button" class="mu-btn mu-btn--tertiary mu-btn--s" aria-pressed="true"><span class="mu-btn__content"><x-import component-from-global-scope="MatchUp.Icon" name="check" size="{{i16}}"></x-import><span class="mu-btn__label label">Invitée</span></span></button>
+</div>
+<div class="tm-row">
+<x-import component-from-global-scope="MatchUp.Avatar" name="Dorra K." size="m" level="{{l40}}"></x-import>
+<span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px">
+<span class="label">Dorra K.</span>
+<span class="caption tm-why">Côté droit, joue au Lac 2</span>
+</span>
+<button type="button" class="mu-btn mu-btn--secondary mu-btn--s"><span class="mu-btn__content"><x-import component-from-global-scope="MatchUp.Icon" name="user-plus" size="{{i16}}"></x-import><span class="mu-btn__label label">Inviter</span></span></button>
+</div>
+<div class="tm-row">
+<x-import component-from-global-scope="MatchUp.Avatar" name="Yosra M." size="m" level="{{l45}}"></x-import>
+<span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px">
+<span class="label">Yosra M.</span>
+<span class="caption tm-why">Niveau 4,5, cherche une paire</span>
+</span>
+<button type="button" class="mu-btn mu-btn--secondary mu-btn--s"><span class="mu-btn__content"><x-import component-from-global-scope="MatchUp.Icon" name="user-plus" size="{{i16}}"></x-import><span class="mu-btn__label label">Inviter</span></span></button>
+</div>
+</div>
+<p class="caption tm-m0 tm-muted" style="display: flex; align-items: center; gap: 6px; padding: 8px 0 4px 0; border-top: 1px solid var(--border)"><x-import component-from-global-scope="MatchUp.Icon" name="info" size="{{i14}}"></x-import>Suggestions de l’IA, tu choisis. Elle peut se tromper.</p>
+</section>
+
+<div class="tm-share">
+<div style="display: flex; flex-direction: column; gap: 2px">
+<h2 class="label-l tm-m0">Ou partage le lien d’invitation</h2>
+<span class="caption tm-muted">Ton partenaire rejoint Les Faucons sans payer : tu règles l’inscription de la paire.</span>
+</div>
+<div class="tm-link"><x-import component-from-global-scope="MatchUp.Icon" name="link" size="{{i16}}"></x-import><span class="body" style="flex: 1; min-width: 0; color: var(--text)">matchup.tn/e/faucons-pml2</span></div>
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px">
+<button type="button" class="mu-btn mu-btn--secondary mu-btn--m mu-btn--block" style="min-height: 44px"><span class="mu-btn__content"><x-import component-from-global-scope="MatchUp.Icon" name="copy" size="{{i20}}"></x-import><span class="mu-btn__label label">Copier le lien</span></span></button>
+<button type="button" class="mu-btn mu-btn--secondary mu-btn--m mu-btn--block" style="min-height: 44px"><span class="mu-btn__content"><x-import component-from-global-scope="MatchUp.Icon" name="whatsapp-logo" size="{{i20}}"></x-import><span class="mu-btn__label label">WhatsApp</span></span></button>
+</div>
+</div>
+</div>
+<div style="padding: 12px 16px 34px 16px; background: var(--surface); box-shadow: var(--elevation-2-up); display: flex; flex-direction: column; gap: 8px">
+<p class="caption tm-m0 tm-muted" style="text-align: center">Mariem confirme depuis son invitation. Remboursé si l’organisateur refuse.</p>
+<a href="PAY-01-Checkout.dc.html" class="mu-btn mu-btn--primary mu-btn--xl mu-btn--block"><span class="mu-btn__content"><span class="mu-btn__label label-l">Payer l’inscription</span><span class="mu-btn__dot" aria-hidden="true">·</span><span class="mu-btn__price num-m">120 DT</span></span></a>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":1288}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return { yes: true, i14: 14, i16: 16, i20: 20, i24: 24, two: 2, three: 3, l35: 3.5, l40: 4.0, l45: 4.5 };
+  }
+}
+</script>
+</body>
+</html>

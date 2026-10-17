@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Catalogue · Paiements et tournois</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/matchup/tokens.css">
+<link rel="stylesheet" href="ds/matchup/components/bundle.css">
+<script src="ds/matchup/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+/* cat:shared — identical in NOT-04…06 */
+body{margin:0}
+a{color:var(--link)}
+.cat-root{position:relative; width:390px; box-sizing:border-box; overflow:hidden; display:flex; flex-direction:column; gap:var(--space-5); padding:40px var(--space-4) 24px var(--space-4); background:var(--bg); color:var(--text); font-family:var(--font-sans)}
+.cat-root > *{flex:none}
+.cat-head{display:flex; flex-direction:column; gap:var(--space-2)}
+.cat-legend{display:grid; grid-template-columns:repeat(3, 1fr); gap:var(--space-3); margin:0; padding:0; list-style:none}
+.cat-legend > li{display:flex; flex-direction:column; align-items:flex-start; gap:6px}
+.cat-prio{flex:none; display:inline-flex; align-items:center; gap:4px; height:20px; padding:0 var(--space-2); border-radius:var(--radius-full); white-space:nowrap}
+.cat-prio--normal{background:var(--surface); color:var(--text-secondary); box-shadow:inset 0 0 0 1px var(--border-strong)}
+.cat-prio--important{background:var(--warning-soft); color:var(--warning-text)}
+.cat-prio--urgent{background:var(--error-soft); color:var(--error-text)}
+.cat-group{display:flex; flex-direction:column; gap:var(--space-2); margin:0}
+.cat-group__title{margin:0; display:flex; align-items:baseline; justify-content:space-between; gap:var(--space-2)}
+.cat-list{margin:0; padding:0; list-style:none; background:var(--surface); border-radius:var(--radius-md); box-shadow:var(--elevation-1); overflow:hidden}
+.cat-entry{margin:0}
+.cat-entry__head{display:flex; align-items:center; gap:var(--space-2); height:28px; padding:0 var(--space-3) 0 var(--space-4); background:var(--surface-muted); box-shadow:inset 0 -1px 0 var(--border)}
+.cat-entry + .cat-entry .cat-entry__head{box-shadow:inset 0 1px 0 var(--border), inset 0 -1px 0 var(--border)}
+.cat-entry__num{flex:none; width:20px; color:var(--text-secondary)}
+.cat-entry__name{flex:1; min-width:0; margin:0; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; color:var(--text)}
+.cat-entry__cap{color:var(--text-secondary); font-weight:inherit}
+.cat-nav{display:flex; justify-content:space-between; gap:var(--space-2); padding-top:var(--space-3); box-shadow:inset 0 1px 0 var(--border)}
+/* /cat:shared */
+</style>
+</helmet>
+<div class="cat-root" style="height: 2200px">
+<header class="cat-head">
+<span class="overline" style="color: var(--text-secondary)">Notifications in-app · catalogue 2/3</span>
+<h1 class="h1" style="margin: 0">Paiements et tournois</h1>
+<p class="body" style="margin: 0; color: var(--text-secondary)">Le montant exact figure toujours dans le titre ou le corps. Impossible de couper ces alertes dans l’app.</p>
+</header>
+<ul class="cat-legend" aria-label="Niveaux de priorité">
+<li><span class="cat-prio cat-prio--normal label-s">Normal</span><span class="caption" style="color: var(--text-secondary)">Pour info</span></li>
+<li><span class="cat-prio cat-prio--important label-s">Important</span><span class="caption" style="color: var(--text-secondary)">Action à faire</span></li>
+<li><span class="cat-prio cat-prio--urgent label-s">Urgent</span><span class="caption" style="color: var(--text-secondary)">Expire dans l’heure</span></li>
+</ul>
+<section class="cat-group" aria-labelledby="cat-g0">
+<div style="display: flex; flex-direction: column; gap: 2px">
+<h2 id="cat-g0" class="cat-group__title"><span class="h3">Paiements</span><span class="caption" style="color: var(--text-secondary)"><span class="num-xs" style="color: var(--text)">7</span> notifications</span></h2>
+</div>
+<ol class="cat-list">
+<li class="cat-entry">
+<div class="cat-entry__head"><span class="cat-entry__num num-xs">11</span><h3 class="cat-entry__name label">Paiement réussi<span class="cat-entry__cap caption"> · avec le reçu</span></h3><span class="cat-prio cat-prio--normal label-s">Normal</span></div>
+<x-import component-from-global-scope="MatchUp.NotificationItem" dc-props="{{pOk}}"></x-import>
+</li>
+<li class="cat-entry">
+<div class="cat-entry__head"><span class="cat-entry__num num-xs">12</span><h3 class="cat-entry__name label">Échec du paiement<span class="cat-entry__cap caption"> · place gardée</span></h3><span class="cat-prio cat-prio--urgent label-s">Urgent</span></div>
+<x-import component-from-global-scope="MatchUp.NotificationItem" dc-props="{{pFail}}"></x-import>
+</li>
+<li class="cat-entry">
+<div class="cat-entry__head"><span class="cat-entry__num num-xs">13</span><h3 class="cat-entry__name label">Part à payer<span class="cat-entry__cap caption"> · relance à 24 h</span></h3><span class="cat-prio cat-prio--important label-s">Important</span></div>
+<x-import component-from-global-scope="MatchUp.NotificationItem" dc-props="{{pDue}}"></x-import>
+</li>
+<li class="cat-entry">
+<div class="cat-entry__head"><span class="cat-entry__num num-xs">14</span><h3 class="cat-entry__name label">Remboursement effectué<span class="cat-entry__cap caption"> · solde</span></h3><span class="cat-prio cat-prio--normal label-s">Normal</span></div>
+<x-import component-from-global-scope="MatchUp.NotificationItem" dc-props="{{pRefund}}"></x-import>
+</li>
+<li class="cat-entry">
+<div class="cat-entry__head"><span class="cat-entry__num num-xs">15</span><h3 class="cat-entry__name label">Abonnement renouvelé<span class="cat-entry__cap caption"> · échéance</span></h3><span class="cat-prio cat-prio--normal label-s">Normal</span></div>
+<x-import component-from-global-scope="MatchUp.NotificationItem" dc-props="{{pRenew}}"></x-import>
+</li>
+<li class="cat-entry">
+<div class="cat-entry__head"><span class="cat-entry__num num-xs">16</span><h3 class="cat-entry__name label">Échec renouvellement<span class="cat-entry__cap caption"> · exemple</span></h3><span class="cat-prio cat-prio--important label-s">Important</span></div>
+<x-import component-from-global-scope="MatchUp.NotificationItem" dc-props="{{pRenewFail}}"></x-import>
+</li>
+<li class="cat-entry">
+<div class="cat-entry__head"><span class="cat-entry__num num-xs">17</span><h3 class="cat-entry__name label">Fin d’essai proche<span class="cat-entry__cap caption"> · 3 jours avant</span></h3><span class="cat-prio cat-prio--normal label-s">Normal</span></div>
+<x-import component-from-global-scope="MatchUp.NotificationItem" dc-props="{{pTrial}}"></x-import>
+</li>
+</ol>
+</section>
+<section class="cat-group" aria-labelledby="cat-g1">
+<div style="display: flex; flex-direction: column; gap: 2px">
+<h2 id="cat-g1" class="cat-group__title"><span class="h3">Tournois</span><span class="caption" style="color: var(--text-secondary)"><span class="num-xs" style="color: var(--text)">5</span> notifications</span></h2>
+</div>
+<ol class="cat-list">
+<li class="cat-entry">
+<div class="cat-entry__head"><span class="cat-entry__num num-xs">18</span><h3 class="cat-entry__name label">Inscription confirmée<span class="cat-entry__cap caption"> · frais payés</span></h3><span class="cat-prio cat-prio--normal label-s">Normal</span></div>
+<x-import component-from-global-scope="MatchUp.NotificationItem" dc-props="{{tReg}}"></x-import>
+</li>
+<li class="cat-entry">
+<div class="cat-entry__head"><span class="cat-entry__num num-xs">19</span><h3 class="cat-entry__name label">Tableau publié<span class="cat-entry__cap caption"> · par l’organisateur</span></h3><span class="cat-prio cat-prio--normal label-s">Normal</span></div>
+<x-import component-from-global-scope="MatchUp.NotificationItem" dc-props="{{tDraw}}"></x-import>
+</li>
+<li class="cat-entry">
+<div class="cat-entry__head"><span class="cat-entry__num num-xs">20</span><h3 class="cat-entry__name label">Match dans 30 min<span class="cat-entry__cap caption"> · chaque match</span></h3><span class="cat-prio cat-prio--urgent label-s">Urgent</span></div>
+<x-import component-from-global-scope="MatchUp.NotificationItem" dc-props="{{tSoon}}"></x-import>
+</li>
+<li class="cat-entry">
+<div class="cat-entry__head"><span class="cat-entry__num num-xs">21</span><h3 class="cat-entry__name label">Résultat<span class="cat-entry__cap caption"> · score validé</span></h3><span class="cat-prio cat-prio--normal label-s">Normal</span></div>
+<x-import component-from-global-scope="MatchUp.NotificationItem" dc-props="{{tResult}}"></x-import>
+</li>
+<li class="cat-entry">
+<div class="cat-entry__head"><span class="cat-entry__num num-xs">22</span><h3 class="cat-entry__name label">Annonce<span class="cat-entry__cap caption"> · de l’organisateur</span></h3><span class="cat-prio cat-prio--normal label-s">Normal</span></div>
+<x-import component-from-global-scope="MatchUp.NotificationItem" dc-props="{{tNews}}"></x-import>
+</li>
+</ol>
+</section>
+<nav class="cat-nav" aria-label="Pages du catalogue">
+<a href="NOT-04-Catalogue-matchs-reservations.dc.html" class="mu-btn mu-btn--tertiary mu-btn--s" style="margin-left: -8px"><span class="mu-btn__content"><x-import component-from-global-scope="MatchUp.Icon" name="arrow-left" size="{{i16}}"></x-import><span class="mu-btn__label label">Catalogue 1/3</span></span></a>
+<a href="NOT-06-Catalogue-entrainement-communaute-pros.dc.html" class="mu-btn mu-btn--tertiary mu-btn--s" style="margin-right: -8px"><span class="mu-btn__content"><span class="mu-btn__label label">Catalogue 3/3</span><x-import component-from-global-scope="MatchUp.Icon" name="arrow-right" size="{{i16}}"></x-import></span></a>
+</nav>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":2200}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const h = React.createElement, B = MatchUp.Button, F = React.Fragment;
+    return {
+      i14: 14, i16: 16,
+      pOk: { unread: true, swipeable: false, as: 'div', category: 'payments', status: 'success', icon: 'check-circle', time: '1 min', title: 'Paiement réussi · 15 DT', body: 'Ta part · Arena Five, mer. 21 oct. · Visa •••• 4242.', href: 'PAY-09-Paiement-reussi.dc.html', actions: h(B, { size: 's', variant: 'secondary', leadingIcon: 'receipt', href: 'SUB-09-Facture-PDF.dc.html' }, 'Voir le reçu') },
+      pFail: { unread: true, swipeable: false, as: 'div', category: 'payments', priority: 'urgent', icon: 'credit-card', time: '1 min', title: 'Paiement refusé · 15 DT', body: 'Ta banque a refusé la Visa •••• 4242. Rien n’a été débité. Place gardée 15 min.', href: 'PAY-05-Carte-refusee.dc.html', actions: h(B, { size: 's', countdown: '14:32', href: 'PAY-05-Carte-refusee.dc.html' }, 'Payer autrement') },
+      pDue: { unread: true, swipeable: false, as: 'div', category: 'payments', priority: 'important', time: '2 h', title: 'Ta part de 15 DT est en attente', body: 'Arena Five, mer. 21 oct. · 21h00. À régler avant mer. 21 oct. · 18h00.', href: 'PAY-01-Checkout.dc.html', actions: h(B, { size: 's', price: '15 DT', href: 'PAY-01-Checkout.dc.html' }, 'Payer ma part') },
+      pRefund: { unread: true, swipeable: false, as: 'div', category: 'payments', status: 'success', time: '9 oct.', title: 'Remboursement de 15 DT effectué', body: 'Foot du sam. 10 oct. annulé par Skander T. Crédité sur ton solde MatchUp.', href: 'WAL-01-Portefeuille.dc.html' },
+      pRenew: { unread: true, swipeable: false, as: 'div', category: 'payments', status: 'success', icon: 'crown-simple', time: '8h05', title: 'Premium renouvelé · 19 DT', body: 'Prélevés sur Visa •••• 4242. Prochain prélèvement : lun. 30 nov.', href: 'SUB-04-Abonnement.dc.html' },
+      pRenewFail: { unread: true, swipeable: false, as: 'div', category: 'payments', priority: 'important', time: '8h05', title: 'Échec du renouvellement Premium', body: '19 DT non prélevés sur ta carte •••• 0341. Mets-la à jour sous 3 jours.', href: 'SUB-04-Abonnement.dc.html', actions: h(B, { size: 's', leadingIcon: 'credit-card', href: 'SUB-04-Abonnement.dc.html' }, 'Mettre à jour ma carte') },
+      pTrial: { unread: true, swipeable: false, as: 'div', category: 'payments', status: 'info', icon: 'hourglass', time: 'mar.', title: 'Ton essai Premium finit dans 3 jours', body: 'Le ven. 30 oct., 19 DT sur Visa •••• 4242. Résiliable sans frais d’ici là.', href: 'SUB-04-Abonnement.dc.html', actions: h(B, { size: 's', variant: 'secondary', href: 'SUB-04-Abonnement.dc.html' }, 'Gérer mon abonnement') },
+      tReg: { unread: true, swipeable: false, as: 'div', category: 'tournaments', status: 'success', time: '3 min', thumbnail: { sport: 'padel', variant: 'poster', label: 'Affiche du Padel Masters Lac 2' }, title: 'Inscription confirmée', body: 'Padel Masters Lac 2 · 24–26 oct. Avec Mariem K., 120 DT payés.' },
+      tDraw: { unread: true, swipeable: false, as: 'div', category: 'tournaments', icon: 'flag-checkered', time: 'jeu.', title: 'Le tableau est publié', body: '1er match sam. 24 oct. · 10h30, Court 2, contre Ines M. & Nour A.', actions: h(B, { size: 's', variant: 'secondary' }, 'Voir le tableau') },
+      tSoon: { unread: true, swipeable: false, as: 'div', category: 'tournaments', priority: 'urgent', time: '10h00', title: 'Ton match commence à 10h30', body: 'Court 2 · Smash Padel Club. Passe à la table de marque 10 min avant.', actions: h(B, { size: 's', variant: 'secondary', leadingIcon: 'navigation-arrow' }, 'Itinéraire') },
+      tResult: { unread: true, swipeable: false, as: 'div', category: 'tournaments', status: 'success', time: '11h40', title: 'Victoire 6-3 7-5 en 8e de finale', body: 'Contre Ines M. & Nour A. Prochain match sam. 24 oct. · 15h00.' },
+      tNews: { unread: true, swipeable: false, as: 'div', category: 'tournaments', icon: 'megaphone', avatar: { name: 'Smash Padel Club' }, time: 'ven.', title: 'Annonce · Padel Masters Lac 2', body: '« Pluie samedi : tous les matchs passent sur les courts indoor. »' }
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -26,14 +26,14 @@ a{color:var(--link)}
 <main style="flex: 1; box-sizing: border-box; width: 100%; max-width: calc(var(--content-max) + 2 * var(--grid-desktop-margin)); margin: 0 auto; padding: var(--space-8) var(--grid-desktop-margin); display: flex; flex-direction: column; gap: var(--space-6)">
 <div style="display: flex; align-items: flex-end; justify-content: space-between; gap: var(--space-6); flex-wrap: wrap">
 <div style="display: flex; flex-direction: column; gap: var(--space-1); min-width: 0">
-<h1 class="h1" style="margin: 0">Bienvenue, Skander</h1>
+<h1 class="h1" style="margin: 0">Bienvenue, Karim</h1>
 <p class="body-l" style="margin: 0; color: var(--text-secondary)">Ton profil coach est prêt. Crée ton premier programme pour accueillir tes élèves.</p>
 </div>
 
 </div><div class="db-cols db-cols--ai" style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-6); align-items: stretch"><section class="mu-card" style="grid-column: span 2; padding: var(--space-8); display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center">
 <x-import component-from-global-scope="MatchUp.EmptyState" illustration="programs" title="Crée ton premier programme" description="Des semaines de séances que tes élèves suivent à leur rythme, avec tes vidéos et tes conseils."></x-import>
 <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: var(--space-3); margin-top: calc(var(--space-4) - var(--space-8))">
-<x-import component-from-global-scope="MatchUp.Button" size="l" leading-icon="plus">Créer mon premier programme</x-import>
+<a href="COA-06-Constructeur.dc.html" class="mu-btn mu-btn--primary mu-btn--l" style="text-decoration: none"><span class="mu-btn__content"><x-import component-from-global-scope="MatchUp.Icon" name="plus" size="{{i20}}"></x-import><span class="mu-btn__label label-l">Créer mon premier programme</span></span></a>
 <x-import component-from-global-scope="MatchUp.Button" size="l" variant="tertiary" leading-icon="play-circle">Voir un exemple</x-import>
 </div>
 <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: var(--space-6); margin-top: var(--space-8); color: var(--text-secondary)">
@@ -43,8 +43,8 @@ a{color:var(--link)}
 </div>
 </section><div style="display: flex; flex-direction: column; gap: var(--space-6)"><x-import component-from-global-scope="MatchUp.AiSuggestionCard" context="Assistant programme" title="L’IA peut proposer un plan de 4 semaines à partir de ta bio" reason-lead="Basé sur" reason="ta bio et tes spécialités : service, débutants, préparation physique." primary-action="{{aiPrimary}}" secondary-action="{{aiSecondary}}">Rien n’est publié sans toi : tu relis et modifies chaque séance.</x-import><section class="mu-card" style="padding: var(--space-4) var(--space-5)">
 <div style="display: flex; align-items: center; gap: var(--space-3)">
-<x-import component-from-global-scope="MatchUp.Avatar" name="Skander T." size="m"></x-import>
-<div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px"><span class="label">Skander T.</span><span class="caption" style="color: var(--text-secondary)">Coach padel · Lac 2</span></div>
+<x-import component-from-global-scope="MatchUp.Avatar" name="Karim J." size="m"></x-import>
+<div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px"><span class="label">Karim J.</span><span class="caption" style="color: var(--text-secondary)">Coach padel · Lac 2</span></div>
 <a href="COA-01-Profil-coach.dc.html" class="mu-btn mu-btn--link" style="flex: none"><span class="mu-btn__content"><span class="mu-btn__label label">Modifier mon profil</span></span></a>
 </div>
 </section></div></div><div class="db-kpis" style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--space-6)"><x-import component-from-global-scope="MatchUp.KpiCard" label="Élèves" value="0" note="Tes élèves apparaîtront ici"></x-import><x-import component-from-global-scope="MatchUp.KpiCard" label="Inscriptions actives" value="0" note="Dès ton premier programme publié"></x-import><x-import component-from-global-scope="MatchUp.KpiCard" label="Revenus du mois" value="0" note="Versés chaque lundi" unit="DT"></x-import><x-import component-from-global-scope="MatchUp.KpiCard" label="Note moyenne" value="—" note="Après les premiers retours"></x-import></div>
@@ -65,8 +65,8 @@ class Component extends DCLogic {
       logoH: 28,
       nav: [{"items": [{"id": "dashboard", "label": "Tableau de bord", "icon": "squares-four"}]}, {"heading": "Coaching", "items": [{"id": "programmes", "label": "Programmes", "icon": "barbell"}, {"id": "eleves", "label": "Élèves", "icon": "users"}, {"id": "retours", "label": "Retours", "icon": "chat-circle-dots"}]}, {"heading": "Gestion", "items": [{"id": "revenus", "label": "Revenus", "icon": "coins"}, {"id": "abonnement", "label": "Abonnement", "icon": "crown-simple"}]}],
       role: {"label": "Coach", "context": "Padel · Lac 2", "initials": "ST"},
-      navUser: {"name": "Skander T.", "caption": "skander.t@email.tn"},
-      barUser: {"name": "Skander T.", "role": "Coach", "email": "skander.t@email.tn", "wallet": 0},
+      navUser: {"name": "Karim J.", "caption": "karim.j@email.tn"},
+      barUser: {"name": "Karim J.", "role": "Coach", "email": "karim.j@email.tn", "wallet": 0},
       bell: 0,
       aiPrimary: {"label": "Proposer un plan", "variant": "secondary", "leadingIcon": "sparkle"},
       aiSecondary: {"label": "Plus tard", "variant": "tertiary"},

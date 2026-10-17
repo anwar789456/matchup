@@ -26,7 +26,7 @@ a{color:var(--link)}
 <main style="flex: 1; box-sizing: border-box; width: 100%; max-width: calc(var(--content-max) + 2 * var(--grid-desktop-margin)); margin: 0 auto; padding: var(--space-8) var(--grid-desktop-margin); display: flex; flex-direction: column; gap: var(--space-6)">
 <div style="display: flex; align-items: flex-end; justify-content: space-between; gap: var(--space-6); flex-wrap: wrap">
 <div style="display: flex; flex-direction: column; gap: var(--space-1); min-width: 0">
-<h1 class="h1" style="margin: 0">Bienvenue, Ines</h1>
+<h1 class="h1" style="margin: 0">Bienvenue, Sami</h1>
 <p class="body-l" style="margin: 0; color: var(--text-secondary)">Tunis Padel Series est prête. Lance ton premier tournoi en quelques minutes.</p>
 </div>
 <a href="ORG-01-Organisation.dc.html" class="mu-btn mu-btn--tertiary mu-btn--m" style="flex: none"><span class="mu-btn__content"><x-import component-from-global-scope="MatchUp.Icon" name="pencil-simple" size="{{i20}}"></x-import><span class="mu-btn__label label">Modifier l’organisation</span></span></a>
@@ -36,7 +36,7 @@ a{color:var(--link)}
 <h2 class="h2" style="margin: 0">Crée ton premier tournoi</h2>
 <p class="body-l" style="margin: 0; color: var(--text-secondary)">Format, terrains, dates, frais d’inscription : on te guide étape par étape. Ton brouillon est enregistré à chaque étape.</p>
 <div style="display: flex; flex-wrap: wrap; gap: var(--space-3); margin-top: var(--space-2)">
-<x-import component-from-global-scope="MatchUp.Button" size="l" leading-icon="plus">Créer un tournoi</x-import>
+<a href="ORG-05-Creer-infos.dc.html" class="mu-btn mu-btn--primary mu-btn--l" style="text-decoration: none"><span class="mu-btn__content"><x-import component-from-global-scope="MatchUp.Icon" name="plus" size="{{i20}}"></x-import><span class="mu-btn__label label-l">Créer un tournoi</span></span></a>
 <x-import component-from-global-scope="MatchUp.Button" size="l" variant="secondary" leading-icon="copy">Reprendre Padel Cup Lac 2</x-import>
 </div>
 </div>
@@ -95,8 +95,8 @@ class Component extends DCLogic {
       logoH: 28,
       nav: [{"items": [{"id": "dashboard", "label": "Tableau de bord", "icon": "squares-four"}]}, {"heading": "Compétitions", "items": [{"id": "tournois", "label": "Tournois & événements", "icon": "trophy"}, {"id": "equipes", "label": "Équipes", "icon": "users-three"}, {"id": "calendrier", "label": "Calendrier", "icon": "calendar-dots"}, {"id": "scores", "label": "Scores en direct", "icon": "broadcast"}]}, {"heading": "Gestion", "items": [{"id": "annonces", "label": "Annonces", "icon": "megaphone"}, {"id": "revenus", "label": "Revenus", "icon": "coins"}]}],
       role: {"label": "Organisateur", "context": "Tunis Padel Series", "initials": "TS"},
-      navUser: {"name": "Ines M.", "caption": "contact@tunispadelseries.tn"},
-      barUser: {"name": "Ines M.", "role": "Organisatrice", "email": "contact@tunispadelseries.tn", "wallet": 0},
+      navUser: {"name": "Sami C.", "caption": "contact@tunispadelseries.tn"},
+      barUser: {"name": "Sami C.", "role": "Organisateur", "email": "contact@tunispadelseries.tn", "wallet": 0},
       bell: 0,
       heroArt: {"style": {"position": "absolute", "inset": 0, "width": "100%", "height": "100%"}},
       railCollapsed: typeof window !== 'undefined' && window.innerWidth < 1200

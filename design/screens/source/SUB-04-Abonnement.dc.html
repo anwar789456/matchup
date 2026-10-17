@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Abonnement</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/matchup/tokens.css">
+<link rel="stylesheet" href="ds/matchup/components/bundle.css">
+<script src="ds/matchup/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0}
+a{color:var(--link)}
+.sub-body > *{flex-shrink:0}
+.sub-section{display:flex; flex-direction:column; gap:var(--space-2); margin:0}
+.sub-section__title{margin:0; padding-inline:var(--space-4); color:var(--text-secondary)}
+.sub-group{margin:0; padding:0; list-style:none; background:var(--surface); border-radius:var(--radius-md); box-shadow:var(--elevation-1); overflow:hidden}
+.sub-group > li{position:relative}
+.sub-group > li + li::before{content:""; position:absolute; top:0; inset-inline-start:72px; inset-inline-end:0; height:1px; background:var(--border); z-index:1}
+.sub-row{position:relative; display:flex; align-items:center; gap:var(--space-3); min-height:64px; padding:var(--space-3) var(--space-4); box-sizing:border-box; color:var(--text); text-decoration:none}
+a.sub-row:hover{background:var(--surface-muted)}
+a.sub-row:focus-visible{outline:none; box-shadow:inset 0 0 0 2px var(--focus)}
+.sub-row__lead{flex:none; width:44px; display:grid; place-items:center}
+.sub-row__text{flex:1 1 auto; min-width:0; display:flex; flex-direction:column; gap:2px}
+.sub-row__chev{flex:none; display:flex; color:var(--text-secondary)}
+.sub-ico{width:40px; height:40px; border-radius:var(--radius-sm); display:grid; place-items:center; background:var(--surface-muted); color:var(--text)}
+.sub-brand{width:44px; height:28px; box-sizing:border-box; border-radius:var(--radius-xs); display:inline-flex; align-items:center; justify-content:center; background:var(--surface); color:var(--text); box-shadow:inset 0 0 0 1.5px var(--text); letter-spacing:0.04em}
+.sub-tag{display:inline-flex; align-items:center; padding:1px 8px; border-radius:var(--radius-full); background:var(--surface-muted); color:var(--text-secondary); box-shadow:inset 0 0 0 1px var(--border)}
+.sub-plan{display:flex; flex-direction:column; gap:var(--space-4); padding:var(--space-5) var(--space-4) var(--space-4); border-radius:var(--radius-lg); background:var(--surface); color:var(--text); position:relative; overflow:hidden}
+.sub-plan::before{content:""; position:absolute; right:-80px; top:-90px; width:220px; height:220px; border-radius:50%; background:radial-gradient(closest-side, color-mix(in srgb, var(--volt-400) 26%, transparent), transparent); pointer-events:none}
+.sub-plan > *{position:relative}
+.sub-crown{flex:none; width:44px; height:44px; border-radius:var(--radius-sm); display:grid; place-items:center; background:var(--volt-400); color:var(--ink-900)}
+.sub-track{position:relative; height:8px; border-radius:var(--radius-full); background:color-mix(in srgb, var(--white) 14%, transparent); overflow:hidden}
+.sub-track > span{position:absolute; left:0; top:0; bottom:0; border-radius:var(--radius-full); background:var(--volt-400)}
+.sub-dl{margin:0; display:flex; flex-direction:column}
+.sub-dl > div{display:flex; align-items:center; justify-content:space-between; gap:var(--space-3); min-height:40px}
+.sub-dl > div + div{border-top:1px solid var(--border)}
+.sub-dl dt{color:var(--text-secondary)}
+.sub-dl dd{margin:0; text-align:end}
+.sub-pdf{flex:none; display:inline-flex; align-items:center; gap:4px; height:28px; padding:0 10px 0 8px; border-radius:var(--radius-full); color:var(--text); text-decoration:none; box-shadow:inset 0 0 0 1px var(--border-strong); background:var(--surface)}
+.sub-pdf:hover{background:var(--surface-muted)}
+.sub-pdf:focus-visible{outline:none; box-shadow:var(--focus-ring)}
+</style>
+</helmet>
+<div style="position: relative; width: 390px; height: 1376px; box-sizing: border-box; display: flex; flex-direction: column; background: var(--bg); color: var(--text); font-family: var(--font-sans)">
+<div style="display: flex; align-items: center; gap: 8px; padding: 52px 16px 0 8px">
+<a href="PRF-05-Menu-du-compte.dc.html" class="mu-iconbtn mu-iconbtn--l mu-iconbtn--ghost" aria-label="Retour au menu du compte" style="color: var(--text)"><x-import component-from-global-scope="MatchUp.Icon" name="arrow-left" size="{{i24}}"></x-import></a>
+<h1 class="h3" style="margin: 0">Abonnement</h1>
+</div>
+
+<div class="sub-body" style="flex: 1; min-height: 0; overflow: auto; display: flex; flex-direction: column; gap: 24px; padding: 12px 16px 34px 16px">
+
+<section class="sub-plan" data-theme="dark" aria-label="Ton offre actuelle">
+<div style="display: flex; align-items: center; gap: 12px">
+<span class="sub-crown"><x-import component-from-global-scope="MatchUp.Icon" name="crown-simple" weight="fill" size="{{i24}}"></x-import></span>
+<div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px">
+<span class="h3">Premium</span>
+<span class="caption" style="color: var(--text-secondary)">Joueur · mensuel</span>
+</div>
+<x-import component-from-global-scope="MatchUp.StatusBadge" status="confirmed" label="Essai gratuit" size="s"></x-import>
+</div>
+<div style="display: flex; flex-direction: column; gap: 8px">
+<div style="display: flex; align-items: baseline; justify-content: space-between; gap: 12px">
+<span class="label">14 jours d’essai restants</span>
+<span class="caption" style="color: var(--text-secondary)">jusqu’au ven. 30 oct.</span>
+</div>
+<div class="sub-track" role="progressbar" aria-label="Essai gratuit : jour 1 sur 14" aria-valuemin="0" aria-valuemax="14" aria-valuenow="1"><span style="width: 7%"></span></div>
+</div>
+<dl class="sub-dl">
+<div><dt class="body">Prochain prélèvement</dt><dd class="label"><span class="num-s">19 DT</span> · ven. 30 oct.</dd></div>
+<div><dt class="body">Ensuite</dt><dd class="label"><span class="num-s">19 DT</span>/mois, le 30</dd></div>
+<div><dt class="body">Carte</dt><dd class="label">Visa •••• 4242</dd></div>
+</dl>
+<div style="display: flex; gap: 8px">
+<a href="SUB-05-Changer-d-offre.dc.html" class="mu-btn mu-btn--secondary mu-btn--m" style="flex: 1"><span class="mu-btn__content"><span class="mu-btn__label label">Changer d’offre</span></span></a>
+<a href="SUB-01-Offres.dc.html" class="mu-btn mu-btn--tertiary mu-btn--m" style="flex: none"><span class="mu-btn__content"><span class="mu-btn__label label">Voir les avantages</span></span></a>
+</div>
+</section>
+
+<x-import component-from-global-scope="MatchUp.Banner" tone="info" icon="bell-ringing" title="Rappel le mar. 27 oct.">On te prévient 3 jours avant le premier prélèvement, par notification et email.</x-import>
+
+<section class="sub-section" aria-labelledby="sub-s-pay">
+<h2 id="sub-s-pay" class="sub-section__title overline">Moyens de paiement</h2>
+<ul class="sub-group">
+<li><div class="sub-row">
+<span class="sub-row__lead"><span class="sub-brand label-s" aria-hidden="true">VISA</span></span>
+<span class="sub-row__text"><span style="display: flex; align-items: center; gap: 8px"><span class="label">Visa •••• 4242</span><span class="sub-tag label-s">Par défaut</span></span><span class="caption" style="color: var(--text-secondary)">Expire 08/27 · utilisée pour Premium</span></span>
+</div></li>
+<li><div class="sub-row">
+<span class="sub-row__lead"><span class="sub-brand label-s" aria-hidden="true">MC</span></span>
+<span class="sub-row__text"><span class="label">Mastercard •••• 5454</span><span class="caption" style="display: flex; align-items: center; gap: 4px; color: var(--warning-text)"><x-import component-from-global-scope="MatchUp.Icon" name="warning" weight="fill" size="{{i14}}"></x-import>Expire le mois prochain (11/26)</span>
+<a href="PAY-03-Nouvelle-carte.dc.html" class="mu-btn mu-btn--link mu-btn--s" style="align-self: flex-start; margin-top: 4px"><span class="mu-btn__content"><span class="mu-btn__label label">Mettre à jour la carte</span></span></a></span>
+</div></li>
+<li><a href="PAY-03-Nouvelle-carte.dc.html" class="sub-row">
+<span class="sub-row__lead"><span class="sub-ico" style="width: 44px; height: 28px; box-sizing: border-box; border-radius: var(--radius-xs); box-shadow: inset 0 0 0 1.5px var(--border-strong); background: var(--surface); color: var(--text-secondary)"><x-import component-from-global-scope="MatchUp.Icon" name="plus" size="{{i16}}"></x-import></span></span>
+<span class="sub-row__text"><span class="label">Ajouter une carte</span></span>
+<span class="sub-row__chev"><x-import component-from-global-scope="MatchUp.Icon" name="caret-right" size="{{i20}}"></x-import></span>
+</a></li>
+</ul>
+</section>
+
+<section class="sub-section" aria-labelledby="sub-s-docs">
+<h2 id="sub-s-docs" class="sub-section__title overline">Factures et reçus</h2>
+<ul class="sub-group">
+<sc-for list="{{receipts}}" as="r">
+<li><div class="sub-row">
+<span class="sub-row__lead"><span class="sub-ico"><x-import component-from-global-scope="MatchUp.Icon" name="receipt" size="{{i20}}"></x-import></span></span>
+<span class="sub-row__text"><span class="label" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{r.label}}</span><span class="caption" style="color: var(--text-secondary)">{{r.meta}}</span></span>
+<span style="flex: none; display: flex; flex-direction: column; align-items: flex-end; gap: 6px">
+<span class="num-s">{{r.amount}}</span>
+<a href="SUB-09-Facture-PDF.dc.html" class="sub-pdf" aria-label="{{r.pdfLabel}}"><x-import component-from-global-scope="MatchUp.Icon" name="download-simple" size="{{i16}}"></x-import><span class="label-s">PDF</span></a>
+</span>
+</div></li>
+</sc-for>
+</ul>
+<p class="caption" style="margin: 0; padding-inline: 16px; color: var(--text-secondary)">Ta première facture Premium arrivera le ven. 30 oct., avec le prélèvement.</p>
+</section>
+
+<section class="sub-section" aria-labelledby="sub-s-stop" style="gap: 12px; padding: 16px; border-radius: var(--radius-md); background: var(--surface); box-shadow: var(--elevation-1)">
+<div style="display: flex; flex-direction: column; gap: 4px">
+<h2 id="sub-s-stop" class="label-l" style="margin: 0">Résilier Premium</h2>
+<p class="body" style="margin: 0; color: var(--text-secondary)">En 2 étapes, sans frais. Si tu résilies pendant l’essai, tu gardes Premium jusqu’au ven. 30 oct. et rien n’est prélevé.</p>
+</div>
+<a href="SUB-06-Resilier-raison.dc.html" class="mu-btn mu-btn--destructive-outline mu-btn--l mu-btn--block"><span class="mu-btn__content"><x-import component-from-global-scope="MatchUp.Icon" name="x-circle" size="{{i20}}"></x-import><span class="mu-btn__label label-l">Résilier l’abonnement</span></span></a>
+</section>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":1376}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      yes: true, i14: 14, i16: 16, i20: 20, i24: 24,
+      receipts: [
+        { label: 'Part Arena Five · MU-48213', meta: 'Reçu · 16 oct. · Visa •••• 4242', amount: '15 DT', pdfLabel: 'Télécharger le reçu PDF, part Arena Five, 16 octobre' },
+        { label: 'Recharge du solde', meta: 'Reçu · 5 oct. · Visa •••• 4242', amount: '50 DT', pdfLabel: 'Télécharger le reçu PDF, recharge du solde, 5 octobre' },
+        { label: 'Part Hoop Zone', meta: 'Reçu · 27 sept. · Visa •••• 4242', amount: '9 DT', pdfLabel: 'Télécharger le reçu PDF, part Hoop Zone, 27 septembre' }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

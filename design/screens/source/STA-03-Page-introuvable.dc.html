@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Partie introuvable</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/matchup/tokens.css">
+<link rel="stylesheet" href="ds/matchup/components/bundle.css">
+<script src="ds/matchup/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0}
+a{color:var(--link)}
+.sta-head{display:flex; align-items:center; gap:4px; min-height:48px; padding:52px 16px 0 8px}
+.sta-link{display:inline-flex; align-items:center; gap:6px; max-width:100%; padding:4px 12px; border-radius:var(--radius-full); background:var(--surface-muted); box-shadow:inset 0 0 0 1px var(--border); color:var(--text-secondary)}
+.sta-link s{text-decoration-thickness:1px}
+.sta-sec{display:flex; flex-direction:column; gap:12px}
+.sta-sec__head{display:flex; align-items:center; justify-content:space-between; gap:8px; min-height:32px}
+</style>
+</helmet>
+<div style="position: relative; width: 390px; height: 844px; box-sizing: border-box; overflow: hidden; display: flex; flex-direction: column; background: var(--bg); color: var(--text); font-family: var(--font-sans)">
+<header class="sta-head">
+<a href="HOM-01-Accueil.dc.html" class="mu-iconbtn mu-iconbtn--l mu-iconbtn--ghost" aria-label="Retour à l’accueil" style="color: var(--text)"><x-import component-from-global-scope="MatchUp.Icon" name="arrow-left" size="{{i24}}"></x-import></a>
+<h1 class="h3" style="margin: 0; flex: 1">Partie</h1>
+</header>
+
+<main style="flex: 1; min-height: 0; display: flex; flex-direction: column; gap: 20px; padding: 0 16px 34px 16px">
+<div style="display: flex; flex-direction: column; align-items: center">
+<x-import component-from-global-scope="MatchUp.EmptyState" illustration="results" title="Cette partie n’existe plus" description="Le lien a expiré ou l’organisateur a supprimé la partie. Si tu avais payé ta part, elle est déjà remboursée sur ton solde MatchUp."></x-import>
+<span class="sta-link caption" style="margin-top: -12px"><x-import component-from-global-scope="MatchUp.Icon" name="link-break" size="{{i16}}"></x-import><s>matchup.tn/p/7Q2K9</s> · lien reçu sur WhatsApp</span>
+</div>
+<a href="EXP-01-Explorer-parties.dc.html" class="mu-btn mu-btn--primary mu-btn--l mu-btn--block"><span class="mu-btn__content"><x-import component-from-global-scope="MatchUp.Icon" name="compass" size="{{i20}}"></x-import><span class="mu-btn__label label-l">Trouver une autre partie</span></span></a>
+
+<section class="sta-sec" aria-labelledby="sta-sim">
+<div class="sta-sec__head">
+<h2 id="sta-sim" class="h3" style="margin: 0">Parties proches ce week-end</h2>
+</div>
+<x-import component-from-global-scope="MatchUp.GameCard" dc-props="{{g1}}"></x-import>
+<x-import component-from-global-scope="MatchUp.GameCard" dc-props="{{g3}}"></x-import>
+</section>
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const at = (d, h, m) => new Date(2026, 9, d, h, m || 0);
+    return {
+      yes: true, i16: 16, i20: 20, i24: 24,
+      g1: {
+        variant: 'compact', sport: 'football', gameType: 'mixte', venue: 'Arena Five', court: 'Terrain 2', place: 'La Marsa', distance: 1.4,
+        start: at(18, 20), spotsTotal: 10, spotsLeft: 2, price: 15, levelMin: 3, levelMax: 4.5,
+        players: [{ name: 'Skander T.' }, { name: 'Hamza R.' }, { name: 'Nour A.' }, { name: 'Aziz H.' }, { name: 'Omar D.' }, { name: 'Salma G.' }, { name: 'Lina F.' }, { name: 'Ines M.' }],
+        organiser: { name: 'Skander T.', reliability: 96 }, href: 'GAM-01-Partie-ouverte.dc.html'
+      },
+      g3: {
+        variant: 'compact', sport: 'basketball', gameType: 'hommes', venue: 'Hoop Zone', place: 'Ennasr', distance: 6.2,
+        start: at(17, 18), spotsTotal: 6, spotsLeft: 2, price: 9, levelMin: 2.5, levelMax: 4,
+        players: [{ name: 'Hamza R.' }, { name: 'Omar D.' }, { name: 'Aziz H.' }, { name: 'Skander T.' }],
+        organiser: { name: 'Hamza R.', reliability: 93 }
+      }
+    };
+  }
+}
+</script>
+</body>
+</html>

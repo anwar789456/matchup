@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Toast temps réel</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/matchup/tokens.css">
+<link rel="stylesheet" href="ds/matchup/components/bundle.css">
+<script src="ds/matchup/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0}
+a{color:var(--link)}
+.tst-hot{position:absolute; display:block; border-radius:var(--radius-full); z-index:5}
+.tst-hot:focus-visible{outline:2px solid var(--focus); outline-offset:2px}
+.tst-new{position:absolute; pointer-events:none; z-index:2}
+.tst-new__ring{position:absolute; inset:0; border-radius:var(--radius-full); box-shadow:0 0 0 3px var(--accent), 0 0 0 9px color-mix(in srgb, var(--accent) 35%, transparent)}
+.tst-new__tag{position:absolute; right:calc(100% + 10px); top:50%; transform:translateY(-50%); display:inline-flex; align-items:center; gap:4px; height:20px; padding:0 8px; border-radius:var(--radius-full); background:var(--accent); color:var(--on-accent); white-space:nowrap; box-shadow:var(--elevation-1)}
+.tst-doc{display:flex; flex-direction:column; gap:var(--space-5); padding:var(--space-8) var(--space-4) var(--space-6) var(--space-4); background:var(--bg); box-shadow:inset 0 1px 0 var(--border)}
+.tst-steps{margin:0; padding:0; list-style:none; display:flex; flex-direction:column; gap:var(--space-3)}
+.tst-steps > li{display:grid; grid-template-columns:24px 1fr; gap:var(--space-3); align-items:start}
+.tst-num{display:inline-grid; place-items:center; width:22px; height:22px; border-radius:var(--radius-full); background:var(--surface-inverse); color:var(--text-inverse)}
+.tst-pin{position:absolute; width:22px; height:22px; border-radius:var(--radius-full); display:grid; place-items:center; background:var(--surface-inverse); color:var(--text-inverse); box-shadow:0 0 0 2px var(--bg)}
+.tst-pin::after{content:""; position:absolute; left:50%; top:22px; width:1px; height:14px; background:var(--border-strong)}
+.tst-pin--below::after{top:auto; bottom:22px; height:16px}
+.tst-rules{margin:0; padding:0; list-style:none; display:grid; grid-template-columns:1fr 1fr; gap:var(--space-3)}
+.tst-rules > li{display:flex; flex-direction:column; gap:4px; padding:var(--space-3); border-radius:var(--radius-md); background:var(--surface); box-shadow:var(--elevation-1)}
+</style>
+</helmet>
+<div class="tst-root" style="position: relative; width: 390px; height: 2036px; box-sizing: border-box; overflow: hidden; background: var(--bg); color: var(--text); font-family: var(--font-sans)">
+
+<div style="position: relative; height: 844px; overflow: hidden; display: flex; flex-direction: column; background: var(--bg)">
+<x-import component-from-global-scope="MatchUp.TopAppBar" title="Football 5 vs 5" subtitle="dim. 18 oct. · 20h00 · Arena Five" on-back="{{noop}}" inset="{{inset}}" scrolled="{{yes}}" actions="{{barActions}}"></x-import>
+<a href="GAM-01-Partie-ouverte.dc.html" class="tst-hot" aria-label="Retour à la partie" style="left: 4px; top: 48px; width: 48px; height: 48px"></a>
+
+<main style="position: relative; flex: 1 1 auto; min-height: 0; padding: 12px 16px 0 16px; display: flex; flex-direction: column; gap: 12px">
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 8px">
+<span class="caption" style="display: inline-flex; align-items: center; gap: 6px; color: var(--text-secondary)"><x-import component-from-global-scope="MatchUp.Icon" name="arrows-clockwise" size="{{i16}}"></x-import>Composition mise à jour à l’instant</span>
+</div>
+<x-import component-from-global-scope="MatchUp.Lineup" sport="football" teams="{{teams}}" title="Composition" on-join="{{noop}}"></x-import>
+<div class="tst-new" aria-hidden="true" style="left: 107px; top: 288px; width: 60px; height: 60px"><span class="tst-new__ring"></span><span class="tst-new__tag label-s"><x-import component-from-global-scope="MatchUp.Icon" name="user-plus" size="{{i12}}"></x-import>Nouveau</span></div>
+</main>
+
+<div style="position: absolute; left: 0; right: 0; bottom: 0; z-index: var(--z-sticky); padding: 12px 16px 34px 16px; background: var(--surface); box-shadow: var(--elevation-2-up); display: flex; flex-direction: column; gap: 10px">
+<p class="caption" style="margin: 0; display: flex; align-items: center; justify-content: center; gap: 6px; color: var(--text-secondary)"><span style="display: flex; color: var(--warning-text)"><x-import component-from-global-scope="MatchUp.Icon" name="users-three" size="{{i16}}"></x-import></span><span><span class="label-s" style="color: var(--text)">Plus qu’1 place</span> · annulation gratuite jusqu’à sam. <span class="num-xs" style="color: var(--text)">20h00</span></span></p>
+<a href="GAM-05-Tu-es-inscrit.dc.html" class="mu-btn mu-btn--primary mu-btn--xl mu-btn--block"><span class="mu-btn__content"><span class="mu-btn__label label-l">Rejoindre et payer</span><span class="mu-btn__dot" aria-hidden="true">·</span><span class="mu-btn__price num-m">15 DT</span></span></a>
+</div>
+
+<x-import component-from-global-scope="MatchUp.Toast.Stack" dc-props="{{liveStack}}"></x-import>
+</div>
+
+<section class="tst-doc" aria-labelledby="tst-doc-t">
+<div style="display: flex; flex-direction: column; gap: 6px">
+<span class="overline" style="color: var(--text-secondary)">Anatomie · mise à jour en temps réel</span>
+<h2 id="tst-doc-t" class="h2" style="margin: 0">Quelqu’un rejoint la partie que tu regardes</h2>
+<p class="body" style="margin: 0; color: var(--text-secondary)">Le jeton du joueur tombe dans son poste (rebond + anneau Volt), le compteur passe à 9/10 et un toast le confirme, sans bloquer l’écran.</p>
+</div>
+
+<div style="position: relative; padding: 40px 0 44px 0">
+<x-import component-from-global-scope="MatchUp.Toast" dc-props="{{anatomy}}"></x-import>
+<span class="tst-pin num-xs" style="left: 15px; top: 4px">1</span>
+<span class="tst-pin num-xs" style="left: 110px; top: 4px">2</span>
+<span class="tst-pin num-xs" style="left: 281px; top: 4px">4</span>
+<span class="tst-pin num-xs" style="left: 322px; top: 4px">5</span>
+<span class="tst-pin tst-pin--below num-xs" style="left: 97px; bottom: 4px">3</span>
+<span class="tst-pin tst-pin--below num-xs" style="left: 196px; bottom: 4px">6</span>
+</div>
+
+<ol class="tst-steps">
+<li><span class="tst-num num-xs">1</span><span class="body"><span class="label">Icône de ton</span> · info pour l’activité des joueurs, succès pour une réservation, erreur pour un paiement.</span></li>
+<li><span class="tst-num num-xs">2</span><span class="body"><span class="label">Titre</span> · ce qui vient d’arriver, avec le nouveau compte (9/10).</span></li>
+<li><span class="tst-num num-xs">3</span><span class="body"><span class="label">Détail</span> · poste, équipe et places restantes, en une ligne.</span></li>
+<li><span class="tst-num num-xs">4</span><span class="body"><span class="label">Une action au plus</span> · un verbe (« Voir »), jamais « OK ».</span></li>
+<li><span class="tst-num num-xs">5</span><span class="body"><span class="label">Fermer</span> · bouton « Fermer », atteignable au clavier.</span></li>
+<li><span class="tst-num num-xs">6</span><span class="body"><span class="label">Ligne de 4 s</span> · se vide puis le toast part ; un toucher la met en pause.</span></li>
+</ol>
+
+<div style="display: flex; flex-direction: column; gap: 8px">
+<h3 class="label-l" style="margin: 0">Pile dépliée au toucher</h3>
+<p class="caption" style="margin: 0; color: var(--text-secondary)">3 toasts au plus, le plus récent devant. Repliés, les plus anciens dépassent de 10 px derrière.</p>
+<div style="position: relative; height: 138px; margin-top: 4px">
+<x-import component-from-global-scope="MatchUp.Toast.Stack" dc-props="{{openStack}}"></x-import>
+</div>
+</div>
+
+<ul class="tst-rules">
+<li><span class="label">Placement</span><span class="caption" style="color: var(--text-secondary)">16 px au-dessus de la barre d’action ou de la barre d’onglets, pleine largeur − 32.</span></li>
+<li><span class="label">Un événement, un toast</span><span class="caption" style="color: var(--text-secondary)">Deux arrivées en 2 s se regroupent : « Rami S. et Mariem K. ont rejoint… ».</span></li>
+<li><span class="label">Calque</span><span class="caption" style="color: var(--text-secondary)">Au-dessus des feuilles et des modales, sous les takeovers (place libérée).</span></li>
+<li><span class="label">Mouvement réduit</span><span class="caption" style="color: var(--text-secondary)">Pas de glissement ni de rebond : le jeton apparaît, la ligne reste fixe.</span></li>
+</ul>
+</section>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":2036}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const h = React.createElement, T = MatchUp.Toast;
+    const P = (name, level, extra) => Object.assign({ name, level }, extra || {});
+    const joined = { tone: 'info', icon: 'user-plus', title: 'Rami S. a rejoint la partie · 9/10', description: 'Attaquant chez les Bleus · plus qu’1 place', paused: true, elapsed: 900 };
+    const booked = { tone: 'success', title: 'Réservation confirmée', description: 'Arena Five · Terrain 1 · mer. 21 oct. · 21h00', action: 'Voir', paused: true, elapsed: 2700 };
+    return {
+      yes: true, noop: () => {}, inset: 44, i16: 16, i12: 12,
+      barActions: [{ icon: 'share-network', label: 'Partager la partie' }, { icon: 'dots-three-vertical', label: 'Plus d’actions' }],
+      teams: [
+        { name: 'Blancs', players: [P('Hamza R.', 3.5), P('Nour A.', 3.0), null, P('Skander T.', 4.0, { role: 'organizer' }), P('Salma G.', 3.0)] },
+        { name: 'Bleus', players: [P('Omar D.', 3.5), P('Lina F.', 3.5), P('Ines M.', 4.0), P('Aziz H.', 4.5), P('Rami S.', 3.5)] }
+      ],
+      liveStack: { placement: 'bottom', contained: true, offset: 146, expanded: false, label: 'Notifications',
+        children: [h(T, Object.assign({ key: 'joined' }, joined)), h(T, Object.assign({ key: 'booked' }, booked))] },
+      openStack: { placement: 'bottom', contained: true, offset: 0, expanded: true, label: 'Notifications (pile dépliée)', style: { left: 0, right: 0 },
+        children: [h(T, Object.assign({ key: 'joined' }, joined)), h(T, Object.assign({ key: 'booked' }, booked))] },
+      anatomy: Object.assign({}, joined, { action: 'Voir', elapsed: 1600 })
+    };
+  }
+}
+</script>
+</body>
+</html>

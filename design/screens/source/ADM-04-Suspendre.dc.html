@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Admin · Suspendre Omar D.</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/matchup/tokens.css">
+<link rel="stylesheet" href="ds/matchup/components/bundle.css">
+<script src="ds/matchup/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+/* adm:shared — identical in ADM-01…10 */
+body{margin:0}
+a{color:var(--link)}
+.adm-head{display:flex; align-items:flex-start; justify-content:space-between; gap:var(--space-3); padding:52px var(--space-2) var(--space-3) var(--space-4)}
+.adm-head__titles{flex:1; min-width:0; display:flex; flex-direction:column; align-items:flex-start; gap:var(--space-2)}
+.adm-head__title{margin:0}
+.adm-role{display:inline-flex; align-items:center; gap:var(--space-1); height:24px; padding:0 10px 0 8px; border-radius:var(--radius-full); background:var(--surface-inverse); color:var(--text-inverse)}
+.adm-me{flex:none; width:48px; height:48px; display:grid; place-items:center; border-radius:var(--radius-full); text-decoration:none}
+.adm-me:focus-visible,.adm-hot:focus-visible{outline:none; box-shadow:var(--focus-ring)}
+.adm-bar{display:flex; align-items:center; gap:var(--space-1); padding:52px var(--space-2) var(--space-2) var(--space-1)}
+.adm-bar__titles{flex:1; min-width:0; display:flex; flex-direction:column; gap:2px}
+.adm-sec{display:flex; flex-direction:column; gap:var(--space-2); margin:0}
+.adm-sec__head{display:flex; align-items:center; justify-content:space-between; gap:var(--space-2); min-height:32px}
+.adm-sec__title{margin:0; display:flex; align-items:center; gap:var(--space-2)}
+.adm-over{margin:0; color:var(--text-secondary)}
+.adm-muted{color:var(--text-secondary)}
+.adm-list{margin:0; padding:0; list-style:none; background:var(--surface); border-radius:var(--radius-md); box-shadow:var(--elevation-1); overflow:hidden}
+.adm-list > li{position:relative}
+.adm-list > li + li::before{content:""; position:absolute; top:0; inset-inline-start:var(--space-4); inset-inline-end:0; height:1px; background:var(--border); z-index:1}
+.adm-list--inset > li + li::before{inset-inline-start:68px}
+.adm-row{position:relative; display:flex; align-items:center; gap:var(--space-3); min-height:64px; padding:var(--space-3) var(--space-4); box-sizing:border-box; color:var(--text); text-decoration:none}
+a.adm-row:hover{background:var(--surface-muted)}
+a.adm-row:focus-visible{outline:none; box-shadow:inset 0 0 0 2px var(--focus)}
+.adm-row--top{align-items:flex-start}
+.adm-ico{flex:none; width:40px; height:40px; border-radius:var(--radius-sm); display:grid; place-items:center; background:var(--surface-muted); color:var(--text)}
+.adm-ico--error{background:var(--error-soft); color:var(--error-text)}
+.adm-ico--warning{background:var(--warning-soft); color:var(--warning-text)}
+.adm-ico--info{background:var(--info-soft); color:var(--info-text)}
+.adm-ico--ai{background:var(--ai-soft); color:var(--ai-text)}
+.adm-ico--success{background:var(--success-soft); color:var(--success-text)}
+.adm-txt{flex:1; min-width:0; display:flex; flex-direction:column; gap:2px}
+.adm-one{white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+.adm-two{display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden}
+.adm-end{flex:none; display:flex; flex-direction:column; align-items:flex-end; gap:4px; text-align:end}
+.adm-chev{flex:none; display:flex; color:var(--text-secondary); margin-inline-end:calc(-1 * var(--space-1))}
+.adm-chips{display:flex; gap:var(--space-2); overflow-x:auto; padding:6px var(--space-4); margin:-6px 0; scrollbar-width:none}
+.adm-chips::-webkit-scrollbar{display:none}
+.adm-chips > *{flex:none}
+.adm-meta{display:flex; align-items:center; justify-content:space-between; gap:var(--space-2); min-height:40px; padding:0 var(--space-2) 0 var(--space-4)}
+.adm-score{flex:none; width:76px; display:flex; flex-direction:column; align-items:flex-end; gap:4px}
+.adm-score__top{display:flex; align-items:baseline; gap:4px}
+.adm-score__track{width:100%; height:4px; border-radius:var(--radius-full); background:var(--surface-muted); overflow:hidden}
+.adm-score__fill{height:100%; border-radius:var(--radius-full)}
+.adm-score--high .adm-score__fill{background:var(--error)}
+.adm-score--high .adm-score__level{color:var(--error-text)}
+.adm-score--mid .adm-score__fill{background:var(--warning)}
+.adm-score--mid .adm-score__level{color:var(--warning-text)}
+.adm-score--low .adm-score__fill{background:var(--text-secondary)}
+.adm-score--low .adm-score__level{color:var(--text-secondary)}
+.adm-why{display:flex; align-items:center; gap:6px; color:var(--text-secondary)}
+.adm-stickybar{position:absolute; left:0; right:0; bottom:0; z-index:4; display:flex; gap:var(--space-3); padding:12px var(--space-4) 34px var(--space-4); background:var(--surface); box-shadow:var(--elevation-2-up)}
+.adm-hot{position:absolute; display:block; border-radius:var(--radius-full); z-index:5}
+/* /adm:shared */
+.sus-wrap{display:flex; flex-wrap:wrap; gap:var(--space-2)}
+</style>
+</helmet>
+<div style="position: relative; width: 390px; height: 844px; box-sizing: border-box; overflow: hidden; background: var(--bg); color: var(--text); font-family: var(--font-sans)">
+
+<div aria-hidden="true">
+<div class="adm-bar">
+<span class="mu-iconbtn mu-iconbtn--l mu-iconbtn--ghost" style="color: var(--text)"><x-import component-from-global-scope="MatchUp.Icon" name="arrow-left" size="{{i24}}"></x-import></span>
+<div class="adm-bar__titles"><span class="label-l">Fiche utilisateur</span><span class="caption adm-muted">Admin · ID U-20417</span></div>
+</div>
+<div style="padding: 8px 16px">
+<div class="mu-card" style="display: flex; align-items: center; gap: 16px; padding: 20px 16px">
+<x-import component-from-global-scope="MatchUp.Avatar" name="Omar D." size="l" level="{{lv35}}"></x-import>
+<div style="flex: 1; min-width: 0; display: flex; flex-direction: column; align-items: flex-start; gap: 4px">
+<span class="h2">Omar D.</span>
+<span class="body adm-muted">@omar.d · Joueur · La Marsa</span>
+<x-import component-from-global-scope="MatchUp.StatusBadge" status="failed" label="Signalé" size="s"></x-import>
+</div>
+</div>
+</div>
+</div>
+
+<x-import component-from-global-scope="MatchUp.Dialog" inline="{{yes}}" open="{{yes}}" placement="bottom" tone="destructive" icon="{{nul}}" safe-area="{{safeBottom}}" title="{{dTitle}}" description="{{dDesc}}" consequence-icon="calendar-x" consequence="{{consequence}}" on-close="{{noop}}">
+<div style="display: flex; flex-direction: column; gap: 16px">
+<div role="radiogroup" aria-labelledby="sus-dur" style="display: flex; flex-direction: column; gap: 8px">
+<span id="sus-dur" class="label">Durée</span>
+<div class="sus-wrap">
+<sc-for list="{{durations}}" as="d">
+<x-import component-from-global-scope="MatchUp.Chip" kind="choice" selected="{{d.on}}" on-click="{{d.pick}}">{{d.label}}</x-import>
+</sc-for>
+</div>
+</div>
+<x-import component-from-global-scope="MatchUp.Select" label="Raison" options="{{reasons}}" value="noshow"></x-import>
+<x-import component-from-global-scope="MatchUp.TextField" label="Message à Omar D." multiline="{{yes}}" rows="{{two}}" max-length="{{max}}" counter="{{yes}}" default-value="2 matchs manqués sans prévenir : sam. 26 sept. et jeu. 8 oct."></x-import>
+<div style="display: flex; flex-direction: column; gap: 12px; padding-top: 4px">
+<a href="ADM-03-Detail-utilisateur.dc.html" class="mu-btn mu-btn--secondary mu-btn--l mu-btn--block"><span class="mu-btn__content"><span class="mu-btn__label label-l">Garder le compte actif</span></span></a>
+<a href="ADM-02-Utilisateurs.dc.html" class="mu-btn mu-btn--destructive mu-btn--l mu-btn--block"><span class="mu-btn__content"><span class="mu-btn__label label-l">{{cta}}</span></span></a>
+</div>
+</div>
+</x-import>
+<a href="ADM-03-Detail-utilisateur.dc.html" class="adm-hot" aria-label="Fermer et revenir à la fiche" style="z-index: calc(var(--z-modal) + 1); left: 327px; top: 126px; width: 44px; height: 44px"></a>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(props) { super(props); this.state = { dur: '7j' }; }
+  renderVals() {
+    const dur = this.state.dur;
+    const opts = [
+      { value: '24h', label: '24 h', until: 'sam. 17 oct. · 18h00', cta: 'Suspendre 24 h' },
+      { value: '7j', label: '7 jours', until: 'ven. 23 oct. · 18h00', cta: 'Suspendre 7 jours' },
+      { value: '30j', label: '30 jours', until: 'dim. 15 nov. · 18h00', cta: 'Suspendre 30 jours' },
+      { value: 'ban', label: 'Définitif', until: null, cta: 'Bannir définitivement' }
+    ];
+    const cur = opts.find((o) => o.value === dur) || opts[1];
+    const freed = 'Ses 2 parties à venir sont libérées et 30 DT remboursés sur son solde.';
+    return {
+      yes: true, nul: null, i16: 16, i20: 20, i24: 24, lv35: 3.5, two: 2, max: 280,
+      noop: () => {},
+      safeBottom: { bottom: 34 },
+      durations: opts.map((o) => ({ label: o.label, on: o.value === dur, pick: () => this.setState({ dur: o.value }) })),
+      consequence: cur.until
+        ? 'Jusqu’au ' + cur.until + ' : ni partie, ni réservation. ' + freed
+        : 'Compte fermé, sans réinscription possible avec ce numéro. ' + freed,
+      cta: cur.cta,
+      dTitle: cur.until ? 'Suspendre Omar D. ?' : 'Bannir Omar D. ?',
+      dDesc: cur.until ? 'Il est prévenu par email avec ta raison. Tu peux lever la suspension à tout moment.' : 'Il est prévenu par email avec ta raison. Seul un admin pourra rouvrir le compte, après un recours.',
+      reasons: [
+        { value: 'noshow', label: 'No-shows répétés' },
+        { value: 'agressif', label: 'Comportement agressif' },
+        { value: 'spam', label: 'Spam ou publicité' },
+        { value: 'fraude', label: 'Fraude au paiement' },
+        { value: 'autre', label: 'Autre raison' }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

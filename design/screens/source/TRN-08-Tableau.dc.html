@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Tableau du tournoi</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/matchup/tokens.css">
+<link rel="stylesheet" href="ds/matchup/components/bundle.css">
+<script src="ds/matchup/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0}
+a{color:var(--link)}
+.tb-muted{color:var(--text-secondary)}
+.tb-m0{margin:0}
+.tb-hot{position:absolute; display:block; border-radius:var(--radius-sm)}
+.tb-hot:focus-visible{outline:2px solid var(--focus); outline-offset:2px}
+.tb-live{display:flex; align-items:center; gap:10px; padding:10px 12px; border-radius:var(--radius-md); background:var(--surface); box-shadow:inset 0 0 0 1.5px var(--live), var(--elevation-1)}
+.tb-dot{flex:none; width:8px; height:8px; border-radius:var(--radius-full); background:var(--live); box-shadow:0 0 0 4px color-mix(in srgb, var(--live) 22%, transparent)}
+@keyframes tb-pulse{0%,100%{opacity:1}50%{opacity:0.35}}
+.tb-dot{animation:tb-pulse 1.6s ease-in-out infinite}
+@media (prefers-reduced-motion: reduce){.tb-dot{animation:none}}
+.tb-map{position:relative; width:326px; height:112px; margin:0 auto}
+.tb-m{position:absolute; width:60px; height:20px; box-sizing:border-box; border-radius:4px; background:var(--surface); box-shadow:inset 0 0 0 1px var(--border-strong); display:flex; flex-direction:column; justify-content:center; gap:3px; padding:0 6px}
+.tb-m i{display:block; height:3px; border-radius:2px; background:var(--border-strong)}
+.tb-m i + i{width:70%}
+.tb-m.is-you{background:var(--accent); box-shadow:none}
+.tb-m.is-you i{background:var(--on-accent); opacity:0.55}
+.tb-m.is-live{box-shadow:0 0 0 2px var(--live)}
+.tb-m.is-tbd{background:transparent; box-shadow:none; border:1.5px dashed var(--border-strong)}
+.tb-w{position:absolute; box-sizing:border-box; border:1.5px solid var(--border-strong); border-left:0; border-radius:0 6px 6px 0}
+.tb-l{position:absolute; height:0; border-top:1.5px solid var(--border-strong)}
+.tb-frame{position:absolute; left:100px; top:-6px; width:228px; height:124px; box-sizing:border-box; border:2px solid var(--text); border-radius:var(--radius-sm); background:color-mix(in srgb, var(--text) 4%, transparent)}
+.tb-frame span{position:absolute; top:-11px; right:10px; padding:1px 6px; border-radius:var(--radius-full); background:var(--text); color:var(--bg)}
+.tb-next{display:flex; align-items:center; gap:12px; padding:14px 16px}
+.tb-clip{height:332px; overflow:hidden}
+</style>
+</helmet>
+<div style="position: relative; width: 390px; height: 980px; box-sizing: border-box; overflow: hidden; display: flex; flex-direction: column; background: var(--bg); color: var(--text); font-family: var(--font-sans)">
+<header style="flex: none; background: var(--surface); box-shadow: inset 0 -1px 0 var(--border)">
+<div style="display: flex; align-items: center; gap: 4px; padding: 52px 8px 4px 8px">
+<a href="TRN-07-Inscription-confirmee.dc.html" class="mu-iconbtn mu-iconbtn--l mu-iconbtn--ghost" aria-label="Retour" style="color: var(--text)"><x-import component-from-global-scope="MatchUp.Icon" name="arrow-left" size="{{i24}}"></x-import></a>
+<span style="flex: 1; min-width: 0; display: flex; flex-direction: column">
+<span class="label-l">Padel Masters Lac 2</span>
+<span class="caption tb-muted">Phase finale · lun. 26 oct. · <span class="num-xs">19h50</span></span>
+</span>
+<button type="button" class="mu-iconbtn mu-iconbtn--l mu-iconbtn--ghost" aria-label="Partager le tableau" style="color: var(--text)"><x-import component-from-global-scope="MatchUp.Icon" name="share-network" size="{{i24}}"></x-import></button>
+</div>
+<div style="padding: 0 16px">
+<x-import component-from-global-scope="MatchUp.Tabs" label="Padel Masters Lac 2" items="{{tabs}}" value="tableau" full-width="{{yes}}" id-base="tb-tab"></x-import>
+</div>
+<a href="TRN-09-Poules-et-classement.dc.html" class="tb-hot" aria-label="Poules et classement" style="left: 16px; top: 104px; width: 119px; height: 48px"></a>
+<a href="TRN-02-Detail-du-tournoi.dc.html" class="tb-hot" aria-label="Infos du tournoi" style="left: 255px; top: 104px; width: 119px; height: 48px"></a>
+</header>
+
+<main id="tb-panel" role="tabpanel" aria-labelledby="tb-tab-tableau" style="flex: 1; min-height: 0; display: flex; flex-direction: column; gap: 20px; padding: 16px 16px 24px 16px">
+
+<div class="tb-live" role="status">
+<span class="tb-dot" aria-hidden="true"></span>
+<span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 1px">
+<span class="overline" style="color: var(--error-text)">En direct · Demie 1 · Court 1</span>
+<span class="label">Les Faucons mènent 6-3, 3-2</span>
+</span>
+<span class="caption tb-muted">ton match</span>
+</div>
+
+<section class="mu-card" aria-labelledby="tb-map-t" style="display: flex; flex-direction: column; gap: 14px; padding: 14px 16px 12px 16px">
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 8px">
+<h2 id="tb-map-t" class="label-l tb-m0">Vue d’ensemble</h2>
+<span style="display: inline-flex; align-items: center; gap: 2px; padding: 2px; border-radius: var(--radius-full); box-shadow: inset 0 0 0 1px var(--border-strong)">
+<button type="button" class="mu-iconbtn mu-iconbtn--s mu-iconbtn--ghost" aria-label="Dézoomer" style="color: var(--text)"><x-import component-from-global-scope="MatchUp.Icon" name="minus" size="{{i16}}"></x-import></button>
+<span class="num-xs" aria-live="polite" style="min-width: 36px; text-align: center">100 %</span>
+<button type="button" class="mu-iconbtn mu-iconbtn--s mu-iconbtn--ghost" aria-label="Zoomer" disabled="disabled" style="color: var(--text)"><x-import component-from-global-scope="MatchUp.Icon" name="plus" size="{{i16}}"></x-import></button>
+</span>
+</div>
+<div class="tb-map" role="img" aria-label="Tableau à 8 équipes : quarts terminés, ta demi-finale en direct, finale à 21h30. L’écran montre les demies et la finale.">
+<div class="tb-m is-you" style="left: 0; top: 4px"><i></i><i></i></div>
+<div class="tb-m" style="left: 0; top: 32px"><i></i><i></i></div>
+<div class="tb-m" style="left: 0; top: 60px"><i></i><i></i></div>
+<div class="tb-m" style="left: 0; top: 88px"><i></i><i></i></div>
+<div class="tb-w" style="left: 60px; top: 14px; width: 26px; height: 28px"></div>
+<div class="tb-w" style="left: 60px; top: 70px; width: 26px; height: 28px"></div>
+<div class="tb-l" style="left: 86px; top: 28px; width: 24px"></div>
+<div class="tb-l" style="left: 86px; top: 84px; width: 24px"></div>
+<div class="tb-m is-you is-live" style="left: 110px; top: 18px"><i></i><i></i></div>
+<div class="tb-m" style="left: 110px; top: 74px"><i></i><i></i></div>
+<div class="tb-w" style="left: 170px; top: 28px; width: 26px; height: 56px"></div>
+<div class="tb-l" style="left: 196px; top: 56px; width: 24px"></div>
+<div class="tb-m is-tbd" style="left: 220px; top: 46px"><i></i><i></i></div>
+<div class="tb-l" style="left: 280px; top: 56px; width: 14px"></div>
+<span style="position: absolute; left: 294px; top: 42px; width: 28px; height: 28px; border-radius: var(--radius-full); background: var(--surface-muted); color: var(--text-secondary); display: flex; align-items: center; justify-content: center"><x-import component-from-global-scope="MatchUp.Icon" name="trophy" size="{{i16}}"></x-import></span>
+<div class="tb-frame" aria-hidden="true"><span class="label-s">À l’écran</span></div>
+</div>
+<div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap; padding-top: 10px; border-top: 1px solid var(--border)">
+<span class="caption tb-muted" style="display: inline-flex; align-items: center; gap: 6px"><span style="width: 12px; height: 12px; border-radius: 3px; background: var(--accent)"></span>Ton parcours</span>
+<span class="caption tb-muted" style="display: inline-flex; align-items: center; gap: 6px"><span style="width: 12px; height: 12px; border-radius: 3px; box-shadow: inset 0 0 0 2px var(--live)"></span>En direct</span>
+<span class="caption tb-muted" style="display: inline-flex; align-items: center; gap: 6px"><span style="width: 12px; height: 12px; border-radius: 3px; border: 1.5px dashed var(--border-strong); box-sizing: border-box"></span>À jouer</span>
+</div>
+</section>
+
+<section aria-label="Tableau de la phase finale" class="tb-clip">
+<x-import component-from-global-scope="MatchUp.Bracket" layout="rounds" rounds="{{rounds}}" default-round="{{one}}" legend="{{no}}"></x-import>
+</section>
+
+<section class="mu-card" aria-labelledby="tb-next-t" style="padding: 0; overflow: hidden">
+<div class="tb-next">
+<span style="flex: none; width: 44px; height: 44px; border-radius: var(--radius-full); background: var(--surface-inverse); color: var(--accent); display: flex; align-items: center; justify-content: center"><x-import component-from-global-scope="MatchUp.Icon" name="trophy" weight="fill" size="{{i20}}"></x-import></span>
+<span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px">
+<span class="overline tb-muted">Si vous gagnez</span>
+<h2 id="tb-next-t" class="label-l tb-m0">Finale · <span class="num-s">21h30</span> · Court 1</h2>
+<span class="caption tb-muted">Contre Smash Bros ou Vibora Marsa · 800 DT au vainqueur</span>
+</span>
+</div>
+</section>
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":980}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const T = (seed, name, score, extra) => Object.assign({ seed, name, score }, extra || {});
+    return {
+      yes: true, no: false, i16: 16, i20: 20, i24: 24, one: 1,
+      tabs: [
+        { value: 'poules', label: 'Poules' },
+        { value: 'tableau', label: 'Tableau', panelId: 'tb-panel' },
+        { value: 'infos', label: 'Infos' }
+      ],
+      rounds: [
+        { name: 'Quarts de finale', short: 'Quarts', date: 'lun. 26 oct. · 18h00', matches: [
+          { label: 'QF 1', note: '6-2 6-4', teams: [T('B1', 'Les Faucons', 2, { you: true }), T('A2', 'Hamza R. / Lina F.', 0)] },
+          { label: 'QF 2', note: '5-7 4-6', teams: [T('C1', 'Les Requins du Lac', 0), T('D2', 'Padel Sisters', 2)] },
+          { label: 'QF 3', note: '6-3 6-4', teams: [T('A1', 'Smash Bros', 2), T('B2', 'Skander T. / Omar D.', 0)] },
+          { label: 'QF 4', note: '6-4 3-6 10-8', teams: [T('D1', 'Vibora Marsa', 2), T('C2', 'Rami S. / Sarra B.', 1)] }
+        ] },
+        { name: 'Demi-finales', short: 'Demies', date: 'lun. 26 oct.', matches: [
+          { label: 'Demie 1', status: 'live', minute: 'S2 · 3-2', teams: [T('B1', 'Les Faucons', 1, { you: true }), T('D2', 'Padel Sisters', 0)] },
+          { label: 'Demie 2', time: '20h15', court: 'Court 2', teams: [T('A1', 'Smash Bros'), T('D1', 'Vibora Marsa')] }
+        ] },
+        { name: 'Finale', short: 'Finale', date: 'lun. 26 oct.', matches: [
+          { label: 'Finale', time: '21h30', court: 'Court 1', teams: [null, null], placeholders: ['Vainqueur demie 1', 'Vainqueur demie 2'] }
+        ] }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

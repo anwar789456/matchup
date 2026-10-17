@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Poules et classement</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/matchup/tokens.css">
+<link rel="stylesheet" href="ds/matchup/components/bundle.css">
+<script src="ds/matchup/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0}
+a{color:var(--link)}
+.pl-muted{color:var(--text-secondary)}
+.pl-m0{margin:0}
+.pl-hot{position:absolute; display:block; border-radius:var(--radius-sm)}
+.pl-hot:focus-visible{outline:2px solid var(--focus); outline-offset:2px}
+.pl-sec{display:flex; flex-direction:column; gap:12px}
+.pl-head{display:flex; align-items:baseline; justify-content:space-between; gap:8px}
+.pl-tbl{width:100%; border-collapse:collapse}
+.pl-tbl abbr{text-decoration:none}
+.pl-tbl th{padding:0 0 8px 0; text-align:center; color:var(--text-secondary); font-weight:inherit}
+.pl-tbl th:nth-child(2){text-align:start}
+.pl-tbl td{padding:0; height:52px; text-align:center; border-top:1px solid var(--border)}
+.pl-tbl td:nth-child(2){text-align:start}
+.pl-tbl tr.is-you td{background:color-mix(in srgb, var(--accent) 22%, transparent)}
+.pl-tbl tr.is-you td:first-child{border-radius:var(--radius-sm) 0 0 var(--radius-sm)}
+.pl-tbl tr.is-you td:last-child{border-radius:0 var(--radius-sm) var(--radius-sm) 0}
+.pl-tbl tr.is-cut td{border-bottom:1.5px dashed var(--border-strong)}
+.pl-tbl tr.is-out td{color:var(--text-secondary)}
+.pl-seed{display:inline-flex; align-items:center; justify-content:center; width:24px; height:22px; border-radius:var(--radius-xs); background:var(--surface-muted)}
+.pl-seed.is-you{background:var(--accent); color:var(--on-accent)}
+.pl-team{display:flex; flex-direction:column; gap:1px; padding:6px 0}
+.pl-q{display:inline-flex; align-items:center; gap:4px; color:var(--success-text)}
+.pl-res{display:grid; grid-template-columns:1fr auto 20px; gap:12px; align-items:center; min-height:56px; padding:8px 16px; text-decoration:none; color:var(--text)}
+.pl-res + .pl-res{border-top:1px solid var(--border)}
+.pl-win{display:inline-flex; align-items:center; justify-content:center; min-width:22px; height:22px; padding:0 6px; border-radius:var(--radius-xs); background:var(--accent); color:var(--on-accent)}
+.pl-other{display:grid; grid-template-columns:64px 1fr; gap:12px; align-items:start; padding:12px 0}
+.pl-other + .pl-other{border-top:1px solid var(--border)}
+.pl-rank{display:grid; grid-template-columns:28px 40px 1fr auto; gap:10px; align-items:center; min-height:56px; padding:6px 16px}
+.pl-rank + .pl-rank{border-top:1px solid var(--border)}
+.pl-rank.is-you{background:color-mix(in srgb, var(--accent) 22%, transparent)}
+.pl-mono{width:40px; height:40px; border-radius:var(--radius-sm); background:var(--padel-soft); color:var(--padel-text); display:flex; align-items:center; justify-content:center}
+</style>
+</helmet>
+<div style="position: relative; width: 390px; height: 1536px; box-sizing: border-box; overflow: hidden; display: flex; flex-direction: column; background: var(--bg); color: var(--text); font-family: var(--font-sans)">
+<header style="flex: none; background: var(--surface); box-shadow: inset 0 -1px 0 var(--border)">
+<div style="display: flex; align-items: center; gap: 4px; padding: 52px 8px 4px 8px">
+<a href="TRN-07-Inscription-confirmee.dc.html" class="mu-iconbtn mu-iconbtn--l mu-iconbtn--ghost" aria-label="Retour" style="color: var(--text)"><x-import component-from-global-scope="MatchUp.Icon" name="arrow-left" size="{{i24}}"></x-import></a>
+<span style="flex: 1; min-width: 0; display: flex; flex-direction: column">
+<span class="label-l">Padel Masters Lac 2</span>
+<span class="caption pl-muted">Poules terminées · lun. 26 oct. · <span class="num-xs">19h50</span></span>
+</span>
+<button type="button" class="mu-iconbtn mu-iconbtn--l mu-iconbtn--ghost" aria-label="Partager le classement" style="color: var(--text)"><x-import component-from-global-scope="MatchUp.Icon" name="share-network" size="{{i24}}"></x-import></button>
+</div>
+<div style="padding: 0 16px">
+<x-import component-from-global-scope="MatchUp.Tabs" label="Padel Masters Lac 2" items="{{tabs}}" value="poules" full-width="{{yes}}" id-base="pl-tab"></x-import>
+</div>
+<a href="TRN-08-Tableau.dc.html" class="pl-hot" aria-label="Tableau de la phase finale" style="left: 136px; top: 104px; width: 119px; height: 48px"></a>
+<a href="TRN-02-Detail-du-tournoi.dc.html" class="pl-hot" aria-label="Infos du tournoi" style="left: 255px; top: 104px; width: 119px; height: 48px"></a>
+</header>
+
+<main id="pl-panel" role="tabpanel" aria-labelledby="pl-tab-poules" style="flex: 1; min-height: 0; display: flex; flex-direction: column; gap: 28px; padding: 16px 16px 24px 16px">
+
+<section class="mu-card" aria-labelledby="pl-b" style="display: flex; flex-direction: column; gap: 14px; padding: 12px 12px 8px 12px">
+<x-import component-from-global-scope="MatchUp.Tabs" variant="pill" label="Poules" items="{{poules}}" value="b" full-width="{{yes}}" id-base="pl-poule"></x-import>
+<div class="pl-head" style="padding: 0 4px">
+<h2 id="pl-b" class="label-l pl-m0">Poule B · ta poule</h2>
+<span class="caption pl-muted">3 journées sur 3</span>
+</div>
+<table class="pl-tbl" aria-labelledby="pl-b">
+<thead>
+<tr class="label-s"><th scope="col" style="width: 32px"><abbr title="Rang">#</abbr></th><th scope="col">Équipe</th><th scope="col" style="width: 26px"><abbr title="Joués">J</abbr></th><th scope="col" style="width: 26px"><abbr title="Victoires">V</abbr></th><th scope="col" style="width: 26px"><abbr title="Défaites">D</abbr></th><th scope="col" style="width: 40px"><abbr title="Différence de jeux">Diff.</abbr></th><th scope="col" style="width: 34px"><abbr title="Points">Pts</abbr></th></tr>
+</thead>
+<tbody>
+<tr class="is-you">
+<td><span class="pl-seed is-you num-xs">B1</span></td>
+<td><span class="pl-team"><span class="label">Les Faucons</span><span class="caption pl-q"><x-import component-from-global-scope="MatchUp.Icon" name="check-circle" weight="fill" size="{{i14}}"></x-import>Qualifié · ton équipe</span></span></td>
+<td class="num-s">3</td><td class="num-s">3</td><td class="num-s">0</td><td class="num-s">+16</td><td class="num-m">6</td>
+</tr>
+<tr class="is-cut">
+<td><span class="pl-seed num-xs">B2</span></td>
+<td><span class="pl-team"><span class="label">Skander T. / Omar D.</span><span class="caption pl-q"><x-import component-from-global-scope="MatchUp.Icon" name="check-circle" weight="fill" size="{{i14}}"></x-import>Qualifié</span></span></td>
+<td class="num-s">3</td><td class="num-s">2</td><td class="num-s">1</td><td class="num-s">+4</td><td class="num-m">4</td>
+</tr>
+<tr class="is-out">
+<td><span class="pl-seed num-xs">3</span></td>
+<td><span class="pl-team"><span class="body">Ines M. / Nour A.</span></span></td>
+<td class="num-s">3</td><td class="num-s">1</td><td class="num-s">2</td><td class="num-s">−5</td><td class="num-m">2</td>
+</tr>
+<tr class="is-out">
+<td><span class="pl-seed num-xs">4</span></td>
+<td><span class="pl-team"><span class="body">Aziz H. / Salma G.</span></span></td>
+<td class="num-s">3</td><td class="num-s">0</td><td class="num-s">3</td><td class="num-s">−15</td><td class="num-m">0</td>
+</tr>
+</tbody>
+</table>
+<p class="caption pl-m0 pl-muted" style="padding: 0 4px 6px 4px">Victoire = 2 pts. À égalité : différence de jeux, puis confrontation directe.</p>
+</section>
+
+<section class="pl-sec" aria-labelledby="pl-res">
+<div class="pl-head">
+<h2 id="pl-res" class="h3 pl-m0">Tes matchs de poule</h2>
+<span class="caption pl-muted">3 victoires</span>
+</div>
+<div class="mu-card" style="padding: 4px 0">
+<a href="TRN-11-Recap-IA.dc.html" class="pl-res" aria-label="Contre Ines M. et Nour A., victoire 6-4 6-3. Voir le résumé IA">
+<span style="display: flex; flex-direction: column; gap: 2px; min-width: 0"><span class="label">contre Ines M. / Nour A.</span><span class="caption pl-muted" style="display: flex; align-items: center; gap: 6px">sam. 24 · Court 2 · <span style="display: inline-flex; align-items: center; gap: 3px; color: var(--ai-text)"><x-import component-from-global-scope="MatchUp.Icon" name="sparkle" weight="fill" size="{{i14}}"></x-import>Résumé IA</span></span></span>
+<span style="display: flex; flex-direction: column; align-items: flex-end; gap: 2px"><span class="num-m">6-4 6-3</span><span class="caption pl-q"><x-import component-from-global-scope="MatchUp.Icon" name="trophy" size="{{i14}}"></x-import>Victoire</span></span>
+<span style="display: flex; color: var(--text-secondary)"><x-import component-from-global-scope="MatchUp.Icon" name="caret-right" size="{{i20}}"></x-import></span>
+</a>
+<div class="pl-res">
+<span style="display: flex; flex-direction: column; gap: 2px; min-width: 0"><span class="label">contre Skander T. / Omar D.</span><span class="caption pl-muted">sam. 24 · Court 1</span></span>
+<span style="display: flex; flex-direction: column; align-items: flex-end; gap: 2px"><span class="num-m">6-3 6-4</span><span class="caption pl-q"><x-import component-from-global-scope="MatchUp.Icon" name="trophy" size="{{i14}}"></x-import>Victoire</span></span>
+<span></span>
+</div>
+<div class="pl-res">
+<span style="display: flex; flex-direction: column; gap: 2px; min-width: 0"><span class="label">contre Aziz H. / Salma G.</span><span class="caption pl-muted">dim. 25 · Court 3</span></span>
+<span style="display: flex; flex-direction: column; align-items: flex-end; gap: 2px"><span class="num-m">6-2 6-4</span><span class="caption pl-q"><x-import component-from-global-scope="MatchUp.Icon" name="trophy" size="{{i14}}"></x-import>Victoire</span></span>
+<span></span>
+</div>
+</div>
+</section>
+
+<section class="pl-sec" aria-labelledby="pl-others">
+<div class="pl-head">
+<h2 id="pl-others" class="h3 pl-m0">Les autres poules</h2>
+<span class="caption pl-muted">2 qualifiées par poule</span>
+</div>
+<div class="mu-card" style="padding: 4px 16px">
+<sc-for list="{{others}}" as="o">
+<div class="pl-other">
+<span class="label">{{o.name}}</span>
+<span style="display: flex; flex-direction: column; gap: 4px">
+<span class="body" style="display: flex; align-items: center; gap: 6px"><span class="pl-seed num-xs">{{o.s1}}</span>{{o.t1}}</span>
+<span class="body" style="display: flex; align-items: center; gap: 6px"><span class="pl-seed num-xs">{{o.s2}}</span>{{o.t2}}</span>
+</span>
+</div>
+</sc-for>
+</div>
+</section>
+
+<section class="pl-sec" aria-labelledby="pl-lead">
+<div class="pl-head">
+<h2 id="pl-lead" class="h3 pl-m0">Classement général</h2>
+<span class="caption pl-muted">toutes poules</span>
+</div>
+<div class="mu-card" style="padding: 4px 0; overflow: hidden">
+<sc-for list="{{lead}}" as="r">
+<div class="pl-rank {{r.cls}}">
+<span class="num-l" style="text-align: center">{{r.rank}}</span>
+<span class="pl-mono label">{{r.mono}}</span>
+<span style="display: flex; flex-direction: column; gap: 1px; min-width: 0"><span class="label">{{r.name}}</span><span class="caption pl-muted">{{r.meta}}</span></span>
+<span style="display: flex; flex-direction: column; align-items: flex-end"><span class="num-m">{{r.diff}}</span><span class="caption pl-muted">jeux</span></span>
+</div>
+</sc-for>
+</div>
+<p class="caption pl-m0 pl-muted">À points égaux, départagées par la différence de jeux.</p>
+</section>
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":1536}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      yes: true, i14: 14, i16: 16, i20: 20, i24: 24,
+      tabs: [
+        { value: 'poules', label: 'Poules', panelId: 'pl-panel' },
+        { value: 'tableau', label: 'Tableau' },
+        { value: 'infos', label: 'Infos' }
+      ],
+      poules: [{ value: 'a', label: 'A' }, { value: 'b', label: 'B' }, { value: 'c', label: 'C' }, { value: 'd', label: 'D' }],
+      others: [
+        { name: 'Poule A', s1: 'A1', t1: 'Smash Bros', s2: 'A2', t2: 'Hamza R. / Lina F.' },
+        { name: 'Poule C', s1: 'C1', t1: 'Les Requins du Lac', s2: 'C2', t2: 'Rami S. / Sarra B.' },
+        { name: 'Poule D', s1: 'D1', t1: 'Vibora Marsa', s2: 'D2', t2: 'Padel Sisters' }
+      ],
+      lead: [
+        { rank: '1', mono: 'LF', name: 'Les Faucons', meta: 'Poule B · 3 V · 6 pts · ton équipe', diff: '+16', cls: 'is-you' },
+        { rank: '2', mono: 'SB', name: 'Smash Bros', meta: 'Poule A · 3 V · 6 pts', diff: '+13', cls: '' },
+        { rank: '3', mono: 'RL', name: 'Les Requins du Lac', meta: 'Poule C · 3 V · 6 pts', diff: '+10', cls: '' },
+        { rank: '4', mono: 'VM', name: 'Vibora Marsa', meta: 'Poule D · 3 V · 6 pts', diff: '+9', cls: '' },
+        { rank: '5', mono: 'PS', name: 'Padel Sisters', meta: 'Poule D · 2 V · 4 pts', diff: '+6', cls: '' }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

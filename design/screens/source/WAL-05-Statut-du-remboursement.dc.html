@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Suivi du remboursement</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/matchup/tokens.css">
+<link rel="stylesheet" href="ds/matchup/components/bundle.css">
+<script src="ds/matchup/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0}
+a{color:var(--link)}
+.st-sec{display:flex; flex-direction:column; gap:var(--space-3)}
+.st-tl{margin:0; padding:0; list-style:none; display:flex; flex-direction:column}
+.st-step{position:relative; display:grid; grid-template-columns:28px 1fr; column-gap:var(--space-3); padding-bottom:var(--space-5)}
+.st-step:last-child{padding-bottom:0}
+.st-step::before{content:""; position:absolute; left:13px; top:30px; bottom:2px; width:2px; border-radius:var(--radius-full); background:var(--success)}
+.st-step:last-child::before{display:none}
+.st-step--now::before{background:none; border-left:2px dashed var(--border-strong); width:0}
+.st-dot{position:relative; z-index:1; width:28px; height:28px; border-radius:var(--radius-full); display:flex; align-items:center; justify-content:center; box-sizing:border-box}
+.st-dot--done{background:var(--success); color:var(--white)}
+.st-dot--now{background:var(--accent); color:var(--on-accent); box-shadow:0 0 0 4px color-mix(in srgb, var(--accent) 35%, transparent)}
+.st-dot--next{background:var(--surface); box-shadow:inset 0 0 0 2px var(--border-strong); color:var(--text-secondary)}
+@keyframes st-pulse{0%{box-shadow:0 0 0 0 color-mix(in srgb, var(--accent) 60%, transparent)}100%{box-shadow:0 0 0 10px transparent}}
+.st-dot--now::after{content:""; position:absolute; inset:0; border-radius:inherit; animation:st-pulse var(--duration-pulse) var(--ease-exit) infinite}
+@media (prefers-reduced-motion: reduce){.st-dot--now::after{animation:none}}
+.st-body{display:flex; flex-direction:column; gap:2px; padding-top:3px}
+.st-row{display:flex; align-items:baseline; justify-content:space-between; gap:var(--space-3)}
+.st-next{margin:0; padding:0; list-style:none; display:flex; flex-direction:column; gap:var(--space-3)}
+.st-next li{display:flex; align-items:flex-start; gap:var(--space-3)}
+.st-next__ico{flex:none; width:32px; height:32px; border-radius:var(--radius-full); background:var(--surface-muted); color:var(--text); display:flex; align-items:center; justify-content:center}
+.st-dl{margin:0; display:flex; flex-direction:column}
+.st-dl > div{display:flex; align-items:flex-start; justify-content:space-between; gap:var(--space-4); padding:10px 0; border-top:1px solid var(--border)}
+.st-dl > div:first-child{border-top:0; padding-top:0}
+.st-dl dt{flex:none; color:var(--text-secondary)}
+.st-dl dd{margin:0; text-align:end}
+</style>
+</helmet>
+<div style="position: relative; width: 390px; height: 1384px; box-sizing: border-box; overflow: hidden; display: flex; flex-direction: column; background: var(--bg); color: var(--text); font-family: var(--font-sans)">
+
+<div style="display: flex; align-items: center; gap: 4px; padding: 52px 16px 8px 8px">
+<a href="WAL-01-Portefeuille.dc.html" class="mu-iconbtn mu-iconbtn--l mu-iconbtn--ghost" aria-label="Retour au portefeuille" style="color: var(--text)"><x-import component-from-global-scope="MatchUp.Icon" name="arrow-left" size="{{i24}}"></x-import></a>
+<h1 class="h3" style="flex: 1; margin: 0">Suivi du remboursement</h1>
+</div>
+
+<div style="flex: 1; min-height: 0; display: flex; flex-direction: column; gap: 28px; padding: 8px 16px 32px 16px">
+
+<section class="mu-card" aria-label="Demande de remboursement" style="display: flex; flex-direction: column; gap: 16px; padding: 16px">
+<div style="display: flex; align-items: center; gap: 12px">
+<span style="flex: none; width: 48px; height: 48px; border-radius: var(--radius-sm); background: var(--basketball-soft); color: var(--basketball-text); display: flex; align-items: center; justify-content: center"><x-import component-from-global-scope="MatchUp.Icon" name="sport-basketball" size="{{i24}}"></x-import></span>
+<span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px">
+<span class="label-l">Part · Hoop Zone</span>
+<span class="caption" style="color: var(--text-secondary)">dim. 27 sept. · Basket · Carte •••• 4242</span>
+</span>
+</div>
+<div style="display: flex; align-items: flex-end; justify-content: space-between; gap: 12px; padding-top: 14px; border-top: 1px solid var(--border)">
+<span style="display: flex; flex-direction: column; gap: 2px"><span class="overline" style="color: var(--text-secondary)">À rembourser</span><span class="num-xl">9 DT</span></span>
+<x-import component-from-global-scope="MatchUp.StatusBadge" status="pending" label="En cours d’examen"></x-import>
+</div>
+</section>
+
+<section class="st-sec" aria-labelledby="st-where">
+<h2 id="st-where" class="h3" style="margin: 0">Où en est ta demande ?</h2>
+<div class="mu-card" style="padding: 20px 16px">
+<ol class="st-tl">
+<li class="st-step">
+<span class="st-dot st-dot--done"><x-import component-from-global-scope="MatchUp.Icon" name="check" weight="bold" size="{{i16}}"></x-import></span>
+<span class="st-body"><span class="st-row"><span class="label">Demande envoyée</span><span class="caption" style="color: var(--text-secondary)">lun. 12 oct.</span></span><span class="caption" style="color: var(--text-secondary)">Motif et photo reçus.</span></span>
+</li>
+<li class="st-step st-step--now" aria-current="step">
+<span class="st-dot st-dot--now"><x-import component-from-global-scope="MatchUp.Icon" name="magnifying-glass" weight="bold" size="{{i14}}"></x-import></span>
+<span class="st-body"><span class="st-row"><span class="label-l">En cours d’examen</span><span class="caption" style="color: var(--text-secondary)">mar. 13 oct.</span></span><span class="caption" style="color: var(--text-secondary)">On vérifie avec Hoop Zone que le terrain était fermé. Tu n’as rien à faire.</span></span>
+</li>
+<li class="st-step">
+<span class="st-dot st-dot--next"><x-import component-from-global-scope="MatchUp.Icon" name="wallet" size="{{i14}}"></x-import></span>
+<span class="st-body"><span class="label" style="color: var(--text-secondary)">Remboursé sur ton solde</span><span class="caption" style="color: var(--text-secondary)">Attendu sous 5 jours ouvrés · +9 DT</span></span>
+</li>
+</ol>
+</div>
+</section>
+
+<section class="st-sec" aria-labelledby="st-then">
+<h2 id="st-then" class="h3" style="margin: 0">Et ensuite ?</h2>
+<ul class="st-next mu-card" style="padding: 16px">
+<li><span class="st-next__ico"><x-import component-from-global-scope="MatchUp.Icon" name="seal-check" size="{{i16}}"></x-import></span><span style="display: flex; flex-direction: column; gap: 2px"><span class="label">Demande acceptée</span><span class="caption" style="color: var(--text-secondary)">9 DT arrivent sur ton solde MatchUp : ton solde passera à 39 DT. On te prévient par notification.</span></span></li>
+<li><span class="st-next__ico"><x-import component-from-global-scope="MatchUp.Icon" name="chat-text" size="{{i16}}"></x-import></span><span style="display: flex; flex-direction: column; gap: 2px"><span class="label">Besoin d’une précision</span><span class="caption" style="color: var(--text-secondary)">On t’écrit ici et par email. Ta réponse relance l’examen.</span></span></li>
+<li><span class="st-next__ico"><x-import component-from-global-scope="MatchUp.Icon" name="info" size="{{i16}}"></x-import></span><span style="display: flex; flex-direction: column; gap: 2px"><span class="label">Demande refusée</span><span class="caption" style="color: var(--text-secondary)">On t’explique pourquoi, et tu peux contester auprès du support.</span></span></li>
+</ul>
+</section>
+
+<section class="st-sec" aria-labelledby="st-req">
+<h2 id="st-req" class="h3" style="margin: 0">Ta demande</h2>
+<div class="mu-card" style="padding: 16px">
+<dl class="st-dl">
+<div style="flex-direction: column; gap: 6px"><span style="align-self: stretch; display: flex; justify-content: space-between; gap: 16px"><dt class="body">Motif</dt><dd class="label">Terrain fermé</dd></span><dd class="body" style="align-self: stretch; text-align: start; padding: 10px 12px; border-radius: var(--radius-sm); background: var(--surface-muted)">« Le terrain était fermé à notre arrivée. »</dd></div>
+<div><dt class="body">Photo</dt><dd class="label" style="display: flex; align-items: center; gap: 6px"><x-import component-from-global-scope="MatchUp.Icon" name="image" size="{{i16}}"></x-import>1 photo jointe</dd></div>
+<div><dt class="body">Vers</dt><dd class="label">Solde MatchUp</dd></div>
+</dl>
+</div>
+</section>
+
+<section class="mu-card" aria-labelledby="st-help" style="display: flex; flex-direction: column; gap: 12px; padding: 16px">
+<div style="display: flex; flex-direction: column; gap: 2px">
+<h2 id="st-help" class="label-l" style="margin: 0">Une question sur ta demande ?</h2>
+<p class="caption" style="margin: 0; color: var(--text-secondary)">L’équipe MatchUp te répond par message, 7 j/7.</p>
+</div>
+<button type="button" class="mu-btn mu-btn--secondary mu-btn--l mu-btn--block"><span class="mu-btn__content"><x-import component-from-global-scope="MatchUp.Icon" name="chat-circle-dots" size="{{i20}}"></x-import><span class="mu-btn__label label-l">Contacter le support</span></span></button>
+</section>
+
+<a href="WAL-01-Portefeuille.dc.html" class="mu-btn mu-btn--tertiary mu-btn--l mu-btn--block"><span class="mu-btn__content"><span class="mu-btn__label label-l">Retour au portefeuille</span></span></a>
+
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":1384}}'>
+class Component extends DCLogic {
+  renderVals() { return { yes: true, i14: 14, i16: 16, i20: 20, i24: 24 }; }
+}
+</script>
+</body>
+</html>

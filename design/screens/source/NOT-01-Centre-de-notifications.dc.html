@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Notifications</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/matchup/tokens.css">
+<link rel="stylesheet" href="ds/matchup/components/bundle.css">
+<script src="ds/matchup/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+/* not:shared — identical in NOT-01…03 */
+body{margin:0}
+a{color:var(--link)}
+.not-root > *{flex:none}
+.not-chips{display:flex; gap:var(--space-2); overflow-x:auto; padding:6px var(--space-4); margin:-6px 0; scrollbar-width:none}
+.not-chips::-webkit-scrollbar{display:none}
+.not-chips > *{flex:none}
+.not-chip{position:relative; display:flex}
+.not-chip__hot{position:absolute; inset:-6px 0; border-radius:var(--radius-full); z-index:1}
+.not-chip__hot:focus-visible{outline:2px solid var(--focus); outline-offset:2px}
+.not-meta{display:flex; align-items:center; justify-content:space-between; gap:var(--space-2); min-height:40px; padding:0 var(--space-2) 0 var(--space-4)}
+.not-group{display:flex; flex-direction:column; margin:0}
+.not-group__title{margin:0; padding:var(--space-5) var(--space-4) var(--space-2) var(--space-4); color:var(--text-secondary); display:flex; align-items:center; gap:var(--space-2)}
+.not-list{margin:0; padding:0; list-style:none; background:var(--surface); box-shadow:inset 0 1px 0 var(--border), inset 0 -1px 0 var(--border)}
+.not-hot{position:absolute; display:block; border-radius:var(--radius-full); z-index:3}
+.not-hot:focus-visible{outline:2px solid var(--focus); outline-offset:2px}
+/* /not:shared */
+</style>
+</helmet>
+<div class="not-root" style="position: relative; width: 390px; height: 1580px; box-sizing: border-box; overflow: hidden; display: flex; flex-direction: column; background: var(--bg); color: var(--text); font-family: var(--font-sans)">
+<x-import component-from-global-scope="MatchUp.TopAppBar" title="Notifications" on-back="{{noop}}" inset="{{inset}}" actions="{{barActions}}"></x-import>
+<a href="HOM-01-Accueil.dc.html" class="not-hot" aria-label="Retour à l’accueil" style="left: 4px; top: 48px; width: 48px; height: 48px"></a>
+<a href="NOT-10-Preferences.dc.html" class="not-hot" aria-label="Préférences de notification" style="left: 338px; top: 48px; width: 48px; height: 48px"></a>
+
+<div class="not-chips" role="radiogroup" aria-label="Filtrer les notifications" style="padding-top: 10px">
+<x-import component-from-global-scope="MatchUp.Chip" kind="choice" selected="{{yes}}">Tout</x-import>
+<x-import component-from-global-scope="MatchUp.Chip" kind="choice">Matchs</x-import>
+<x-import component-from-global-scope="MatchUp.Chip" kind="choice">Réservations</x-import>
+<x-import component-from-global-scope="MatchUp.Chip" kind="choice">Tournois</x-import>
+<span class="not-chip"><x-import component-from-global-scope="MatchUp.Chip" kind="choice">Paiements</x-import><a href="NOT-02-Notifications-paiements.dc.html" class="not-chip__hot" aria-label="Filtrer : Paiements"></a></span>
+<x-import component-from-global-scope="MatchUp.Chip" kind="choice">Entraînement</x-import>
+<x-import component-from-global-scope="MatchUp.Chip" kind="choice">Communauté</x-import>
+</div>
+
+<div class="not-meta" style="margin-top: 8px">
+<span class="caption" style="display: flex; align-items: center; gap: 6px; color: var(--text-secondary)"><span style="width: 8px; height: 8px; border-radius: var(--radius-full); background: var(--primary)"></span><span><span class="num-xs" style="color: var(--text)">3</span> non lues</span></span>
+<button type="button" class="mu-btn mu-btn--tertiary mu-btn--s"><span class="mu-btn__content"><x-import component-from-global-scope="MatchUp.Icon" name="checks" size="{{i16}}"></x-import><span class="mu-btn__label label">Tout marquer comme lu</span></span></button>
+</div>
+
+<section class="not-group" aria-labelledby="not-g-today">
+<h2 id="not-g-today" class="not-group__title overline">Aujourd’hui</h2>
+<ul class="not-list">
+<x-import component-from-global-scope="MatchUp.NotificationItem" as="li" dc-props="{{nPlace}}"></x-import>
+<x-import component-from-global-scope="MatchUp.NotificationItem" as="li" dc-props="{{nInvite}}"></x-import>
+<x-import component-from-global-scope="MatchUp.NotificationItem" as="li" dc-props="{{nPart}}"></x-import>
+<x-import component-from-global-scope="MatchUp.NotificationItem" as="li" dc-props="{{nJoined}}"></x-import>
+</ul>
+</section>
+
+<section class="not-group" aria-labelledby="not-g-week">
+<h2 id="not-g-week" class="not-group__title overline">Cette semaine</h2>
+<ul class="not-list">
+<x-import component-from-global-scope="MatchUp.NotificationItem" as="li" dc-props="{{nCup}}"></x-import>
+<x-import component-from-global-scope="MatchUp.NotificationItem" as="li" dc-props="{{nReply}}"></x-import>
+<x-import component-from-global-scope="MatchUp.NotificationItem" as="li" dc-props="{{nReview}}"></x-import>
+<x-import component-from-global-scope="MatchUp.NotificationItem" as="li" dc-props="{{nRate}}"></x-import>
+</ul>
+</section>
+
+<section class="not-group" aria-labelledby="not-g-old">
+<h2 id="not-g-old" class="not-group__title overline">Plus ancien</h2>
+<ul class="not-list">
+<x-import component-from-global-scope="MatchUp.NotificationItem" as="li" dc-props="{{nRefund}}"></x-import>
+<x-import component-from-global-scope="MatchUp.NotificationItem" as="li" dc-props="{{nReminder}}"></x-import>
+</ul>
+</section>
+
+<p class="caption" style="margin: 0; padding: 20px 16px 34px 16px; text-align: center; color: var(--text-secondary)">Tu as tout vu. Les notifications de plus de 90 jours sont effacées.</p>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":1580}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const h = React.createElement, B = MatchUp.Button, F = React.Fragment;
+    return {
+      yes: true, noop: () => {}, inset: 44, i16: 16,
+      barActions: [{ icon: 'gear-six', label: 'Préférences de notification' }],
+      nPlace: {
+        category: 'matches', sport: 'football', priority: 'urgent', unread: true, time: '1 min', swipeable: false,
+        title: 'Une place s’est libérée',
+        body: 'Foot 5v5 · Arena Five · dim. 18 oct. · 20h00. Réclame-la avant qu’elle passe au suivant.',
+        href: 'GAM-04-Place-disponible.dc.html',
+        actions: h(B, { size: 's', countdown: '14:59', href: 'GAM-04-Place-disponible.dc.html' }, 'Réclamer la place')
+      },
+      nInvite: {
+        category: 'matches', sport: 'padel', avatar: { name: 'Mariem K.' }, unread: true, time: '12 min',
+        title: 'Mariem K. t’invite au padel',
+        body: 'Padel mixte · Smash Padel Club · ven. 23 oct. · 19h30 · 25 DT par personne · 2/4 joueurs.',
+        href: 'MAT-01-A-venir.dc.html',
+        actions: h(F, null,
+          h(B, { size: 's', href: 'MAT-01-A-venir.dc.html' }, 'Accepter'),
+          h(B, { size: 's', variant: 'secondary', href: 'MAT-01-A-venir.dc.html' }, 'Refuser'))
+      },
+      nPart: {
+        category: 'payments', priority: 'important', unread: true, time: '2 h',
+        title: 'Ta part de 15 DT est en attente',
+        body: 'Ta réservation à Arena Five, mer. 21 oct. · 21h00. À régler avant mer. 21 oct. · 18h00.',
+        href: 'PAY-01-Checkout.dc.html',
+        actions: h(B, { size: 's', price: '15 DT', href: 'PAY-01-Checkout.dc.html' }, 'Payer ma part')
+      },
+      nJoined: {
+        category: 'matches', sport: 'football', time: '3 h',
+        title: 'Nour A. et 2 autres ont rejoint ta partie',
+        body: 'Arena Five · Terrain 1 · mer. 21 oct. · 21h00 · 6/10 joueurs, encore 4 places.',
+        people: [{ name: 'Nour A.' }, { name: 'Omar D.' }, { name: 'Aziz H.' }],
+        href: 'MAT-05-Detail-reservation.dc.html'
+      },
+      nCup: {
+        category: 'tournaments', time: 'jeu.', thumbnail: { sport: 'padel', variant: 'poster', label: 'Affiche du Padel Masters Lac 2' },
+        title: 'Inscriptions ouvertes : Padel Masters Lac 2',
+        body: 'Smash Padel Club · 24–26 oct. · 120 DT par équipe. Plus que 4 places.'
+      },
+      nReply: {
+        category: 'community', avatar: { name: 'Hamza R.' }, time: 'mer.',
+        title: 'Hamza R. a répondu à ton post',
+        body: '« Compte sur moi, on vient à deux. » — sur ton post « 5v5 dimanche soir à La Marsa ».'
+      },
+      nReview: {
+        category: 'payments', status: 'info', icon: 'hourglass', time: 'mar.',
+        title: 'Remboursement en cours d’examen',
+        body: 'Part · Hoop Zone · dim. 27 sept. · 9 DT. Réponse sous 5 jours ouvrés.',
+        href: 'WAL-05-Statut-du-remboursement.dc.html'
+      },
+      nRate: {
+        category: 'matches', sport: 'padel', time: 'lun.',
+        title: 'Note tes coéquipiers du ven. 9 oct.',
+        body: 'Padel · Smash Padel Club avec Mariem K., Ines M. et Nour A. 1 min suffit.',
+        href: 'MAT-08-Evaluer-les-joueurs.dc.html',
+        actions: h(B, { size: 's', variant: 'secondary', leadingIcon: 'star', href: 'MAT-08-Evaluer-les-joueurs.dc.html' }, 'Noter les joueurs')
+      },
+      nRefund: {
+        category: 'payments', status: 'success', time: '9 oct.',
+        title: 'Remboursement de 15 DT effectué',
+        body: 'Foot du sam. 10 oct. annulé par Skander T. 15 DT crédités sur ton solde MatchUp.',
+        href: 'WAL-01-Portefeuille.dc.html'
+      },
+      nReminder: {
+        category: 'matches', sport: 'football', icon: 'clock', time: '3 oct.',
+        title: 'Rappel : Foot 5v5 à Arena Five dans 2 h',
+        body: 'Sam. 3 oct. · Terrain 2. Arrive 10 min avant, chasubles fournies.',
+        href: 'MAT-02-Passes.dc.html'
+      }
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Offres</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/matchup/tokens.css">
+<link rel="stylesheet" href="ds/matchup/components/bundle.css">
+<script src="ds/matchup/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0}
+a{color:var(--link)}
+.sub-body > *{flex-shrink:0}
+.sub-sec{display:flex; flex-direction:column; gap:var(--space-3)}
+.sub-cmp{background:var(--surface); border-radius:var(--radius-md); box-shadow:var(--elevation-1), inset 0 0 0 1px var(--border); overflow:hidden}
+.sub-cmp__row{display:grid; grid-template-columns:minmax(0,1fr) 80px 84px; align-items:center; min-height:48px; padding:0 0 0 var(--space-4)}
+.sub-cmp__row + .sub-cmp__row{border-top:1px solid var(--border)}
+.sub-cmp__head{min-height:56px; background:var(--surface-muted)}
+.sub-cmp__cell{display:flex; align-items:center; justify-content:center; text-align:center; height:100%; padding:6px 4px; box-sizing:border-box}
+.sub-cmp__cell--prem{background:color-mix(in srgb, var(--accent) 14%, transparent)}
+.sub-cmp__head .sub-cmp__cell--prem{background:color-mix(in srgb, var(--accent) 34%, transparent)}
+.sub-yes{color:var(--success-text); display:flex}
+.sub-no{color:var(--text-disabled); display:flex}
+.sub-faq{background:var(--surface); border-radius:var(--radius-md); box-shadow:var(--elevation-1), inset 0 0 0 1px var(--border); overflow:hidden}
+.sub-faq details + details{border-top:1px solid var(--border)}
+.sub-faq summary{list-style:none; cursor:pointer; display:flex; align-items:center; gap:var(--space-3); min-height:56px; padding:var(--space-3) var(--space-4); box-sizing:border-box}
+.sub-faq summary::-webkit-details-marker{display:none}
+.sub-faq summary:focus-visible{outline:none; box-shadow:inset 0 0 0 2px var(--focus)}
+.sub-faq__caret{flex:none; display:flex; color:var(--text-secondary); transition:transform var(--duration-base) var(--ease-move)}
+.sub-faq details[open] .sub-faq__caret{transform:rotate(180deg)}
+.sub-faq__a{margin:0; padding:0 var(--space-4) var(--space-4) var(--space-4); color:var(--text-secondary)}
+</style>
+</helmet>
+<div style="position: relative; width: 390px; height: 2172px; box-sizing: border-box; display: flex; flex-direction: column; background: var(--bg); color: var(--text); font-family: var(--font-sans)">
+<div style="display: flex; align-items: center; gap: 8px; padding: 52px 16px 0 8px">
+<a href="PRF-05-Menu-du-compte.dc.html" class="mu-iconbtn mu-iconbtn--l mu-iconbtn--ghost" aria-label="Retour" style="color: var(--text)"><x-import component-from-global-scope="MatchUp.Icon" name="arrow-left" size="{{i24}}"></x-import></a>
+<span class="label-l">Offres et abonnements</span>
+</div>
+
+<div class="sub-body" style="flex: 1; min-height: 0; overflow: auto; display: flex; flex-direction: column; gap: 24px; padding: 8px 16px 24px 16px">
+<div style="display: flex; flex-direction: column; gap: 8px">
+<h1 class="h1" style="margin: 0">Joue plus. Progresse plus vite.</h1>
+<p class="body-l" style="margin: 0; color: var(--text-secondary)">{{intro}}</p>
+</div>
+
+<div style="margin: -4px -16px 0 -16px; padding: 0 16px">
+<x-import component-from-global-scope="MatchUp.Tabs" label="Offres par profil" items="{{tabs}}" value="{{tab}}" on-change="{{setTab}}" full-width="{{yes}}"></x-import>
+</div>
+
+<x-import component-from-global-scope="MatchUp.SegmentedControl" label="Période de facturation" options="{{periods}}" value="{{period}}" on-change="{{setPeriod}}" full-width="{{yes}}"></x-import>
+
+<sc-if value="{{isJoueur}}">
+<div style="display: flex; flex-direction: column; gap: 16px">
+<x-import component-from-global-scope="MatchUp.PricingCard" audience="Joueur" icon="user" name="Premium" pitch="Passe avant les autres et progresse avec l’IA." savings="2 mois offerts" price="{{p19}}" yearly-price="{{p190}}" period="{{period}}" features="{{premiumFeatures}}" recommended="{{yes}}" cta="Essayer 14 jours gratuits" trial-note="{{premiumNote}}" on-cta="{{noop}}"></x-import>
+<x-import component-from-global-scope="MatchUp.PricingCard" variant="compact" audience="Joueur" icon="user" name="Gratuit" pitch="Parties, réservations et niveau IA, sans engagement." price="{{p0}}" period="{{period}}" features="{{freeFeatures}}" current="{{yes}}"></x-import>
+</div>
+</sc-if>
+<sc-if value="{{isOwner}}">
+<div style="display: flex; flex-direction: column; gap: 16px">
+<x-import component-from-global-scope="MatchUp.PricingCard" audience="Propriétaire" icon="storefront" name="Pro" pitch="Remplis tes créneaux creux et gère plusieurs sites." savings="2 mois offerts" price="{{p149}}" yearly-price="{{p1490}}" period="{{period}}" features="{{proFeatures}}" recommended="{{yes}}" cta="Choisir Pro" trial-note="{{proNote}}" on-cta="{{noop}}"></x-import>
+<x-import component-from-global-scope="MatchUp.PricingCard" audience="Propriétaire" icon="storefront" name="Starter" pitch="Ton terrain réservable en ligne en 10 minutes." savings="2 mois offerts" price="{{p79}}" yearly-price="{{p790}}" period="{{period}}" features="{{starterFeatures}}" cta="Choisir Starter" trial-note="{{starterNote}}" on-cta="{{noop}}"></x-import>
+</div>
+</sc-if>
+<sc-if value="{{isCoach}}">
+<x-import component-from-global-scope="MatchUp.PricingCard" audience="Entraîneurs" icon="sport-whistle" name="Coach" pitch="Publie tes programmes et suis tes élèves." savings="2 mois offerts" price="{{p39}}" yearly-price="{{p390}}" period="{{period}}" features="{{coachFeatures}}" cta="Devenir coach" trial-note="{{coachNote}}" on-cta="{{noop}}"></x-import>
+</sc-if>
+
+<sc-if value="{{isJoueur}}">
+<section class="sub-sec" aria-labelledby="sub-cmp-t">
+<div style="display: flex; flex-direction: column; gap: 4px">
+<h2 id="sub-cmp-t" class="h3" style="margin: 0">Compare Gratuit et Premium</h2>
+<p class="body" style="margin: 0; color: var(--text-secondary)">Tes réservations, ton niveau et ton historique restent dans les deux offres.</p>
+</div>
+<div class="sub-cmp" role="table" aria-label="Comparaison Gratuit et Premium">
+<div class="sub-cmp__row sub-cmp__head" role="row">
+<span class="overline" role="columnheader" style="color: var(--text-secondary)">Inclus</span>
+<span class="sub-cmp__cell" role="columnheader" style="flex-direction: column; gap: 0"><span class="label">Gratuit</span><span class="caption" style="color: var(--text-secondary)">0 DT</span></span>
+<span class="sub-cmp__cell sub-cmp__cell--prem" role="columnheader" style="flex-direction: column; gap: 0"><span class="label">Premium</span><span class="caption" style="color: var(--text)">{{premShort}}</span></span>
+</div>
+<sc-for list="{{rows}}" as="r">
+<div class="sub-cmp__row" role="row">
+<span class="body" role="rowheader" style="padding: 8px 8px 8px 0">{{r.label}}</span>
+<span class="sub-cmp__cell" role="cell">
+<sc-if value="{{r.freeYes}}"><span class="sub-yes" role="img" aria-label="Inclus"><x-import component-from-global-scope="MatchUp.Icon" name="check-circle" weight="fill" size="{{i20}}"></x-import></span></sc-if>
+<sc-if value="{{r.freeNo}}"><span class="sub-no" role="img" aria-label="Non inclus"><x-import component-from-global-scope="MatchUp.Icon" name="minus" size="{{i20}}"></x-import></span></sc-if>
+<sc-if value="{{r.freeText}}"><span class="caption" style="color: var(--text-secondary)">{{r.freeText}}</span></sc-if>
+</span>
+<span class="sub-cmp__cell sub-cmp__cell--prem" role="cell">
+<sc-if value="{{r.premYes}}"><span class="sub-yes" role="img" aria-label="Inclus"><x-import component-from-global-scope="MatchUp.Icon" name="check-circle" weight="fill" size="{{i20}}"></x-import></span></sc-if>
+<sc-if value="{{r.premText}}"><span class="label-s">{{r.premText}}</span></sc-if>
+</span>
+</div>
+</sc-for>
+</div>
+</section>
+
+<section class="sub-sec" aria-labelledby="sub-faq-t">
+<h2 id="sub-faq-t" class="h3" style="margin: 0">Questions fréquentes</h2>
+<div class="sub-faq">
+<details open="">
+<summary><span class="label" style="flex: 1">Est-ce que je paie pendant l’essai ?</span><span class="sub-faq__caret"><x-import component-from-global-scope="MatchUp.Icon" name="caret-down" size="{{i20}}"></x-import></span></summary>
+<p class="sub-faq__a body">Non : 0 DT aujourd’hui. On te prévient le mar. 27 oct., 3 jours avant le premier prélèvement de 19 DT le ven. 30 oct.</p>
+</details>
+<details>
+<summary><span class="label" style="flex: 1">Comment je résilie ?</span><span class="sub-faq__caret"><x-import component-from-global-scope="MatchUp.Icon" name="caret-down" size="{{i20}}"></x-import></span></summary>
+<p class="sub-faq__a body">Dans Mon compte › Abonnement › « Résilier l’abonnement », en 2 étapes, sans appel ni frais. Premium reste actif jusqu’à la fin de la période déjà payée.</p>
+</details>
+<details>
+<summary><span class="label" style="flex: 1">Je peux passer à l’annuel plus tard ?</span><span class="sub-faq__caret"><x-import component-from-global-scope="MatchUp.Icon" name="caret-down" size="{{i20}}"></x-import></span></summary>
+<p class="sub-faq__a body">Oui, à tout moment. Tu vois le montant exact avant de confirmer, et ce que tu as déjà payé est déduit au prorata.</p>
+</details>
+<details>
+<summary><span class="label" style="flex: 1">Que se passe-t-il si je repasse en Gratuit ?</span><span class="sub-faq__caret"><x-import component-from-global-scope="MatchUp.Icon" name="caret-down" size="{{i20}}"></x-import></span></summary>
+<p class="sub-faq__a body">Tu gardes tes matchs, ton niveau, ta fiabilité et ton solde. Tu perds la priorité sur les listes d’attente, les plans IA et les statistiques avancées.</p>
+</details>
+</div>
+</section>
+</sc-if>
+
+<p class="caption" style="margin: 0; display: flex; align-items: center; justify-content: center; gap: 6px; color: var(--text-secondary)"><x-import component-from-global-scope="MatchUp.Icon" name="lock-simple" size="{{i16}}"></x-import>Prix TTC en dinars · Paiement sécurisé par Stripe</p>
+</div>
+
+<sc-if value="{{isJoueur}}"><a href="SUB-02-Checkout-Premium.dc.html" aria-label="Essayer Premium 14 jours gratuits" style="position: absolute; left: 40px; top: 608px; width: 310px; height: 48px; border-radius: var(--radius-sm)"></a></sc-if>
+<div style="padding: 12px 16px 34px 16px; background: var(--surface); box-shadow: var(--elevation-2-up); display: flex; flex-direction: column; gap: 8px">
+<sc-if value="{{isJoueur}}">
+<a href="SUB-02-Checkout-Premium.dc.html" class="mu-btn mu-btn--primary mu-btn--xl mu-btn--block"><span class="mu-btn__content"><span class="mu-btn__label label-l">Essayer Premium gratuitement</span></span></a>
+<p class="caption" style="margin: 0; text-align: center; color: var(--text-secondary)">{{barNote}}</p>
+</sc-if>
+<sc-if value="{{isOwner}}">
+<a href="OWN-09-Tableau-de-bord.dc.html" class="mu-btn mu-btn--primary mu-btn--xl mu-btn--block"><span class="mu-btn__content"><span class="mu-btn__label label-l">Terminer mon espace propriétaire</span></span></a>
+<p class="caption" style="margin: 0; text-align: center; color: var(--text-secondary)">Tu choisis ton offre à la dernière étape · 14 jours gratuits</p>
+</sc-if>
+<sc-if value="{{isCoach}}">
+<a href="COA-01-Profil-coach.dc.html" class="mu-btn mu-btn--primary mu-btn--xl mu-btn--block"><span class="mu-btn__content"><span class="mu-btn__label label-l">Devenir coach</span></span></a>
+<p class="caption" style="margin: 0; text-align: center; color: var(--text-secondary)">Profil vérifié avant ta première vente · 14 jours gratuits</p>
+</sc-if>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":2172}}'>
+class Component extends DCLogic {
+  state = { tab: 'joueur', period: 'month' };
+  renderVals() {
+    const s = this.state;
+    const y = s.period === 'year';
+    const note = (m, a) => '14 jours gratuits, puis ' + (y ? a + '/an' : m + '/mois') + ' · Résiliable à tout moment';
+    return {
+      yes: true, i16: 16, i20: 20, i24: 24,
+      p0: 0, p19: 19, p190: 190, p79: 79, p790: 790, p149: 149, p1490: 1490, p39: 39, p390: 390,
+      noop: () => {},
+      tab: s.tab, period: s.period,
+      isJoueur: s.tab === 'joueur', isOwner: s.tab === 'proprietaire', isCoach: s.tab === 'coach',
+      setTab: (v) => this.setState({ tab: v }),
+      setPeriod: (v) => this.setState({ period: v }),
+      tabs: [{ value: 'joueur', label: 'Joueur' }, { value: 'proprietaire', label: 'Propriétaire' }, { value: 'coach', label: 'Coach' }],
+      periods: [{ value: 'month', label: 'Mensuel' }, { value: 'year', label: 'Annuel', badge: '−17 %' }],
+      intro: s.tab === 'joueur' ? 'Essaie Premium 14 jours gratuitement. Aucun prélèvement avant le ven. 30 oct., résiliable en 2 étapes.'
+        : s.tab === 'proprietaire' ? 'Mets ton terrain en ligne et encaisse les parts des joueurs. 14 jours d’essai sur les deux offres.'
+        : 'Vends tes programmes et suis tes élèves. 14 jours d’essai, puis une commission de 10 % sur tes ventes.',
+      premiumNote: note('19 DT', '190 DT'),
+      starterNote: note('79 DT', '790 DT'),
+      proNote: note('149 DT', '1 490 DT'),
+      coachNote: note('39 DT', '390 DT'),
+      premShort: y ? '190 DT/an' : '19 DT/mois',
+      barNote: y ? '0 DT aujourd’hui, puis 190 DT/an dès le ven. 30 oct. · Résiliable à tout moment' : '0 DT aujourd’hui, puis 19 DT/mois dès le ven. 30 oct. · Résiliable à tout moment',
+      premiumFeatures: [
+        { label: 'Priorité sur les listes d’attente' }, { label: 'Plans d’entraînement IA' }, { label: 'Programmes des coachs inclus' },
+        { label: 'Statistiques avancées' }, { label: 'Pas de frais de service' }
+      ],
+      freeFeatures: [
+        { label: 'Parties ouvertes à ton niveau' }, { label: 'Réservation et paiement de ta part' }, { label: 'Niveau IA et fiabilité' },
+        { label: 'Priorité sur les listes d’attente', included: false }, { label: 'Plans d’entraînement IA', included: false }
+      ],
+      starterFeatures: [
+        { label: '1 site · jusqu’à 3 terrains' }, { label: 'Réservations en ligne' }, { label: 'Paiements des joueurs' },
+        { label: 'Tarifs dynamiques', included: false }, { label: 'Insights IA', included: false }, { label: 'Plusieurs sites', included: false }
+      ],
+      proFeatures: [
+        { label: 'Terrains illimités' }, { label: 'Réservations en ligne' }, { label: 'Paiements des joueurs' },
+        { label: 'Tarifs dynamiques' }, { label: 'Insights IA' }, { label: 'Plusieurs sites' }
+      ],
+      coachFeatures: [
+        { label: 'Programmes illimités' }, { label: 'Paiements des élèves' }, { label: 'Statistiques de tes élèves' },
+        { label: 'Commission de 10 % sur les ventes' }
+      ],
+      rows: [
+        { label: 'Parties ouvertes et réservations', freeYes: true, premYes: true },
+        { label: 'Paiement de ta part en ligne', freeYes: true, premYes: true },
+        { label: 'Niveau IA et fiabilité', freeYes: true, premYes: true },
+        { label: 'Priorité sur les listes d’attente', freeNo: true, premYes: true },
+        { label: 'Plans d’entraînement IA', freeNo: true, premYes: true },
+        { label: 'Programmes des coachs', freeNo: true, premYes: true },
+        { label: 'Statistiques', freeText: 'De base', premText: 'Avancées' },
+        { label: 'Frais de service', freeText: 'Offerts au lancement', premText: '0 DT' }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Avis</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/matchup/tokens.css">
+<link rel="stylesheet" href="ds/matchup/components/bundle.css">
+<script src="ds/matchup/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+/* own:sub — identical in OWN-17, 18, 19, 25 */
+body{margin:0}
+a{color:var(--link)}
+.own-back{position:absolute; left:4px; top:48px; width:48px; height:48px; border-radius:var(--radius-full); z-index:2}
+.own-back:focus-visible{outline:none; box-shadow:var(--focus-ring)}
+.own-body{flex:1; min-height:0; display:flex; flex-direction:column; gap:var(--space-5); padding:var(--space-2) var(--space-4) var(--space-8) var(--space-4)}
+.own-sec{color:var(--text-secondary)}
+.own-t{margin:0; padding-inline:var(--space-1); color:var(--text-secondary)}
+.own-row{display:flex; align-items:center; gap:var(--space-3)}
+/* /own:sub */
+.rev-sum{display:flex; gap:var(--space-5); padding:var(--space-4) var(--space-4) var(--space-4) var(--space-5)}
+.rev-dist{flex:1; min-width:0; margin:0; padding:0; list-style:none; display:flex; flex-direction:column; gap:6px}
+.rev-dist > li{display:grid; grid-template-columns:12px 1fr 28px; align-items:center; gap:var(--space-2)}
+.rev-dist__track{height:6px; border-radius:var(--radius-full); background:var(--surface-muted); overflow:hidden}
+.rev-dist__fill{height:100%; border-radius:var(--radius-full); background:var(--warning)}
+.rev-chips{display:flex; gap:var(--space-2); overflow-x:auto; margin:0 -16px; padding:2px 16px 4px 16px; scrollbar-width:none}
+.rev-chips::-webkit-scrollbar{display:none}
+.rev{display:flex; flex-direction:column; gap:var(--space-3); padding:var(--space-4)}
+.rev__head{display:flex; align-items:flex-start; gap:var(--space-3)}
+.rev__who{flex:1; min-width:0; display:flex; flex-direction:column; align-items:flex-start; gap:3px}
+.rev__more{margin:-10px -10px 0 0}
+.rev__text{margin:0}
+.rev__reply{display:flex; flex-direction:column; gap:var(--space-1); padding:var(--space-3); border-radius:var(--radius-sm); background:var(--surface-muted)}
+.rev__compose{display:flex; flex-direction:column; gap:var(--space-3); padding-top:var(--space-3); border-top:1px solid var(--border)}
+.rev__btns{display:flex; justify-content:flex-end; gap:var(--space-2)}
+.rev-flag{display:inline-flex; align-items:center; gap:4px; padding:1px 8px; border-radius:var(--radius-full); background:var(--warning-soft); color:var(--warning-text)}
+</style>
+</helmet>
+<div style="position: relative; width: 390px; height: 1520px; box-sizing: border-box; overflow: hidden; display: flex; flex-direction: column; background: var(--bg); color: var(--text); font-family: var(--font-sans)">
+<x-import component-from-global-scope="MatchUp.TopAppBar" title="Avis" subtitle="Espace propriétaire · Arena Five" on-back="{{noop}}" back-label="Retour à Plus" inset="{{inset}}"></x-import>
+<a href="OWN-15-Plus.dc.html" class="own-back" aria-label="Retour à Plus"></a>
+
+<div class="own-body" style="gap: 16px">
+
+<section class="mu-card rev-sum" aria-label="Note moyenne 4,7 sur 5, 128 avis">
+<div style="flex: none; display: flex; flex-direction: column; align-items: flex-start; gap: 4px">
+<span class="num-hero">4,7</span>
+<x-import component-from-global-scope="MatchUp.StarRating" read-only="{{yes}}" value="{{v47}}" size="{{s16}}" show-value="{{no}}"></x-import>
+<span class="caption own-sec">128 avis vérifiés</span>
+</div>
+<ul class="rev-dist" aria-label="Répartition des notes">
+<li><span class="label-s">5</span><span class="rev-dist__track"><span class="rev-dist__fill" style="display: block; width: 78%"></span></span><span class="num-xs own-sec" style="text-align: end">100</span></li>
+<li><span class="label-s">4</span><span class="rev-dist__track"><span class="rev-dist__fill" style="display: block; width: 16%"></span></span><span class="num-xs own-sec" style="text-align: end">20</span></li>
+<li><span class="label-s">3</span><span class="rev-dist__track"><span class="rev-dist__fill" style="display: block; width: 4%"></span></span><span class="num-xs own-sec" style="text-align: end">5</span></li>
+<li><span class="label-s">2</span><span class="rev-dist__track"><span class="rev-dist__fill" style="display: block; width: 2%"></span></span><span class="num-xs own-sec" style="text-align: end">2</span></li>
+<li><span class="label-s">1</span><span class="rev-dist__track"><span class="rev-dist__fill" style="display: block; width: 1%"></span></span><span class="num-xs own-sec" style="text-align: end">1</span></li>
+</ul>
+</section>
+
+<p class="caption own-sec" style="margin: -4px 4px 0 4px; display: flex; align-items: center; gap: 6px"><x-import component-from-global-scope="MatchUp.Icon" name="seal-check" size="{{i16}}"></x-import>Seuls les joueurs qui ont joué chez toi peuvent laisser un avis.</p>
+
+<div class="rev-chips" role="group" aria-label="Filtrer les avis">
+<x-import component-from-global-scope="MatchUp.Chip" size="s" selected="{{yes}}" count="{{c128}}">Tous</x-import>
+<x-import component-from-global-scope="MatchUp.Chip" size="s" count="{{c1}}">Sans réponse</x-import>
+<x-import component-from-global-scope="MatchUp.Chip" size="s" count="{{c100}}">5 étoiles</x-import>
+<x-import component-from-global-scope="MatchUp.Chip" size="s" count="{{c8}}">3 étoiles et moins</x-import>
+</div>
+
+<h2 class="overline own-t" style="margin-top: 4px">Plus récents</h2>
+
+<article class="mu-card rev" aria-labelledby="rev-omar">
+<div class="rev__head">
+<x-import component-from-global-scope="MatchUp.Avatar" name="Omar D." size="m"></x-import>
+<div class="rev__who">
+<span id="rev-omar" class="label-l">Omar D.</span>
+<x-import component-from-global-scope="MatchUp.StarRating" read-only="{{yes}}" value="{{v3}}" size="{{s16}}" show-value="{{no}}"></x-import><span class="caption own-sec">jeu. 15 oct. · Terrain 2</span>
+</div>
+<sc-if value="{{notPosted}}"><span class="rev-flag label-s"><x-import component-from-global-scope="MatchUp.Icon" name="chat-circle-dots" size="{{i14}}"></x-import>Sans réponse</span></sc-if>
+<sc-if value="{{posted}}"><x-import component-from-global-scope="MatchUp.StatusBadge" status="confirmed" label="Répondu" size="s"></x-import></sc-if>
+</div>
+<p class="body rev__text">Vestiaires à rafraîchir : une seule douche marchait mardi soir. Le terrain, lui, est top et l’éclairage nickel.</p>
+<sc-if value="{{notPosted}}">
+<div class="rev__compose">
+<x-import component-from-global-scope="MatchUp.TextField" label="Ta réponse publique" multiline="{{yes}}" rows="{{four}}" max-length="{{max}}" counter="{{yes}}" default-value="Merci Omar pour ton retour ! La douche est réparée depuis mercredi et on rénove les vestiaires début novembre. À dimanche sur le terrain." helper="Visible par tous sur la page d’Arena Five."></x-import>
+<div class="rev__btns">
+<button type="button" class="mu-btn mu-btn--tertiary mu-btn--m"><span class="mu-btn__content"><span class="mu-btn__label label">Annuler</span></span></button>
+<button type="button" class="mu-btn mu-btn--primary mu-btn--m" onclick="{{post}}"><span class="mu-btn__content"><x-import component-from-global-scope="MatchUp.Icon" name="paper-plane-right" size="{{i16}}"></x-import><span class="mu-btn__label label">Publier la réponse</span></span></button>
+</div>
+</div>
+</sc-if>
+<sc-if value="{{posted}}">
+<div class="rev__reply">
+<span class="label-s" style="display: flex; align-items: center; gap: 6px"><x-import component-from-global-scope="MatchUp.Icon" name="arrow-bend-up-left" size="{{i14}}"></x-import>Arena Five · à l’instant</span>
+<p class="body" style="margin: 0">Merci Omar pour ton retour ! La douche est réparée depuis mercredi et on rénove les vestiaires début novembre. À dimanche sur le terrain.</p>
+<button type="button" class="mu-btn mu-btn--link mu-btn--s" style="align-self: flex-start" onclick="{{unpost}}"><span class="mu-btn__content"><span class="mu-btn__label label">Modifier</span></span></button>
+</div>
+</sc-if>
+</article>
+
+<article class="mu-card rev" aria-labelledby="rev-mariem">
+<div class="rev__head">
+<x-import component-from-global-scope="MatchUp.Avatar" name="Mariem K." size="m"></x-import>
+<div class="rev__who">
+<span id="rev-mariem" class="label-l">Mariem K.</span>
+<x-import component-from-global-scope="MatchUp.StarRating" read-only="{{yes}}" value="{{v5}}" size="{{s16}}" show-value="{{no}}"></x-import><span class="caption own-sec">mar. 13 oct. · Terrain 1</span>
+</div>
+<button type="button" class="mu-iconbtn mu-iconbtn--m mu-iconbtn--ghost rev__more" aria-label="Plus d’actions sur l’avis de Mariem K." style="color: var(--text-secondary)"><x-import component-from-global-scope="MatchUp.Icon" name="dots-three" size="{{i20}}"></x-import></button>
+</div>
+<p class="body rev__text">Gazon impeccable, éclairage parfait pour les matchs du soir et accueil très sympa. On revient avec l’équipe des filles samedi.</p>
+<div class="rev__reply">
+<span class="label-s" style="display: flex; align-items: center; gap: 6px"><x-import component-from-global-scope="MatchUp.Icon" name="arrow-bend-up-left" size="{{i14}}"></x-import>Arena Five · mer. 14 oct.</span>
+<p class="body" style="margin: 0">Merci Mariem ! Le Terrain 1 vous attend samedi à 19h00, chasubles prêtes.</p>
+</div>
+</article>
+
+<article class="mu-card rev" aria-labelledby="rev-hamza">
+<div class="rev__head">
+<x-import component-from-global-scope="MatchUp.Avatar" name="Hamza R." size="m"></x-import>
+<div class="rev__who">
+<span id="rev-hamza" class="label-l">Hamza R.</span>
+<x-import component-from-global-scope="MatchUp.StarRating" read-only="{{yes}}" value="{{v4}}" size="{{s16}}" show-value="{{no}}"></x-import><span class="caption own-sec">sam. 10 oct. · Terrain 1</span>
+</div>
+<button type="button" class="mu-iconbtn mu-iconbtn--m mu-iconbtn--ghost rev__more" aria-label="Plus d’actions sur l’avis de Hamza R." style="color: var(--text-secondary)"><x-import component-from-global-scope="MatchUp.Icon" name="dots-three" size="{{i20}}"></x-import></button>
+</div>
+<p class="body rev__text">On joue ici tous les jeudis : réservation simple, terrain prêt à l’heure. Il manque juste un peu d’eau fraîche au café.</p>
+<div class="rev__reply">
+<span class="label-s" style="display: flex; align-items: center; gap: 6px"><x-import component-from-global-scope="MatchUp.Icon" name="arrow-bend-up-left" size="{{i14}}"></x-import>Arena Five · dim. 11 oct.</span>
+<p class="body" style="margin: 0">Bien noté Hamza, le frigo du café est rempli avant chaque créneau du soir maintenant.</p>
+</div>
+</article>
+
+<button type="button" class="mu-btn mu-btn--secondary mu-btn--m mu-btn--block"><span class="mu-btn__content"><span class="mu-btn__label label">Voir les 125 autres avis</span></span></button>
+<p class="caption own-sec" style="margin: 0 8px; text-align: center">Un avis injurieux ou faux ? Signale-le avec « … » : l’équipe MatchUp le vérifie sous 48 h. Tu ne peux pas supprimer un avis.</p>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":1520}}'>
+class Component extends DCLogic {
+  state = { posted: false };
+  renderVals() {
+    const p = this.state.posted;
+    return {
+      yes: true, no: false, i14: 14, i16: 16, i20: 20, i24: 24, inset: 44, s16: 16, four: 4, max: 500,
+      v47: 4.7, v5: 5, v4: 4, v3: 3, c128: 128, c1: 1, c100: 100, c8: 8,
+      noop: () => {},
+      posted: p, notPosted: !p,
+      post: () => this.setState({ posted: true }),
+      unpost: () => this.setState({ posted: false })
+    };
+  }
+}
+</script>
+</body>
+</html>

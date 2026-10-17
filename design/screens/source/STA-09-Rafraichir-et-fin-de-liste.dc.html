@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Rafraîchir et fin de liste</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/matchup/tokens.css">
+<link rel="stylesheet" href="ds/matchup/components/bundle.css">
+<script src="ds/matchup/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0}
+a{color:var(--link)}
+.exp-chips{display:flex; gap:8px; overflow-x:auto; padding:6px 16px 6px 16px; margin:-6px 0; scrollbar-width:none}
+.exp-chips::-webkit-scrollbar{display:none}
+.exp-chips > *{flex:none}
+.exp-hot{position:absolute; display:block; border-radius:var(--radius-sm)}
+.exp-hot:focus-visible{box-shadow:var(--focus-ring); outline:none}
+/* While a toast or snackbar shows, the AI fab lifts above it (Toast guideline). */
+.sta9 .mu-tab-bar__fab{bottom:calc(100% + 96px)}
+.ptr{display:flex; flex-direction:column; align-items:center; gap:6px; padding:16px 0 4px 0}
+.ptr__bubble{width:40px; height:40px; border-radius:var(--radius-full); background:var(--surface); box-shadow:var(--elevation-2); color:var(--text); display:flex; align-items:center; justify-content:center}
+.eol{display:flex; flex-direction:column; align-items:center; gap:8px; padding:20px 16px 8px 16px; text-align:center}
+.eol__rule{display:flex; align-items:center; gap:12px; width:100%; color:var(--text-secondary)}
+.eol__rule::before,.eol__rule::after{content:""; flex:1; height:1px; background:var(--border)}
+</style>
+</helmet>
+<div class="sta9" style="position: relative; width: 390px; height: 1384px; box-sizing: border-box; overflow: hidden; display: flex; flex-direction: column; background: var(--bg); color: var(--text); font-family: var(--font-sans)">
+<header style="position: relative; z-index: 2; flex: none; display: flex; flex-direction: column; gap: 12px; padding: 52px 0 12px 0; background: var(--surface); box-shadow: inset 0 -1px 0 var(--border)">
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 0 16px; min-height: 40px">
+<h1 class="h2" style="margin: 0">Explorer</h1>
+<x-import component-from-global-scope="MatchUp.Chip" icon="map-pin" trailing-icon="caret-down" aria-label="Zone : La Marsa, 10 km. Changer">La Marsa · 10 km</x-import>
+</div>
+<div style="padding: 0 16px">
+<x-import component-from-global-scope="MatchUp.SearchField" placeholder="Terrain, partie, quartier…"></x-import>
+</div>
+<div style="padding: 0 16px">
+<x-import component-from-global-scope="MatchUp.SegmentedControl" label="Explorer" options="{{segs}}" value="parties" full-width="{{yes}}"></x-import>
+</div>
+<div class="exp-chips" role="group" aria-label="Filtres rapides">
+<x-import component-from-global-scope="MatchUp.Chip" icon="sliders-horizontal" count="{{n2}}">Filtres</x-import>
+<x-import component-from-global-scope="MatchUp.Chip" selected="{{yes}}">Ce week-end</x-import>
+<x-import component-from-global-scope="MatchUp.Chip" selected="{{yes}}">Mon niveau</x-import>
+<x-import component-from-global-scope="MatchUp.Chip">Ce soir</x-import>
+<x-import component-from-global-scope="MatchUp.Chip" kind="sport" sport="football" on-click="{{noop}}"></x-import>
+<x-import component-from-global-scope="MatchUp.Chip" kind="sport" sport="padel" on-click="{{noop}}"></x-import>
+</div>
+<a href="EXP-05-Recherche.dc.html" class="exp-hot" aria-label="Rechercher un terrain, une partie, un quartier" style="left: 16px; top: 104px; width: 358px; height: 48px; border-radius: var(--radius-full)"></a>
+<a href="EXP-03-Explorer-terrains.dc.html" class="exp-hot" aria-label="Voir les terrains" style="left: 137px; top: 164px; width: 117px; height: 40px"></a>
+<a href="EXP-04-Filtres.dc.html" class="exp-hot" aria-label="Filtres, 2 actifs" style="left: 16px; top: 216px; width: 112px; height: 32px; border-radius: var(--radius-full)"></a>
+</header>
+
+<div class="ptr" role="status" aria-live="polite">
+<span class="ptr__bubble"><x-import component-from-global-scope="MatchUp.Spinner" size="{{i20}}"></x-import></span>
+<span class="caption" style="color: var(--text-secondary)">Mise à jour des parties…</span>
+</div>
+
+<main style="flex: 1; min-height: 0; display: flex; flex-direction: column; gap: 12px; padding: 4px 16px 0 16px">
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-right: -8px">
+<p class="label" style="margin: 0"><span class="num-s">2</span> parties <span style="color: var(--text-secondary); font-weight: inherit">· ce week-end</span></p>
+<button type="button" class="mu-btn mu-btn--tertiary mu-btn--s" aria-label="Trier par : date"><span class="mu-btn__content"><x-import component-from-global-scope="MatchUp.Icon" name="arrows-down-up" size="{{i16}}"></x-import><span class="mu-btn__label label">Date</span></span></button>
+</div>
+<x-import component-from-global-scope="MatchUp.GameCard" dc-props="{{g3}}"></x-import>
+<x-import component-from-global-scope="MatchUp.GameCard" dc-props="{{g1}}"></x-import>
+
+<div class="eol">
+<span class="eol__rule caption"><x-import component-from-global-scope="MatchUp.Icon" name="flag-checkered" size="{{i16}}"></x-import></span>
+<h2 class="label-l" style="margin: 0">C’est tout pour l’instant</h2>
+<p class="body" style="margin: 0; max-width: 300px; color: var(--text-secondary)">Tu as vu les 2 parties de ce week-end à ton niveau près de La Marsa.</p>
+<a href="EXP-01-Explorer-parties.dc.html" class="mu-btn mu-btn--secondary mu-btn--m" style="margin-top: 4px"><span class="mu-btn__content"><x-import component-from-global-scope="MatchUp.Icon" name="calendar-blank" size="{{i20}}"></x-import><span class="mu-btn__label label">Voir toute la semaine</span></span></a>
+</div>
+</main>
+
+<x-import component-from-global-scope="MatchUp.Toast.Stack" dc-props="{{stack}}"></x-import>
+<a href="GAM-03-Liste-d-attente.dc.html" class="exp-hot" aria-label="Réessayer de rejoindre la liste d’attente" style="z-index: calc(var(--z-toast) + 1); left: 276px; bottom: 126px; width: 98px; height: 44px"></a>
+<x-import component-from-global-scope="MatchUp.TabBar" items="{{tabs}}" value="explorer" safe-area="{{sa}}" fab="{{yes}}" dc-props="{{tabStyle}}"></x-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":1384}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const at = (d, h, m) => new Date(2026, 9, d, h, m || 0);
+    const h = React.createElement;
+    return {
+      yes: true, no: false, i12: 12, i16: 16, i20: 20, n2: 2, sa: 34, noop: () => {},
+      segs: [{ value: 'parties', label: 'Parties' }, { value: 'terrains', label: 'Terrains' }, { value: 'tournois', label: 'Tournois' }],
+      tabs: [
+        { value: 'accueil', label: 'Accueil', icon: 'house', href: 'HOM-01-Accueil.dc.html' },
+        { value: 'explorer', label: 'Explorer', icon: 'compass', href: 'EXP-01-Explorer-parties.dc.html' },
+        { value: 'matchs', label: 'Mes matchs', icon: 'calendar-check', badge: 1, badgeLabel: '1 invitation', href: 'MAT-01-A-venir.dc.html' },
+        { value: 'entrainement', label: 'Entraînement', icon: 'barbell', href: 'ENT-01-Mon-entrainement.dc.html' },
+        { value: 'communaute', label: 'Communauté', icon: 'users-three', href: 'FRM-01-Communaute.dc.html' }
+      ],
+      tabStyle: { style: { position: 'absolute', left: 0, right: 0, bottom: 0 } },
+      stack: { placement: 'bottom', contained: true, offset: 116, label: 'Notifications',
+        children: [h(MatchUp.Snackbar, { key: 'rollback', tone: 'error', icon: 'warning-circle', message: 'Impossible de rejoindre la liste d’attente. Rien n’a changé.', action: 'Réessayer', paused: true, elapsed: 1200 })] },
+      g3: {
+        sport: 'basketball', gameType: 'hommes', venue: 'Hoop Zone', place: 'Ennasr', distance: 6.2,
+        start: at(17, 18), spotsTotal: 6, spotsLeft: 2, price: 9, levelMin: 2.5, levelMax: 4,
+        players: [{ name: 'Hamza R.' }, { name: 'Omar D.' }, { name: 'Aziz H.' }, { name: 'Skander T.' }],
+        organiser: { name: 'Hamza R.', reliability: 93 }
+      },
+      g1: {
+        sport: 'football', gameType: 'mixte', venue: 'Arena Five', court: 'Terrain 2', place: 'La Marsa', distance: 1.4,
+        start: at(18, 20), spotsTotal: 10, spotsLeft: 0, price: 15, levelMin: 3, levelMax: 4.5,
+        players: [{ name: 'Skander T.' }, { name: 'Hamza R.' }, { name: 'Nour A.' }, { name: 'Aziz H.' }, { name: 'Omar D.' }, { name: 'Salma G.' }, { name: 'Lina F.' }, { name: 'Ines M.' }, { name: 'Mariem K.' }, { name: 'Rami S.' }],
+        organiser: { name: 'Skander T.', reliability: 96 }, matchFit: 85, onWaitlist: () => {},
+        href: 'GAM-02-Partie-complete.dc.html'
+      }
+    };
+  }
+}
+</script>
+</body>
+</html>

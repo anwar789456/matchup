@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Coach · Détail élève</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/matchup/tokens.css">
+<link rel="stylesheet" href="ds/matchup/components/bundle.css">
+<script src="ds/matchup/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+/* coa:shared — identical in COA-04…12 */
+body{margin:0}
+a{color:var(--link)}
+.coa-head{display:flex; align-items:flex-start; justify-content:space-between; gap:var(--space-3); padding:52px var(--space-4) 0 var(--space-4)}
+.coa-head__text{flex:1; min-width:0; display:flex; flex-direction:column; align-items:flex-start; gap:var(--space-2)}
+.coa-head__actions{flex:none; display:flex; align-items:center; gap:var(--space-1); margin-inline-end:calc(-1 * var(--space-1))}
+.coa-role{display:inline-flex; align-items:center; gap:6px; padding:3px 10px 3px 8px; border-radius:var(--radius-full); background:var(--surface); box-shadow:inset 0 0 0 1px var(--border); color:var(--text)}
+.coa-me{position:relative; display:flex; border-radius:var(--radius-full); text-decoration:none; color:inherit}
+.coa-me::before{content:""; position:absolute; inset:-4px}
+.coa-me:focus-visible{outline:none; box-shadow:var(--focus-ring)}
+.coa-sec{display:flex; flex-direction:column; gap:var(--space-3); padding:0 var(--space-4)}
+.coa-sec__head{display:flex; align-items:center; justify-content:space-between; gap:var(--space-3); min-height:32px; margin-inline-end:calc(-1 * var(--space-3))}
+.coa-sec__title{margin:0; display:flex; align-items:center; gap:var(--space-2)}
+.coa-list{margin:0; padding:0; list-style:none; background:var(--surface); border-radius:var(--radius-md); box-shadow:var(--elevation-1); overflow:hidden}
+.coa-list > li{position:relative}
+.coa-list > li + li::before{content:""; position:absolute; top:0; inset-inline-start:68px; inset-inline-end:0; height:1px; background:var(--border); z-index:1}
+.coa-row{position:relative; display:flex; align-items:center; gap:var(--space-3); min-height:64px; padding:var(--space-3) var(--space-4); box-sizing:border-box; color:var(--text); text-decoration:none}
+a.coa-row:hover{background:var(--surface-muted)}
+a.coa-row:focus-visible{outline:none; box-shadow:inset 0 0 0 2px var(--focus)}
+.coa-row__text{flex:1; min-width:0; display:flex; flex-direction:column; gap:2px}
+.coa-row__sub{color:var(--text-secondary); white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+.coa-chev{flex:none; display:flex; color:var(--text-secondary); margin-inline-end:calc(-1 * var(--space-1))}
+.coa-pill{flex:none; display:inline-flex; align-items:center; gap:4px; padding:2px 10px; border-radius:var(--radius-full); background:var(--accent); color:var(--on-accent)}
+.coa-muted{color:var(--text-secondary)}
+.coa-hot{position:absolute; display:block; border-radius:var(--radius-full); z-index:3}
+.coa-hot:focus-visible{outline:2px solid var(--focus); outline-offset:2px}
+/* /coa:shared */
+.stu-top{display:flex; align-items:center; justify-content:space-between; padding:52px var(--space-2) 0 var(--space-2)}
+.stu-id{display:flex; align-items:center; gap:var(--space-4)}
+.stu-prog{display:flex; flex-direction:column; gap:var(--space-4); padding:var(--space-4)}
+.stu-prog__main{display:flex; align-items:center; gap:var(--space-5)}
+.stu-facts{flex:1; min-width:0; margin:0; display:grid; grid-template-columns:1fr; gap:var(--space-2)}
+.stu-facts > div{display:flex; align-items:baseline; justify-content:space-between; gap:var(--space-2); padding-bottom:var(--space-2); border-bottom:1px solid var(--border)}
+.stu-facts > div:last-child{border-bottom:0; padding-bottom:0}
+.stu-facts dt{color:var(--text-secondary)}
+.stu-facts dd{margin:0}
+.stu-next{display:flex; align-items:center; gap:var(--space-3); padding:var(--space-3); border-radius:var(--radius-sm); background:var(--surface-muted)}
+.stu-vid{display:flex; flex-direction:column; gap:var(--space-3); padding:var(--space-4)}
+.stu-vid__top{display:flex; gap:var(--space-3)}
+.stu-thumb{flex:none; position:relative; width:112px; height:72px; border-radius:var(--radius-sm); overflow:hidden; display:flex; text-decoration:none}
+.stu-thumb__play{position:absolute; inset:0; display:flex; align-items:center; justify-content:center; z-index:1}
+.stu-thumb__play > span{width:32px; height:32px; border-radius:var(--radius-full); background:var(--white); color:var(--ink-900); display:flex; align-items:center; justify-content:center; box-shadow:var(--elevation-2)}
+.stu-thumb__t{position:absolute; inset-inline-end:6px; bottom:4px; z-index:1; color:var(--white)}
+.stu-ai{display:flex; flex-direction:column; gap:6px; padding:var(--space-3); border-radius:var(--radius-sm); background:var(--ai-soft)}
+.stu-lessons{display:flex; flex-direction:column; gap:var(--space-2)}
+.stu-quote{margin:0; padding:var(--space-4); display:flex; flex-direction:column; gap:var(--space-2)}
+</style>
+</helmet>
+<div style="position: relative; width: 390px; height: 2008px; box-sizing: border-box; overflow: hidden; background: var(--bg); color: var(--text); font-family: var(--font-sans)">
+
+<div class="stu-top">
+<a href="COA-09-Eleves.dc.html" class="mu-iconbtn mu-iconbtn--l mu-iconbtn--ghost" aria-label="Retour aux élèves" style="color: var(--text)"><x-import component-from-global-scope="MatchUp.Icon" name="arrow-left" size="{{i24}}"></x-import></a>
+<button type="button" class="mu-iconbtn mu-iconbtn--l mu-iconbtn--ghost" aria-label="Plus d’actions" style="color: var(--text)"><x-import component-from-global-scope="MatchUp.Icon" name="dots-three-vertical" size="{{i24}}"></x-import></button>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 28px; padding: 4px 16px 40px 16px">
+
+<section style="display: flex; flex-direction: column; gap: 16px" aria-label="Élève">
+<div class="stu-id">
+<x-import component-from-global-scope="MatchUp.Avatar" name="Yassine B." size="l" level="{{lv35}}"></x-import>
+<div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 4px">
+<h1 class="h2" style="margin: 0">Yassine B.</h1>
+<span class="body coa-muted">@yassine.b · La Marsa</span>
+<span style="display: flex; flex-wrap: wrap; align-items: center; gap: 6px"><x-import component-from-global-scope="MatchUp.Chip" kind="sport" sport="padel" size="s">Padel · côté gauche</x-import><x-import component-from-global-scope="MatchUp.Chip" kind="level" level="{{lv35}}" size="s"></x-import></span>
+</div>
+</div>
+<div style="display: grid; grid-template-columns: auto 1fr; gap: 12px">
+<button type="button" class="mu-btn mu-btn--secondary mu-btn--l mu-btn--block"><span class="mu-btn__content"><x-import component-from-global-scope="MatchUp.Icon" name="chat-circle-dots" size="{{i20}}"></x-import><span class="mu-btn__label label-l">Message</span></span></button>
+<a href="COA-11-Retour.dc.html" class="mu-btn mu-btn--primary mu-btn--l mu-btn--block"><span class="mu-btn__content"><x-import component-from-global-scope="MatchUp.Icon" name="note-pencil" size="{{i20}}"></x-import><span class="mu-btn__label label-l">Faire un retour</span></span></a>
+</div>
+</section>
+
+<section class="coa-sec" style="padding: 0" aria-labelledby="stu-p">
+<div class="coa-sec__head"><h2 id="stu-p" class="coa-sec__title h3">Bandeja en 4 semaines</h2><span class="caption coa-muted" style="margin-inline-end: 12px">depuis le lun. 5 oct.</span></div>
+<div class="mu-card stu-prog">
+<div class="stu-prog__main">
+<x-import component-from-global-scope="MatchUp.ProgressRing" value="{{five}}" max="{{twelve}}" size="{{r120}}" unit="séances" label="Bandeja en 4 semaines · Yassine B."></x-import>
+<dl class="stu-facts">
+<div><dt class="caption">Avancement</dt><dd class="num-s">42 %</dd></div>
+<div><dt class="caption">Semaine</dt><dd><span class="num-s">2</span><span class="caption coa-muted"> sur 4</span></dd></div>
+<div><dt class="caption">Cette semaine</dt><dd><span class="num-s">2/3</span><span class="caption coa-muted"> séances</span></dd></div>
+<div><dt class="caption">Série</dt><dd><span class="num-s">6</span><span class="caption coa-muted"> semaines</span></dd></div>
+</dl>
+</div>
+<div class="stu-next">
+<span style="flex: none; width: 36px; height: 36px; border-radius: var(--radius-full); background: var(--accent); color: var(--on-accent); display: flex; align-items: center; justify-content: center"><x-import component-from-global-scope="MatchUp.Icon" name="play" weight="fill" size="{{i16}}"></x-import></span>
+<span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px"><span class="label">Séance 5 · Bandeja croisée</span><span class="caption coa-muted">À faire aujourd’hui · 4 exercices</span></span>
+</div>
+</div>
+</section>
+
+<section class="coa-sec" style="padding: 0" aria-labelledby="stu-v">
+<div class="coa-sec__head"><h2 id="stu-v" class="coa-sec__title h3">Vidéo à commenter</h2></div>
+<article class="mu-card stu-vid">
+<div class="stu-vid__top">
+<a href="COA-11-Retour.dc.html" class="stu-thumb" aria-label="Lire la vidéo Bandeja, 42 secondes"><x-import component-from-global-scope="MatchUp.CourtArt" sport="padel" variant="photo" dc-props="{{vthumb}}"></x-import><span class="stu-thumb__play"><span><x-import component-from-global-scope="MatchUp.Icon" name="play" weight="fill" size="{{i16}}"></x-import></span></span><span class="stu-thumb__t num-xs">0:42</span></a>
+<div style="flex: 1; min-width: 0; display: flex; flex-direction: column; align-items: flex-start; gap: 4px">
+<span class="label">Bandeja · 0:42</span>
+<span class="caption coa-muted">Envoyée ven. 16 oct. · 17h05 · séance 4</span>
+<x-import component-from-global-scope="MatchUp.StatusBadge" status="pending" label="Attend ton retour" size="s"></x-import>
+</div>
+</div>
+<div class="stu-ai">
+<span style="display: flex; align-items: center; gap: 8px"><x-import component-from-global-scope="MatchUp.AiLabel" size="s"></x-import><span class="label-s">Analyse vidéo de Yassine · 3 conseils</span></span>
+<span class="caption" style="color: var(--text)">Frappe un peu tôt (0:18), balle au centre au lieu de la grille (0:31), bon replacement (0:39). À confirmer ou corriger dans ton retour.</span>
+</div>
+<a href="COA-11-Retour.dc.html" class="mu-btn mu-btn--primary mu-btn--m mu-btn--block"><span class="mu-btn__content"><x-import component-from-global-scope="MatchUp.Icon" name="video-camera" size="{{i20}}"></x-import><span class="mu-btn__label label">Commenter la vidéo</span></span></a>
+</article>
+</section>
+
+<section aria-label="Activité">
+<x-import component-from-global-scope="MatchUp.BarChart" title="Minutes d’entraînement" subtitle="6 dernières semaines · séances faites dans l’app" categories="{{weeks}}" series="{{mins}}" unit-label="minutes" height="{{chartH}}" category-label="Semaine"></x-import>
+</section>
+
+<section class="coa-sec" style="padding: 0" aria-labelledby="stu-l">
+<div class="coa-sec__head"><h2 id="stu-l" class="coa-sec__title h3">Séances</h2><span class="caption coa-muted" style="margin-inline-end: 12px"><span class="num-xs" style="color: var(--text)">4</span> terminées sur 12</span></div>
+<div class="stu-lessons">
+<x-import component-from-global-scope="MatchUp.LessonCard" variant="compact" sport="padel" index="{{n3}}" title="Bandeja long de ligne" duration="{{d22}}" drills="{{n3}}" status="done"></x-import>
+<x-import component-from-global-scope="MatchUp.LessonCard" variant="compact" sport="padel" index="{{n4}}" title="Viser la grille" duration="{{d24}}" drills="{{n4}}" status="done"></x-import>
+<x-import component-from-global-scope="MatchUp.LessonCard" variant="compact" sport="padel" index="{{n5}}" title="Bandeja croisée" duration="{{d30}}" drills="{{n4}}" status="current"></x-import>
+<x-import component-from-global-scope="MatchUp.LessonCard" variant="compact" sport="padel" index="{{n6}}" title="Bandeja sous pression" duration="{{d26}}" drills="{{n4}}" status="available"></x-import>
+</div>
+</section>
+
+<section class="coa-sec" style="padding: 0" aria-labelledby="stu-n">
+<div class="coa-sec__head"><h2 id="stu-n" class="coa-sec__title h3">Notes et retours</h2></div>
+<figure class="mu-card stu-quote">
+<figcaption class="caption coa-muted" style="display: flex; align-items: center; gap: 6px"><x-import component-from-global-scope="MatchUp.Icon" name="chat-centered-text" size="{{i14}}"></x-import>Note de Yassine · séance 4 · jeu. 15 oct.</figcaption>
+<blockquote class="body" style="margin: 0">« J’arrive à la placer, mais pas encore croisée. Elle part souvent au centre. »</blockquote>
+</figure>
+<figure class="mu-card stu-quote">
+<figcaption class="caption coa-muted" style="display: flex; align-items: center; gap: 6px"><x-import component-from-global-scope="MatchUp.Icon" name="note-pencil" size="{{i14}}"></x-import>Ton retour · séance 2 · lun. 12 oct.</figcaption>
+<blockquote class="body" style="margin: 0">« Bonne trajectoire. Garde la raquette plus haute en préparation, tu gagneras du temps sur les lobs. »</blockquote>
+</figure>
+</section>
+
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":2008}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const wk = (d, m, label) => ({ short: d + ' ' + m, label: 'Semaine du ' + label });
+    return {
+      yes: true, no: false, i14: 14, i16: 16, i20: 20, i24: 24,
+      lv35: 3.5, five: 5, twelve: 12, r120: 120, chartH: 200,
+      n3: 3, n4: 4, n5: 5, n6: 6, d22: 22, d24: 24, d26: 26, d30: 30,
+      vthumb: { style: { width: '112px', height: '72px' } },
+      weeks: [wk(7, 'sept.', 'lun. 7 sept.'), wk(14, 'sept.', 'lun. 14 sept.'), wk(21, 'sept.', 'lun. 21 sept.'), wk(28, 'sept.', 'lun. 28 sept.'), wk(5, 'oct.', 'lun. 5 oct.'), wk(12, 'oct.', 'lun. 12 oct.')],
+      mins: [{ id: 'min', label: 'Minutes', data: [40, 55, 45, 60, 75, 46] }]
+    };
+  }
+}
+</script>
+</body>
+</html>

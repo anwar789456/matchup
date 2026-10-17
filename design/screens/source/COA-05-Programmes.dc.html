@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Coach · Programmes</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/matchup/tokens.css">
+<link rel="stylesheet" href="ds/matchup/components/bundle.css">
+<script src="ds/matchup/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+/* coa:shared — identical in COA-04…12 */
+body{margin:0}
+a{color:var(--link)}
+.coa-head{display:flex; align-items:flex-start; justify-content:space-between; gap:var(--space-3); padding:52px var(--space-4) 0 var(--space-4)}
+.coa-head__text{flex:1; min-width:0; display:flex; flex-direction:column; align-items:flex-start; gap:var(--space-2)}
+.coa-head__actions{flex:none; display:flex; align-items:center; gap:var(--space-1); margin-inline-end:calc(-1 * var(--space-1))}
+.coa-role{display:inline-flex; align-items:center; gap:6px; padding:3px 10px 3px 8px; border-radius:var(--radius-full); background:var(--surface); box-shadow:inset 0 0 0 1px var(--border); color:var(--text)}
+.coa-me{position:relative; display:flex; border-radius:var(--radius-full); text-decoration:none; color:inherit}
+.coa-me::before{content:""; position:absolute; inset:-4px}
+.coa-me:focus-visible{outline:none; box-shadow:var(--focus-ring)}
+.coa-sec{display:flex; flex-direction:column; gap:var(--space-3); padding:0 var(--space-4)}
+.coa-sec__head{display:flex; align-items:center; justify-content:space-between; gap:var(--space-3); min-height:32px; margin-inline-end:calc(-1 * var(--space-3))}
+.coa-sec__title{margin:0; display:flex; align-items:center; gap:var(--space-2)}
+.coa-list{margin:0; padding:0; list-style:none; background:var(--surface); border-radius:var(--radius-md); box-shadow:var(--elevation-1); overflow:hidden}
+.coa-list > li{position:relative}
+.coa-list > li + li::before{content:""; position:absolute; top:0; inset-inline-start:68px; inset-inline-end:0; height:1px; background:var(--border); z-index:1}
+.coa-row{position:relative; display:flex; align-items:center; gap:var(--space-3); min-height:64px; padding:var(--space-3) var(--space-4); box-sizing:border-box; color:var(--text); text-decoration:none}
+a.coa-row:hover{background:var(--surface-muted)}
+a.coa-row:focus-visible{outline:none; box-shadow:inset 0 0 0 2px var(--focus)}
+.coa-row__text{flex:1; min-width:0; display:flex; flex-direction:column; gap:2px}
+.coa-row__sub{color:var(--text-secondary); white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+.coa-chev{flex:none; display:flex; color:var(--text-secondary); margin-inline-end:calc(-1 * var(--space-1))}
+.coa-pill{flex:none; display:inline-flex; align-items:center; gap:4px; padding:2px 10px; border-radius:var(--radius-full); background:var(--accent); color:var(--on-accent)}
+.coa-muted{color:var(--text-secondary)}
+.coa-hot{position:absolute; display:block; border-radius:var(--radius-full); z-index:3}
+.coa-hot:focus-visible{outline:2px solid var(--focus); outline-offset:2px}
+/* /coa:shared */
+.prg-card{display:flex; flex-direction:column; gap:var(--space-3); padding:var(--space-4)}
+.prg-top{display:flex; align-items:flex-start; gap:var(--space-3)}
+.prg-thumb{flex:none; width:64px; height:64px; border-radius:var(--radius-sm); overflow:hidden; display:flex}
+.prg-stats{display:grid; grid-template-columns:repeat(3, minmax(0, 1fr)); padding:var(--space-3) 0 0 0; border-top:1px solid var(--border)}
+.prg-stats > div{display:flex; flex-direction:column; gap:2px; padding-inline-start:var(--space-3)}
+.prg-stats > div:first-child{padding-inline-start:0}
+.prg-stats > div + div{border-inline-start:1px solid var(--border)}
+.prg-foot{display:flex; align-items:center; justify-content:space-between; gap:var(--space-2)}
+.prg-new{display:flex; align-items:center; gap:var(--space-3); padding:var(--space-4); border-radius:var(--radius-md); border:1.5px dashed var(--border-strong); text-decoration:none; color:var(--text)}
+.prg-new:hover{background:var(--surface)}
+.prg-new:focus-visible{outline:none; box-shadow:var(--focus-ring)}
+</style>
+</helmet>
+<div style="position: relative; width: 390px; height: 1144px; box-sizing: border-box; overflow: hidden; display: flex; flex-direction: column; background: var(--bg); color: var(--text); font-family: var(--font-sans)">
+
+<header class="coa-head">
+<div class="coa-head__text">
+<span class="coa-role label-s"><x-import component-from-global-scope="MatchUp.Icon" name="sport-whistle" size="{{i16}}"></x-import>Espace coach</span>
+<h1 class="h1" style="margin: 0">Programmes</h1>
+</div>
+<div class="coa-head__actions" style="margin-top: 36px">
+<a href="COA-06-Constructeur.dc.html" class="mu-btn mu-btn--primary mu-btn--m"><span class="mu-btn__content"><x-import component-from-global-scope="MatchUp.Icon" name="plus" size="{{i20}}"></x-import><span class="mu-btn__label label">Créer</span></span></a>
+<a href="PRF-06-Changer-de-role.dc.html" class="coa-me" aria-label="Karim J. · changer de rôle" style="margin-inline-start: 8px"><x-import component-from-global-scope="MatchUp.Avatar" name="Karim J." size="m"></x-import></a>
+</div>
+</header>
+
+<div style="padding: 12px 16px 0 16px">
+<x-import component-from-global-scope="MatchUp.Tabs" label="Filtrer mes programmes" items="{{tabsTop}}" value="tous" full-width="{{yes}}" id-base="prg-tab"></x-import>
+</div>
+
+<div id="prg-panel" role="tabpanel" aria-labelledby="prg-tab-tous" style="display: flex; flex-direction: column; gap: 20px; padding: 16px 16px 120px 16px">
+
+<section aria-labelledby="prg-draft" style="display: flex; flex-direction: column; gap: 8px">
+<h2 id="prg-draft" class="overline coa-muted" style="margin: 0">À terminer</h2>
+<article class="mu-card prg-card" aria-labelledby="prg-draft-t">
+<div class="prg-top">
+<span class="prg-thumb" style="align-items: center; justify-content: center; background: var(--surface-muted); box-shadow: inset 0 0 0 1px var(--border)"><x-import component-from-global-scope="MatchUp.Icon" name="note-pencil" size="{{i24}}"></x-import></span>
+<div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 4px">
+<span style="display: flex"><x-import component-from-global-scope="MatchUp.StatusBadge" status="draft" size="s"></x-import></span>
+<h3 id="prg-draft-t" class="label-l" style="margin: 0">Jeu au filet en 4 semaines</h3>
+<span class="caption coa-muted">Padel · niveau 2,5 – 4,0 · modifié hier à 22h10</span>
+</div>
+</div>
+<x-import component-from-global-scope="MatchUp.ProgressBar" value="{{ten}}" max="{{twelve}}" unit="séances" label="Séances prêtes" size="s"></x-import>
+<p class="caption" style="margin: 0; display: flex; align-items: flex-start; gap: 8px; color: var(--text-secondary)"><span style="flex: none; display: flex; color: var(--warning-text)"><x-import component-from-global-scope="MatchUp.Icon" name="warning-circle" size="{{i16}}"></x-import></span><span>Pour publier : 2 séances de la semaine 4 et le prix.</span></p>
+<div class="prg-foot">
+<button type="button" class="mu-btn mu-btn--tertiary mu-btn--s" style="margin-inline-start: -8px"><span class="mu-btn__content"><x-import component-from-global-scope="MatchUp.Icon" name="trash" size="{{i16}}"></x-import><span class="mu-btn__label label">Supprimer</span></span></button>
+<a href="COA-06-Constructeur.dc.html" class="mu-btn mu-btn--primary mu-btn--s"><span class="mu-btn__content"><span class="mu-btn__label label">Continuer</span><x-import component-from-global-scope="MatchUp.Icon" name="arrow-right" size="{{i16}}"></x-import></span></a>
+</div>
+</article>
+</section>
+
+<section aria-labelledby="prg-live" style="display: flex; flex-direction: column; gap: 8px">
+<h2 id="prg-live" class="overline coa-muted" style="margin: 0">Publiés · 52 inscriptions actives</h2>
+
+<article class="mu-card prg-card" aria-labelledby="prg-b-t">
+<div class="prg-top">
+<span class="prg-thumb"><x-import component-from-global-scope="MatchUp.CourtArt" sport="padel" variant="photo" dc-props="{{thumb}}"></x-import></span>
+<div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 4px">
+<span style="display: flex"><x-import component-from-global-scope="MatchUp.StatusBadge" status="confirmed" label="Publié" size="s"></x-import></span>
+<h3 id="prg-b-t" class="label-l" style="margin: 0">Bandeja en 4 semaines</h3>
+<span class="caption coa-muted">4 sem. · 12 séances · niveau 3,0 – 4,5</span>
+</div>
+</div>
+<div class="prg-stats">
+<div><span class="caption coa-muted">Élèves actifs</span><span class="num-m">34</span></div>
+<div><span class="caption coa-muted">Oct. · net</span><span><span class="num-m">1 620</span><span class="num-xs coa-muted"> DT</span></span></div>
+<div><span class="caption coa-muted">Note</span><span><span class="num-m">4,9</span><span class="caption coa-muted"> (48)</span></span></div>
+</div>
+<div class="prg-foot">
+<span style="display: inline-flex; align-items: center; gap: 6px; white-space: nowrap"><span class="num-s">45 DT</span><span class="caption coa-muted">ou</span><span class="label-s" style="display: inline-flex; align-items: center; gap: 4px; padding: 1px 8px; border-radius: var(--radius-full); background: var(--accent); color: var(--on-accent)"><x-import component-from-global-scope="MatchUp.Icon" name="crown-simple" size="{{i14}}"></x-import>Premium</span></span>
+<a href="ENT-03-Detail-du-programme.dc.html" class="mu-btn mu-btn--tertiary mu-btn--s" style="margin-inline-end: -8px"><span class="mu-btn__content"><x-import component-from-global-scope="MatchUp.Icon" name="eye" size="{{i16}}"></x-import><span class="mu-btn__label label">Voir la page</span></span></a>
+</div>
+</article>
+
+<article class="mu-card prg-card" aria-labelledby="prg-s-t">
+<div class="prg-top">
+<span class="prg-thumb"><x-import component-from-global-scope="MatchUp.CourtArt" sport="padel" variant="pattern" dc-props="{{thumb}}"></x-import></span>
+<div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 4px">
+<span style="display: flex"><x-import component-from-global-scope="MatchUp.StatusBadge" status="confirmed" label="Publié" size="s"></x-import></span>
+<h3 id="prg-s-t" class="label-l" style="margin: 0">Service et retour</h3>
+<span class="caption coa-muted">3 sem. · 10 séances · niveau 2,5 – 4,0</span>
+</div>
+</div>
+<div class="prg-stats">
+<div><span class="caption coa-muted">Élèves actifs</span><span class="num-m">18</span></div>
+<div><span class="caption coa-muted">Oct. · net</span><span><span class="num-m">540</span><span class="num-xs coa-muted"> DT</span></span></div>
+<div><span class="caption coa-muted">Note</span><span><span class="num-m">4,8</span><span class="caption coa-muted"> (16)</span></span></div>
+</div>
+<div class="prg-foot">
+<span class="num-s">30 DT</span>
+<button type="button" class="mu-btn mu-btn--tertiary mu-btn--s" style="margin-inline-end: -8px"><span class="mu-btn__content"><x-import component-from-global-scope="MatchUp.Icon" name="eye" size="{{i16}}"></x-import><span class="mu-btn__label label">Voir la page</span></span></button>
+</div>
+</article>
+</section>
+
+<a href="COA-06-Constructeur.dc.html" class="prg-new">
+<span style="flex: none; width: 40px; height: 40px; border-radius: var(--radius-sm); background: var(--accent); color: var(--on-accent); display: flex; align-items: center; justify-content: center"><x-import component-from-global-scope="MatchUp.Icon" name="plus" size="{{i24}}"></x-import></span>
+<span style="display: flex; flex-direction: column; gap: 2px">
+<span class="label">Créer un programme</span>
+<span class="caption coa-muted">Semaines, séances, exercices et vidéos</span>
+</span>
+</a>
+
+</div>
+
+<x-import component-from-global-scope="MatchUp.TabBar" items="{{tabs}}" value="programmes" label="Navigation de l’espace coach" safe-area="{{sa}}" dc-props="{{tabStyle}}"></x-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":1144}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      yes: true, no: false, i14: 14, i16: 16, i20: 20, i24: 24, sa: 34, ten: 10, twelve: 12,
+      thumb: { style: { width: '64px', height: '64px' } },
+      tabsTop: [
+        { value: 'tous', label: 'Tous', count: 3, panelId: 'prg-panel' },
+        { value: 'publies', label: 'Publiés', count: 2 },
+        { value: 'brouillons', label: 'Brouillons', count: 1 }
+      ],
+      tabs: [
+        { value: 'tableau', label: 'Tableau', icon: 'house', href: 'COA-04-Tableau-de-bord.dc.html' },
+        { value: 'programmes', label: 'Programmes', icon: 'clipboard-text', href: 'COA-05-Programmes.dc.html' },
+        { value: 'eleves', label: 'Élèves', icon: 'users', href: 'COA-09-Eleves.dc.html' },
+        { value: 'revenus', label: 'Revenus', icon: 'coins', href: 'COA-12-Revenus.dc.html' }
+      ],
+      tabStyle: { style: { position: 'absolute', left: 0, right: 0, bottom: 0 } }
+    };
+  }
+}
+</script>
+</body>
+</html>
