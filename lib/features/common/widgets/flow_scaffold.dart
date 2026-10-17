@@ -121,22 +121,25 @@ class StickyActionBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final c = context.mu;
-    return DecoratedBox(
-      decoration: BoxDecoration(color: c.surface, boxShadow: MuElevation.of(context).level2Up),
-      child: SafeArea(
-        top: false,
-        minimum: const EdgeInsets.only(bottom: MuSpace.s3),
-        child: Padding(
-          padding: const EdgeInsets.fromLTRB(MuSpace.s4, MuSpace.s3, MuSpace.s4, 0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              for (final (i, child) in children.indexed) ...[
-                if (i > 0) const SizedBox(height: MuSpace.s3),
-                child,
+    // Toasts stay above the sticky bar.
+    return MuToastAnchor(
+      child: DecoratedBox(
+        decoration: BoxDecoration(color: c.surface, boxShadow: MuElevation.of(context).level2Up),
+        child: SafeArea(
+          top: false,
+          minimum: const EdgeInsets.only(bottom: MuSpace.s3),
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(MuSpace.s4, MuSpace.s3, MuSpace.s4, 0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                for (final (i, child) in children.indexed) ...[
+                  if (i > 0) const SizedBox(height: MuSpace.s3),
+                  child,
+                ],
               ],
-            ],
+            ),
           ),
         ),
       ),

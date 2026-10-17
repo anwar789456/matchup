@@ -77,7 +77,7 @@ class SettingsScreen extends ConsumerWidget {
                       icon: PhosphorIcons.bell(),
                       title: 'Notifications',
                       value: s.notificationsSummary,
-                      onTap: () => showComingSoon(context),
+                      onTap: () => context.push(Routes.notificationSettings),
                     ),
                     MuSettingsRow(
                       icon: PhosphorIcons.translate(),

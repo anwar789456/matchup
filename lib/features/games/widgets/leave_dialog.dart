@@ -12,7 +12,6 @@ import '../data/games_repository.dart';
 /// snackbar « Partie quittée · Annuler » takes it back on « Annuler ».
 Future<bool> confirmLeaveGame(BuildContext context, WidgetRef ref, MuGame game) async {
   final nav = Navigator.of(context, rootNavigator: true);
-  final organiserFirst = (game.organiser ?? 'L’organisateur').split(' ').first;
   final freeUntil = game.start.subtract(const Duration(hours: 24));
   final leave = await MuDialog.show<bool>(
     context,
@@ -54,12 +53,11 @@ Future<bool> confirmLeaveGame(BuildContext context, WidgetRef ref, MuGame game) 
   final actions = ref.read(gameActionsProvider);
   await actions.leave(game);
   if (!overlay.mounted) return true;
-  MuToast.show(
+  // Snackbar.md: an undo is a snackbar, not a toast.
+  MuSnackbar.show(
     overlay.context,
     overlay: overlay,
-    title: 'Partie quittée',
-    description:
-        '${formatDT(game.pricePerPlayer)} remboursés sur ton solde. $organiserFirst est prévenu.',
+    message: 'Partie quittée',
     action: MuAction('Annuler', () => actions.rejoin(game, team: team, slot: slot)),
   );
   return true;

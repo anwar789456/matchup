@@ -12,8 +12,7 @@ enum MuToastTone { success, error, warning, info, neutral }
 /// Toast (components/Toast.md): non-blocking feedback on `toast-bg` (dark in both themes).
 ///
 /// Use [MuToast.show] to display one; the widget itself is the visual, also usable inline
-/// (the ONB-03 illustration). The 3-deep stack comes with the Notifications milestone; for now a
-/// new toast replaces the current one.
+/// (the ONB-03 illustration). Toasts and snackbars share [MuToaster]'s region and queue.
 class MuToast extends StatelessWidget {
   const MuToast({
     super.key,
@@ -44,39 +43,40 @@ class MuToast extends StatelessWidget {
   static const double _closeAlpha = 0.8;
   static const double _line = 2;
 
-  static _ToastHost? _current;
-
-  /// Shows a toast: bottom on phones, top-end on wide screens; auto-dismisses after
-  /// `duration-toast` unless [persistent].
+  /// Shows a toast in the toast region: above the tab bar or the sticky action bar on phones,
+  /// top-end on wide screens; auto-dismisses after `duration-toast` unless [persistent]. At most
+  /// 3 show at once (newest in front), the next ones wait; a toast with the same title replaces
+  /// the one on screen.
   static void show(
     BuildContext context, {
     required String title,
     MuToastTone tone = MuToastTone.neutral,
     String? description,
+    IconData? icon,
     MuAction? action,
     bool persistent = false,
     OverlayState? overlay,
   }) {
-    _current?.remove();
     // [overlay] lets a flow whose page is gone (left game, cancelled booking) still toast.
-    overlay ??= Overlay.of(context, rootOverlay: true);
-    late final _ToastHost host;
-    host = _ToastHost(
-      overlay: overlay,
+    MuToaster.add(
+      overlay ?? Overlay.of(context, rootOverlay: true),
+      id: title,
+      persistent: persistent,
       builder: (progress, close) => MuToast(
         title: title,
         tone: tone,
         description: description,
-        action: action,
+        icon: icon,
+        action: action == null
+            ? null
+            : MuAction(action.label, () {
+                action.onPressed();
+                close();
+              }),
         onClose: close,
         progress: persistent ? null : progress,
       ),
-      persistent: persistent,
-      onRemoved: () {
-        if (identical(_current, host)) _current = null;
-      },
     );
-    _current = host..insert();
   }
 
   @override
@@ -175,51 +175,285 @@ class MuToast extends StatelessWidget {
   }
 }
 
-/// One toast in the root overlay, with its enter/exit animation and auto-dismiss timer.
-class _ToastHost {
-  _ToastHost({
-    required this.overlay,
-    required this.builder,
-    required this.persistent,
-    required this.onRemoved,
-  });
+/// One toast or snackbar waiting or on screen.
+class _ToastItem {
+  _ToastItem({required this.id, required this.persistent, required this.builder});
 
-  final OverlayState overlay;
-  final Widget Function(Animation<double> progress, VoidCallback close) builder;
+  final String id;
   final bool persistent;
-  final VoidCallback onRemoved;
-  OverlayEntry? _entry;
+  final Widget Function(Animation<double> progress, VoidCallback close) builder;
+  final GlobalKey<_ToastTileState> key = GlobalKey();
+}
 
-  void insert() {
-    _entry = OverlayEntry(
-      builder: (context) => _ToastLayer(
-        persistent: persistent,
-        builder: builder,
-        onDone: remove,
-      ),
-    );
-    overlay.insert(_entry!);
+/// The toast region (Toast.md « Stack »): one overlay entry, up to 3 toasts on screen (newest in
+/// front, the older ones peeking 10 px behind at 0.95 / 0.90 until a tap expands them), a queue
+/// for the next ones, placed `space-4` above the bottom bar registered by [MuToastAnchor].
+abstract final class MuToaster {
+  static const int max = 3;
+
+  static final ValueNotifier<List<_ToastItem>> _shown = ValueNotifier(const []);
+  static final List<_ToastItem> _queue = [];
+  static OverlayEntry? _entry;
+  static OverlayState? _overlay;
+  static final List<_MuToastAnchorState> _anchors = [];
+
+  /// Height of the bar the toasts sit above (tab bar or sticky action bar), 0 when none.
+  static final ValueNotifier<double> bottomInset = ValueNotifier(0);
+
+  static void add(
+    OverlayState overlay, {
+    required String id,
+    required bool persistent,
+    required Widget Function(Animation<double> progress, VoidCallback close) builder,
+  }) {
+    if (_overlay != overlay || _entry == null || !_entry!.mounted) {
+      _entry?.remove();
+      _overlay = overlay;
+      _entry = OverlayEntry(builder: (_) => const _ToastRegion());
+      overlay.insert(_entry!);
+    }
+    final item = _ToastItem(id: id, persistent: persistent, builder: builder);
+    final shown = [..._shown.value]..removeWhere((x) => x.id == id);
+    _queue.removeWhere((x) => x.id == id);
+    if (shown.length >= max) {
+      _queue.add(item);
+    } else {
+      shown.add(item);
+    }
+    _shown.value = shown;
   }
 
-  void remove() {
+  static void _remove(_ToastItem item) {
+    final shown = [..._shown.value]..remove(item);
+    while (shown.length < max && _queue.isNotEmpty) {
+      shown.add(_queue.removeAt(0));
+    }
+    _shown.value = shown;
+    if (shown.isEmpty) {
+      _entry?.remove();
+      _entry = null;
+    }
+  }
+
+  /// Removes every toast at once (sign out, tests).
+  static void clear() {
+    _queue.clear();
+    _shown.value = const [];
     _entry?.remove();
     _entry = null;
-    onRemoved();
+  }
+
+  static void _updateInset() {
+    var inset = 0.0;
+    for (final a in _anchors.reversed) {
+      if (a.visible) {
+        inset = a.height;
+        break;
+      }
+    }
+    if (bottomInset.value != inset) bottomInset.value = inset;
   }
 }
 
-class _ToastLayer extends StatefulWidget {
-  const _ToastLayer({required this.persistent, required this.builder, required this.onDone});
+/// Marks the bottom bar toasts must stay above (the tab bar, a sticky action bar). The last
+/// visible anchor wins, so a pushed page's sticky bar takes over from the tab bar under it.
+class MuToastAnchor extends StatefulWidget {
+  const MuToastAnchor({super.key, required this.child});
 
-  final bool persistent;
-  final Widget Function(Animation<double> progress, VoidCallback close) builder;
+  final Widget child;
+
+  @override
+  State<MuToastAnchor> createState() => _MuToastAnchorState();
+}
+
+class _MuToastAnchorState extends State<MuToastAnchor> {
+  double height = 0;
+  bool visible = true;
+
+  @override
+  void initState() {
+    super.initState();
+    MuToaster._anchors.add(this);
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    // Pages covered by another page keep their state with tickers off.
+    visible = TickerMode.valuesOf(context).enabled;
+    _schedule();
+  }
+
+  void _schedule() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
+      final box = context.findRenderObject() as RenderBox?;
+      if (box != null && box.hasSize) height = box.size.height;
+      MuToaster._updateInset();
+    });
+  }
+
+  @override
+  void dispose() {
+    MuToaster._anchors.remove(this);
+    WidgetsBinding.instance.addPostFrameCallback((_) => MuToaster._updateInset());
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    _schedule();
+    return widget.child;
+  }
+}
+
+class _ToastRegion extends StatefulWidget {
+  const _ToastRegion();
+
+  @override
+  State<_ToastRegion> createState() => _ToastRegionState();
+}
+
+class _ToastRegionState extends State<_ToastRegion> {
+  bool _expanded = false;
+
+  // Toast.md: older toasts peek 10 px behind the newest at scale 0.95 / 0.90.
+  static const double _peek = 10;
+  static const List<double> _scales = [1, 0.95, 0.90];
+
+  void _toggle() {
+    setState(() => _expanded = !_expanded);
+    for (final item in MuToaster._shown.value) {
+      final tile = item.key.currentState;
+      _expanded ? tile?._pause() : tile?._resume();
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final wide = MediaQuery.sizeOf(context).width >= MuLayout.bpExpanded;
+    return ValueListenableBuilder<double>(
+      valueListenable: MuToaster.bottomInset,
+      builder: (context, inset, _) => ValueListenableBuilder<List<_ToastItem>>(
+        valueListenable: MuToaster._shown,
+        builder: (context, shown, _) {
+          if (shown.isEmpty) return const SizedBox.shrink();
+          if (shown.length < 2 && _expanded) _expanded = false;
+          Widget tile(_ToastItem item) => _ToastTile(
+            key: item.key,
+            item: item,
+            fromTop: wide,
+            paused: _expanded,
+            onDone: () => MuToaster._remove(item),
+          );
+          final newest = shown.last;
+          final Widget stack;
+          if (_expanded || shown.length == 1) {
+            stack = Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                for (final (i, item) in (wide ? shown.reversed : shown).indexed) ...[
+                  if (i > 0) const SizedBox(height: MuSpace.s2),
+                  tile(item),
+                ],
+              ],
+            );
+          } else {
+            final older = shown.sublist(0, shown.length - 1).reversed.toList();
+            stack = GestureDetector(
+              behavior: HitTestBehavior.deferToChild,
+              onTap: _toggle,
+              child: Stack(
+                clipBehavior: Clip.none,
+                children: [
+                  for (final (i, item) in older.indexed.toList().reversed) ...[
+                    // Kept alive offstage so its timer runs; only its surface peeks.
+                    Offstage(child: tile(item)),
+                    Positioned.fill(
+                      child: Transform.translate(
+                        offset: Offset(0, (wide ? 1 : -1) * _peek * (i + 1)),
+                        child: Transform.scale(
+                          scale: _scales[(i + 1).clamp(0, _scales.length - 1)],
+                          alignment: wide ? Alignment.bottomCenter : Alignment.topCenter,
+                          child: const _Covered(),
+                        ),
+                      ),
+                    ),
+                  ],
+                  tile(newest),
+                ],
+              ),
+            );
+          }
+          final bottom = MediaQuery.paddingOf(context).bottom;
+          return Align(
+            alignment: wide ? AlignmentDirectional.topEnd : Alignment.bottomCenter,
+            child: Padding(
+              padding: wide
+                  ? EdgeInsetsDirectional.only(
+                      top: MediaQuery.paddingOf(context).top + MuSpace.s4,
+                      end: MuSpace.s6,
+                    )
+                  : EdgeInsets.fromLTRB(
+                      MuSpace.s4,
+                      0,
+                      MuSpace.s4,
+                      (inset > bottom ? inset : bottom) + MuSpace.s4,
+                    ),
+              child: SizedBox(
+                width: wide ? MuSize.toast : double.infinity,
+                child: Semantics(
+                  container: true,
+                  label: 'Notifications',
+                  explicitChildNodes: true,
+                  child: stack,
+                ),
+              ),
+            ),
+          );
+        },
+      ),
+    );
+  }
+}
+
+/// An older toast behind the newest: only its surface shows.
+class _Covered extends StatelessWidget {
+  const _Covered();
+
+  @override
+  Widget build(BuildContext context) {
+    final c = context.mu;
+    return DecoratedBox(
+      decoration: BoxDecoration(
+        color: c.toastBg,
+        borderRadius: MuRadius.mdAll,
+        boxShadow: MuElevation.of(context).level2,
+      ),
+    );
+  }
+}
+
+class _ToastTile extends StatefulWidget {
+  const _ToastTile({
+    super.key,
+    required this.item,
+    required this.fromTop,
+    required this.paused,
+    required this.onDone,
+  });
+
+  final _ToastItem item;
+  final bool fromTop;
+  final bool paused;
   final VoidCallback onDone;
 
   @override
-  State<_ToastLayer> createState() => _ToastLayerState();
+  State<_ToastTile> createState() => _ToastTileState();
 }
 
-class _ToastLayerState extends State<_ToastLayer> with TickerProviderStateMixin {
+class _ToastTileState extends State<_ToastTile> with TickerProviderStateMixin {
   // The auto-dismiss timer keeps its 4 s even when the system shortens animations (reduce
   // motion scales controllers down); only the enter/exit motion follows that setting.
   late final AnimationController _life = AnimationController(
@@ -240,11 +474,7 @@ class _ToastLayerState extends State<_ToastLayer> with TickerProviderStateMixin 
     _show.duration = MuMotion.durationOf(context, MuMotion.base);
     if (_show.value == 0 && !_show.isAnimating) {
       _show.forward();
-      if (!widget.persistent) {
-        _life.reverse().whenCompleteOrCancel(() {
-          if (_life.value == 0) _close();
-        });
-      }
+      if (!widget.paused) _resume();
     }
   }
 
@@ -258,7 +488,7 @@ class _ToastLayerState extends State<_ToastLayer> with TickerProviderStateMixin 
   void _pause() => _life.stop();
 
   void _resume() {
-    if (!widget.persistent && !_closing) {
+    if (!widget.item.persistent && !_closing) {
       _life.reverse().whenCompleteOrCancel(() {
         if (_life.value == 0) _close();
       });
@@ -274,36 +504,26 @@ class _ToastLayerState extends State<_ToastLayer> with TickerProviderStateMixin 
 
   @override
   Widget build(BuildContext context) {
-    final wide = MediaQuery.sizeOf(context).width >= MuLayout.bpExpanded;
     final toast = MouseRegion(
       onEnter: (_) => _pause(),
-      onExit: (_) => _resume(),
-      child: widget.builder(_life, _close),
+      onExit: (_) {
+        if (!widget.paused) _resume();
+      },
+      child: widget.item.builder(_life, _close),
     );
-    final animated = AnimatedBuilder(
+    return AnimatedBuilder(
       animation: _show,
       builder: (context, child) {
         final t = MuMotion.enter.transform(_show.value);
         return Opacity(
           opacity: t,
           child: Transform.translate(
-            offset: Offset(0, (1 - t) * _slide * (wide ? -1 : 1)),
+            offset: Offset(0, (1 - t) * _slide * (widget.fromTop ? -1 : 1)),
             child: child,
           ),
         );
       },
       child: toast,
-    );
-    return SafeArea(
-      child: Align(
-        alignment: wide ? AlignmentDirectional.topEnd : Alignment.bottomCenter,
-        child: Padding(
-          padding: wide
-              ? const EdgeInsetsDirectional.only(top: MuSpace.s4, end: MuSpace.s6)
-              : const EdgeInsets.all(MuSpace.s4),
-          child: SizedBox(width: wide ? MuSize.toast : double.infinity, child: animated),
-        ),
-      ),
     );
   }
 }

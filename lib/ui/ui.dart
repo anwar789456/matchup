@@ -49,6 +49,7 @@ export 'mu_settings_row.dart';
 export 'mu_sidebar.dart';
 export 'mu_skeleton.dart';
 export 'mu_slot_grid.dart';
+export 'mu_snackbar.dart';
 export 'mu_social_button.dart';
 export 'mu_sparkline.dart';
 export 'mu_spinner.dart';

@@ -86,6 +86,7 @@ class _CancelReasonScreenState extends ConsumerState<CancelReasonScreen> {
                 const SizedBox(height: MuSpace.s5),
                 MuRadioGroup<CancelReason>(
                   label: 'Raison',
+                  hideLabel: true,
                   options: [
                     for (final r in CancelReason.values) MuRadioOption(value: r, label: r.label),
                   ],

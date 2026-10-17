@@ -12,6 +12,7 @@ import '../../../ui/ui.dart';
 import '../../common/data/story_data.dart';
 import '../../common/widgets/coming_soon.dart';
 import '../../common/widgets/flow_scaffold.dart';
+import '../../notifications/controllers/live_events.dart';
 import '../../payments/controllers/checkout_controller.dart';
 import '../../venue/data/venue_details.dart';
 import '../controllers/game_actions.dart';
@@ -92,6 +93,18 @@ class _GameScreenState extends ConsumerState<GameScreen> {
   Widget build(BuildContext context) {
     final c = context.mu;
     final details = ref.watch(gameDetailsProvider(widget.gameId));
+    // NOT-07: someone joins while the lobby is open — the lineup refreshes and a toast says so.
+    ref.listen(gameLiveEventsProvider, (_, next) {
+      final e = next.value;
+      if (e == null || e.gameId != widget.gameId) return;
+      MuToast.show(
+        context,
+        tone: MuToastTone.info,
+        icon: PhosphorIcons.userPlus(PhosphorIconsStyle.fill),
+        title: e.title,
+        description: e.description,
+      );
+    });
     return Scaffold(
       backgroundColor: c.bg,
       body: switch (details) {

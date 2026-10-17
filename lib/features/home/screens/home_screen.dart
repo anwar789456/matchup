@@ -9,6 +9,7 @@ import '../../../core/format.dart';
 import '../../../router.dart';
 import '../../../theme/theme.dart';
 import '../../../ui/ui.dart';
+import '../../notifications/data/notification_repository.dart';
 import '../../common/widgets/coming_soon.dart';
 import '../../explore/controllers/explore_controller.dart';
 import '../../matches/data/bookings_repository.dart';
@@ -374,9 +375,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               location: zone,
               userName: userName,
               userImage: photo == null ? null : MemoryImage(photo),
-              notifications: me?.unreadNotifications ?? 0,
+              notifications: ref.watch(unreadNotificationsProvider),
               onLocation: () => showComingSoon(context),
-              onNotifications: () => showComingSoon(context),
+              onNotifications: () => context.push(Routes.notifications),
               onAccount: () => showAccountMenu(context, ref),
             ),
             const SizedBox(height: MuSpace.s1),
