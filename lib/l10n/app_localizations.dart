@@ -16546,6 +16546,1302 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **' · dates à confirmer'**
   String get datesAConfirmer;
+
+  /// No description provided for @risqueDeChurn.
+  ///
+  /// In fr, this message translates to:
+  /// **'Risque de churn'**
+  String get risqueDeChurn;
+
+  /// No description provided for @adminFinanceAbonnesPremium.
+  ///
+  /// In fr, this message translates to:
+  /// **'Admin · Finance · abonnés Premium'**
+  String get adminFinanceAbonnesPremium;
+
+  /// No description provided for @retourAFinance.
+  ///
+  /// In fr, this message translates to:
+  /// **'Retour à Finance'**
+  String get retourAFinance;
+
+  /// No description provided for @misAJour.
+  ///
+  /// In fr, this message translates to:
+  /// **'Mis à jour {p0}'**
+  String misAJour(Object p0);
+
+  /// No description provided for @abonnesPourraientPartir.
+  ///
+  /// In fr, this message translates to:
+  /// **'{p0} abonnés pourraient partir'**
+  String abonnesPourraientPartir(Object p0);
+
+  /// No description provided for @calculeChaqueNuitSurJours.
+  ///
+  /// In fr, this message translates to:
+  /// **'Calculé chaque nuit sur 60 jours d’activité : matchs, paiements, avantages utilisés. L’IA propose, tu décides : rien n’est envoyé sans toi.'**
+  String get calculeChaqueNuitSurJours;
+
+  /// No description provided for @parMoisEnJeu.
+  ///
+  /// In fr, this message translates to:
+  /// **'par mois en jeu'**
+  String get parMoisEnJeu;
+
+  /// No description provided for @abonnesPremium.
+  ///
+  /// In fr, this message translates to:
+  /// **'abonnés Premium'**
+  String get abonnesPremium;
+
+  /// No description provided for @niveauDeRisque.
+  ///
+  /// In fr, this message translates to:
+  /// **'Niveau de risque'**
+  String get niveauDeRisque;
+
+  /// No description provided for @eleve.
+  ///
+  /// In fr, this message translates to:
+  /// **'Élevé'**
+  String get eleve;
+
+  /// No description provided for @ignores.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ignorés'**
+  String get ignores;
+
+  /// No description provided for @personneDansCetteCategorie.
+  ///
+  /// In fr, this message translates to:
+  /// **'Personne dans cette catégorie'**
+  String get personneDansCetteCategorie;
+
+  /// No description provided for @lIaPeutSeTromper2.
+  ///
+  /// In fr, this message translates to:
+  /// **'L’IA peut se tromper. « Préparer l’offre » ouvre un aperçu de l’email : tu le relis avant l’envoi. Tes votes améliorent le modèle.'**
+  String get lIaPeutSeTromper2;
+
+  /// No description provided for @risqueEleve.
+  ///
+  /// In fr, this message translates to:
+  /// **'Risque élevé'**
+  String get risqueEleve;
+
+  /// No description provided for @risqueMoyen.
+  ///
+  /// In fr, this message translates to:
+  /// **'Risque moyen'**
+  String get risqueMoyen;
+
+  /// No description provided for @matchsParSemaineSem.
+  ///
+  /// In fr, this message translates to:
+  /// **'Matchs par semaine · 12 sem.'**
+  String get matchsParSemaineSem;
+
+  /// No description provided for @finance.
+  ///
+  /// In fr, this message translates to:
+  /// **'Finance'**
+  String get finance;
+
+  /// No description provided for @auToutesLesVilles.
+  ///
+  /// In fr, this message translates to:
+  /// **'Au {p0} · toutes les villes'**
+  String auToutesLesVilles(Object p0);
+
+  /// No description provided for @encaisseJours.
+  ///
+  /// In fr, this message translates to:
+  /// **'Encaissé · 7 jours'**
+  String get encaisseJours;
+
+  /// No description provided for @vsJoursAvant.
+  ///
+  /// In fr, this message translates to:
+  /// **'vs 7 jours avant'**
+  String get vsJoursAvant;
+
+  /// No description provided for @rembourseJours.
+  ///
+  /// In fr, this message translates to:
+  /// **'Remboursé · 7 jours'**
+  String get rembourseJours;
+
+  /// No description provided for @aValider.
+  ///
+  /// In fr, this message translates to:
+  /// **'À valider'**
+  String get aValider;
+
+  /// No description provided for @versementsEtRemboursements.
+  ///
+  /// In fr, this message translates to:
+  /// **'Versements et remboursements'**
+  String get versementsEtRemboursements;
+
+  /// No description provided for @versementsRemboursements.
+  ///
+  /// In fr, this message translates to:
+  /// **'{p0} versements · {p1} remboursements'**
+  String versementsRemboursements(Object p0, Object p1);
+
+  /// No description provided for @abonnesARisque.
+  ///
+  /// In fr, this message translates to:
+  /// **'{p0} abonnés à risque'**
+  String abonnesARisque(Object p0);
+
+  /// No description provided for @abonnesPremiumMois.
+  ///
+  /// In fr, this message translates to:
+  /// **'{p0} abonnés Premium · {p1} {p2}/mois'**
+  String abonnesPremiumMois(Object p0, Object p1, Object p2);
+
+  /// No description provided for @encaissementsJours.
+  ///
+  /// In fr, this message translates to:
+  /// **'Encaissements · 30 jours'**
+  String get encaissementsJours;
+
+  /// No description provided for @enDuAu.
+  ///
+  /// In fr, this message translates to:
+  /// **'En {p0} · du {p1} au {p2}'**
+  String enDuAu(Object p0, Object p1, Object p2);
+
+  /// No description provided for @encaisse.
+  ///
+  /// In fr, this message translates to:
+  /// **'Encaissé'**
+  String get encaisse;
+
+  /// No description provided for @dOuVientLArgent.
+  ///
+  /// In fr, this message translates to:
+  /// **'D’où vient l’argent'**
+  String get dOuVientLArgent;
+
+  /// No description provided for @derniersJoursEncaisses.
+  ///
+  /// In fr, this message translates to:
+  /// **'7 derniers jours · {p0} encaissés'**
+  String derniersJoursEncaisses(Object p0);
+
+  /// No description provided for @encaisses.
+  ///
+  /// In fr, this message translates to:
+  /// **'{p0} encaissés'**
+  String encaisses(Object p0);
+
+  /// No description provided for @source.
+  ///
+  /// In fr, this message translates to:
+  /// **'Source'**
+  String get source;
+
+  /// No description provided for @transactions.
+  ///
+  /// In fr, this message translates to:
+  /// **'Transactions'**
+  String get transactions;
+
+  /// No description provided for @exporter.
+  ///
+  /// In fr, this message translates to:
+  /// **'Exporter'**
+  String get exporter;
+
+  /// No description provided for @rechercherUneTransaction.
+  ///
+  /// In fr, this message translates to:
+  /// **'Rechercher une transaction'**
+  String get rechercherUneTransaction;
+
+  /// No description provided for @nomTerrainReferenceMu.
+  ///
+  /// In fr, this message translates to:
+  /// **'Nom, terrain, référence MU-…'**
+  String get nomTerrainReferenceMu;
+
+  /// No description provided for @typeDeTransaction.
+  ///
+  /// In fr, this message translates to:
+  /// **'Type de transaction'**
+  String get typeDeTransaction;
+
+  /// No description provided for @abonnements.
+  ///
+  /// In fr, this message translates to:
+  /// **'Abonnements'**
+  String get abonnements;
+
+  /// No description provided for @aucuneTransactionTrouvee.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucune transaction trouvée'**
+  String get aucuneTransactionTrouvee;
+
+  /// No description provided for @scoreIaDecroissant.
+  ///
+  /// In fr, this message translates to:
+  /// **'Score IA décroissant'**
+  String get scoreIaDecroissant;
+
+  /// No description provided for @plusRecentsDAbord.
+  ///
+  /// In fr, this message translates to:
+  /// **'Plus récents d’abord'**
+  String get plusRecentsDAbord;
+
+  /// No description provided for @trierLesContenus.
+  ///
+  /// In fr, this message translates to:
+  /// **'Trier les contenus'**
+  String get trierLesContenus;
+
+  /// No description provided for @ordreDeLaFile.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ordre de la file'**
+  String get ordreDeLaFile;
+
+  /// No description provided for @moderation.
+  ///
+  /// In fr, this message translates to:
+  /// **'Modération'**
+  String get moderation;
+
+  /// No description provided for @aucunSignalementOuvert.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucun signalement ouvert'**
+  String get aucunSignalementOuvert;
+
+  /// No description provided for @ouvertsLePlusAncien.
+  ///
+  /// In fr, this message translates to:
+  /// **'{p0} ouverts · le plus ancien : {p1}'**
+  String ouvertsLePlusAncien(Object p0, Object p1);
+
+  /// No description provided for @rechercherUnContenu.
+  ///
+  /// In fr, this message translates to:
+  /// **'Rechercher un contenu'**
+  String get rechercherUnContenu;
+
+  /// No description provided for @motAuteurDiscussion.
+  ///
+  /// In fr, this message translates to:
+  /// **'Mot, auteur, discussion…'**
+  String get motAuteurDiscussion;
+
+  /// No description provided for @typeDeContenu.
+  ///
+  /// In fr, this message translates to:
+  /// **'Type de contenu'**
+  String get typeDeContenu;
+
+  /// No description provided for @commentaires.
+  ///
+  /// In fr, this message translates to:
+  /// **'Commentaires'**
+  String get commentaires;
+
+  /// No description provided for @posts.
+  ///
+  /// In fr, this message translates to:
+  /// **'Posts'**
+  String get posts;
+
+  /// No description provided for @profils.
+  ///
+  /// In fr, this message translates to:
+  /// **'Profils'**
+  String get profils;
+
+  /// No description provided for @aucunContenuARevoir.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucun contenu à revoir'**
+  String get aucunContenuARevoir;
+
+  /// No description provided for @contenusSignales.
+  ///
+  /// In fr, this message translates to:
+  /// **'Contenus signalés'**
+  String get contenusSignales;
+
+  /// No description provided for @leScoreIaTrieLa.
+  ///
+  /// In fr, this message translates to:
+  /// **'Le score IA trie la file : il ne masque ni ne supprime rien seul. C’est tout pour l’instant · 41 signalements traités cette semaine.'**
+  String get leScoreIaTrieLa;
+
+  /// No description provided for @vueDEnsemble.
+  ///
+  /// In fr, this message translates to:
+  /// **'Vue d’ensemble'**
+  String get vueDEnsemble;
+
+  /// No description provided for @bonjour2.
+  ///
+  /// In fr, this message translates to:
+  /// **'Bonjour {p0} · {p1}'**
+  String bonjour2(Object p0, Object p1);
+
+  /// No description provided for @utilisateurs.
+  ///
+  /// In fr, this message translates to:
+  /// **'Utilisateurs'**
+  String get utilisateurs;
+
+  /// No description provided for @vsSemDerniere.
+  ///
+  /// In fr, this message translates to:
+  /// **'vs sem. dernière'**
+  String get vsSemDerniere;
+
+  /// No description provided for @terrainsActifs2.
+  ///
+  /// In fr, this message translates to:
+  /// **'Terrains actifs'**
+  String get terrainsActifs2;
+
+  /// No description provided for @aTraiter.
+  ///
+  /// In fr, this message translates to:
+  /// **'À traiter'**
+  String get aTraiter;
+
+  /// No description provided for @elements.
+  ///
+  /// In fr, this message translates to:
+  /// **'{p0} éléments'**
+  String elements(Object p0);
+
+  /// No description provided for @signalementsOuverts.
+  ///
+  /// In fr, this message translates to:
+  /// **'Signalements ouverts'**
+  String get signalementsOuverts;
+
+  /// No description provided for @scoreIaEleve.
+  ///
+  /// In fr, this message translates to:
+  /// **'{p0} score IA élevé'**
+  String scoreIaEleve(Object p0);
+
+  /// No description provided for @verifications.
+  ///
+  /// In fr, this message translates to:
+  /// **'{p0} vérifications'**
+  String verifications(Object p0);
+
+  /// No description provided for @verificationsEnAttente.
+  ///
+  /// In fr, this message translates to:
+  /// **'Vérifications en attente'**
+  String get verificationsEnAttente;
+
+  /// No description provided for @reservationsParSport.
+  ///
+  /// In fr, this message translates to:
+  /// **'Réservations par sport'**
+  String get reservationsParSport;
+
+  /// No description provided for @matchupDerniersJoursReservations.
+  ///
+  /// In fr, this message translates to:
+  /// **'MatchUp · 7 derniers jours · {p0} réservations'**
+  String matchupDerniersJoursReservations(Object p0);
+
+  /// No description provided for @reservationsAuTotal.
+  ///
+  /// In fr, this message translates to:
+  /// **'réservations au total'**
+  String get reservationsAuTotal;
+
+  /// No description provided for @signalementsRecents.
+  ///
+  /// In fr, this message translates to:
+  /// **'Signalements récents'**
+  String get signalementsRecents;
+
+  /// No description provided for @aucuneToxiciteAvisConteste.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucune toxicité · avis contesté'**
+  String get aucuneToxiciteAvisConteste;
+
+  /// No description provided for @leScoreIaAideA.
+  ///
+  /// In fr, this message translates to:
+  /// **'Le score IA aide à trier. Rien n’est supprimé sans ta décision.'**
+  String get leScoreIaAideA;
+
+  /// No description provided for @abonnesPremiumARisque.
+  ///
+  /// In fr, this message translates to:
+  /// **'{p0} abonnés Premium à risque'**
+  String abonnesPremiumARisque(Object p0);
+
+  /// No description provided for @abonnesPremium2.
+  ///
+  /// In fr, this message translates to:
+  /// **'{p0} abonnés Premium'**
+  String abonnesPremium2(Object p0);
+
+  /// No description provided for @cetteSemaineEssaisEnCours.
+  ///
+  /// In fr, this message translates to:
+  /// **'{p0} cette semaine · {p1} essais en cours'**
+  String cetteSemaineEssaisEnCours(Object p0, Object p1);
+
+  /// No description provided for @commentaire.
+  ///
+  /// In fr, this message translates to:
+  /// **'Commentaire · {p0}'**
+  String commentaire(Object p0);
+
+  /// No description provided for @vendsCramponsPasCher.
+  ///
+  /// In fr, this message translates to:
+  /// **'« Vends crampons pas cher »'**
+  String get vendsCramponsPasCher;
+
+  /// No description provided for @franchementTEsNul.
+  ///
+  /// In fr, this message translates to:
+  /// **'« Franchement t’es nul… »'**
+  String get franchementTEsNul;
+
+  /// No description provided for @panierCasseDepuisDesSemaines.
+  ///
+  /// In fr, this message translates to:
+  /// **'« Panier cassé depuis des semaines »'**
+  String get panierCasseDepuisDesSemaines;
+
+  /// No description provided for @validerVersements.
+  ///
+  /// In fr, this message translates to:
+  /// **'Valider {p0} versements ?'**
+  String validerVersements(Object p0);
+
+  /// No description provided for @validerLeVersement.
+  ///
+  /// In fr, this message translates to:
+  /// **'Valider le versement ?'**
+  String get validerLeVersement;
+
+  /// No description provided for @lesVirementsPartentLunOct.
+  ///
+  /// In fr, this message translates to:
+  /// **'Les virements partent lun. 19 oct. Ils ne peuvent plus être annulés ensuite.'**
+  String get lesVirementsPartentLunOct;
+
+  /// No description provided for @vers2.
+  ///
+  /// In fr, this message translates to:
+  /// **'{p0} vers {p1}.'**
+  String vers2(Object p0, Object p1);
+
+  /// No description provided for @pasMaintenant.
+  ///
+  /// In fr, this message translates to:
+  /// **'Pas maintenant'**
+  String get pasMaintenant;
+
+  /// No description provided for @validerVersements2.
+  ///
+  /// In fr, this message translates to:
+  /// **'Valider {p0} versements'**
+  String validerVersements2(Object p0);
+
+  /// No description provided for @validerLeVersement2.
+  ///
+  /// In fr, this message translates to:
+  /// **'Valider le versement'**
+  String get validerLeVersement2;
+
+  /// No description provided for @versementsValides.
+  ///
+  /// In fr, this message translates to:
+  /// **'{p0} versements validés'**
+  String versementsValides(Object p0);
+
+  /// No description provided for @versementValide.
+  ///
+  /// In fr, this message translates to:
+  /// **'Versement validé'**
+  String get versementValide;
+
+  /// No description provided for @remboursesA.
+  ///
+  /// In fr, this message translates to:
+  /// **'{p0} remboursés à {p1}'**
+  String remboursesA(Object p0, Object p1);
+
+  /// No description provided for @adminFinance.
+  ///
+  /// In fr, this message translates to:
+  /// **'Admin · Finance'**
+  String get adminFinance;
+
+  /// No description provided for @valides.
+  ///
+  /// In fr, this message translates to:
+  /// **'Validés'**
+  String get valides;
+
+  /// No description provided for @versementDuLunOctPour.
+  ///
+  /// In fr, this message translates to:
+  /// **'Versement du lun. 19 oct. pour la semaine du 12 au 18 oct. L’argent ne part qu’après ta validation.'**
+  String get versementDuLunOctPour;
+
+  /// No description provided for @toutSelectionner.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tout sélectionner'**
+  String get toutSelectionner;
+
+  /// No description provided for @selectionnes.
+  ///
+  /// In fr, this message translates to:
+  /// **'{p0} sélectionnés'**
+  String selectionnes(Object p0);
+
+  /// No description provided for @selectionne2.
+  ///
+  /// In fr, this message translates to:
+  /// **'{p0} sélectionné'**
+  String selectionne2(Object p0);
+
+  /// No description provided for @dernierLunOctArenaFive.
+  ///
+  /// In fr, this message translates to:
+  /// **'Dernier : lun. 12 oct. · Arena Five · 1 250 DT'**
+  String get dernierLunOctArenaFive;
+
+  /// No description provided for @demandes.
+  ///
+  /// In fr, this message translates to:
+  /// **'{p0} demandes · {p1}'**
+  String demandes(Object p0, Object p1);
+
+  /// No description provided for @aucuneDemandeDeRemboursement.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucune demande de remboursement'**
+  String get aucuneDemandeDeRemboursement;
+
+  /// No description provided for @unRefusDemandeUneRaison.
+  ///
+  /// In fr, this message translates to:
+  /// **'Un refus demande une raison : la personne la reçoit par email et peut contacter le support.'**
+  String get unRefusDemandeUneRaison;
+
+  /// No description provided for @selectionner.
+  ///
+  /// In fr, this message translates to:
+  /// **'Sélectionner {p0}'**
+  String selectionner(Object p0);
+
+  /// No description provided for @validePartLunOct.
+  ///
+  /// In fr, this message translates to:
+  /// **'Validé · part lun. 19 oct.'**
+  String get validePartLunOct;
+
+  /// No description provided for @rembourser.
+  ///
+  /// In fr, this message translates to:
+  /// **'Rembourser {p0}'**
+  String rembourser(Object p0);
+
+  /// No description provided for @approuverEtRepublier.
+  ///
+  /// In fr, this message translates to:
+  /// **'Approuver et republier'**
+  String get approuverEtRepublier;
+
+  /// No description provided for @supprimerLeCommentaire.
+  ///
+  /// In fr, this message translates to:
+  /// **'Supprimer le commentaire'**
+  String get supprimerLeCommentaire;
+
+  /// No description provided for @supprimerEtAvertirLAuteur.
+  ///
+  /// In fr, this message translates to:
+  /// **'Supprimer et avertir l’auteur'**
+  String get supprimerEtAvertirLAuteur;
+
+  /// No description provided for @suspendreLAuteur.
+  ///
+  /// In fr, this message translates to:
+  /// **'Suspendre l’auteur'**
+  String get suspendreLAuteur;
+
+  /// No description provided for @supprimerEtAvertir.
+  ///
+  /// In fr, this message translates to:
+  /// **'Supprimer et avertir'**
+  String get supprimerEtAvertir;
+
+  /// No description provided for @choisirLaDuree.
+  ///
+  /// In fr, this message translates to:
+  /// **'Choisir la durée'**
+  String get choisirLaDuree;
+
+  /// No description provided for @leCommentaireReapparaitPourTout.
+  ///
+  /// In fr, this message translates to:
+  /// **'Le commentaire réapparaît pour tout le monde et les 3 signalements sont classés.'**
+  String get leCommentaireReapparaitPourTout;
+
+  /// No description provided for @ilDisparaitPourToutLe.
+  ///
+  /// In fr, this message translates to:
+  /// **'Il disparaît pour tout le monde. {p0} reçoit la raison par notification.'**
+  String ilDisparaitPourToutLe(Object p0);
+
+  /// No description provided for @supprimePourToutLeMonde.
+  ///
+  /// In fr, this message translates to:
+  /// **'Supprimé pour tout le monde, et 1er avertissement pour {p0}. Au 3e : suspension de 7 jours.'**
+  String supprimePourToutLeMonde(Object p0);
+
+  /// No description provided for @leCommentaireEstSupprimeTu.
+  ///
+  /// In fr, this message translates to:
+  /// **'Le commentaire est supprimé. Tu choisis ensuite la durée et la raison de la suspension.'**
+  String get leCommentaireEstSupprimeTu;
+
+  /// No description provided for @supprimerEtAvertir2.
+  ///
+  /// In fr, this message translates to:
+  /// **'Supprimer et avertir {p0} ?'**
+  String supprimerEtAvertir2(Object p0);
+
+  /// No description provided for @supprimerLeCommentaire2.
+  ///
+  /// In fr, this message translates to:
+  /// **'Supprimer le commentaire ?'**
+  String get supprimerLeCommentaire2;
+
+  /// No description provided for @tuNePourrasPasLe.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tu ne pourras pas le republier ensuite.'**
+  String get tuNePourrasPasLe;
+
+  /// No description provided for @commentaireRepublie.
+  ///
+  /// In fr, this message translates to:
+  /// **'Commentaire republié'**
+  String get commentaireRepublie;
+
+  /// No description provided for @commentaireSupprimeAverti.
+  ///
+  /// In fr, this message translates to:
+  /// **'Commentaire supprimé · {p0} averti'**
+  String commentaireSupprimeAverti(Object p0);
+
+  /// No description provided for @commentaireSupprime.
+  ///
+  /// In fr, this message translates to:
+  /// **'Commentaire supprimé'**
+  String get commentaireSupprime;
+
+  /// No description provided for @revoirLeCommentaire.
+  ///
+  /// In fr, this message translates to:
+  /// **'Revoir le commentaire'**
+  String get revoirLeCommentaire;
+
+  /// No description provided for @passageReleveParLIa.
+  ///
+  /// In fr, this message translates to:
+  /// **'{p0} (passage relevé par l’IA)'**
+  String passageReleveParLIa(Object p0);
+
+  /// No description provided for @taDecision.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ta décision'**
+  String get taDecision;
+
+  /// No description provided for @estBanni.
+  ///
+  /// In fr, this message translates to:
+  /// **'{p0} est banni'**
+  String estBanni(Object p0);
+
+  /// No description provided for @estSuspendu.
+  ///
+  /// In fr, this message translates to:
+  /// **'{p0} est suspendu'**
+  String estSuspendu(Object p0);
+
+  /// No description provided for @sesPartiesAVenirSont.
+  ///
+  /// In fr, this message translates to:
+  /// **' Ses {p0} parties à venir sont libérées et {p1} remboursés sur son solde.'**
+  String sesPartiesAVenirSont(Object p0, Object p1);
+
+  /// No description provided for @compteFermeSansReinscriptionPossible.
+  ///
+  /// In fr, this message translates to:
+  /// **'Compte fermé, sans réinscription possible avec ce numéro.{p0}'**
+  String compteFermeSansReinscriptionPossible(Object p0);
+
+  /// No description provided for @jusquAuNiPartieNi.
+  ///
+  /// In fr, this message translates to:
+  /// **'Jusqu’au {p0} · {p1} : ni partie, ni réservation.{p2}'**
+  String jusquAuNiPartieNi(Object p0, Object p1, Object p2);
+
+  /// No description provided for @suspendreH.
+  ///
+  /// In fr, this message translates to:
+  /// **'Suspendre 24 h'**
+  String get suspendreH;
+
+  /// No description provided for @suspendreJours.
+  ///
+  /// In fr, this message translates to:
+  /// **'Suspendre 7 jours'**
+  String get suspendreJours;
+
+  /// No description provided for @suspendreJours2.
+  ///
+  /// In fr, this message translates to:
+  /// **'Suspendre 30 jours'**
+  String get suspendreJours2;
+
+  /// No description provided for @bannirDefinitivement.
+  ///
+  /// In fr, this message translates to:
+  /// **'Bannir définitivement'**
+  String get bannirDefinitivement;
+
+  /// No description provided for @bannir.
+  ///
+  /// In fr, this message translates to:
+  /// **'Bannir {p0} ?'**
+  String bannir(Object p0);
+
+  /// No description provided for @suspendre.
+  ///
+  /// In fr, this message translates to:
+  /// **'Suspendre {p0} ?'**
+  String suspendre(Object p0);
+
+  /// No description provided for @ilEstPrevenuParEmail.
+  ///
+  /// In fr, this message translates to:
+  /// **'Il est prévenu par email avec ta raison. Seul un admin pourra rouvrir le compte, après un recours.'**
+  String get ilEstPrevenuParEmail;
+
+  /// No description provided for @ilEstPrevenuParEmail2.
+  ///
+  /// In fr, this message translates to:
+  /// **'Il est prévenu par email avec ta raison. Tu peux lever la suspension à tout moment.'**
+  String get ilEstPrevenuParEmail2;
+
+  /// No description provided for @definitif.
+  ///
+  /// In fr, this message translates to:
+  /// **'Définitif'**
+  String get definitif;
+
+  /// No description provided for @messageA.
+  ///
+  /// In fr, this message translates to:
+  /// **'Message à {p0}'**
+  String messageA(Object p0);
+
+  /// No description provided for @garderLeCompteActif.
+  ///
+  /// In fr, this message translates to:
+  /// **'Garder le compte actif'**
+  String get garderLeCompteActif;
+
+  /// No description provided for @ficheUtilisateur.
+  ///
+  /// In fr, this message translates to:
+  /// **'Fiche utilisateur'**
+  String get ficheUtilisateur;
+
+  /// No description provided for @admin.
+  ///
+  /// In fr, this message translates to:
+  /// **'Admin'**
+  String get admin;
+
+  /// No description provided for @adminId.
+  ///
+  /// In fr, this message translates to:
+  /// **'Admin · ID {p0}'**
+  String adminId(Object p0);
+
+  /// No description provided for @retourAuxUtilisateurs.
+  ///
+  /// In fr, this message translates to:
+  /// **'Retour aux utilisateurs'**
+  String get retourAuxUtilisateurs;
+
+  /// No description provided for @avertir.
+  ///
+  /// In fr, this message translates to:
+  /// **'Avertir'**
+  String get avertir;
+
+  /// No description provided for @suspendre2.
+  ///
+  /// In fr, this message translates to:
+  /// **'Suspendre'**
+  String get suspendre2;
+
+  /// No description provided for @banni.
+  ///
+  /// In fr, this message translates to:
+  /// **'Banni'**
+  String get banni;
+
+  /// No description provided for @suspendu.
+  ///
+  /// In fr, this message translates to:
+  /// **'Suspendu'**
+  String get suspendu;
+
+  /// No description provided for @signale.
+  ///
+  /// In fr, this message translates to:
+  /// **'Signalé'**
+  String get signale;
+
+  /// No description provided for @inscrit.
+  ///
+  /// In fr, this message translates to:
+  /// **'Inscrit'**
+  String get inscrit;
+
+  /// No description provided for @signalementOuvert.
+  ///
+  /// In fr, this message translates to:
+  /// **'Signalement ouvert'**
+  String get signalementOuvert;
+
+  /// No description provided for @sur5.
+  ///
+  /// In fr, this message translates to:
+  /// **'1 sur 1'**
+  String get sur5;
+
+  /// No description provided for @signalePar.
+  ///
+  /// In fr, this message translates to:
+  /// **'Signalé par {p0}'**
+  String signalePar(Object p0);
+
+  /// No description provided for @classer.
+  ///
+  /// In fr, this message translates to:
+  /// **'Classer'**
+  String get classer;
+
+  /// No description provided for @activiteRecente.
+  ///
+  /// In fr, this message translates to:
+  /// **'Activité récente'**
+  String get activiteRecente;
+
+  /// No description provided for @sanctions.
+  ///
+  /// In fr, this message translates to:
+  /// **'Sanctions'**
+  String get sanctions;
+
+  /// No description provided for @banniDefinitivement.
+  ///
+  /// In fr, this message translates to:
+  /// **'Banni définitivement'**
+  String get banniDefinitivement;
+
+  /// No description provided for @suspenduJusquAu.
+  ///
+  /// In fr, this message translates to:
+  /// **'Suspendu jusqu’au {p0} · {p1}'**
+  String suspenduJusquAu(Object p0, Object p1);
+
+  /// No description provided for @aucuneSanction.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucune sanction'**
+  String get aucuneSanction;
+
+  /// No description provided for @niAvertissementNiSuspensionDepuis.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ni avertissement ni suspension depuis son inscription.'**
+  String get niAvertissementNiSuspensionDepuis;
+
+  /// No description provided for @rechercherUnUtilisateur.
+  ///
+  /// In fr, this message translates to:
+  /// **'Rechercher un utilisateur'**
+  String get rechercherUnUtilisateur;
+
+  /// No description provided for @nomEmailTelephone.
+  ///
+  /// In fr, this message translates to:
+  /// **'Nom, email, téléphone…'**
+  String get nomEmailTelephone;
+
+  /// No description provided for @role.
+  ///
+  /// In fr, this message translates to:
+  /// **'Rôle'**
+  String get role;
+
+  /// No description provided for @signales.
+  ///
+  /// In fr, this message translates to:
+  /// **'Signalés'**
+  String get signales;
+
+  /// No description provided for @nouveauxJours.
+  ///
+  /// In fr, this message translates to:
+  /// **'Nouveaux · 7 jours'**
+  String get nouveauxJours;
+
+  /// No description provided for @aucunUtilisateurTrouve.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucun utilisateur trouvé'**
+  String get aucunUtilisateurTrouve;
+
+  /// No description provided for @surFaisDefilerPourCharger.
+  ///
+  /// In fr, this message translates to:
+  /// **'{p0} sur {p1} · fais défiler pour charger la suite'**
+  String surFaisDefilerPourCharger(Object p0, Object p1);
+
+  /// No description provided for @selectionnerPlusieursUtilisateurs.
+  ///
+  /// In fr, this message translates to:
+  /// **'Sélectionner plusieurs utilisateurs'**
+  String get selectionnerPlusieursUtilisateurs;
+
+  /// No description provided for @toutSelectionnerSurCettePage.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tout sélectionner sur cette page'**
+  String get toutSelectionnerSurCettePage;
+
+  /// No description provided for @selectionnes2.
+  ///
+  /// In fr, this message translates to:
+  /// **' sélectionnés'**
+  String get selectionnes2;
+
+  /// No description provided for @selectionne3.
+  ///
+  /// In fr, this message translates to:
+  /// **' sélectionné'**
+  String get selectionne3;
+
+  /// No description provided for @actionsSurLaSelection.
+  ///
+  /// In fr, this message translates to:
+  /// **'Actions sur la sélection'**
+  String get actionsSurLaSelection;
+
+  /// No description provided for @suspendre3.
+  ///
+  /// In fr, this message translates to:
+  /// **'Suspendre ({p0})'**
+  String suspendre3(Object p0);
+
+  /// No description provided for @suspendreComptes.
+  ///
+  /// In fr, this message translates to:
+  /// **'Suspendre {p0} comptes ?'**
+  String suspendreComptes(Object p0);
+
+  /// No description provided for @chaqueCompteEstPrevenuPar.
+  ///
+  /// In fr, this message translates to:
+  /// **'Chaque compte est prévenu par email. Tu peux lever la suspension à tout moment.'**
+  String get chaqueCompteEstPrevenuPar;
+
+  /// No description provided for @jusquAuNiPartieNi2.
+  ///
+  /// In fr, this message translates to:
+  /// **'Jusqu’au {p0} · {p1} : ni partie, ni réservation, ni publication pour {p2}.'**
+  String jusquAuNiPartieNi2(Object p0, Object p1, Object p2);
+
+  /// No description provided for @garderLesComptesActifs.
+  ///
+  /// In fr, this message translates to:
+  /// **'Garder les comptes actifs'**
+  String get garderLesComptesActifs;
+
+  /// No description provided for @comptesSuspendusJours.
+  ///
+  /// In fr, this message translates to:
+  /// **'{p0} comptes suspendus 7 jours'**
+  String comptesSuspendusJours(Object p0);
+
+  /// No description provided for @suspenduJours.
+  ///
+  /// In fr, this message translates to:
+  /// **'{p0} suspendu 7 jours'**
+  String suspenduJours(Object p0);
+
+  /// No description provided for @trierLesUtilisateurs.
+  ///
+  /// In fr, this message translates to:
+  /// **'Trier les utilisateurs'**
+  String get trierLesUtilisateurs;
+
+  /// No description provided for @ordreDeLaListe.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ordre de la liste'**
+  String get ordreDeLaListe;
+
+  /// No description provided for @signalesPuisVerificationsEnAttente.
+  ///
+  /// In fr, this message translates to:
+  /// **'Signalés, puis vérifications en attente.'**
+  String get signalesPuisVerificationsEnAttente;
+
+  /// No description provided for @filtrerParRole.
+  ///
+  /// In fr, this message translates to:
+  /// **'Filtrer par rôle'**
+  String get filtrerParRole;
+
+  /// No description provided for @tousLesRoles.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tous les rôles'**
+  String get tousLesRoles;
+
+  /// No description provided for @filtrerParStatut.
+  ///
+  /// In fr, this message translates to:
+  /// **'Filtrer par statut'**
+  String get filtrerParStatut;
+
+  /// No description provided for @tousLesStatuts.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tous les statuts'**
+  String get tousLesStatuts;
+
+  /// No description provided for @aTraiterDAbord.
+  ///
+  /// In fr, this message translates to:
+  /// **'À traiter d’abord'**
+  String get aTraiterDAbord;
+
+  /// No description provided for @derniereActivite.
+  ///
+  /// In fr, this message translates to:
+  /// **'Dernière activité'**
+  String get derniereActivite;
+
+  /// No description provided for @inscriptionLaPlusRecente.
+  ///
+  /// In fr, this message translates to:
+  /// **'Inscription la plus récente'**
+  String get inscriptionLaPlusRecente;
+
+  /// No description provided for @fiabiliteLaPlusBasse.
+  ///
+  /// In fr, this message translates to:
+  /// **'Fiabilité la plus basse'**
+  String get fiabiliteLaPlusBasse;
+
+  /// No description provided for @nomAZ.
+  ///
+  /// In fr, this message translates to:
+  /// **'Nom (A → Z)'**
+  String get nomAZ;
+
+  /// No description provided for @actif.
+  ///
+  /// In fr, this message translates to:
+  /// **'Actif'**
+  String get actif;
+
+  /// No description provided for @piecesVerifiees.
+  ///
+  /// In fr, this message translates to:
+  /// **'Pièces vérifiées · {p0}'**
+  String piecesVerifiees(Object p0);
+
+  /// No description provided for @verifie3.
+  ///
+  /// In fr, this message translates to:
+  /// **'{p0} vérifié'**
+  String verifie3(Object p0);
+
+  /// No description provided for @verifications2.
+  ///
+  /// In fr, this message translates to:
+  /// **'Vérifications'**
+  String get verifications2;
+
+  /// No description provided for @aucuneDemandeEnAttente.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucune demande en attente'**
+  String get aucuneDemandeEnAttente;
+
+  /// No description provided for @demandesLaPlusAncienne.
+  ///
+  /// In fr, this message translates to:
+  /// **'{p0} demandes · la plus ancienne : {p1}'**
+  String demandesLaPlusAncienne(Object p0, Object p1);
+
+  /// No description provided for @typeDeDemande.
+  ///
+  /// In fr, this message translates to:
+  /// **'Type de demande'**
+  String get typeDeDemande;
+
+  /// No description provided for @coachs.
+  ///
+  /// In fr, this message translates to:
+  /// **'Coachs'**
+  String get coachs;
+
+  /// No description provided for @traitees.
+  ///
+  /// In fr, this message translates to:
+  /// **'Traitées'**
+  String get traitees;
+
+  /// No description provided for @rienAVerifierPourL.
+  ///
+  /// In fr, this message translates to:
+  /// **'Rien à vérifier pour l’instant'**
+  String get rienAVerifierPourL;
+
+  /// No description provided for @traiteesCetteSemaine.
+  ///
+  /// In fr, this message translates to:
+  /// **'Traitées cette semaine'**
+  String get traiteesCetteSemaine;
+
+  /// No description provided for @envoye2.
+  ///
+  /// In fr, this message translates to:
+  /// **'Envoyé {p0}'**
+  String envoye2(Object p0);
+
+  /// No description provided for @illisible.
+  ///
+  /// In fr, this message translates to:
+  /// **'Illisible'**
+  String get illisible;
+
+  /// No description provided for @ouvrir.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ouvrir'**
+  String get ouvrir;
+
+  /// No description provided for @demanderUnePhotoNette.
+  ///
+  /// In fr, this message translates to:
+  /// **'Demander une photo nette'**
+  String get demanderUnePhotoNette;
+
+  /// No description provided for @refuserLaDemande.
+  ///
+  /// In fr, this message translates to:
+  /// **'Refuser la demande'**
+  String get refuserLaDemande;
+
+  /// No description provided for @approuver.
+  ///
+  /// In fr, this message translates to:
+  /// **'Approuver'**
+  String get approuver;
+
+  /// No description provided for @adminChangerDeRole.
+  ///
+  /// In fr, this message translates to:
+  /// **'{p0}, admin. Changer de rôle'**
+  String adminChangerDeRole(Object p0);
+
+  /// No description provided for @vue.
+  ///
+  /// In fr, this message translates to:
+  /// **'Vue'**
+  String get vue;
+
+  /// No description provided for @scoreIa.
+  ///
+  /// In fr, this message translates to:
+  /// **'Score IA {p0}, {p1}'**
+  String scoreIa(Object p0, Object p1);
+
+  /// No description provided for @adminMatchup.
+  ///
+  /// In fr, this message translates to:
+  /// **'Admin MatchUp'**
+  String get adminMatchup;
+
+  /// No description provided for @review.
+  ///
+  /// In fr, this message translates to:
+  /// **'?review={p0}'**
+  String review(Object p0);
+
+  /// No description provided for @auTotal.
+  ///
+  /// In fr, this message translates to:
+  /// **'au total'**
+  String get auTotal;
+
+  /// No description provided for @duTotal.
+  ///
+  /// In fr, this message translates to:
+  /// **'du total'**
+  String get duTotal;
+
+  /// No description provided for @partText2.
+  ///
+  /// In fr, this message translates to:
+  /// **'Part'**
+  String get partText2;
+
+  /// No description provided for @valeur.
+  ///
+  /// In fr, this message translates to:
+  /// **'Valeur'**
+  String get valeur;
+
+  /// No description provided for @categorie.
+  ///
+  /// In fr, this message translates to:
+  /// **'Catégorie'**
+  String get categorie;
 }
 
 class _AppLocalizationsDelegate

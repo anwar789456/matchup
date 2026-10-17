@@ -196,11 +196,13 @@ Future<void> showRoleSwitcher(BuildContext context, {String current = 'player'})
       pending: 1,
       semanticLabel: l10n.passerEnProprietaireDeTerrain,
     ),
+    MuRole(id: 'admin', name: l10n.adminMatchup, icon: PhosphorIcons.shieldCheck()),
   ],
   onChanged: (r) {
     if (r.id == current) return;
     router.go(switch (r.id) {
       'owner' => Routes.ownerToday,
+      'admin' => Routes.adminOverview,
       _ => Routes.home,
     });
   },

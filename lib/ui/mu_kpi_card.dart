@@ -94,16 +94,22 @@ class MuKpiCard extends StatelessWidget {
           children: [
             Text(label, style: MuType.label.copyWith(color: c.textSecondary)),
             const SizedBox(height: MuSpace.s2),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.baseline,
-              textBaseline: TextBaseline.alphabetic,
-              children: [
-                Text(value, style: MuType.numXl.copyWith(color: c.text)),
-                if (unit != null) ...[
-                  const SizedBox(width: MuSpace.s1),
-                  Text(unit!, style: MuType.numM.copyWith(color: c.textSecondary)),
+            // Half-width cards on a 360 phone: the number shrinks rather than overflow.
+            FittedBox(
+              fit: BoxFit.scaleDown,
+              alignment: AlignmentDirectional.centerStart,
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.baseline,
+                textBaseline: TextBaseline.alphabetic,
+                children: [
+                  Text(value, style: MuType.numXl.copyWith(color: c.text)),
+                  if (unit != null) ...[
+                    const SizedBox(width: MuSpace.s1),
+                    Text(unit!, style: MuType.numM.copyWith(color: c.textSecondary)),
+                  ],
                 ],
-              ],
+              ),
             ),
             const SizedBox(height: MuSpace.s2),
             change ??

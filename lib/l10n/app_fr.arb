@@ -8140,5 +8140,687 @@
   "priveePaye": "Privée · payé",
   "voirLeGraphique": "Voir le graphique",
   "voirLeTableau": "Voir le tableau",
-  "datesAConfirmer": " · dates à confirmer"
+  "datesAConfirmer": " · dates à confirmer",
+  "risqueDeChurn": "Risque de churn",
+  "adminFinanceAbonnesPremium": "Admin · Finance · abonnés Premium",
+  "retourAFinance": "Retour à Finance",
+  "misAJour": "Mis à jour {p0}",
+  "@misAJour": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "abonnesPourraientPartir": "{p0} abonnés pourraient partir",
+  "@abonnesPourraientPartir": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "calculeChaqueNuitSurJours": "Calculé chaque nuit sur 60 jours d’activité : matchs, paiements, avantages utilisés. L’IA propose, tu décides : rien n’est envoyé sans toi.",
+  "parMoisEnJeu": "par mois en jeu",
+  "abonnesPremium": "abonnés Premium",
+  "niveauDeRisque": "Niveau de risque",
+  "eleve": "Élevé",
+  "ignores": "Ignorés",
+  "personneDansCetteCategorie": "Personne dans cette catégorie",
+  "lIaPeutSeTromper2": "L’IA peut se tromper. « Préparer l’offre » ouvre un aperçu de l’email : tu le relis avant l’envoi. Tes votes améliorent le modèle.",
+  "risqueEleve": "Risque élevé",
+  "risqueMoyen": "Risque moyen",
+  "matchsParSemaineSem": "Matchs par semaine · 12 sem.",
+  "finance": "Finance",
+  "auToutesLesVilles": "Au {p0} · toutes les villes",
+  "@auToutesLesVilles": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "encaisseJours": "Encaissé · 7 jours",
+  "vsJoursAvant": "vs 7 jours avant",
+  "rembourseJours": "Remboursé · 7 jours",
+  "aValider": "À valider",
+  "versementsEtRemboursements": "Versements et remboursements",
+  "versementsRemboursements": "{p0} versements · {p1} remboursements",
+  "@versementsRemboursements": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      },
+      "p1": {
+        "type": "Object"
+      }
+    }
+  },
+  "abonnesARisque": "{p0} abonnés à risque",
+  "@abonnesARisque": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "abonnesPremiumMois": "{p0} abonnés Premium · {p1} {p2}/mois",
+  "@abonnesPremiumMois": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      },
+      "p1": {
+        "type": "Object"
+      },
+      "p2": {
+        "type": "Object"
+      }
+    }
+  },
+  "encaissementsJours": "Encaissements · 30 jours",
+  "enDuAu": "En {p0} · du {p1} au {p2}",
+  "@enDuAu": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      },
+      "p1": {
+        "type": "Object"
+      },
+      "p2": {
+        "type": "Object"
+      }
+    }
+  },
+  "encaisse": "Encaissé",
+  "dOuVientLArgent": "D’où vient l’argent",
+  "derniersJoursEncaisses": "7 derniers jours · {p0} encaissés",
+  "@derniersJoursEncaisses": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "encaisses": "{p0} encaissés",
+  "@encaisses": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "source": "Source",
+  "transactions": "Transactions",
+  "exporter": "Exporter",
+  "rechercherUneTransaction": "Rechercher une transaction",
+  "nomTerrainReferenceMu": "Nom, terrain, référence MU-…",
+  "typeDeTransaction": "Type de transaction",
+  "abonnements": "Abonnements",
+  "aucuneTransactionTrouvee": "Aucune transaction trouvée",
+  "scoreIaDecroissant": "Score IA décroissant",
+  "plusRecentsDAbord": "Plus récents d’abord",
+  "trierLesContenus": "Trier les contenus",
+  "ordreDeLaFile": "Ordre de la file",
+  "moderation": "Modération",
+  "aucunSignalementOuvert": "Aucun signalement ouvert",
+  "ouvertsLePlusAncien": "{p0} ouverts · le plus ancien : {p1}",
+  "@ouvertsLePlusAncien": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      },
+      "p1": {
+        "type": "Object"
+      }
+    }
+  },
+  "rechercherUnContenu": "Rechercher un contenu",
+  "motAuteurDiscussion": "Mot, auteur, discussion…",
+  "typeDeContenu": "Type de contenu",
+  "commentaires": "Commentaires",
+  "posts": "Posts",
+  "profils": "Profils",
+  "aucunContenuARevoir": "Aucun contenu à revoir",
+  "contenusSignales": "Contenus signalés",
+  "leScoreIaTrieLa": "Le score IA trie la file : il ne masque ni ne supprime rien seul. C’est tout pour l’instant · 41 signalements traités cette semaine.",
+  "vueDEnsemble": "Vue d’ensemble",
+  "bonjour2": "Bonjour {p0} · {p1}",
+  "@bonjour2": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      },
+      "p1": {
+        "type": "Object"
+      }
+    }
+  },
+  "utilisateurs": "Utilisateurs",
+  "vsSemDerniere": "vs sem. dernière",
+  "terrainsActifs2": "Terrains actifs",
+  "aTraiter": "À traiter",
+  "elements": "{p0} éléments",
+  "@elements": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "signalementsOuverts": "Signalements ouverts",
+  "scoreIaEleve": "{p0} score IA élevé",
+  "@scoreIaEleve": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "verifications": "{p0} vérifications",
+  "@verifications": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "verificationsEnAttente": "Vérifications en attente",
+  "reservationsParSport": "Réservations par sport",
+  "matchupDerniersJoursReservations": "MatchUp · 7 derniers jours · {p0} réservations",
+  "@matchupDerniersJoursReservations": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "reservationsAuTotal": "réservations au total",
+  "signalementsRecents": "Signalements récents",
+  "aucuneToxiciteAvisConteste": "Aucune toxicité · avis contesté",
+  "leScoreIaAideA": "Le score IA aide à trier. Rien n’est supprimé sans ta décision.",
+  "abonnesPremiumARisque": "{p0} abonnés Premium à risque",
+  "@abonnesPremiumARisque": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "abonnesPremium2": "{p0} abonnés Premium",
+  "@abonnesPremium2": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "cetteSemaineEssaisEnCours": "{p0} cette semaine · {p1} essais en cours",
+  "@cetteSemaineEssaisEnCours": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      },
+      "p1": {
+        "type": "Object"
+      }
+    }
+  },
+  "commentaire": "Commentaire · {p0}",
+  "@commentaire": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "vendsCramponsPasCher": "« Vends crampons pas cher »",
+  "franchementTEsNul": "« Franchement t’es nul… »",
+  "panierCasseDepuisDesSemaines": "« Panier cassé depuis des semaines »",
+  "validerVersements": "Valider {p0} versements ?",
+  "@validerVersements": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "validerLeVersement": "Valider le versement ?",
+  "lesVirementsPartentLunOct": "Les virements partent lun. 19 oct. Ils ne peuvent plus être annulés ensuite.",
+  "vers2": "{p0} vers {p1}.",
+  "@vers2": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      },
+      "p1": {
+        "type": "Object"
+      }
+    }
+  },
+  "pasMaintenant": "Pas maintenant",
+  "validerVersements2": "Valider {p0} versements",
+  "@validerVersements2": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "validerLeVersement2": "Valider le versement",
+  "versementsValides": "{p0} versements validés",
+  "@versementsValides": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "versementValide": "Versement validé",
+  "remboursesA": "{p0} remboursés à {p1}",
+  "@remboursesA": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      },
+      "p1": {
+        "type": "Object"
+      }
+    }
+  },
+  "adminFinance": "Admin · Finance",
+  "valides": "Validés",
+  "versementDuLunOctPour": "Versement du lun. 19 oct. pour la semaine du 12 au 18 oct. L’argent ne part qu’après ta validation.",
+  "toutSelectionner": "Tout sélectionner",
+  "selectionnes": "{p0} sélectionnés",
+  "@selectionnes": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "selectionne2": "{p0} sélectionné",
+  "@selectionne2": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "dernierLunOctArenaFive": "Dernier : lun. 12 oct. · Arena Five · 1 250 DT",
+  "demandes": "{p0} demandes · {p1}",
+  "@demandes": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      },
+      "p1": {
+        "type": "Object"
+      }
+    }
+  },
+  "aucuneDemandeDeRemboursement": "Aucune demande de remboursement",
+  "unRefusDemandeUneRaison": "Un refus demande une raison : la personne la reçoit par email et peut contacter le support.",
+  "selectionner": "Sélectionner {p0}",
+  "@selectionner": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "validePartLunOct": "Validé · part lun. 19 oct.",
+  "rembourser": "Rembourser {p0}",
+  "@rembourser": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "approuverEtRepublier": "Approuver et republier",
+  "supprimerLeCommentaire": "Supprimer le commentaire",
+  "supprimerEtAvertirLAuteur": "Supprimer et avertir l’auteur",
+  "suspendreLAuteur": "Suspendre l’auteur",
+  "supprimerEtAvertir": "Supprimer et avertir",
+  "choisirLaDuree": "Choisir la durée",
+  "leCommentaireReapparaitPourTout": "Le commentaire réapparaît pour tout le monde et les 3 signalements sont classés.",
+  "ilDisparaitPourToutLe": "Il disparaît pour tout le monde. {p0} reçoit la raison par notification.",
+  "@ilDisparaitPourToutLe": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "supprimePourToutLeMonde": "Supprimé pour tout le monde, et 1er avertissement pour {p0}. Au 3e : suspension de 7 jours.",
+  "@supprimePourToutLeMonde": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "leCommentaireEstSupprimeTu": "Le commentaire est supprimé. Tu choisis ensuite la durée et la raison de la suspension.",
+  "supprimerEtAvertir2": "Supprimer et avertir {p0} ?",
+  "@supprimerEtAvertir2": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "supprimerLeCommentaire2": "Supprimer le commentaire ?",
+  "tuNePourrasPasLe": "Tu ne pourras pas le republier ensuite.",
+  "commentaireRepublie": "Commentaire republié",
+  "commentaireSupprimeAverti": "Commentaire supprimé · {p0} averti",
+  "@commentaireSupprimeAverti": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "commentaireSupprime": "Commentaire supprimé",
+  "revoirLeCommentaire": "Revoir le commentaire",
+  "passageReleveParLIa": "{p0} (passage relevé par l’IA)",
+  "@passageReleveParLIa": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "taDecision": "Ta décision",
+  "estBanni": "{p0} est banni",
+  "@estBanni": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "estSuspendu": "{p0} est suspendu",
+  "@estSuspendu": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "sesPartiesAVenirSont": " Ses {p0} parties à venir sont libérées et {p1} remboursés sur son solde.",
+  "@sesPartiesAVenirSont": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      },
+      "p1": {
+        "type": "Object"
+      }
+    }
+  },
+  "compteFermeSansReinscriptionPossible": "Compte fermé, sans réinscription possible avec ce numéro.{p0}",
+  "@compteFermeSansReinscriptionPossible": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "jusquAuNiPartieNi": "Jusqu’au {p0} · {p1} : ni partie, ni réservation.{p2}",
+  "@jusquAuNiPartieNi": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      },
+      "p1": {
+        "type": "Object"
+      },
+      "p2": {
+        "type": "Object"
+      }
+    }
+  },
+  "suspendreH": "Suspendre 24 h",
+  "suspendreJours": "Suspendre 7 jours",
+  "suspendreJours2": "Suspendre 30 jours",
+  "bannirDefinitivement": "Bannir définitivement",
+  "bannir": "Bannir {p0} ?",
+  "@bannir": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "suspendre": "Suspendre {p0} ?",
+  "@suspendre": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "ilEstPrevenuParEmail": "Il est prévenu par email avec ta raison. Seul un admin pourra rouvrir le compte, après un recours.",
+  "ilEstPrevenuParEmail2": "Il est prévenu par email avec ta raison. Tu peux lever la suspension à tout moment.",
+  "definitif": "Définitif",
+  "messageA": "Message à {p0}",
+  "@messageA": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "garderLeCompteActif": "Garder le compte actif",
+  "ficheUtilisateur": "Fiche utilisateur",
+  "admin": "Admin",
+  "adminId": "Admin · ID {p0}",
+  "@adminId": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "retourAuxUtilisateurs": "Retour aux utilisateurs",
+  "avertir": "Avertir",
+  "suspendre2": "Suspendre",
+  "banni": "Banni",
+  "suspendu": "Suspendu",
+  "signale": "Signalé",
+  "inscrit": "Inscrit",
+  "signalementOuvert": "Signalement ouvert",
+  "sur5": "1 sur 1",
+  "signalePar": "Signalé par {p0}",
+  "@signalePar": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "classer": "Classer",
+  "activiteRecente": "Activité récente",
+  "sanctions": "Sanctions",
+  "banniDefinitivement": "Banni définitivement",
+  "suspenduJusquAu": "Suspendu jusqu’au {p0} · {p1}",
+  "@suspenduJusquAu": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      },
+      "p1": {
+        "type": "Object"
+      }
+    }
+  },
+  "aucuneSanction": "Aucune sanction",
+  "niAvertissementNiSuspensionDepuis": "Ni avertissement ni suspension depuis son inscription.",
+  "rechercherUnUtilisateur": "Rechercher un utilisateur",
+  "nomEmailTelephone": "Nom, email, téléphone…",
+  "role": "Rôle",
+  "signales": "Signalés",
+  "nouveauxJours": "Nouveaux · 7 jours",
+  "aucunUtilisateurTrouve": "Aucun utilisateur trouvé",
+  "surFaisDefilerPourCharger": "{p0} sur {p1} · fais défiler pour charger la suite",
+  "@surFaisDefilerPourCharger": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      },
+      "p1": {
+        "type": "Object"
+      }
+    }
+  },
+  "selectionnerPlusieursUtilisateurs": "Sélectionner plusieurs utilisateurs",
+  "toutSelectionnerSurCettePage": "Tout sélectionner sur cette page",
+  "selectionnes2": " sélectionnés",
+  "selectionne3": " sélectionné",
+  "actionsSurLaSelection": "Actions sur la sélection",
+  "suspendre3": "Suspendre ({p0})",
+  "@suspendre3": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "suspendreComptes": "Suspendre {p0} comptes ?",
+  "@suspendreComptes": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "chaqueCompteEstPrevenuPar": "Chaque compte est prévenu par email. Tu peux lever la suspension à tout moment.",
+  "jusquAuNiPartieNi2": "Jusqu’au {p0} · {p1} : ni partie, ni réservation, ni publication pour {p2}.",
+  "@jusquAuNiPartieNi2": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      },
+      "p1": {
+        "type": "Object"
+      },
+      "p2": {
+        "type": "Object"
+      }
+    }
+  },
+  "garderLesComptesActifs": "Garder les comptes actifs",
+  "comptesSuspendusJours": "{p0} comptes suspendus 7 jours",
+  "@comptesSuspendusJours": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "suspenduJours": "{p0} suspendu 7 jours",
+  "@suspenduJours": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "trierLesUtilisateurs": "Trier les utilisateurs",
+  "ordreDeLaListe": "Ordre de la liste",
+  "signalesPuisVerificationsEnAttente": "Signalés, puis vérifications en attente.",
+  "filtrerParRole": "Filtrer par rôle",
+  "tousLesRoles": "Tous les rôles",
+  "filtrerParStatut": "Filtrer par statut",
+  "tousLesStatuts": "Tous les statuts",
+  "aTraiterDAbord": "À traiter d’abord",
+  "derniereActivite": "Dernière activité",
+  "inscriptionLaPlusRecente": "Inscription la plus récente",
+  "fiabiliteLaPlusBasse": "Fiabilité la plus basse",
+  "nomAZ": "Nom (A → Z)",
+  "actif": "Actif",
+  "piecesVerifiees": "Pièces vérifiées · {p0}",
+  "@piecesVerifiees": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "verifie3": "{p0} vérifié",
+  "@verifie3": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "verifications2": "Vérifications",
+  "aucuneDemandeEnAttente": "Aucune demande en attente",
+  "demandesLaPlusAncienne": "{p0} demandes · la plus ancienne : {p1}",
+  "@demandesLaPlusAncienne": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      },
+      "p1": {
+        "type": "Object"
+      }
+    }
+  },
+  "typeDeDemande": "Type de demande",
+  "coachs": "Coachs",
+  "traitees": "Traitées",
+  "rienAVerifierPourL": "Rien à vérifier pour l’instant",
+  "traiteesCetteSemaine": "Traitées cette semaine",
+  "envoye2": "Envoyé {p0}",
+  "@envoye2": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "illisible": "Illisible",
+  "ouvrir": "Ouvrir",
+  "demanderUnePhotoNette": "Demander une photo nette",
+  "refuserLaDemande": "Refuser la demande",
+  "approuver": "Approuver",
+  "adminChangerDeRole": "{p0}, admin. Changer de rôle",
+  "@adminChangerDeRole": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "vue": "Vue",
+  "scoreIa": "Score IA {p0}, {p1}",
+  "@scoreIa": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      },
+      "p1": {
+        "type": "Object"
+      }
+    }
+  },
+  "adminMatchup": "Admin MatchUp",
+  "review": "?review={p0}",
+  "@review": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "auTotal": "au total",
+  "duTotal": "du total",
+  "partText2": "Part",
+  "valeur": "Valeur",
+  "categorie": "Catégorie"
 }

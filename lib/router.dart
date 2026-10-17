@@ -3,6 +3,18 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import 'features/admin/screens/churn_screen.dart';
+import 'features/admin/screens/finance_screen.dart';
+import 'features/admin/screens/moderation_screen.dart';
+import 'features/admin/screens/overview_screen.dart';
+import 'features/admin/screens/payouts_screen.dart';
+import 'features/admin/screens/review_screen.dart';
+import 'features/admin/screens/suspend_screen.dart';
+import 'features/admin/screens/user_screen.dart';
+import 'features/admin/screens/users_screen.dart';
+import 'features/admin/screens/verifications_screen.dart';
+import 'features/admin/widgets/admin_shell.dart';
+import 'features/admin/widgets/admin_widgets.dart';
 import 'features/auth/screens/account_locked_screen.dart';
 import 'features/auth/screens/forgot_password_screen.dart';
 import 'features/auth/screens/login_screen.dart';
@@ -218,6 +230,18 @@ abstract final class Routes {
   static const ownerReviews = '/owner/reviews'; // OWN-19
   static const ownerCheckInResult = '/owner/checkin/result'; // OWN-21 / 22 / 23 (extra: CheckInResult)
   static const ownerRevenue = '/owner/revenue'; // OWN-25
+  // Admin space (phase 14): its own shell, Vue · Utilisateurs · Vérifications · Modération · Finance.
+  static const adminOverview = '/admin/overview'; // ADM-01
+  static const adminUsers = '/admin/users'; // ADM-02
+  static const adminVerifications = '/admin/verifications'; // ADM-05
+  static const adminModeration = '/admin/moderation'; // ADM-09
+  static const adminFinance = '/admin/finance'; // ADM-06
+  static String adminUser(String id) => '/admin/user/$id'; // ADM-03
+  static String adminSuspend(String id, {String? review}) =>
+      '/admin/user/$id/suspend${review == null ? '' : l10n.review(review)}'; // ADM-04
+  static const adminPayouts = '/admin/payouts'; // ADM-07
+  static const adminChurn = '/admin/churn'; // ADM-08
+  static String adminReview(String id) => '/admin/review/$id'; // ADM-10
   static const coachProfile = '/coa/profile'; // COA-01
   static const coachCertification = '/coa/certification'; // COA-02
   static const coachDashboard = '/coa/dashboard'; // COA-03
@@ -403,6 +427,58 @@ final routerProvider = Provider<GoRouter>((ref) {
       _root(Routes.ownerClients, (_) => const OwnerClientsScreen()),
       _root(Routes.ownerReviews, (_) => const OwnerReviewsScreen()),
       _root(Routes.ownerRevenue, (_) => const OwnerRevenueScreen()),
+      StatefulShellRoute.indexedStack(
+        builder: (context, state, shell) => AdminShell(shell: shell),
+        branches: [
+          StatefulShellBranch(
+            routes: [_route(Routes.adminOverview, (_) => const AdminOverviewScreen())],
+          ),
+          StatefulShellBranch(
+            routes: [_route(Routes.adminUsers, (_) => const AdminUsersScreen())],
+          ),
+          StatefulShellBranch(
+            routes: [
+              _route(Routes.adminVerifications, (_) => const AdminVerificationsScreen()),
+            ],
+          ),
+          StatefulShellBranch(
+            routes: [_route(Routes.adminModeration, (_) => const AdminModerationScreen())],
+          ),
+          StatefulShellBranch(
+            routes: [_route(Routes.adminFinance, (_) => const AdminFinanceScreen())],
+          ),
+        ],
+      ),
+      GoRoute(
+        path: '/admin/user/:id',
+        parentNavigatorKey: _rootKey,
+        builder: (context, state) => AdminUserScreen(userId: state.pathParameters['id']!),
+        routes: [
+          GoRoute(
+            path: 'suspend',
+            parentNavigatorKey: _rootKey,
+            pageBuilder: (context, state) => adminOverlayPage(
+              context,
+              state,
+              AdminSuspendScreen(
+                userId: state.pathParameters['id']!,
+                reviewId: state.uri.queryParameters['review'],
+              ),
+            ),
+          ),
+        ],
+      ),
+      _root(Routes.adminPayouts, (_) => const AdminPayoutsScreen()),
+      _root(Routes.adminChurn, (_) => const AdminChurnScreen()),
+      GoRoute(
+        path: '/admin/review/:id',
+        parentNavigatorKey: _rootKey,
+        pageBuilder: (context, state) => adminOverlayPage(
+          context,
+          state,
+          AdminReviewScreen(itemId: state.pathParameters['id']!),
+        ),
+      ),
       GoRoute(
         path: '/game/:id',
         parentNavigatorKey: _rootKey,

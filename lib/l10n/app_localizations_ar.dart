@@ -9843,4 +9843,785 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get datesAConfirmer => ' · dates à confirmer';
+
+  @override
+  String get risqueDeChurn => 'Risque de churn';
+
+  @override
+  String get adminFinanceAbonnesPremium => 'Admin · Finance · abonnés Premium';
+
+  @override
+  String get retourAFinance => 'Retour à Finance';
+
+  @override
+  String misAJour(Object p0) {
+    return 'Mis à jour $p0';
+  }
+
+  @override
+  String abonnesPourraientPartir(Object p0) {
+    return '$p0 abonnés pourraient partir';
+  }
+
+  @override
+  String get calculeChaqueNuitSurJours =>
+      'Calculé chaque nuit sur 60 jours d’activité : matchs, paiements, avantages utilisés. L’IA propose, tu décides : rien n’est envoyé sans toi.';
+
+  @override
+  String get parMoisEnJeu => 'par mois en jeu';
+
+  @override
+  String get abonnesPremium => 'abonnés Premium';
+
+  @override
+  String get niveauDeRisque => 'Niveau de risque';
+
+  @override
+  String get eleve => 'Élevé';
+
+  @override
+  String get ignores => 'Ignorés';
+
+  @override
+  String get personneDansCetteCategorie => 'Personne dans cette catégorie';
+
+  @override
+  String get lIaPeutSeTromper2 =>
+      'L’IA peut se tromper. « Préparer l’offre » ouvre un aperçu de l’email : tu le relis avant l’envoi. Tes votes améliorent le modèle.';
+
+  @override
+  String get risqueEleve => 'Risque élevé';
+
+  @override
+  String get risqueMoyen => 'Risque moyen';
+
+  @override
+  String get matchsParSemaineSem => 'Matchs par semaine · 12 sem.';
+
+  @override
+  String get finance => 'Finance';
+
+  @override
+  String auToutesLesVilles(Object p0) {
+    return 'Au $p0 · toutes les villes';
+  }
+
+  @override
+  String get encaisseJours => 'Encaissé · 7 jours';
+
+  @override
+  String get vsJoursAvant => 'vs 7 jours avant';
+
+  @override
+  String get rembourseJours => 'Remboursé · 7 jours';
+
+  @override
+  String get aValider => 'À valider';
+
+  @override
+  String get versementsEtRemboursements => 'Versements et remboursements';
+
+  @override
+  String versementsRemboursements(Object p0, Object p1) {
+    return '$p0 versements · $p1 remboursements';
+  }
+
+  @override
+  String abonnesARisque(Object p0) {
+    return '$p0 abonnés à risque';
+  }
+
+  @override
+  String abonnesPremiumMois(Object p0, Object p1, Object p2) {
+    return '$p0 abonnés Premium · $p1 $p2/mois';
+  }
+
+  @override
+  String get encaissementsJours => 'Encaissements · 30 jours';
+
+  @override
+  String enDuAu(Object p0, Object p1, Object p2) {
+    return 'En $p0 · du $p1 au $p2';
+  }
+
+  @override
+  String get encaisse => 'Encaissé';
+
+  @override
+  String get dOuVientLArgent => 'D’où vient l’argent';
+
+  @override
+  String derniersJoursEncaisses(Object p0) {
+    return '7 derniers jours · $p0 encaissés';
+  }
+
+  @override
+  String encaisses(Object p0) {
+    return '$p0 encaissés';
+  }
+
+  @override
+  String get source => 'Source';
+
+  @override
+  String get transactions => 'Transactions';
+
+  @override
+  String get exporter => 'Exporter';
+
+  @override
+  String get rechercherUneTransaction => 'Rechercher une transaction';
+
+  @override
+  String get nomTerrainReferenceMu => 'Nom, terrain, référence MU-…';
+
+  @override
+  String get typeDeTransaction => 'Type de transaction';
+
+  @override
+  String get abonnements => 'Abonnements';
+
+  @override
+  String get aucuneTransactionTrouvee => 'Aucune transaction trouvée';
+
+  @override
+  String get scoreIaDecroissant => 'Score IA décroissant';
+
+  @override
+  String get plusRecentsDAbord => 'Plus récents d’abord';
+
+  @override
+  String get trierLesContenus => 'Trier les contenus';
+
+  @override
+  String get ordreDeLaFile => 'Ordre de la file';
+
+  @override
+  String get moderation => 'Modération';
+
+  @override
+  String get aucunSignalementOuvert => 'Aucun signalement ouvert';
+
+  @override
+  String ouvertsLePlusAncien(Object p0, Object p1) {
+    return '$p0 ouverts · le plus ancien : $p1';
+  }
+
+  @override
+  String get rechercherUnContenu => 'Rechercher un contenu';
+
+  @override
+  String get motAuteurDiscussion => 'Mot, auteur, discussion…';
+
+  @override
+  String get typeDeContenu => 'Type de contenu';
+
+  @override
+  String get commentaires => 'Commentaires';
+
+  @override
+  String get posts => 'Posts';
+
+  @override
+  String get profils => 'Profils';
+
+  @override
+  String get aucunContenuARevoir => 'Aucun contenu à revoir';
+
+  @override
+  String get contenusSignales => 'Contenus signalés';
+
+  @override
+  String get leScoreIaTrieLa =>
+      'Le score IA trie la file : il ne masque ni ne supprime rien seul. C’est tout pour l’instant · 41 signalements traités cette semaine.';
+
+  @override
+  String get vueDEnsemble => 'Vue d’ensemble';
+
+  @override
+  String bonjour2(Object p0, Object p1) {
+    return 'Bonjour $p0 · $p1';
+  }
+
+  @override
+  String get utilisateurs => 'Utilisateurs';
+
+  @override
+  String get vsSemDerniere => 'vs sem. dernière';
+
+  @override
+  String get terrainsActifs2 => 'Terrains actifs';
+
+  @override
+  String get aTraiter => 'À traiter';
+
+  @override
+  String elements(Object p0) {
+    return '$p0 éléments';
+  }
+
+  @override
+  String get signalementsOuverts => 'Signalements ouverts';
+
+  @override
+  String scoreIaEleve(Object p0) {
+    return '$p0 score IA élevé';
+  }
+
+  @override
+  String verifications(Object p0) {
+    return '$p0 vérifications';
+  }
+
+  @override
+  String get verificationsEnAttente => 'Vérifications en attente';
+
+  @override
+  String get reservationsParSport => 'Réservations par sport';
+
+  @override
+  String matchupDerniersJoursReservations(Object p0) {
+    return 'MatchUp · 7 derniers jours · $p0 réservations';
+  }
+
+  @override
+  String get reservationsAuTotal => 'réservations au total';
+
+  @override
+  String get signalementsRecents => 'Signalements récents';
+
+  @override
+  String get aucuneToxiciteAvisConteste => 'Aucune toxicité · avis contesté';
+
+  @override
+  String get leScoreIaAideA =>
+      'Le score IA aide à trier. Rien n’est supprimé sans ta décision.';
+
+  @override
+  String abonnesPremiumARisque(Object p0) {
+    return '$p0 abonnés Premium à risque';
+  }
+
+  @override
+  String abonnesPremium2(Object p0) {
+    return '$p0 abonnés Premium';
+  }
+
+  @override
+  String cetteSemaineEssaisEnCours(Object p0, Object p1) {
+    return '$p0 cette semaine · $p1 essais en cours';
+  }
+
+  @override
+  String commentaire(Object p0) {
+    return 'Commentaire · $p0';
+  }
+
+  @override
+  String get vendsCramponsPasCher => '« Vends crampons pas cher »';
+
+  @override
+  String get franchementTEsNul => '« Franchement t’es nul… »';
+
+  @override
+  String get panierCasseDepuisDesSemaines =>
+      '« Panier cassé depuis des semaines »';
+
+  @override
+  String validerVersements(Object p0) {
+    return 'Valider $p0 versements ?';
+  }
+
+  @override
+  String get validerLeVersement => 'Valider le versement ?';
+
+  @override
+  String get lesVirementsPartentLunOct =>
+      'Les virements partent lun. 19 oct. Ils ne peuvent plus être annulés ensuite.';
+
+  @override
+  String vers2(Object p0, Object p1) {
+    return '$p0 vers $p1.';
+  }
+
+  @override
+  String get pasMaintenant => 'Pas maintenant';
+
+  @override
+  String validerVersements2(Object p0) {
+    return 'Valider $p0 versements';
+  }
+
+  @override
+  String get validerLeVersement2 => 'Valider le versement';
+
+  @override
+  String versementsValides(Object p0) {
+    return '$p0 versements validés';
+  }
+
+  @override
+  String get versementValide => 'Versement validé';
+
+  @override
+  String remboursesA(Object p0, Object p1) {
+    return '$p0 remboursés à $p1';
+  }
+
+  @override
+  String get adminFinance => 'Admin · Finance';
+
+  @override
+  String get valides => 'Validés';
+
+  @override
+  String get versementDuLunOctPour =>
+      'Versement du lun. 19 oct. pour la semaine du 12 au 18 oct. L’argent ne part qu’après ta validation.';
+
+  @override
+  String get toutSelectionner => 'Tout sélectionner';
+
+  @override
+  String selectionnes(Object p0) {
+    return '$p0 sélectionnés';
+  }
+
+  @override
+  String selectionne2(Object p0) {
+    return '$p0 sélectionné';
+  }
+
+  @override
+  String get dernierLunOctArenaFive =>
+      'Dernier : lun. 12 oct. · Arena Five · 1 250 DT';
+
+  @override
+  String demandes(Object p0, Object p1) {
+    return '$p0 demandes · $p1';
+  }
+
+  @override
+  String get aucuneDemandeDeRemboursement => 'Aucune demande de remboursement';
+
+  @override
+  String get unRefusDemandeUneRaison =>
+      'Un refus demande une raison : la personne la reçoit par email et peut contacter le support.';
+
+  @override
+  String selectionner(Object p0) {
+    return 'Sélectionner $p0';
+  }
+
+  @override
+  String get validePartLunOct => 'Validé · part lun. 19 oct.';
+
+  @override
+  String rembourser(Object p0) {
+    return 'Rembourser $p0';
+  }
+
+  @override
+  String get approuverEtRepublier => 'Approuver et republier';
+
+  @override
+  String get supprimerLeCommentaire => 'Supprimer le commentaire';
+
+  @override
+  String get supprimerEtAvertirLAuteur => 'Supprimer et avertir l’auteur';
+
+  @override
+  String get suspendreLAuteur => 'Suspendre l’auteur';
+
+  @override
+  String get supprimerEtAvertir => 'Supprimer et avertir';
+
+  @override
+  String get choisirLaDuree => 'Choisir la durée';
+
+  @override
+  String get leCommentaireReapparaitPourTout =>
+      'Le commentaire réapparaît pour tout le monde et les 3 signalements sont classés.';
+
+  @override
+  String ilDisparaitPourToutLe(Object p0) {
+    return 'Il disparaît pour tout le monde. $p0 reçoit la raison par notification.';
+  }
+
+  @override
+  String supprimePourToutLeMonde(Object p0) {
+    return 'Supprimé pour tout le monde, et 1er avertissement pour $p0. Au 3e : suspension de 7 jours.';
+  }
+
+  @override
+  String get leCommentaireEstSupprimeTu =>
+      'Le commentaire est supprimé. Tu choisis ensuite la durée et la raison de la suspension.';
+
+  @override
+  String supprimerEtAvertir2(Object p0) {
+    return 'Supprimer et avertir $p0 ?';
+  }
+
+  @override
+  String get supprimerLeCommentaire2 => 'Supprimer le commentaire ?';
+
+  @override
+  String get tuNePourrasPasLe => 'Tu ne pourras pas le republier ensuite.';
+
+  @override
+  String get commentaireRepublie => 'Commentaire republié';
+
+  @override
+  String commentaireSupprimeAverti(Object p0) {
+    return 'Commentaire supprimé · $p0 averti';
+  }
+
+  @override
+  String get commentaireSupprime => 'Commentaire supprimé';
+
+  @override
+  String get revoirLeCommentaire => 'Revoir le commentaire';
+
+  @override
+  String passageReleveParLIa(Object p0) {
+    return '$p0 (passage relevé par l’IA)';
+  }
+
+  @override
+  String get taDecision => 'Ta décision';
+
+  @override
+  String estBanni(Object p0) {
+    return '$p0 est banni';
+  }
+
+  @override
+  String estSuspendu(Object p0) {
+    return '$p0 est suspendu';
+  }
+
+  @override
+  String sesPartiesAVenirSont(Object p0, Object p1) {
+    return ' Ses $p0 parties à venir sont libérées et $p1 remboursés sur son solde.';
+  }
+
+  @override
+  String compteFermeSansReinscriptionPossible(Object p0) {
+    return 'Compte fermé, sans réinscription possible avec ce numéro.$p0';
+  }
+
+  @override
+  String jusquAuNiPartieNi(Object p0, Object p1, Object p2) {
+    return 'Jusqu’au $p0 · $p1 : ni partie, ni réservation.$p2';
+  }
+
+  @override
+  String get suspendreH => 'Suspendre 24 h';
+
+  @override
+  String get suspendreJours => 'Suspendre 7 jours';
+
+  @override
+  String get suspendreJours2 => 'Suspendre 30 jours';
+
+  @override
+  String get bannirDefinitivement => 'Bannir définitivement';
+
+  @override
+  String bannir(Object p0) {
+    return 'Bannir $p0 ?';
+  }
+
+  @override
+  String suspendre(Object p0) {
+    return 'Suspendre $p0 ?';
+  }
+
+  @override
+  String get ilEstPrevenuParEmail =>
+      'Il est prévenu par email avec ta raison. Seul un admin pourra rouvrir le compte, après un recours.';
+
+  @override
+  String get ilEstPrevenuParEmail2 =>
+      'Il est prévenu par email avec ta raison. Tu peux lever la suspension à tout moment.';
+
+  @override
+  String get definitif => 'Définitif';
+
+  @override
+  String messageA(Object p0) {
+    return 'Message à $p0';
+  }
+
+  @override
+  String get garderLeCompteActif => 'Garder le compte actif';
+
+  @override
+  String get ficheUtilisateur => 'Fiche utilisateur';
+
+  @override
+  String get admin => 'Admin';
+
+  @override
+  String adminId(Object p0) {
+    return 'Admin · ID $p0';
+  }
+
+  @override
+  String get retourAuxUtilisateurs => 'Retour aux utilisateurs';
+
+  @override
+  String get avertir => 'Avertir';
+
+  @override
+  String get suspendre2 => 'Suspendre';
+
+  @override
+  String get banni => 'Banni';
+
+  @override
+  String get suspendu => 'Suspendu';
+
+  @override
+  String get signale => 'Signalé';
+
+  @override
+  String get inscrit => 'Inscrit';
+
+  @override
+  String get signalementOuvert => 'Signalement ouvert';
+
+  @override
+  String get sur5 => '1 sur 1';
+
+  @override
+  String signalePar(Object p0) {
+    return 'Signalé par $p0';
+  }
+
+  @override
+  String get classer => 'Classer';
+
+  @override
+  String get activiteRecente => 'Activité récente';
+
+  @override
+  String get sanctions => 'Sanctions';
+
+  @override
+  String get banniDefinitivement => 'Banni définitivement';
+
+  @override
+  String suspenduJusquAu(Object p0, Object p1) {
+    return 'Suspendu jusqu’au $p0 · $p1';
+  }
+
+  @override
+  String get aucuneSanction => 'Aucune sanction';
+
+  @override
+  String get niAvertissementNiSuspensionDepuis =>
+      'Ni avertissement ni suspension depuis son inscription.';
+
+  @override
+  String get rechercherUnUtilisateur => 'Rechercher un utilisateur';
+
+  @override
+  String get nomEmailTelephone => 'Nom, email, téléphone…';
+
+  @override
+  String get role => 'Rôle';
+
+  @override
+  String get signales => 'Signalés';
+
+  @override
+  String get nouveauxJours => 'Nouveaux · 7 jours';
+
+  @override
+  String get aucunUtilisateurTrouve => 'Aucun utilisateur trouvé';
+
+  @override
+  String surFaisDefilerPourCharger(Object p0, Object p1) {
+    return '$p0 sur $p1 · fais défiler pour charger la suite';
+  }
+
+  @override
+  String get selectionnerPlusieursUtilisateurs =>
+      'Sélectionner plusieurs utilisateurs';
+
+  @override
+  String get toutSelectionnerSurCettePage => 'Tout sélectionner sur cette page';
+
+  @override
+  String get selectionnes2 => ' sélectionnés';
+
+  @override
+  String get selectionne3 => ' sélectionné';
+
+  @override
+  String get actionsSurLaSelection => 'Actions sur la sélection';
+
+  @override
+  String suspendre3(Object p0) {
+    return 'Suspendre ($p0)';
+  }
+
+  @override
+  String suspendreComptes(Object p0) {
+    return 'Suspendre $p0 comptes ?';
+  }
+
+  @override
+  String get chaqueCompteEstPrevenuPar =>
+      'Chaque compte est prévenu par email. Tu peux lever la suspension à tout moment.';
+
+  @override
+  String jusquAuNiPartieNi2(Object p0, Object p1, Object p2) {
+    return 'Jusqu’au $p0 · $p1 : ni partie, ni réservation, ni publication pour $p2.';
+  }
+
+  @override
+  String get garderLesComptesActifs => 'Garder les comptes actifs';
+
+  @override
+  String comptesSuspendusJours(Object p0) {
+    return '$p0 comptes suspendus 7 jours';
+  }
+
+  @override
+  String suspenduJours(Object p0) {
+    return '$p0 suspendu 7 jours';
+  }
+
+  @override
+  String get trierLesUtilisateurs => 'Trier les utilisateurs';
+
+  @override
+  String get ordreDeLaListe => 'Ordre de la liste';
+
+  @override
+  String get signalesPuisVerificationsEnAttente =>
+      'Signalés, puis vérifications en attente.';
+
+  @override
+  String get filtrerParRole => 'Filtrer par rôle';
+
+  @override
+  String get tousLesRoles => 'Tous les rôles';
+
+  @override
+  String get filtrerParStatut => 'Filtrer par statut';
+
+  @override
+  String get tousLesStatuts => 'Tous les statuts';
+
+  @override
+  String get aTraiterDAbord => 'À traiter d’abord';
+
+  @override
+  String get derniereActivite => 'Dernière activité';
+
+  @override
+  String get inscriptionLaPlusRecente => 'Inscription la plus récente';
+
+  @override
+  String get fiabiliteLaPlusBasse => 'Fiabilité la plus basse';
+
+  @override
+  String get nomAZ => 'Nom (A → Z)';
+
+  @override
+  String get actif => 'Actif';
+
+  @override
+  String piecesVerifiees(Object p0) {
+    return 'Pièces vérifiées · $p0';
+  }
+
+  @override
+  String verifie3(Object p0) {
+    return '$p0 vérifié';
+  }
+
+  @override
+  String get verifications2 => 'Vérifications';
+
+  @override
+  String get aucuneDemandeEnAttente => 'Aucune demande en attente';
+
+  @override
+  String demandesLaPlusAncienne(Object p0, Object p1) {
+    return '$p0 demandes · la plus ancienne : $p1';
+  }
+
+  @override
+  String get typeDeDemande => 'Type de demande';
+
+  @override
+  String get coachs => 'Coachs';
+
+  @override
+  String get traitees => 'Traitées';
+
+  @override
+  String get rienAVerifierPourL => 'Rien à vérifier pour l’instant';
+
+  @override
+  String get traiteesCetteSemaine => 'Traitées cette semaine';
+
+  @override
+  String envoye2(Object p0) {
+    return 'Envoyé $p0';
+  }
+
+  @override
+  String get illisible => 'Illisible';
+
+  @override
+  String get ouvrir => 'Ouvrir';
+
+  @override
+  String get demanderUnePhotoNette => 'Demander une photo nette';
+
+  @override
+  String get refuserLaDemande => 'Refuser la demande';
+
+  @override
+  String get approuver => 'Approuver';
+
+  @override
+  String adminChangerDeRole(Object p0) {
+    return '$p0, admin. Changer de rôle';
+  }
+
+  @override
+  String get vue => 'Vue';
+
+  @override
+  String scoreIa(Object p0, Object p1) {
+    return 'Score IA $p0, $p1';
+  }
+
+  @override
+  String get adminMatchup => 'Admin MatchUp';
+
+  @override
+  String review(Object p0) {
+    return '?review=$p0';
+  }
+
+  @override
+  String get auTotal => 'au total';
+
+  @override
+  String get duTotal => 'du total';
+
+  @override
+  String get partText2 => 'Part';
+
+  @override
+  String get valeur => 'Valeur';
+
+  @override
+  String get categorie => 'Catégorie';
 }
