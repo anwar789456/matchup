@@ -11,6 +11,8 @@ import '../../../ui/ui.dart';
 import '../../common/data/story_data.dart';
 import '../../common/widgets/coming_soon.dart';
 import '../../home/controllers/home_providers.dart';
+import '../../subscription/controllers/subscription_controller.dart';
+import '../../subscription/data/subscription_repository.dart';
 import '../data/profile_repository.dart';
 
 /// PRF-05 · Menu du compte: the sheet from the Home avatar — profile, wallet, Premium, settings,
@@ -111,8 +113,16 @@ Future<void> showAccountMenu(BuildContext context, WidgetRef ref) {
               _Item(
                 icon: PhosphorIcons.crownSimple(),
                 title: 'MatchUp Premium',
-                detail: '14 jours gratuits, sans engagement',
-                onTap: () => go(Routes.subscriptionOffers),
+                detail: switch (ref.watch(subscriptionProvider).value?.status) {
+                  PremiumStatus.trial => 'Essai gratuit en cours',
+                  PremiumStatus.cancelled => 'Résilié · actif jusqu’au 30 oct.',
+                  _ => '14 jours gratuits, sans engagement',
+                },
+                onTap: () => go(
+                  ref.read(subscriptionProvider).value?.premium ?? false
+                      ? Routes.subscription
+                      : Routes.subscriptionOffers,
+                ),
               ),
               _Item(
                 icon: PhosphorIcons.gearSix(),

@@ -50,7 +50,15 @@ import 'features/home/widgets/player_shell.dart';
 import 'features/onboarding/screens/splash_screen.dart';
 import 'features/organizer_onboarding/controllers/organizer_controller.dart';
 import 'features/payments/screens/checkout_screen.dart';
+import 'features/payments/data/receipt.dart';
 import 'features/payments/screens/payment_result_screens.dart';
+import 'features/payments/screens/receipt_screen.dart';
+import 'features/subscription/screens/cancel_screens.dart';
+import 'features/subscription/screens/change_plan_screen.dart';
+import 'features/subscription/screens/offers_screen.dart';
+import 'features/subscription/screens/premium_checkout_screen.dart';
+import 'features/subscription/screens/premium_welcome_screen.dart';
+import 'features/subscription/screens/subscription_screen.dart';
 import 'features/payments/screens/split_tracker_screen.dart';
 import 'features/wallet/screens/refund_screens.dart';
 import 'features/wallet/screens/topup_screen.dart';
@@ -153,7 +161,15 @@ abstract final class Routes {
   static const paymentSuccess = '/pay/success'; // PAY-09
   static const paymentFailed = '/pay/failed'; // PAY-10
   static String bookingPayments(String id) => '/booking/$id/payments'; // PAY-11 / PAY-12
-  static const subscriptionOffers = '/premium'; // SUB-01 (phase 10)
+  static const subscriptionOffers = '/premium'; // SUB-01
+  static const premiumCheckout = '/premium/checkout'; // SUB-02
+  static const premiumWelcome = '/premium/welcome'; // SUB-03
+  static const subscription = '/premium/subscription'; // SUB-04
+  static const subscriptionChange = '/premium/change'; // SUB-05
+  static const subscriptionCancel = '/premium/cancel'; // SUB-06
+  static const subscriptionRetention = '/premium/cancel/offer'; // SUB-07
+  static const subscriptionCancelled = '/premium/cancelled'; // SUB-08
+  static const receipt = '/receipt'; // SUB-09 (extra: ReceiptEntry)
 
   // Pro onboardings (phase 4).
   static const ownerCompany = '/own/company'; // OWN-01
@@ -221,6 +237,7 @@ GoRoute _root(String path, Widget Function(GoRouterState state) build) => GoRout
 );
 
 /// A page of a later phase, for now « Bientôt disponible » (CLAUDE.md rule 8).
+// ignore: unused_element
 GoRoute _later(String path, String title, String fallback) => GoRoute(
   path: path,
   parentNavigatorKey: _rootKey,
@@ -385,7 +402,15 @@ final routerProvider = Provider<GoRouter>((ref) {
         final (card, reason) = s.extra as (String, String?)? ?? ('ta carte', null);
         return PaymentFailedScreen(cardLabel: card, reason: reason);
       }),
-      _later(Routes.subscriptionOffers, 'MatchUp Premium', Routes.home),
+      _root(Routes.subscriptionOffers, (_) => const OffersScreen()),
+      _root(Routes.premiumCheckout, (_) => const PremiumCheckoutScreen()),
+      _root(Routes.premiumWelcome, (_) => const PremiumWelcomeScreen()),
+      _root(Routes.subscription, (_) => const SubscriptionScreen()),
+      _root(Routes.subscriptionChange, (_) => const ChangePlanScreen()),
+      _root(Routes.subscriptionCancel, (_) => const CancelReasonScreen()),
+      _root(Routes.subscriptionRetention, (_) => const RetentionOfferScreen()),
+      _root(Routes.subscriptionCancelled, (_) => const CancelledScreen()),
+      _root(Routes.receipt, (s) => ReceiptScreen(entry: s.extra! as ReceiptEntry)),
       _owner(Routes.ownerCompany, const CompanyScreen()),
       _owner(Routes.ownerAddress, const AddressScreen()),
       _owner(Routes.ownerCourts, const CourtsScreen()),

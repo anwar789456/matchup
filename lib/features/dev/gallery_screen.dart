@@ -769,6 +769,35 @@ class _GalleryBodyState extends State<_GalleryBody> {
               features: [('Terrains illimités', true), ('Comptes gérants', false)],
             ),
           ),
+          const SizedBox(height: MuSpace.s4),
+          MuPricingCard(
+            period: _period,
+            current: true,
+            onCta: null,
+            plan: const MuPlan(
+              name: 'Premium',
+              audience: 'Joueur',
+              pitch: 'Passe avant les autres et progresse avec l’IA.',
+              monthly: 19,
+              yearly: 190,
+              features: [('Priorité sur les listes d’attente', true)],
+            ),
+          ),
+          const SizedBox(height: MuSpace.s4),
+          MuPricingCard(
+            period: _period,
+            compact: true,
+            current: true,
+            onCta: null,
+            plan: const MuPlan(
+              name: 'Gratuit',
+              audience: 'Joueur',
+              pitch: 'Parties, réservations et niveau IA, sans engagement.',
+              monthly: 0,
+              yearly: 0,
+              features: [],
+            ),
+          ),
         ]),
         const _Section('KpiCard', [
           MuKpiCard(

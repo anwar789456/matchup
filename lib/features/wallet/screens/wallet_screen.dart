@@ -93,9 +93,8 @@ class _WalletScreenState extends ConsumerState<WalletScreen> {
                         ),
                         Text('Paie tes parts en un tap. Tes remboursements arrivent ici.', style: MuType.caption.copyWith(color: inverse.withValues(alpha: 0.7))),
                         const SizedBox(height: MuSpace.s4),
-                        Theme(
-                          data: Theme.of(context).copyWith(extensions: [dark ? c : MuColors.dark]),
-                          child: Builder(
+                        MuNightTheme(
+                        child: Builder(
                             builder: (context) => MuButton.primary(
                               label: 'Recharger',
                               leading: PhosphorIcons.plus(),

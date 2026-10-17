@@ -20,6 +20,7 @@ class MuAiSuggestionCard extends StatefulWidget {
     required this.reason,
     this.reasonLead = 'Recommandé car',
     this.content,
+    this.body,
     this.primary,
     this.secondary,
     this.primaryIcon,
@@ -32,6 +33,9 @@ class MuAiSuggestionCard extends StatefulWidget {
   final String context;
   final String title;
   final String? content;
+
+  /// Rich content under the title (SUB-07: the offer's price).
+  final Widget? body;
   final String reasonLead;
   final String reason;
   final MuAction? primary;
@@ -182,6 +186,7 @@ class _MuAiSuggestionCardState extends State<MuAiSuggestionCard> {
               const SizedBox(height: MuSpace.s3),
               Text(widget.content!, style: MuType.body.copyWith(color: c.textSecondary)),
             ],
+            if (widget.body != null) ...[const SizedBox(height: MuSpace.s3), widget.body!],
             const SizedBox(height: MuSpace.s3),
             Container(
               padding: const EdgeInsets.symmetric(horizontal: MuSpace.s3, vertical: MuSpace.s2),

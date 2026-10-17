@@ -13,6 +13,7 @@ import '../../common/widgets/flow_scaffold.dart';
 import '../../home/controllers/home_providers.dart';
 import '../controllers/checkout_controller.dart';
 import '../widgets/checkout_widgets.dart';
+import 'receipt_screen.dart';
 
 /// PAY-09 · Paiement réussi: the receipt, the ticket with its QR code, calendar and share, the
 /// invite card, then « Terminé ».
@@ -119,7 +120,7 @@ class PaymentSuccessScreen extends ConsumerWidget {
                         Divider(height: MuSpace.s4, thickness: 1, color: c.border),
                         line('Total payé', formatDT(receipt.amount), strong: true),
                         const SizedBox(height: MuSpace.s3),
-                        MuButton.secondary(label: 'Voir le reçu', leading: PhosphorIcons.fileText(), fullWidth: true, onPressed: () => showComingSoon(context)),
+                        MuButton.secondary(label: 'Voir le reçu', leading: PhosphorIcons.fileText(), fullWidth: true, onPressed: () => context.push(Routes.receipt, extra: receiptFromPayment(req, receipt))),
                       ],
                     ),
                   ),

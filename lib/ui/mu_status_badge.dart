@@ -105,13 +105,13 @@ class MuStatusBadge extends StatelessWidget {
           children: [
             if (icon != null)
               Icon(icon, size: small ? _iconS : MuSize.iconXs, color: ink)
-            else
+            else if (status == MuStatus.live)
               Container(
                 width: _liveDot,
                 height: _liveDot,
                 decoration: BoxDecoration(color: c.live, shape: BoxShape.circle),
               ),
-            const SizedBox(width: MuSpace.s1),
+            if (icon != null || status == MuStatus.live) const SizedBox(width: MuSpace.s1),
             Text(
               status == MuStatus.live ? text.toUpperCase() : text,
               style: (status == MuStatus.live ? MuType.overline : MuType.labelS)
