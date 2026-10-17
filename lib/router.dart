@@ -24,6 +24,12 @@ import 'features/booking/screens/booking_invites_screen.dart';
 import 'features/booking/screens/booking_public_screen.dart';
 import 'features/booking/screens/booking_summary_screen.dart';
 import 'features/booking/screens/booking_type_screen.dart';
+import 'features/games/screens/game_screen.dart';
+import 'features/games/screens/joined_screen.dart';
+import 'features/games/screens/waitlist_screen.dart';
+import 'features/matches/screens/booking_detail_screen.dart';
+import 'features/matches/screens/matches_screen.dart';
+import 'features/matches/screens/score_screen.dart';
 import 'features/common/widgets/coming_soon.dart';
 import 'features/common/widgets/pro_gate.dart';
 import 'features/explore/controllers/explore_controller.dart';
@@ -99,7 +105,10 @@ abstract final class Routes {
   static const matches = '/matches'; // MAT-01 (phase 7)
   static const training = '/training'; // Milestone 6
   static const community = '/community'; // Milestone 6
-  static String game(String id) => '/game/$id'; // GAM-01 / GAM-02 (phase 7)
+  static String game(String id) => '/game/$id'; // GAM-01 / GAM-02
+  static String gameWaitlist(String id) => '/game/$id/waitlist'; // GAM-03
+  static String gameJoined(String id) => '/game/$id/joined'; // GAM-05
+  static String matchScore(String id) => '/match/$id/score'; // MAT-09
   static String venue(String id) => '/venue/$id'; // VEN-01
   static String venueSlots(String id) => '/venue/$id/slots'; // VEN-02
   static const bookingType = '/booking/new/type'; // BKG-01
@@ -108,7 +117,7 @@ abstract final class Routes {
   static const bookingInvitesAfter = '/booking/new/invites?after=1'; // BKG-03 from BKG-05
   static const bookingSummary = '/booking/new/summary'; // BKG-04
   static const bookingDone = '/booking/new/done'; // BKG-05
-  static String booking(String id) => '/booking/$id'; // MAT-05 (phase 7)
+  static String booking(String id) => '/booking/$id'; // MAT-05
   static String player(String name) => '/player/${Uri.encodeComponent(name)}'; // PRF-02 (phase 8)
 
   // Pro onboardings (phase 4).
@@ -248,7 +257,7 @@ final routerProvider = Provider<GoRouter>((ref) {
             ],
           ),
           StatefulShellBranch(
-            routes: [_route(Routes.matches, (_) => const ComingSoonTab(title: 'Mes matchs'))],
+            routes: [_route(Routes.matches, (_) => const MatchesScreen())],
           ),
           StatefulShellBranch(
             routes: [_route(Routes.training, (_) => const ComingSoonTab(title: 'Entraînement'))],
@@ -258,7 +267,23 @@ final routerProvider = Provider<GoRouter>((ref) {
           ),
         ],
       ),
-      _later('/game/:id', 'Partie ouverte', Routes.explore),
+      GoRoute(
+        path: '/game/:id',
+        parentNavigatorKey: _rootKey,
+        builder: (context, state) => GameScreen(gameId: state.pathParameters['id']!),
+        routes: [
+          GoRoute(
+            path: 'waitlist',
+            parentNavigatorKey: _rootKey,
+            builder: (context, state) => WaitlistScreen(gameId: state.pathParameters['id']!),
+          ),
+          GoRoute(
+            path: 'joined',
+            parentNavigatorKey: _rootKey,
+            builder: (context, state) => JoinedScreen(gameId: state.pathParameters['id']!),
+          ),
+        ],
+      ),
       GoRoute(
         path: '/venue/:id',
         parentNavigatorKey: _rootKey,
@@ -279,7 +304,16 @@ final routerProvider = Provider<GoRouter>((ref) {
       ),
       _root(Routes.bookingSummary, (_) => const BookingSummaryScreen()),
       _root(Routes.bookingDone, (_) => const BookingDoneScreen()),
-      _later('/booking/:id', 'Détail de la réservation', Routes.home),
+      GoRoute(
+        path: '/booking/:id',
+        parentNavigatorKey: _rootKey,
+        builder: (context, state) => BookingDetailScreen(bookingId: state.pathParameters['id']!),
+      ),
+      GoRoute(
+        path: '/match/:id/score',
+        parentNavigatorKey: _rootKey,
+        builder: (context, state) => ScoreScreen(matchId: state.pathParameters['id']!),
+      ),
       _later('/player/:name', 'Profil public', Routes.explore),
       _owner(Routes.ownerCompany, const CompanyScreen()),
       _owner(Routes.ownerAddress, const AddressScreen()),

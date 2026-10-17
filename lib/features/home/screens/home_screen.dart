@@ -56,6 +56,10 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     context.go(Routes.explore);
   }
 
+  /// A joined game opens its lobby; a booked court its booking page.
+  String _openLink(UpcomingMatches next, MuBooking b) =>
+      next.games.any((g) => g.id == b.id) ? Routes.game(b.id!) : Routes.booking(b.id!);
+
   void _directions(MuBooking b) {
     final venue = ref
         .read(nearbyVenuesProvider)
@@ -257,14 +261,14 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                         _InvitationRow(invitation: inv, onTap: () => context.go(Routes.matches)),
                         const SizedBox(height: MuSpace.s3),
                       ],
-                      for (final (i, b) in next.bookings.indexed) ...[
+                      for (final (i, b) in next.all.indexed) ...[
                         if (i > 0) const SizedBox(height: MuSpace.s3),
                         MuBookingCard(
                           booking: b,
                           variant: i == 0
                               ? MuBookingCardVariant.standard
                               : MuBookingCardVariant.compact,
-                          onTap: () => context.push(Routes.booking(b.id!)),
+                          onTap: () => context.push(_openLink(next, b)),
                           onShowQr: () => context.push(Routes.booking(b.id!)),
                           onDirections: () => _directions(b),
                           onMore: () => showComingSoon(context),

@@ -79,6 +79,38 @@ class MuButton extends StatelessWidget {
         inline = false,
         linkStyle = null;
 
+  const MuButton.destructive({
+    super.key,
+    required this.label,
+    required this.onPressed,
+    this.size = MuButtonSize.m,
+    this.leading,
+    this.trailing,
+    this.price,
+    this.countdown,
+    this.loading = false,
+    this.success = false,
+    this.fullWidth = false,
+  })  : variant = MuButtonVariant.destructive,
+        inline = false,
+        linkStyle = null;
+
+  const MuButton.destructiveOutline({
+    super.key,
+    required this.label,
+    required this.onPressed,
+    this.size = MuButtonSize.m,
+    this.leading,
+    this.trailing,
+    this.price,
+    this.countdown,
+    this.loading = false,
+    this.success = false,
+    this.fullWidth = false,
+  })  : variant = MuButtonVariant.destructiveOutline,
+        inline = false,
+        linkStyle = null;
+
   /// A text link. [inline] links sit inside a sentence: no 44 px row, [linkStyle] matches the
   /// surrounding text (`label`, `label-l`…).
   const MuButton.link({

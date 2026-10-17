@@ -10,6 +10,7 @@ import '../../theme/theme.dart';
 import '../../ui/ui.dart';
 import '../common/data/story_data.dart';
 import '../explore/controllers/explore_controller.dart';
+import '../games/widgets/claim_takeover.dart';
 import '../home/controllers/home_providers.dart';
 
 /// Debug-only widget gallery: every Mu* widget, in Light and Night match side by side on wide
@@ -121,6 +122,7 @@ class _GalleryBodyState extends State<_GalleryBody> {
   DateTime _day = Story.at(21, 0);
   int _spots = 4;
   int _stars = 4;
+  int _tab = 0;
 
   @override
   void dispose() {
@@ -1200,6 +1202,313 @@ class _GalleryBodyState extends State<_GalleryBody> {
             time: '21h00',
             players: '6/10',
             paid: '15 DT',
+          ),
+        ]),
+        _Section('TopAppBar — large / compact / media', [
+          MuTopAppBar.large(
+            title: 'Mes matchs',
+            actions: [
+              MuBarAction(icon: PhosphorIcons.calendarPlus(), label: 'Réserver un terrain'),
+            ],
+          ),
+          MuTopAppBar.compact(
+            title: 'Ma réservation',
+            subtitle: 'Réf. MU-48213',
+            onBack: () {},
+            actions: [MuBarAction(icon: PhosphorIcons.shareNetwork(), label: 'Partager')],
+          ),
+          SizedBox(
+            height: 120,
+            child: MuCourtArt(
+              sport: MuSport.football,
+              variant: MuCourtArtVariant.photo,
+              child: Align(
+                alignment: Alignment.topCenter,
+                child: MuTopAppBar.media(
+                  onBack: () {},
+                  actions: [
+                    MuBarAction(icon: PhosphorIcons.shareNetwork(), label: 'Partager la partie'),
+                    MuBarAction(icon: PhosphorIcons.dotsThreeVertical(), label: 'Plus d’actions'),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ]),
+        _Section('Tabs', [
+          MuTabs(
+            label: 'Mes matchs',
+            tabs: const [MuTab('À venir', count: 3), MuTab('Passés'), MuTab('Annulés')],
+            index: _tab,
+            fullWidth: true,
+            onChanged: (i) => setState(() => _tab = i),
+          ),
+          const SizedBox(height: MuSpace.s3),
+          MuTabs(
+            label: 'Filtre',
+            variant: MuTabsVariant.pill,
+            tabs: const [MuTab('Tous'), MuTab('Foot'), MuTab('Padel')],
+            index: _tab,
+            onChanged: (i) => setState(() => _tab = i),
+          ),
+        ]),
+        const _Section('StatusBadge — icon-only', [
+          Row(children: [
+            MuStatusBadge(status: MuStatus.confirmed, label: 'Vérifié', iconOnly: true),
+            SizedBox(width: MuSpace.s2),
+            MuStatusBadge(status: MuStatus.paid, label: 'Payé', iconOnly: true),
+            SizedBox(width: MuSpace.s2),
+            MuStatusBadge(status: MuStatus.cancelled, label: 'Annulée', iconOnly: true),
+          ]),
+        ]),
+        const _Section('ReliabilityBadge', [
+          Row(children: [
+            MuReliabilityBadge(score: 96),
+            SizedBox(width: MuSpace.s2),
+            MuReliabilityBadge(score: 82, size: MuBadgeSize.s),
+            SizedBox(width: MuSpace.s2),
+            MuReliabilityBadge(score: 61, size: MuBadgeSize.s),
+          ]),
+          SizedBox(height: MuSpace.s3),
+          MuReliabilityBadge(score: 96, detail: true, honored: 47, total: 49, period: '12 mois'),
+        ]),
+        _Section('MatchFitScore — ring', [
+          MuMatchFitScore.ring(
+            value: 85,
+            factors: [
+              MuFitFactor(
+                icon: PhosphorIcons.gauge(),
+                label: 'Niveau dans la fourchette',
+                detail: 'Toi 3,0 · partie 3,0–4,5',
+              ),
+              MuFitFactor(
+                icon: PhosphorIcons.usersThree(),
+                label: 'Milieu recherché',
+                detail: 'Ton poste habituel',
+              ),
+              MuFitFactor(
+                icon: PhosphorIcons.mapPin(),
+                label: 'À 1,4 km',
+                detail: 'Arena Five · La Marsa',
+              ),
+            ],
+            note: 'Recommandé car Skander cherche un milieu près de chez toi. L’IA peut se tromper.',
+          ),
+        ]),
+        _Section('Lineup', [
+          MuLineup(
+            sport: MuSport.football,
+            teams: const [
+              MuLineupTeam(
+                name: 'Blancs',
+                players: [
+                  MuLineupPlayer('Hamza R.', level: 3.5),
+                  MuLineupPlayer('Nour A.', level: 3.0),
+                  null,
+                  MuLineupPlayer('Skander T.', level: 4.0, role: MuLineupRole.organizer),
+                  MuLineupPlayer('Salma G.', level: 3.0),
+                ],
+              ),
+              MuLineupTeam(
+                name: 'Bleus',
+                players: [
+                  MuLineupPlayer('Omar D.', level: 3.5),
+                  MuLineupPlayer('Lina F.', level: 3.5),
+                  MuLineupPlayer('Ines M.', level: 4.0),
+                  MuLineupPlayer('Aziz H.', level: 4.5),
+                  null,
+                ],
+              ),
+            ],
+            onJoin: (team, slot, position) => MuToast.show(
+              context,
+              title: 'Équipe ${team + 1} · place ${slot + 1} · $position',
+            ),
+          ),
+          const SizedBox(height: MuSpace.s3),
+          const MuLineup(
+            sport: MuSport.padel,
+            variant: MuLineupVariant.compact,
+            header: false,
+            teams: [
+              MuLineupTeam(
+                name: 'Toi / Mariem',
+                players: [MuLineupPlayer('Yassine B.', you: true), MuLineupPlayer('Mariem K.')],
+              ),
+              MuLineupTeam(name: 'Ines / Nour', players: [MuLineupPlayer('Ines M.'), null]),
+            ],
+          ),
+        ]),
+        const _Section('MatchCard', [
+          MuMatchCard(
+            match: MuMatch(
+              sport: MuSport.football,
+              status: MuMatchStatus.finished,
+              round: 'Sam. 3 oct.',
+              court: 'Arena Five',
+              teams: [
+                MuMatchTeam(
+                  name: 'Blancs · ton équipe',
+                  shortName: 'Toi',
+                  monogram: 'BL',
+                  score: 5,
+                  you: true,
+                ),
+                MuMatchTeam(name: 'Bleus', monogram: 'BE', score: 7),
+              ],
+            ),
+            variant: MuMatchCardVariant.compact,
+          ),
+          SizedBox(height: MuSpace.s3),
+          MuMatchCard(
+            match: MuMatch(
+              sport: MuSport.padel,
+              status: MuMatchStatus.finished,
+              round: 'Ven. 9 oct.',
+              court: 'Smash Padel Club',
+              teams: [
+                MuMatchTeam(
+                  name: 'Yassine B. / Mariem K.',
+                  shortName: 'Toi / Mariem',
+                  monogram: 'YM',
+                  sets: [6, 6],
+                  you: true,
+                ),
+                MuMatchTeam(
+                  name: 'Ines M. / Nour A.',
+                  shortName: 'Ines / Nour',
+                  monogram: 'IN',
+                  sets: [4, 3],
+                ),
+              ],
+            ),
+            variant: MuMatchCardVariant.compact,
+          ),
+          SizedBox(height: MuSpace.s3),
+          MuMatchCard(
+            match: MuMatch(
+              sport: MuSport.basketball,
+              status: MuMatchStatus.live,
+              round: 'Demi-finale',
+              court: 'Hoop Zone · Terrain A',
+              minute: '34’',
+              competition: 'Hoop Zone 3x3 Cup',
+              target: 21,
+              teams: [
+                MuMatchTeam(name: 'Noirs', monogram: 'NO', score: 18),
+                MuMatchTeam(name: 'Oranges', monogram: 'OR', score: 16),
+              ],
+            ),
+          ),
+          SizedBox(height: MuSpace.s3),
+          MuMatchCard.loading(variant: MuMatchCardVariant.compact),
+        ]),
+        const _Section('Scoreboard', [
+          MuScoreboard(
+            sport: MuSport.padel,
+            status: MuMatchStatus.finished,
+            date: 'ven. 9 oct.',
+            venue: 'Smash Padel Club · Court 3',
+            teams: [
+              MuScoreTeam(name: 'Toi / Mariem K.', players: ['Toi', 'Mariem K.'], you: true),
+              MuScoreTeam(name: 'Ines M. / Nour A.', players: ['Ines M.', 'Nour A.']),
+            ],
+            sets: [(6, 4), (6, 3)],
+          ),
+          SizedBox(height: MuSpace.s3),
+          MuScoreboard(
+            sport: MuSport.basketball,
+            status: MuMatchStatus.live,
+            clock: '08:12',
+            period: '2e mi-temps',
+            venue: 'Hoop Zone',
+            teams: [MuScoreTeam(name: 'Noirs', short: 'NO'), MuScoreTeam(name: 'Oranges', short: 'OR')],
+            score: (18, 16),
+          ),
+          SizedBox(height: MuSpace.s3),
+          MuScoreboard(
+            sport: MuSport.football,
+            status: MuMatchStatus.finished,
+            variant: MuScoreboardVariant.compact,
+            date: 'sam. 3 oct.',
+            teams: [
+              MuScoreTeam(name: 'Blancs', short: 'BL', you: true),
+              MuScoreTeam(name: 'Bleus', short: 'BE'),
+            ],
+            score: (5, 7),
+          ),
+        ]),
+        _Section('Dialog', [
+          Wrap(
+            spacing: MuSpace.s2,
+            runSpacing: MuSpace.s2,
+            children: [
+              MuButton.destructive(
+                label: 'Annuler la réservation',
+                size: MuButtonSize.s,
+                onPressed: () => MuDialog.show<bool>(
+                  context,
+                  tone: MuDialogTone.destructive,
+                  icon: PhosphorIcons.calendarX(),
+                  title: 'Annuler la réservation ?',
+                  description:
+                      'Arena Five · Terrain 1 · mer. 21 oct. · 21h00. Les joueurs et Arena Five seront prévenus.',
+                  consequence:
+                      'Les 6 joueurs seront remboursés : 15 DT chacun sur leur solde MatchUp.',
+                  consequenceIcon: PhosphorIcons.wallet(),
+                  actions: [
+                    MuButton.secondary(
+                      label: 'Garder la réservation',
+                      size: MuButtonSize.l,
+                      fullWidth: true,
+                      onPressed: () => Navigator.of(context, rootNavigator: true).pop(false),
+                    ),
+                    MuButton.destructive(
+                      label: 'Annuler la réservation',
+                      size: MuButtonSize.l,
+                      fullWidth: true,
+                      onPressed: () => Navigator.of(context, rootNavigator: true).pop(true),
+                    ),
+                  ],
+                ),
+              ),
+              MuButton.secondary(
+                label: 'Centré · info',
+                size: MuButtonSize.s,
+                onPressed: () => MuDialog.show<void>(
+                  context,
+                  tone: MuDialogTone.info,
+                  placement: MuDialogPlacement.center,
+                  title: 'Score à confirmer',
+                  description:
+                      'Ines et Nour confirmeront le score. Sans réponse sous 48 h, il est validé.',
+                  actions: [
+                    MuButton.primary(
+                      label: 'Compris',
+                      size: MuButtonSize.l,
+                      fullWidth: true,
+                      onPressed: () => Navigator.of(context, rootNavigator: true).pop(),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ]),
+        _Section('Debug — place libérée (GAM-04)', [
+          Consumer(
+            builder: (context, ref, _) => MuButton.primary(
+              label: 'Simuler une place libérée',
+              leading: PhosphorIcons.hourglassMedium(),
+              size: MuButtonSize.m,
+              onPressed: () => showClaimTakeover(context, ref, Story.g1.id!),
+            ),
+          ),
+          const SizedBox(height: MuSpace.s2),
+          Text(
+            'Ouvre le takeover GAM-04 sur G1 avec un vrai compte à rebours de 15 min ; '
+            '« Réclamer la place » paie la part et ouvre GAM-05.',
+            style: MuType.caption.copyWith(color: c.textSecondary),
           ),
         ]),
         _Section('Spinner', [

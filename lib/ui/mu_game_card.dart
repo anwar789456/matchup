@@ -657,6 +657,10 @@ class MuGameCard extends StatelessWidget {
                       ],
                     ),
                     const SizedBox(height: MuSpace.s2),
+                    // Joined or cancelled, the status replaces the places (MAT-01 « Tu joues »).
+                    if (g.status != MuGameStatus.open && _flag(g) != null)
+                      Align(alignment: AlignmentDirectional.centerStart, child: _flag(g)!)
+                    else
                     Row(
                       children: [
                         if (g.spotsTotal <= _DotsMeter.maxDots) ...[

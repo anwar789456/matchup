@@ -55,9 +55,11 @@ class MuToast extends StatelessWidget {
     String? description,
     MuAction? action,
     bool persistent = false,
+    OverlayState? overlay,
   }) {
     _current?.remove();
-    final overlay = Overlay.of(context, rootOverlay: true);
+    // [overlay] lets a flow whose page is gone (left game, cancelled booking) still toast.
+    overlay ??= Overlay.of(context, rootOverlay: true);
     late final _ToastHost host;
     host = _ToastHost(
       overlay: overlay,
@@ -218,8 +220,14 @@ class _ToastLayer extends StatefulWidget {
 }
 
 class _ToastLayerState extends State<_ToastLayer> with TickerProviderStateMixin {
-  late final AnimationController _life =
-      AnimationController(vsync: this, duration: MuMotion.toast, value: 1);
+  // The auto-dismiss timer keeps its 4 s even when the system shortens animations (reduce
+  // motion scales controllers down); only the enter/exit motion follows that setting.
+  late final AnimationController _life = AnimationController(
+    vsync: this,
+    duration: MuMotion.toast,
+    value: 1,
+    animationBehavior: AnimationBehavior.preserve,
+  );
   late final AnimationController _show = AnimationController(vsync: this);
   bool _closing = false;
 

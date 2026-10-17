@@ -83,6 +83,16 @@ abstract final class Story {
 
   static const venues = [arenaFive, smashPadel, padelHouse, hoopZone];
 
+  /// « Route de la Corniche, La Marsa »: the street of each venue, by id.
+  static const streets = <String, String>{
+    'arena-five': 'Route de la Corniche, La Marsa',
+    'smash-padel': 'Rue du Lac Biwa, Lac 2',
+    'padel-house-menzah': 'Avenue Hédi Nouira, Menzah 6',
+    'hoop-zone': 'Rue Abou Kacem Chebbi, Ennasr',
+  };
+
+  static String streetOf(MuVenue v) => streets[v.id] ?? v.place;
+
   /// Districts the search knows, with their venues (null: everything around the player's zone).
   static const zones = <(String, List<String>?)>[
     ('La Marsa', null),

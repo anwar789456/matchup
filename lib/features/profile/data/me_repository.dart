@@ -45,6 +45,9 @@ abstract interface class MeRepository {
 
   /// Takes [amount] DT from the balance (a share paid with it).
   Future<void> debit(num amount);
+
+  /// Puts [amount] DT back (a refund).
+  Future<void> credit(num amount);
 }
 
 /// Yassine B. from the story (design/screens/STORY-DATA.md), with a 30 DT balance.
@@ -70,6 +73,9 @@ class FakeMeRepository implements MeRepository {
     if (amount > _balance) throw StateError('Solde insuffisant');
     _balance -= amount;
   }
+
+  @override
+  Future<void> credit(num amount) async => _balance += amount;
 }
 
 final meRepositoryProvider = Provider<MeRepository>((ref) => FakeMeRepository());

@@ -17,9 +17,17 @@ final recommendedGamesProvider = FutureProvider<List<MuGame>>(
 );
 
 /// « Tes prochains matchs » and the « Mes matchs » tab badge.
-final upcomingMatchesProvider = FutureProvider<UpcomingMatches>(
-  (ref) => ref.watch(bookingsRepositoryProvider).upcoming(),
-);
+final upcomingMatchesProvider = FutureProvider<UpcomingMatches>((ref) async {
+  final (base, joined) = await (
+    ref.watch(bookingsRepositoryProvider).upcoming(),
+    ref.watch(gamesRepositoryProvider).joined(),
+  ).wait;
+  return UpcomingMatches(
+    invitations: base.invitations,
+    games: [...joined, ...base.games]..sort((a, b) => a.start.compareTo(b.start)),
+    bookings: base.bookings,
+  );
+});
 
 /// « Terrains près de toi » (the Home shows the two closest).
 final nearbyVenuesProvider = FutureProvider<List<MuVenue>>(

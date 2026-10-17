@@ -8,7 +8,8 @@ import 'src/interaction.dart';
 
 enum MuStepperSize { m, s }
 
-enum MuStepperLayout { stacked, inline }
+/// `bare`: the control alone, named by [label] for assistive tech (MAT-09's set cells).
+enum MuStepperLayout { stacked, inline, bare }
 
 /// Stepper (components/Stepper.md): a small whole number between bounds with − and + — players,
 /// places to fill — and a helper with the price per person, announced politely as it changes.
@@ -177,6 +178,7 @@ class _MuStepperState extends State<MuStepper> {
       ],
     );
 
+    if (widget.layout == MuStepperLayout.bare) return control;
     if (widget.layout == MuStepperLayout.inline) {
       return Row(
         children: [

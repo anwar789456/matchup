@@ -17,11 +17,15 @@ class MuStatusBadge extends StatelessWidget {
     required this.status,
     this.label,
     this.size = MuBadgeSize.m,
+    this.iconOnly = false,
   });
 
   final MuStatus status;
   final String? label;
   final MuBadgeSize size;
+
+  /// A 24 circle with the icon only; the label becomes its tooltip.
+  final bool iconOnly;
 
   // StatusBadge.md: M 24 high, padding 8 / 10, icon 16; S 20, 6 / 8, icon 14; live dot 8.
   static const double _heightM = 24;
@@ -63,6 +67,24 @@ class MuStatusBadge extends StatelessWidget {
     };
     final text = label ?? _defaultLabel;
 
+    if (iconOnly && icon != null) {
+      return Tooltip(
+        message: text,
+        child: Semantics(
+          label: text,
+          excludeSemantics: true,
+          child: Container(
+            width: _heightM,
+            height: _heightM,
+            decoration: ShapeDecoration(
+              color: ground,
+              shape: CircleBorder(side: ring ? BorderSide(color: c.border) : BorderSide.none),
+            ),
+            child: Icon(icon, size: _iconS, color: ink),
+          ),
+        ),
+      );
+    }
     return Semantics(
       label: text,
       excludeSemantics: true,
