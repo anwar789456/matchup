@@ -11,6 +11,9 @@ abstract interface class GamesRepository {
 
   /// « Parties pour toi »: the AI's best matches, best first.
   Future<List<MuGame>> recommended();
+
+  /// Lists a public game the player organises, so players at their level can join it.
+  Future<void> publish(MuGame game);
 }
 
 /// The story's games (design/screens/STORY-DATA.md).
@@ -20,6 +23,7 @@ class FakeGamesRepository implements GamesRepository {
 
   final Duration latency;
   final bool Function() _offline;
+  final _published = <MuGame>[];
 
   Future<void> _wait() async {
     await Future<void>.delayed(latency);
@@ -29,8 +33,11 @@ class FakeGamesRepository implements GamesRepository {
   @override
   Future<List<MuGame>> openGames() async {
     await _wait();
-    return Story.openGames;
+    return [...Story.openGames, ..._published];
   }
+
+  @override
+  Future<void> publish(MuGame game) async => _published.add(game);
 
   @override
   Future<List<MuGame>> recommended() async {

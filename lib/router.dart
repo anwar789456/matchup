@@ -19,6 +19,11 @@ import 'features/coach_onboarding/controllers/coach_controller.dart';
 import 'features/coach_onboarding/screens/certification_screen.dart';
 import 'features/coach_onboarding/screens/coach_dashboard_screen.dart';
 import 'features/coach_onboarding/screens/coach_profile_screen.dart';
+import 'features/booking/screens/booking_done_screen.dart';
+import 'features/booking/screens/booking_invites_screen.dart';
+import 'features/booking/screens/booking_public_screen.dart';
+import 'features/booking/screens/booking_summary_screen.dart';
+import 'features/booking/screens/booking_type_screen.dart';
 import 'features/common/widgets/coming_soon.dart';
 import 'features/common/widgets/pro_gate.dart';
 import 'features/explore/controllers/explore_controller.dart';
@@ -51,6 +56,8 @@ import 'features/player_onboarding/screens/profile_screen.dart';
 import 'features/player_onboarding/screens/questionnaire_screen.dart';
 import 'features/player_onboarding/screens/sports_screen.dart';
 import 'features/player_onboarding/screens/zones_screen.dart';
+import 'features/venue/screens/slot_screen.dart';
+import 'features/venue/screens/venue_screen.dart';
 import 'theme/theme.dart';
 
 /// Route paths, one per screen code (design/screens/SCREENS.md). Error variants (AUTH-01b,
@@ -93,7 +100,14 @@ abstract final class Routes {
   static const training = '/training'; // Milestone 6
   static const community = '/community'; // Milestone 6
   static String game(String id) => '/game/$id'; // GAM-01 / GAM-02 (phase 7)
-  static String venue(String id) => '/venue/$id'; // VEN-01 (phase 6)
+  static String venue(String id) => '/venue/$id'; // VEN-01
+  static String venueSlots(String id) => '/venue/$id/slots'; // VEN-02
+  static const bookingType = '/booking/new/type'; // BKG-01
+  static const bookingPublic = '/booking/new/public'; // BKG-02
+  static const bookingInvites = '/booking/new/invites'; // BKG-03
+  static const bookingInvitesAfter = '/booking/new/invites?after=1'; // BKG-03 from BKG-05
+  static const bookingSummary = '/booking/new/summary'; // BKG-04
+  static const bookingDone = '/booking/new/done'; // BKG-05
   static String booking(String id) => '/booking/$id'; // MAT-05 (phase 7)
   static String player(String name) => '/player/${Uri.encodeComponent(name)}'; // PRF-02 (phase 8)
 
@@ -154,6 +168,13 @@ GoRoute _coach(String path, Widget screen) =>
     _route(path, (_) => ProGate(provider: coachProvider, child: screen));
 GoRoute _organizer(String path, Widget screen) =>
     _route(path, (_) => ProGate(provider: organizerProvider, child: screen));
+
+/// A full-screen page over the tabs (no tab bar).
+GoRoute _root(String path, Widget Function(GoRouterState state) build) => GoRoute(
+  path: path,
+  parentNavigatorKey: _rootKey,
+  builder: (context, state) => build(state),
+);
 
 /// A page of a later phase, for now « Bientôt disponible » (CLAUDE.md rule 8).
 GoRoute _later(String path, String title, String fallback) => GoRoute(
@@ -238,7 +259,26 @@ final routerProvider = Provider<GoRouter>((ref) {
         ],
       ),
       _later('/game/:id', 'Partie ouverte', Routes.explore),
-      _later('/venue/:id', 'Fiche du terrain', Routes.exploreVenues),
+      GoRoute(
+        path: '/venue/:id',
+        parentNavigatorKey: _rootKey,
+        builder: (context, state) => VenueScreen(venueId: state.pathParameters['id']!),
+        routes: [
+          GoRoute(
+            path: 'slots',
+            parentNavigatorKey: _rootKey,
+            builder: (context, state) => SlotScreen(venueId: state.pathParameters['id']!),
+          ),
+        ],
+      ),
+      _root(Routes.bookingType, (_) => const BookingTypeScreen()),
+      _root(Routes.bookingPublic, (_) => const BookingPublicScreen()),
+      _root(
+        Routes.bookingInvites,
+        (s) => BookingInvitesScreen(afterBooking: s.uri.queryParameters['after'] == '1'),
+      ),
+      _root(Routes.bookingSummary, (_) => const BookingSummaryScreen()),
+      _root(Routes.bookingDone, (_) => const BookingDoneScreen()),
       _later('/booking/:id', 'Détail de la réservation', Routes.home),
       _later('/player/:name', 'Profil public', Routes.explore),
       _owner(Routes.ownerCompany, const CompanyScreen()),

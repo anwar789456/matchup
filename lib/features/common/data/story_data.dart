@@ -435,6 +435,20 @@ abstract final class Story {
   static const myFirstName = 'Yassine';
   static const myLevels = {MuSport.padel: 3.5, MuSport.football: 3.0};
   static const unreadNotifications = 3;
+  static const myEmail = 'yassine.b@email.tn';
+  static const myBalance = 30;
+
+  /// Teammates the booking flow suggests (BKG-03): who played with Yassine at Arena Five or near
+  /// La Marsa; those with 2 games or more together are invited by default.
+  static const teammates = [
+    (name: 'Skander T.', level: 4.0, position: 'Attaquant', together: 6),
+    (name: 'Hamza R.', level: 3.5, position: 'Gardien', together: 4),
+    (name: 'Aziz H.', level: 4.5, position: 'Milieu', together: 3),
+    (name: 'Omar D.', level: 3.5, position: 'Défenseur', together: 3),
+    (name: 'Nour A.', level: 3.0, position: 'Défenseuse', together: 2),
+    (name: 'Ines M.', level: 4.0, position: 'Milieu', together: 0),
+    (name: 'Salma G.', level: 3.0, position: 'Attaquante', together: 0),
+  ];
 
   static const recentSearches = [
     'padel la marsa',

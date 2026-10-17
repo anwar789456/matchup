@@ -117,6 +117,10 @@ class _GalleryBodyState extends State<_GalleryBody> {
   RangeValues _level = const RangeValues(3, 4.5);
   bool _favourite = false;
   String? _pin = Story.arenaFive.id;
+  MuSlotRange? _slot2 = const MuSlotRange('t1', 1, 2);
+  DateTime _day = Story.at(21, 0);
+  int _spots = 4;
+  int _stars = 4;
 
   @override
   void dispose() {
@@ -1099,6 +1103,103 @@ class _GalleryBodyState extends State<_GalleryBody> {
                 ],
               ),
             ],
+          ),
+        ]),
+        _Section('SlotGrid', [
+          MuSlotGrid(
+            label: 'Créneaux Arena Five',
+            start: 20 * 60,
+            padding: 0,
+            value: _slot2,
+            onChanged: (v) => setState(() => _slot2 = v),
+            courts: const [
+              MuSlotCourt(
+                id: 't1',
+                name: 'Terrain 1',
+                detail: 'Éclairé',
+                slots: [
+                  MuSlot(price: 150, peak: true),
+                  MuSlot(price: 150, peak: true),
+                  MuSlot(price: 150, peak: true),
+                  MuSlot(price: 120),
+                ],
+              ),
+              MuSlotCourt(
+                id: 't2',
+                name: 'Terrain 2',
+                detail: 'Éclairé',
+                slots: [
+                  MuSlot(status: MuSlotStatus.booked),
+                  MuSlot(status: MuSlotStatus.booked),
+                  MuSlot(status: MuSlotStatus.mine),
+                  MuSlot(price: 96, discount: 20, oldPrice: 120),
+                ],
+              ),
+              MuSlotCourt(
+                id: 't3',
+                name: 'Terrain 3',
+                detail: 'Indoor',
+                slots: [
+                  MuSlot(status: MuSlotStatus.blocked, label: 'Tournoi'),
+                  MuSlot(status: MuSlotStatus.blocked, label: 'Tournoi'),
+                  MuSlot(price: 150, peak: true),
+                  MuSlot(status: MuSlotStatus.booked),
+                ],
+              ),
+            ],
+          ),
+        ]),
+        _Section('DateStrip', [
+          MuDateStrip(
+            start: Story.at(16, 0),
+            today: Story.at(16, 0),
+            value: _day,
+            bleed: 0,
+            availability: (d) =>
+                d.day == 17 || d.day == 24 ? MuDayAvailability.soldOut : MuDayAvailability.available,
+            onChanged: (d) => setState(() => _day = d),
+          ),
+        ]),
+        _Section('Stepper', [
+          MuStepper(
+            label: 'Places à compléter',
+            value: _spots,
+            min: 1,
+            max: 4,
+            helper: (n) => '${6 + n} joueurs · ${formatDT(150 / (6 + n))} chacun',
+            onChanged: (v) => setState(() => _spots = v),
+          ),
+        ]),
+        _Section('StarRating', [
+          const MuStarRating.display(value: 4.7, count: 128),
+          const SizedBox(height: MuSpace.s3),
+          MuStarRating.input(
+            value: _stars.toDouble(),
+            label: 'Fair-play',
+            onChanged: (v) => setState(() => _stars = v),
+          ),
+        ]),
+        _Section('ProgressBar — places', [
+          MuProgressBar(
+            variant: MuProgressVariant.spots,
+            label: 'Paiements',
+            value: 1,
+            pending: 5,
+            max: 10,
+            people: Story.myBooking.players,
+            legend: true,
+          ),
+        ]),
+        const _Section('Takeover — billet', [
+          MuTicket(
+            reference: 'MU-48213',
+            sport: MuSport.football,
+            venue: 'Arena Five · La Marsa',
+            court: 'Terrain 1',
+            date: 'mer. 21 oct.',
+            time: '21h00',
+            players: '6/10',
+            paid: '15 DT',
           ),
         ]),
         _Section('Spinner', [

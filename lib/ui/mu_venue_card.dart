@@ -20,7 +20,7 @@ enum MuAmenity {
   showers('Douches'),
   parking('Parking'),
   covered('Couvert'),
-  cafe('Cafétéria'),
+  cafe('Café'),
   bibs('Chasubles');
 
   const MuAmenity(this.label);

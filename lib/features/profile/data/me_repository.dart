@@ -13,6 +13,8 @@ class Me {
     required this.displayName,
     required this.zone,
     required this.levels,
+    this.email,
+    this.balance = 0,
     this.unreadNotifications = 0,
     this.position,
   });
@@ -26,6 +28,12 @@ class Me {
   /// The district of the location chip, « La Marsa ».
   final String zone;
   final Map<MuSport, double> levels;
+
+  /// Where confirmations are sent.
+  final String? email;
+
+  /// The MatchUp balance in DT (refunds land here; it can pay a share).
+  final num balance;
   final int unreadNotifications;
 
   /// Where the player is, for the map's « Ta position ».
@@ -34,21 +42,34 @@ class Me {
 
 abstract interface class MeRepository {
   Future<Me> me();
+
+  /// Takes [amount] DT from the balance (a share paid with it).
+  Future<void> debit(num amount);
 }
 
-/// Yassine B. from the story (design/screens/STORY-DATA.md).
+/// Yassine B. from the story (design/screens/STORY-DATA.md), with a 30 DT balance.
 class FakeMeRepository implements MeRepository {
-  const FakeMeRepository();
+  FakeMeRepository();
+
+  num _balance = Story.myBalance;
 
   @override
-  Future<Me> me() async => const Me(
+  Future<Me> me() async => Me(
     firstName: Story.myFirstName,
     displayName: Story.myName,
     zone: Story.zone,
     levels: Story.myLevels,
+    email: Story.myEmail,
+    balance: _balance,
     unreadNotifications: Story.unreadNotifications,
     position: Story.me,
   );
+
+  @override
+  Future<void> debit(num amount) async {
+    if (amount > _balance) throw StateError('Solde insuffisant');
+    _balance -= amount;
+  }
 }
 
-final meRepositoryProvider = Provider<MeRepository>((ref) => const FakeMeRepository());
+final meRepositoryProvider = Provider<MeRepository>((ref) => FakeMeRepository());

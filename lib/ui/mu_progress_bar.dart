@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 import '../theme/theme.dart';
+import 'mu_avatar.dart';
+import 'mu_avatar_stack.dart';
 
 enum MuProgressVariant { bar, segmented, spots }
 
@@ -10,7 +12,8 @@ enum MuProgressSize { s, m, l }
 /// ProgressBar (components/ProgressBar.md): continuous, segmented or game spots (confirmed solid,
 /// [pending] hatched, free). Always pair it with a number — [label] + value — or a [hint].
 ///
-/// The AvatarStack header of the spots variant comes with the GameCard milestone.
+/// The spots variant takes [people] for its header (AvatarStack + « 6/10 joueurs » + « 4 places
+/// libres ») and [legend] for « 1 confirmé · 5 en attente · 4 libres » under the track.
 class MuProgressBar extends StatelessWidget {
   const MuProgressBar({
     super.key,
@@ -26,6 +29,8 @@ class MuProgressBar extends StatelessWidget {
     this.showValue = true,
     this.hint,
     this.indeterminate = false,
+    this.people,
+    this.legend = false,
   });
 
   final double value;
@@ -44,6 +49,15 @@ class MuProgressBar extends StatelessWidget {
   final bool showValue;
   final String? hint;
   final bool indeterminate;
+
+  /// Spots: who is in, for the header.
+  final List<MuPerson>? people;
+
+  /// Spots: the confirmed · pending · free legend.
+  final bool legend;
+
+  // The legend swatches: 16 × 6.
+  static const Size _swatch = Size(16, 6);
 
   // ProgressBar.md: tracks 4 / 6 / 8 px; segment gaps 3 px; pending starts 2 px after the solid.
   static const double _trackS = 4;
@@ -92,6 +106,10 @@ class MuProgressBar extends StatelessWidget {
         : unit != null
             ? '${_num(value)} sur ${_num(max)} $unit${pending > 0 ? ', dont ${_num(pending)} en attente' : ''}'
             : _valueText;
+
+    if (variant == MuProgressVariant.spots && people != null) {
+      return _spots(context, track, semantics);
+    }
 
     return Semantics(
       label: label,
@@ -142,6 +160,79 @@ class MuProgressBar extends StatelessWidget {
                     hint!,
                     style: MuType.caption.copyWith(color: error ? c.errorText : c.textSecondary),
                   ),
+                ),
+              ],
+            ),
+          ],
+        ],
+      ),
+    );
+  }
+
+  Widget _spots(BuildContext context, Widget track, String semantics) {
+    final c = context.mu;
+    final total = max.round();
+    final confirmed = value.round();
+    final waiting = pending.round();
+    final taken = confirmed + waiting;
+    final free = total - taken;
+    Widget key(Widget swatch, String text) => Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        SizedBox.fromSize(size: _swatch, child: swatch),
+        const SizedBox(width: MuSpace.s1),
+        Text(text, style: MuType.caption.copyWith(color: c.textSecondary)),
+      ],
+    );
+    final fill = tone.color(c);
+    return Semantics(
+      label: label,
+      value: '$taken joueurs sur $total, $confirmed confirmés, $waiting en attente, $free libres',
+      excludeSemantics: true,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Row(
+            children: [
+              MuAvatarStack(people: people!, size: MuAvatarSize.xs),
+              const SizedBox(width: MuSpace.s2),
+              Text.rich(
+                TextSpan(
+                  children: [
+                    TextSpan(text: '$taken/$total', style: MuType.numM.copyWith(color: c.text)),
+                    TextSpan(
+                      text: ' joueurs',
+                      style: MuType.body.copyWith(color: c.textSecondary),
+                    ),
+                  ],
+                ),
+              ),
+              const Spacer(),
+              Text(
+                '$free ${free == 1 ? 'place libre' : 'places libres'}',
+                style: MuType.caption.copyWith(color: c.textSecondary),
+              ),
+            ],
+          ),
+          const SizedBox(height: MuSpace.s2),
+          track,
+          if (legend) ...[
+            const SizedBox(height: MuSpace.s2),
+            Wrap(
+              spacing: MuSpace.s4,
+              runSpacing: MuSpace.s1,
+              children: [
+                key(
+                  DecoratedBox(decoration: BoxDecoration(color: fill, borderRadius: MuRadius.xsAll)),
+                  '$confirmed ${confirmed == 1 ? 'confirmé' : 'confirmés'}',
+                ),
+                key(CustomPaint(painter: _HatchPainter(fill)), '$waiting en attente'),
+                key(
+                  DecoratedBox(
+                    decoration: BoxDecoration(color: c.border, borderRadius: MuRadius.xsAll),
+                  ),
+                  '$free ${free == 1 ? 'libre' : 'libres'}',
                 ),
               ],
             ),

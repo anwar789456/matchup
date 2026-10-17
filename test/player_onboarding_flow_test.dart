@@ -66,7 +66,7 @@ void main() {
       gamesRepositoryProvider.overrideWithValue(FakeGamesRepository(latency: Duration.zero)),
       venuesRepositoryProvider.overrideWithValue(FakeVenuesRepository(latency: Duration.zero)),
       bookingsRepositoryProvider.overrideWithValue(
-        const FakeBookingsRepository(latency: Duration.zero),
+        FakeBookingsRepository(latency: Duration.zero),
       ),
       tournamentsRepositoryProvider.overrideWithValue(
         FakeTournamentsRepository(latency: Duration.zero),

@@ -123,7 +123,7 @@ void main() {
             FakeTournamentsRepository(latency: Duration.zero),
           ),
           bookingsRepositoryProvider.overrideWithValue(
-            const FakeBookingsRepository(latency: Duration.zero),
+            FakeBookingsRepository(latency: Duration.zero),
           ),
         ],
       );

@@ -24,6 +24,7 @@ class MuChoiceCard extends StatefulWidget {
     this.layout = MuChoiceLayout.row,
     this.error = false,
     this.background,
+    this.extra,
   });
 
   final String title;
@@ -35,6 +36,9 @@ class MuChoiceCard extends StatefulWidget {
   final MuChoiceLayout layout;
   final bool error;
   final Widget? background;
+
+  /// Under the description: a tag such as « Recommandé » (BKG-04).
+  final Widget? extra;
 
   @override
   State<MuChoiceCard> createState() => _MuChoiceCardState();
@@ -80,6 +84,7 @@ class _MuChoiceCardState extends State<MuChoiceCard> {
         Text(widget.title, style: MuType.labelL.copyWith(color: titleColor)),
         if (widget.description != null)
           Text(widget.description!, style: MuType.body.copyWith(color: descColor)),
+        if (widget.extra != null) ...[const SizedBox(height: MuSpace.s2), widget.extra!],
       ],
     );
 
