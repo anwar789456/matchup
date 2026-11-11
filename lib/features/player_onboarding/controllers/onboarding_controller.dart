@@ -3,14 +3,14 @@ import 'dart:typed_data';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../theme/theme.dart';
-import '../../../core/api/api_client.dart';
 import '../../../core/api/session.dart';
-import '../data/api_profile_repository.dart';
+import '../../../core/db/app_database.dart';
 import '../data/level_estimator.dart';
 import '../data/location_services.dart';
 import '../data/onboarding_state.dart';
 import '../data/onboarding_store.dart';
 import '../data/profile_repository.dart';
+import '../data/sqlite_profile_repository.dart';
 
 // Backends of the player onboarding. Swap the fakes for the API implementations here.
 final onboardingStoreProvider = Provider<OnboardingStore>((ref) => LocalOnboardingStore());
@@ -19,7 +19,7 @@ final devicePermissionsProvider =
     Provider<DevicePermissions>((ref) => const SystemPermissions());
 final zoneDirectoryProvider = Provider<ZoneDirectory>((ref) => const FakeZoneDirectory());
 final profileRepositoryProvider = Provider<ProfileRepository>(
-  (ref) => ApiProfileRepository(ref.read(apiClientProvider), userId: () => ref.read(sessionProvider)),
+  (ref) => SqliteProfileRepository(ref.read(appDatabaseProvider), userId: () => ref.read(sessionProvider)),
 );
 
 /// The onboarding answers, loaded from the device and saved after every change.

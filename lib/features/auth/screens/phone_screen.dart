@@ -9,6 +9,7 @@ import '../../../theme/theme.dart';
 import '../../../ui/ui.dart';
 import '../../common/widgets/flow_scaffold.dart';
 import '../controllers/auth_providers.dart';
+import '../widgets/auth_messages.dart';
 import '../widgets/auth_widgets.dart';
 import '../../../l10n/l10n.dart';
 
@@ -50,6 +51,8 @@ class _PhoneScreenState extends ConsumerState<PhoneScreen> {
       await ref.read(authRepositoryProvider).sendPhoneCode(_digits);
       ref.read(authFlowProvider.notifier).setPhone(_digits);
       if (mounted) context.push(Routes.smsCode);
+    } catch (e) {
+      if (mounted) setState(() => _error = AuthMessages.smsFailure(e));
     } finally {
       if (mounted) setState(() => _loading = false);
     }

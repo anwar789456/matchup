@@ -23,6 +23,7 @@ class CodeEntry extends StatefulWidget {
     required this.buttonLabel,
     this.successMessage,
     this.header,
+    this.resendFailure,
   });
 
   final InlineSpan lead;
@@ -37,6 +38,9 @@ class CodeEntry extends StatefulWidget {
   /// Shown in the success state before moving on (« Numéro vérifié. »); null skips it.
   final String? successMessage;
   final Widget? header;
+
+  /// The error toast when [onResend] fails; null lets the error through.
+  final String Function(Object error)? resendFailure;
 
   @override
   State<CodeEntry> createState() => _CodeEntryState();
@@ -85,7 +89,10 @@ class _CodeEntryState extends State<CodeEntry> {
       if (mounted) widget.onVerified();
     } catch (e) {
       final message = AuthMessages.codeFailure(e);
-      if (message == null) rethrow;
+      if (message == null) {
+        if (mounted) setState(() => _verifying = false);
+        rethrow;
+      }
       if (!mounted) return;
       setState(() {
         _verifying = false;
@@ -116,7 +123,14 @@ class _CodeEntryState extends State<CodeEntry> {
           resendIn: _resendIn,
           autofocus: true,
           onResend: () async {
-            await widget.onResend();
+            final failure = widget.resendFailure;
+            try {
+              await widget.onResend();
+            } catch (e) {
+              if (failure == null) rethrow;
+              if (context.mounted) MuToast.show(context, tone: MuToastTone.error, title: failure(e));
+              return;
+            }
             if (!context.mounted) return;
             MuToast.show(context, tone: MuToastTone.success, title: l10n.codeRenvoye);
           },

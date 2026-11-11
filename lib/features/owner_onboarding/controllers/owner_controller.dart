@@ -5,15 +5,15 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/format.dart';
 import '../../../ui/ui.dart';
 import '../../common/data/pro_providers.dart';
-import '../../../core/api/api_client.dart';
 import '../../../core/api/session.dart';
-import '../data/api_owner_repository.dart';
+import '../../../core/db/app_database.dart';
 import '../data/owner_draft.dart';
 import '../data/owner_repository.dart';
+import '../data/sqlite_owner_repository.dart';
 import '../../../l10n/l10n.dart';
 
 final ownerRepositoryProvider = Provider<OwnerRepository>(
-  (ref) => ApiOwnerRepository(ref.read(apiClientProvider), userId: () => ref.read(sessionProvider)),
+  (ref) => SqliteOwnerRepository(ref.read(appDatabaseProvider), userId: () => ref.read(sessionProvider)),
 );
 
 /// The owner wizard draft: loaded from the device (or started from the account), saved after

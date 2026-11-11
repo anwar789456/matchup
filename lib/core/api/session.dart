@@ -1,8 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-/// Who is signed in: the `id` of the account in the utilisateur module, kept on the device.
-/// No token yet — the team's backend has no authentication (school project).
+/// Who is signed in: the `id` of the account in the `utilisateurs` table, kept on the device.
 class Session extends Notifier<int?> {
   static const _key = 'session.userId';
 

@@ -40,7 +40,7 @@ This folder is the design handoff. Treat it as the source of truth for how the a
 ## Architecture
 
 - Flutter stable (3.27+), Dart 3.
-- Packages: `google_fonts`, `phosphor_flutter`, `flutter_svg`, `go_router` (navigation, one route per screen code; `StatefulShellRoute` for the 5 tabs), `flutter_riverpod` (state), `flutter_localizations` + `intl` (fr default, ar, en later), `shared_preferences`. Added in Milestone 3: `flutter_map` + `latlong2` (Explorer map, muted tiles, no API key), `qr_flutter` (booking QR), `url_launcher` (Itinéraire), `share_plus` (share links). Added in Milestones 4–5: `pdf` + `printing` (receipt PDF), `flutter_local_notifications` (simulated push). `flutter_stripe` only when the backend exists. Ask before adding any other package.
+- Packages: `google_fonts`, `phosphor_flutter`, `flutter_svg`, `go_router` (navigation, one route per screen code; `StatefulShellRoute` for the 5 tabs), `flutter_riverpod` (state), `flutter_localizations` + `intl` (fr default, ar, en later), `shared_preferences`. Added in Milestone 3: `flutter_map` + `latlong2` (Explorer map, muted tiles, no API key), `qr_flutter` (booking QR), `url_launcher` (Itinéraire), `share_plus` (share links). Added in Milestones 4–5: `pdf` + `printing` (receipt PDF), `flutter_local_notifications` (simulated push). Local database (no server): `sqflite` + `sqflite_common_ffi_web` (web, needs `web/sqlite3.wasm` + `web/sqflite_sw.js`), `path`, `crypto` (password hashes); `sqflite_common_ffi` in tests. The schema is in `lib/core/db/app_database.dart`. `flutter_stripe` only when the backend exists. Ask before adding any other package.
 - Folders:
   ```
   lib/

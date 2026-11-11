@@ -34,6 +34,7 @@ class SmsCodeScreen extends ConsumerWidget {
       successMessage: AuthMessages.phoneVerified,
       verify: repo.verifyPhoneCode,
       onResend: () => repo.sendPhoneCode(digits),
+      resendFailure: AuthMessages.smsFailure,
       onVerified: () => context.push(Routes.verifyEmail),
     );
   }

@@ -35,6 +35,12 @@ class TooManyCodeAttempts extends AuthFailure {
   final DateTime retryAt;
 }
 
+/// AUTH-02: a new SMS code was asked for too soon: wait until [retryAt].
+class CodeRequestTooSoon extends AuthFailure {
+  const CodeRequestTooSoon(this.retryAt);
+  final DateTime retryAt;
+}
+
 /// AUTH-08: the new password must differ from the old one.
 class SamePassword extends AuthFailure {
   const SamePassword();
@@ -60,9 +66,10 @@ abstract interface class AuthRepository {
   /// When the current lock ends, or null when sign-in is allowed.
   DateTime? lockedUntil();
 
+  /// Throws [CodeRequestTooSoon].
   Future<void> sendPhoneCode(String digits);
 
-  /// Throws [InvalidCode] or [TooManyCodeAttempts].
+  /// Throws [InvalidCode] or [TooManyCodeAttempts]. The right code saves the number.
   Future<void> verifyPhoneCode(String code);
 
   Future<void> resendVerificationEmail();
