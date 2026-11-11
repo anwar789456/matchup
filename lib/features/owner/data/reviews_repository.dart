@@ -2,7 +2,9 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/clock.dart';
+import '../../../core/db/app_database.dart';
 import '../../common/data/story_data.dart';
+import 'sqlite_owner_repositories.dart';
 
 /// A player's review of the venue, and the venue's public reply (OWN-19).
 @immutable
@@ -96,7 +98,10 @@ class FakeReviewsRepository implements ReviewsRepository {
   final Duration latency;
   final DateTime Function() _clock;
 
-  late ReviewsSummary _summary = ReviewsSummary(
+  ReviewsSummary _summary = storySummary;
+
+  /// 4,7 · 128 avis, the three latest (Omar's waits for a reply).
+  static final storySummary = ReviewsSummary(
     average: 4.7,
     total: 128,
     byStars: const {5: 100, 4: 20, 3: 5, 2: 2, 1: 1},
@@ -159,8 +164,9 @@ class FakeReviewsRepository implements ReviewsRepository {
   }
 }
 
+/// Reviews and replies live in the phone's database. Tests override it with the fake.
 final reviewsRepositoryProvider = Provider<ReviewsRepository>(
-  (ref) => FakeReviewsRepository(clock: ref.watch(clockProvider)),
+  (ref) => SqliteReviewsRepository(ref.watch(appDatabaseProvider), clock: ref.watch(clockProvider)),
 );
 
 final ownerReviewsProvider = FutureProvider<ReviewsSummary>(

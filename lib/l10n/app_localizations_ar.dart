@@ -320,6 +320,14 @@ class AppLocalizationsAr extends AppLocalizations {
       'Trop d’essais. Réessaie dans 10 minutes.';
 
   @override
+  String get patienteAvantNouveauCode =>
+      'Patiente un peu avant de demander un nouveau code.';
+
+  @override
+  String get impossibleDEnvoyerLeSms =>
+      'Impossible d’envoyer le SMS. Réessaie dans un instant.';
+
+  @override
   String get numeroVerifie => 'Numéro vérifié.';
 
   @override

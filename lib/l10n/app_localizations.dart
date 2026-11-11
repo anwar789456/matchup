@@ -658,6 +658,18 @@ abstract class AppLocalizations {
   /// **'Trop d’essais. Réessaie dans 10 minutes.'**
   String get tropDEssaisReessaieDans;
 
+  /// No description provided for @patienteAvantNouveauCode.
+  ///
+  /// In fr, this message translates to:
+  /// **'Patiente un peu avant de demander un nouveau code.'**
+  String get patienteAvantNouveauCode;
+
+  /// No description provided for @impossibleDEnvoyerLeSms.
+  ///
+  /// In fr, this message translates to:
+  /// **'Impossible d’envoyer le SMS. Réessaie dans un instant.'**
+  String get impossibleDEnvoyerLeSms;
+
   /// No description provided for @numeroVerifie.
   ///
   /// In fr, this message translates to:

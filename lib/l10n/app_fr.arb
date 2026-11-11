@@ -107,6 +107,8 @@
   "emailOuMotDePasse": "Email ou mot de passe incorrect.",
   "entreLesChiffresDuCode": "Entre les 6 chiffres du code.",
   "tropDEssaisReessaieDans": "Trop d’essais. Réessaie dans 10 minutes.",
+  "patienteAvantNouveauCode": "Patiente un peu avant de demander un nouveau code.",
+  "impossibleDEnvoyerLeSms": "Impossible d’envoyer le SMS. Réessaie dans un instant.",
   "numeroVerifie": "Numéro vérifié.",
   "lesMotsDePasseCorrespondent": "Les mots de passe correspondent.",
   "lesMotsDePasseNe": "Les mots de passe ne correspondent pas.",

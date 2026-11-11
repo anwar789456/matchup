@@ -1,6 +1,8 @@
 import 'dart:convert';
 
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:sqflite/sqflite.dart';
+
+import '../../../core/db/app_database.dart';
 
 /// Where the pro onboarding drafts (owner, coach, organiser) are kept between sessions, as JSON
 /// maps under a key. The wizard saves after every change.
@@ -12,14 +14,17 @@ abstract interface class DraftStore {
   Future<void> clear(String key);
 }
 
-/// Keeps the drafts on the device (shared_preferences; localStorage on the web).
-class LocalDraftStore implements DraftStore {
-  const LocalDraftStore();
+/// Keeps the drafts in the `brouillons` table (key, JSON content, last change).
+class SqliteDraftStore implements DraftStore {
+  const SqliteDraftStore(this._database);
+
+  final AppDatabase _database;
 
   @override
   Future<Map<String, Object?>?> load(String key) async {
-    final prefs = await SharedPreferences.getInstance();
-    final raw = prefs.getString(key);
+    final rows = await (await _database.db)
+        .query('brouillons', columns: ['contenu'], where: 'cle = ?', whereArgs: [key]);
+    final raw = rows.firstOrNull?['contenu'] as String?;
     if (raw == null) return null;
     try {
       return jsonDecode(raw) as Map<String, Object?>;
@@ -32,14 +37,16 @@ class LocalDraftStore implements DraftStore {
 
   @override
   Future<void> save(String key, Map<String, Object?> json) async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setString(key, jsonEncode(json));
+    await (await _database.db).insert(
+      'brouillons',
+      {'cle': key, 'contenu': jsonEncode(json), 'maj_le': DateTime.now().toIso8601String()},
+      conflictAlgorithm: ConflictAlgorithm.replace,
+    );
   }
 
   @override
   Future<void> clear(String key) async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.remove(key);
+    await (await _database.db).delete('brouillons', where: 'cle = ?', whereArgs: [key]);
   }
 }
 

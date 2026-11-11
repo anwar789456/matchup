@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/db/app_database.dart';
 import '../../common/data/draft_store.dart';
 import 'notification_models.dart';
 
@@ -106,7 +107,9 @@ class NotificationPrefs {
   }
 }
 
-final notificationPrefsStoreProvider = Provider<DraftStore>((ref) => const LocalDraftStore());
+final notificationPrefsStoreProvider = Provider<DraftStore>(
+  (ref) => SqliteDraftStore(ref.watch(appDatabaseProvider)),
+);
 
 /// The preferences, loaded from the device and saved after every change.
 class NotificationPrefsController extends Notifier<NotificationPrefs> {

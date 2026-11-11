@@ -1,8 +1,10 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/connectivity.dart';
+import '../../../core/db/app_database.dart';
 import '../../../ui/ui.dart';
 import '../../common/data/story_data.dart';
+import 'sqlite_catalog_repositories.dart';
 
 /// Tournaments open for registration near the player.
 abstract interface class TournamentsRepository {
@@ -27,6 +29,10 @@ class FakeTournamentsRepository implements TournamentsRepository {
   }
 }
 
+/// Tournaments live in the phone's database. Tests override it with the fake.
 final tournamentsRepositoryProvider = Provider<TournamentsRepository>(
-  (ref) => FakeTournamentsRepository(offline: () => ref.read(simulatedOfflineProvider)),
+  (ref) => SqliteTournamentsRepository(
+    ref.watch(appDatabaseProvider),
+    offline: () => ref.read(simulatedOfflineProvider),
+  ),
 );

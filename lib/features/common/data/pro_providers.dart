@@ -2,11 +2,14 @@ import 'dart:typed_data';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/db/app_database.dart';
 import 'draft_store.dart';
 import 'file_services.dart';
 
 // Backends shared by the pro onboardings. Swap the fakes for the API implementations here.
-final draftStoreProvider = Provider<DraftStore>((ref) => const LocalDraftStore());
+final draftStoreProvider = Provider<DraftStore>(
+  (ref) => SqliteDraftStore(ref.watch(appDatabaseProvider)),
+);
 final fileSourceProvider = Provider<FileSource>((ref) => const DeviceFileSource());
 final uploadServiceProvider = Provider<UploadService>((ref) => const FakeUploadService());
 

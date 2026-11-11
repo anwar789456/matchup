@@ -1,8 +1,10 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/db/app_database.dart';
 import '../../../theme/theme.dart';
 import '../../common/data/story_data.dart';
+import 'sqlite_owner_repositories.dart';
 
 /// A court of the owner's venue (OWN-11 columns, OWN-17).
 @immutable
@@ -230,13 +232,19 @@ class FakeOwnerRepository implements OwnerRepository {
   FakeOwnerRepository({this.latency = const Duration(milliseconds: 300)});
 
   final Duration latency;
-  final _courts = [
-    const OwnerCourt(id: 't1', number: 1),
-    const OwnerCourt(id: 't2', number: 2),
-    const OwnerCourt(id: 't3', number: 3, indoor: true),
+  final _courts = [...storyCourts];
+  late final List<OwnerBooking> _bookings = storyBookings();
+  late final List<OwnerBlock> _blocks = [...storyBlocks];
+
+  /// Arena Five's three courts, the third indoor.
+  static const storyCourts = [
+    OwnerCourt(id: 't1', number: 1),
+    OwnerCourt(id: 't2', number: 2),
+    OwnerCourt(id: 't3', number: 3, indoor: true),
   ];
-  late final List<OwnerBooking> _bookings = _story();
-  late final List<OwnerBlock> _blocks = [
+
+  /// Terrain 3 closed for cleaning tonight at 18h.
+  static final storyBlocks = [
     OwnerBlock(
       id: 'b1',
       court: 3,
@@ -254,7 +262,7 @@ class FakeOwnerRepository implements OwnerRepository {
       a.year == b.year && a.month == b.month && a.day == b.day;
 
   /// Arena Five's week (OWN-10, OWN-11, OWN-12, OWN-14).
-  static List<OwnerBooking> _story() {
+  static List<OwnerBooking> storyBookings() {
     OwnerBooking b(
       String ref,
       int day,
@@ -493,9 +501,14 @@ class FakeOwnerRepository implements OwnerRepository {
   Future<CheckInResult> checkIn(String code, DateTime at) async {
     await _wait();
     final c = code.trim().toUpperCase();
-    if (c == 'MU-48213') {
-      final b = _bookings.firstWhere((x) => x.ref == c);
-      return CheckInResult(status: CheckInStatus.valid, code: c, scannedAt: at, booking: b);
+    return checkInOf(c, at, _bookings.where((x) => x.ref == c).firstOrNull);
+  }
+
+  /// OWN-21 to 23 for code [c] (upper case) scanned [at]: MU-48213 is tonight's valid ticket,
+  /// MU-48190 was already scanned at 19h02, anything else is unknown. [booking] is [c]'s.
+  static CheckInResult checkInOf(String c, DateTime at, OwnerBooking? booking) {
+    if (c == 'MU-48213' && booking != null) {
+      return CheckInResult(status: CheckInStatus.valid, code: c, scannedAt: at, booking: booking);
     }
     if (c == 'MU-48190') {
       return CheckInResult(
@@ -520,7 +533,11 @@ class FakeOwnerRepository implements OwnerRepository {
   }
 }
 
-final ownerRepositoryProvider = Provider<OwnerRepository>((ref) => FakeOwnerRepository());
+/// The venue's courts, bookings and blocks live in the phone's database. Tests override it with
+/// the fake.
+final ownerRepositoryProvider = Provider<OwnerRepository>(
+  (ref) => SqliteOwnerRepository(ref.watch(appDatabaseProvider)),
+);
 
 final ownerCourtsProvider = FutureProvider<List<OwnerCourt>>(
   (ref) => ref.watch(ownerRepositoryProvider).courts(),

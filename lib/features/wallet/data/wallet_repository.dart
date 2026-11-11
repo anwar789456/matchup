@@ -1,12 +1,14 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/db/app_database.dart';
 import '../../../theme/theme.dart';
 import '../../../ui/ui.dart';
 import '../../common/data/story_data.dart';
 import '../../home/controllers/home_providers.dart';
 import '../../payments/data/payment_repository.dart';
 import '../../profile/data/me_repository.dart';
+import 'sqlite_wallet_repository.dart';
 
 enum RefundReason { venueClosed, gameCancelled, paidTwice, other }
 
@@ -83,7 +85,10 @@ class FakeWalletRepository implements WalletRepository {
     date: DateTime(2026, 9, 27, 18),
   );
 
-  final _history = <MuTransaction>[
+  final _history = [...storyHistory];
+
+  /// The story's history (STORY-DATA « Wallet »).
+  static final storyHistory = <MuTransaction>[
     MuTransaction(
       id: 'tx-share-oct21',
       kind: MuTransactionKind.booking,
@@ -144,7 +149,10 @@ class FakeWalletRepository implements WalletRepository {
     hoopZone,
   ];
 
-  final _refunds = <RefundRequest>[
+  final _refunds = [...storyRefunds];
+
+  /// The Hoop Zone request, under review.
+  static final storyRefunds = <RefundRequest>[
     RefundRequest(
       id: 'rf-hoop',
       transaction: hoopZone,
@@ -196,7 +204,10 @@ class FakeWalletRepository implements WalletRepository {
   }
 }
 
-final walletRepositoryProvider = Provider<WalletRepository>((ref) => FakeWalletRepository());
+/// The wallet lives in the phone's database. Tests override it with the fake.
+final walletRepositoryProvider = Provider<WalletRepository>(
+  (ref) => SqliteWalletRepository(ref.watch(appDatabaseProvider)),
+);
 
 final walletHistoryProvider = FutureProvider<List<MuTransaction>>(
   (ref) => ref.watch(walletRepositoryProvider).history(),

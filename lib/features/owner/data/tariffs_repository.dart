@@ -1,8 +1,10 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/db/app_database.dart';
 import '../../common/data/story_data.dart';
 import 'owner_drafts.dart';
+import 'sqlite_owner_repositories.dart';
 
 /// A group of courts sharing one price (OWN-16 « Terrains 1 et 2 », « Terrain 3 »).
 @immutable
@@ -131,7 +133,10 @@ class FakeTariffsRepository implements TariffsRepository {
 
   final Duration latency;
 
-  Tariffs _tariffs = Tariffs(
+  Tariffs _tariffs = storyTariffs;
+
+  /// Arena Five's prices: 120 DT off-peak, 150 DT at peak (18h–23h and weekends).
+  static final storyTariffs = Tariffs(
     prices: const [
       CourtPrice(id: 'outdoor', courts: [1, 2], offPeak: 120, peak: 150),
       CourtPrice(id: 'indoor', courts: [3], offPeak: 120, peak: 150, indoor: true),
@@ -183,7 +188,10 @@ class FakeTariffsRepository implements TariffsRepository {
   }
 }
 
-final tariffsRepositoryProvider = Provider<TariffsRepository>((ref) => FakeTariffsRepository());
+/// The price list lives in the phone's database. Tests override it with the fake.
+final tariffsRepositoryProvider = Provider<TariffsRepository>(
+  (ref) => SqliteTariffsRepository(ref.watch(appDatabaseProvider)),
+);
 
 final tariffsProvider = FutureProvider<Tariffs>(
   (ref) => ref.watch(tariffsRepositoryProvider).load(),

@@ -1,9 +1,11 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/db/app_database.dart';
 import '../../../ui/ui.dart';
 import '../../common/data/story_data.dart';
 import '../../payments/data/receipt.dart';
+import 'sqlite_subscription_repository.dart';
 
 export '../../payments/data/receipt.dart';
 
@@ -156,7 +158,10 @@ class FakeSubscriptionRepository implements SubscriptionRepository {
       _set(_sub.copyWith(status: PremiumStatus.trial, cancelReason: () => null));
 
   @override
-  Future<List<ReceiptEntry>> receipts() async => [
+  Future<List<ReceiptEntry>> receipts() async => storyReceipts;
+
+  /// The story's three receipts (SUB-04).
+  static final storyReceipts = <ReceiptEntry>[
     ReceiptEntry(
       number: 'MU-R-2026-01482',
       label: 'Part Arena Five · MU-48213',
@@ -201,8 +206,9 @@ class FakeSubscriptionRepository implements SubscriptionRepository {
   ];
 }
 
+/// The plan and receipts live in the phone's database. Tests override it with the fake.
 final subscriptionRepositoryProvider = Provider<SubscriptionRepository>(
-  (ref) => FakeSubscriptionRepository(),
+  (ref) => SqliteSubscriptionRepository(ref.watch(appDatabaseProvider)),
 );
 
 final receiptsProvider = FutureProvider<List<ReceiptEntry>>(

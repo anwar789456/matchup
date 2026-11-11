@@ -1,9 +1,11 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/db/app_database.dart';
 import '../../../theme/theme.dart';
 import '../../../ui/ui.dart';
 import '../../common/data/story_data.dart';
+import 'sqlite_admin_repository.dart';
 
 /// Where an account stands for the admin (ADM-02 badge).
 enum AdminUserStatus { flagged, toVerify, active, suspended, banned }
@@ -1272,7 +1274,11 @@ class FakeAdminRepository implements AdminRepository {
   }
 }
 
-final adminRepositoryProvider = Provider<AdminRepository>((ref) => FakeAdminRepository());
+/// The admin's decisions live in the phone's database (`admin_journal`). Tests override it with
+/// the fake.
+final adminRepositoryProvider = Provider<AdminRepository>(
+  (ref) => SqliteAdminRepository(ref.watch(appDatabaseProvider)),
+);
 
 final adminOverviewProvider = FutureProvider<AdminOverview>(
   (ref) => ref.watch(adminRepositoryProvider).overview(),

@@ -1,9 +1,11 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/db/app_database.dart';
 import '../../../theme/theme.dart';
 import '../../../ui/ui.dart';
 import '../../common/data/story_data.dart';
+import 'sqlite_me_repository.dart';
 
 /// The signed-in player as the app shell shows them.
 @immutable
@@ -78,4 +80,7 @@ class FakeMeRepository implements MeRepository {
   Future<void> credit(num amount) async => _balance += amount;
 }
 
-final meRepositoryProvider = Provider<MeRepository>((ref) => FakeMeRepository());
+/// The balance lives in the phone's database. Tests override it with the fake.
+final meRepositoryProvider = Provider<MeRepository>(
+  (ref) => SqliteMeRepository(ref.watch(appDatabaseProvider)),
+);

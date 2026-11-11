@@ -3,8 +3,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../theme/theme.dart';
 import '../../../ui/ui.dart';
+import '../../../core/db/app_database.dart';
 import '../../common/data/story_data.dart';
 import 'matches_models.dart';
+import 'sqlite_bookings_repository.dart';
 
 export 'matches_models.dart';
 
@@ -104,25 +106,26 @@ class FakeBookingsRepository implements BookingsRepository {
   final Duration latency;
   final _bookings = [Story.myBooking];
   final _accepted = <MuGame>[];
-  final _cancelled = <CancelledBooking>[_storyCancelled];
+  final _cancelled = <CancelledBooking>[storyCancelled];
   final _rated = <String>{};
   final _scores = <String, List<(int, int)>>{};
-  var _invitations = [
-    MatchInvitation(
-      id: 'inv-mariem',
-      from: Story.invitation.from,
-      sport: Story.invitation.sport,
-      venue: Story.invitation.venue,
-      place: 'Lac 2',
-      start: Story.invitation.start,
-      share: Story.invitation.share,
-      spotsTotal: Story.invitation.spotsTotal,
-      spotsLeft: Story.invitation.spotsLeft,
-    ),
-  ];
+  var _invitations = [storyInvitation];
 
-  // References follow the story's MU-48213.
-  static const int _firstRef = 48213;
+  /// Mariem's padel invitation.
+  static final storyInvitation = MatchInvitation(
+    id: 'inv-mariem',
+    from: Story.invitation.from,
+    sport: Story.invitation.sport,
+    venue: Story.invitation.venue,
+    place: 'Lac 2',
+    start: Story.invitation.start,
+    share: Story.invitation.share,
+    spotsTotal: Story.invitation.spotsTotal,
+    spotsLeft: Story.invitation.spotsLeft,
+  );
+
+  /// References follow the story's MU-48213.
+  static const int firstReference = 48213;
 
   static const _levels = <String, double>{
     'Skander T.': 4.0,
@@ -134,7 +137,7 @@ class FakeBookingsRepository implements BookingsRepository {
   };
 
   /// Skander's game of sam. 10 oct., cancelled the day before.
-  static final _storyCancelled = CancelledBooking(
+  static final storyCancelled = CancelledBooking(
     booking: MuBooking(
       id: 'g-cancelled-oct10',
       sport: MuSport.football,
@@ -154,7 +157,7 @@ class FakeBookingsRepository implements BookingsRepository {
     refund: 15,
   );
 
-  static final _storyPast = <PastMatch>[
+  static final storyPast = <PastMatch>[
     PastMatch(
       id: 'pm-padel-oct9',
       sport: MuSport.padel,
@@ -256,7 +259,7 @@ class FakeBookingsRepository implements BookingsRepository {
       for (final b in [..._bookings, for (final c in _cancelled) c.booking])
         if (b.id != null && b.id!.startsWith('MU-')) int.tryParse(b.id!.substring(3)) ?? 0,
     ];
-    return 'MU-${used.fold(_firstRef - 1, (a, b) => a > b ? a : b) + 1}';
+    return 'MU-${used.fold(firstReference - 1, (a, b) => a > b ? a : b) + 1}';
   }
 
   @override
@@ -291,6 +294,12 @@ class FakeBookingsRepository implements BookingsRepository {
     await Future<void>.delayed(latency);
     final b = _booking(id);
     if (b == null) throw StateError('Réservation introuvable : $id');
+    return detailsOf(b);
+  }
+
+  /// MAT-05: the venue, the line-up, the payments and the chat of booking [b].
+  static BookingDetails detailsOf(MuBooking b) {
+    final id = b.id;
     final venue = Story.venues.firstWhere(
       (v) => v.name == b.venue,
       orElse: () => Story.venues.first,
@@ -404,7 +413,7 @@ class FakeBookingsRepository implements BookingsRepository {
   Future<List<PastMatch>> past() async {
     await Future<void>.delayed(latency);
     return [
-      for (final m in _storyPast)
+      for (final m in storyPast)
         PastMatch(
           id: m.id,
           sport: m.sport,
@@ -434,24 +443,23 @@ class FakeBookingsRepository implements BookingsRepository {
       for (final i in _invitations)
         if (i.id != invitationId) i,
     ];
-    if (accept) {
-      _accepted.add(
-        MuGame(
-          id: inv.id,
-          sport: inv.sport,
-          venue: inv.venue,
-          place: inv.place,
-          start: inv.start,
-          spotsTotal: inv.spotsTotal,
-          spotsLeft: inv.spotsLeft - 1,
-          pricePerPlayer: inv.share,
-          players: [inv.from, Story.yassine],
-          organiser: inv.from.name,
-          status: MuGameStatus.joined,
-        ),
-      );
-    }
+    if (accept) _accepted.add(gameOf(inv));
   }
+
+  /// An accepted invitation as the game « À venir » shows (the player took one spot).
+  static MuGame gameOf(MatchInvitation inv) => MuGame(
+        id: inv.id,
+        sport: inv.sport,
+        venue: inv.venue,
+        place: inv.place,
+        start: inv.start,
+        spotsTotal: inv.spotsTotal,
+        spotsLeft: inv.spotsLeft - 1,
+        pricePerPlayer: inv.share,
+        players: [inv.from, Story.yassine],
+        organiser: inv.from.name,
+        status: MuGameStatus.joined,
+      );
 
   @override
   Future<void> rate(String matchId, List<MateRating> ratings) async {
@@ -466,4 +474,7 @@ class FakeBookingsRepository implements BookingsRepository {
   }
 }
 
-final bookingsRepositoryProvider = Provider<BookingsRepository>((ref) => FakeBookingsRepository());
+/// The player's bookings, kept in the phone's database. Tests override it with the fake.
+final bookingsRepositoryProvider = Provider<BookingsRepository>(
+  (ref) => SqliteBookingsRepository(ref.watch(appDatabaseProvider)),
+);
