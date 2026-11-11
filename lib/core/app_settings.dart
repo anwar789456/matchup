@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+
+import 'db/app_database.dart';
+import 'db/preferences.dart';
 
 /// App-wide display settings: theme (« Clair » / « Night match » / « Système ») and language,
-/// saved on the device (SET-04).
+/// saved in the `preferences` table (SET-04).
 @immutable
 class AppSettings {
   const AppSettings({this.themeMode = ThemeMode.system, this.locale = const Locale('fr')});
@@ -18,8 +20,10 @@ class AppSettings {
 }
 
 class AppSettingsController extends Notifier<AppSettings> {
-  static const _themeKey = 'settings.theme';
-  static const _localeKey = 'settings.locale';
+  static const _themeKey = 'reglages.theme';
+  static const _localeKey = 'reglages.langue';
+
+  Preferences get _prefs => Preferences(ref.read(appDatabaseProvider));
 
   @override
   AppSettings build() {
@@ -29,9 +33,8 @@ class AppSettingsController extends Notifier<AppSettings> {
 
   Future<void> _load() async {
     try {
-      final prefs = await SharedPreferences.getInstance();
-      final theme = prefs.getString(_themeKey);
-      final locale = prefs.getString(_localeKey);
+      final theme = await _prefs.get(_themeKey);
+      final locale = await _prefs.get(_localeKey);
       state = AppSettings(
         themeMode: ThemeMode.values.firstWhere(
           (m) => m.name == theme,
@@ -40,7 +43,7 @@ class AppSettingsController extends Notifier<AppSettings> {
         locale: locale == null ? const Locale('fr') : Locale(locale),
       );
     } catch (_) {
-      // No preferences (tests, first run): keep the defaults.
+      // No database yet: keep the defaults.
     }
   }
 
@@ -56,8 +59,7 @@ class AppSettingsController extends Notifier<AppSettings> {
 
   Future<void> _save(String key, String value) async {
     try {
-      final prefs = await SharedPreferences.getInstance();
-      await prefs.setString(key, value);
+      await _prefs.set(key, value);
     } catch (_) {}
   }
 }

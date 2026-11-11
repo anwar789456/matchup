@@ -1,7 +1,9 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/db/app_database.dart';
 import '../../common/data/story_data.dart';
+import '../../explore/data/sqlite_catalog_repositories.dart';
 
 /// Someone the player could invite.
 @immutable
@@ -44,6 +46,7 @@ class FakeTeammatesRepository implements TeammatesRepository {
   ];
 }
 
+/// Teammates live in the phone's database. Tests override it with the fake.
 final teammatesRepositoryProvider = Provider<TeammatesRepository>(
-  (ref) => const FakeTeammatesRepository(),
+  (ref) => SqliteTeammatesRepository(ref.watch(appDatabaseProvider)),
 );

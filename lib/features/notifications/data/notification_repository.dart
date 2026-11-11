@@ -3,9 +3,10 @@ import 'dart:async';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 
-import '../../../core/clock.dart';
+import '../../../core/db/app_database.dart';
 import '../../../theme/theme.dart';
 import 'notification_models.dart';
+import 'sqlite_notification_repository.dart';
 
 /// The notification centre's data. Until a backend exists [FakeNotificationRepository] serves
 /// the story's notifications (NOT-01 / NOT-02) and the debug menu pushes new ones.
@@ -236,8 +237,9 @@ List<AppNotification> storyNotifications(DateTime now) {
   ];
 }
 
+/// The centre lives in the phone's database. Tests override it with the fake.
 final notificationRepositoryProvider = Provider<NotificationRepository>(
-  (ref) => FakeNotificationRepository(now: ref.read(clockProvider)()),
+  (ref) => SqliteNotificationRepository(ref.watch(appDatabaseProvider)),
 );
 
 final notificationsProvider = StreamProvider<List<AppNotification>>(

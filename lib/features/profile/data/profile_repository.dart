@@ -2,10 +2,12 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 
+import '../../../core/db/app_database.dart';
 import '../../../core/format.dart';
 import '../../../theme/theme.dart';
 import '../../../ui/ui.dart';
 import '../../common/data/story_data.dart';
+import 'sqlite_profile_repository.dart';
 
 /// A level the AI estimates for one sport, with its history (PRF-01 « Mes niveaux »).
 @immutable
@@ -490,7 +492,11 @@ class FakePlayerProfileRepository implements PlayerProfileRepository {
   @override
   Future<LevelExplanation> explain(MuSport sport) async {
     await Future<void>.delayed(latency);
-    return const LevelExplanation(
+    return storyExplanation;
+  }
+
+  /// PRF-03 for Yassine's padel level.
+  static const storyExplanation = LevelExplanation(
       factors: [
         ('Tes 18 matchs de padel', 0.55, 'Résultats et niveau des adversaires (3,0 à 4,5)'),
         ('9 avis de coéquipiers', 0.30, '7 « conforme », 2 « au-dessus » de ton niveau'),
@@ -502,7 +508,6 @@ class FakePlayerProfileRepository implements PlayerProfileRepository {
         ('Défaite 4-6 6-7', 'mar. 22 sept.', 'Serrée contre une paire à 4,0 : pas de baisse', 0),
       ],
     );
-  }
 
   @override
   Future<void> adjustLevel(MuSport sport, double level) async {}
@@ -511,8 +516,9 @@ class FakePlayerProfileRepository implements PlayerProfileRepository {
   Future<void> contestLevel(MuSport sport) async {}
 }
 
+/// The profile's edits and follows live in the phone's database. Tests override it with the fake.
 final playerProfileRepositoryProvider = Provider<PlayerProfileRepository>(
-  (ref) => FakePlayerProfileRepository(),
+  (ref) => SqlitePlayerProfileRepository(ref.watch(appDatabaseProvider)),
 );
 
 final myProfileProvider = FutureProvider<PlayerProfile>(

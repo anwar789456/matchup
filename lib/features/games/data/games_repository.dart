@@ -2,11 +2,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 import '../../../core/connectivity.dart';
+import '../../../core/db/app_database.dart';
 import '../../../core/format.dart';
 import '../../../theme/theme.dart';
 import '../../../ui/ui.dart';
 import '../../common/data/story_data.dart';
 import 'game_details.dart';
+import 'sqlite_games_repository.dart';
 
 export 'game_details.dart';
 
@@ -97,9 +99,16 @@ class FakeGamesRepository implements GamesRepository {
     return null;
   }
 
-  MuGame _current(MuGame g) {
-    final joined = _membership[g.id] == GameMembership.joined;
-    final left = g.spotsLeft + (_freed[g.id] ?? 0) - (joined ? 1 : 0);
+  MuGame _current(MuGame g) => current(
+    g,
+    joined: _membership[g.id] == GameMembership.joined,
+    freed: _freed[g.id] ?? 0,
+  );
+
+  /// [g] as the player sees it: one place less and « Inscrit » once joined, plus the places
+  /// [freed] since the story.
+  static MuGame current(MuGame g, {required bool joined, int freed = 0}) {
+    final left = g.spotsLeft + freed - (joined ? 1 : 0);
     return MuGame(
       id: g.id,
       venueId: g.venueId,
@@ -153,7 +162,13 @@ class FakeGamesRepository implements GamesRepository {
   }
 
   /// G1's teams as the lobby shows them (STORY-DATA.md); other games fill their sides in order.
-  List<MuLineupTeam> _teams(MuGame g) {
+  /// [freed] places empty the last filled seats; the player sits at [slot] once [joined].
+  static List<MuLineupTeam> teams(
+    MuGame g, {
+    int freed = 0,
+    bool joined = false,
+    (int, int)? slot,
+  }) {
     final size = teamSize(g.sport);
     final names = teamNames(g.sport);
     MuLineupPlayer player(MuPerson p) => MuLineupPlayer(
@@ -169,7 +184,7 @@ class FakeGamesRepository implements GamesRepository {
         [player(Story.omar), player(Story.lina), player(Story.ines), player(Story.aziz), null],
       ];
       // GAM-02: Mariem and Rami took the last two places (in the story, not after a join).
-      final storyLeft = Story.g1.spotsLeft + (_freed[g.id] ?? 0);
+      final storyLeft = Story.g1.spotsLeft + freed;
       if (storyLeft <= 0) {
         sides[0][2] = player(Story.mariem);
         sides[1][4] = player(Story.rami);
@@ -185,7 +200,6 @@ class FakeGamesRepository implements GamesRepository {
         i++;
       }
     }
-    final freed = _freed[g.id] ?? 0;
     if (freed > 0) {
       // The freed places: the last filled, non-organiser positions.
       var toFree = freed;
@@ -199,8 +213,8 @@ class FakeGamesRepository implements GamesRepository {
         }
       }
     }
-    final mine = _slot[g.id];
-    if (_membership[g.id] == GameMembership.joined && mine != null) {
+    final mine = slot;
+    if (joined && mine != null) {
       sides[mine.$1][mine.$2] = MuLineupPlayer(
         Story.myName,
         level: Story.myLevels[g.sport] ?? _levels[Story.myName],
@@ -215,7 +229,26 @@ class FakeGamesRepository implements GamesRepository {
     await _wait();
     final base = _find(id);
     if (base == null) throw StateError('Partie introuvable : $id');
-    final g = _current(base);
+    return detailsOf(
+      base,
+      membership: _membership[id] ?? GameMembership.none,
+      freed: _freed[id] ?? 0,
+      slot: _slot[id],
+      waitlistPosition: _waitlistPosition[id],
+    );
+  }
+
+  /// GAM-01 / GAM-02 for [base] given where the player stands.
+  static GameDetails detailsOf(
+    MuGame base, {
+    required GameMembership membership,
+    int freed = 0,
+    (int, int)? slot,
+    int? waitlistPosition,
+  }) {
+    final id = base.id;
+    final joined = membership == GameMembership.joined;
+    final g = current(base, joined: joined, freed: freed);
     final venue = Story.venues.firstWhere(
       (v) => v.id == g.venueId,
       orElse: () => Story.venues.first,
@@ -225,11 +258,10 @@ class FakeGamesRepository implements GamesRepository {
     const c = _levels;
     final organiserFirst = (g.organiser ?? 'L’organisateur').split(' ').first;
     final waitlistCount = full ? 2 : 0;
-    final membership = _membership[id] ?? GameMembership.none;
     return GameDetails(
       game: g,
       venue: venue,
-      teams: _teams(g),
+      teams: teams(g, freed: freed, joined: joined, slot: slot),
       messageCount: isG1 ? 14 : 3,
       messages: [
         GameMessage(
@@ -279,9 +311,9 @@ class FakeGamesRepository implements GamesRepository {
           : 'Recommandé car $organiserFirst cherche un milieu près de chez toi. L’IA peut se tromper.',
       membership: membership,
       waitlistCount: waitlistCount,
-      waitlistPosition: membership == GameMembership.waitlisted ? _waitlistPosition[id] : null,
-      joinedTeam: _slot[id]?.$1,
-      joinedSlot: _slot[id]?.$2,
+      waitlistPosition: membership == GameMembership.waitlisted ? waitlistPosition : null,
+      joinedTeam: slot?.$1,
+      joinedSlot: slot?.$2,
     );
   }
 
@@ -301,8 +333,11 @@ class FakeGamesRepository implements GamesRepository {
   @override
   Future<void> joinWaitlist(String id) async {
     _membership[id] = GameMembership.waitlisted;
-    _waitlistPosition[id] = 3;
+    _waitlistPosition[id] = waitlistStart;
   }
+
+  /// The player's place in a waitlist that already has two people.
+  static const waitlistStart = 3;
 
   @override
   Future<void> leaveWaitlist(String id) async {
@@ -321,8 +356,12 @@ class FakeGamesRepository implements GamesRepository {
   }
 }
 
+/// Games and the player's places live in the phone's database. Tests override it with the fake.
 final gamesRepositoryProvider = Provider<GamesRepository>(
-  (ref) => FakeGamesRepository(offline: () => ref.read(simulatedOfflineProvider)),
+  (ref) => SqliteGamesRepository(
+    ref.watch(appDatabaseProvider),
+    offline: () => ref.read(simulatedOfflineProvider),
+  ),
 );
 
 /// The game page's data; invalidate after joining, leaving or the waitlist.

@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../theme/theme.dart';
 import '../../../core/api/session.dart';
 import '../../../core/db/app_database.dart';
+import '../../common/data/draft_store.dart';
 import '../data/level_estimator.dart';
 import '../data/location_services.dart';
 import '../data/onboarding_state.dart';
@@ -13,7 +14,9 @@ import '../data/profile_repository.dart';
 import '../data/sqlite_profile_repository.dart';
 
 // Backends of the player onboarding. Swap the fakes for the API implementations here.
-final onboardingStoreProvider = Provider<OnboardingStore>((ref) => LocalOnboardingStore());
+final onboardingStoreProvider = Provider<OnboardingStore>(
+  (ref) => DraftOnboardingStore(SqliteDraftStore(ref.watch(appDatabaseProvider))),
+);
 final levelEstimatorProvider = Provider<LevelEstimator>((ref) => const FakeLevelEstimator());
 final devicePermissionsProvider =
     Provider<DevicePermissions>((ref) => const SystemPermissions());

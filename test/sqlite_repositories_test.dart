@@ -6,7 +6,6 @@ import 'package:matchup/core/db/app_database.dart';
 import 'package:matchup/core/sms/sms_sender.dart';
 import 'package:matchup/features/auth/data/auth_repository.dart';
 import 'package:matchup/features/auth/data/sqlite_auth_repository.dart';
-import 'package:matchup/features/matches/data/bookings_repository.dart';
 import 'package:matchup/features/matches/data/sqlite_bookings_repository.dart';
 import 'package:matchup/features/owner_onboarding/data/owner_repository.dart';
 import 'package:matchup/features/owner_onboarding/data/sqlite_owner_repository.dart';

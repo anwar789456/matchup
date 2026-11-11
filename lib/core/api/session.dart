@@ -1,29 +1,31 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
-/// Who is signed in: the `id` of the account in the `utilisateurs` table, kept on the device.
+import '../db/app_database.dart';
+import '../db/preferences.dart';
+
+/// Who is signed in: the `id` of the account in the `utilisateurs` table, kept in `preferences`.
 class Session extends Notifier<int?> {
-  static const _key = 'session.userId';
+  static const _key = 'session.utilisateur_id';
+
+  Preferences get _prefs => Preferences(ref.read(appDatabaseProvider));
 
   @override
   int? build() {
-    SharedPreferences.getInstance().then((prefs) {
-      final id = prefs.getInt(_key);
+    _prefs.get(_key).then((v) {
+      final id = int.tryParse(v ?? '');
       if (id != null && state == null) state = id;
-    });
+    }).catchError((Object _) {});
     return null;
   }
 
   Future<void> signIn(int userId) async {
     state = userId;
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setInt(_key, userId);
+    await _prefs.set(_key, '$userId');
   }
 
   Future<void> signOut() async {
     state = null;
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.remove(_key);
+    await _prefs.set(_key, null);
   }
 }
 

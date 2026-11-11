@@ -1,7 +1,4 @@
-import 'dart:convert';
-
-import 'package:shared_preferences/shared_preferences.dart';
-
+import '../../common/data/draft_store.dart';
 import 'onboarding_state.dart';
 
 /// Where the onboarding progress is kept between launches.
@@ -13,35 +10,29 @@ abstract interface class OnboardingStore {
   Future<void> clear();
 }
 
-/// Keeps the progress on the device (shared_preferences), as JSON.
-class LocalOnboardingStore implements OnboardingStore {
+/// Keeps the progress as JSON in the `brouillons` table, through [DraftStore].
+class DraftOnboardingStore implements OnboardingStore {
+  const DraftOnboardingStore(this._drafts);
+
+  final DraftStore _drafts;
   static const _key = 'player_onboarding.v1';
 
   @override
   Future<PlayerOnboardingState?> load() async {
-    final prefs = await SharedPreferences.getInstance();
-    final raw = prefs.getString(_key);
-    if (raw == null) return null;
+    final json = await _drafts.load(_key);
+    if (json == null) return null;
     try {
-      return PlayerOnboardingState.fromJson(jsonDecode(raw) as Map<String, Object?>);
-    } on FormatException {
-      return null;
+      return PlayerOnboardingState.fromJson(json);
     } on TypeError {
       return null;
     }
   }
 
   @override
-  Future<void> save(PlayerOnboardingState state) async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setString(_key, jsonEncode(state.toJson()));
-  }
+  Future<void> save(PlayerOnboardingState state) => _drafts.save(_key, state.toJson());
 
   @override
-  Future<void> clear() async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.remove(_key);
-  }
+  Future<void> clear() => _drafts.clear(_key);
 }
 
 /// For tests.

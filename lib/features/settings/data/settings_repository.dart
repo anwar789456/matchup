@@ -1,5 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:sqflite/sqflite.dart';
+
+import '../../../core/db/app_database.dart';
 
 /// A signed-in device (SET-03 « Sessions actives »).
 @immutable
@@ -25,7 +28,8 @@ enum Gender { male, female, unspecified }
 
 enum InvitePolicy { everyone, teammates, nobody }
 
-/// Everything the settings screens read and write (SET-02 to SET-06), kept in memory.
+/// Everything the settings screens read and write (SET-02 to SET-06), kept in the
+/// `reglages_compte` row and the `sessions_appareils` table.
 @immutable
 class AccountSettings {
   const AccountSettings({
@@ -128,24 +132,120 @@ class AccountSettings {
 }
 
 class AccountSettingsController extends Notifier<AccountSettings> {
+  AppDatabase get _database => ref.read(appDatabaseProvider);
+
   @override
-  AccountSettings build() => const AccountSettings();
+  AccountSettings build() {
+    _load();
+    return const AccountSettings();
+  }
 
-  void update(AccountSettings Function(AccountSettings s) change) => state = change(state);
+  Future<void> _load() async {
+    try {
+      final db = await _database.db;
+      final row = (await db.query('reglages_compte')).firstOrNull;
+      if (row == null) return;
+      state = AccountSettingsRows.read(row, await db.query('sessions_appareils', orderBy: 'position'));
+    } catch (_) {
+      // No database: keep the defaults.
+    }
+  }
 
-  void signOutSession(String id) => state = state.copyWith(
+  void _set(AccountSettings next) {
+    state = next;
+    _database.db
+        .then((db) => db.transaction((txn) => AccountSettingsRows.write(txn, next)))
+        .catchError((Object _) {});
+  }
+
+  void update(AccountSettings Function(AccountSettings s) change) => _set(change(state));
+
+  void signOutSession(String id) => _set(state.copyWith(
     sessions: [
       for (final s in state.sessions)
         if (s.id != id) s,
     ],
-  );
+  ));
 
-  void signOutOthers() => state = state.copyWith(
+  void signOutOthers() => _set(state.copyWith(
     sessions: [
       for (final s in state.sessions)
         if (s.current) s,
     ],
-  );
+  ));
+}
+
+/// [AccountSettings] ⇄ the `reglages_compte` row and the `sessions_appareils` rows.
+abstract final class AccountSettingsRows {
+  static AccountSettings read(Map<String, Object?> r, List<Map<String, Object?>> sessions) =>
+      AccountSettings(
+        email: r['email']! as String,
+        phone: r['telephone']! as String,
+        firstName: r['prenom']! as String,
+        lastName: r['nom']! as String,
+        birthDate: r['date_naissance']! as String,
+        gender: Gender.values.byName(r['genre']! as String),
+        passwordChanged: r['mdp_change']! as String,
+        twoFactor: r['double_facteur'] == 1,
+        sessions: [
+          for (final s in sessions)
+            DeviceSession(
+              id: s['id']! as String,
+              name: s['nom']! as String,
+              where: s['lieu']! as String,
+              current: s['actuelle'] == 1,
+              mobile: s['mobile'] == 1,
+            ),
+        ],
+        googleEmail: r['google_email'] as String?,
+        appleConnected: r['apple'] == 1,
+        profilePublic: r['profil_public'] == 1,
+        invites: InvitePolicy.values.byName(r['invitations']! as String),
+        showLevel: r['montrer_niveau'] == 1,
+        showReliability: r['montrer_fiabilite'] == 1,
+        preciseLocation: r['position_precise'] == 1,
+        blocked: r['bloques']! as int,
+        notificationsSummary: r['resume_notifications']! as String,
+      );
+
+  /// Replaces the row and the sessions with [s].
+  static Future<void> write(DatabaseExecutor db, AccountSettings s) async {
+    await db.insert(
+      'reglages_compte',
+      {
+        'id': 1,
+        'email': s.email,
+        'telephone': s.phone,
+        'prenom': s.firstName,
+        'nom': s.lastName,
+        'date_naissance': s.birthDate,
+        'genre': s.gender.name,
+        'mdp_change': s.passwordChanged,
+        'double_facteur': s.twoFactor ? 1 : 0,
+        'google_email': s.googleEmail,
+        'apple': s.appleConnected ? 1 : 0,
+        'profil_public': s.profilePublic ? 1 : 0,
+        'invitations': s.invites.name,
+        'montrer_niveau': s.showLevel ? 1 : 0,
+        'montrer_fiabilite': s.showReliability ? 1 : 0,
+        'position_precise': s.preciseLocation ? 1 : 0,
+        'bloques': s.blocked,
+        'resume_notifications': s.notificationsSummary,
+      },
+      conflictAlgorithm: ConflictAlgorithm.replace,
+    );
+    await db.delete('sessions_appareils');
+    for (final (i, d) in s.sessions.indexed) {
+      await db.insert('sessions_appareils', {
+        'id': d.id,
+        'nom': d.name,
+        'lieu': d.where,
+        'actuelle': d.current ? 1 : 0,
+        'mobile': d.mobile ? 1 : 0,
+        'position': i,
+      });
+    }
+  }
 }
 
 final accountSettingsProvider = NotifierProvider<AccountSettingsController, AccountSettings>(

@@ -1,8 +1,10 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/connectivity.dart';
+import '../../../core/db/app_database.dart';
 import '../../../ui/ui.dart';
 import '../../common/data/story_data.dart';
+import 'sqlite_venues_repository.dart';
 
 /// Venues (« Terrains »): Explorer's list and map, the Home's « Terrains près de toi ».
 abstract interface class VenuesRepository {
@@ -26,6 +28,10 @@ class FakeVenuesRepository implements VenuesRepository {
   }
 }
 
+/// Venues live in the phone's database. Tests override it with the fake.
 final venuesRepositoryProvider = Provider<VenuesRepository>(
-  (ref) => FakeVenuesRepository(offline: () => ref.read(simulatedOfflineProvider)),
+  (ref) => SqliteVenuesRepository(
+    ref.watch(appDatabaseProvider),
+    offline: () => ref.read(simulatedOfflineProvider),
+  ),
 );

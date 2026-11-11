@@ -1,6 +1,9 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/db/app_database.dart';
+import 'sqlite_payment_repository.dart';
+
 enum CardBrand { visa, mastercard }
 
 /// A saved card (STORY-DATA « Milestones 4–5 »: Visa 4242 default, Mastercard 5454 expiring).
@@ -142,11 +145,26 @@ class FakePaymentRepository implements PaymentRepository {
 
   final Duration latency;
   final PaymentOutcome Function() _outcome;
-  final _cards = <PaymentCard>[
-    const PaymentCard(id: 'visa-4242', brand: CardBrand.visa, last4: '4242', expMonth: 8, expYear: 2027, isDefault: true),
-    const PaymentCard(id: 'mc-5454', brand: CardBrand.mastercard, last4: '5454', expMonth: 11, expYear: 2026),
+  final _cards = [...storyCards];
+
+  /// Visa 4242 by default, Mastercard 5454 expiring next month.
+  static const storyCards = <PaymentCard>[
+    PaymentCard(id: 'visa-4242', brand: CardBrand.visa, last4: '4242', expMonth: 8, expYear: 2027, isDefault: true),
+    PaymentCard(id: 'mc-5454', brand: CardBrand.mastercard, last4: '5454', expMonth: 11, expYear: 2026),
   ];
-  int _receipts = 1482;
+
+  /// The promo codes the checkout knows: valid (percent) or refused (message).
+  static const storyPromos = <String, ({int? percent, String? error})>{
+    'BIENVENUE10': (percent: 10, error: null),
+    'MARSA2025': (percent: null, error: 'Ce code a expiré le 31 déc. 2025.'),
+  };
+
+  /// The first receipt number of the story, « MU-R-2026-01482 ».
+  static const firstReceipt = 1482;
+
+  static const unknownPromo = 'Ce code n’existe pas.';
+
+  int _receipts = firstReceipt;
   ({num amount, PayWith method, PaymentCard? card})? _pending;
 
   PaymentReceipt _receipt(num amount, PayWith method, PaymentCard? card) => PaymentReceipt(
@@ -226,11 +244,12 @@ class FakePaymentRepository implements PaymentRepository {
   Future<PromoResult> applyPromo(String code) async {
     await Future<void>.delayed(latency);
     final upper = code.trim().toUpperCase();
-    return switch (upper) {
-      'BIENVENUE10' => PromoResult(code: upper, percent: 10),
-      'MARSA2025' => PromoResult(code: upper, error: 'Ce code a expiré le 31 déc. 2025.'),
-      _ => PromoResult(code: upper, error: 'Ce code n’existe pas.'),
-    };
+    final promo = storyPromos[upper];
+    return PromoResult(
+      code: upper,
+      percent: promo?.percent,
+      error: promo == null ? unknownPromo : promo.error,
+    );
   }
 }
 
@@ -246,8 +265,13 @@ final paymentOutcomeProvider = NotifierProvider<PaymentOutcomeController, Paymen
   PaymentOutcomeController.new,
 );
 
+/// Cards and payments live in the phone's database; the bank's answer comes from the debug
+/// menu. Tests override it with the fake.
 final paymentRepositoryProvider = Provider<PaymentRepository>(
-  (ref) => FakePaymentRepository(outcome: () => ref.read(paymentOutcomeProvider)),
+  (ref) => SqlitePaymentRepository(
+    ref.watch(appDatabaseProvider),
+    outcome: () => ref.read(paymentOutcomeProvider),
+  ),
 );
 
 final paymentCardsProvider = FutureProvider<List<PaymentCard>>(
