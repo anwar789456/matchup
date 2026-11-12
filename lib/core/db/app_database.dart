@@ -27,7 +27,7 @@ import 'seed.dart';
 ///
 /// v5: the Communauté (`forum_membres`, `forum_sujets`, `forum_messages`, `forum_votes`,
 /// `forum_reactions`, `forum_favoris`, `forum_suivis`, `forum_blocages`, `forum_visites`,
-/// `forum_signalements`, `forum_sanctions`), the same tables as the backend's `forum` schema.
+/// `forum_signalements`, `forum_sanctions`), text ids and an `auteur_id` per row, ready for Supabase sync.
 class AppDatabase {
   /// [factory] and [path] default to [defaultFactory] / [defaultPath].
   AppDatabase({DatabaseFactory? factory, String? path})

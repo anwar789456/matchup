@@ -7,7 +7,7 @@ import '../../../l10n/l10n.dart';
 import '../../../theme/theme.dart';
 
 /// The bytes of a `data:image/…;base64,…` image (how the phone keeps post images until they
-/// are uploaded to the backend), or null for a URL.
+/// are uploaded to Supabase Storage), or null for a URL.
 Uint8List? forumImageBytes(String src) {
   if (!src.startsWith('data:')) return null;
   final comma = src.indexOf(',');

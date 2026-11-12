@@ -5,51 +5,68 @@ import 'package:sqflite/sqflite.dart';
 import '../../../core/clock.dart';
 import 'forum_ai.dart';
 
-/// The story's forum (design/screens/STORY-DATA.md « Forum », FRM-01…05), with the same people
-/// and ids as the backend's demo (backend/apps/forum/src/demo/demo.service.ts). Yassine (1) is
-/// the member using the app.
+/// The story's forum (design/screens/STORY-DATA.md « Forum », FRM-01…05). Ids are text, like
+/// the rows the app creates (UUIDs), and every vote, reaction and report is its own row: counts
+/// are computed from them. These demo rows stay on each phone; only what the member writes is
+/// synced. Yassine ([me]) is the member using the app until Supabase gives a real user id.
 abstract final class ForumSeed {
-  static const me = 1;
+  static const me = 'demo-yassine';
 
-  /// Anonymous voters: ids far from real members, only to give realistic counters.
-  static const crowd = 100000;
+  /// The story's people: number used in the data below → (id, name, handle, level, sport).
+  static const members = <int, (String, String, String?, double?, String?)>{
+    1: (me, 'Yassine B.', 'yassine.b', 3.0, 'football'),
+    2: ('demo-ines', 'Ines M.', 'ines.m', 4.0, 'padel'),
+    3: ('demo-skander', 'Skander T.', 'skander.t', 4.0, 'football'),
+    4: ('demo-mariem', 'Mariem K.', 'mariem.k', 4.0, 'padel'),
+    5: ('demo-sami', 'Sami C.', 'sami.c', 4.5, 'padel'),
+    6: ('demo-hamza', 'Hamza R.', 'hamza.r', 3.5, 'football'),
+    7: ('demo-aziz', 'Aziz H.', 'aziz.h', 4.5, 'football'),
+    8: ('demo-omar', 'Omar D.', 'omar.d', 3.5, 'football'),
+    9: ('demo-bonsplans', 'Bons Plans Sport TN', 'bonsplans.tn', null, null),
+    10: ('demo-leila', 'Leila M.', 'leila.m', null, null),
+    11: ('demo-promo', 'promo_crampons', 'promo_crampons', null, null),
+    12: ('demo-bilel', 'coach.bilel', 'coach.bilel', null, 'padel'),
+    13: ('demo-karim', 'Karim J.', 'karim.j', 5.0, 'padel'),
+    14: ('demo-rami', 'Rami S.', 'rami.s', 3.5, 'padel'),
+    15: ('demo-nour', 'Nour A.', 'nour.a', 3.0, 'padel'),
+    16: ('demo-salma', 'Salma G.', 'salma.g', 3.0, 'football'),
+    17: ('demo-lina', 'Lina F.', 'lina.f', 3.5, 'padel'),
+    18: ('demo-mehdi', 'Mehdi K.', 'mehdi.k', 4.5, 'basketball'),
+  };
 
-  /// (id, name, handle, level, sport)
-  static const members = <(int, String, String?, double?, String?)>[
-    (1, 'Yassine B.', 'yassine.b', 3.0, 'football'),
-    (2, 'Ines M.', 'ines.m', 4.0, 'padel'),
-    (3, 'Skander T.', 'skander.t', 4.0, 'football'),
-    (4, 'Mariem K.', 'mariem.k', 4.0, 'padel'),
-    (5, 'Sami C.', 'sami.c', 4.5, 'padel'),
-    (6, 'Hamza R.', 'hamza.r', 3.5, 'football'),
-    (7, 'Aziz H.', 'aziz.h', 4.5, 'football'),
-    (8, 'Omar D.', 'omar.d', 3.5, 'football'),
-    (9, 'Bons Plans Sport TN', 'bonsplans.tn', null, null),
-    (10, 'Leila M.', 'leila.m', null, null),
-    (11, 'promo_crampons', 'promo_crampons', null, null),
-    (12, 'coach.bilel', 'coach.bilel', null, 'padel'),
-    (13, 'Karim J.', 'karim.j', 5.0, 'padel'),
-    (14, 'Rami S.', 'rami.s', 3.5, 'padel'),
-    (15, 'Nour A.', 'nour.a', 3.0, 'padel'),
-    (16, 'Salma G.', 'salma.g', 3.0, 'football'),
-    (17, 'Lina F.', 'lina.f', 3.5, 'padel'),
-    (18, 'Mehdi K.', 'mehdi.k', 4.5, 'basketball'),
-  ];
+  /// The id of story member [n].
+  static String id(int n) => members[n]!.$1;
 
-  static DateTime _ago(Duration d) => storyNow.subtract(d);
-  static Duration _h(num h) => Duration(minutes: (h * 60).round());
+  /// Ids of the demo rows (stable, so tests and screens can find them).
+  static String postId(String key) => 'demo-sujet-$key';
+  static String replyId(String key) => 'demo-message-$key';
 
+  static DateTime _ago(num hours) => storyNow.subtract(Duration(minutes: (hours * 60).round()));
+
+  /// Writes the whole story in one batch (every id is known in advance), so creating a database
+  /// stays fast.
   static Future<void> insert(DatabaseExecutor db) async {
-    for (final (id, name, handle, level, sport) in members) {
-      await db.insert('forum_membres', {'id': id, 'nom': name, 'pseudo': handle, 'niveau': level, 'sport': sport});
+    final batch = db.batch();
+    final now = storyNow.toIso8601String();
+    for (final (memberId, name, handle, level, sport) in members.values) {
+      batch.insert('forum_membres', {
+        'id': memberId,
+        'auteur_id': memberId,
+        'nom': name,
+        'pseudo': handle,
+        'niveau': level,
+        'sport': sport,
+        'maj_le': now,
+      });
     }
 
-    final postIds = <String, int>{};
     for (final p in _posts) {
-      final created = _ago(_h(p.hoursAgo));
+      final created = _ago(p.hoursAgo).toIso8601String();
       final analysis = ForumAi.analyze('${p.title}\n${p.body}');
-      final id = await db.insert('forum_sujets', {
-        'auteur_id': p.author,
+      final id = postId(p.key);
+      batch.insert('forum_sujets', {
+        'id': id,
+        'auteur_id': ForumSeed.id(p.author),
         'titre': p.title,
         'contenu': p.body,
         'categorie': p.category,
@@ -57,118 +74,123 @@ abstract final class ForumSeed {
         'tags': jsonEncode(p.tags),
         'mentions': jsonEncode(ForumAi.mentions(p.body)),
         'epingle': p.pinned ? 1 : 0,
+        // The spam post was hidden by the moderation (its 5 reports), not by a phone.
         'statut': p.hidden ? 'masque' : 'publie',
-        'score_ia': analysis.score,
-        'derniere_activite': created.toIso8601String(),
-        'cree_le': created.toIso8601String(),
-      });
-      postIds[p.key] = id;
-      await _crowd(db, 'sujet', id, p.votes, p.useful, p.thanks);
-      await db.insert('forum_suivis', {'utilisateur_id': p.author, 'type': 'sujet', 'cible_id': id});
-    }
-
-    final replyIds = <String, (int, int, int?)>{}; // key → (id, author, parent)
-    for (final r in _replies) {
-      final parent = r.parent == null ? null : replyIds[r.parent]!;
-      final created = _ago(_h(r.hoursAgo));
-      final analysis = ForumAi.analyze(r.body);
-      final id = await db.insert('forum_messages', {
-        'sujet_id': postIds[r.post],
-        'parent_id': parent == null ? null : (parent.$3 ?? parent.$1),
-        'auteur_id': r.author,
-        'en_reponse_a_id': parent?.$2,
-        'contenu': r.body,
-        'mentions': jsonEncode(ForumAi.mentions(r.body)),
-        'statut': r.hidden ? 'masque' : 'publie',
+        'meilleure_reponse_id': p.key == 'crampons' ? replyId('tf') : null,
         'score_ia': analysis.score,
         'motif_ia': analysis.score >= 0.15 ? analysis.reason : null,
-        'publie_malgre_alerte': r.hidden ? 1 : 0,
-        'cree_le': created.toIso8601String(),
+        'cree_le': created,
       });
-      replyIds[r.key] = (id, r.author, parent == null ? null : (parent.$3 ?? parent.$1));
-      await _crowd(db, 'message', id, r.votes, r.useful, 0);
-      if (r.hidden) {
-        await db.insert('forum_signalements', {
-          'cible': 'message',
-          'cible_id': id,
-          'signaleur_id': null,
-          'motif': 'insulte',
-          'details': 'IA · ${analysis.score}',
-          'cree_le': created.toIso8601String(),
-        });
-      }
+      _crowd(batch, 'sujet', id, p.votes, p.useful, p.thanks, created);
+      batch.insert('forum_suivis', {'utilisateur_id': ForumSeed.id(p.author), 'type': 'sujet', 'cible_id': id});
     }
 
-    // Counters, last activity and the best answer of « Crampons pour synthétique ? ».
-    for (final id in postIds.values) {
-      await db.rawUpdate(
-        '''
-        UPDATE forum_sujets SET
-          nb_reponses = (SELECT COUNT(*) FROM forum_messages WHERE sujet_id = ? AND statut = 'publie'),
-          derniere_activite = COALESCE((SELECT MAX(cree_le) FROM forum_messages WHERE sujet_id = ?), cree_le)
-        WHERE id = ?''',
-        [id, id, id],
-      );
+    final authors = <String, int>{};
+    final parents = <String, String?>{};
+    for (final r in _replies) {
+      final created = _ago(r.hoursAgo).toIso8601String();
+      final analysis = ForumAi.analyze(r.body);
+      final parent = r.parent;
+      final id = replyId(r.key);
+      authors[r.key] = r.author;
+      parents[r.key] = parent == null ? null : (parents[parent] ?? replyId(parent));
+      batch.insert('forum_messages', {
+        'id': id,
+        'sujet_id': postId(r.post),
+        'parent_id': parents[r.key],
+        'auteur_id': ForumSeed.id(r.author),
+        'en_reponse_a_id': parent == null ? null : ForumSeed.id(authors[parent]!),
+        'contenu': r.body,
+        'mentions': jsonEncode(ForumAi.mentions(r.body)),
+        // Yassine published it despite the FRM-03 warning: his own row, masked until reviewed.
+        'statut': r.hidden ? 'masque' : 'publie',
+        'publie_malgre_alerte': r.hidden ? 1 : 0,
+        'score_ia': analysis.score,
+        'motif_ia': analysis.score >= 0.15 ? analysis.reason : null,
+        'cree_le': created,
+      });
+      _crowd(batch, 'message', id, r.votes, r.useful, 0, created);
     }
-    await db.update('forum_sujets', {'meilleure_reponse_id': replyIds['tf']!.$1}, where: 'id = ?', whereArgs: [postIds['crampons']]);
 
-    // Reports from people (ADM-09): the spam post is hidden at its 5th.
+    // Reports (ADM-09): one row per reporter.
     for (final (target, key, by, reason) in _reports) {
-      final id = target == 'sujet' ? postIds[key]! : replyIds[key]!.$1;
       for (final (i, who) in by.indexed) {
-        await db.insert('forum_signalements', {
+        batch.insert('forum_signalements', {
+          'id': 'demo-signalement-$key-$who',
+          'auteur_id': ForumSeed.id(who),
           'cible': target,
-          'cible_id': id,
-          'signaleur_id': who,
+          'cible_id': target == 'sujet' ? postId(key) : replyId(key),
           'motif': reason,
-          'cree_le': _ago(_h(10 - i)).toIso8601String(),
+          'cree_le': _ago(10 - i).toIso8601String(),
         });
       }
     }
 
     // Yassine voted up Ines's bandeja (FRM-01) and Skander's post with « Utile » (FRM-04),
-    // saved the Masters post, and last opened the forum yesterday at 12h00
-    // (« Nouveaux depuis ta dernière visite »).
-    await _mine(db, 'sujet', postIds['bandeja']!, vote: 1);
-    await _mine(db, 'sujet', postIds['crampons']!, vote: 1, useful: true);
-    await db.insert('forum_favoris', {'utilisateur_id': me, 'sujet_id': postIds['masters'], 'cree_le': storyNow.toIso8601String()});
-    await db.insert('forum_visites', {'utilisateur_id': me, 'derniere_visite': _ago(_h(30)).toIso8601String()});
+    // saved the Masters post, and last opened the forum yesterday at 12h00 (« Nouveaux depuis
+    // ta dernière visite »).
+    batch.insert('forum_votes', {
+      'id': 'demo-vote-me-bandeja',
+      'auteur_id': me,
+      'cible': 'sujet',
+      'cible_id': postId('bandeja'),
+      'valeur': 1,
+      'cree_le': now,
+    });
+    batch.insert('forum_votes', {
+      'id': 'demo-vote-me-crampons',
+      'auteur_id': me,
+      'cible': 'sujet',
+      'cible_id': postId('crampons'),
+      'valeur': 1,
+      'cree_le': now,
+    });
+    batch.insert('forum_reactions', {
+      'id': 'demo-utile-me-crampons',
+      'auteur_id': me,
+      'cible': 'sujet',
+      'cible_id': postId('crampons'),
+      'type': 'utile',
+      'cree_le': now,
+    });
+    batch.insert('forum_favoris', {'utilisateur_id': me, 'sujet_id': postId('masters'), 'cree_le': now});
+    batch.insert('forum_visites', {'utilisateur_id': me, 'derniere_visite': _ago(30).toIso8601String()});
+    await batch.commit(noResult: true);
   }
 
-  static Future<void> _mine(DatabaseExecutor db, String target, int id, {int vote = 0, bool useful = false}) async {
-    if (vote != 0) {
-      await db.insert('forum_votes', {'utilisateur_id': me, 'cible': target, 'cible_id': id, 'valeur': vote});
-    }
-    if (useful) {
-      await db.insert('forum_reactions', {'utilisateur_id': me, 'cible': target, 'cible_id': id, 'type': 'utile'});
-    }
-    await _recount(db, target, id);
-  }
-
-  static Future<void> _crowd(DatabaseExecutor db, String target, int id, int votes, int useful, int thanks) async {
-    final batch = db.batch();
+  /// Votes and reactions from anonymous demo voters, one row each.
+  static void _crowd(Batch batch, String target, String id, int votes, int useful, int thanks, String at) {
     for (var i = 0; i < votes.abs(); i++) {
-      batch.insert('forum_votes', {'utilisateur_id': crowd + i, 'cible': target, 'cible_id': id, 'valeur': votes.sign});
+      batch.insert('forum_votes', {
+        'id': '$id-vote-$i',
+        'auteur_id': 'demo-foule-$i',
+        'cible': target,
+        'cible_id': id,
+        'valeur': votes.sign,
+        'cree_le': at,
+      });
     }
     for (var i = 0; i < useful; i++) {
-      batch.insert('forum_reactions', {'utilisateur_id': crowd + i, 'cible': target, 'cible_id': id, 'type': 'utile'});
+      batch.insert('forum_reactions', {
+        'id': '$id-utile-$i',
+        'auteur_id': 'demo-foule-$i',
+        'cible': target,
+        'cible_id': id,
+        'type': 'utile',
+        'cree_le': at,
+      });
     }
     for (var i = 0; i < thanks; i++) {
-      batch.insert('forum_reactions', {'utilisateur_id': crowd + 500 + i, 'cible': target, 'cible_id': id, 'type': 'merci'});
+      batch.insert('forum_reactions', {
+        'id': '$id-merci-$i',
+        'auteur_id': 'demo-foule-$i',
+        'cible': target,
+        'cible_id': id,
+        'type': 'merci',
+        'cree_le': at,
+      });
     }
-    await batch.commit(noResult: true);
-    await _recount(db, target, id);
   }
-
-  static Future<void> _recount(DatabaseExecutor db, String target, int id) => db.rawUpdate(
-    '''
-    UPDATE ${target == 'sujet' ? 'forum_sujets' : 'forum_messages'} SET
-      score = (SELECT COALESCE(SUM(valeur), 0) FROM forum_votes WHERE cible = ?1 AND cible_id = ?2),
-      nb_utile = (SELECT COUNT(*) FROM forum_reactions WHERE cible = ?1 AND cible_id = ?2 AND type = 'utile'),
-      nb_merci = (SELECT COUNT(*) FROM forum_reactions WHERE cible = ?1 AND cible_id = ?2 AND type = 'merci')
-    WHERE id = ?2''',
-    [target, id],
-  );
 
   // ── The story ───────────────────────────────────────────────────────────────────────────
 
@@ -438,7 +460,7 @@ abstract final class ForumSeed {
     _Reply('b1', 'basket', 16, 'Je suis à 3,5, je peux venir mardi.', hoursAgo: 30, votes: 2),
   ];
 
-  /// (target, key, reporters, reason)
+  /// (target, key, reporters (story numbers), reason)
   static const _reports = <(String, String, List<int>, String)>[
     ('sujet', 'spam', [1, 2, 3, 4, 6], 'spam'),
     ('message', 'nul', [8, 7, 6], 'insulte'),

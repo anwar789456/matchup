@@ -27,7 +27,7 @@ import '../widgets/report_sheet.dart';
 class DiscussionScreen extends ConsumerStatefulWidget {
   const DiscussionScreen({super.key, required this.postId});
 
-  final int postId;
+  final String postId;
 
   @override
   ConsumerState<DiscussionScreen> createState() => _DiscussionScreenState();
@@ -134,7 +134,7 @@ class _DiscussionScreenState extends ConsumerState<DiscussionScreen> {
     if (mounted) setState(() => _sending = false);
   }
 
-  Future<void> _report(ForumTarget target, int id, ForumAuthor author) async {
+  Future<void> _report(ForumTarget target, String id, ForumAuthor author) async {
     final choice = await showReportSheet(context, target: target, author: author);
     if (choice == null || !mounted) return;
     await _run(() async {
@@ -661,7 +661,7 @@ class _ReplyBlock extends StatelessWidget {
 
   final ForumReply reply;
   final DateTime now;
-  final void Function(int id, int value) onVote;
+  final void Function(String id, int value) onVote;
   final ValueChanged<ForumReply> onReply;
   final ValueChanged<ForumReply> onMore;
   final ValueChanged<ForumReply> onWhy;
@@ -972,7 +972,7 @@ class _ReplyBar extends ConsumerWidget {
 
   static const int _maxLines = 5;
 
-  /// Same limit as the backend (LIMITES.reponseMax).
+  /// Same limit as a post's message.
   static const int _maxLength = 2000;
 
   @override

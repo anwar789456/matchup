@@ -8,27 +8,35 @@ import '../../../core/db/app_database.dart';
 import '../../../l10n/l10n.dart';
 import '../../../theme/theme.dart';
 import 'forum_ai.dart';
+import 'forum_identity.dart';
 import 'forum_repository.dart';
 import 'forum_seed.dart';
 import 'forum_text.dart';
 
-/// [ForumRepository] on the phone's database (schema v3, `forum_*` tables), applying the same
-/// rules as the backend's forum module: what each reader sees, counters recounted after each
-/// change, the FRM-03 alert, 3 reports hide a content, suspended members cannot write.
+/// [ForumRepository] on the phone's database (schema v5, `forum_*` tables), shaped for the
+/// Supabase sync (shared tables, `auteur_id` = owner):
+///
+/// - Every row the phone creates gets a UUID ([newForumId]).
+/// - The phone only writes rows whose `auteur_id` is the member using it: a vote, a reaction or
+///   a report is its own row; scores, reply counts, « Utile » / « Merci » and the last activity
+///   are computed from those rows when reading.
+/// - Nothing here hides another member's post: the « hidden after 3 reports » rule will be a
+///   Supabase trigger. What the phone hides is its own text published despite the FRM-03 alert.
 class SqliteForumRepository implements ForumRepository {
-  SqliteForumRepository(this._database, {required this._now, bool Function()? offline, this.meId = ForumSeed.me})
-    : _offline = offline ?? (() => false);
+  SqliteForumRepository(this._database, {required this._now, String Function()? meId, bool Function()? offline})
+    : _meId = meId ?? (() => ForumSeed.me),
+      _offline = offline ?? (() => false);
 
   final AppDatabase _database;
   final DateTime Function() _now;
+  final String Function() _meId;
   final bool Function() _offline;
 
-  /// The member using the app.
-  final int meId;
-
   static const _draftKey = 'forum_nouveau_post';
-  static const _reportsToHide = 3;
   static const _pageMax = 50;
+
+  /// The member using the app (Supabase user id, or the demo player).
+  String get meId => _meId();
 
   Future<Database> get _db async {
     if (_offline()) throw const OfflineException();
@@ -37,12 +45,14 @@ class SqliteForumRepository implements ForumRepository {
 
   String get _nowIso => _now().toIso8601String();
 
-  // ── Reading helpers ───────────────────────────────────────────────────────────────────────
+  static String _marks(int n) => List.filled(n, '?').join(',');
 
-  Future<Map<int, ForumAuthor>> _members(DatabaseExecutor db) async => {
+  // ── Members ───────────────────────────────────────────────────────────────────────────────
+
+  Future<Map<String, ForumAuthor>> _members(DatabaseExecutor db) async => {
     for (final r in await db.query('forum_membres'))
-      r['id']! as int: ForumAuthor(
-        id: r['id']! as int,
+      r['id']! as String: ForumAuthor(
+        id: r['id']! as String,
         name: r['nom']! as String,
         handle: r['pseudo'] as String?,
         level: (r['niveau'] as num?)?.toDouble(),
@@ -50,38 +60,98 @@ class SqliteForumRepository implements ForumRepository {
       ),
   };
 
-  static ForumAuthor _unknown(int id) => ForumAuthor(id: id, name: l10n.forumMembre);
+  static ForumAuthor _unknown(String id) => ForumAuthor(id: id, name: l10n.forumMembre);
 
-  Future<Set<int>> _blocked(DatabaseExecutor db) async => {
+  /// The member's own profile row, created the first time they use the forum under a new id
+  /// (a Supabase user), from the player's profile (the story's Yassine until the Utilisateur
+  /// module gives real names).
+  Future<void> _ensureMe(DatabaseExecutor db) async {
+    final me = meId;
+    if ((await db.query('forum_membres', where: 'id = ?', whereArgs: [me])).isNotEmpty) return;
+    final profile = (await db.query('forum_membres', where: 'id = ?', whereArgs: [ForumSeed.me])).firstOrNull;
+    await db.insert('forum_membres', {
+      'id': me,
+      'auteur_id': me,
+      'nom': profile?['nom'] ?? l10n.forumMembre,
+      'pseudo': profile?['pseudo'],
+      'niveau': profile?['niveau'],
+      'sport': profile?['sport'],
+      'maj_le': _nowIso,
+    }, conflictAlgorithm: ConflictAlgorithm.ignore);
+  }
+
+  Future<Set<String>> _blocked(DatabaseExecutor db) async => {
     for (final r in await db.query('forum_blocages', columns: ['bloque_id'], where: 'utilisateur_id = ?', whereArgs: [meId]))
-      r['bloque_id']! as int,
+      r['bloque_id']! as String,
   };
 
-  /// The reader's votes, reactions and reports on [ids].
-  Future<Map<int, ForumMine>> _mine(DatabaseExecutor db, ForumTarget target, List<int> ids, Map<int, int> authors) async {
-    final out = {for (final id in ids) id: ForumMine(author: authors[id] == meId)};
+  // ── Counts, computed from the rows ────────────────────────────────────────────────────────
+
+  /// Score, « Utile » and « Merci » of [ids].
+  Future<Map<String, ({int score, int useful, int thanks})>> _counts(DatabaseExecutor db, ForumTarget target, List<String> ids) async {
+    final out = {for (final id in ids) id: (score: 0, useful: 0, thanks: 0)};
     if (ids.isEmpty) return out;
-    final marks = List.filled(ids.length, '?').join(',');
-    final args = [meId, target.code, ...ids];
+    final args = [target.code, ...ids];
     for (final r in await db.rawQuery(
-      'SELECT cible_id, valeur FROM forum_votes WHERE utilisateur_id = ? AND cible = ? AND cible_id IN ($marks)',
+      'SELECT cible_id, COALESCE(SUM(valeur), 0) AS s FROM forum_votes WHERE cible = ? AND cible_id IN (${_marks(ids.length)}) GROUP BY cible_id',
       args,
     )) {
-      final id = r['cible_id']! as int;
+      final id = r['cible_id']! as String;
+      out[id] = (score: (r['s']! as num).toInt(), useful: out[id]!.useful, thanks: out[id]!.thanks);
+    }
+    for (final r in await db.rawQuery(
+      'SELECT cible_id, type, COUNT(*) AS n FROM forum_reactions WHERE cible = ? AND cible_id IN (${_marks(ids.length)}) GROUP BY cible_id, type',
+      args,
+    )) {
+      final id = r['cible_id']! as String;
+      final n = r['n']! as int;
+      final c = out[id]!;
+      out[id] = r['type'] == ForumReaction.useful.code
+          ? (score: c.score, useful: n, thanks: c.thanks)
+          : (score: c.score, useful: c.useful, thanks: n);
+    }
+    return out;
+  }
+
+  /// Visible replies and the last reply time of each post.
+  Future<Map<String, ({int replies, String? last})>> _replyStats(DatabaseExecutor db, List<String> ids) async {
+    final out = <String, ({int replies, String? last})>{};
+    if (ids.isEmpty) return out;
+    for (final r in await db.rawQuery(
+      "SELECT sujet_id, COUNT(*) AS n, MAX(cree_le) AS last FROM forum_messages WHERE statut = 'publie' AND sujet_id IN (${_marks(ids.length)}) GROUP BY sujet_id",
+      ids,
+    )) {
+      out[r['sujet_id']! as String] = (replies: r['n']! as int, last: r['last'] as String?);
+    }
+    return out;
+  }
+
+  /// The reader's votes, reactions and open reports on [ids].
+  Future<Map<String, ForumMine>> _mine(DatabaseExecutor db, ForumTarget target, List<String> ids, Map<String, String> authors) async {
+    final me = meId;
+    final out = {for (final id in ids) id: ForumMine(author: authors[id] == me)};
+    if (ids.isEmpty) return out;
+    final args = [me, target.code, ...ids];
+    final marks = _marks(ids.length);
+    for (final r in await db.rawQuery(
+      'SELECT cible_id, valeur FROM forum_votes WHERE auteur_id = ? AND cible = ? AND cible_id IN ($marks)',
+      args,
+    )) {
+      final id = r['cible_id']! as String;
       out[id] = out[id]!.copyWith(vote: r['valeur']! as int);
     }
     for (final r in await db.rawQuery(
-      'SELECT cible_id, type FROM forum_reactions WHERE utilisateur_id = ? AND cible = ? AND cible_id IN ($marks)',
+      'SELECT cible_id, type FROM forum_reactions WHERE auteur_id = ? AND cible = ? AND cible_id IN ($marks)',
       args,
     )) {
-      final id = r['cible_id']! as int;
+      final id = r['cible_id']! as String;
       out[id] = r['type'] == ForumReaction.useful.code ? out[id]!.copyWith(useful: true) : out[id]!.copyWith(thanks: true);
     }
     for (final r in await db.rawQuery(
-      "SELECT cible_id FROM forum_signalements WHERE signaleur_id = ? AND cible = ? AND statut = 'ouvert' AND cible_id IN ($marks)",
+      "SELECT cible_id FROM forum_signalements WHERE auteur_id = ? AND cible = ? AND statut = 'ouvert' AND cible_id IN ($marks)",
       args,
     )) {
-      final id = r['cible_id']! as int;
+      final id = r['cible_id']! as String;
       out[id] = out[id]!.copyWith(reported: true);
     }
     return out;
@@ -89,39 +159,53 @@ class SqliteForumRepository implements ForumRepository {
 
   static List<String> _list(Object? json) => [for (final v in jsonDecode(json as String? ?? '[]') as List) v as String];
 
-  Future<List<ForumPost>> _posts(DatabaseExecutor db, List<Map<String, Object?>> rows, {bool full = false}) async {
-    if (rows.isEmpty) return const [];
-    final members = await _members(db);
-    final ids = [for (final r in rows) r['id']! as int];
-    final authors = {for (final r in rows) r['id']! as int: r['auteur_id']! as int};
-    final mine = await _mine(db, ForumTarget.post, ids, authors);
-    final marks = List.filled(ids.length, '?').join(',');
-    final saved = {
-      for (final r in await db.rawQuery('SELECT sujet_id FROM forum_favoris WHERE utilisateur_id = ? AND sujet_id IN ($marks)', [
-        meId,
-        ...ids,
-      ]))
-        r['sujet_id']! as int,
-    };
-    final followed = {
-      for (final r in await db.rawQuery(
-        "SELECT cible_id FROM forum_suivis WHERE utilisateur_id = ? AND type = 'sujet' AND cible_id IN ($marks)",
-        [meId, ...ids],
-      ))
-        r['cible_id']! as int,
-    };
-    final me = members[meId];
+  /// A post row with its computed numbers, before the reader's state.
+  Future<List<_PostRow>> _rows(DatabaseExecutor db, List<Map<String, Object?>> rows) async {
+    final ids = [for (final r in rows) r['id']! as String];
+    final counts = await _counts(db, ForumTarget.post, ids);
+    final stats = await _replyStats(db, ids);
     return [
       for (final r in rows)
         () {
-          final id = r['id']! as int;
-          final author = r['auteur_id']! as int;
+          final id = r['id']! as String;
+          final s = stats[id];
+          final last = [r['cree_le']! as String, ?s?.last].reduce((a, b) => a.compareTo(b) >= 0 ? a : b);
+          return _PostRow(r, counts[id]!, s?.replies ?? 0, DateTime.parse(last));
+        }(),
+    ];
+  }
+
+  Future<List<ForumPost>> _posts(DatabaseExecutor db, List<_PostRow> rows, {bool full = false}) async {
+    if (rows.isEmpty) return const [];
+    final me = meId;
+    final members = await _members(db);
+    final ids = [for (final r in rows) r.id];
+    final mine = await _mine(db, ForumTarget.post, ids, {for (final r in rows) r.id: r.author});
+    final saved = {
+      for (final r in await db.rawQuery(
+        'SELECT sujet_id FROM forum_favoris WHERE utilisateur_id = ? AND sujet_id IN (${_marks(ids.length)})',
+        [me, ...ids],
+      ))
+        r['sujet_id']! as String,
+    };
+    final followed = {
+      for (final r in await db.rawQuery(
+        "SELECT cible_id FROM forum_suivis WHERE utilisateur_id = ? AND type = 'sujet' AND cible_id IN (${_marks(ids.length)})",
+        [me, ...ids],
+      ))
+        r['cible_id']! as String,
+    };
+    final handle = members[me]?.handle;
+    return [
+      for (final p in rows)
+        () {
+          final r = p.row;
           final status = ForumStatus.fromCode(r['statut']! as String);
-          final hiddenForMe = status == ForumStatus.hidden && author != meId;
+          final hiddenForMe = status == ForumStatus.hidden && p.author != me;
           final body = r['contenu']! as String;
           return ForumPost(
-            id: id,
-            author: members[author] ?? _unknown(author),
+            id: p.id,
+            author: members[p.author] ?? _unknown(p.author),
             title: r['titre']! as String,
             body: full && !hiddenForMe ? body : null,
             excerpt: hiddenForMe ? null : ForumText.excerpt(body),
@@ -131,25 +215,25 @@ class SqliteForumRepository implements ForumRepository {
             images: hiddenForMe ? const [] : _list(r['images']),
             pinned: r['epingle'] == 1,
             status: status,
-            bestAnswerId: r['meilleure_reponse_id'] as int?,
-            score: r['score']! as int,
-            replies: r['nb_reponses']! as int,
-            useful: r['nb_utile']! as int,
-            thanks: r['nb_merci']! as int,
-            mentionsMe: me?.handle != null && author != meId && _list(r['mentions']).contains(me!.handle),
+            bestAnswerId: r['meilleure_reponse_id'] as String?,
+            score: p.counts.score,
+            replies: p.replies,
+            useful: p.counts.useful,
+            thanks: p.counts.thanks,
+            mentionsMe: handle != null && p.author != me && _list(r['mentions']).contains(handle),
             createdAt: DateTime.parse(r['cree_le']! as String),
             editedAt: r['modifie_le'] == null ? null : DateTime.parse(r['modifie_le']! as String),
-            lastActivity: DateTime.parse(r['derniere_activite']! as String),
-            mine: mine[id]!.copyWith(saved: saved.contains(id), following: followed.contains(id)),
+            lastActivity: p.lastActivity,
+            mine: mine[p.id]!.copyWith(saved: saved.contains(p.id), following: followed.contains(p.id)),
           );
         }(),
     ];
   }
 
   /// « Tendance »: (score + 2 × replies + reactions + 1) / (hours since last activity + 2)^1.3.
-  double _trend(Map<String, Object?> r) {
-    final hours = _now().difference(DateTime.parse(r['derniere_activite']! as String)).inMinutes / 60;
-    final weight = (r['score']! as int) + 2 * (r['nb_reponses']! as int) + (r['nb_utile']! as int) + (r['nb_merci']! as int) + 1;
+  double _trend(_PostRow p) {
+    final hours = _now().difference(p.lastActivity).inMinutes / 60;
+    final weight = p.counts.score + 2 * p.replies + p.counts.useful + p.counts.thanks + 1;
     return weight / math.pow(math.max(0, hours) + 2, 1.3);
   }
 
@@ -158,17 +242,19 @@ class SqliteForumRepository implements ForumRepository {
   @override
   Future<ForumAuthor> me() async {
     final db = await _db;
+    await _ensureMe(db);
     return (await _members(db))[meId] ?? _unknown(meId);
   }
 
   @override
   Future<ForumFeed> feed(ForumQuery query, {int limit = 20, int offset = 0}) async {
     final db = await _db;
+    final me = meId;
     final where = <String>["(statut = 'publie' OR (statut = 'masque' AND auteur_id = ?))"];
-    final args = <Object?>[meId];
+    final args = <Object?>[me];
     final blocked = await _blocked(db);
     if (blocked.isNotEmpty) {
-      where.add('auteur_id NOT IN (${List.filled(blocked.length, '?').join(',')})');
+      where.add('auteur_id NOT IN (${_marks(blocked.length)})');
       args.addAll(blocked);
     }
     if (query.category != null) {
@@ -194,22 +280,18 @@ class SqliteForumRepository implements ForumRepository {
     }
     if (query.savedOnly) {
       where.add('id IN (SELECT sujet_id FROM forum_favoris WHERE utilisateur_id = ?)');
-      args.add(meId);
+      args.add(me);
     }
-    final rows = [...await db.query('forum_sujets', where: where.join(' AND '), whereArgs: args)];
-    int created(Map<String, Object?> r) => DateTime.parse(r['cree_le']! as String).millisecondsSinceEpoch;
+    final rows = await _rows(db, await db.query('forum_sujets', where: where.join(' AND '), whereArgs: args));
     rows.sort((a, b) {
-      final pin = (b['epingle']! as int).compareTo(a['epingle']! as int);
+      final pin = (b.row['epingle']! as int).compareTo(a.row['epingle']! as int);
       if (pin != 0) return pin;
       final byMode = switch (query.sort) {
         ForumSort.trending => _trend(b).compareTo(_trend(a)),
-        ForumSort.top =>
-          (b['score']! as int).compareTo(a['score']! as int) != 0
-              ? (b['score']! as int).compareTo(a['score']! as int)
-              : (b['nb_reponses']! as int).compareTo(a['nb_reponses']! as int),
+        ForumSort.top => b.counts.score != a.counts.score ? b.counts.score.compareTo(a.counts.score) : b.replies.compareTo(a.replies),
         ForumSort.recent => 0,
       };
-      return byMode != 0 ? byMode : created(b).compareTo(created(a));
+      return byMode != 0 ? byMode : (b.row['cree_le']! as String).compareTo(a.row['cree_le']! as String);
     });
     final page = rows.skip(offset).take(math.min(limit, _pageMax)).toList();
     return ForumFeed(total: rows.length, posts: await _posts(db, page));
@@ -218,7 +300,8 @@ class SqliteForumRepository implements ForumRepository {
   @override
   Future<List<ForumCategoryCount>> categories({MuSport? sport}) async {
     final db = await _db;
-    final visit = (await db.query('forum_visites', where: 'utilisateur_id = ?', whereArgs: [meId])).firstOrNull;
+    final me = meId;
+    final visit = (await db.query('forum_visites', where: 'utilisateur_id = ?', whereArgs: [me])).firstOrNull;
     final since = visit?['derniere_visite'] as String?;
     final rows = await db.rawQuery(
       '''
@@ -226,7 +309,7 @@ class SqliteForumRepository implements ForumRepository {
         SUM(CASE WHEN ? IS NOT NULL AND cree_le > ? AND auteur_id <> ? THEN 1 ELSE 0 END) AS nouveaux
       FROM forum_sujets WHERE statut = 'publie' ${sport != null ? 'AND sport = ?' : ''}
       GROUP BY categorie''',
-      [since, since, meId, if (sport != null) sport.name],
+      [since, since, me, if (sport != null) sport.name],
     );
     return [
       for (final c in ForumCategory.values)
@@ -246,44 +329,42 @@ class SqliteForumRepository implements ForumRepository {
   // ── FRM-04 ────────────────────────────────────────────────────────────────────────────────
 
   @override
-  Future<ForumThread> thread(int postId, {ReplySort sort = ReplySort.useful}) async {
+  Future<ForumThread> thread(String postId, {ReplySort sort = ReplySort.useful}) async {
     final db = await _db;
+    final me = meId;
     final row = (await db.query('forum_sujets', where: 'id = ?', whereArgs: [postId])).firstOrNull;
     if (row == null || row['statut'] == ForumStatus.deleted.code) throw ForumRuleException(l10n.forumDiscussionSupprimee);
-    final post = (await _posts(db, [row], full: true)).single;
+    final post = (await _posts(db, await _rows(db, [row]), full: true)).single;
 
     final members = await _members(db);
     final blocked = await _blocked(db);
     final rows = await db.query('forum_messages', where: 'sujet_id = ?', whereArgs: [postId], orderBy: 'cree_le, id');
-    final mine = await _mine(
-      db,
-      ForumTarget.reply,
-      [for (final r in rows) r['id']! as int],
-      {for (final r in rows) r['id']! as int: r['auteur_id']! as int},
-    );
+    final ids = [for (final r in rows) r['id']! as String];
+    final counts = await _counts(db, ForumTarget.reply, ids);
+    final mine = await _mine(db, ForumTarget.reply, ids, {for (final r in rows) r['id']! as String: r['auteur_id']! as String});
 
     ForumReply view(Map<String, Object?> r, List<ForumReply> children) {
-      final id = r['id']! as int;
-      final author = r['auteur_id']! as int;
+      final id = r['id']! as String;
+      final author = r['auteur_id']! as String;
       final status = ForumStatus.fromCode(r['statut']! as String);
       final isBlocked = blocked.contains(author);
-      final hiddenForMe = status == ForumStatus.hidden && author != meId;
-      final answering = r['en_reponse_a_id'] as int?;
+      final hiddenForMe = status == ForumStatus.hidden && author != me;
+      final answering = r['en_reponse_a_id'] as String?;
       return ForumReply(
         id: id,
         postId: postId,
-        parentId: r['parent_id'] as int?,
+        parentId: r['parent_id'] as String?,
         author: members[author] ?? _unknown(author),
         // A direct reply answers the post's author (« Ta réponse à Skander T. »).
-        answering: answering != null ? members[answering] : (r['parent_id'] == null ? post.author : null),
+        answering: answering != null ? (members[answering] ?? _unknown(answering)) : (r['parent_id'] == null ? post.author : null),
         body: status == ForumStatus.deleted || hiddenForMe || isBlocked ? null : r['contenu']! as String,
         status: status,
         blocked: isBlocked,
         byPostAuthor: author == post.author.id,
         best: id == post.bestAnswerId,
-        score: r['score']! as int,
-        useful: r['nb_utile']! as int,
-        thanks: r['nb_merci']! as int,
+        score: counts[id]!.score,
+        useful: counts[id]!.useful,
+        thanks: counts[id]!.thanks,
         createdAt: DateTime.parse(r['cree_le']! as String),
         editedAt: r['modifie_le'] == null ? null : DateTime.parse(r['modifie_le']! as String),
         mine: mine[id]!,
@@ -293,16 +374,16 @@ class SqliteForumRepository implements ForumRepository {
 
     // Deleted replies and blocked authors stay only as placeholders for their answers.
     bool keep(ForumReply r) => !(r.deleted || r.blocked) || r.children.isNotEmpty;
-    final childrenOf = <int, List<ForumReply>>{};
+    final childrenOf = <String, List<ForumReply>>{};
     for (final r in rows) {
-      final parent = r['parent_id'] as int?;
+      final parent = r['parent_id'] as String?;
       if (parent == null) continue;
       final v = view(r, const []);
       if (keep(v)) childrenOf.putIfAbsent(parent, () => []).add(v);
     }
     final level1 = [
       for (final r in rows)
-        if (r['parent_id'] == null) view(r, childrenOf[r['id']! as int] ?? const []),
+        if (r['parent_id'] == null) view(r, childrenOf[r['id']! as String] ?? const []),
     ].where(keep).toList();
 
     int weight(ForumReply r) => r.score + r.useful;
@@ -329,12 +410,12 @@ class SqliteForumRepository implements ForumRepository {
   // ── FRM-02 ────────────────────────────────────────────────────────────────────────────────
 
   @override
-  Future<List<SimilarPost>> similar(String title, {MuSport? sport, List<String> tags = const [], int? exclude}) async {
+  Future<List<SimilarPost>> similar(String title, {MuSport? sport, List<String> tags = const [], String? exclude}) async {
     final db = await _db;
     if (ForumAi.keywords(title).where((w) => w.length > 3).isEmpty) return const [];
-    final rows = await db.query('forum_sujets', where: "statut = 'publie'${exclude != null ? ' AND id <> ?' : ''}", whereArgs: [?exclude]);
-    final posts = await _posts(db, rows);
-    final bodies = {for (final r in rows) r['id']! as int: r['contenu']! as String};
+    final raw = await db.query('forum_sujets', where: "statut = 'publie'${exclude != null ? ' AND id <> ?' : ''}", whereArgs: [?exclude]);
+    final posts = await _posts(db, await _rows(db, raw));
+    final bodies = {for (final r in raw) r['id']! as String: r['contenu']! as String};
     final scored =
         [
             for (final p in posts)
@@ -370,25 +451,16 @@ class SqliteForumRepository implements ForumRepository {
     return r == null ? null : DateTime.parse(r['jusqua']! as String);
   }
 
-  /// The FRM-03 check: throws on the first try above the threshold; with [confirmed] the text is
-  /// published masked and reported by the AI.
+  /// The FRM-03 check: throws on the first try above the threshold; with [confirmed] the
+  /// member's own text is published masked until a moderator reads it.
   ModerationAnalysis _control(String text, bool confirmed) {
     final a = ForumAi.analyze(text);
     if (a.alert && !confirmed) throw ForumAlertException(a);
     return a;
   }
 
-  Future<void> _reportByAi(DatabaseExecutor db, ForumTarget target, int id, ModerationAnalysis a) => db.insert('forum_signalements', {
-    'cible': target.code,
-    'cible_id': id,
-    'signaleur_id': null,
-    'motif': a.reason == l10n.forumIaSpamContact || a.reason == l10n.forumIaSpamPub ? ReportReason.spam.code : ReportReason.insult.code,
-    'details': 'IA · ${a.reason} · ${a.score}',
-    'cree_le': _nowIso,
-  });
-
-  Future<ForumPost> _post(DatabaseExecutor db, int id) async =>
-      (await _posts(db, await db.query('forum_sujets', where: 'id = ?', whereArgs: [id]), full: true)).single;
+  Future<ForumPost> _post(DatabaseExecutor db, String id) async =>
+      (await _posts(db, await _rows(db, await db.query('forum_sujets', where: 'id = ?', whereArgs: [id])), full: true)).single;
 
   @override
   Future<ForumPost> publish(PostDraft draft, {bool confirmed = false}) async {
@@ -399,9 +471,13 @@ class SqliteForumRepository implements ForumRepository {
     if (title.length < 10) throw ForumRuleException(l10n.forumTitreTropCourt);
     if (body.isEmpty) throw ForumRuleException(l10n.forumMessageVide);
     final a = _control('$title\n$body', confirmed);
-    return db.transaction((txn) async {
-      final id = await txn.insert('forum_sujets', {
-        'auteur_id': meId,
+    final me = meId;
+    final id = newForumId();
+    await db.transaction((txn) async {
+      await _ensureMe(txn);
+      await txn.insert('forum_sujets', {
+        'id': id,
+        'auteur_id': me,
         'titre': title,
         'contenu': body,
         'categorie': draft.category.code,
@@ -413,21 +489,19 @@ class SqliteForumRepository implements ForumRepository {
         'publie_malgre_alerte': a.alert ? 1 : 0,
         'score_ia': a.score,
         'motif_ia': a.score >= 0.15 ? a.reason : null,
-        'derniere_activite': _nowIso,
         'cree_le': _nowIso,
       });
-      if (a.alert) await _reportByAi(txn, ForumTarget.post, id, a);
       await txn.insert('forum_suivis', {
-        'utilisateur_id': meId,
+        'utilisateur_id': me,
         'type': 'sujet',
         'cible_id': id,
       }, conflictAlgorithm: ConflictAlgorithm.ignore);
-      return _post(txn, id);
     });
+    return _post(db, id);
   }
 
   @override
-  Future<ForumPost> editPost(int postId, PostDraft draft, {bool confirmed = false}) async {
+  Future<ForumPost> editPost(String postId, PostDraft draft, {bool confirmed = false}) async {
     final db = await _db;
     final row = await _row(db, ForumTarget.post, postId);
     if (row['auteur_id'] != meId) throw ForumRuleException(l10n.forumSeulLAuteur);
@@ -453,43 +527,33 @@ class SqliteForumRepository implements ForumRepository {
         if (hide) 'statut': ForumStatus.hidden.code,
         if (hide) 'publie_malgre_alerte': 1,
       },
-      where: 'id = ?',
-      whereArgs: [postId],
+      where: 'id = ? AND auteur_id = ?',
+      whereArgs: [postId, meId],
     );
-    if (hide) await _reportByAi(db, ForumTarget.post, postId, a);
     return _post(db, postId);
   }
 
   @override
-  Future<void> deletePost(int postId) async {
+  Future<void> deletePost(String postId) async {
     final db = await _db;
     final row = await _row(db, ForumTarget.post, postId);
     if (row['auteur_id'] != meId) throw ForumRuleException(l10n.forumSeulLAuteur);
-    await db.update('forum_sujets', {'statut': ForumStatus.deleted.code}, where: 'id = ?', whereArgs: [postId]);
+    await db.update('forum_sujets', {'statut': ForumStatus.deleted.code}, where: 'id = ? AND auteur_id = ?', whereArgs: [postId, meId]);
   }
 
   // ── Replies ───────────────────────────────────────────────────────────────────────────────
 
-  Future<Map<String, Object?>> _row(DatabaseExecutor db, ForumTarget target, int id) async {
-    final r = (await db.query(
-      target == ForumTarget.post ? 'forum_sujets' : 'forum_messages',
-      where: 'id = ?',
-      whereArgs: [id],
-    )).firstOrNull;
+  String _table(ForumTarget t) => t == ForumTarget.post ? 'forum_sujets' : 'forum_messages';
+
+  Future<Map<String, Object?>> _row(DatabaseExecutor db, ForumTarget target, String id) async {
+    final r = (await db.query(_table(target), where: 'id = ?', whereArgs: [id])).firstOrNull;
     if (r == null || r['statut'] == ForumStatus.deleted.code) {
       throw ForumRuleException(target == ForumTarget.post ? l10n.forumDiscussionSupprimee : l10n.forumReponseSupprimee);
     }
     return r;
   }
 
-  Future<void> _recountReplies(DatabaseExecutor db, int postId, {bool activity = false}) => db.rawUpdate(
-    '''
-    UPDATE forum_sujets SET nb_reponses = (SELECT COUNT(*) FROM forum_messages WHERE sujet_id = ?1 AND statut = 'publie')
-    ${activity ? ', derniere_activite = ?2' : ''} WHERE id = ?1''',
-    [postId, if (activity) _nowIso],
-  );
-
-  Future<ForumReply> _reply(DatabaseExecutor db, int postId, int replyId) async {
+  Future<ForumReply> _reply(String postId, String replyId) async {
     final t = await thread(postId, sort: ReplySort.oldest);
     for (final r in [?t.bestAnswer, ...t.replies]) {
       if (r.id == replyId) return r;
@@ -501,27 +565,31 @@ class SqliteForumRepository implements ForumRepository {
   }
 
   @override
-  Future<ForumReply> reply(int postId, String body, {int? parentId, bool confirmed = false}) async {
+  Future<ForumReply> reply(String postId, String body, {String? parentId, bool confirmed = false}) async {
     final db = await _db;
+    final me = meId;
     final post = await _row(db, ForumTarget.post, postId);
-    if (post['statut'] == ForumStatus.hidden.code && post['auteur_id'] != meId) throw ForumRuleException(l10n.forumEnVerification);
+    if (post['statut'] == ForumStatus.hidden.code && post['auteur_id'] != me) throw ForumRuleException(l10n.forumEnVerification);
     await _checkCanWrite(db);
     final text = body.trim();
     if (text.isEmpty) throw ForumRuleException(l10n.forumMessageVide);
 
-    int? level1;
-    int? answering;
+    String? level1;
+    String? answering;
     if (parentId != null) {
       final parent = await _row(db, ForumTarget.reply, parentId);
-      level1 = (parent['parent_id'] as int?) ?? parentId;
-      answering = parent['auteur_id']! as int;
+      level1 = (parent['parent_id'] as String?) ?? parentId;
+      answering = parent['auteur_id']! as String;
     }
     final a = _control(text, confirmed);
-    final id = await db.transaction((txn) async {
-      final id = await txn.insert('forum_messages', {
+    final id = newForumId();
+    await db.transaction((txn) async {
+      await _ensureMe(txn);
+      await txn.insert('forum_messages', {
+        'id': id,
         'sujet_id': postId,
         'parent_id': level1,
-        'auteur_id': meId,
+        'auteur_id': me,
         'en_reponse_a_id': answering,
         'contenu': text,
         'mentions': jsonEncode(ForumAi.mentions(text)),
@@ -531,15 +599,12 @@ class SqliteForumRepository implements ForumRepository {
         'motif_ia': a.score >= 0.15 ? a.reason : null,
         'cree_le': _nowIso,
       });
-      if (a.alert) await _reportByAi(txn, ForumTarget.reply, id, a);
-      await _recountReplies(txn, postId, activity: !a.alert);
-      return id;
     });
-    return _reply(db, postId, id);
+    return _reply(postId, id);
   }
 
   @override
-  Future<ForumReply> editReply(int replyId, String body, {bool confirmed = false}) async {
+  Future<ForumReply> editReply(String replyId, String body, {bool confirmed = false}) async {
     final db = await _db;
     final row = await _row(db, ForumTarget.reply, replyId);
     if (row['auteur_id'] != meId) throw ForumRuleException(l10n.forumSeulLAuteur);
@@ -559,41 +624,26 @@ class SqliteForumRepository implements ForumRepository {
         if (hide) 'statut': ForumStatus.hidden.code,
         if (hide) 'publie_malgre_alerte': 1,
       },
-      where: 'id = ?',
-      whereArgs: [replyId],
+      where: 'id = ? AND auteur_id = ?',
+      whereArgs: [replyId, meId],
     );
-    final postId = row['sujet_id']! as int;
-    if (hide) {
-      await _reportByAi(db, ForumTarget.reply, replyId, a);
-      await _recountReplies(db, postId);
-    }
-    return _reply(db, postId, replyId);
+    return _reply(row['sujet_id']! as String, replyId);
   }
 
+  /// The reply becomes « Message supprimé » (its answers stay). If it was the best answer, the
+  /// post simply stops showing it: the post's own `meilleure_reponse_id` is the author's to change.
   @override
-  Future<void> deleteReply(int replyId) async {
+  Future<void> deleteReply(String replyId) async {
     final db = await _db;
     final row = await _row(db, ForumTarget.reply, replyId);
     if (row['auteur_id'] != meId) throw ForumRuleException(l10n.forumSeulLAuteur);
-    final postId = row['sujet_id']! as int;
-    await db.transaction((txn) async {
-      await txn.update('forum_messages', {'statut': ForumStatus.deleted.code}, where: 'id = ?', whereArgs: [replyId]);
-      await txn.update(
-        'forum_sujets',
-        {'meilleure_reponse_id': null},
-        where: 'id = ? AND meilleure_reponse_id = ?',
-        whereArgs: [postId, replyId],
-      );
-      await _recountReplies(txn, postId);
-    });
+    await db.update('forum_messages', {'statut': ForumStatus.deleted.code}, where: 'id = ? AND auteur_id = ?', whereArgs: [replyId, meId]);
   }
 
-  // ── Votes, reactions, saves, follows ──────────────────────────────────────────────────────
-
-  String _table(ForumTarget t) => t == ForumTarget.post ? 'forum_sujets' : 'forum_messages';
+  // ── Votes and reactions: one row per member ───────────────────────────────────────────────
 
   /// Not on your own content, not on a masked one, not while suspended.
-  Future<void> _checkCanReact(DatabaseExecutor db, ForumTarget target, int id, String ownMessage) async {
+  Future<void> _checkCanReact(DatabaseExecutor db, ForumTarget target, String id, String ownMessage) async {
     final row = await _row(db, target, id);
     if (row['auteur_id'] == meId) throw ForumRuleException(ownMessage);
     if (row['statut'] == ForumStatus.hidden.code) throw ForumRuleException(l10n.forumEnVerification);
@@ -601,61 +651,59 @@ class SqliteForumRepository implements ForumRepository {
   }
 
   @override
-  Future<int> vote(ForumTarget target, int id, int value) async {
+  Future<int> vote(ForumTarget target, String id, int value) async {
     final db = await _db;
     await _checkCanReact(db, target, id, l10n.forumPasDeVotePourSoi);
-    return db.transaction((txn) async {
+    final me = meId;
+    await db.transaction((txn) async {
+      final mine = (await txn.query(
+        'forum_votes',
+        where: 'auteur_id = ? AND cible = ? AND cible_id = ?',
+        whereArgs: [me, target.code, id],
+      )).firstOrNull;
       if (value == 0) {
-        await txn.delete('forum_votes', where: 'utilisateur_id = ? AND cible = ? AND cible_id = ?', whereArgs: [meId, target.code, id]);
+        if (mine != null) await txn.delete('forum_votes', where: 'id = ?', whereArgs: [mine['id']]);
+      } else if (mine != null) {
+        await txn.update('forum_votes', {'valeur': value.sign}, where: 'id = ?', whereArgs: [mine['id']]);
       } else {
         await txn.insert('forum_votes', {
-          'utilisateur_id': meId,
+          'id': newForumId(),
+          'auteur_id': me,
           'cible': target.code,
           'cible_id': id,
           'valeur': value.sign,
-        }, conflictAlgorithm: ConflictAlgorithm.replace);
+          'cree_le': _nowIso,
+        });
       }
-      await txn.rawUpdate(
-        'UPDATE ${_table(target)} SET score = (SELECT COALESCE(SUM(valeur), 0) FROM forum_votes WHERE cible = ?1 AND cible_id = ?2) WHERE id = ?2',
-        [target.code, id],
-      );
-      final r = await txn.query(_table(target), columns: ['score'], where: 'id = ?', whereArgs: [id]);
-      return r.single['score']! as int;
     });
+    return (await _counts(db, target, [id]))[id]!.score;
   }
 
   @override
-  Future<void> react(ForumTarget target, int id, ForumReaction reaction, {required bool on}) async {
+  Future<void> react(ForumTarget target, String id, ForumReaction reaction, {required bool on}) async {
     final db = await _db;
     await _checkCanReact(db, target, id, l10n.forumPasDeReactionPourSoi);
-    await db.transaction((txn) async {
-      if (on) {
-        await txn.insert('forum_reactions', {
-          'utilisateur_id': meId,
-          'cible': target.code,
-          'cible_id': id,
-          'type': reaction.code,
-        }, conflictAlgorithm: ConflictAlgorithm.ignore);
-      } else {
-        await txn.delete(
-          'forum_reactions',
-          where: 'utilisateur_id = ? AND cible = ? AND cible_id = ? AND type = ?',
-          whereArgs: [meId, target.code, id, reaction.code],
-        );
-      }
-      await txn.rawUpdate(
-        '''
-        UPDATE ${_table(target)} SET
-          nb_utile = (SELECT COUNT(*) FROM forum_reactions WHERE cible = ?1 AND cible_id = ?2 AND type = 'utile'),
-          nb_merci = (SELECT COUNT(*) FROM forum_reactions WHERE cible = ?1 AND cible_id = ?2 AND type = 'merci')
-        WHERE id = ?2''',
-        [target.code, id],
+    final me = meId;
+    if (on) {
+      await db.insert('forum_reactions', {
+        'id': newForumId(),
+        'auteur_id': me,
+        'cible': target.code,
+        'cible_id': id,
+        'type': reaction.code,
+        'cree_le': _nowIso,
+      }, conflictAlgorithm: ConflictAlgorithm.ignore);
+    } else {
+      await db.delete(
+        'forum_reactions',
+        where: 'auteur_id = ? AND cible = ? AND cible_id = ? AND type = ?',
+        whereArgs: [me, target.code, id, reaction.code],
       );
-    });
+    }
   }
 
   @override
-  Future<void> chooseBestAnswer(int postId, int? replyId) async {
+  Future<void> chooseBestAnswer(String postId, String? replyId) async {
     final db = await _db;
     final post = await _row(db, ForumTarget.post, postId);
     if (post['auteur_id'] != meId) throw ForumRuleException(l10n.forumSeulLAuteurChoisit);
@@ -666,11 +714,13 @@ class SqliteForumRepository implements ForumRepository {
       }
       if (r['auteur_id'] == meId) throw ForumRuleException(l10n.forumPasTaPropreReponse);
     }
-    await db.update('forum_sujets', {'meilleure_reponse_id': replyId}, where: 'id = ?', whereArgs: [postId]);
+    await db.update('forum_sujets', {'meilleure_reponse_id': replyId}, where: 'id = ? AND auteur_id = ?', whereArgs: [postId, meId]);
   }
 
+  // ── Private lists: saved, followed, blocked ───────────────────────────────────────────────
+
   @override
-  Future<void> save(int postId, {required bool on}) async {
+  Future<void> save(String postId, {required bool on}) async {
     final db = await _db;
     await _row(db, ForumTarget.post, postId);
     if (on) {
@@ -684,7 +734,7 @@ class SqliteForumRepository implements ForumRepository {
     }
   }
 
-  Future<void> _follow(String type, int id, bool on) async {
+  Future<void> _follow(String type, String id, bool on) async {
     final db = await _db;
     if (on) {
       await db.insert('forum_suivis', {'utilisateur_id': meId, 'type': type, 'cible_id': id}, conflictAlgorithm: ConflictAlgorithm.ignore);
@@ -694,23 +744,23 @@ class SqliteForumRepository implements ForumRepository {
   }
 
   @override
-  Future<void> follow(int postId, {required bool on}) => _follow('sujet', postId, on);
+  Future<void> follow(String postId, {required bool on}) => _follow('sujet', postId, on);
 
   @override
-  Future<void> followMember(int memberId, {required bool on}) {
+  Future<void> followMember(String memberId, {required bool on}) {
     if (memberId == meId) throw ForumRuleException(l10n.forumPasTeSuivre);
     return _follow('membre', memberId, on);
   }
 
   @override
-  Future<bool> isFollowingMember(int memberId) async {
+  Future<bool> isFollowingMember(String memberId) async {
     final db = await _db;
     final r = await db.query('forum_suivis', where: "utilisateur_id = ? AND type = 'membre' AND cible_id = ?", whereArgs: [meId, memberId]);
     return r.isNotEmpty;
   }
 
   @override
-  Future<void> block(int memberId, {required bool on}) async {
+  Future<void> block(String memberId, {required bool on}) async {
     final db = await _db;
     if (memberId == meId) throw ForumRuleException(l10n.forumPasTeMasquer);
     if (on) {
@@ -720,50 +770,39 @@ class SqliteForumRepository implements ForumRepository {
     }
   }
 
-  // ── FRM-05 ────────────────────────────────────────────────────────────────────────────────
+  // ── FRM-05: one report row per reporter ───────────────────────────────────────────────────
 
   @override
-  Future<bool> report(ForumTarget target, int id, ReportReason reason, {String? details, bool muteAuthor = false}) async {
+  Future<void> report(ForumTarget target, String id, ReportReason reason, {String? details, bool muteAuthor = false}) async {
     final db = await _db;
     final row = await _row(db, target, id);
-    final author = row['auteur_id']! as int;
-    if (author == meId) throw ForumRuleException(l10n.forumPasTonPropreMessage);
-    return db.transaction((txn) async {
-      await txn.insert('forum_signalements', {
-        'cible': target.code,
-        'cible_id': id,
-        'signaleur_id': meId,
-        'motif': reason.code,
-        'details': details,
-        'statut': 'ouvert',
-        'cree_le': _nowIso,
-      }, conflictAlgorithm: ConflictAlgorithm.replace);
+    final author = row['auteur_id']! as String;
+    final me = meId;
+    if (author == me) throw ForumRuleException(l10n.forumPasTonPropreMessage);
+    await db.transaction((txn) async {
+      final mine = (await txn.query(
+        'forum_signalements',
+        where: 'auteur_id = ? AND cible = ? AND cible_id = ?',
+        whereArgs: [me, target.code, id],
+      )).firstOrNull;
+      final values = {'motif': reason.code, 'details': details, 'statut': 'ouvert', 'cree_le': _nowIso};
+      if (mine != null) {
+        await txn.update('forum_signalements', values, where: 'id = ?', whereArgs: [mine['id']]);
+      } else {
+        await txn.insert('forum_signalements', {'id': newForumId(), 'auteur_id': me, 'cible': target.code, 'cible_id': id, ...values});
+      }
       if (muteAuthor) {
-        await txn.insert('forum_blocages', {'utilisateur_id': meId, 'bloque_id': author}, conflictAlgorithm: ConflictAlgorithm.ignore);
+        await txn.insert('forum_blocages', {'utilisateur_id': me, 'bloque_id': author}, conflictAlgorithm: ConflictAlgorithm.ignore);
       }
-      final n =
-          Sqflite.firstIntValue(
-            await txn.rawQuery(
-              "SELECT COUNT(*) FROM forum_signalements WHERE cible = ? AND cible_id = ? AND statut = 'ouvert' AND signaleur_id IS NOT NULL",
-              [target.code, id],
-            ),
-          ) ??
-          0;
-      if (row['statut'] == ForumStatus.published.code && n >= _reportsToHide) {
-        await txn.update(_table(target), {'statut': ForumStatus.hidden.code}, where: 'id = ?', whereArgs: [id]);
-        if (target == ForumTarget.reply) await _recountReplies(txn, row['sujet_id']! as int);
-        return true;
-      }
-      return row['statut'] == ForumStatus.hidden.code;
     });
   }
 
   @override
-  Future<void> undoReport(ForumTarget target, int id) async {
+  Future<void> undoReport(ForumTarget target, String id) async {
     final db = await _db;
     await db.delete(
       'forum_signalements',
-      where: "signaleur_id = ? AND cible = ? AND cible_id = ? AND statut = 'ouvert'",
+      where: "auteur_id = ? AND cible = ? AND cible_id = ? AND statut = 'ouvert'",
       whereArgs: [meId, target.code, id],
     );
   }
@@ -796,4 +835,17 @@ class SqliteForumRepository implements ForumRepository {
     final db = await _db;
     await db.delete('brouillons', where: 'cle = ?', whereArgs: [_draftKey]);
   }
+}
+
+/// A post row with the numbers computed from the vote, reaction and reply rows.
+class _PostRow {
+  _PostRow(this.row, this.counts, this.replies, this.lastActivity);
+
+  final Map<String, Object?> row;
+  final ({int score, int useful, int thanks}) counts;
+  final int replies;
+  final DateTime lastActivity;
+
+  String get id => row['id']! as String;
+  String get author => row['auteur_id']! as String;
 }

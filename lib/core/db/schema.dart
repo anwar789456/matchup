@@ -612,20 +612,27 @@ const schemaVersions = <int, List<String>>{
     'INSERT INTO sync_etat (id) VALUES (1)',
   ],
 
-  // ── v5 · the Communauté (forum), same tables as the backend's `forum` schema ──────────────
+  // ── v5 · the Communauté (forum) — Hani ─────────────────────────────────────────────────────
+  // Shared tables (synced with SyncScope.shared, ownerColumn 'auteur_id'): text UUID ids, the
+  // writer's Supabase user id in `auteur_id`, one row per vote / reaction / report. No row ever
+  // stores a count or a state another member writes: counts are computed from the rows, and
+  // hiding after 3 reports will be a Supabase trigger. Private tables (favoris, suivis,
+  // blocages, visites) belong to `utilisateur_id`.
   5: [
     '''
     CREATE TABLE forum_membres (
-      id INTEGER PRIMARY KEY,
+      id TEXT PRIMARY KEY,
+      auteur_id TEXT NOT NULL,
       nom TEXT NOT NULL,
       pseudo TEXT,
       niveau REAL,
-      sport TEXT
+      sport TEXT,
+      maj_le TEXT NOT NULL
     )''',
     '''
     CREATE TABLE forum_sujets (
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      auteur_id INTEGER NOT NULL,
+      id TEXT PRIMARY KEY,
+      auteur_id TEXT NOT NULL,
       titre TEXT NOT NULL,
       contenu TEXT NOT NULL,
       categorie TEXT NOT NULL,
@@ -635,32 +642,24 @@ const schemaVersions = <int, List<String>>{
       mentions TEXT NOT NULL DEFAULT '[]',
       epingle INTEGER NOT NULL DEFAULT 0,
       statut TEXT NOT NULL DEFAULT 'publie',
-      meilleure_reponse_id INTEGER,
-      score INTEGER NOT NULL DEFAULT 0,
-      nb_reponses INTEGER NOT NULL DEFAULT 0,
-      nb_utile INTEGER NOT NULL DEFAULT 0,
-      nb_merci INTEGER NOT NULL DEFAULT 0,
+      meilleure_reponse_id TEXT,
       score_ia REAL NOT NULL DEFAULT 0,
       motif_ia TEXT,
       publie_malgre_alerte INTEGER NOT NULL DEFAULT 0,
       modifie_le TEXT,
-      derniere_activite TEXT NOT NULL,
       cree_le TEXT NOT NULL
     )''',
     'CREATE INDEX forum_sujets_statut ON forum_sujets (statut, categorie)',
     '''
     CREATE TABLE forum_messages (
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      sujet_id INTEGER NOT NULL REFERENCES forum_sujets (id) ON DELETE CASCADE,
-      parent_id INTEGER,
-      auteur_id INTEGER NOT NULL,
-      en_reponse_a_id INTEGER,
+      id TEXT PRIMARY KEY,
+      sujet_id TEXT NOT NULL,
+      parent_id TEXT,
+      auteur_id TEXT NOT NULL,
+      en_reponse_a_id TEXT,
       contenu TEXT NOT NULL,
       mentions TEXT NOT NULL DEFAULT '[]',
       statut TEXT NOT NULL DEFAULT 'publie',
-      score INTEGER NOT NULL DEFAULT 0,
-      nb_utile INTEGER NOT NULL DEFAULT 0,
-      nb_merci INTEGER NOT NULL DEFAULT 0,
       score_ia REAL NOT NULL DEFAULT 0,
       motif_ia TEXT,
       publie_malgre_alerte INTEGER NOT NULL DEFAULT 0,
@@ -670,59 +669,64 @@ const schemaVersions = <int, List<String>>{
     'CREATE INDEX forum_messages_sujet ON forum_messages (sujet_id, parent_id)',
     '''
     CREATE TABLE forum_votes (
-      utilisateur_id INTEGER NOT NULL,
+      id TEXT PRIMARY KEY,
+      auteur_id TEXT NOT NULL,
       cible TEXT NOT NULL,
-      cible_id INTEGER NOT NULL,
+      cible_id TEXT NOT NULL,
       valeur INTEGER NOT NULL,
-      PRIMARY KEY (utilisateur_id, cible, cible_id)
+      cree_le TEXT NOT NULL,
+      UNIQUE (auteur_id, cible, cible_id)
     )''',
     'CREATE INDEX forum_votes_cible ON forum_votes (cible, cible_id)',
     '''
     CREATE TABLE forum_reactions (
-      utilisateur_id INTEGER NOT NULL,
+      id TEXT PRIMARY KEY,
+      auteur_id TEXT NOT NULL,
       cible TEXT NOT NULL,
-      cible_id INTEGER NOT NULL,
+      cible_id TEXT NOT NULL,
       type TEXT NOT NULL,
-      PRIMARY KEY (utilisateur_id, cible, cible_id, type)
+      cree_le TEXT NOT NULL,
+      UNIQUE (auteur_id, cible, cible_id, type)
     )''',
     'CREATE INDEX forum_reactions_cible ON forum_reactions (cible, cible_id)',
     '''
+    CREATE TABLE forum_signalements (
+      id TEXT PRIMARY KEY,
+      auteur_id TEXT NOT NULL,
+      cible TEXT NOT NULL,
+      cible_id TEXT NOT NULL,
+      motif TEXT NOT NULL,
+      details TEXT,
+      statut TEXT NOT NULL DEFAULT 'ouvert',
+      cree_le TEXT NOT NULL,
+      UNIQUE (auteur_id, cible, cible_id)
+    )''',
+    '''
     CREATE TABLE forum_favoris (
-      utilisateur_id INTEGER NOT NULL,
-      sujet_id INTEGER NOT NULL,
+      utilisateur_id TEXT NOT NULL,
+      sujet_id TEXT NOT NULL,
       cree_le TEXT NOT NULL,
       PRIMARY KEY (utilisateur_id, sujet_id)
     )''',
     '''
     CREATE TABLE forum_suivis (
-      utilisateur_id INTEGER NOT NULL,
+      utilisateur_id TEXT NOT NULL,
       type TEXT NOT NULL,
-      cible_id INTEGER NOT NULL,
+      cible_id TEXT NOT NULL,
       PRIMARY KEY (utilisateur_id, type, cible_id)
     )''',
     '''
     CREATE TABLE forum_blocages (
-      utilisateur_id INTEGER NOT NULL,
-      bloque_id INTEGER NOT NULL,
+      utilisateur_id TEXT NOT NULL,
+      bloque_id TEXT NOT NULL,
       PRIMARY KEY (utilisateur_id, bloque_id)
     )''',
-    'CREATE TABLE forum_visites (utilisateur_id INTEGER PRIMARY KEY, derniere_visite TEXT NOT NULL)',
-    '''
-    CREATE TABLE forum_signalements (
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      cible TEXT NOT NULL,
-      cible_id INTEGER NOT NULL,
-      signaleur_id INTEGER,
-      motif TEXT NOT NULL,
-      details TEXT,
-      statut TEXT NOT NULL DEFAULT 'ouvert',
-      cree_le TEXT NOT NULL,
-      UNIQUE (signaleur_id, cible, cible_id)
-    )''',
+    'CREATE TABLE forum_visites (utilisateur_id TEXT PRIMARY KEY, derniere_visite TEXT NOT NULL)',
+    // Written by the moderation (admin / Supabase), read by the phone to block posting.
     '''
     CREATE TABLE forum_sanctions (
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      utilisateur_id INTEGER NOT NULL,
+      id TEXT PRIMARY KEY,
+      utilisateur_id TEXT NOT NULL,
       type TEXT NOT NULL,
       motif TEXT NOT NULL,
       jusqua TEXT,

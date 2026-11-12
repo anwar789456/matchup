@@ -76,10 +76,10 @@ class ForumFeedController extends AsyncNotifier<ForumFeedState> {
     state = AsyncData(s.copyWith(posts: [for (final p in s.posts) p.id == post.id ? post : p]));
   }
 
-  ForumPost? _find(int id) => state.value?.posts.where((p) => p.id == id).firstOrNull;
+  ForumPost? _find(String id) => state.value?.posts.where((p) => p.id == id).firstOrNull;
 
   /// Votes at once; the score is corrected from the database, or rolled back on error.
-  Future<void> vote(int postId, int value) async {
+  Future<void> vote(String postId, int value) async {
     final before = _find(postId);
     if (before == null) return;
     _replace(
@@ -98,7 +98,7 @@ class ForumFeedController extends AsyncNotifier<ForumFeedState> {
     }
   }
 
-  Future<void> save(int postId, bool on) async {
+  Future<void> save(String postId, bool on) async {
     final before = _find(postId);
     if (before == null) return;
     _replace(before.copyWith(mine: before.mine.copyWith(saved: on)));
@@ -111,7 +111,7 @@ class ForumFeedController extends AsyncNotifier<ForumFeedState> {
     }
   }
 
-  Future<void> undoReport(int postId) async {
+  Future<void> undoReport(String postId) async {
     final before = _find(postId);
     if (before == null) return;
     _replace(before.copyWith(mine: before.mine.copyWith(reported: false)));
@@ -125,7 +125,7 @@ final forumFeedProvider = AsyncNotifierProvider.family<ForumFeedController, Foru
 class ForumThreadController extends AsyncNotifier<ForumThread> {
   ForumThreadController(this.postId);
 
-  final int postId;
+  final String postId;
   ReplySort _sort = ReplySort.useful;
 
   ForumRepository get _repo => ref.read(forumRepositoryProvider);
@@ -163,7 +163,7 @@ class ForumThreadController extends AsyncNotifier<ForumThread> {
     );
   }
 
-  ForumReply? findReply(int id) {
+  ForumReply? findReply(String id) {
     final t = _t;
     if (t == null) return null;
     for (final r in [?t.bestAnswer, ...t.replies]) {
@@ -240,7 +240,7 @@ class ForumThreadController extends AsyncNotifier<ForumThread> {
     }
   }
 
-  Future<void> voteReply(int id, int value) async {
+  Future<void> voteReply(String id, int value) async {
     final before = findReply(id);
     if (before == null) return;
     _setReply(
@@ -259,7 +259,7 @@ class ForumThreadController extends AsyncNotifier<ForumThread> {
     }
   }
 
-  Future<void> reactReply(int id, ForumReaction reaction, bool on) async {
+  Future<void> reactReply(String id, ForumReaction reaction, bool on) async {
     final before = findReply(id);
     if (before == null) return;
     final delta = on ? 1 : -1;
@@ -283,37 +283,36 @@ class ForumThreadController extends AsyncNotifier<ForumThread> {
   }
 
   /// Publishes a reply (throws [ForumAlertException] for FRM-03) and reloads the thread.
-  Future<ForumReply> reply(String body, {int? parentId, bool confirmed = false}) async {
+  Future<ForumReply> reply(String body, {String? parentId, bool confirmed = false}) async {
     final r = await _repo.reply(postId, body, parentId: parentId, confirmed: confirmed);
     await reload();
     return r;
   }
 
-  Future<void> editReply(int id, String body, {bool confirmed = false}) async {
+  Future<void> editReply(String id, String body, {bool confirmed = false}) async {
     await _repo.editReply(id, body, confirmed: confirmed);
     await reload();
   }
 
-  Future<void> deleteReply(int id) async {
+  Future<void> deleteReply(String id) async {
     await _repo.deleteReply(id);
     await reload();
   }
 
-  Future<void> chooseBest(int? replyId) async {
+  Future<void> chooseBest(String? replyId) async {
     await _repo.chooseBestAnswer(postId, replyId);
     await reload();
   }
 
-  Future<bool> report(ForumTarget target, int id, ReportReason reason, {String? details, bool mute = false}) async {
-    final hidden = await _repo.report(target, id, reason, details: details, muteAuthor: mute);
+  Future<void> report(ForumTarget target, String id, ReportReason reason, {String? details, bool mute = false}) async {
+    await _repo.report(target, id, reason, details: details, muteAuthor: mute);
     await reload();
-    return hidden;
   }
 }
 
-final forumThreadProvider = AsyncNotifierProvider.family<ForumThreadController, ForumThread, int>(ForumThreadController.new);
+final forumThreadProvider = AsyncNotifierProvider.family<ForumThreadController, ForumThread, String>(ForumThreadController.new);
 
 /// Whether the reader follows a member (FRM-04 « Suivre »).
-final forumFollowingMemberProvider = FutureProvider.family<bool, int>(
+final forumFollowingMemberProvider = FutureProvider.family<bool, String>(
   (ref, id) => ref.watch(forumRepositoryProvider).isFollowingMember(id),
 );

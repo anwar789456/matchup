@@ -30,7 +30,7 @@ import '../widgets/moderation_alert.dart';
 class NewPostScreen extends ConsumerStatefulWidget {
   const NewPostScreen({super.key, this.editId});
 
-  final int? editId;
+  final String? editId;
 
   @override
   ConsumerState<NewPostScreen> createState() => _NewPostScreenState();
@@ -222,7 +222,7 @@ class _NewPostScreenState extends ConsumerState<NewPostScreen> {
             MuForumPostCard(
               post: forumCardData(
                 ForumPost(
-                  id: 0,
+                  id: '',
                   author: me,
                   title: _draft.title.isEmpty ? l10n.forumTitre : _draft.title,
                   excerpt: ForumText.excerpt(_draft.body),

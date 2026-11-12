@@ -123,7 +123,7 @@ enum ForumStatus {
 class ForumAuthor {
   const ForumAuthor({required this.id, required this.name, this.handle, this.level, this.sport, this.imageUrl});
 
-  final int id;
+  final String id;
 
   /// « Skander T. »
   final String name;
@@ -197,7 +197,7 @@ class ForumPost {
     this.mine = const ForumMine(),
   });
 
-  final int id;
+  final String id;
   final ForumAuthor author;
   final String title;
 
@@ -212,7 +212,7 @@ class ForumPost {
   final List<String> images;
   final bool pinned;
   final ForumStatus status;
-  final int? bestAnswerId;
+  final String? bestAnswerId;
   final int score;
   final int replies;
   final int useful;
@@ -226,7 +226,7 @@ class ForumPost {
   bool get hidden => status == ForumStatus.hidden;
   bool get hasBestAnswer => bestAnswerId != null;
 
-  ForumPost copyWith({int? score, int? useful, int? thanks, ForumMine? mine, int? Function()? bestAnswerId}) => ForumPost(
+  ForumPost copyWith({int? score, int? useful, int? thanks, ForumMine? mine, String? Function()? bestAnswerId}) => ForumPost(
     id: id,
     author: author,
     title: title,
@@ -274,9 +274,9 @@ class ForumReply {
     this.children = const [],
   });
 
-  final int id;
-  final int postId;
-  final int? parentId;
+  final String id;
+  final String postId;
+  final String? parentId;
   final ForumAuthor author;
 
   /// The member this reply answers (« Ta réponse à Omar D. »).
@@ -351,7 +351,7 @@ class ForumQuery {
   final ForumSort sort;
   final String? search;
   final String? tag;
-  final int? authorId;
+  final String? authorId;
   final bool savedOnly;
 
   ForumQuery copyWith({

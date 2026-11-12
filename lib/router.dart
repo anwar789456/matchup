@@ -168,8 +168,8 @@ abstract final class Routes {
   static const forumNew = '/frm/nouveau'; // FRM-02
   static const forumSearch = '/frm/recherche'; // FRM-01 « Rechercher »
   static const forumMine = '/frm/mes-posts'; // FRM-01 « Mes posts et favoris »
-  static String forumPost(int id) => '/frm/discussion/$id'; // FRM-04
-  static String forumEdit(int id) => '/frm/discussion/$id/modifier'; // FRM-02 in edit mode
+  static String forumPost(String id) => '/frm/discussion/$id'; // FRM-04
+  static String forumEdit(String id) => '/frm/discussion/$id/modifier'; // FRM-02 in edit mode
   static String game(String id) => '/game/$id'; // GAM-01 / GAM-02
   static String gameWaitlist(String id) => '/game/$id/waitlist'; // GAM-03
   static String gameJoined(String id) => '/game/$id/joined'; // GAM-05
@@ -362,8 +362,8 @@ final routerProvider = Provider<GoRouter>((ref) {
       _root(Routes.forumNew, (_) => const NewPostScreen()),
       _root(Routes.forumSearch, (_) => const ForumSearchScreen()),
       _root(Routes.forumMine, (_) => const ForumMineScreen()),
-      _root('/frm/discussion/:id', (s) => DiscussionScreen(postId: int.parse(s.pathParameters['id']!))),
-      _root('/frm/discussion/:id/modifier', (s) => NewPostScreen(editId: int.parse(s.pathParameters['id']!))),
+      _root('/frm/discussion/:id', (s) => DiscussionScreen(postId: s.pathParameters['id']!)),
+      _root('/frm/discussion/:id/modifier', (s) => NewPostScreen(editId: s.pathParameters['id']!)),
       StatefulShellRoute.indexedStack(
         builder: (context, state, shell) => PlayerShell(shell: shell),
         branches: [

@@ -1,5 +1,5 @@
 /// Light Markdown of forum posts: `**gras**`, `*italique*`, `- ` / `1. ` lists, `> ` quotes,
-/// `[texte](lien)`, `@pseudo`. The same subset the backend stores.
+/// `[texte](lien)`, `@pseudo`.
 abstract final class ForumText {
   /// Plain text: markers removed, whitespace collapsed (card excerpt, search).
   static String plain(String markdown) => markdown

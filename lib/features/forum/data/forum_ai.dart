@@ -1,7 +1,7 @@
 import '../../../l10n/l10n.dart';
 import 'forum_models.dart';
 
-/// The forum's "AI" on the phone, the same rules as the backend (backend/apps/forum/src/ia/
+/// The forum's "AI" on the phone (first written for the NestJS module, backend/apps/forum/src/ia/
 /// ia.logic.ts): toxicity / spam score with the passages to highlight (FRM-03), a calmer rewrite
 /// when one can be made, tag suggestions (FRM-02) and similar discussions. Rule-based French and
 /// Tunisian derja; it never hides anything by itself.

@@ -45,13 +45,13 @@ Future<void> showForumMenu(BuildContext context, List<ForumMenuItem> items) asyn
 }
 
 /// « Copier le lien »: the discussion's link, then a toast.
-void copyForumLink(BuildContext context, int postId) {
+void copyForumLink(BuildContext context, String postId) {
   Clipboard.setData(ClipboardData(text: forumLink(postId)));
   MuToast.show(context, tone: MuToastTone.success, title: l10n.lienCopie, icon: PhosphorIcons.link());
 }
 
 /// The public link of a discussion (shared and copied).
-String forumLink(int postId) => 'https://matchup.tn/communaute/$postId';
+String forumLink(String postId) => 'https://matchup.tn/communaute/$postId';
 
 /// Shows what went wrong with a forum action as a toast: offline, a suspension, a rule.
 void showForumError(BuildContext context, Object error) {
