@@ -40,7 +40,8 @@ class _ReviewsScreenState extends ConsumerState<ReviewsScreen> {
         ),
       );
     }
-    final all = TrainingStory.reviewsOf(p);
+    // Newest first.
+    final all = [...TrainingStory.reviewsOf(p)]..sort((a, b) => a.daysAgo.compareTo(b.daysAgo));
     final shown = [for (final r in all) if (_stars == null || r.stars == _stars) r];
     return Scaffold(
       backgroundColor: c.bg,

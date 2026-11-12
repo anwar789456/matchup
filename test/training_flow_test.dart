@@ -563,7 +563,7 @@ void main() {
       tester,
     ) async {
       await pumpApp(tester, TrainingRoutes.root);
-      await tester.tap(find.bySemanticsLabel('Historique'));
+      await tester.tap(find.text('Voir l’historique'));
       await tester.pumpAndSettle();
       expect(find.text('Historique'), findsOneWidget);
       expect(find.text('Désactivés'), findsOneWidget);

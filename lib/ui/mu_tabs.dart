@@ -82,7 +82,9 @@ class _MuTabsState extends State<MuTabs> {
         ? (c.surfaceInverse, c.textInverse)
         : (c.surfaceMuted, c.textSecondary);
     return Container(
-      constraints: const BoxConstraints(minWidth: MuTabs.countMin, minHeight: MuTabs.countMin),
+      // A fixed height: with `alignment` alone the pill would stretch to the whole tab.
+      height: MuTabs.countMin,
+      constraints: const BoxConstraints(minWidth: MuTabs.countMin),
       padding: const EdgeInsets.symmetric(horizontal: MuTabs.countPad),
       decoration: BoxDecoration(color: ground, borderRadius: MuRadius.fullAll),
       alignment: Alignment.center,

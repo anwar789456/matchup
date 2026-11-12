@@ -243,29 +243,27 @@ class StudentScreen extends ConsumerWidget {
                   _VideoCard(student: s, feedbackSent: feedback != null),
                 ],
                 const SizedBox(height: MuSpace.s8),
-                MuCardSurface(
-                  child: MuBarChart(
-                    title: l10n.coaTrainingMinutes,
-                    subtitle: l10n.coaTrainingMinutesDetail,
-                    categories: [for (final d in weeks) '${d.day} ${formatMonth(d)}'],
-                    tooltipCategories: [for (final d in weeks) l10n.coaWeekOf(formatDay(d))],
-                    series: [
-                      MuBarSeries(
-                        label: l10n.coaMinutes,
-                        data: yassine
-                            ? CoachStory.yassineMinutes
-                            : [
-                                for (var i = 0; i < 6; i++)
-                                  (20 + (seed * (i + 3)) % 50).toDouble(),
-                              ],
-                        color: c.chart1,
-                      ),
-                    ],
-                    format: (v) => l10n.entMinutes(v.round()),
-                    compact: (v) => '${v.round()}',
-                    categoryLabel: l10n.coaWeekLabel,
-                    height: 200,
-                  ),
+                MuBarChart(
+                  title: l10n.coaTrainingMinutes,
+                  subtitle: l10n.coaTrainingMinutesDetail,
+                  categories: [for (final d in weeks) '${d.day} ${formatMonth(d)}'],
+                  tooltipCategories: [for (final d in weeks) l10n.coaWeekOf(formatDay(d))],
+                  series: [
+                    MuBarSeries(
+                      label: l10n.coaMinutes,
+                      data: yassine
+                          ? CoachStory.yassineMinutes
+                          : [
+                              for (var i = 0; i < 6; i++)
+                                (20 + (seed * (i + 3)) % 50).toDouble(),
+                            ],
+                      color: c.chart1,
+                    ),
+                  ],
+                  format: (v) => l10n.entMinutes(v.round()),
+                  compact: (v) => '${v.round()}',
+                  categoryLabel: l10n.coaWeekLabel,
+                  height: 200,
                 ),
                 if (program != null) ...[
                   const SizedBox(height: MuSpace.s8),

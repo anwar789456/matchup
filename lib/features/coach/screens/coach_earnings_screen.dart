@@ -185,43 +185,39 @@ class _CoachEarningsScreenState extends ConsumerState<CoachEarningsScreen> {
                   ),
                 ),
                 const SizedBox(height: MuSpace.s4),
-                MuCardSurface(
-                  child: MuBarChart(
-                    title: l10n.coaNetSixMonths,
-                    subtitle: l10n.coaNetSixMonthsDetail(formatMonthLong(now)),
-                    categories: [for (final m in months) formatMonth(m)],
-                    tooltipCategories: [for (final m in months) '${formatMonthLong(m)} ${m.year}'],
-                    series: [
-                      MuBarSeries(
-                        label: l10n.coaNet,
-                        data: [for (final v in monthly.skip(monthly.length - 6)) v.toDouble()],
-                        color: c.chart1,
-                      ),
-                    ],
-                    format: formatDT,
-                    compact: (v) => v >= 1000 ? '${formatAmount((v / 1000).round())}k $dtUnit' : formatAmount(v),
-                    categoryLabel: l10n.coaMonth,
-                    height: 220,
-                  ),
+                MuBarChart(
+                  title: l10n.coaNetSixMonths,
+                  subtitle: l10n.coaNetSixMonthsDetail(formatMonthLong(now)),
+                  categories: [for (final m in months) formatMonth(m)],
+                  tooltipCategories: [for (final m in months) '${formatMonthLong(m)} ${m.year}'],
+                  series: [
+                    MuBarSeries(
+                      label: l10n.coaNet,
+                      data: [for (final v in monthly.skip(monthly.length - 6)) v.toDouble()],
+                      color: c.chart1,
+                    ),
+                  ],
+                  format: formatDT,
+                  compact: (v) => v >= 1000 ? '${formatAmount((v / 1000).round())}k $dtUnit' : formatAmount(v),
+                  categoryLabel: l10n.coaMonth,
+                  height: 220,
                 ),
                 const SizedBox(height: MuSpace.s4),
-                MuCardSurface(
-                  child: MuBarChart(
-                    title: l10n.coaBySource(formatMonthLong(now)),
-                    subtitle: l10n.coaBySourceDetail(formatDay(now)),
-                    orientation: Axis.horizontal,
-                    categories: [for (final s in CoachStory.sources) s.$1],
-                    series: [
-                      MuBarSeries(
-                        label: l10n.coaNet,
-                        data: [for (final s in CoachStory.sources) s.$2.toDouble()],
-                        color: c.chart1,
-                      ),
-                    ],
-                    format: formatDT,
-                    categoryLabel: l10n.coaSource,
-                    height: 160,
-                  ),
+                MuBarChart(
+                  title: l10n.coaBySource(formatMonthLong(now)),
+                  subtitle: l10n.coaBySourceDetail(formatDay(now)),
+                  orientation: Axis.horizontal,
+                  categories: [for (final s in CoachStory.sources) s.$1],
+                  series: [
+                    MuBarSeries(
+                      label: l10n.coaNet,
+                      data: [for (final s in CoachStory.sources) s.$2.toDouble()],
+                      color: c.chart1,
+                    ),
+                  ],
+                  format: formatDT,
+                  categoryLabel: l10n.coaSource,
+                  height: 160,
                 ),
               ],
             ),

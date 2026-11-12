@@ -38,11 +38,6 @@ class TrainingScreen extends ConsumerWidget {
       title: l10n.entrainement,
       actions: [
         MuBarAction(
-          icon: PhosphorIcons.clockCounterClockwise(),
-          label: l10n.entHistory,
-          onPressed: () => context.push(TrainingRoutes.history),
-        ),
-        MuBarAction(
           icon: PhosphorIcons.videoCamera(),
           label: l10n.entAnalyseVideo,
           onPressed: () => context.push(TrainingRoutes.video),
@@ -140,6 +135,19 @@ class _Content extends ConsumerWidget {
           now: now,
           progress: progress,
           todayLesson: doneToday ? null : next?.index,
+        ),
+      ),
+      // « Historique » and « Rappels de séance » (the bar keeps its two designed actions).
+      Padding(
+        padding: const EdgeInsetsDirectional.only(end: MuSpace.s2),
+        child: Align(
+          alignment: AlignmentDirectional.centerEnd,
+          child: MuButton.tertiary(
+            label: l10n.entSeeHistory,
+            leading: PhosphorIcons.clockCounterClockwise(),
+            size: MuButtonSize.s,
+            onPressed: () => context.push(TrainingRoutes.history),
+          ),
         ),
       ),
       if (active != null && next != null) ...[
