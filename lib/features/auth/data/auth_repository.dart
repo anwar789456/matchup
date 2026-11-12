@@ -72,8 +72,13 @@ abstract interface class AuthRepository {
   /// Throws [InvalidCode] or [TooManyCodeAttempts]. The right code saves the number.
   Future<void> verifyPhoneCode(String code);
 
+  /// Emails a new confirmation code (AUTH-04). Throws [CodeRequestTooSoon].
   Future<void> resendVerificationEmail();
 
+  /// Confirms the address with the emailed code. Throws [InvalidCode] or [TooManyCodeAttempts].
+  Future<void> verifyEmailCode(String code);
+
+  /// Emails a reset code (AUTH-06); silent for an unknown address.
   Future<void> sendPasswordResetCode(String email);
 
   /// Throws [InvalidCode] or [TooManyCodeAttempts].

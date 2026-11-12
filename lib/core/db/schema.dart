@@ -542,4 +542,25 @@ const schemaVersions = <int, List<String>>{
       le TEXT NOT NULL
     )''',
   ],
+
+  // ── v3 · email codes (AUTH-04 confirmation sent through EmailJS) ────────────────────────────
+  // SQLite cannot change a CHECK: the codes table is rebuilt with the new usage, rows kept.
+  3: [
+    '''
+    CREATE TABLE codes_v3 (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      email TEXT NOT NULL,
+      usage TEXT NOT NULL CHECK (usage IN ('telephone', 'reinitialisation', 'email')),
+      hash TEXT NOT NULL,
+      expire_le TEXT NOT NULL,
+      essais INTEGER NOT NULL DEFAULT 0,
+      bloque_jusqua TEXT,
+      utilise INTEGER NOT NULL DEFAULT 0,
+      cree_le TEXT NOT NULL
+    )''',
+    'INSERT INTO codes_v3 SELECT * FROM codes',
+    'DROP TABLE codes',
+    'ALTER TABLE codes_v3 RENAME TO codes',
+    'CREATE INDEX codes_email ON codes (email, usage)',
+  ],
 };

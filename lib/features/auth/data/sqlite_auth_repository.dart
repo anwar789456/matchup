@@ -5,6 +5,7 @@ import 'package:crypto/crypto.dart';
 import 'package:sqflite/sqflite.dart';
 
 import '../../../core/db/app_database.dart';
+import '../../../core/email/email_sender.dart';
 import '../../../core/sms/sms_sender.dart';
 import 'auth_repository.dart';
 import 'fake_auth_repository.dart';
@@ -12,17 +13,17 @@ import 'fake_auth_repository.dart';
 /// [AuthRepository] on the phone's database (`utilisateurs`, `codes`).
 ///
 /// - Passwords are stored as SHA-256 of a random salt + the password, never in clear.
-/// - The SMS code (AUTH-02/03) leaves through [SmsSender] (textbee.dev); the reset code
-///   (AUTH-06/07) goes by SMS to the account's verified number. Without a textbee key, or without
-///   a verified number for a reset, the code is `123456`.
-/// - Codes are stored hashed: 3 wrong codes block for 10 minutes; one SMS per 30 s and 5 per
-///   hour per account.
-/// - There is no mail server: the confirmation email (AUTH-04) is not sent.
+/// - The SMS code (AUTH-02/03) leaves through [SmsSender] (textbee.dev); the email confirmation
+///   code (AUTH-04, sent at sign-up) and the reset code (AUTH-06/07) through [EmailSender]
+///   (EmailJS). Without their settings the code is `123456`.
+/// - Codes are stored hashed: 3 wrong codes block for 10 minutes; one SMS or email per 30 s
+///   and 5 per hour per account and use.
 /// - Google/Apple sign-in stays simulated by [FakeAuthRepository].
 class SqliteAuthRepository implements AuthRepository {
   SqliteAuthRepository(
     this._database, {
     required this.sms,
+    required this.mail,
     required this.onSignedIn,
     this.userId,
     DateTime Function()? now,
@@ -33,6 +34,7 @@ class SqliteAuthRepository implements AuthRepository {
 
   final AppDatabase _database;
   final SmsSender sms;
+  final EmailSender mail;
 
   /// Receives the account id after sign-up or sign-in.
   final Future<void> Function(int userId) onSignedIn;
@@ -45,7 +47,8 @@ class SqliteAuthRepository implements AuthRepository {
   final FakeAuthRepository _simulated;
 
   static const smsValidity = Duration(minutes: 10);
-  static const resetValidity = Duration(minutes: 15);
+  static const emailValidity = Duration(minutes: 10);
+  static const resetValidity = Duration(minutes: 10);
   static const smsInterval = Duration(seconds: 30);
   static const smsPerHour = 5;
   static const simulatedCode = FakeAuthRepository.validCode;
@@ -106,6 +109,39 @@ class SqliteAuthRepository implements AuthRepository {
       'cree_le': _iso(_now()),
     });
     await _signedIn(id, address);
+    // AUTH-04: the confirmation code. A mail failure must not fail the sign-up (« Renvoyer »).
+    try {
+      await _sendEmailCode(address);
+    } on EmailNotSent {
+      // The player can ask for it again on AUTH-04.
+    }
+  }
+
+  /// Saves a new confirmation code for [address] and emails it.
+  Future<void> _sendEmailCode(String address) async {
+    final db = await _db;
+    await _throttle(db, address, 'email');
+    final code = await _newCode(db, address, 'email', emailValidity, live: mail.live);
+    await mail.sendCode(to: address, code: code, purpose: EmailCodePurpose.confirmation);
+  }
+
+  /// One code per 30 s and 5 per hour for [email] and [usage]; throws [CodeRequestTooSoon].
+  Future<void> _throttle(DatabaseExecutor db, String email, String usage) async {
+    final now = _now();
+    final recent = await db.query(
+      'codes',
+      columns: ['cree_le'],
+      where: 'email = ? AND usage = ? AND cree_le > ?',
+      whereArgs: [email, usage, _iso(now.subtract(const Duration(hours: 1)))],
+      orderBy: 'id DESC',
+    );
+    if (recent.isEmpty) return;
+    final last = DateTime.parse(recent.first['cree_le']! as String);
+    if (now.difference(last) < smsInterval) throw CodeRequestTooSoon(last.add(smsInterval));
+    if (recent.length >= smsPerHour) {
+      final oldest = DateTime.parse(recent.last['cree_le']! as String);
+      throw CodeRequestTooSoon(oldest.add(const Duration(hours: 1)));
+    }
   }
 
   @override
@@ -203,22 +239,7 @@ class SqliteAuthRepository implements AuthRepository {
     if (email == null) return _simulated.sendPhoneCode(digits);
     _phone = digits;
     final db = await _db;
-    final now = _now();
-    final recent = await db.query(
-      'codes',
-      columns: ['cree_le'],
-      where: "email = ? AND usage = 'telephone' AND cree_le > ?",
-      whereArgs: [email, _iso(now.subtract(const Duration(hours: 1)))],
-      orderBy: 'id DESC',
-    );
-    if (recent.isNotEmpty) {
-      final last = DateTime.parse(recent.first['cree_le']! as String);
-      if (now.difference(last) < smsInterval) throw CodeRequestTooSoon(last.add(smsInterval));
-      if (recent.length >= smsPerHour) {
-        final oldest = DateTime.parse(recent.last['cree_le']! as String);
-        throw CodeRequestTooSoon(oldest.add(const Duration(hours: 1)));
-      }
-    }
+    await _throttle(db, email, 'telephone');
     final code = await _newCode(db, email, 'telephone', smsValidity, live: sms.live, salt: '$digits:');
     await sms.send('+216$digits', 'MatchUp : ton code est $code. Il expire dans 10 minutes.');
   }
@@ -237,9 +258,23 @@ class SqliteAuthRepository implements AuthRepository {
     });
   }
 
-  /// No mail server on the phone: the confirmation email is not sent.
   @override
-  Future<void> resendVerificationEmail() async {}
+  Future<void> resendVerificationEmail() async {
+    final email = await _currentEmail();
+    if (email != null) await _sendEmailCode(email);
+  }
+
+  @override
+  Future<void> verifyEmailCode(String code) async {
+    final email = await _currentEmail();
+    if (email == null) return _simulated.verifyEmailCode(code);
+    final id = await _checkCode(email, 'email', code);
+    final db = await _db;
+    await db.transaction((txn) async {
+      await txn.update('utilisateurs', {'email_verifie': 1}, where: 'email = ?', whereArgs: [email]);
+      await txn.update('codes', {'utilise': 1}, where: 'id = ?', whereArgs: [id]);
+    });
+  }
 
   @override
   Future<void> sendPasswordResetCode(String email) async {
@@ -250,12 +285,9 @@ class SqliteAuthRepository implements AuthRepository {
     final user = await _user(db, address);
     // Same answer for an unknown email, so nobody can test which emails have an account.
     if (user == null) return;
-    final phone = user['telephone_verifie'] == 1 ? user['telephone'] as String? : null;
-    final code = await _newCode(db, address, 'reinitialisation', resetValidity,
-        live: sms.live && phone != null);
-    if (phone != null) {
-      await sms.send('+216$phone', 'MatchUp : ton code pour changer de mot de passe est $code.');
-    }
+    await _throttle(db, address, 'reinitialisation');
+    final code = await _newCode(db, address, 'reinitialisation', resetValidity, live: mail.live);
+    await mail.sendCode(to: address, code: code, purpose: EmailCodePurpose.reset);
   }
 
   @override

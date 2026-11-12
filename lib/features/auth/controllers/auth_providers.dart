@@ -3,15 +3,18 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/api/session.dart';
 import '../../../core/db/app_database.dart';
+import '../../../core/email/email_sender.dart';
 import '../../../core/sms/sms_sender.dart';
 import '../data/auth_repository.dart';
 import '../data/sqlite_auth_repository.dart';
 
-/// Accounts live in the phone's database; codes leave by SMS. Tests override it with the fake.
+/// Accounts live in the phone's database; codes leave by SMS and email. Tests override it with
+/// the fake.
 final authRepositoryProvider = Provider<AuthRepository>(
   (ref) => SqliteAuthRepository(
     ref.read(appDatabaseProvider),
     sms: ref.read(smsSenderProvider),
+    mail: ref.read(emailSenderProvider),
     onSignedIn: (id) => ref.read(sessionProvider.notifier).signIn(id),
     userId: () => ref.read(sessionProvider),
   ),

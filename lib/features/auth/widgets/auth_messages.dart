@@ -41,6 +41,10 @@ abstract final class AuthMessages {
   static String smsFailure(Object e) =>
       e is CodeRequestTooSoon ? l10n.patienteAvantNouveauCode : l10n.impossibleDEnvoyerLeSms;
 
+  /// AUTH-04 / AUTH-06: why the email code could not be sent.
+  static String emailFailure(Object e) =>
+      e is CodeRequestTooSoon ? l10n.patienteAvantNouveauCode : l10n.impossibleDEnvoyerLEmail;
+
   /// Message for a failed code check, or null when it is not a code failure.
   static String? codeFailure(Object e) => switch (e) {
         InvalidCode(:final attemptsLeft) => wrongCode(attemptsLeft),

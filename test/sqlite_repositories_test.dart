@@ -3,6 +3,7 @@ import 'dart:math';
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:matchup/core/db/app_database.dart';
+import 'package:matchup/core/email/email_sender.dart';
 import 'package:matchup/core/sms/sms_sender.dart';
 import 'package:matchup/features/auth/data/auth_repository.dart';
 import 'package:matchup/features/auth/data/sqlite_auth_repository.dart';
@@ -28,16 +29,50 @@ class _Sms implements SmsSender {
   Future<void> send(String to, String message) async => sent.add((to, message));
 }
 
+/// Records the emails instead of sending them.
+class _Mail implements EmailSender {
+  _Mail({this.live = true});
+
+  @override
+  final bool live;
+  final sent = <(String, String, EmailCodePurpose)>[];
+
+  String get lastCode => sent.last.$2;
+
+  @override
+  Future<void> sendCode({
+    required String to,
+    required String code,
+    required EmailCodePurpose purpose,
+  }) async =>
+      sent.add((to, code, purpose));
+}
+
+class _FailingMail implements EmailSender {
+  @override
+  bool get live => true;
+
+  @override
+  Future<void> sendCode({
+    required String to,
+    required String code,
+    required EmailCodePurpose purpose,
+  }) async =>
+      throw const EmailNotSent('quota');
+}
+
 void main() {
   sqfliteFfiInit();
   late AppDatabase database;
   late _Sms sms;
+  late _Mail mail;
   late DateTime now;
   int? session;
 
   SqliteAuthRepository auth() => SqliteAuthRepository(
         database,
         sms: sms,
+        mail: mail,
         onSignedIn: (id) async => session = id,
         userId: () => session,
         now: () => now,
@@ -47,6 +82,7 @@ void main() {
   setUp(() {
     database = AppDatabase(factory: databaseFactoryFfi, path: inMemoryDatabasePath);
     sms = _Sms();
+    mail = _Mail();
     now = DateTime(2026, 10, 16, 18);
     session = null;
   });
@@ -129,21 +165,64 @@ void main() {
       await repo.verifyPhoneCode('123456');
     });
 
-    test('password reset by SMS to the verified number (AUTH-06 to 08)', () async {
+    test('sign-up emails a confirmation code; the right one verifies the address (AUTH-04)', () async {
       final repo = auth();
       await repo.signUp(email: 'yassine.b@email.tn', password: 'Marsa2026');
-      await repo.sendPhoneCode('98123456');
-      await repo.verifyPhoneCode(sms.lastCode);
+      expect(mail.sent.single.$1, 'yassine.b@email.tn');
+      expect(mail.sent.single.$3, EmailCodePurpose.confirmation);
 
-      await repo.sendPasswordResetCode('yassine.b@email.tn');
-      expect(sms.sent.last.$1, '+21698123456');
-      await repo.verifyPasswordResetCode(sms.lastCode);
+      await expectLater(
+        repo.verifyEmailCode('000000'),
+        throwsA(isA<InvalidCode>().having((e) => e.attemptsLeft, 'left', 2)),
+      );
+      // A resend inside 30 s is refused, then a new code replaces the old one.
+      await expectLater(repo.resendVerificationEmail(), throwsA(isA<CodeRequestTooSoon>()));
+      final first = mail.lastCode;
+      now = now.add(const Duration(seconds: 31));
+      await repo.resendVerificationEmail();
+      await expectLater(repo.verifyEmailCode(first), throwsA(isA<InvalidCode>()));
+      await repo.verifyEmailCode(mail.lastCode);
+      expect((await (await database.db).query('utilisateurs')).single['email_verifie'], 1);
+    });
+
+    test('a failing mail service does not fail the sign-up', () async {
+      final repo = SqliteAuthRepository(
+        database,
+        sms: sms,
+        mail: _FailingMail(),
+        onSignedIn: (id) async => session = id,
+        now: () => now,
+      );
+      await repo.signUp(email: 'yassine.b@email.tn', password: 'Marsa2026');
+      expect(session, 1);
+      await expectLater(repo.sendPasswordResetCode('yassine.b@email.tn'), throwsA(isA<EmailNotSent>()));
+    });
+
+    test('password reset with the emailed code (AUTH-06 to 08)', () async {
+      final repo = auth();
+      await repo.signUp(email: 'yassine.b@email.tn', password: 'Marsa2026');
+
+      await repo.sendPasswordResetCode('Yassine.B@email.tn');
+      expect(mail.sent.last.$3, EmailCodePurpose.reset);
+      await repo.verifyPasswordResetCode(mail.lastCode);
       await expectLater(repo.resetPassword('Marsa2026'), throwsA(isA<SamePassword>()));
       await repo.resetPassword('Lac2-2026');
 
       session = null;
       await auth().signIn(email: 'yassine.b@email.tn', password: 'Lac2-2026');
       expect(session, 1);
+
+      // An unknown address gets the same silent answer and no email.
+      final before = mail.sent.length;
+      await repo.sendPasswordResetCode('nobody@email.tn');
+      expect(mail.sent, hasLength(before));
+    });
+
+    test('without EmailJS settings the email codes are 123456', () async {
+      mail = _Mail(live: false);
+      final repo = auth();
+      await repo.signUp(email: 'yassine.b@email.tn', password: 'Marsa2026');
+      await repo.verifyEmailCode('123456');
     });
 
     test('the role and the phone survive a restart of the repository', () async {

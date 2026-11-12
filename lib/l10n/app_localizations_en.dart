@@ -262,6 +262,47 @@ class AppLocalizationsEn extends AppLocalizations {
   String get verifieTaBoiteMail => 'Vérifie ta boîte mail';
 
   @override
+  String get onAEnvoyeUnCodeA => 'On a envoyé un code de confirmation à ';
+
+  @override
+  String get entreLePourActiverTonCompte =>
+      '. Entre‑le pour activer ton compte.';
+
+  @override
+  String get leCodeDeConfirmationT =>
+      'Le code de confirmation t’attend dans ta boîte.';
+
+  @override
+  String codeEnvoyeA2(Object p0) {
+    return 'Code envoyé à $p0';
+  }
+
+  @override
+  String get emailVerifie => 'Email vérifié.';
+
+  @override
+  String get impossibleDEnvoyerLEmail =>
+      'Impossible d’envoyer l’email. Réessaie dans un instant.';
+
+  @override
+  String emailSujetConfirmation(Object p0) {
+    return '$p0 est ton code MatchUp';
+  }
+
+  @override
+  String get emailTexteConfirmation =>
+      'Voici ton code pour activer ton compte MatchUp. Il expire dans 10 minutes.';
+
+  @override
+  String emailSujetReinitialisation(Object p0) {
+    return '$p0 est ton code pour changer de mot de passe';
+  }
+
+  @override
+  String get emailTexteReinitialisation =>
+      'Voici ton code pour choisir un nouveau mot de passe MatchUp. Il expire dans 10 minutes. Si tu n’as rien demandé, ignore cet email.';
+
+  @override
   String get onAEnvoyeUnLien => 'On a envoyé un lien de confirmation à ';
 
   @override

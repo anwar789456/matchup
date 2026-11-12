@@ -74,6 +74,62 @@ void main() {
       }
     });
 
+    test('v3 rebuilds the codes table: old codes kept, email codes accepted', () async {
+      final dir = await tempDir();
+      final path = fileIn(dir);
+      try {
+        // A phone on v2 with an SMS code pending.
+        final v2 = await databaseFactoryFfi.openDatabase(
+          path,
+          options: OpenDatabaseOptions(
+            version: 2,
+            onCreate: (db, _) async {
+              for (final v in [1, 2]) {
+                for (final s in schemaVersions[v]!) {
+                  await db.execute(s);
+                }
+                await seedVersion(db, v);
+              }
+              await db.insert('codes', {
+                'email': 'yassine.b@email.tn',
+                'usage': 'telephone',
+                'hash': 'h',
+                'expire_le': '2026-10-16T18:10:00.000',
+                'cree_le': '2026-10-16T18:00:00.000',
+              });
+            },
+          ),
+        );
+        await expectLater(
+          v2.insert('codes', {
+            'email': 'x',
+            'usage': 'email',
+            'hash': 'h',
+            'expire_le': 'x',
+            'cree_le': 'x',
+          }),
+          throwsA(isA<DatabaseException>()),
+        );
+        await v2.close();
+
+        final file = AppDatabase(factory: databaseFactoryFfi, path: path);
+        final db = await file.db;
+        expect(await db.getVersion(), AppDatabase.version);
+        expect((await db.query('codes')).single['usage'], 'telephone');
+        await db.insert('codes', {
+          'email': 'yassine.b@email.tn',
+          'usage': 'email',
+          'hash': 'h',
+          'expire_le': 'x',
+          'cree_le': 'x',
+        });
+        expect(await db.query('codes'), hasLength(2));
+        await file.close();
+      } finally {
+        await dir.delete(recursive: true);
+      }
+    });
+
     test('foreign keys are on: a refund needs its transaction', () async {
       final db = await database.db;
       expect(

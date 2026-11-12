@@ -4,16 +4,17 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 
-import '../../../core/format.dart';
 import '../../../router.dart';
 import '../../../theme/theme.dart';
 import '../../../ui/ui.dart';
 import '../../common/widgets/flow_scaffold.dart';
 import '../controllers/auth_providers.dart';
+import '../widgets/auth_messages.dart';
 import '../widgets/auth_widgets.dart';
 import '../../../l10n/l10n.dart';
 
-/// AUTH-04 · Vérifie ton email: open the mailbox, resend after 0:45, or continue and verify later.
+/// AUTH-04 · Vérifie ta boîte mail: the 6-digit code emailed at sign-up (there is no server to
+/// open a link), checked as soon as it is typed; resend after 0:45, or continue and verify later.
 class VerifyEmailScreen extends ConsumerStatefulWidget {
   const VerifyEmailScreen({super.key});
 
@@ -23,25 +24,69 @@ class VerifyEmailScreen extends ConsumerStatefulWidget {
 
 class _VerifyEmailScreenState extends ConsumerState<VerifyEmailScreen> {
   // AUTH-04: « Renvoyer l’email » is available again after 0:45.
-  static const _resendDelay = Duration(seconds: 45);
+  static const _resendIn = Duration(seconds: 45);
 
-  late DateTime _resendAt = DateTime.now().add(_resendDelay);
-  bool _sending = false;
+  final _code = TextEditingController();
+  String? _error;
+  String? _disabled;
+  String? _success;
+  bool _verifying = false;
+
+  @override
+  void dispose() {
+    _code.dispose();
+    super.dispose();
+  }
 
   Future<void> _resend(String email) async {
-    setState(() => _sending = true);
-    await ref.read(authRepositoryProvider).resendVerificationEmail();
+    try {
+      await ref.read(authRepositoryProvider).resendVerificationEmail();
+    } catch (e) {
+      if (mounted) {
+        MuToast.show(context, tone: MuToastTone.error, title: AuthMessages.emailFailure(e));
+      }
+      return;
+    }
     if (!mounted) return;
-    setState(() {
-      _sending = false;
-      _resendAt = DateTime.now().add(_resendDelay);
-    });
     MuToast.show(
       context,
       tone: MuToastTone.success,
       title: l10n.emailRenvoye,
-      description: l10n.lienEnvoyeA(email),
+      description: l10n.codeEnvoyeA2(email),
     );
+  }
+
+  Future<void> _verify() async {
+    if (_verifying || _success != null || _disabled != null) return;
+    if (_code.text.length < 6) {
+      setState(() => _error = AuthMessages.codeIncomplete);
+      return;
+    }
+    setState(() {
+      _verifying = true;
+      _error = null;
+    });
+    try {
+      await ref.read(authRepositoryProvider).verifyEmailCode(_code.text);
+      if (!mounted) return;
+      setState(() {
+        _verifying = false;
+        _success = l10n.emailVerifie;
+      });
+      await Future<void>.delayed(MuMotion.success);
+      if (mounted) context.push(Routes.roles);
+    } catch (e) {
+      final message = AuthMessages.codeFailure(e);
+      if (!mounted) return;
+      setState(() {
+        _verifying = false;
+        if (message == AuthMessages.tooManyCodes) {
+          _disabled = message;
+        } else {
+          _error = message ?? AuthMessages.emailFailure(e);
+        }
+      });
+    }
   }
 
   @override
@@ -50,8 +95,7 @@ class _VerifyEmailScreenState extends ConsumerState<VerifyEmailScreen> {
     final email = ref.watch(authFlowProvider).email ?? '';
     return FlowScaffold(
       onBack: () => goBack(context, Routes.smsCode),
-      centerBody: true,
-      gap: MuSpace.s8,
+      gap: MuSpace.s6,
       body: [
         Column(
           children: [
@@ -68,12 +112,27 @@ class _VerifyEmailScreenState extends ConsumerState<VerifyEmailScreen> {
               l10n.verifieTaBoiteMail,
               centered: true,
               leadSpan: TextSpan(children: [
-                TextSpan(text: l10n.onAEnvoyeUnLien),
+                TextSpan(text: l10n.onAEnvoyeUnCodeA),
                 TextSpan(text: email, style: MuType.labelL.copyWith(color: c.text)),
-                const TextSpan(text: '. Ouvre‑le pour activer ton compte.'),
+                TextSpan(text: l10n.entreLePourActiverTonCompte),
               ]),
             ),
           ],
+        ),
+        MuOtpInput(
+          controller: _code,
+          label: l10n.codeRecuParEmail,
+          helper: l10n.expireDansMinutesRegardeAussi,
+          error: _error,
+          success: _success,
+          verifying: _verifying,
+          disabled: _disabled,
+          resendIn: _resendIn,
+          onResend: () => _resend(email),
+          onChanged: (_) {
+            if (_error != null) setState(() => _error = null);
+          },
+          onCompleted: (_) => _verify(),
         ),
         Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -90,17 +149,11 @@ class _VerifyEmailScreenState extends ConsumerState<VerifyEmailScreen> {
                   MuToast.show(
                     context,
                     title: l10n.ouvreTaMessagerie,
-                    description: l10n.leLienDeConfirmationT,
+                    description: l10n.leCodeDeConfirmationT,
                   );
                 }
               },
             ),
-            const SizedBox(height: MuSpace.s3),
-            Center(child: _ResendButton(
-              resendAt: _resendAt,
-              loading: _sending,
-              onPressed: () => _resend(email),
-            )),
             const SizedBox(height: MuSpace.s1),
             Center(
               child: MuButton.tertiary(
@@ -130,39 +183,6 @@ class _VerifyEmailScreenState extends ConsumerState<VerifyEmailScreen> {
           style: MuType.caption.copyWith(color: c.textSecondary),
         ),
       ],
-    );
-  }
-}
-
-/// « Renvoyer l’email · 0:45 », disabled while the countdown runs.
-class _ResendButton extends StatefulWidget {
-  const _ResendButton({required this.resendAt, required this.loading, required this.onPressed});
-
-  final DateTime resendAt;
-  final bool loading;
-  final VoidCallback onPressed;
-
-  @override
-  State<_ResendButton> createState() => _ResendButtonState();
-}
-
-class _ResendButtonState extends State<_ResendButton> {
-  late final Stream<int> _ticks = Stream.periodic(const Duration(seconds: 1), (i) => i);
-
-  @override
-  Widget build(BuildContext context) {
-    return StreamBuilder<int>(
-      stream: _ticks,
-      builder: (context, _) {
-        final left = widget.resendAt.difference(DateTime.now());
-        final waiting = left > Duration.zero;
-        return MuButton.tertiary(
-          label: l10n.renvoyerLEmail,
-          countdown: waiting ? formatClock(left + const Duration(milliseconds: 999)) : null,
-          loading: widget.loading,
-          onPressed: waiting ? null : widget.onPressed,
-        );
-      },
     );
   }
 }

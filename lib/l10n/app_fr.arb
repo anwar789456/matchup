@@ -90,6 +90,37 @@
     }
   },
   "verifieTaBoiteMail": "Vérifie ta boîte mail",
+  "onAEnvoyeUnCodeA": "On a envoyé un code de confirmation à ",
+  "entreLePourActiverTonCompte": ". Entre‑le pour activer ton compte.",
+  "leCodeDeConfirmationT": "Le code de confirmation t’attend dans ta boîte.",
+  "codeEnvoyeA2": "Code envoyé à {p0}",
+  "@codeEnvoyeA2": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "emailVerifie": "Email vérifié.",
+  "impossibleDEnvoyerLEmail": "Impossible d’envoyer l’email. Réessaie dans un instant.",
+  "emailSujetConfirmation": "{p0} est ton code MatchUp",
+  "@emailSujetConfirmation": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "emailTexteConfirmation": "Voici ton code pour activer ton compte MatchUp. Il expire dans 10 minutes.",
+  "emailSujetReinitialisation": "{p0} est ton code pour changer de mot de passe",
+  "@emailSujetReinitialisation": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "emailTexteReinitialisation": "Voici ton code pour choisir un nouveau mot de passe MatchUp. Il expire dans 10 minutes. Si tu n’as rien demandé, ignore cet email.",
   "onAEnvoyeUnLien": "On a envoyé un lien de confirmation à ",
   "ouvrirMaMessagerie": "Ouvrir ma messagerie",
   "ouvreTaMessagerie": "Ouvre ta messagerie",

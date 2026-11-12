@@ -556,6 +556,66 @@ abstract class AppLocalizations {
   /// **'Vérifie ta boîte mail'**
   String get verifieTaBoiteMail;
 
+  /// No description provided for @onAEnvoyeUnCodeA.
+  ///
+  /// In fr, this message translates to:
+  /// **'On a envoyé un code de confirmation à '**
+  String get onAEnvoyeUnCodeA;
+
+  /// No description provided for @entreLePourActiverTonCompte.
+  ///
+  /// In fr, this message translates to:
+  /// **'. Entre‑le pour activer ton compte.'**
+  String get entreLePourActiverTonCompte;
+
+  /// No description provided for @leCodeDeConfirmationT.
+  ///
+  /// In fr, this message translates to:
+  /// **'Le code de confirmation t’attend dans ta boîte.'**
+  String get leCodeDeConfirmationT;
+
+  /// No description provided for @codeEnvoyeA2.
+  ///
+  /// In fr, this message translates to:
+  /// **'Code envoyé à {p0}'**
+  String codeEnvoyeA2(Object p0);
+
+  /// No description provided for @emailVerifie.
+  ///
+  /// In fr, this message translates to:
+  /// **'Email vérifié.'**
+  String get emailVerifie;
+
+  /// No description provided for @impossibleDEnvoyerLEmail.
+  ///
+  /// In fr, this message translates to:
+  /// **'Impossible d’envoyer l’email. Réessaie dans un instant.'**
+  String get impossibleDEnvoyerLEmail;
+
+  /// No description provided for @emailSujetConfirmation.
+  ///
+  /// In fr, this message translates to:
+  /// **'{p0} est ton code MatchUp'**
+  String emailSujetConfirmation(Object p0);
+
+  /// No description provided for @emailTexteConfirmation.
+  ///
+  /// In fr, this message translates to:
+  /// **'Voici ton code pour activer ton compte MatchUp. Il expire dans 10 minutes.'**
+  String get emailTexteConfirmation;
+
+  /// No description provided for @emailSujetReinitialisation.
+  ///
+  /// In fr, this message translates to:
+  /// **'{p0} est ton code pour changer de mot de passe'**
+  String emailSujetReinitialisation(Object p0);
+
+  /// No description provided for @emailTexteReinitialisation.
+  ///
+  /// In fr, this message translates to:
+  /// **'Voici ton code pour choisir un nouveau mot de passe MatchUp. Il expire dans 10 minutes. Si tu n’as rien demandé, ignore cet email.'**
+  String get emailTexteReinitialisation;
+
   /// No description provided for @onAEnvoyeUnLien.
   ///
   /// In fr, this message translates to:
