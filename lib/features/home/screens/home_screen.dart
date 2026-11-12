@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 
+import '../../assistant/assistant_routes.dart';
 import '../../../core/clock.dart';
 import '../../../core/connectivity.dart';
 import '../../../core/directions.dart';
@@ -424,7 +425,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               const SizedBox(height: MuSpace.s1),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: MuSpace.s4),
-                child: _AskBar(onTap: () => showComingSoon(context)),
+                child: _AskBar(onTap: () => context.push(AssistantRoutes.player)),
               ),
               const SizedBox(height: _sectionGap),
               forYou,

@@ -79,6 +79,7 @@ import 'features/wallet/screens/topup_screen.dart';
 import 'features/wallet/screens/wallet_screen.dart';
 import 'features/organizer_onboarding/screens/organisation_screen.dart';
 import 'features/organizer_onboarding/screens/organizer_dashboard_screen.dart';
+import 'features/assistant/assistant_routes.dart';
 import 'features/coach/coach_routes.dart';
 import 'features/training/screens/training_screen.dart';
 import 'features/training/training_routes.dart';
@@ -390,6 +391,7 @@ final routerProvider = Provider<GoRouter>((ref) {
         ],
       ),
       coachShellRoute(_rootKey),
+      ...assistantRoutes(_rootKey),
       StatefulShellRoute.indexedStack(
         builder: (context, state, shell) => OwnerShell(shell: shell),
         branches: [

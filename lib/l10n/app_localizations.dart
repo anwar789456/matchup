@@ -22107,6 +22107,439 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Ton retour · séance {session} · {day}'**
   String coaYourFeedbackOn(int session, Object day);
+
+  /// No description provided for @aiAssistantTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Assistant MatchUp'**
+  String get aiAssistantTitle;
+
+  /// No description provided for @aiCloseAssistant.
+  ///
+  /// In fr, this message translates to:
+  /// **'Fermer l’assistant'**
+  String get aiCloseAssistant;
+
+  /// No description provided for @aiOwnerSpace.
+  ///
+  /// In fr, this message translates to:
+  /// **'Espace propriétaire · {venue}'**
+  String aiOwnerSpace(Object venue);
+
+  /// No description provided for @aiSender.
+  ///
+  /// In fr, this message translates to:
+  /// **'MatchUp'**
+  String get aiSender;
+
+  /// No description provided for @aiSenderLabel.
+  ///
+  /// In fr, this message translates to:
+  /// **'MatchUp, réponse générée par l’IA'**
+  String get aiSenderLabel;
+
+  /// No description provided for @aiLabelShort.
+  ///
+  /// In fr, this message translates to:
+  /// **'IA'**
+  String get aiLabelShort;
+
+  /// No description provided for @aiGreeting.
+  ///
+  /// In fr, this message translates to:
+  /// **'Salut {name} ! Je trouve des parties à ton niveau, je réserve des terrains et je te conseille des programmes. Je te dis toujours pourquoi, et rien n’est réservé ni payé sans ta confirmation.'**
+  String aiGreeting(Object name);
+
+  /// No description provided for @aiOwnerGreeting.
+  ///
+  /// In fr, this message translates to:
+  /// **'Bonjour ! Je lis ton planning, tes réservations et tes tarifs pour t’aider à remplir tes terrains. Rien ne change sans ta confirmation.'**
+  String get aiOwnerGreeting;
+
+  /// No description provided for @aiWhatIUse.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ce que j’utilise pour te répondre'**
+  String get aiWhatIUse;
+
+  /// No description provided for @aiPrivate.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tes conversations restent privées, visibles par toi seul.'**
+  String get aiPrivate;
+
+  /// No description provided for @aiDisclaimerLong.
+  ///
+  /// In fr, this message translates to:
+  /// **'L’IA peut se tromper. Elle ne réserve et ne paie rien sans ta confirmation.'**
+  String get aiDisclaimerLong;
+
+  /// No description provided for @aiDisclaimer.
+  ///
+  /// In fr, this message translates to:
+  /// **'MatchUp ne réserve et ne paie rien sans ta confirmation.'**
+  String get aiDisclaimer;
+
+  /// No description provided for @aiAnswering.
+  ///
+  /// In fr, this message translates to:
+  /// **'Réponse en cours…'**
+  String get aiAnswering;
+
+  /// No description provided for @aiSend.
+  ///
+  /// In fr, this message translates to:
+  /// **'Envoyer'**
+  String get aiSend;
+
+  /// No description provided for @aiStop.
+  ///
+  /// In fr, this message translates to:
+  /// **'Arrêter la réponse'**
+  String get aiStop;
+
+  /// No description provided for @aiStopped.
+  ///
+  /// In fr, this message translates to:
+  /// **'Réponse arrêtée.'**
+  String get aiStopped;
+
+  /// No description provided for @aiWriting.
+  ///
+  /// In fr, this message translates to:
+  /// **'L’assistant écrit'**
+  String get aiWriting;
+
+  /// No description provided for @aiTodayAt.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aujourd’hui · {time}'**
+  String aiTodayAt(Object time);
+
+  /// No description provided for @aiUnderstood.
+  ///
+  /// In fr, this message translates to:
+  /// **'J’ai compris'**
+  String get aiUnderstood;
+
+  /// No description provided for @aiUnderstoodGroup.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ce que l’assistant a compris'**
+  String get aiUnderstoodGroup;
+
+  /// No description provided for @aiFeedbackGroup.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ton avis sur cette réponse'**
+  String get aiFeedbackGroup;
+
+  /// No description provided for @aiUseful.
+  ///
+  /// In fr, this message translates to:
+  /// **'Réponse utile'**
+  String get aiUseful;
+
+  /// No description provided for @aiNotUseful.
+  ///
+  /// In fr, this message translates to:
+  /// **'Réponse pas utile'**
+  String get aiNotUseful;
+
+  /// No description provided for @aiThanksFeedback.
+  ///
+  /// In fr, this message translates to:
+  /// **'Merci pour ton retour · L’IA peut se tromper.'**
+  String get aiThanksFeedback;
+
+  /// No description provided for @aiCheckBefore.
+  ///
+  /// In fr, this message translates to:
+  /// **'L’IA peut se tromper. Vérifie avant de confirmer.'**
+  String get aiCheckBefore;
+
+  /// No description provided for @aiCheckSummary.
+  ///
+  /// In fr, this message translates to:
+  /// **'L’IA peut se tromper. Vérifie le récapitulatif.'**
+  String get aiCheckSummary;
+
+  /// No description provided for @aiCheckPlanning.
+  ///
+  /// In fr, this message translates to:
+  /// **'L’IA peut se tromper. Vérifie dans ton planning.'**
+  String get aiCheckPlanning;
+
+  /// No description provided for @aiUnstable.
+  ///
+  /// In fr, this message translates to:
+  /// **'Connexion instable'**
+  String get aiUnstable;
+
+  /// No description provided for @aiBackSoon.
+  ///
+  /// In fr, this message translates to:
+  /// **'L’assistant revient dès que le réseau est rétabli.'**
+  String get aiBackSoon;
+
+  /// No description provided for @aiCouldNotAnswer.
+  ///
+  /// In fr, this message translates to:
+  /// **'Je n’ai pas pu répondre'**
+  String get aiCouldNotAnswer;
+
+  /// No description provided for @aiCutOff.
+  ///
+  /// In fr, this message translates to:
+  /// **'La connexion a été coupée pendant ma recherche. Ton message est gardé et aucune action n’a été faite.'**
+  String get aiCutOff;
+
+  /// No description provided for @aiSeePrograms.
+  ///
+  /// In fr, this message translates to:
+  /// **'Voir les programmes'**
+  String get aiSeePrograms;
+
+  /// No description provided for @aiAlreadyFound.
+  ///
+  /// In fr, this message translates to:
+  /// **'Déjà trouvé · 1 court libre'**
+  String get aiAlreadyFound;
+
+  /// No description provided for @aiVerified.
+  ///
+  /// In fr, this message translates to:
+  /// **'Vérifié'**
+  String get aiVerified;
+
+  /// No description provided for @aiRatingDistance.
+  ///
+  /// In fr, this message translates to:
+  /// **'{rating} ({reviews} avis) · {km}'**
+  String aiRatingDistance(Object rating, int reviews, Object km);
+
+  /// No description provided for @aiFreeSlots.
+  ///
+  /// In fr, this message translates to:
+  /// **'Créneaux libres · {day}'**
+  String aiFreeSlots(Object day);
+
+  /// No description provided for @aiFreeSlotsOn.
+  ///
+  /// In fr, this message translates to:
+  /// **'Créneaux libres {day}'**
+  String aiFreeSlotsOn(Object day);
+
+  /// No description provided for @aiSlotTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'{court} · {day} · {time}'**
+  String aiSlotTitle(Object court, Object day, Object time);
+
+  /// No description provided for @aiBookAt.
+  ///
+  /// In fr, this message translates to:
+  /// **'Réserver {time}'**
+  String aiBookAt(Object time);
+
+  /// No description provided for @aiSeeVenue.
+  ///
+  /// In fr, this message translates to:
+  /// **'Voir le terrain'**
+  String get aiSeeVenue;
+
+  /// No description provided for @aiIndoorCourt.
+  ///
+  /// In fr, this message translates to:
+  /// **'{court} · indoor'**
+  String aiIndoorCourt(Object court);
+
+  /// No description provided for @aiHourCourtPrice.
+  ///
+  /// In fr, this message translates to:
+  /// **'1 h · {price} le terrain'**
+  String aiHourCourtPrice(Object price);
+
+  /// No description provided for @aiPerPlayerAt.
+  ///
+  /// In fr, this message translates to:
+  /// **'par joueur à {players}'**
+  String aiPerPlayerAt(int players);
+
+  /// No description provided for @aiPerPlayerShort.
+  ///
+  /// In fr, this message translates to:
+  /// **'/joueur à {players}'**
+  String aiPerPlayerShort(int players);
+
+  /// No description provided for @aiConfirmText.
+  ///
+  /// In fr, this message translates to:
+  /// **'Je réserve le {court} à {venue}, {day} à {time}, {price} ({share} par joueur). Confirmer ?'**
+  String aiConfirmText(
+    Object court,
+    Object venue,
+    Object day,
+    Object time,
+    Object price,
+    Object share,
+  );
+
+  /// No description provided for @aiYourShare.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ta part'**
+  String get aiYourShare;
+
+  /// No description provided for @aiShareOf.
+  ///
+  /// In fr, this message translates to:
+  /// **'sur {price} · {players} joueurs'**
+  String aiShareOf(Object price, int players);
+
+  /// No description provided for @aiCancellation.
+  ///
+  /// In fr, this message translates to:
+  /// **'Annulation'**
+  String get aiCancellation;
+
+  /// No description provided for @aiFreeUntil.
+  ///
+  /// In fr, this message translates to:
+  /// **'Gratuite jusqu’à {when}'**
+  String aiFreeUntil(Object when);
+
+  /// No description provided for @aiHalfUntil.
+  ///
+  /// In fr, this message translates to:
+  /// **'puis 50 % jusqu’à {when}'**
+  String aiHalfUntil(Object when);
+
+  /// No description provided for @aiTonightAt.
+  ///
+  /// In fr, this message translates to:
+  /// **'ce soir {time}'**
+  String aiTonightAt(Object time);
+
+  /// No description provided for @aiNothingWithout.
+  ///
+  /// In fr, this message translates to:
+  /// **'Rien n’est réservé ni payé sans ta confirmation. Tu vérifies le paiement juste après.'**
+  String get aiNothingWithout;
+
+  /// No description provided for @aiConfirm.
+  ///
+  /// In fr, this message translates to:
+  /// **'Confirmer'**
+  String get aiConfirm;
+
+  /// No description provided for @aiFreeCourt.
+  ///
+  /// In fr, this message translates to:
+  /// **'Court libre · {day} · {time}'**
+  String aiFreeCourt(Object day, Object time);
+
+  /// No description provided for @aiCreateTomorrow.
+  ///
+  /// In fr, this message translates to:
+  /// **'Crée ta partie demain à {time}'**
+  String aiCreateTomorrow(Object time);
+
+  /// No description provided for @aiCreateOn.
+  ///
+  /// In fr, this message translates to:
+  /// **'Crée ta partie {day} à {time}'**
+  String aiCreateOn(Object day, Object time);
+
+  /// No description provided for @aiCreateGame.
+  ///
+  /// In fr, this message translates to:
+  /// **'Créer la partie'**
+  String get aiCreateGame;
+
+  /// No description provided for @aiHours.
+  ///
+  /// In fr, this message translates to:
+  /// **'{count} h'**
+  String aiHours(int count);
+
+  /// No description provided for @aiDurationCourtPrice.
+  ///
+  /// In fr, this message translates to:
+  /// **'{duration} · {price} le court'**
+  String aiDurationCourtPrice(Object duration, Object price);
+
+  /// No description provided for @aiNotifyMe.
+  ///
+  /// In fr, this message translates to:
+  /// **'Préviens-moi si ça s’ouvre'**
+  String get aiNotifyMe;
+
+  /// No description provided for @aiAlertOn.
+  ///
+  /// In fr, this message translates to:
+  /// **'Activée'**
+  String get aiAlertOn;
+
+  /// No description provided for @aiAlertSaved.
+  ///
+  /// In fr, this message translates to:
+  /// **'Alerte activée : je te préviens si une partie s’ouvre.'**
+  String get aiAlertSaved;
+
+  /// No description provided for @aiFillRate.
+  ///
+  /// In fr, this message translates to:
+  /// **'Taux de remplissage'**
+  String get aiFillRate;
+
+  /// No description provided for @aiPercent.
+  ///
+  /// In fr, this message translates to:
+  /// **'{value} %'**
+  String aiPercent(int value);
+
+  /// No description provided for @aiSlot.
+  ///
+  /// In fr, this message translates to:
+  /// **'Créneau'**
+  String get aiSlot;
+
+  /// No description provided for @aiTariffsOf.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tarifs · {venue}'**
+  String aiTariffsOf(Object venue);
+
+  /// No description provided for @aiPrepareOffer.
+  ///
+  /// In fr, this message translates to:
+  /// **'Préparer l’offre'**
+  String get aiPrepareOffer;
+
+  /// No description provided for @aiIgnore.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ignorer'**
+  String get aiIgnore;
+
+  /// No description provided for @aiPromoMeta.
+  ///
+  /// In fr, this message translates to:
+  /// **'par terrain · {slots} créneaux · {day}'**
+  String aiPromoMeta(int slots, Object day);
+
+  /// No description provided for @aiPromoDetail.
+  ///
+  /// In fr, this message translates to:
+  /// **'Soit {price} par joueur à {players}. Les joueurs voient le prix barré. Rien ne change sans ta confirmation.'**
+  String aiPromoDetail(Object price, int players);
+
+  /// No description provided for @aiYourMessage.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ton message à l’assistant'**
+  String get aiYourMessage;
 }
 
 class _AppLocalizationsDelegate

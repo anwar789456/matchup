@@ -4,7 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../theme/theme.dart';
 import '../../../ui/ui.dart';
-import '../../common/widgets/coming_soon.dart';
+import '../../assistant/assistant_routes.dart';
 import '../../training/controllers/training_reminders.dart';
 import '../controllers/home_providers.dart';
 
@@ -35,7 +35,7 @@ class PlayerShell extends ConsumerWidget {
         onChanged: (i) => shell.goBranch(i, initialLocation: i == shell.currentIndex),
       ),
       floatingActionButton: _fabTabs.contains(shell.currentIndex)
-          ? MuFab(onPressed: () => showComingSoon(context))
+          ? MuFab(onPressed: () => context.push(AssistantRoutes.player))
           : null,
     );
   }

@@ -13581,4 +13581,287 @@ class AppLocalizationsFr extends AppLocalizations {
   String coaYourFeedbackOn(int session, Object day) {
     return 'Ton retour · séance $session · $day';
   }
+
+  @override
+  String get aiAssistantTitle => 'Assistant MatchUp';
+
+  @override
+  String get aiCloseAssistant => 'Fermer l’assistant';
+
+  @override
+  String aiOwnerSpace(Object venue) {
+    return 'Espace propriétaire · $venue';
+  }
+
+  @override
+  String get aiSender => 'MatchUp';
+
+  @override
+  String get aiSenderLabel => 'MatchUp, réponse générée par l’IA';
+
+  @override
+  String get aiLabelShort => 'IA';
+
+  @override
+  String aiGreeting(Object name) {
+    return 'Salut $name ! Je trouve des parties à ton niveau, je réserve des terrains et je te conseille des programmes. Je te dis toujours pourquoi, et rien n’est réservé ni payé sans ta confirmation.';
+  }
+
+  @override
+  String get aiOwnerGreeting =>
+      'Bonjour ! Je lis ton planning, tes réservations et tes tarifs pour t’aider à remplir tes terrains. Rien ne change sans ta confirmation.';
+
+  @override
+  String get aiWhatIUse => 'Ce que j’utilise pour te répondre';
+
+  @override
+  String get aiPrivate =>
+      'Tes conversations restent privées, visibles par toi seul.';
+
+  @override
+  String get aiDisclaimerLong =>
+      'L’IA peut se tromper. Elle ne réserve et ne paie rien sans ta confirmation.';
+
+  @override
+  String get aiDisclaimer =>
+      'MatchUp ne réserve et ne paie rien sans ta confirmation.';
+
+  @override
+  String get aiAnswering => 'Réponse en cours…';
+
+  @override
+  String get aiSend => 'Envoyer';
+
+  @override
+  String get aiStop => 'Arrêter la réponse';
+
+  @override
+  String get aiStopped => 'Réponse arrêtée.';
+
+  @override
+  String get aiWriting => 'L’assistant écrit';
+
+  @override
+  String aiTodayAt(Object time) {
+    return 'Aujourd’hui · $time';
+  }
+
+  @override
+  String get aiUnderstood => 'J’ai compris';
+
+  @override
+  String get aiUnderstoodGroup => 'Ce que l’assistant a compris';
+
+  @override
+  String get aiFeedbackGroup => 'Ton avis sur cette réponse';
+
+  @override
+  String get aiUseful => 'Réponse utile';
+
+  @override
+  String get aiNotUseful => 'Réponse pas utile';
+
+  @override
+  String get aiThanksFeedback =>
+      'Merci pour ton retour · L’IA peut se tromper.';
+
+  @override
+  String get aiCheckBefore =>
+      'L’IA peut se tromper. Vérifie avant de confirmer.';
+
+  @override
+  String get aiCheckSummary =>
+      'L’IA peut se tromper. Vérifie le récapitulatif.';
+
+  @override
+  String get aiCheckPlanning =>
+      'L’IA peut se tromper. Vérifie dans ton planning.';
+
+  @override
+  String get aiUnstable => 'Connexion instable';
+
+  @override
+  String get aiBackSoon => 'L’assistant revient dès que le réseau est rétabli.';
+
+  @override
+  String get aiCouldNotAnswer => 'Je n’ai pas pu répondre';
+
+  @override
+  String get aiCutOff =>
+      'La connexion a été coupée pendant ma recherche. Ton message est gardé et aucune action n’a été faite.';
+
+  @override
+  String get aiSeePrograms => 'Voir les programmes';
+
+  @override
+  String get aiAlreadyFound => 'Déjà trouvé · 1 court libre';
+
+  @override
+  String get aiVerified => 'Vérifié';
+
+  @override
+  String aiRatingDistance(Object rating, int reviews, Object km) {
+    return '$rating ($reviews avis) · $km';
+  }
+
+  @override
+  String aiFreeSlots(Object day) {
+    return 'Créneaux libres · $day';
+  }
+
+  @override
+  String aiFreeSlotsOn(Object day) {
+    return 'Créneaux libres $day';
+  }
+
+  @override
+  String aiSlotTitle(Object court, Object day, Object time) {
+    return '$court · $day · $time';
+  }
+
+  @override
+  String aiBookAt(Object time) {
+    return 'Réserver $time';
+  }
+
+  @override
+  String get aiSeeVenue => 'Voir le terrain';
+
+  @override
+  String aiIndoorCourt(Object court) {
+    return '$court · indoor';
+  }
+
+  @override
+  String aiHourCourtPrice(Object price) {
+    return '1 h · $price le terrain';
+  }
+
+  @override
+  String aiPerPlayerAt(int players) {
+    return 'par joueur à $players';
+  }
+
+  @override
+  String aiPerPlayerShort(int players) {
+    return '/joueur à $players';
+  }
+
+  @override
+  String aiConfirmText(
+    Object court,
+    Object venue,
+    Object day,
+    Object time,
+    Object price,
+    Object share,
+  ) {
+    return 'Je réserve le $court à $venue, $day à $time, $price ($share par joueur). Confirmer ?';
+  }
+
+  @override
+  String get aiYourShare => 'Ta part';
+
+  @override
+  String aiShareOf(Object price, int players) {
+    return 'sur $price · $players joueurs';
+  }
+
+  @override
+  String get aiCancellation => 'Annulation';
+
+  @override
+  String aiFreeUntil(Object when) {
+    return 'Gratuite jusqu’à $when';
+  }
+
+  @override
+  String aiHalfUntil(Object when) {
+    return 'puis 50 % jusqu’à $when';
+  }
+
+  @override
+  String aiTonightAt(Object time) {
+    return 'ce soir $time';
+  }
+
+  @override
+  String get aiNothingWithout =>
+      'Rien n’est réservé ni payé sans ta confirmation. Tu vérifies le paiement juste après.';
+
+  @override
+  String get aiConfirm => 'Confirmer';
+
+  @override
+  String aiFreeCourt(Object day, Object time) {
+    return 'Court libre · $day · $time';
+  }
+
+  @override
+  String aiCreateTomorrow(Object time) {
+    return 'Crée ta partie demain à $time';
+  }
+
+  @override
+  String aiCreateOn(Object day, Object time) {
+    return 'Crée ta partie $day à $time';
+  }
+
+  @override
+  String get aiCreateGame => 'Créer la partie';
+
+  @override
+  String aiHours(int count) {
+    return '$count h';
+  }
+
+  @override
+  String aiDurationCourtPrice(Object duration, Object price) {
+    return '$duration · $price le court';
+  }
+
+  @override
+  String get aiNotifyMe => 'Préviens-moi si ça s’ouvre';
+
+  @override
+  String get aiAlertOn => 'Activée';
+
+  @override
+  String get aiAlertSaved =>
+      'Alerte activée : je te préviens si une partie s’ouvre.';
+
+  @override
+  String get aiFillRate => 'Taux de remplissage';
+
+  @override
+  String aiPercent(int value) {
+    return '$value %';
+  }
+
+  @override
+  String get aiSlot => 'Créneau';
+
+  @override
+  String aiTariffsOf(Object venue) {
+    return 'Tarifs · $venue';
+  }
+
+  @override
+  String get aiPrepareOffer => 'Préparer l’offre';
+
+  @override
+  String get aiIgnore => 'Ignorer';
+
+  @override
+  String aiPromoMeta(int slots, Object day) {
+    return 'par terrain · $slots créneaux · $day';
+  }
+
+  @override
+  String aiPromoDetail(Object price, int players) {
+    return 'Soit $price par joueur à $players. Les joueurs voient le prix barré. Rien ne change sans ta confirmation.';
+  }
+
+  @override
+  String get aiYourMessage => 'Ton message à l’assistant';
 }

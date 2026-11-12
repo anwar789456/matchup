@@ -11643,5 +11643,303 @@
         "type": "Object"
       }
     }
-  }
+  },
+  "aiAssistantTitle": "Assistant MatchUp",
+  "aiCloseAssistant": "Fermer l’assistant",
+  "aiOwnerSpace": "Espace propriétaire · {venue}",
+  "@aiOwnerSpace": {
+    "placeholders": {
+      "venue": {
+        "type": "Object"
+      }
+    }
+  },
+  "aiSender": "MatchUp",
+  "aiSenderLabel": "MatchUp, réponse générée par l’IA",
+  "aiLabelShort": "IA",
+  "aiGreeting": "Salut {name} ! Je trouve des parties à ton niveau, je réserve des terrains et je te conseille des programmes. Je te dis toujours pourquoi, et rien n’est réservé ni payé sans ta confirmation.",
+  "@aiGreeting": {
+    "placeholders": {
+      "name": {
+        "type": "Object"
+      }
+    }
+  },
+  "aiOwnerGreeting": "Bonjour ! Je lis ton planning, tes réservations et tes tarifs pour t’aider à remplir tes terrains. Rien ne change sans ta confirmation.",
+  "aiWhatIUse": "Ce que j’utilise pour te répondre",
+  "aiPrivate": "Tes conversations restent privées, visibles par toi seul.",
+  "aiDisclaimerLong": "L’IA peut se tromper. Elle ne réserve et ne paie rien sans ta confirmation.",
+  "aiDisclaimer": "MatchUp ne réserve et ne paie rien sans ta confirmation.",
+  "aiAnswering": "Réponse en cours…",
+  "aiSend": "Envoyer",
+  "aiStop": "Arrêter la réponse",
+  "aiStopped": "Réponse arrêtée.",
+  "aiWriting": "L’assistant écrit",
+  "aiTodayAt": "Aujourd’hui · {time}",
+  "@aiTodayAt": {
+    "placeholders": {
+      "time": {
+        "type": "Object"
+      }
+    }
+  },
+  "aiUnderstood": "J’ai compris",
+  "aiUnderstoodGroup": "Ce que l’assistant a compris",
+  "aiFeedbackGroup": "Ton avis sur cette réponse",
+  "aiUseful": "Réponse utile",
+  "aiNotUseful": "Réponse pas utile",
+  "aiThanksFeedback": "Merci pour ton retour · L’IA peut se tromper.",
+  "aiCheckBefore": "L’IA peut se tromper. Vérifie avant de confirmer.",
+  "aiCheckSummary": "L’IA peut se tromper. Vérifie le récapitulatif.",
+  "aiCheckPlanning": "L’IA peut se tromper. Vérifie dans ton planning.",
+  "aiUnstable": "Connexion instable",
+  "aiBackSoon": "L’assistant revient dès que le réseau est rétabli.",
+  "aiCouldNotAnswer": "Je n’ai pas pu répondre",
+  "aiCutOff": "La connexion a été coupée pendant ma recherche. Ton message est gardé et aucune action n’a été faite.",
+  "aiSeePrograms": "Voir les programmes",
+  "aiAlreadyFound": "Déjà trouvé · 1 court libre",
+  "aiVerified": "Vérifié",
+  "aiRatingDistance": "{rating} ({reviews} avis) · {km}",
+  "@aiRatingDistance": {
+    "placeholders": {
+      "rating": {
+        "type": "Object"
+      },
+      "reviews": {
+        "type": "int"
+      },
+      "km": {
+        "type": "Object"
+      }
+    }
+  },
+  "aiFreeSlots": "Créneaux libres · {day}",
+  "@aiFreeSlots": {
+    "placeholders": {
+      "day": {
+        "type": "Object"
+      }
+    }
+  },
+  "aiFreeSlotsOn": "Créneaux libres {day}",
+  "@aiFreeSlotsOn": {
+    "placeholders": {
+      "day": {
+        "type": "Object"
+      }
+    }
+  },
+  "aiSlotTitle": "{court} · {day} · {time}",
+  "@aiSlotTitle": {
+    "placeholders": {
+      "court": {
+        "type": "Object"
+      },
+      "day": {
+        "type": "Object"
+      },
+      "time": {
+        "type": "Object"
+      }
+    }
+  },
+  "aiBookAt": "Réserver {time}",
+  "@aiBookAt": {
+    "placeholders": {
+      "time": {
+        "type": "Object"
+      }
+    }
+  },
+  "aiSeeVenue": "Voir le terrain",
+  "aiIndoorCourt": "{court} · indoor",
+  "@aiIndoorCourt": {
+    "placeholders": {
+      "court": {
+        "type": "Object"
+      }
+    }
+  },
+  "aiHourCourtPrice": "1 h · {price} le terrain",
+  "@aiHourCourtPrice": {
+    "placeholders": {
+      "price": {
+        "type": "Object"
+      }
+    }
+  },
+  "aiPerPlayerAt": "par joueur à {players}",
+  "@aiPerPlayerAt": {
+    "placeholders": {
+      "players": {
+        "type": "int"
+      }
+    }
+  },
+  "aiPerPlayerShort": "/joueur à {players}",
+  "@aiPerPlayerShort": {
+    "placeholders": {
+      "players": {
+        "type": "int"
+      }
+    }
+  },
+  "aiConfirmText": "Je réserve le {court} à {venue}, {day} à {time}, {price} ({share} par joueur). Confirmer ?",
+  "@aiConfirmText": {
+    "placeholders": {
+      "court": {
+        "type": "Object"
+      },
+      "venue": {
+        "type": "Object"
+      },
+      "day": {
+        "type": "Object"
+      },
+      "time": {
+        "type": "Object"
+      },
+      "price": {
+        "type": "Object"
+      },
+      "share": {
+        "type": "Object"
+      }
+    }
+  },
+  "aiYourShare": "Ta part",
+  "aiShareOf": "sur {price} · {players} joueurs",
+  "@aiShareOf": {
+    "placeholders": {
+      "price": {
+        "type": "Object"
+      },
+      "players": {
+        "type": "int"
+      }
+    }
+  },
+  "aiCancellation": "Annulation",
+  "aiFreeUntil": "Gratuite jusqu’à {when}",
+  "@aiFreeUntil": {
+    "placeholders": {
+      "when": {
+        "type": "Object"
+      }
+    }
+  },
+  "aiHalfUntil": "puis 50 % jusqu’à {when}",
+  "@aiHalfUntil": {
+    "placeholders": {
+      "when": {
+        "type": "Object"
+      }
+    }
+  },
+  "aiTonightAt": "ce soir {time}",
+  "@aiTonightAt": {
+    "placeholders": {
+      "time": {
+        "type": "Object"
+      }
+    }
+  },
+  "aiNothingWithout": "Rien n’est réservé ni payé sans ta confirmation. Tu vérifies le paiement juste après.",
+  "aiConfirm": "Confirmer",
+  "aiFreeCourt": "Court libre · {day} · {time}",
+  "@aiFreeCourt": {
+    "placeholders": {
+      "day": {
+        "type": "Object"
+      },
+      "time": {
+        "type": "Object"
+      }
+    }
+  },
+  "aiCreateTomorrow": "Crée ta partie demain à {time}",
+  "@aiCreateTomorrow": {
+    "placeholders": {
+      "time": {
+        "type": "Object"
+      }
+    }
+  },
+  "aiCreateOn": "Crée ta partie {day} à {time}",
+  "@aiCreateOn": {
+    "placeholders": {
+      "day": {
+        "type": "Object"
+      },
+      "time": {
+        "type": "Object"
+      }
+    }
+  },
+  "aiCreateGame": "Créer la partie",
+  "aiHours": "{count} h",
+  "@aiHours": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "aiDurationCourtPrice": "{duration} · {price} le court",
+  "@aiDurationCourtPrice": {
+    "placeholders": {
+      "duration": {
+        "type": "Object"
+      },
+      "price": {
+        "type": "Object"
+      }
+    }
+  },
+  "aiNotifyMe": "Préviens-moi si ça s’ouvre",
+  "aiAlertOn": "Activée",
+  "aiAlertSaved": "Alerte activée : je te préviens si une partie s’ouvre.",
+  "aiFillRate": "Taux de remplissage",
+  "aiPercent": "{value} %",
+  "@aiPercent": {
+    "placeholders": {
+      "value": {
+        "type": "int"
+      }
+    }
+  },
+  "aiSlot": "Créneau",
+  "aiTariffsOf": "Tarifs · {venue}",
+  "@aiTariffsOf": {
+    "placeholders": {
+      "venue": {
+        "type": "Object"
+      }
+    }
+  },
+  "aiPrepareOffer": "Préparer l’offre",
+  "aiIgnore": "Ignorer",
+  "aiPromoMeta": "par terrain · {slots} créneaux · {day}",
+  "@aiPromoMeta": {
+    "placeholders": {
+      "slots": {
+        "type": "int"
+      },
+      "day": {
+        "type": "Object"
+      }
+    }
+  },
+  "aiPromoDetail": "Soit {price} par joueur à {players}. Les joueurs voient le prix barré. Rien ne change sans ta confirmation.",
+  "@aiPromoDetail": {
+    "placeholders": {
+      "price": {
+        "type": "Object"
+      },
+      "players": {
+        "type": "int"
+      }
+    }
+  },
+  "aiYourMessage": "Ton message à l’assistant"
 }

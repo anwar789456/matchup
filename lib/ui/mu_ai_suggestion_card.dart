@@ -28,6 +28,7 @@ class MuAiSuggestionCard extends StatefulWidget {
     this.onFeedback,
     this.onDismiss,
     this.secondaryDismisses = false,
+    this.showFeedback = true,
   }) : reasonLead = reasonLead ?? l10n.recommandeCar;
 
   /// Header line (« Assistant programme »).
@@ -46,6 +47,9 @@ class MuAiSuggestionCard extends StatefulWidget {
   /// true = useful, false = not useful, null = vote withdrawn.
   final ValueChanged<bool?>? onFeedback;
   final VoidCallback? onDismiss;
+
+  /// The 👍 / 👎 of the footer (off when the answer around it has its own, as in AI-02).
+  final bool showFeedback;
 
   /// « Plus tard » also hides the card (with « Annuler » to bring it back).
   final bool secondaryDismisses;
@@ -216,7 +220,7 @@ class _MuAiSuggestionCardState extends State<MuAiSuggestionCard> {
               crossAxisAlignment: WrapCrossAlignment.center,
               runSpacing: MuSpace.s2,
               children: [
-                Row(mainAxisSize: MainAxisSize.min, children: thumbs),
+                if (widget.showFeedback) Row(mainAxisSize: MainAxisSize.min, children: thumbs),
                 Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [

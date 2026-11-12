@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 
+import '../../assistant/assistant_routes.dart';
 import '../../../theme/theme.dart';
 import '../../../ui/ui.dart';
-import '../../common/widgets/coming_soon.dart';
 import '../../../l10n/l10n.dart';
 
 /// The owner space's frame (CLAUDE.md rule 14): Aujourd’hui · Planning · Check-in ·
@@ -63,7 +63,7 @@ class OwnerShell extends StatelessWidget {
         index: shell.currentIndex,
         onChanged: (i) => shell.goBranch(i, initialLocation: i == shell.currentIndex),
       ),
-      floatingActionButton: MuFab(onPressed: () => showComingSoon(context)),
+      floatingActionButton: MuFab(onPressed: () => context.push(AssistantRoutes.owner)),
     );
   }
 }

@@ -2,6 +2,7 @@
 library;
 
 export 'mu_ai_label.dart';
+export 'mu_assistant.dart';
 export 'mu_ai_shimmer.dart';
 export 'mu_ai_suggestion_card.dart';
 export 'mu_ai_text_block.dart';
