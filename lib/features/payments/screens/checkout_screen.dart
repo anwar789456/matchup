@@ -1,4 +1,7 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_stripe/flutter_stripe.dart' show CardField, CardFieldInputDetails;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
@@ -12,7 +15,10 @@ import '../../common/widgets/flow_scaffold.dart';
 import '../../home/controllers/home_providers.dart';
 import '../../settings/data/settings_repository.dart';
 import '../controllers/checkout_controller.dart';
+import '../data/mailer.dart';
+import 'receipt_screen.dart';
 import '../data/payment_repository.dart';
+import '../data/stripe_gateway.dart';
 import '../widgets/checkout_widgets.dart';
 import '../widgets/secure_payment_takeover.dart';
 import '../../../l10n/l10n.dart';
@@ -32,10 +38,17 @@ class CheckoutScreen extends ConsumerStatefulWidget {
 
 class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
   _Mode _mode = _Mode.cards;
+
+  /// With no saved card yet, « Moyen de paiement » opens on the new card.
+  _Mode get _shownMode =>
+      _mode == _Mode.cards && (ref.read(paymentCardsProvider).value?.isEmpty ?? false) ? _Mode.newCard : _mode;
   bool _detail = false;
   bool _useBalance = false;
   bool _accepted = false;
   bool _saveCard = true;
+
+  /// What Stripe's card field says about the typed card (complete, brand, last 4).
+  CardFieldInputDetails? _stripeCard;
   bool _busy = false;
   String? _cardId;
   PromoResult? _promo;
@@ -95,8 +108,19 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
     PaymentCard? card;
     final method = _due == 0 && _useBalance ? PayWith.balance : PayWith.card;
 
+    if (method == PayWith.card && StripeConfig.enabled) {
+      if (_shownMode == _Mode.newCard) {
+        await _payWithStripe(req);
+        return;
+      }
+      final saved = cards.where((c) => c.id == _cardId).firstOrNull ?? cards.where((c) => c.isDefault).firstOrNull ?? cards.firstOrNull;
+      if (saved != null && saved.isStripe) {
+        await _payWithStripe(req, saved: saved);
+        return;
+      }
+    }
     if (method == PayWith.card) {
-      if (_mode == _Mode.newCard) {
+      if (_shownMode == _Mode.newCard) {
         final errors = _validateCard();
         if (_promo?.valid == false) errors['promo'] = l10n.codePromoExpire;
         if (errors.isNotEmpty) {
@@ -175,6 +199,76 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
     }
   }
 
+  /// Through Stripe (test mode): a new card typed in Stripe's field, or a [saved] Stripe card. The
+  /// Edge Function makes the PaymentIntent, Stripe checks the card and runs 3-D Secure itself,
+  /// then the payment is kept like any other. A new card is saved when « Enregistrer » is on.
+  Future<void> _payWithStripe(CheckoutRequest req, {PaymentCard? saved}) async {
+    if (saved == null && _stripeCard?.complete != true) {
+      setState(() => _errors = {'stripe': l10n.numeroDeCarteInvalide});
+      return;
+    }
+    setState(() {
+      _busy = true;
+      _errors = const {};
+    });
+    final amount = _due;
+    final overlay = MuLoadingOverlay.show(context, amount: formatDT(amount), detail: '${req.sport.label} · ${req.title} · ${req.subtitle}');
+    final gateway = ref.read(stripeGatewayProvider);
+    final repo = ref.read(paymentRepositoryProvider);
+    try {
+      final intent = await gateway.createIntent(
+        amount: amount,
+        description: req.title,
+        reference: req.reference,
+        save: saved == null && _saveCard,
+        paymentMethodId: saved?.id,
+      );
+      overlay.close();
+      final outcome = saved == null
+          ? await gateway.confirmCard(intent, holderName: _name.text)
+          : await gateway.confirmSaved(intent, saved.id);
+      if (!mounted) return;
+      if (!outcome.paid) {
+        _declined(PaymentResult(PaymentStatus.declined, reason: outcome.failure, attemptAt: DateTime.now()), saved);
+        return;
+      }
+      var brand = saved?.brand ?? cardBrandOf(_stripeCard?.brand);
+      var last4 = saved?.last4 ?? _stripeCard?.last4;
+      if (saved == null && outcome.paymentMethodId != null) {
+        try {
+          final card = await gateway.card(outcome.paymentMethodId!);
+          brand = cardBrandOf(card.brand) ?? brand;
+          last4 = card.last4;
+          if (_saveCard) {
+            await saveStripeCard(repo, card);
+            ref.invalidate(paymentCardsProvider);
+          }
+        } catch (_) {
+          // The payment went through; only the card's details are missing on the receipt.
+        }
+      }
+      final receipt = await repo.recordStripe(
+        amount: amount,
+        reason: req.title,
+        intentId: outcome.intentId!,
+        reference: req.reference,
+        brand: brand,
+        last4: last4,
+      );
+      if (!mounted) return;
+      await _succeed(MuLoadingOverlay.show(context, amount: formatDT(amount)), receipt, req);
+    } catch (_) {
+      overlay.close();
+      if (!mounted) return;
+      setState(() {
+        _busy = false;
+        _mode = _Mode.network;
+        _timeout = false;
+        _attemptAt = DateTime.now();
+      });
+    }
+  }
+
   void _declined(PaymentResult result, PaymentCard? card) {
     _attempts++;
     if (_attempts >= _maxAttempts) {
@@ -207,6 +301,8 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
     final pause = MuMotion.durationOf(context, MuMotion.success);
     await req.onPaid(receipt, _fromBalance);
     ref.read(lastPaymentProvider.notifier).set(req, receipt);
+    // EML-05, in the background: the screen never waits for the email.
+    unawaited(ref.read(mailerProvider).receipt(receiptFromPayment(req, receipt)));
     await Future<void>.delayed(pause);
     if (!mounted) return;
     overlay.close();
@@ -321,7 +417,7 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
       ],
     );
 
-    final methods = _mode == _Mode.newCard
+    final methods = _shownMode == _Mode.newCard
         ? Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -351,6 +447,17 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
                 country: _country,
                 onCountry: (v) => setState(() => _country = v ?? _country),
                 errors: _errors,
+                stripeField: StripeConfig.enabled
+                    ? CardField(
+                        countryCode: 'TN',
+                        style: MuType.body.copyWith(color: c.text),
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(borderRadius: MuRadius.smAll, borderSide: BorderSide(color: c.borderControl)),
+                          contentPadding: const EdgeInsets.symmetric(horizontal: MuSpace.s3, vertical: MuSpace.s3),
+                        ),
+                        onCardChanged: (d) => setState(() => _stripeCard = d),
+                      )
+                    : null,
               ),
               const SizedBox(height: MuSpace.s4),
               MuCheckbox(

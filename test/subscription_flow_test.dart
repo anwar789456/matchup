@@ -157,10 +157,9 @@ void main() {
   });
 
   testWidgets('SUB-09: the receipt is a real A4 PDF', (tester) async {
-    final receipts = await FakeSubscriptionRepository(latency: Duration.zero).receipts();
     final bytes = await tester.runAsync(
       () => buildReceiptPdf(
-        receipts.first,
+        FakeSubscriptionRepository.storyReceipts.first,
         const ReceiptClient(
           name: 'Yassine Belhaj',
           city: 'La Marsa, Tunisie',

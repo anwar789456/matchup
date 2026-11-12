@@ -40,6 +40,8 @@ class SubscriptionScreen extends ConsumerWidget {
     if (!sub.premium) return const OffersScreen();
     final now = ref.read(clockProvider)();
     final cancelled = sub.status == PremiumStatus.cancelled;
+    // Paid by Stripe: no trial bar, « Actif ».
+    final active = sub.status == PremiumStatus.active;
     final left = sub.trialEnds.difference(DateTime(now.year, now.month, now.day)).inDays;
     final cards = ref.watch(paymentCardsProvider).value ?? const <PaymentCard>[];
     final receipts = ref.watch(receiptsProvider).value ?? const <ReceiptEntry>[];
@@ -118,7 +120,7 @@ class SubscriptionScreen extends ConsumerWidget {
                           ),
                           MuStatusBadge(
                             status: cancelled ? MuStatus.cancelled : MuStatus.confirmed,
-                            label: cancelled ? l10n.resilie : l10n.essaiGratuit,
+                            label: cancelled ? l10n.resilie : active ? l10n.actif : l10n.essaiGratuit,
                             size: MuBadgeSize.s,
                           ),
                         ],
@@ -128,25 +130,27 @@ class SubscriptionScreen extends ConsumerWidget {
                         children: [
                           Expanded(
                             child: Text(
-                              cancelled ? l10n.premiumActif : l10n.joursDEssaiRestants(left),
+                              cancelled || active ? l10n.premiumActif : l10n.joursDEssaiRestants(left),
                               style: MuType.label.copyWith(color: inverse),
                             ),
                           ),
                           Text(l10n.jusquAu2(end), style: MuType.caption.copyWith(color: soft)),
                         ],
                       ),
-                      const SizedBox(height: MuSpace.s2),
-                      // On the ink card the bar takes the Night match primary (Volt).
-                      MuNightTheme(
-                        child: MuProgressBar(
-                          value: (Subscription.trialDays - left)
-                              .clamp(1, Subscription.trialDays)
-                              .toDouble(),
-                          max: Subscription.trialDays.toDouble(),
-                          size: MuProgressSize.s,
-                          showValue: false,
+                      if (!active) ...[
+                        const SizedBox(height: MuSpace.s2),
+                        // On the ink card the bar takes the Night match primary (Volt).
+                        MuNightTheme(
+                          child: MuProgressBar(
+                            value: (Subscription.trialDays - left)
+                                .clamp(1, Subscription.trialDays)
+                                .toDouble(),
+                            max: Subscription.trialDays.toDouble(),
+                            size: MuProgressSize.s,
+                            showValue: false,
+                          ),
                         ),
-                      ),
+                      ],
                       const SizedBox(height: MuSpace.s2),
                       SubLine(l10n.prochainPrelevement, nextValue, inverse: true),
                       Divider(height: 1, thickness: 1, color: inverse.withValues(alpha: 0.12)),
@@ -186,7 +190,8 @@ class SubscriptionScreen extends ConsumerWidget {
                     ],
                   ),
                 ),
-                if (!cancelled) ...[
+                // The reminder before the first charge: only during the trial.
+                if (!cancelled && !active) ...[
                   const SizedBox(height: MuSpace.s5),
                   MuBanner(
                     tone: MuBannerTone.info,
@@ -359,14 +364,16 @@ class SubscriptionScreen extends ConsumerWidget {
                     ],
                   ),
                 ),
-                const SizedBox(height: MuSpace.s2),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: MuSpace.s4),
-                  child: Text(
-                    l10n.taPremiereFacturePremiumArrivera(end),
-                    style: caption,
+                if (receipts.isEmpty) ...[
+                  const SizedBox(height: MuSpace.s2),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: MuSpace.s4),
+                    child: Text(
+                      l10n.taPremiereFacturePremiumArrivera(end),
+                      style: caption,
+                    ),
                   ),
-                ),
+                ],
                 if (!cancelled) ...[
                   const SizedBox(height: MuSpace.s6),
                   MuCardSurface(

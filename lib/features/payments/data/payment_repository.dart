@@ -34,12 +34,15 @@ class PaymentCard {
   /// « 08/27 ».
   String get expiry => '${expMonth.toString().padLeft(2, '0')}/${expYear % 100}';
 
+  /// Saved on the player's Stripe customer: it pays through Stripe.
+  bool get isStripe => id.startsWith('pm_');
+
   /// Expires next month from the story's « now » (oct. 2026).
   bool get expiresSoon => expYear == 2026 && expMonth == 11;
 }
 
 /// How the share is paid.
-enum PayWith { card, balance, applePay, googlePay }
+enum PayWith { card, balance, applePay, googlePay, stripe }
 
 /// The outcome the debug menu picks for the next fake payment (CLAUDE.md rule 10).
 enum PaymentOutcome { success, threeDSecure, declined, networkError, timeout }
@@ -80,6 +83,7 @@ class PaymentReceipt {
     PayWith.balance => 'Solde MatchUp',
     PayWith.applePay => 'Apple Pay',
     PayWith.googlePay => 'Google Pay',
+    PayWith.stripe => card != null && card!.last4.isNotEmpty ? '${card!.label} · Stripe' : 'Carte · Stripe',
   };
 }
 
@@ -117,7 +121,8 @@ abstract interface class PaymentRepository {
   Future<PaymentReceipt> pay(num amount, {required String reason});
 
   Future<List<PaymentCard>> cards();
-  Future<PaymentCard> addCard({required CardBrand brand, required String last4, required int expMonth, required int expYear, bool save = true});
+  /// [id]: a Stripe card keeps its PaymentMethod id (« pm_… »), so a saved card pays through Stripe.
+  Future<PaymentCard> addCard({required CardBrand brand, required String last4, required int expMonth, required int expYear, bool save = true, String? id});
 
   /// The checkout's payment; the status says what the screen does next. [reference] is what it
   /// pays for (booking « MU-48213 », game « g1 »), null for a top-up or Premium.
@@ -142,7 +147,27 @@ abstract interface class PaymentRepository {
 
   /// Every try at the bank, failed ones included, newest first.
   Future<List<PaymentAttempt>> attempts({String? reference});
+
+  /// A card payment Stripe accepted (test mode): numbered and kept like the others, with the
+  /// PaymentIntent id (« pi_… ») in place of a saved card.
+  Future<PaymentReceipt> recordStripe({
+    required num amount,
+    required String reason,
+    required String intentId,
+    String? reference,
+    CardBrand? brand,
+    String? last4,
+  });
 }
+
+/// The stand-in card of a Stripe payment: its id is `stripe:<PaymentIntent id>`.
+PaymentCard stripeCard(String intentId, CardBrand? brand, String? last4) => PaymentCard(
+  id: 'stripe:$intentId',
+  brand: brand ?? CardBrand.visa,
+  last4: last4 ?? '',
+  expMonth: 0,
+  expYear: 0,
+);
 
 /// A payment that went through, as stored: paid, or refunded later.
 @immutable
@@ -168,6 +193,9 @@ class PaymentRecord {
   final DateTime? refundedAt;
 
   bool get refunded => refundedAt != null;
+
+  /// « pi_3Q… » for a payment made with Stripe.
+  String? get stripeIntentId => cardId != null && cardId!.startsWith('stripe:') ? cardId!.substring(7) : null;
 }
 
 enum AttemptState { pending, paid, failed }
@@ -294,6 +322,20 @@ class FakePaymentRepository implements PaymentRepository {
   ];
 
   @override
+  Future<PaymentReceipt> recordStripe({
+    required num amount,
+    required String reason,
+    required String intentId,
+    String? reference,
+    CardBrand? brand,
+    String? last4,
+  }) async {
+    final receipt = _receipt(amount, PayWith.stripe, stripeCard(intentId, brand, last4), reason: reason, reference: reference);
+    _log(PaymentResult(PaymentStatus.success, receipt: receipt), amount: amount, method: PayWith.stripe, reason: reason, reference: reference);
+    return receipt;
+  }
+
+  @override
   Future<List<PaymentAttempt>> attempts({String? reference}) async => [
     for (final a in _attempts)
       if (reference == null || a.reference == reference) a,
@@ -309,8 +351,8 @@ class FakePaymentRepository implements PaymentRepository {
   Future<List<PaymentCard>> cards() async => [..._cards];
 
   @override
-  Future<PaymentCard> addCard({required CardBrand brand, required String last4, required int expMonth, required int expYear, bool save = true}) async {
-    final card = PaymentCard(id: '${brand.name}-$last4-${_cards.length}', brand: brand, last4: last4, expMonth: expMonth, expYear: expYear);
+  Future<PaymentCard> addCard({required CardBrand brand, required String last4, required int expMonth, required int expYear, bool save = true, String? id}) async {
+    final card = PaymentCard(id: id ?? '${brand.name}-$last4-${_cards.length}', brand: brand, last4: last4, expMonth: expMonth, expYear: expYear);
     if (save) _cards.add(card);
     return card;
   }

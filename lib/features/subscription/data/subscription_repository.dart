@@ -17,6 +17,9 @@ enum PremiumStatus {
   /// 14-day trial, first charge on ven. 30 oct.
   trial,
 
+  /// Paid: Stripe charges the card each period.
+  active,
+
   /// Cancelled: Premium stays active until the end of the paid (or trial) period, then Gratuit.
   cancelled,
 }
@@ -79,11 +82,13 @@ class Subscription {
     String? cardLabel,
     bool? offerAccepted,
     CancelReason? Function()? cancelReason,
+    DateTime? trialEnds,
+    DateTime? reminder,
   }) => Subscription(
     status: status ?? this.status,
     period: period ?? this.period,
-    trialEnds: trialEnds,
-    reminder: reminder,
+    trialEnds: trialEnds ?? this.trialEnds,
+    reminder: reminder ?? this.reminder,
     cardLabel: cardLabel ?? this.cardLabel,
     offerAccepted: offerAccepted ?? this.offerAccepted,
     cancelReason: cancelReason == null ? this.cancelReason : cancelReason(),
@@ -99,6 +104,12 @@ abstract interface class SubscriptionRepository {
   Future<Subscription> acceptOffer();
   Future<Subscription> reactivate();
   Future<List<ReceiptEntry>> receipts();
+
+  /// Keeps what Stripe says (status, next charge, period, offer).
+  Future<Subscription> save(Subscription s);
+
+  /// A Premium invoice Stripe charged, as a receipt of SUB-04 (ignored if already kept).
+  Future<void> addReceipt(ReceiptEntry r);
 }
 
 /// Starts on Gratuit (STORY: Yassine starts the trial ven. 16 oct.).
@@ -158,7 +169,17 @@ class FakeSubscriptionRepository implements SubscriptionRepository {
       _set(_sub.copyWith(status: PremiumStatus.trial, cancelReason: () => null));
 
   @override
-  Future<List<ReceiptEntry>> receipts() async => storyReceipts;
+  Future<List<ReceiptEntry>> receipts() async => [..._receipts];
+
+  final _receipts = <ReceiptEntry>[];
+
+  @override
+  Future<Subscription> save(Subscription s) async => _sub = s;
+
+  @override
+  Future<void> addReceipt(ReceiptEntry r) async {
+    if (_receipts.every((x) => x.number != r.number)) _receipts.insert(0, r);
+  }
 
   /// The story's three receipts (SUB-04).
   static final storyReceipts = <ReceiptEntry>[

@@ -40,7 +40,7 @@ class SqliteSubscriptionRepository implements SubscriptionRepository {
             : CancelReason.values.byName(r['motif_annulation']! as String),
       );
 
-  /// Gratuit on ven. 16 oct., and the three receipts of SUB-04.
+  /// Gratuit on ven. 16 oct. No receipt: SUB-04 lists the invoices Stripe really charged.
   static Future<void> seed(DatabaseExecutor db) async {
     await db.insert(
       'abonnement',
@@ -51,8 +51,19 @@ class SqliteSubscriptionRepository implements SubscriptionRepository {
         reminder: Story.at(27, 0),
       )),
     );
-    for (final r in FakeSubscriptionRepository.storyReceipts) {
-      await db.insert('recus', {
+  }
+
+  @override
+  Future<Subscription> save(Subscription s) async {
+    await (await _db).insert('abonnement', _row(s), conflictAlgorithm: ConflictAlgorithm.replace);
+    return s;
+  }
+
+  @override
+  Future<void> addReceipt(ReceiptEntry r) async {
+    final db = await _db;
+    await db.transaction((txn) async {
+      final kept = await txn.insert('recus', {
         'numero': r.number,
         'libelle': r.label,
         'date': r.date.toIso8601String(),
@@ -60,9 +71,10 @@ class SqliteSubscriptionRepository implements SubscriptionRepository {
         'carte': r.card,
         'reference': r.reference,
         'politique': r.policy,
-      });
+      }, conflictAlgorithm: ConflictAlgorithm.ignore);
+      if (kept == 0) return;
       for (final (i, l) in r.lines.indexed) {
-        await db.insert('recu_lignes', {
+        await txn.insert('recu_lignes', {
           'numero': r.number,
           'position': i,
           'libelle': l.title,
@@ -71,7 +83,7 @@ class SqliteSubscriptionRepository implements SubscriptionRepository {
           'details': jsonEncode(l.details),
         });
       }
-    }
+    });
   }
 
   @override

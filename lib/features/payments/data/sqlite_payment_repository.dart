@@ -70,10 +70,9 @@ class SqlitePaymentRepository implements PaymentRepository {
         'numero': result.receipt?.number,
       };
 
+  /// Promo codes only: a phone starts with no card; the player's cards are the ones they add
+  /// (with Stripe, saved on their Stripe customer and synced to Supabase).
   static Future<void> seed(DatabaseExecutor db) async {
-    for (final (i, c) in FakePaymentRepository.storyCards.indexed) {
-      await db.insert('cartes', _cardRow(c, i));
-    }
     for (final e in FakePaymentRepository.storyPromos.entries) {
       await db.insert('codes_promo',
           {'code': e.key, 'pourcentage': e.value.percent, 'erreur': e.value.error});
@@ -91,17 +90,19 @@ class SqlitePaymentRepository implements PaymentRepository {
     required int expMonth,
     required int expYear,
     bool save = true,
+    String? id,
   }) async {
     final db = await _db;
     final count = Sqflite.firstIntValue(await db.rawQuery('SELECT COUNT(*) FROM cartes')) ?? 0;
     final card = PaymentCard(
-      id: '${brand.name}-$last4-$count',
+      id: id ?? '${brand.name}-$last4-$count',
       brand: brand,
       last4: last4,
       expMonth: expMonth,
       expYear: expYear,
+      isDefault: count == 0, // the first card is the default one
     );
-    if (save) await db.insert('cartes', _cardRow(card, count));
+    if (save) await db.insert('cartes', _cardRow(card, count), conflictAlgorithm: ConflictAlgorithm.replace);
     return card;
   }
 
@@ -154,6 +155,17 @@ class SqlitePaymentRepository implements PaymentRepository {
       return receipt;
     });
   }
+
+  @override
+  Future<PaymentReceipt> recordStripe({
+    required num amount,
+    required String reason,
+    required String intentId,
+    String? reference,
+    CardBrand? brand,
+    String? last4,
+  }) =>
+      _pay(amount, PayWith.stripe, stripeCard(intentId, brand, last4), reason, reference);
 
   @override
   Future<PaymentReceipt> pay(num amount, {required String reason}) async {

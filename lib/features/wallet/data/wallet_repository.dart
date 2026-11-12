@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -6,7 +8,9 @@ import '../../../theme/theme.dart';
 import '../../../ui/ui.dart';
 import '../../common/data/story_data.dart';
 import '../../home/controllers/home_providers.dart';
+import '../../payments/data/mailer.dart';
 import '../../payments/data/payment_repository.dart';
+import '../../payments/data/stripe_gateway.dart';
 import '../../profile/data/me_repository.dart';
 import 'sqlite_wallet_repository.dart';
 
@@ -277,6 +281,31 @@ class WalletActions {
   const WalletActions(this._ref);
 
   final Ref _ref;
+
+  /// Pays a refund request back. To the card, a Stripe payment is refunded on Stripe first (the
+  /// money really goes back, test mode); to the balance, the balance is credited.
+  Future<RefundRequest> completeRefund(RefundRequest r) async {
+    final txId = r.transaction.id;
+    if (r.target == RefundTarget.card && txId.startsWith('tx-')) {
+      final number = txId.substring(3);
+      final paid = (await _ref.read(paymentRepositoryProvider).payments()).where((p) => p.number == number).firstOrNull;
+      final intent = paid?.stripeIntentId;
+      if (intent != null) await _ref.read(stripeGatewayProvider).refund(intent, amount: r.amount);
+    }
+    final done = await _ref.read(walletRepositoryProvider).completeRefund(r.id);
+    unawaited(_ref.read(mailerProvider).refund(
+      number: txId.startsWith('tx-') ? txId.substring(3) : txId,
+      label: r.transaction.label,
+      amount: r.amount,
+      toCard: r.target == RefundTarget.card,
+      card: r.transaction.meta.split(' · ').skip(2).join(' · '),
+    ));
+    _ref
+      ..invalidate(refundRequestsProvider)
+      ..invalidate(walletHistoryProvider)
+      ..invalidate(meProvider);
+    return done;
+  }
 
   Future<void> topUp(num amount, PaymentReceipt receipt) async {
     await _ref.read(meRepositoryProvider).credit(amount);
