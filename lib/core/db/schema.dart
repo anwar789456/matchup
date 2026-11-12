@@ -642,7 +642,7 @@ const schemaVersions = <int, List<String>>{
     )''',
     '''
     CREATE TABLE entrainement_plans (
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      id TEXT PRIMARY KEY,
       semaine TEXT NOT NULL,
       objectifs TEXT NOT NULL,
       contenu TEXT NOT NULL,
@@ -650,7 +650,7 @@ const schemaVersions = <int, List<String>>{
     )''',
     '''
     CREATE TABLE entrainement_analyses (
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      id TEXT PRIMARY KEY,
       geste TEXT NOT NULL,
       fichier TEXT NOT NULL,
       taille INTEGER NOT NULL,

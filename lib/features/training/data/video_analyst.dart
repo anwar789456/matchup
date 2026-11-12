@@ -15,7 +15,7 @@ abstract final class VideoAnalyst {
   static const venue = 'Smash Padel Club';
 
   static VideoAnalysis analyse({
-    required int id,
+    required String id,
     required VideoMove move,
     required String fileName,
     required int sizeBytes,

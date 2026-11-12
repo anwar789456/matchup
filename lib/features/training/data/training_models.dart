@@ -488,7 +488,8 @@ class VideoAnalysis {
     this.sharedWithCoach = false,
   });
 
-  final int id;
+  /// A UUID made on the phone (synced: unique across the user's phones).
+  final String id;
   final VideoMove move;
   final String fileName;
   final int sizeBytes;

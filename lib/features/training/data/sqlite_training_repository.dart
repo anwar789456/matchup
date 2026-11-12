@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:math';
 
 import 'package:sqflite/sqflite.dart';
 
@@ -10,7 +11,7 @@ import 'training_models.dart';
 import 'training_repository.dart';
 import 'training_story.dart';
 
-/// [TrainingRepository] on the phone's database (schema v3): programs joined in
+/// [TrainingRepository] on the phone's database (schema v5): programs joined in
 /// `entrainement_inscriptions`, sessions done in `entrainement_seances`, the streak and the plan
 /// card in `entrainement_profil`. The catalogue itself is the story's content until the
 /// entrainement API serves it.
@@ -139,6 +140,7 @@ class SqliteTrainingRepository implements TrainingRepository {
     final db = await _db;
     await db.transaction((txn) async {
       await txn.insert('entrainement_plans', {
+        'id': _uuid(),
         'semaine': plan.weekStart.toIso8601String(),
         'objectifs': jsonEncode([for (final g in plan.request.goals) g.name]),
         'contenu': jsonEncode([
@@ -166,7 +168,9 @@ class SqliteTrainingRepository implements TrainingRepository {
     required bool share,
     required DateTime now,
   }) async {
-    final id = await (await _db).insert('entrainement_analyses', {
+    final id = _uuid();
+    await (await _db).insert('entrainement_analyses', {
+      'id': id,
       'geste': move.name,
       'fichier': fileName,
       'taille': sizeBytes,
@@ -196,5 +200,18 @@ class SqliteTrainingRepository implements TrainingRepository {
 
   /// The plans accepted, latest first (one JSON row per week).
   Future<List<Map<String, Object?>>> acceptedPlans() async =>
-      (await _db).query('entrainement_plans', orderBy: 'id DESC');
+      (await _db).query('entrainement_plans', orderBy: 'accepte_le DESC');
+
+  static final _random = Random.secure();
+
+  /// A random (v4) UUID: plans and analyses are synced, so their ids must never clash
+  /// between two phones of the same player (supabase/README.md).
+  static String _uuid() {
+    final b = List<int>.generate(16, (_) => _random.nextInt(256));
+    b[6] = (b[6] & 0x0f) | 0x40;
+    b[8] = (b[8] & 0x3f) | 0x80;
+    final h = b.map((x) => x.toRadixString(16).padLeft(2, '0')).join();
+    return '${h.substring(0, 8)}-${h.substring(8, 12)}-${h.substring(12, 16)}-'
+        '${h.substring(16, 20)}-${h.substring(20)}';
+  }
 }

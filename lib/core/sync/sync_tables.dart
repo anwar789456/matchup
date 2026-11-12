@@ -46,6 +46,13 @@ const syncTables = <SyncTable>[
   SyncTable('recus'),
   SyncTable('recu_lignes'),
 
-  // ── Utilisateur (Alaa) · Réservation (Mahmoud) · Tournois (Ayoub) · Entraînement (Aziz) ·
-  //    Forum (Hani): add your tables here.
+  // ── Entraînement (Aziz) ──────────────────────────────────────────────────────────────────
+  SyncTable('entrainement_profil'),
+  SyncTable('entrainement_inscriptions'),
+  SyncTable('entrainement_seances'),
+  SyncTable('entrainement_plans'),
+  SyncTable('entrainement_analyses'),
+
+  // ── Utilisateur (Alaa) · Réservation (Mahmoud) · Tournois (Ayoub) · Forum (Hani): add your
+  //    tables here.
 ];

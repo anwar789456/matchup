@@ -130,7 +130,7 @@ class FakeTrainingRepository implements TrainingRepository {
     required DateTime now,
   }) => _wait(
     VideoAnalyst.analyse(
-      id: ++_analyses,
+      id: '${++_analyses}',
       move: move,
       fileName: fileName,
       sizeBytes: sizeBytes,

@@ -94,7 +94,7 @@ void main() {
     });
   });
 
-  group('SqliteTrainingRepository (schema v3)', () {
+  group('SqliteTrainingRepository (schema v5)', () {
     late AppDatabase database;
     late SqliteTrainingRepository repo;
 
@@ -136,6 +136,45 @@ void main() {
       expect(p.result('bandeja', 5)!.notes, 'Poignet plus ferme');
       expect(p.planCardHidden, isTrue);
     });
+  });
+
+  test('training changes are queued for Supabase; the story seed is not', () async {
+    final database = AppDatabase();
+    addTearDown(database.close);
+    final repo = SqliteTrainingRepository(database, aiDelay: Duration.zero);
+    final db = await database.db;
+    Future<List<String>> queued() async => [
+      for (final r in await db.query('sync_outbox', orderBy: 'id')) r['tableau']! as String,
+    ];
+    expect(await queued(), isEmpty);
+    await repo.enroll('basket-3x3');
+    await repo.completeLesson(
+      LessonResult(
+        programId: 'bandeja',
+        index: 5,
+        doneAt: storyNow,
+        minutes: 24,
+        drillsDone: 4,
+        drillsTotal: 4,
+      ),
+    );
+    final plan = await repo.generatePlan(PlanRequest.story, storyNow);
+    await repo.acceptPlan(plan);
+    final video = await repo.analyseVideo(
+      move: VideoMove.bandeja,
+      fileName: 'bandeja-ven16.mp4',
+      sizeBytes: 19293798,
+      share: false,
+      now: storyNow,
+    );
+    expect(video.id, matches(RegExp(r'^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-')));
+    expect(await queued(), [
+      'entrainement_inscriptions',
+      'entrainement_seances',
+      'entrainement_plans',
+      'entrainement_profil',
+      'entrainement_analyses',
+    ]);
   });
 
   group('Entraînement tab', () {
