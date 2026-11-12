@@ -85,23 +85,8 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
     });
   }
 
-  Map<String, String> _validateCard() {
-    final errors = <String, String>{};
-    final digits = _number.text.replaceAll(' ', '');
-    if (digits.length < 16 || !CardInputZone.luhn(digits)) {
-      errors['number'] = l10n.numeroDeCarteInvalide;
-    }
-    final exp = _expiry.text.replaceAll(RegExp(r'\D'), '');
-    final month = exp.length >= 2 ? int.tryParse(exp.substring(0, 2)) : null;
-    final year = exp.length == 4 ? int.tryParse(exp.substring(2)) : null;
-    if (month == null || year == null || month < 1 || month > 12) {
-      errors['expiry'] = l10n.dateDExpirationInvalide;
-    } else if (year < 26 || (year == 26 && month < 10)) {
-      errors['expiry'] = l10n.carteExpiree;
-    }
-    if (_cvc.text.length < 3) errors['cvc'] = l10n.cvcIncorrect;
-    return errors;
-  }
+  Map<String, String> _validateCard() =>
+      CardInputZone.validate(number: _number.text, expiry: _expiry.text, cvc: _cvc.text);
 
   Future<void> _pay() async {
     final req = _request!;

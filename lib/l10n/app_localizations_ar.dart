@@ -3923,6 +3923,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String get ajouterUneCarte => 'إضافة بطاقة';
 
   @override
+  String get carteAjoutee => 'تمت إضافة البطاقة';
+
+  @override
   String get ouEnUnGeste => 'أو بلمسة واحدة';
 
   @override

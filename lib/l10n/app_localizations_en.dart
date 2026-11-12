@@ -3929,6 +3929,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get ajouterUneCarte => 'Ajouter une carte';
 
   @override
+  String get carteAjoutee => 'Carte ajoutée';
+
+  @override
   String get ouEnUnGeste => 'ou en un geste';
 
   @override

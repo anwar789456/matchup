@@ -7,9 +7,9 @@ import '../../../core/format.dart';
 import '../../../router.dart';
 import '../../../theme/theme.dart';
 import '../../../ui/ui.dart';
-import '../../common/widgets/coming_soon.dart';
 import '../../common/widgets/flow_scaffold.dart';
 import '../../payments/data/payment_repository.dart';
+import '../../payments/widgets/add_card_sheet.dart';
 import '../../payments/widgets/checkout_widgets.dart';
 import '../controllers/subscription_controller.dart';
 import '../data/subscription_repository.dart';
@@ -269,7 +269,10 @@ class _PremiumCheckoutScreenState extends ConsumerState<PremiumCheckoutScreen> {
                       MuSettingsRow(
                         title: l10n.ajouterUneCarte,
                         icon: PhosphorIcons.plus(),
-                        onTap: () => showComingSoon(context),
+                        onTap: () async {
+                          final added = await showAddCardSheet(context);
+                          if (added != null && mounted) setState(() => _cardId = added.id);
+                        },
                       ),
                     ],
                   ),

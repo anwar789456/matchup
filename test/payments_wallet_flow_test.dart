@@ -9,6 +9,7 @@ import 'package:matchup/features/explore/data/tournaments_repository.dart';
 import 'package:matchup/features/games/data/games_repository.dart';
 import 'package:matchup/features/matches/data/bookings_repository.dart';
 import 'package:matchup/features/payments/data/payment_repository.dart';
+import 'package:matchup/features/payments/screens/receipt_screen.dart';
 import 'package:matchup/features/player_onboarding/controllers/onboarding_controller.dart';
 import 'package:matchup/features/player_onboarding/data/onboarding_state.dart';
 import 'package:matchup/features/player_onboarding/data/onboarding_store.dart';
@@ -249,6 +250,31 @@ void main() {
     expect(find.widgetWithText(MuButton, 'Payer le reste'), findsNothing);
     await see(tester, find.text('Avancée par toi').first);
     expect(find.text('Avancée par toi'), findsNWidgets(2));
+    expect(tester.takeException(), isNull);
+  });
+
+  testWidgets('« Ajouter une carte » (SUB-02 → PAY-03) saves the card; a wallet line opens its receipt', (
+    tester,
+  ) async {
+    await pumpApp(tester, Routes.premiumCheckout);
+    await see(tester, find.text('Ajouter une carte'));
+    await tap(tester, find.text('Ajouter une carte'));
+    expect(find.text('Nouvelle carte'), findsWidgets);
+    await tap(tester, find.widgetWithText(MuButton, 'Enregistrer'));
+    expect(find.text('Numéro de carte invalide'), findsWidgets); // PAY-04, the sheet stays
+    await tester.enterText(find.byType(TextField).at(1), '5555 5555 5555 4444');
+    await tester.enterText(find.byType(TextField).at(2), '12/29');
+    await tester.enterText(find.byType(TextField).at(3), '123');
+    await tapQuick(tester, find.widgetWithText(MuButton, 'Enregistrer'));
+    expect(find.text('Carte ajoutée'), findsOneWidget);
+    await tester.pumpAndSettle();
+    expect(find.textContaining('4444'), findsWidgets);
+
+    container.read(routerProvider).go(Routes.wallet);
+    await tester.pumpAndSettle();
+    await see(tester, find.byType(MuTransactionRow).first);
+    await tapQuick(tester, find.byType(MuTransactionRow).first); // the PDF preview never settles
+    expect(find.byType(ReceiptScreen), findsOneWidget);
     expect(tester.takeException(), isNull);
   });
 }

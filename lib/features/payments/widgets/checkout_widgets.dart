@@ -413,6 +413,23 @@ class CardInputZone extends StatelessWidget {
     return digits.length >= 13 && sum % 10 == 0;
   }
 
+  /// Field key → message for the number, expiry (« MM/AA ») and CVC (PAY-04).
+  static Map<String, String> validate({required String number, required String expiry, required String cvc}) {
+    final errors = <String, String>{};
+    final digits = number.replaceAll(' ', '');
+    if (digits.length < 16 || !luhn(digits)) errors['number'] = l10n.numeroDeCarteInvalide;
+    final exp = expiry.replaceAll(RegExp(r'\D'), '');
+    final month = exp.length >= 2 ? int.tryParse(exp.substring(0, 2)) : null;
+    final year = exp.length == 4 ? int.tryParse(exp.substring(2)) : null;
+    if (month == null || year == null || month < 1 || month > 12) {
+      errors['expiry'] = l10n.dateDExpirationInvalide;
+    } else if (year < 26 || (year == 26 && month < 10)) {
+      errors['expiry'] = l10n.carteExpiree;
+    }
+    if (cvc.length < 3) errors['cvc'] = l10n.cvcIncorrect;
+    return errors;
+  }
+
   @override
   Widget build(BuildContext context) {
     final c = context.mu;

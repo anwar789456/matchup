@@ -8,7 +8,7 @@ import '../../../core/format.dart';
 import '../../../router.dart';
 import '../../../theme/theme.dart';
 import '../../../ui/ui.dart';
-import '../../common/widgets/coming_soon.dart';
+import '../../payments/screens/receipt_screen.dart';
 import '../../home/controllers/home_providers.dart';
 import '../data/wallet_repository.dart';
 import '../../../l10n/l10n.dart';
@@ -176,7 +176,11 @@ class _WalletScreenState extends ConsumerState<WalletScreen> {
                       MuTransactionList(
                         children: [
                           for (final x in items.where((x) => group(x.date) == group(t.date)))
-                            MuTransactionRow(tx: x, onTap: () => showComingSoon(context)),
+                            MuTransactionRow(
+                              tx: x,
+                              // A failed payment has no receipt.
+                              onTap: x.status == MuTransactionStatus.failed ? null : () => context.push(Routes.receipt, extra: receiptFromTransaction(x)),
+                            ),
                         ],
                       ),
                     ],

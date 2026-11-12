@@ -38,6 +38,17 @@ ReceiptEntry receiptFromPayment(CheckoutRequest req, PaymentReceipt receipt) => 
       : l10n.gratuiteJusquAuPuisJusqu(formatDateTime(req.policy!.$1), formatDateTime(req.policy!.$2)),
 );
 
+/// The receipt of a wallet line (WAL-01 → SUB-09): its receipt number when the payment made one
+/// (`tx-MU-R-2026-01482`), the means of payment from the end of its detail line.
+ReceiptEntry receiptFromTransaction(MuTransaction tx) => ReceiptEntry(
+  number: tx.id.startsWith('tx-MU-R-') ? tx.id.substring(3) : tx.id,
+  label: tx.label,
+  date: tx.date,
+  amount: tx.amount.abs(),
+  card: tx.meta.split(' · ').last,
+  lines: [ReceiptLine(tx.label, tx.amount.abs(), details: [tx.meta])],
+);
+
 /// SUB-09 · Reçu PDF: the A4 receipt rendered from [buildReceiptPdf], with « Partager » and
 /// « Imprimer ou enregistrer » (the system print sheet saves it as a PDF).
 class ReceiptScreen extends ConsumerWidget {

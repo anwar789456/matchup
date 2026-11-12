@@ -8,8 +8,8 @@ import '../../../core/format.dart';
 import '../../../router.dart';
 import '../../../theme/theme.dart';
 import '../../../ui/ui.dart';
-import '../../common/widgets/coming_soon.dart';
 import '../../payments/data/payment_repository.dart';
+import '../../payments/widgets/add_card_sheet.dart';
 import '../../payments/widgets/checkout_widgets.dart';
 import '../controllers/subscription_controller.dart';
 import '../data/subscription_repository.dart';
@@ -255,7 +255,7 @@ class SubscriptionScreen extends ConsumerWidget {
                                       ),
                                       MuButton.link(
                                         label: l10n.mettreAJourLaCarte,
-                                        onPressed: () => showComingSoon(context),
+                                        onPressed: () => showAddCardSheet(context),
                                       ),
                                     ] else
                                       Text(
@@ -279,7 +279,7 @@ class SubscriptionScreen extends ConsumerWidget {
                       MuSettingsRow(
                         title: l10n.ajouterUneCarte,
                         icon: PhosphorIcons.plus(),
-                        onTap: () => showComingSoon(context),
+                        onTap: () => showAddCardSheet(context),
                       ),
                     ],
                   ),

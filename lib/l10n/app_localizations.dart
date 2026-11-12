@@ -6742,6 +6742,12 @@ abstract class AppLocalizations {
   /// **'Ajouter une carte'**
   String get ajouterUneCarte;
 
+  /// No description provided for @carteAjoutee.
+  ///
+  /// In fr, this message translates to:
+  /// **'Carte ajoutée'**
+  String get carteAjoutee;
+
   /// No description provided for @ouEnUnGeste.
   ///
   /// In fr, this message translates to:

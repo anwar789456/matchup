@@ -227,6 +227,7 @@
   "soldeMatchup2": "رصيد MatchUp · {p0}",
   "couvreTaPartDe": "يغطّي حصّتك البالغة {p0}",
   "ajouterUneCarte": "إضافة بطاقة",
+  "carteAjoutee": "تمت إضافة البطاقة",
   "ouEnUnGeste": "أو بلمسة واحدة",
   "payerAvecApplePay": "ادفع {p0} عبر Apple Pay",
   "payerAvecGooglePay": "ادفع {p0} عبر Google Pay",

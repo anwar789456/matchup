@@ -2978,6 +2978,7 @@
     }
   },
   "ajouterUneCarte": "Ajouter une carte",
+  "carteAjoutee": "Carte ajoutée",
   "ouEnUnGeste": "ou en un geste",
   "payerAvecApplePay": "Payer {p0} avec Apple Pay",
   "@payerAvecApplePay": {
