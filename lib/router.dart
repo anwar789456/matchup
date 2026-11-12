@@ -84,6 +84,10 @@ import 'features/tournaments/organizer/inscriptions_screen.dart';
 import 'features/tournaments/organizer/mes_tournois_screen.dart';
 import 'features/tournaments/organizer/planning_screen.dart';
 import 'features/tournaments/organizer/scores_screen.dart';
+import 'features/tournaments/player/inscrire_equipe_screen.dart';
+import 'features/tournaments/player/mon_equipe_screen.dart';
+import 'features/tournaments/player/tableau_screen.dart';
+import 'features/tournaments/player/tournoi_detail_screen.dart';
 import 'features/onboarding/screens/welcome_screen.dart';
 import 'features/owner/data/owner_drafts.dart';
 import 'features/owner/data/owner_repository.dart';
@@ -258,6 +262,10 @@ abstract final class Routes {
   static String organizerInscriptions(String id) => '/org/tournoi/$id/inscriptions'; // ORG-10
   static String organizerPlanning(String id) => '/org/tournoi/$id/planning'; // ORG-11
   static String organizerScores(String id) => '/org/tournoi/$id/scores'; // ORG-12, ORG-13
+  static String tournoi(String id) => '/trn/$id'; // TRN-02
+  static String tournoiInscrire(String id) => '/trn/$id/inscrire'; // TRN-04, TRN-05
+  static String tournoiEquipe(String id) => '/trn/$id/equipe'; // TRN-06, TRN-07
+  static String tournoiTableau(String id) => '/trn/$id/tableau'; // TRN-08, TRN-09
 
   /// The owner wizard, in order.
   static const owner = [
@@ -599,6 +607,28 @@ final routerProvider = Provider<GoRouter>((ref) {
       _organizer(Routes.organizerOrganisation, const OrganisationScreen()),
       _organizer(Routes.organizerDashboard, const OrganizerDashboardScreen()),
       _root(Routes.organizerTournois, (_) => const MesTournoisScreen()),
+      GoRoute(
+        path: '/trn/:id',
+        parentNavigatorKey: _rootKey,
+        builder: (context, state) => TournoiDetailScreen(id: state.pathParameters['id']!),
+        routes: [
+          GoRoute(
+            path: 'inscrire',
+            parentNavigatorKey: _rootKey,
+            builder: (context, state) => InscrireEquipeScreen(id: state.pathParameters['id']!),
+          ),
+          GoRoute(
+            path: 'equipe',
+            parentNavigatorKey: _rootKey,
+            builder: (context, state) => MonEquipeScreen(id: state.pathParameters['id']!),
+          ),
+          GoRoute(
+            path: 'tableau',
+            parentNavigatorKey: _rootKey,
+            builder: (context, state) => TableauScreen(id: state.pathParameters['id']!),
+          ),
+        ],
+      ),
       _root(Routes.organizerCreer, (_) => const CreateTournoiScreen()),
       GoRoute(
         path: '/org/tournoi/:id',

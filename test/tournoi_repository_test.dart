@@ -111,6 +111,20 @@ void main() {
     expect(semis.every((m) => m.equipe1 != null && m.equipe2 != null), isTrue);
   });
 
+  test('my team: found as captain or as a member who joined; gone once withdrawn', () async {
+    final id = await repo.create(draft());
+    me = 'c1';
+    expect(await repo.monEquipe(id), isNull);
+    final team = await repo.inscrire(id, nom: 'Les Faucons', capitaineNom: 'Alaa');
+    expect((await repo.monEquipe(id))!.id, team.id);
+    me = 'c2';
+    await repo.rejoindre(team.codeInvitation, nom: 'Ayoub');
+    expect((await repo.monEquipe(id))!.id, team.id);
+    me = 'c1';
+    await repo.annulerEquipe(team.id);
+    expect(await repo.monEquipe(id), isNull);
+  });
+
   test('announcements are the organiser’s', () async {
     final id = await repo.create(draft());
     await repo.annoncer(id, 'Rendez-vous 8h30 au club.');

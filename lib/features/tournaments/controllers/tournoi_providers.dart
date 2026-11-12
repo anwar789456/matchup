@@ -28,9 +28,16 @@ final matchsProvider = FutureProvider.family<List<MatchPlan>, String>((ref, id) 
   return ref.watch(tournoiRepositoryProvider).matchs(id);
 });
 
+/// TRN-02/06/07: my team in this tournament, or null.
+final monEquipeProvider = FutureProvider.family<Equipe?, String>((ref, id) {
+  ref.watch(syncRevisionProvider);
+  return ref.watch(tournoiRepositoryProvider).monEquipe(id);
+});
+
 /// Re-reads one tournament's screens after a write.
 void refreshTournoi(WidgetRef ref, String id) {
   ref
+    ..invalidate(monEquipeProvider(id))
     ..invalidate(mesTournoisProvider)
     ..invalidate(tournoiProvider(id))
     ..invalidate(equipesProvider(id))

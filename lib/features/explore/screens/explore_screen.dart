@@ -180,8 +180,9 @@ class _ExploreScreenState extends ConsumerState<ExploreScreen> {
                 for (final t in tournamentList)
                   MuTournamentCard(
                     tournament: t,
-                    onTap: () => showComingSoon(context),
-                    onRegister: () => showComingSoon(context),
+                    // TRN-02 (Tournois module): the detail, where the team registers.
+                    onTap: t.id == null ? null : () => context.push(Routes.tournoi(t.id!)),
+                    onRegister: t.id == null ? null : () => context.push(Routes.tournoi(t.id!)),
                     onWaitlist: () => showComingSoon(context),
                   ),
               ],

@@ -11153,4 +11153,240 @@ class AppLocalizationsEn extends AppLocalizations {
   String trnTourDe(int size, int n) {
     return 'Tour de $size · $n';
   }
+
+  @override
+  String get trnAnnulerInscription => 'Annuler l’inscription';
+
+  @override
+  String get trnAuTotal => 'au total';
+
+  @override
+  String get trnAucuneEquipeValidee => 'Aucune équipe validée pour l’instant.';
+
+  @override
+  String get trnCodeCopie => 'Code copié';
+
+  @override
+  String get trnCodeInvitation => 'Code d’invitation';
+
+  @override
+  String get trnCoequipiersNote =>
+      'Les autres te rejoignent avec le code d’invitation, sans payer : tu règles l’inscription de l’équipe.';
+
+  @override
+  String get trnComplet => 'Complet';
+
+  @override
+  String get trnCopierCode => 'Copier le code';
+
+  @override
+  String get trnCreeTonEquipe => 'Crée ton équipe';
+
+  @override
+  String get trnCreeTonEquipeLead =>
+      'Un nom, un capitaine. Tes coéquipiers peuvent aussi te rejoindre avec un code.';
+
+  @override
+  String get trnCreerEquipe => 'Créer l’équipe';
+
+  @override
+  String get trnDemiFinales => 'Demi-finales';
+
+  @override
+  String get trnDetailDuTournoi => 'Détail du tournoi';
+
+  @override
+  String get trnDiff => 'Diff.';
+
+  @override
+  String get trnEnCoursValidation =>
+      'L’organisateur vérifie le niveau et les places.';
+
+  @override
+  String get trnEquipe => 'Équipe';
+
+  @override
+  String get trnEquipeCreee => 'Équipe créée';
+
+  @override
+  String get trnGererTournoi => 'Gérer le tournoi';
+
+  @override
+  String get trnHuitiemes => 'Huitièmes de finale';
+
+  @override
+  String get trnInscription => 'Inscription';
+
+  @override
+  String get trnInscriptionConfirmee => 'Inscription confirmée';
+
+  @override
+  String get trnInscriptionEnvoyee => 'Inscription envoyée';
+
+  @override
+  String get trnInscriptionsBientot => 'Inscriptions bientôt';
+
+  @override
+  String get trnInscrireEquipe => 'Inscrire mon équipe';
+
+  @override
+  String get trnJ => 'J';
+
+  @override
+  String get trnJaiUnCode => 'J’ai un code d’invitation';
+
+  @override
+  String get trnLeTableau => 'Le tableau';
+
+  @override
+  String get trnLesPoules => 'Les poules';
+
+  @override
+  String get trnLieu => 'Lieu';
+
+  @override
+  String get trnNomEquipe => 'Nom de l’équipe';
+
+  @override
+  String get trnNomEquipeRequis => 'Donne un nom à ton équipe.';
+
+  @override
+  String get trnPaiementAttendu => 'Paie pour réserver ta place.';
+
+  @override
+  String get trnPartageCode => 'Partage ce code à tes coéquipiers';
+
+  @override
+  String get trnPasDEquipe => 'Tu n’as pas d’équipe dans ce tournoi.';
+
+  @override
+  String get trnPayerInscription => 'Payer l’inscription';
+
+  @override
+  String get trnPhaseFinale => 'Phase finale';
+
+  @override
+  String get trnPlaces => 'Places';
+
+  @override
+  String get trnPointsNote =>
+      'Victoire = 3 pts, nul = 1 pt. À égalité : différence, puis points marqués.';
+
+  @override
+  String get trnPts => 'Pts';
+
+  @override
+  String get trnQualifie => 'Qualifié';
+
+  @override
+  String get trnQuartsDeFinale => 'Quarts de finale';
+
+  @override
+  String get trnRefuseeParOrga => 'Refusée par l’organisateur';
+
+  @override
+  String get trnRejoindre => 'Rejoindre';
+
+  @override
+  String get trnRejoindreDescription =>
+      'Le capitaine de l’équipe t’a envoyé un code de 6 lettres.';
+
+  @override
+  String get trnRejoindreEquipe => 'Rejoindre une équipe';
+
+  @override
+  String get trnRembourseSiRefus => 'Refusée ? Tu es remboursé en entier.';
+
+  @override
+  String get trnTableauDuTournoi => 'Tableau du tournoi';
+
+  @override
+  String get trnTableauPasPublie => 'Le tableau n’est pas encore publié.';
+
+  @override
+  String get trnTesMatchs => 'Tes matchs';
+
+  @override
+  String get trnTirage => 'Tirage et calendrier';
+
+  @override
+  String get trnTirageNote =>
+      'Ton calendrier arrive dès que l’organisateur publie le tableau.';
+
+  @override
+  String get trnV => 'V';
+
+  @override
+  String get trnValidationOrga => 'Validation par l’organisateur';
+
+  @override
+  String trnCapitaineNom(String name) {
+    return 'Capitaine : $name';
+  }
+
+  @override
+  String trnCoequipiers(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Tes $n coéquipiers',
+      one: 'Ton partenaire',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String trnEquipesInscrites(int n) {
+    return 'Équipes inscrites · $n';
+  }
+
+  @override
+  String trnInscriptionEyebrow(String team) {
+    return 'INSCRIPTION · $team';
+  }
+
+  @override
+  String trnInscriptionPayee(String amount) {
+    return 'Inscription payée · $amount';
+  }
+
+  @override
+  String trnInscritesSur(int a, int b) {
+    return '$a/$b inscrites';
+  }
+
+  @override
+  String trnJoueurN(int n) {
+    return 'Joueur $n';
+  }
+
+  @override
+  String trnMembresN(int a, int b) {
+    return 'Membres · $a/$b';
+  }
+
+  @override
+  String trnMonEquipe(String name) {
+    return 'Mon équipe $name';
+  }
+
+  @override
+  String trnNiveauFourchette(String min, String max) {
+    return 'Niveau $min – $max';
+  }
+
+  @override
+  String trnParEquipeDe(int n) {
+    return 'par équipe de $n';
+  }
+
+  @override
+  String trnPouleX(String p) {
+    return 'Poule $p';
+  }
+
+  @override
+  String trnToi(String name) {
+    return '$name · toi';
+  }
 }

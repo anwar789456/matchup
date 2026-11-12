@@ -334,6 +334,19 @@ class TournoiRepository {
     return (await equipe(team.id))!;
   }
 
+  /// The team I am in for [tournoiId] (not withdrawn), or null.
+  Future<Equipe?> monEquipe(String tournoiId) async {
+    final self = me();
+    for (final e in await equipes(tournoiId)) {
+      if (e.statut != EquipeStatut.annulee && e.membres.any((m) => m.$1 == self)) return e;
+    }
+    return null;
+  }
+
+  /// A teammate added by name, who has no account yet: a placeholder id (they can also join
+  /// with the invite code).
+  String invite() => 'invite-${newId()}';
+
   /// The captain paid the fee (after PAY-01 accepted it).
   Future<void> marquerPaye(String equipeId) async {
     final e = await equipe(equipeId);
