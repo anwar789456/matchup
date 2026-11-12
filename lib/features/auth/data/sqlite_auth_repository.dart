@@ -166,7 +166,13 @@ class SqliteAuthRepository implements AuthRepository {
     final hashed = {'mot_de_passe': hashPassword(salt, password), 'sel': salt};
     final updated = await db.update('utilisateurs', hashed, where: 'email = ?', whereArgs: [address]);
     if (updated == 0 && create) {
-      await db.insert('utilisateurs', {...hashed, 'email': address, 'cree_le': _iso(_now())});
+      // Another sign-in may have just made the copy (OAuth return): then update it instead.
+      final id = await db.insert(
+        'utilisateurs',
+        {...hashed, 'email': address, 'cree_le': _iso(_now())},
+        conflictAlgorithm: ConflictAlgorithm.ignore,
+      );
+      if (id == 0) await db.update('utilisateurs', hashed, where: 'email = ?', whereArgs: [address]);
     }
     _signInFailures = 0;
     _lockedUntil = null;

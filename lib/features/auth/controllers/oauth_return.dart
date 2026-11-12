@@ -20,8 +20,12 @@ final oauthReturnProvider = Provider<void>((ref) {
   StreamSubscription<AuthState>? sub;
   ref.onDispose(() => sub?.cancel());
 
+  // The restored session and the « signedIn » event both arrive on the way back from Google:
+  // handle each Supabase user once, never twice at the same time (two copies of the account).
+  final handled = <String>{};
+
   Future<void> handle(User? user) async {
-    if (user == null) return;
+    if (user == null || !handled.add(user.id)) return;
     final repo = ref.read(authRepositoryProvider);
     if (repo is! SupabaseAuthRepository) return;
     try {
@@ -31,6 +35,7 @@ final oauthReturnProvider = Provider<void>((ref) {
       final home = await ref.read(sessionProvider.notifier).setupDoneRoute();
       await _goWhenStarted(ref.read(routerProvider), home ?? Routes.roles);
     } catch (e) {
+      handled.remove(user.id); // a later sign-in event may try again
       debugPrint('Connexion Google non terminée : $e');
     }
   }
