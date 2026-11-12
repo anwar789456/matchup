@@ -86,6 +86,7 @@ abstract final class TrainingStory {
       ],
       tip: 'Finis ton geste vers la grille, pas vers le sol : c’est ce qui fait tourner la balle.',
       counterLabel: 'Bandejas réussies',
+      counterNoun: 'une bandeja',
       counted: true,
     ),
     Exercise(
@@ -103,6 +104,7 @@ abstract final class TrainingStory {
       ],
       tip: 'Ne recule jamais en marche arrière : les pas chassés gardent ton épaule de profil.',
       counterLabel: 'Bandejas réussies',
+      counterNoun: 'une bandeja',
     ),
     Exercise(
       title: 'Jeu à thème',
@@ -117,17 +119,22 @@ abstract final class TrainingStory {
     ),
   ];
 
-  static Exercise _ex(String title, String dose, {int sets = 1, int? reps, String? label}) =>
-      Exercise(
-        title: title,
-        dose: dose,
-        video: const Duration(seconds: 55),
-        sets: sets,
-        reps: reps,
-        rest: reps == null ? Duration.zero : const Duration(seconds: 45),
-        counterLabel: label,
-        counted: label != null,
-      );
+  static Exercise _ex(
+    String title,
+    String dose, {
+    int sets = 1,
+    int? reps,
+    String? label,
+  }) => Exercise(
+    title: title,
+    dose: dose,
+    video: const Duration(seconds: 55),
+    sets: sets,
+    reps: reps,
+    rest: reps == null ? Duration.zero : const Duration(seconds: 45),
+    counterLabel: label,
+    counted: label != null,
+  );
 
   static final bandeja = TrainingProgram(
     card: const MuProgram(
@@ -185,7 +192,11 @@ abstract final class TrainingStory {
             minutes: 20,
             downloaded: true,
             exercises: [
-              Exercise(title: 'Prise continentale et armé', dose: '3 min', video: Duration(seconds: 40)),
+              Exercise(
+                title: 'Prise continentale et armé',
+                dose: '3 min',
+                video: Duration(seconds: 40),
+              ),
               Exercise(
                 title: 'Armé face au grillage, sans balle',
                 dose: '3 × 10',
@@ -204,6 +215,7 @@ abstract final class TrainingStory {
                 rest: Duration(seconds: 45),
                 setup: _throwSetup,
                 counterLabel: 'Bandejas réussies',
+                counterNoun: 'une bandeja',
                 counted: true,
               ),
             ],
@@ -214,7 +226,11 @@ abstract final class TrainingStory {
             minutes: 22,
             downloaded: true,
             exercises: [
-              Exercise(title: 'Échauffement des épaules', dose: '4 min', video: Duration(seconds: 45)),
+              Exercise(
+                title: 'Échauffement des épaules',
+                dose: '4 min',
+                video: Duration(seconds: 45),
+              ),
               Exercise(
                 title: 'Armé face au grillage',
                 dose: '3 × 10',
@@ -233,9 +249,14 @@ abstract final class TrainingStory {
                 rest: Duration(seconds: 45),
                 setup: _throwSetup,
                 counterLabel: 'Bandejas réussies',
+                counterNoun: 'une bandeja',
                 counted: true,
               ),
-              Exercise(title: 'Jeu à thème', dose: '5 min', video: Duration(seconds: 50)),
+              Exercise(
+                title: 'Jeu à thème',
+                dose: '5 min',
+                video: Duration(seconds: 50),
+              ),
             ],
           ),
           TrainingLesson(
@@ -244,7 +265,11 @@ abstract final class TrainingStory {
             minutes: 23,
             downloaded: true,
             exercises: [
-              Exercise(title: 'Échauffement des épaules', dose: '4 min', video: Duration(seconds: 45)),
+              Exercise(
+                title: 'Échauffement des épaules',
+                dose: '4 min',
+                video: Duration(seconds: 45),
+              ),
               Exercise(
                 title: 'Bandeja long de ligne sur lancer',
                 dose: '3 × 12',
@@ -254,6 +279,7 @@ abstract final class TrainingStory {
                 rest: Duration(seconds: 45),
                 setup: _throwSetup,
                 counterLabel: 'Bandejas réussies',
+                counterNoun: 'une bandeja',
                 counted: true,
               ),
               Exercise(
@@ -265,7 +291,11 @@ abstract final class TrainingStory {
                 rest: Duration(seconds: 45),
                 counterLabel: 'Balles sur la ligne',
               ),
-              Exercise(title: 'Jeu à thème', dose: '5 min', video: Duration(seconds: 50)),
+              Exercise(
+                title: 'Jeu à thème',
+                dose: '5 min',
+                video: Duration(seconds: 50),
+              ),
             ],
           ),
         ],
@@ -282,7 +312,13 @@ abstract final class TrainingStory {
             downloaded: true,
             exercises: [
               _ex('Échauffement des épaules', '4 min'),
-              _ex('Bandeja vers la grille', '3 × 10', sets: 3, reps: 10, label: 'Bandejas réussies'),
+              _ex(
+                'Bandeja vers la grille',
+                '3 × 10',
+                sets: 3,
+                reps: 10,
+                label: 'Bandejas réussies',
+              ),
               _ex('Jeu à thème', '5 min'),
             ],
           ),
@@ -299,7 +335,13 @@ abstract final class TrainingStory {
             minutes: 20,
             exercises: [
               _ex('Échauffement des épaules', '4 min'),
-              _ex('Bandeja sur lob rapide', '3 × 10', sets: 3, reps: 10, label: 'Bandejas réussies'),
+              _ex(
+                'Bandeja sur lob rapide',
+                '3 × 10',
+                sets: 3,
+                reps: 10,
+                label: 'Bandejas réussies',
+              ),
               _ex('Bandeja puis volée', '3 × 8', sets: 3, reps: 8),
               _ex('Jeu à thème', '5 min'),
             ],
@@ -318,7 +360,13 @@ abstract final class TrainingStory {
             exercises: [
               _ex('Échauffement des jambes', '4 min'),
               _ex('Pas chassés sans balle', '3 × 10', sets: 3, reps: 10),
-              _ex('Bandeja en reculant', '3 × 10', sets: 3, reps: 10, label: 'Bandejas réussies'),
+              _ex(
+                'Bandeja en reculant',
+                '3 × 10',
+                sets: 3,
+                reps: 10,
+                label: 'Bandejas réussies',
+              ),
             ],
           ),
           TrainingLesson(
@@ -327,7 +375,13 @@ abstract final class TrainingStory {
             minutes: 20,
             exercises: [
               _ex('Échauffement des épaules', '4 min'),
-              _ex('Bandeja sur lob court', '3 × 10', sets: 3, reps: 10, label: 'Bandejas réussies'),
+              _ex(
+                'Bandeja sur lob court',
+                '3 × 10',
+                sets: 3,
+                reps: 10,
+                label: 'Bandejas réussies',
+              ),
               _ex('Jeu à thème', '5 min'),
             ],
           ),
@@ -337,7 +391,13 @@ abstract final class TrainingStory {
             minutes: 23,
             exercises: [
               _ex('Échauffement des jambes', '4 min'),
-              _ex('Bandeja et 2 pas en avant', '3 × 10', sets: 3, reps: 10, label: 'Bandejas réussies'),
+              _ex(
+                'Bandeja et 2 pas en avant',
+                '3 × 10',
+                sets: 3,
+                reps: 10,
+                label: 'Bandejas réussies',
+              ),
               _ex('Volée après la bandeja', '3 × 8', sets: 3, reps: 8),
               _ex('Jeu à thème', '5 min'),
             ],
@@ -356,7 +416,13 @@ abstract final class TrainingStory {
             exercises: [
               _ex('Échauffement des épaules', '4 min'),
               _ex('Lire la hauteur du lob', '3 × 8', sets: 3, reps: 8),
-              _ex('Bandeja ou víbora sur lancer', '3 × 10', sets: 3, reps: 10, label: 'Bons choix'),
+              _ex(
+                'Bandeja ou víbora sur lancer',
+                '3 × 10',
+                sets: 3,
+                reps: 10,
+                label: 'Bons choix',
+              ),
               _ex('Jeu à thème', '5 min'),
             ],
           ),
@@ -376,7 +442,12 @@ abstract final class TrainingStory {
             minutes: 20,
             exercises: [
               _ex('Échauffement des épaules', '4 min'),
-              _ex('10 bandejas filmées', '1 × 10', reps: 10, label: 'Bandejas réussies'),
+              _ex(
+                '10 bandejas filmées',
+                '1 × 10',
+                reps: 10,
+                label: 'Bandejas réussies',
+              ),
             ],
           ),
         ],
@@ -435,8 +506,7 @@ abstract final class TrainingStory {
     perWeek: 3,
     minutesMin: 15,
     minutesMax: 25,
-    forYouReason:
-        'tu joues côté gauche : c’est toi qui retournes la plupart des services adverses.',
+    forYouReason: 'tu joues côté gauche : c’est toi qui retournes la plupart des services adverses.',
     about:
         'Le premier coup de chaque point. En 3 semaines, Karim t’aide à servir toujours à la '
         'vitre et à retourner bas, dans les pieds du joueur au filet.',
@@ -456,15 +526,36 @@ abstract final class TrainingStory {
       ),
     ],
     weeks: [
-      _week(1, 'Le service', 'Lancer · Vitre · Régularité', 1,
-          ['Le lancer de balle', 'Servir à la vitre', 'Service sous pression'], 20,
-          drill: 'Services à la vitre', counter: 'Services réussis'),
-      _week(2, 'Le retour', 'Bas · Dans les pieds · Croisé', 4,
-          ['Retour bas', 'Retour dans les pieds', 'Retour croisé'], 20,
-          drill: 'Retours sur service', counter: 'Retours réussis'),
-      _week(3, 'En match', 'Lob de retour · Enchaîner · Test', 7,
-          ['Le lob de retour', 'Service et montée', 'Test en jeu'], 20,
-          drill: 'Points à thème', counter: 'Points gagnés'),
+      _week(
+        1,
+        'Le service',
+        'Lancer · Vitre · Régularité',
+        1,
+        ['Le lancer de balle', 'Servir à la vitre', 'Service sous pression'],
+        20,
+        drill: 'Services à la vitre',
+        counter: 'Services réussis',
+      ),
+      _week(
+        2,
+        'Le retour',
+        'Bas · Dans les pieds · Croisé',
+        4,
+        ['Retour bas', 'Retour dans les pieds', 'Retour croisé'],
+        20,
+        drill: 'Retours sur service',
+        counter: 'Retours réussis',
+      ),
+      _week(
+        3,
+        'En match',
+        'Lob de retour · Enchaîner · Test',
+        7,
+        ['Le lob de retour', 'Service et montée', 'Test en jeu'],
+        20,
+        drill: 'Points à thème',
+        counter: 'Points gagnés',
+      ),
     ],
   );
 
@@ -510,8 +601,22 @@ abstract final class TrainingStory {
       for (var w = 0; w < 6; w++)
         _week(
           w + 1,
-          ['Les bases', 'Fractionné', 'Changements de direction', 'Sprints répétés', 'Intensité match', 'Test final'][w],
-          ['Footing · Gainage · Mobilité', 'Courts · Longs · Récupération', 'Appuis · Plots · Réaction', 'Départs · Relances · Repos', 'Jeu réduit · Pressing · Repli', 'Test navette · Bilan · Suite'][w],
+          [
+            'Les bases',
+            'Fractionné',
+            'Changements de direction',
+            'Sprints répétés',
+            'Intensité match',
+            'Test final',
+          ][w],
+          [
+            'Footing · Gainage · Mobilité',
+            'Courts · Longs · Récupération',
+            'Appuis · Plots · Réaction',
+            'Départs · Relances · Repos',
+            'Jeu réduit · Pressing · Repli',
+            'Test navette · Bilan · Suite',
+          ][w],
           w * 3 + 1,
           [
             ['Footing et gainage', 'Mobilité', 'Premier fractionné'],
@@ -566,18 +671,46 @@ abstract final class TrainingStory {
       ),
     ],
     weeks: [
-      _week(1, 'Le dribble', 'Deux mains · Tête haute', 1,
-          ['Dribble main faible', 'Dribble tête haute'], 20,
-          drill: 'Dribbles en slalom', counter: 'Passages sans perte'),
-      _week(2, 'Le tir', 'Geste · Lancers francs', 3,
-          ['Le geste du tir', 'Lancers francs'], 20,
-          drill: 'Tirs près du panier', counter: 'Paniers réussis'),
-      _week(3, 'Le jeu à 3', 'Écran · Pick and roll', 5,
-          ['L’écran', 'Le pick and roll'], 20,
-          drill: 'Pick and roll à 3', counter: 'Actions réussies'),
-      _week(4, 'En match', 'Demi-terrain · Test', 7,
-          ['Match à 3', 'Test final'], 20,
-          drill: 'Tirs en mouvement', counter: 'Paniers réussis'),
+      _week(
+        1,
+        'Le dribble',
+        'Deux mains · Tête haute',
+        1,
+        ['Dribble main faible', 'Dribble tête haute'],
+        20,
+        drill: 'Dribbles en slalom',
+        counter: 'Passages sans perte',
+      ),
+      _week(
+        2,
+        'Le tir',
+        'Geste · Lancers francs',
+        3,
+        ['Le geste du tir', 'Lancers francs'],
+        20,
+        drill: 'Tirs près du panier',
+        counter: 'Paniers réussis',
+      ),
+      _week(
+        3,
+        'Le jeu à 3',
+        'Écran · Pick and roll',
+        5,
+        ['L’écran', 'Le pick and roll'],
+        20,
+        drill: 'Pick and roll à 3',
+        counter: 'Actions réussies',
+      ),
+      _week(
+        4,
+        'En match',
+        'Demi-terrain · Test',
+        7,
+        ['Match à 3', 'Test final'],
+        20,
+        drill: 'Tirs en mouvement',
+        counter: 'Paniers réussis',
+      ),
     ],
   );
 

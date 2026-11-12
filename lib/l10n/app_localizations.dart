@@ -18406,6 +18406,630 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Ta semaine · {range}'**
   String entYourWeek(Object range);
+
+  /// No description provided for @entAbout.
+  ///
+  /// In fr, this message translates to:
+  /// **'À propos'**
+  String get entAbout;
+
+  /// No description provided for @entAddRep.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ajouter {noun}'**
+  String entAddRep(Object noun);
+
+  /// No description provided for @entRemoveRep.
+  ///
+  /// In fr, this message translates to:
+  /// **'Retirer {noun}'**
+  String entRemoveRep(Object noun);
+
+  /// No description provided for @entOneRep.
+  ///
+  /// In fr, this message translates to:
+  /// **'une répétition'**
+  String get entOneRep;
+
+  /// No description provided for @entAllSetsDone.
+  ///
+  /// In fr, this message translates to:
+  /// **'Toutes les séries sont faites'**
+  String get entAllSetsDone;
+
+  /// No description provided for @entAnalyseMyMove.
+  ///
+  /// In fr, this message translates to:
+  /// **'Analyser ma {move} en vidéo'**
+  String entAnalyseMyMove(Object move);
+
+  /// No description provided for @entAnalyseMyMoveGeneric.
+  ///
+  /// In fr, this message translates to:
+  /// **'Analyser mon geste en vidéo'**
+  String get entAnalyseMyMoveGeneric;
+
+  /// No description provided for @entBackToCatalogue.
+  ///
+  /// In fr, this message translates to:
+  /// **'Retour au catalogue'**
+  String get entBackToCatalogue;
+
+  /// No description provided for @entBackToTraining.
+  ///
+  /// In fr, this message translates to:
+  /// **'Retour à mon entraînement'**
+  String get entBackToTraining;
+
+  /// No description provided for @entCertifiedLine.
+  ///
+  /// In fr, this message translates to:
+  /// **'{certification} · diplôme vérifié par MatchUp'**
+  String entCertifiedLine(Object certification);
+
+  /// No description provided for @entCheckoutEyebrow.
+  ///
+  /// In fr, this message translates to:
+  /// **'Programme d’entraînement'**
+  String get entCheckoutEyebrow;
+
+  /// No description provided for @entCheckoutLine.
+  ///
+  /// In fr, this message translates to:
+  /// **'Programme complet · accès à vie'**
+  String get entCheckoutLine;
+
+  /// No description provided for @entCheckoutSubtitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'{coach} · {weeks} semaines · {sessions} séances'**
+  String entCheckoutSubtitle(Object coach, int weeks, int sessions);
+
+  /// No description provided for @entCoachTip.
+  ///
+  /// In fr, this message translates to:
+  /// **'Le conseil de {name}'**
+  String entCoachTip(Object name);
+
+  /// No description provided for @entContinueSession.
+  ///
+  /// In fr, this message translates to:
+  /// **'Continuer · Séance {index}'**
+  String entContinueSession(int index);
+
+  /// No description provided for @entDaysAgo.
+  ///
+  /// In fr, this message translates to:
+  /// **'{days, plural, =1{il y a 1 jour} other{il y a {days} jours}}'**
+  String entDaysAgo(int days);
+
+  /// No description provided for @entFinishedAgo.
+  ///
+  /// In fr, this message translates to:
+  /// **'{days, plural, =1{Programme terminé · il y a 1 jour} other{Programme terminé · il y a {days} jours}}'**
+  String entFinishedAgo(int days);
+
+  /// No description provided for @entDifficulty.
+  ///
+  /// In fr, this message translates to:
+  /// **'Difficulté de la séance'**
+  String get entDifficulty;
+
+  /// No description provided for @entDoneWord.
+  ///
+  /// In fr, this message translates to:
+  /// **'{count, plural, =0{fait} =1{fait} other{faits}}'**
+  String entDoneWord(int count);
+
+  /// No description provided for @entDrillsDone.
+  ///
+  /// In fr, this message translates to:
+  /// **'{done, plural, =0{0 exercice fait} =1{1 exercice fait} other{{done} exercices faits}} sur {total}'**
+  String entDrillsDone(int done, int total);
+
+  /// No description provided for @entEnroll.
+  ///
+  /// In fr, this message translates to:
+  /// **'S’inscrire au programme'**
+  String get entEnroll;
+
+  /// No description provided for @entEnrolled.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tu es inscrit'**
+  String get entEnrolled;
+
+  /// No description provided for @entEnrolledText.
+  ///
+  /// In fr, this message translates to:
+  /// **'« {program} » est dans Mes programmes.'**
+  String entEnrolledText(Object program);
+
+  /// No description provided for @entExercises.
+  ///
+  /// In fr, this message translates to:
+  /// **'Exercices'**
+  String get entExercises;
+
+  /// No description provided for @entExercisesOf.
+  ///
+  /// In fr, this message translates to:
+  /// **'Exercices de la séance {index}'**
+  String entExercisesOf(int index);
+
+  /// No description provided for @entFeelingAdapts.
+  ///
+  /// In fr, this message translates to:
+  /// **'La séance {index} s’adapte à ta réponse. {coach} la voit aussi.'**
+  String entFeelingAdapts(int index, Object coach);
+
+  /// No description provided for @entFeelingCoachSees.
+  ///
+  /// In fr, this message translates to:
+  /// **'{coach} voit ta réponse.'**
+  String entFeelingCoachSees(Object coach);
+
+  /// No description provided for @entFreeLine.
+  ///
+  /// In fr, this message translates to:
+  /// **'Gratuit · sans engagement'**
+  String get entFreeLine;
+
+  /// No description provided for @entHeroLabel.
+  ///
+  /// In fr, this message translates to:
+  /// **'Court de {sport} éclairé, aperçu du programme'**
+  String entHeroLabel(Object sport);
+
+  /// No description provided for @entHoursMinutes.
+  ///
+  /// In fr, this message translates to:
+  /// **'{hours} h {minutes}'**
+  String entHoursMinutes(int hours, Object minutes);
+
+  /// No description provided for @entHowWasIt.
+  ///
+  /// In fr, this message translates to:
+  /// **'Comment c’était ?'**
+  String get entHowWasIt;
+
+  /// No description provided for @entInBrief.
+  ///
+  /// In fr, this message translates to:
+  /// **'Le programme en bref'**
+  String get entInBrief;
+
+  /// No description provided for @entInsteadOf.
+  ///
+  /// In fr, this message translates to:
+  /// **'au lieu de {price}'**
+  String entInsteadOf(Object price);
+
+  /// No description provided for @entJoinedLine.
+  ///
+  /// In fr, this message translates to:
+  /// **'{done} séances sur {total} · prochaine : Séance {index} · {title}'**
+  String entJoinedLine(int done, int total, int index, Object title);
+
+  /// No description provided for @entJustRight.
+  ///
+  /// In fr, this message translates to:
+  /// **'Juste bien'**
+  String get entJustRight;
+
+  /// No description provided for @entTooEasy.
+  ///
+  /// In fr, this message translates to:
+  /// **'Trop facile'**
+  String get entTooEasy;
+
+  /// No description provided for @entTooHard.
+  ///
+  /// In fr, this message translates to:
+  /// **'Trop dur'**
+  String get entTooHard;
+
+  /// No description provided for @entLessonDoneTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Séance {index} terminée'**
+  String entLessonDoneTitle(int index);
+
+  /// No description provided for @entLevelSpan.
+  ///
+  /// In fr, this message translates to:
+  /// **'Niveau {range}'**
+  String entLevelSpan(Object range);
+
+  /// No description provided for @entMarkDone.
+  ///
+  /// In fr, this message translates to:
+  /// **'Marquer comme fait'**
+  String get entMarkDone;
+
+  /// No description provided for @entMinutesRange.
+  ///
+  /// In fr, this message translates to:
+  /// **'{range} min'**
+  String entMinutesRange(Object range);
+
+  /// No description provided for @entMyNotes.
+  ///
+  /// In fr, this message translates to:
+  /// **'Mes notes'**
+  String get entMyNotes;
+
+  /// No description provided for @entNext.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ensuite'**
+  String get entNext;
+
+  /// No description provided for @entNextExercise.
+  ///
+  /// In fr, this message translates to:
+  /// **'Exercice suivant'**
+  String get entNextExercise;
+
+  /// No description provided for @entPreviousExercise.
+  ///
+  /// In fr, this message translates to:
+  /// **'Exercice précédent'**
+  String get entPreviousExercise;
+
+  /// No description provided for @entNextLine.
+  ///
+  /// In fr, this message translates to:
+  /// **'{sets} · {video} de vidéo'**
+  String entNextLine(Object sets, Object video);
+
+  /// No description provided for @entNextOn.
+  ///
+  /// In fr, this message translates to:
+  /// **'Prochaine : Séance {index} · {title} · {day}'**
+  String entNextOn(int index, Object title, Object day);
+
+  /// No description provided for @entNoCommitment.
+  ///
+  /// In fr, this message translates to:
+  /// **'sans engagement'**
+  String get entNoCommitment;
+
+  /// No description provided for @entNotesHelper.
+  ///
+  /// In fr, this message translates to:
+  /// **'Visibles par toi seul. Tu peux les envoyer à {coach} à la fin.'**
+  String entNotesHelper(Object coach);
+
+  /// No description provided for @entOneOff.
+  ///
+  /// In fr, this message translates to:
+  /// **'en une fois'**
+  String get entOneOff;
+
+  /// No description provided for @entOutOf.
+  ///
+  /// In fr, this message translates to:
+  /// **'sur {minutes}'**
+  String entOutOf(int minutes);
+
+  /// No description provided for @entPaidLine.
+  ///
+  /// In fr, this message translates to:
+  /// **'{price} en une fois · accès à vie'**
+  String entPaidLine(Object price);
+
+  /// No description provided for @entPayAndEnroll.
+  ///
+  /// In fr, this message translates to:
+  /// **'Payer {price} et m’inscrire'**
+  String entPayAndEnroll(Object price);
+
+  /// No description provided for @entPerWeek.
+  ///
+  /// In fr, this message translates to:
+  /// **'{count} par semaine'**
+  String entPerWeek(int count);
+
+  /// No description provided for @entPlanned.
+  ///
+  /// In fr, this message translates to:
+  /// **'prévu {minutes} min'**
+  String entPlanned(int minutes);
+
+  /// No description provided for @entPlayVideo.
+  ///
+  /// In fr, this message translates to:
+  /// **'Lire la vidéo, {duration}'**
+  String entPlayVideo(Object duration);
+
+  /// No description provided for @entPremiumActive.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ton essai Premium est actif : tu suis les {sessions} séances sans payer le programme.'**
+  String entPremiumActive(int sessions);
+
+  /// No description provided for @entPremiumLine.
+  ///
+  /// In fr, this message translates to:
+  /// **'{price} · inclus dans {which} · sans engagement'**
+  String entPremiumLine(Object price, Object which);
+
+  /// No description provided for @entYourTrial.
+  ///
+  /// In fr, this message translates to:
+  /// **'ton essai Premium'**
+  String get entYourTrial;
+
+  /// No description provided for @entYourPremium.
+  ///
+  /// In fr, this message translates to:
+  /// **'ton abonnement Premium'**
+  String get entYourPremium;
+
+  /// No description provided for @entPremiumOffer.
+  ///
+  /// In fr, this message translates to:
+  /// **'Avec Premium, tu suis les {sessions} séances sans payer le programme.'**
+  String entPremiumOffer(int sessions);
+
+  /// No description provided for @entPremiumTerms.
+  ///
+  /// In fr, this message translates to:
+  /// **'Essai gratuit {days} jours, puis {monthly}/mois, résiliable à tout moment. Sans Premium, le programme coûte {price} en une fois.'**
+  String entPremiumTerms(int days, Object monthly, Object price);
+
+  /// No description provided for @entPremiumTrialTerms.
+  ///
+  /// In fr, this message translates to:
+  /// **'Essai gratuit jusqu’au {date}, puis {monthly}/mois, résiliable à tout moment. Sans Premium, le programme coûte {price} en une fois.'**
+  String entPremiumTrialTerms(Object date, Object monthly, Object price);
+
+  /// No description provided for @entProgramFinished.
+  ///
+  /// In fr, this message translates to:
+  /// **'Programme terminé : {total} séances sur {total}.'**
+  String entProgramFinished(int total);
+
+  /// No description provided for @entProgramGone.
+  ///
+  /// In fr, this message translates to:
+  /// **'Programme introuvable'**
+  String get entProgramGone;
+
+  /// No description provided for @entProgramGoneText.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ce programme n’est plus proposé. Choisis-en un autre dans le catalogue.'**
+  String get entProgramGoneText;
+
+  /// No description provided for @entQuitSession.
+  ///
+  /// In fr, this message translates to:
+  /// **'Quitter la séance'**
+  String get entQuitSession;
+
+  /// No description provided for @entRatingSplit.
+  ///
+  /// In fr, this message translates to:
+  /// **'Répartition des notes'**
+  String get entRatingSplit;
+
+  /// No description provided for @entRepsDone.
+  ///
+  /// In fr, this message translates to:
+  /// **'Répétitions réussies'**
+  String get entRepsDone;
+
+  /// No description provided for @entRestBetween.
+  ///
+  /// In fr, this message translates to:
+  /// **'{seconds} s de repos entre les séries'**
+  String entRestBetween(int seconds);
+
+  /// No description provided for @entRestBetweenSets.
+  ///
+  /// In fr, this message translates to:
+  /// **'Repos entre les séries'**
+  String get entRestBetweenSets;
+
+  /// No description provided for @entRestLeft.
+  ///
+  /// In fr, this message translates to:
+  /// **'Repos : encore {seconds} s'**
+  String entRestLeft(int seconds);
+
+  /// No description provided for @entSaveProgram.
+  ///
+  /// In fr, this message translates to:
+  /// **'Enregistrer le programme'**
+  String get entSaveProgram;
+
+  /// No description provided for @entSeeAllReviews.
+  ///
+  /// In fr, this message translates to:
+  /// **'Voir les {count} avis'**
+  String entSeeAllReviews(int count);
+
+  /// No description provided for @entSeeCatalogue.
+  ///
+  /// In fr, this message translates to:
+  /// **'Voir le catalogue'**
+  String get entSeeCatalogue;
+
+  /// No description provided for @entSeePreview.
+  ///
+  /// In fr, this message translates to:
+  /// **'Voir l’aperçu, {duration}'**
+  String entSeePreview(Object duration);
+
+  /// No description provided for @entSeePreviewShort.
+  ///
+  /// In fr, this message translates to:
+  /// **'Voir l’aperçu'**
+  String get entSeePreviewShort;
+
+  /// No description provided for @entSessionInNumbers.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ta séance en chiffres'**
+  String get entSessionInNumbers;
+
+  /// No description provided for @entSessionVideos.
+  ///
+  /// In fr, this message translates to:
+  /// **'Vidéos de la séance {index} · {title}'**
+  String entSessionVideos(int index, Object title);
+
+  /// No description provided for @entSessions.
+  ///
+  /// In fr, this message translates to:
+  /// **'Séances'**
+  String get entSessions;
+
+  /// No description provided for @entSetOf.
+  ///
+  /// In fr, this message translates to:
+  /// **'Série {set} sur {sets}'**
+  String entSetOf(int set, int sets);
+
+  /// No description provided for @entSetsOf.
+  ///
+  /// In fr, this message translates to:
+  /// **'{sets, plural, =1{1 série de {reps}} other{{sets} séries de {reps}}}'**
+  String entSetsOf(int sets, int reps);
+
+  /// No description provided for @entShareExercise.
+  ///
+  /// In fr, this message translates to:
+  /// **'{exercise} · un exercice du programme {program} sur MatchUp'**
+  String entShareExercise(Object exercise, Object program);
+
+  /// No description provided for @entShareExerciseLabel.
+  ///
+  /// In fr, this message translates to:
+  /// **'Partager l’exercice'**
+  String get entShareExerciseLabel;
+
+  /// No description provided for @entShareProgram.
+  ///
+  /// In fr, this message translates to:
+  /// **'Partager le programme'**
+  String get entShareProgram;
+
+  /// No description provided for @entShareText.
+  ///
+  /// In fr, this message translates to:
+  /// **'{program} avec {coach}, sur MatchUp'**
+  String entShareText(Object program, Object coach);
+
+  /// No description provided for @entSkipExercise.
+  ///
+  /// In fr, this message translates to:
+  /// **'Passer l’exercice'**
+  String get entSkipExercise;
+
+  /// No description provided for @entSkipRest.
+  ///
+  /// In fr, this message translates to:
+  /// **'Passer'**
+  String get entSkipRest;
+
+  /// No description provided for @entStartRest.
+  ///
+  /// In fr, this message translates to:
+  /// **'Lancer'**
+  String get entStartRest;
+
+  /// No description provided for @entStartSession.
+  ///
+  /// In fr, this message translates to:
+  /// **'Lancer la séance'**
+  String get entStartSession;
+
+  /// No description provided for @entStarsCount.
+  ///
+  /// In fr, this message translates to:
+  /// **'{stars, plural, =1{1 étoile} other{{stars} étoiles}} : {count} avis'**
+  String entStarsCount(int stars, int count);
+
+  /// No description provided for @entStreakNow.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ta série passe à {weeks} semaines de suite.'**
+  String entStreakNow(int weeks);
+
+  /// No description provided for @entStudentReviews.
+  ///
+  /// In fr, this message translates to:
+  /// **'Avis des élèves'**
+  String get entStudentReviews;
+
+  /// No description provided for @entTarget.
+  ///
+  /// In fr, this message translates to:
+  /// **'Objectif : {reps}'**
+  String entTarget(int reps);
+
+  /// No description provided for @entTheProgram.
+  ///
+  /// In fr, this message translates to:
+  /// **'Le programme'**
+  String get entTheProgram;
+
+  /// No description provided for @entTryPremium.
+  ///
+  /// In fr, this message translates to:
+  /// **'Essayer Premium'**
+  String get entTryPremium;
+
+  /// No description provided for @entVideoOf.
+  ///
+  /// In fr, this message translates to:
+  /// **'Vidéo de démonstration : {exercise}'**
+  String entVideoOf(Object exercise);
+
+  /// No description provided for @entWeekSoFar.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ta semaine : {done}/{goal}'**
+  String entWeekSoFar(int done, int goal);
+
+  /// No description provided for @entWeekTotal.
+  ///
+  /// In fr, this message translates to:
+  /// **'{count, plural, =1{1 séance} other{{count} séances}} · {total} au total'**
+  String entWeekTotal(int count, Object total);
+
+  /// No description provided for @entWeekValidated.
+  ///
+  /// In fr, this message translates to:
+  /// **'Semaine validée : {done}/{goal}'**
+  String entWeekValidated(int done, int goal);
+
+  /// No description provided for @entWeeksShort.
+  ///
+  /// In fr, this message translates to:
+  /// **'{weeks} sem.'**
+  String entWeeksShort(int weeks);
+
+  /// No description provided for @entWeeksWord.
+  ///
+  /// In fr, this message translates to:
+  /// **'{count, plural, =1{semaine} other{semaines}}'**
+  String entWeeksWord(int count);
+
+  /// No description provided for @entYouNeed.
+  ///
+  /// In fr, this message translates to:
+  /// **'Il te faut : {what}'**
+  String entYouNeed(Object what);
+
+  /// No description provided for @entYourCoach.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ton coach'**
+  String get entYourCoach;
 }
 
 class _AppLocalizationsDelegate

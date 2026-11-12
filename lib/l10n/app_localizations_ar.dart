@@ -11028,4 +11028,479 @@ class AppLocalizationsAr extends AppLocalizations {
   String entYourWeek(Object range) {
     return 'Ta semaine · $range';
   }
+
+  @override
+  String get entAbout => 'À propos';
+
+  @override
+  String entAddRep(Object noun) {
+    return 'Ajouter $noun';
+  }
+
+  @override
+  String entRemoveRep(Object noun) {
+    return 'Retirer $noun';
+  }
+
+  @override
+  String get entOneRep => 'une répétition';
+
+  @override
+  String get entAllSetsDone => 'Toutes les séries sont faites';
+
+  @override
+  String entAnalyseMyMove(Object move) {
+    return 'Analyser ma $move en vidéo';
+  }
+
+  @override
+  String get entAnalyseMyMoveGeneric => 'Analyser mon geste en vidéo';
+
+  @override
+  String get entBackToCatalogue => 'Retour au catalogue';
+
+  @override
+  String get entBackToTraining => 'Retour à mon entraînement';
+
+  @override
+  String entCertifiedLine(Object certification) {
+    return '$certification · diplôme vérifié par MatchUp';
+  }
+
+  @override
+  String get entCheckoutEyebrow => 'Programme d’entraînement';
+
+  @override
+  String get entCheckoutLine => 'Programme complet · accès à vie';
+
+  @override
+  String entCheckoutSubtitle(Object coach, int weeks, int sessions) {
+    return '$coach · $weeks semaines · $sessions séances';
+  }
+
+  @override
+  String entCoachTip(Object name) {
+    return 'Le conseil de $name';
+  }
+
+  @override
+  String entContinueSession(int index) {
+    return 'Continuer · Séance $index';
+  }
+
+  @override
+  String entDaysAgo(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: 'il y a $days jours',
+      one: 'il y a 1 jour',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String entFinishedAgo(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: 'Programme terminé · il y a $days jours',
+      one: 'Programme terminé · il y a 1 jour',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get entDifficulty => 'Difficulté de la séance';
+
+  @override
+  String entDoneWord(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'faits',
+      one: 'fait',
+      zero: 'fait',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String entDrillsDone(int done, int total) {
+    String _temp0 = intl.Intl.pluralLogic(
+      done,
+      locale: localeName,
+      other: '$done exercices faits',
+      one: '1 exercice fait',
+      zero: '0 exercice fait',
+    );
+    return '$_temp0 sur $total';
+  }
+
+  @override
+  String get entEnroll => 'S’inscrire au programme';
+
+  @override
+  String get entEnrolled => 'Tu es inscrit';
+
+  @override
+  String entEnrolledText(Object program) {
+    return '« $program » est dans Mes programmes.';
+  }
+
+  @override
+  String get entExercises => 'Exercices';
+
+  @override
+  String entExercisesOf(int index) {
+    return 'Exercices de la séance $index';
+  }
+
+  @override
+  String entFeelingAdapts(int index, Object coach) {
+    return 'La séance $index s’adapte à ta réponse. $coach la voit aussi.';
+  }
+
+  @override
+  String entFeelingCoachSees(Object coach) {
+    return '$coach voit ta réponse.';
+  }
+
+  @override
+  String get entFreeLine => 'Gratuit · sans engagement';
+
+  @override
+  String entHeroLabel(Object sport) {
+    return 'Court de $sport éclairé, aperçu du programme';
+  }
+
+  @override
+  String entHoursMinutes(int hours, Object minutes) {
+    return '$hours h $minutes';
+  }
+
+  @override
+  String get entHowWasIt => 'Comment c’était ?';
+
+  @override
+  String get entInBrief => 'Le programme en bref';
+
+  @override
+  String entInsteadOf(Object price) {
+    return 'au lieu de $price';
+  }
+
+  @override
+  String entJoinedLine(int done, int total, int index, Object title) {
+    return '$done séances sur $total · prochaine : Séance $index · $title';
+  }
+
+  @override
+  String get entJustRight => 'Juste bien';
+
+  @override
+  String get entTooEasy => 'Trop facile';
+
+  @override
+  String get entTooHard => 'Trop dur';
+
+  @override
+  String entLessonDoneTitle(int index) {
+    return 'Séance $index terminée';
+  }
+
+  @override
+  String entLevelSpan(Object range) {
+    return 'Niveau $range';
+  }
+
+  @override
+  String get entMarkDone => 'Marquer comme fait';
+
+  @override
+  String entMinutesRange(Object range) {
+    return '$range min';
+  }
+
+  @override
+  String get entMyNotes => 'Mes notes';
+
+  @override
+  String get entNext => 'Ensuite';
+
+  @override
+  String get entNextExercise => 'Exercice suivant';
+
+  @override
+  String get entPreviousExercise => 'Exercice précédent';
+
+  @override
+  String entNextLine(Object sets, Object video) {
+    return '$sets · $video de vidéo';
+  }
+
+  @override
+  String entNextOn(int index, Object title, Object day) {
+    return 'Prochaine : Séance $index · $title · $day';
+  }
+
+  @override
+  String get entNoCommitment => 'sans engagement';
+
+  @override
+  String entNotesHelper(Object coach) {
+    return 'Visibles par toi seul. Tu peux les envoyer à $coach à la fin.';
+  }
+
+  @override
+  String get entOneOff => 'en une fois';
+
+  @override
+  String entOutOf(int minutes) {
+    return 'sur $minutes';
+  }
+
+  @override
+  String entPaidLine(Object price) {
+    return '$price en une fois · accès à vie';
+  }
+
+  @override
+  String entPayAndEnroll(Object price) {
+    return 'Payer $price et m’inscrire';
+  }
+
+  @override
+  String entPerWeek(int count) {
+    return '$count par semaine';
+  }
+
+  @override
+  String entPlanned(int minutes) {
+    return 'prévu $minutes min';
+  }
+
+  @override
+  String entPlayVideo(Object duration) {
+    return 'Lire la vidéo, $duration';
+  }
+
+  @override
+  String entPremiumActive(int sessions) {
+    return 'Ton essai Premium est actif : tu suis les $sessions séances sans payer le programme.';
+  }
+
+  @override
+  String entPremiumLine(Object price, Object which) {
+    return '$price · inclus dans $which · sans engagement';
+  }
+
+  @override
+  String get entYourTrial => 'ton essai Premium';
+
+  @override
+  String get entYourPremium => 'ton abonnement Premium';
+
+  @override
+  String entPremiumOffer(int sessions) {
+    return 'Avec Premium, tu suis les $sessions séances sans payer le programme.';
+  }
+
+  @override
+  String entPremiumTerms(int days, Object monthly, Object price) {
+    return 'Essai gratuit $days jours, puis $monthly/mois, résiliable à tout moment. Sans Premium, le programme coûte $price en une fois.';
+  }
+
+  @override
+  String entPremiumTrialTerms(Object date, Object monthly, Object price) {
+    return 'Essai gratuit jusqu’au $date, puis $monthly/mois, résiliable à tout moment. Sans Premium, le programme coûte $price en une fois.';
+  }
+
+  @override
+  String entProgramFinished(int total) {
+    return 'Programme terminé : $total séances sur $total.';
+  }
+
+  @override
+  String get entProgramGone => 'Programme introuvable';
+
+  @override
+  String get entProgramGoneText =>
+      'Ce programme n’est plus proposé. Choisis-en un autre dans le catalogue.';
+
+  @override
+  String get entQuitSession => 'Quitter la séance';
+
+  @override
+  String get entRatingSplit => 'Répartition des notes';
+
+  @override
+  String get entRepsDone => 'Répétitions réussies';
+
+  @override
+  String entRestBetween(int seconds) {
+    return '$seconds s de repos entre les séries';
+  }
+
+  @override
+  String get entRestBetweenSets => 'Repos entre les séries';
+
+  @override
+  String entRestLeft(int seconds) {
+    return 'Repos : encore $seconds s';
+  }
+
+  @override
+  String get entSaveProgram => 'Enregistrer le programme';
+
+  @override
+  String entSeeAllReviews(int count) {
+    return 'Voir les $count avis';
+  }
+
+  @override
+  String get entSeeCatalogue => 'Voir le catalogue';
+
+  @override
+  String entSeePreview(Object duration) {
+    return 'Voir l’aperçu, $duration';
+  }
+
+  @override
+  String get entSeePreviewShort => 'Voir l’aperçu';
+
+  @override
+  String get entSessionInNumbers => 'Ta séance en chiffres';
+
+  @override
+  String entSessionVideos(int index, Object title) {
+    return 'Vidéos de la séance $index · $title';
+  }
+
+  @override
+  String get entSessions => 'Séances';
+
+  @override
+  String entSetOf(int set, int sets) {
+    return 'Série $set sur $sets';
+  }
+
+  @override
+  String entSetsOf(int sets, int reps) {
+    String _temp0 = intl.Intl.pluralLogic(
+      sets,
+      locale: localeName,
+      other: '$sets séries de $reps',
+      one: '1 série de $reps',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String entShareExercise(Object exercise, Object program) {
+    return '$exercise · un exercice du programme $program sur MatchUp';
+  }
+
+  @override
+  String get entShareExerciseLabel => 'Partager l’exercice';
+
+  @override
+  String get entShareProgram => 'Partager le programme';
+
+  @override
+  String entShareText(Object program, Object coach) {
+    return '$program avec $coach, sur MatchUp';
+  }
+
+  @override
+  String get entSkipExercise => 'Passer l’exercice';
+
+  @override
+  String get entSkipRest => 'Passer';
+
+  @override
+  String get entStartRest => 'Lancer';
+
+  @override
+  String get entStartSession => 'Lancer la séance';
+
+  @override
+  String entStarsCount(int stars, int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      stars,
+      locale: localeName,
+      other: '$stars étoiles',
+      one: '1 étoile',
+    );
+    return '$_temp0 : $count avis';
+  }
+
+  @override
+  String entStreakNow(int weeks) {
+    return 'Ta série passe à $weeks semaines de suite.';
+  }
+
+  @override
+  String get entStudentReviews => 'Avis des élèves';
+
+  @override
+  String entTarget(int reps) {
+    return 'Objectif : $reps';
+  }
+
+  @override
+  String get entTheProgram => 'Le programme';
+
+  @override
+  String get entTryPremium => 'Essayer Premium';
+
+  @override
+  String entVideoOf(Object exercise) {
+    return 'Vidéo de démonstration : $exercise';
+  }
+
+  @override
+  String entWeekSoFar(int done, int goal) {
+    return 'Ta semaine : $done/$goal';
+  }
+
+  @override
+  String entWeekTotal(int count, Object total) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count séances',
+      one: '1 séance',
+    );
+    return '$_temp0 · $total au total';
+  }
+
+  @override
+  String entWeekValidated(int done, int goal) {
+    return 'Semaine validée : $done/$goal';
+  }
+
+  @override
+  String entWeeksShort(int weeks) {
+    return '$weeks sem.';
+  }
+
+  @override
+  String entWeeksWord(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'semaines',
+      one: 'semaine',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String entYouNeed(Object what) {
+    return 'Il te faut : $what';
+  }
+
+  @override
+  String get entYourCoach => 'Ton coach';
 }

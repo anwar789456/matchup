@@ -197,6 +197,74 @@ void main() {
       await settleFonts(tester);
     });
 
+    testWidgets('ENT-04 → ENT-05: session 5 played through validates the week', (tester) async {
+      await pumpApp(tester, TrainingRoutes.lesson('bandeja', 5));
+      expect(find.text('1 / 4'), findsOneWidget);
+      expect(find.text('Échauffement des épaules'), findsOneWidget);
+      await tester.tap(find.text('Marquer comme fait'));
+      await tester.pumpAndSettle();
+      expect(find.text('2 / 4'), findsOneWidget);
+      expect(find.text('Bandeja croisée sur lancer'), findsOneWidget);
+      expect(find.text('Série 1 sur 3'), findsOneWidget);
+      await tester.ensureVisible(find.text('Lancer'));
+      await tester.pumpAndSettle();
+      for (var i = 0; i < 10; i++) {
+        await tester.tap(find.bySemanticsLabel('Ajouter une bandeja'));
+        await tester.pump();
+      }
+      await tester.tap(find.text('Lancer'));
+      await tester.pump();
+      expect(find.text('Série 2 sur 3'), findsOneWidget);
+      await tester.tap(find.text('Passer'));
+      await tester.pump();
+      for (var i = 0; i < 3; i++) {
+        await tester.tap(find.text('Marquer comme fait'));
+        await tester.pumpAndSettle();
+      }
+      expect(find.text('Séance 5 terminée'), findsWidgets);
+      expect(find.text('Semaine validée : 3/3'), findsOneWidget);
+      expect(find.text('Ta série passe à 7 semaines de suite.'), findsOneWidget);
+      expect(find.text('5 séances sur 12 · 42 %'), findsOneWidget);
+      await tester.tap(find.text('Juste bien'));
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('Retour à mon entraînement'));
+      await tester.pumpAndSettle();
+      expect(find.text('7'), findsOneWidget);
+      expect(find.textContaining('Semaine validée'), findsOneWidget);
+      await settleFonts(tester);
+    });
+
+    testWidgets('ENT-03: joining a free program adds it to Mes programmes', (tester) async {
+      await pumpApp(tester, TrainingRoutes.program('basket-3x3'));
+      expect(find.text('Bases du basket 3×3'), findsOneWidget);
+      expect(find.text('Gratuit · sans engagement'), findsOneWidget);
+      await tester.tap(find.text('S’inscrire au programme'));
+      await tester.pumpAndSettle();
+      expect(find.text('Mes programmes'), findsOneWidget);
+      await see(tester, find.text('Bases du basket 3×3'));
+      await settleFonts(tester);
+    });
+
+    testWidgets('ENT-03: a paid program opens the checkout (PAY-01)', (tester) async {
+      await pumpApp(tester, TrainingRoutes.program('service-retour'));
+      expect(find.textContaining('en une fois · accès à vie'), findsOneWidget);
+      await tester.tap(find.textContaining('et m’inscrire'));
+      await tester.pumpAndSettle();
+      expect(find.text('Service et retour'), findsWidgets);
+      expect(find.textContaining('PROGRAMME D’ENTRAÎNEMENT'), findsWidgets);
+      await settleFonts(tester);
+    });
+
+    testWidgets('ENT-03 joined: « Continuer · Séance 5 » opens the session', (tester) async {
+      await pumpApp(tester, TrainingRoutes.program('bandeja'));
+      expect(find.text('Bandeja en 4 semaines'), findsOneWidget);
+      expect(find.text('Continuer · Séance 5'), findsOneWidget);
+      await tester.tap(find.text('Continuer · Séance 5'));
+      await tester.pumpAndSettle();
+      expect(find.text('1 / 4'), findsOneWidget);
+      await settleFonts(tester);
+    });
+
     testWidgets('ENT-02 lists the programs and filters them', (tester) async {
       await pumpApp(tester, TrainingRoutes.programs);
       expect(find.text('Programmes'), findsWidgets);

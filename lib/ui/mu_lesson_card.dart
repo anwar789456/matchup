@@ -146,20 +146,30 @@ class MuLessonCard extends StatelessWidget {
     );
   }
 
+  /// « 4 exercices · ☁ Hors ligne » on one line.
   Widget _meta(BuildContext context, String text, {required bool downloaded}) {
     final c = context.mu;
     final style = MuType.caption.copyWith(color: c.textSecondary);
-    return Wrap(
-      crossAxisAlignment: WrapCrossAlignment.center,
-      children: [
-        Text(text, style: style),
-        if (downloaded) ...[
-          Text(' · ', style: style),
-          Icon(PhosphorIcons.cloudCheck(), size: _metaIcon, color: c.textSecondary),
-          const SizedBox(width: MuSpace.s1 / 2),
-          Text(l10n.horsLigne, style: style),
+    return Text.rich(
+      TextSpan(
+        children: [
+          TextSpan(text: text),
+          if (downloaded) ...[
+            const TextSpan(text: ' · '),
+            WidgetSpan(
+              alignment: PlaceholderAlignment.middle,
+              child: Padding(
+                padding: const EdgeInsetsDirectional.only(end: MuSpace.s1 / 2),
+                child: Icon(PhosphorIcons.cloudCheck(), size: _metaIcon, color: c.textSecondary),
+              ),
+            ),
+            TextSpan(text: l10n.horsLigne),
+          ],
         ],
-      ],
+      ),
+      maxLines: 1,
+      overflow: TextOverflow.ellipsis,
+      style: style,
     );
   }
 

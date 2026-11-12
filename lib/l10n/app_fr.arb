@@ -9209,5 +9209,576 @@
         "type": "Object"
       }
     }
-  }
+  },
+  "entAbout": "À propos",
+  "entAddRep": "Ajouter {noun}",
+  "@entAddRep": {
+    "placeholders": {
+      "noun": {
+        "type": "Object"
+      }
+    }
+  },
+  "entRemoveRep": "Retirer {noun}",
+  "@entRemoveRep": {
+    "placeholders": {
+      "noun": {
+        "type": "Object"
+      }
+    }
+  },
+  "entOneRep": "une répétition",
+  "entAllSetsDone": "Toutes les séries sont faites",
+  "entAnalyseMyMove": "Analyser ma {move} en vidéo",
+  "@entAnalyseMyMove": {
+    "placeholders": {
+      "move": {
+        "type": "Object"
+      }
+    }
+  },
+  "entAnalyseMyMoveGeneric": "Analyser mon geste en vidéo",
+  "entBackToCatalogue": "Retour au catalogue",
+  "entBackToTraining": "Retour à mon entraînement",
+  "entCertifiedLine": "{certification} · diplôme vérifié par MatchUp",
+  "@entCertifiedLine": {
+    "placeholders": {
+      "certification": {
+        "type": "Object"
+      }
+    }
+  },
+  "entCheckoutEyebrow": "Programme d’entraînement",
+  "entCheckoutLine": "Programme complet · accès à vie",
+  "entCheckoutSubtitle": "{coach} · {weeks} semaines · {sessions} séances",
+  "@entCheckoutSubtitle": {
+    "placeholders": {
+      "coach": {
+        "type": "Object"
+      },
+      "weeks": {
+        "type": "int"
+      },
+      "sessions": {
+        "type": "int"
+      }
+    }
+  },
+  "entCoachTip": "Le conseil de {name}",
+  "@entCoachTip": {
+    "placeholders": {
+      "name": {
+        "type": "Object"
+      }
+    }
+  },
+  "entContinueSession": "Continuer · Séance {index}",
+  "@entContinueSession": {
+    "placeholders": {
+      "index": {
+        "type": "int"
+      }
+    }
+  },
+  "entDaysAgo": "{days, plural, =1{il y a 1 jour} other{il y a {days} jours}}",
+  "@entDaysAgo": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "entFinishedAgo": "{days, plural, =1{Programme terminé · il y a 1 jour} other{Programme terminé · il y a {days} jours}}",
+  "@entFinishedAgo": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "entDifficulty": "Difficulté de la séance",
+  "entDoneWord": "{count, plural, =0{fait} =1{fait} other{faits}}",
+  "@entDoneWord": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "entDrillsDone": "{done, plural, =0{0 exercice fait} =1{1 exercice fait} other{{done} exercices faits}} sur {total}",
+  "@entDrillsDone": {
+    "placeholders": {
+      "done": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "entEnroll": "S’inscrire au programme",
+  "entEnrolled": "Tu es inscrit",
+  "entEnrolledText": "« {program} » est dans Mes programmes.",
+  "@entEnrolledText": {
+    "placeholders": {
+      "program": {
+        "type": "Object"
+      }
+    }
+  },
+  "entExercises": "Exercices",
+  "entExercisesOf": "Exercices de la séance {index}",
+  "@entExercisesOf": {
+    "placeholders": {
+      "index": {
+        "type": "int"
+      }
+    }
+  },
+  "entFeelingAdapts": "La séance {index} s’adapte à ta réponse. {coach} la voit aussi.",
+  "@entFeelingAdapts": {
+    "placeholders": {
+      "index": {
+        "type": "int"
+      },
+      "coach": {
+        "type": "Object"
+      }
+    }
+  },
+  "entFeelingCoachSees": "{coach} voit ta réponse.",
+  "@entFeelingCoachSees": {
+    "placeholders": {
+      "coach": {
+        "type": "Object"
+      }
+    }
+  },
+  "entFreeLine": "Gratuit · sans engagement",
+  "entHeroLabel": "Court de {sport} éclairé, aperçu du programme",
+  "@entHeroLabel": {
+    "placeholders": {
+      "sport": {
+        "type": "Object"
+      }
+    }
+  },
+  "entHoursMinutes": "{hours} h {minutes}",
+  "@entHoursMinutes": {
+    "placeholders": {
+      "hours": {
+        "type": "int"
+      },
+      "minutes": {
+        "type": "Object"
+      }
+    }
+  },
+  "entHowWasIt": "Comment c’était ?",
+  "entInBrief": "Le programme en bref",
+  "entInsteadOf": "au lieu de {price}",
+  "@entInsteadOf": {
+    "placeholders": {
+      "price": {
+        "type": "Object"
+      }
+    }
+  },
+  "entJoinedLine": "{done} séances sur {total} · prochaine : Séance {index} · {title}",
+  "@entJoinedLine": {
+    "placeholders": {
+      "done": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      },
+      "index": {
+        "type": "int"
+      },
+      "title": {
+        "type": "Object"
+      }
+    }
+  },
+  "entJustRight": "Juste bien",
+  "entTooEasy": "Trop facile",
+  "entTooHard": "Trop dur",
+  "entLessonDoneTitle": "Séance {index} terminée",
+  "@entLessonDoneTitle": {
+    "placeholders": {
+      "index": {
+        "type": "int"
+      }
+    }
+  },
+  "entLevelSpan": "Niveau {range}",
+  "@entLevelSpan": {
+    "placeholders": {
+      "range": {
+        "type": "Object"
+      }
+    }
+  },
+  "entMarkDone": "Marquer comme fait",
+  "entMinutesRange": "{range} min",
+  "@entMinutesRange": {
+    "placeholders": {
+      "range": {
+        "type": "Object"
+      }
+    }
+  },
+  "entMyNotes": "Mes notes",
+  "entNext": "Ensuite",
+  "entNextExercise": "Exercice suivant",
+  "entPreviousExercise": "Exercice précédent",
+  "entNextLine": "{sets} · {video} de vidéo",
+  "@entNextLine": {
+    "placeholders": {
+      "sets": {
+        "type": "Object"
+      },
+      "video": {
+        "type": "Object"
+      }
+    }
+  },
+  "entNextOn": "Prochaine : Séance {index} · {title} · {day}",
+  "@entNextOn": {
+    "placeholders": {
+      "index": {
+        "type": "int"
+      },
+      "title": {
+        "type": "Object"
+      },
+      "day": {
+        "type": "Object"
+      }
+    }
+  },
+  "entNoCommitment": "sans engagement",
+  "entNotesHelper": "Visibles par toi seul. Tu peux les envoyer à {coach} à la fin.",
+  "@entNotesHelper": {
+    "placeholders": {
+      "coach": {
+        "type": "Object"
+      }
+    }
+  },
+  "entOneOff": "en une fois",
+  "entOutOf": "sur {minutes}",
+  "@entOutOf": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "entPaidLine": "{price} en une fois · accès à vie",
+  "@entPaidLine": {
+    "placeholders": {
+      "price": {
+        "type": "Object"
+      }
+    }
+  },
+  "entPayAndEnroll": "Payer {price} et m’inscrire",
+  "@entPayAndEnroll": {
+    "placeholders": {
+      "price": {
+        "type": "Object"
+      }
+    }
+  },
+  "entPerWeek": "{count} par semaine",
+  "@entPerWeek": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "entPlanned": "prévu {minutes} min",
+  "@entPlanned": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "entPlayVideo": "Lire la vidéo, {duration}",
+  "@entPlayVideo": {
+    "placeholders": {
+      "duration": {
+        "type": "Object"
+      }
+    }
+  },
+  "entPremiumActive": "Ton essai Premium est actif : tu suis les {sessions} séances sans payer le programme.",
+  "@entPremiumActive": {
+    "placeholders": {
+      "sessions": {
+        "type": "int"
+      }
+    }
+  },
+  "entPremiumLine": "{price} · inclus dans {which} · sans engagement",
+  "@entPremiumLine": {
+    "placeholders": {
+      "price": {
+        "type": "Object"
+      },
+      "which": {
+        "type": "Object"
+      }
+    }
+  },
+  "entYourTrial": "ton essai Premium",
+  "entYourPremium": "ton abonnement Premium",
+  "entPremiumOffer": "Avec Premium, tu suis les {sessions} séances sans payer le programme.",
+  "@entPremiumOffer": {
+    "placeholders": {
+      "sessions": {
+        "type": "int"
+      }
+    }
+  },
+  "entPremiumTerms": "Essai gratuit {days} jours, puis {monthly}/mois, résiliable à tout moment. Sans Premium, le programme coûte {price} en une fois.",
+  "@entPremiumTerms": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      },
+      "monthly": {
+        "type": "Object"
+      },
+      "price": {
+        "type": "Object"
+      }
+    }
+  },
+  "entPremiumTrialTerms": "Essai gratuit jusqu’au {date}, puis {monthly}/mois, résiliable à tout moment. Sans Premium, le programme coûte {price} en une fois.",
+  "@entPremiumTrialTerms": {
+    "placeholders": {
+      "date": {
+        "type": "Object"
+      },
+      "monthly": {
+        "type": "Object"
+      },
+      "price": {
+        "type": "Object"
+      }
+    }
+  },
+  "entProgramFinished": "Programme terminé : {total} séances sur {total}.",
+  "@entProgramFinished": {
+    "placeholders": {
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "entProgramGone": "Programme introuvable",
+  "entProgramGoneText": "Ce programme n’est plus proposé. Choisis-en un autre dans le catalogue.",
+  "entQuitSession": "Quitter la séance",
+  "entRatingSplit": "Répartition des notes",
+  "entRepsDone": "Répétitions réussies",
+  "entRestBetween": "{seconds} s de repos entre les séries",
+  "@entRestBetween": {
+    "placeholders": {
+      "seconds": {
+        "type": "int"
+      }
+    }
+  },
+  "entRestBetweenSets": "Repos entre les séries",
+  "entRestLeft": "Repos : encore {seconds} s",
+  "@entRestLeft": {
+    "placeholders": {
+      "seconds": {
+        "type": "int"
+      }
+    }
+  },
+  "entSaveProgram": "Enregistrer le programme",
+  "entSeeAllReviews": "Voir les {count} avis",
+  "@entSeeAllReviews": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "entSeeCatalogue": "Voir le catalogue",
+  "entSeePreview": "Voir l’aperçu, {duration}",
+  "@entSeePreview": {
+    "placeholders": {
+      "duration": {
+        "type": "Object"
+      }
+    }
+  },
+  "entSeePreviewShort": "Voir l’aperçu",
+  "entSessionInNumbers": "Ta séance en chiffres",
+  "entSessionVideos": "Vidéos de la séance {index} · {title}",
+  "@entSessionVideos": {
+    "placeholders": {
+      "index": {
+        "type": "int"
+      },
+      "title": {
+        "type": "Object"
+      }
+    }
+  },
+  "entSessions": "Séances",
+  "entSetOf": "Série {set} sur {sets}",
+  "@entSetOf": {
+    "placeholders": {
+      "set": {
+        "type": "int"
+      },
+      "sets": {
+        "type": "int"
+      }
+    }
+  },
+  "entSetsOf": "{sets, plural, =1{1 série de {reps}} other{{sets} séries de {reps}}}",
+  "@entSetsOf": {
+    "placeholders": {
+      "sets": {
+        "type": "int"
+      },
+      "reps": {
+        "type": "int"
+      }
+    }
+  },
+  "entShareExercise": "{exercise} · un exercice du programme {program} sur MatchUp",
+  "@entShareExercise": {
+    "placeholders": {
+      "exercise": {
+        "type": "Object"
+      },
+      "program": {
+        "type": "Object"
+      }
+    }
+  },
+  "entShareExerciseLabel": "Partager l’exercice",
+  "entShareProgram": "Partager le programme",
+  "entShareText": "{program} avec {coach}, sur MatchUp",
+  "@entShareText": {
+    "placeholders": {
+      "program": {
+        "type": "Object"
+      },
+      "coach": {
+        "type": "Object"
+      }
+    }
+  },
+  "entSkipExercise": "Passer l’exercice",
+  "entSkipRest": "Passer",
+  "entStartRest": "Lancer",
+  "entStartSession": "Lancer la séance",
+  "entStarsCount": "{stars, plural, =1{1 étoile} other{{stars} étoiles}} : {count} avis",
+  "@entStarsCount": {
+    "placeholders": {
+      "stars": {
+        "type": "int"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "entStreakNow": "Ta série passe à {weeks} semaines de suite.",
+  "@entStreakNow": {
+    "placeholders": {
+      "weeks": {
+        "type": "int"
+      }
+    }
+  },
+  "entStudentReviews": "Avis des élèves",
+  "entTarget": "Objectif : {reps}",
+  "@entTarget": {
+    "placeholders": {
+      "reps": {
+        "type": "int"
+      }
+    }
+  },
+  "entTheProgram": "Le programme",
+  "entTryPremium": "Essayer Premium",
+  "entVideoOf": "Vidéo de démonstration : {exercise}",
+  "@entVideoOf": {
+    "placeholders": {
+      "exercise": {
+        "type": "Object"
+      }
+    }
+  },
+  "entWeekSoFar": "Ta semaine : {done}/{goal}",
+  "@entWeekSoFar": {
+    "placeholders": {
+      "done": {
+        "type": "int"
+      },
+      "goal": {
+        "type": "int"
+      }
+    }
+  },
+  "entWeekTotal": "{count, plural, =1{1 séance} other{{count} séances}} · {total} au total",
+  "@entWeekTotal": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "total": {
+        "type": "Object"
+      }
+    }
+  },
+  "entWeekValidated": "Semaine validée : {done}/{goal}",
+  "@entWeekValidated": {
+    "placeholders": {
+      "done": {
+        "type": "int"
+      },
+      "goal": {
+        "type": "int"
+      }
+    }
+  },
+  "entWeeksShort": "{weeks} sem.",
+  "@entWeeksShort": {
+    "placeholders": {
+      "weeks": {
+        "type": "int"
+      }
+    }
+  },
+  "entWeeksWord": "{count, plural, =1{semaine} other{semaines}}",
+  "@entWeeksWord": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "entYouNeed": "Il te faut : {what}",
+  "@entYouNeed": {
+    "placeholders": {
+      "what": {
+        "type": "Object"
+      }
+    }
+  },
+  "entYourCoach": "Ton coach"
 }

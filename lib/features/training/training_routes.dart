@@ -3,6 +3,9 @@ import 'package:go_router/go_router.dart';
 
 import '../../l10n/l10n.dart';
 import '../common/widgets/coming_soon.dart';
+import 'screens/lesson_done_screen.dart';
+import 'screens/lesson_screen.dart';
+import 'screens/program_screen.dart';
 import 'screens/programs_screen.dart';
 
 /// The Entraînement tab's routes, named by screen code (ENT-01…09). [trainingRoutes] are the
@@ -20,6 +23,8 @@ abstract final class TrainingRoutes {
   static const videoResult = '/training/video/result'; // ENT-09
 }
 
+int _index(GoRouterState s) => int.tryParse(s.pathParameters['index'] ?? '') ?? 1;
+
 /// ENT-02 keeps the tab bar (it is drawn on its PNG); the other pages cover it ([rootKey]).
 List<RouteBase> trainingRoutes(GlobalKey<NavigatorState> rootKey) {
   GoRoute page(String path, Widget Function(GoRouterState state) build) => GoRoute(
@@ -32,9 +37,15 @@ List<RouteBase> trainingRoutes(GlobalKey<NavigatorState> rootKey) {
 
   return [
     GoRoute(path: 'programs', builder: (context, state) => const ProgramsScreen()),
-    page('program/:id', (s) => soon(l10n.entProgram)),
-    page('program/:id/lesson/:index', (s) => soon(l10n.entSession)),
-    page('program/:id/lesson/:index/done', (s) => soon(l10n.entSession)),
+    page('program/:id', (s) => ProgramScreen(programId: s.pathParameters['id']!)),
+    page(
+      'program/:id/lesson/:index',
+      (s) => LessonScreen(programId: s.pathParameters['id']!, index: _index(s)),
+    ),
+    page(
+      'program/:id/lesson/:index/done',
+      (s) => LessonDoneScreen(programId: s.pathParameters['id']!, index: _index(s)),
+    ),
     page('plan', (s) => soon(l10n.entTrainingPlan)),
     page('plan/week', (s) => soon(l10n.entTrainingPlan)),
     page('video', (s) => soon(l10n.entAnalyseVideoTitle)),

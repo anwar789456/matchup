@@ -275,7 +275,8 @@ class MuCoachCard extends StatelessWidget {
             runSpacing: MuSpace.s2,
             children: [
               MuChip.sport(k.sport, size: MuChipSize.s),
-              for (final s in k.specialties) MuChip(label: s, size: MuChipSize.s),
+              for (final s in k.specialties)
+                MuChip(kind: MuChipKind.input, label: s, size: MuChipSize.s),
             ],
           ),
           const SizedBox(height: MuSpace.s4),

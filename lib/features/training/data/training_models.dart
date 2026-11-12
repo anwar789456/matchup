@@ -18,6 +18,7 @@ class Exercise {
     this.steps = const [],
     this.tip,
     this.counterLabel,
+    this.counterNoun,
     this.counted = false,
   });
 
@@ -43,6 +44,9 @@ class Exercise {
 
   /// « Bandejas réussies »: what the counter counts.
   final String? counterLabel;
+
+  /// « une bandeja », for the stepper's « Ajouter une bandeja » (« une répétition » when null).
+  final String? counterNoun;
 
   /// The session's key drill: its reps make the « Bandejas 29/36 » of ENT-05.
   final bool counted;
