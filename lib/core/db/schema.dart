@@ -587,4 +587,28 @@ const schemaVersions = <int, List<String>>{
     // When a refund request was paid back.
     'ALTER TABLE demandes_remboursement ADD COLUMN rembourse_le TEXT',
   ],
+
+  // ── v4 · Supabase sync: the changes waiting to be sent (lib/core/sync) ─────────────────────
+  4: [
+    '''
+    CREATE TABLE sync_outbox (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      tableau TEXT NOT NULL,
+      operation TEXT NOT NULL CHECK (operation IN ('upsert', 'delete')),
+      k1 TEXT,
+      k2 TEXT,
+      k3 TEXT,
+      le TEXT NOT NULL
+    )''',
+    // application = 1 while pulled rows are written (the triggers stay quiet); utilisateur = the
+    // Supabase user this phone last pulled for.
+    '''
+    CREATE TABLE sync_etat (
+      id INTEGER PRIMARY KEY CHECK (id = 1),
+      application INTEGER NOT NULL DEFAULT 0,
+      utilisateur TEXT,
+      dernier_pull TEXT
+    )''',
+    'INSERT INTO sync_etat (id) VALUES (1)',
+  ],
 };

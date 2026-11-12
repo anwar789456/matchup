@@ -2,6 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sqflite/sqflite.dart';
 
 import 'database_factory.dart';
+import '../sync/sync_outbox.dart';
 import 'schema.dart';
 import 'seed.dart';
 
@@ -62,6 +63,8 @@ class AppDatabase {
           onConfigure: (db) => db.execute('PRAGMA foreign_keys = ON'),
           onCreate: (db, v) => _migrate(db, 0, v),
           onUpgrade: _migrate,
+          // After the migrations: the triggers follow the synced tables' current columns.
+          onOpen: installSyncTriggers,
         ),
       );
 

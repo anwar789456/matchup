@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
@@ -5,14 +7,20 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'app.dart';
+import 'core/supabase/supabase_config.dart';
+import 'core/sync/sync_service.dart';
 
-void main() {
+Future<void> main() async {
   // The fonts ship in assets/google_fonts (theme README « Fonts »): no download at first launch.
   GoogleFonts.config.allowRuntimeFetching = false;
   LicenseRegistry.addLicense(_fontLicenses);
   WidgetsFlutterBinding.ensureInitialized();
   loadArabicGlyphFallback();
-  runApp(const ProviderScope(child: MatchUpApp()));
+  // Supabase when supabase.json was given (--dart-define-from-file); the app never waits on it.
+  unawaited(SupabaseConfig.init());
+  final container = ProviderContainer();
+  container.read(syncLoopProvider);
+  runApp(UncontrolledProviderScope(container: container, child: const MatchUpApp()));
 }
 
 /// Widgets style text with MuType (Plus Jakarta Sans, Barlow Condensed), which have no Arabic

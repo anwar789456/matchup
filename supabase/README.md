@@ -1,0 +1,55 @@
+# MatchUp on Supabase + SQFlite
+
+The app keeps working on the phone's SQLite database (SQFlite): every screen reads and writes it,
+offline included. Supabase is the shared copy in the cloud: the tables listed in
+`lib/core/sync/sync_tables.dart` are sent there in the background.
+
+```
+screen → repository → SQFlite ──(trigger)──> sync_outbox ──(SyncService, every 30 s)──> Supabase
+                                                              <── first sync on a new phone: pull
+```
+
+- Every insert, update and delete on a synced table adds a row to `sync_outbox` (SQLite triggers,
+  recreated each time the database opens). The service sends the row as it is now, with
+  `owner_id` = the signed-in Supabase user, then empties the outbox. Offline, changes wait.
+- A phone that never synced for this user first pulls their rows (a new phone, a reinstall).
+- Each phone signs in anonymously for now. When the Utilisateur module links real accounts,
+  the same rows follow the user.
+- Row Level Security: a user only sees and writes their own rows (`owner`), or reads everyone's
+  rows and writes their own (`shared`).
+
+## One-time setup (one person, for the team)
+
+1. Create a project on supabase.com (free plan).
+2. Authentication › Sign In / Providers: turn on **Allow anonymous sign-ins**.
+3. SQL editor: paste and run all of `supabase/schema.sql`.
+4. Project Settings › API Keys: copy the Project URL and the **publishable** key, and share them
+   with the team (the publishable key is meant for apps; Row Level Security protects the data).
+
+## Every developer
+
+```bash
+cp supabase.example.json supabase.json     # then paste the URL and the publishable key
+flutter run --dart-define-from-file=supabase.json
+```
+
+`supabase.json` is git-ignored. Without it the app runs on SQFlite alone (tests always do).
+The debug menu (bug button) shows the last sync and has « Synchroniser maintenant ».
+
+## Sync your module's tables
+
+1. Add your table to `syncTables` in `lib/core/sync/sync_tables.dart` (parents before children).
+   It needs a primary key of 1 to 3 columns. Use `SyncScope.shared` for data everyone must see.
+2. `flutter test test/supabase_schema_test.dart --update-goldens` regenerates `supabase/schema.sql`.
+3. Run `supabase/schema.sql` again in the SQL editor (safe to run again), commit, push.
+
+Your repositories do not change. The same goes for a new column: add it with a new schema
+version in `lib/core/db/schema.dart`, then steps 2 and 3.
+
+## Good to know
+
+- The story's seed rows stay on each phone; only what the user changes is sent.
+- Integer ids made by one phone (`AUTOINCREMENT`) are unique per user, not across phones of the
+  same user. Prefer text ids for data a user creates on two phones.
+- Synced today: Paiement (balance, history, refunds, cards, payments, attempts, split shares,
+  Premium, receipts). The other modules add theirs.

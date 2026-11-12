@@ -5,6 +5,8 @@ import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 import '../../core/connectivity.dart';
 import '../../core/platform.dart';
+import '../../core/supabase/supabase_config.dart';
+import '../../core/sync/sync_service.dart';
 import '../../router.dart';
 import '../../theme/theme.dart';
 import '../../ui/ui.dart';
@@ -76,6 +78,29 @@ Future<void> showDebugMenu(BuildContext context, WidgetRef ref) => MuBottomSheet
         shrinkWrap: true,
         padding: const EdgeInsets.fromLTRB(MuSpace.s4, 0, MuSpace.s4, MuSpace.s8),
         children: [
+          section('Supabase'),
+          Text(
+            !SupabaseConfig.configured
+                ? 'Non configuré : lance avec --dart-define-from-file=supabase.json'
+                : ref.watch(lastSyncProvider) == null
+                    ? 'Pas encore synchronisé'
+                    : ref.watch(lastSyncProvider)!.ok
+                        ? 'Dernière synchro : ${ref.watch(lastSyncProvider)!.sent} envoyé(s), ${ref.watch(lastSyncProvider)!.received} reçu(s)'
+                        : 'Erreur : ${ref.watch(lastSyncProvider)!.errors.join(' · ')}',
+            style: MuType.caption.copyWith(color: c.textSecondary),
+          ),
+          const SizedBox(height: MuSpace.s2),
+          MuButton.tertiary(
+            label: 'Synchroniser maintenant',
+            leading: PhosphorIcons.cloudArrowUp(),
+            fullWidth: true,
+            onPressed: !SupabaseConfig.configured
+                ? null
+                : () async {
+                    if (!await SupabaseConfig.ensureSession()) return;
+                    ref.read(lastSyncProvider.notifier).set(await ref.read(syncServiceProvider).sync());
+                  },
+          ),
           section('Paiement'),
           MuSelect<PaymentOutcome>(
             label: 'Issue du prochain paiement',

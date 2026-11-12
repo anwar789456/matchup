@@ -49,3 +49,6 @@ app.*.map.json
 
 # Local keys passed with --dart-define-from-file (never committed)
 /secrets.json
+
+# Supabase project settings (copy supabase.example.json)
+supabase.json
