@@ -190,7 +190,8 @@ class SubscriptionScreen extends ConsumerWidget {
                     ],
                   ),
                 ),
-                if (!cancelled) ...[
+                // The reminder before the first charge: only during the trial.
+                if (!cancelled && !active) ...[
                   const SizedBox(height: MuSpace.s5),
                   MuBanner(
                     tone: MuBannerTone.info,
@@ -363,14 +364,16 @@ class SubscriptionScreen extends ConsumerWidget {
                     ],
                   ),
                 ),
-                const SizedBox(height: MuSpace.s2),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: MuSpace.s4),
-                  child: Text(
-                    l10n.taPremiereFacturePremiumArrivera(end),
-                    style: caption,
+                if (receipts.isEmpty) ...[
+                  const SizedBox(height: MuSpace.s2),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: MuSpace.s4),
+                    child: Text(
+                      l10n.taPremiereFacturePremiumArrivera(end),
+                      style: caption,
+                    ),
                   ),
-                ),
+                ],
                 if (!cancelled) ...[
                   const SizedBox(height: MuSpace.s6),
                   MuCardSurface(
