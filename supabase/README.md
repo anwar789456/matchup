@@ -84,11 +84,18 @@ do not use the copy above. `supabase/reservation.sql` (written by hand, run it o
 editor, safe to run again) creates `reservations` and `reservation_joueurs` with:
 
 - an exclusion constraint: no two live bookings overlap on a court;
-- `prochaine_reference()`: « MU-48214 », one sequence for every phone;
+- `prochaine_reference()`: « MU-50001 », one sequence for every phone;
 - `bloquer_creneau()` before the checkout (a 15-minute hold), `confirmer_reservation()` after
   payment, `creneaux_pris()` for the slot grid (taken slots, not who took them);
 - Row Level Security: a player reads and changes only their own bookings.
 
-In the app, `SupabaseBookingsRepository` books and cancels on Supabase (network needed) and keeps
-the phone's tables as its cache (shown first, refreshed, used offline). Invitations, ratings,
-scores and the owner's tables still use the copy above.
+It also holds the venue catalogue (`etablissements`, `etablissement_terrains`, readable by
+everyone), the slots an owner closed (`blocages`: every player's grid shows them and booking
+them is refused) and lets an owner read the bookings made at their venue. The first account that
+opens the owner space of a venue without an owner claims it (`revendiquer_etablissement`).
+
+In the app, `SupabaseBookingsRepository`, `SupabaseVenuesRepository`, `SupabaseOwnerRepository`
+and `SupabaseTariffsRepository` use Supabase and keep the phone's tables as their cache (shown
+first, refreshed, used offline). Invitations, ratings and scores are personal to the player, and
+the owner's courts, own bookings, arrivals and full price list stay on the phone: they still use
+the copy above.

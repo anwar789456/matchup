@@ -29,7 +29,7 @@ typedef RemoteBooking = ({MuBooking booking, CancelledBooking? cancellation});
 /// Where booked courts live for everyone (supabase/reservation.sql). [SupabaseReservationRemote]
 /// in the app, a map in tests.
 abstract interface class ReservationRemote {
-  /// « MU-48214 », unique across every phone.
+  /// « MU-50001 », unique across every phone.
   Future<String> nextReference();
 
   /// Holds [booking]'s slot for 15 minutes before the checkout. Throws [SlotTaken].
@@ -110,9 +110,11 @@ class SupabaseReservationRemote implements ReservationRemote {
 
   @override
   Future<List<RemoteBooking>> mine() async {
+    // Only the player's own: an owner may also read the bookings made at their venue.
     final rows = await _client
         .from('reservations')
         .select('*, reservation_joueurs(position, nom, image_url)')
+        .eq('organisateur_id', _client.auth.currentUser!.id)
         .neq('statut', MuBookingStatus.pendingPayment.name)
         .order('debut');
     return [for (final r in rows) readRemote(r)];

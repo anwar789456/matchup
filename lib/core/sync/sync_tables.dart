@@ -53,12 +53,12 @@ const syncTables = <SyncTable>[
   SyncTable('invitations'),
   SyncTable('matchs_notes'),
   SyncTable('matchs_scores'),
-  // The venue owner's side: courts, bookings and arrivals, closed slots, prices and promos.
+  // The venue owner's side: courts, bookings and arrivals, the price list and promos. (Closed
+  // slots live in Supabase's `blocages`: SupabaseOwnerRepository.)
   // (`terrains` from the owner onboarding waits for `utilisateurs`: it points at an account id.)
   SyncTable('proprio_terrains'),
   SyncTable('proprio_reservations'),
   SyncTable('proprio_presences'),
-  SyncTable('proprio_blocages'),
   SyncTable('tarifs'),
   SyncTable('tarif_groupes'),
   SyncTable('tarif_groupe_terrains'),

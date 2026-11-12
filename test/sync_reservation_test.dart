@@ -53,12 +53,13 @@ void main() {
     expect(remote.tables['matchs_scores'], hasLength(2));
   });
 
-  test('the owner’s blocks, no-shows and prices are sent; removed rows are deleted', () async {
+  test('the owner’s no-shows and price list are copied; closed slots are not', () async {
     final remote = MemoryRemote('owner-a');
     final sync = SyncService(database, remote);
     final owner = SqliteOwnerRepository(database);
 
-    final block = await owner.block(
+    // Closed slots live in Supabase's `blocages` (SupabaseOwnerRepository), not in the copy.
+    await owner.block(
       courts: [2],
       start: DateTime(2026, 10, 22, 8),
       end: DateTime(2026, 10, 22, 12),
@@ -76,15 +77,11 @@ void main() {
     ));
 
     expect((await sync.sync()).errors, isEmpty);
-    expect(remote.tables['proprio_blocages']!.values.single['note'], 'Entretien du gazon');
+    expect(remote.tables.keys, isNot(contains('proprio_blocages')));
     final presences = remote.tables['proprio_presences']!.values.where((r) => r['ref'] == 'MU-48213');
     expect([for (final r in presences) if (r['etat'] == 'absent') r['nom']], ['Ines M.', 'Lina F.']);
     expect([for (final r in presences) if (r['etat'] == 'attendu') r['nom']], ['Rami S.', 'Salma G.']);
     expect(remote.tables['tarif_groupes']!.values.every((g) => g['prix_pointe'] == 160), isTrue);
     expect(remote.tables['promos']!.values.single['pourcentage'], 20);
-
-    await owner.unblock(block.id);
-    expect((await sync.sync()).errors, isEmpty);
-    expect(remote.tables['proprio_blocages'], isEmpty);
   });
 }

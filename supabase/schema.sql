@@ -422,31 +422,6 @@ drop policy if exists "proprio_presences_ecriture" on public.proprio_presences;
 create policy "proprio_presences_lecture" on public.proprio_presences for select to authenticated using (owner_id = auth.uid());
 create policy "proprio_presences_ecriture" on public.proprio_presences for all to authenticated using (owner_id = auth.uid()) with check (owner_id = auth.uid());
 
--- proprio_blocages (owner)
-create table if not exists public.proprio_blocages (
-  owner_id uuid not null default auth.uid() references auth.users (id) on delete cascade,
-  "id" text,
-  "terrain" bigint not null,
-  "debut" text not null,
-  "fin" text not null,
-  "motif" text not null,
-  "note" text,
-  "hebdo" bigint not null,
-  primary key (owner_id, "id")
-);
-alter table public.proprio_blocages add column if not exists "id" text;
-alter table public.proprio_blocages add column if not exists "terrain" bigint;
-alter table public.proprio_blocages add column if not exists "debut" text;
-alter table public.proprio_blocages add column if not exists "fin" text;
-alter table public.proprio_blocages add column if not exists "motif" text;
-alter table public.proprio_blocages add column if not exists "note" text;
-alter table public.proprio_blocages add column if not exists "hebdo" bigint;
-alter table public.proprio_blocages enable row level security;
-drop policy if exists "proprio_blocages_lecture" on public.proprio_blocages;
-drop policy if exists "proprio_blocages_ecriture" on public.proprio_blocages;
-create policy "proprio_blocages_lecture" on public.proprio_blocages for select to authenticated using (owner_id = auth.uid());
-create policy "proprio_blocages_ecriture" on public.proprio_blocages for all to authenticated using (owner_id = auth.uid()) with check (owner_id = auth.uid());
-
 -- tarifs (owner)
 create table if not exists public.tarifs (
   owner_id uuid not null default auth.uid() references auth.users (id) on delete cascade,
