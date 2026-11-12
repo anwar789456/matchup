@@ -109,19 +109,21 @@ class SupabaseAuthRepository implements AuthRepository {
           OAuthProvider.google,
           redirectTo: _redirectTo,
           authScreenLaunchMode: LaunchMode.platformDefault,
+          // Always Google's account list, even when one account is already signed in.
+          queryParams: const {'prompt': 'select_account'},
         ));
     if (!opened) throw const ProviderSignInFailed();
     if (kIsWeb) await Completer<void>().future;
   }
 
   /// The device came back from Google signed in as [user] (`oauthReturnProvider`): the phone's
-  /// copy of the account is made or reused and signed in. Returns its email, or null when there
-  /// is nothing to do (anonymous, email/password, or already this account).
+  /// copy of the account is made or reused and signed in. Returns its email, or null when it is
+  /// not a Google sign-in (anonymous device session, email/password).
   Future<String?> adoptOAuthUser(User user) async {
     final email = user.email;
     final provider = user.appMetadata['provider'];
     if (user.isAnonymous || email == null || provider == null || provider == 'email') return null;
-    if (await local.currentEmail() == _key(email)) return null;
+    if (local.signedIn && await local.currentEmail() == _key(email)) return _key(email);
     // The phone's copy needs a password; Google accounts sign in through Google, never with it.
     final random = Random.secure();
     final password = List.generate(32, (_) => random.nextInt(36).toRadixString(36)).join();

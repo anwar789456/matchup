@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 
+import '../../../core/api/session.dart';
 import '../../../core/format.dart';
 import '../../../router.dart';
 import '../../../theme/theme.dart';
@@ -55,7 +56,9 @@ class _VerifyEmailScreenState extends ConsumerState<VerifyEmailScreen> {
       final verified = await ref.read(authRepositoryProvider).isEmailVerified();
       if (!verified || !mounted) return;
       _check?.cancel();
-      context.push(Routes.roles);
+      // Confirmed: the role and setup chosen meanwhile now reach the Supabase account too.
+      final next = await ref.read(sessionProvider.notifier).nextRoute();
+      if (mounted) context.push(next ?? Routes.roles);
     } on Exception {
       // Offline or server down: try again at the next tick.
     } finally {
@@ -163,9 +166,10 @@ class _VerifyEmailScreenState extends ConsumerState<VerifyEmailScreen> {
           label: l10n.continuer,
           size: MuButtonSize.xl,
           fullWidth: true,
-          onPressed: () {
+          onPressed: () async {
             _check?.cancel();
-            context.push(Routes.roles);
+            final next = await ref.read(sessionProvider.notifier).nextRoute();
+            if (context.mounted) context.push(next ?? Routes.roles);
           },
         ),
         Text(

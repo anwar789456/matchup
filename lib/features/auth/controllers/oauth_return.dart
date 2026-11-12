@@ -10,6 +10,7 @@ import '../../../core/supabase/supabase_config.dart';
 import '../../../router.dart';
 import '../data/supabase_auth_repository.dart';
 import 'auth_providers.dart';
+import '../../profile/data/account_profile.dart';
 
 /// « Continuer avec Google » (AUTH-01, AUTH-05): the browser leaves for Google and the app
 /// starts again signed in to Supabase as that Google account. This finishes the sign-in: the
@@ -32,8 +33,12 @@ final oauthReturnProvider = Provider<void>((ref) {
       final email = await repo.adoptOAuthUser(user);
       if (email == null) return;
       ref.read(authFlowProvider.notifier).setEmail(email);
-      final home = await ref.read(sessionProvider.notifier).setupDoneRoute();
-      await _goWhenStarted(ref.read(routerProvider), home ?? Routes.roles);
+      final meta = user.userMetadata ?? const {};
+      await ref.read(accountProfileProvider).fillNames((meta['full_name'] ?? meta['name']) as String?);
+      final next = await ref.read(sessionProvider.notifier).nextRoute();
+      await _goWhenStarted(ref.read(routerProvider), next ?? Routes.roles);
+      // Signed out later on this phone, then Google again: handled again then.
+      handled.remove(user.id);
     } catch (e) {
       handled.remove(user.id); // a later sign-in event may try again
       debugPrint('Connexion Google non terminée : $e');
@@ -50,12 +55,15 @@ final oauthReturnProvider = Provider<void>((ref) {
   });
 });
 
-/// Waits for the splash to hand over (it picks its own next screen), then opens [route].
+/// Waits for the splash to hand over (it picks its own next screen), then opens [route] — only
+/// from an entry screen (splash, welcome, login, sign-up), never over a screen of the app.
 Future<void> _goWhenStarted(GoRouter router, String route) async {
+  String path() => router.routerDelegate.currentConfiguration.uri.path;
   for (var i = 0; i < 50; i++) {
-    final path = router.routerDelegate.currentConfiguration.uri.path;
-    if (path != Routes.splash && path != '/') break;
+    if (path() != Routes.splash && path() != '/') break;
     await Future<void>.delayed(const Duration(milliseconds: 200));
   }
-  router.go(route);
+  final here = path();
+  final entry = here == '/' || here.startsWith('/onb/') || here == Routes.login || here == Routes.signup;
+  if (entry) router.go(route);
 }

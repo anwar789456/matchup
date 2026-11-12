@@ -20,6 +20,15 @@ void main() {
     await session.signIn(2);
     expect(await session.setupDoneRoute(), isNull);
 
+    // A role chosen but its setup not finished: the next sign-in resumes it, not the roles.
+    await session.signIn(3);
+    expect(await session.nextRoute(), isNull);
+    await session.markRoleChosen('/ply/sports');
+    expect(await session.nextRoute(), '/ply/sports');
+    await session.markSetupDone(Routes.home);
+    expect(await session.nextRoute(), Routes.home);
+    await session.signIn(1);
+
     // Signing out and back in keeps it.
     await session.signOut();
     await session.signIn(1);

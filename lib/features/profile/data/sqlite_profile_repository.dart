@@ -6,6 +6,7 @@ import '../../../core/db/app_database.dart';
 import '../../../theme/theme.dart';
 import '../../common/data/story_data.dart';
 import 'profile_repository.dart';
+import 'sqlite_me_repository.dart';
 
 /// [PlayerProfileRepository] on the phone's database: what the player edits (PRF-04) in the
 /// `profil_joueur` row, the players they follow in `joueurs_suivis`, their level adjustments and
@@ -16,6 +17,8 @@ class SqlitePlayerProfileRepository implements PlayerProfileRepository {
   final AppDatabase _database;
 
   Future<Database> get _db => _database.db;
+
+  static Map<String, Object?> rowOf(PlayerProfile p) => _row(p);
 
   static Map<String, Object?> _row(PlayerProfile p) => {
         'id': 1,
@@ -35,8 +38,11 @@ class SqlitePlayerProfileRepository implements PlayerProfileRepository {
 
   @override
   Future<PlayerProfile> me() async {
-    final r = (await (await _db).query('profil_joueur')).single;
+    final db = await _db;
+    final r = (await db.query('profil_joueur')).single;
+    final identity = await accountIdentity(db);
     return FakePlayerProfileRepository.yassine.copyWith(
+      name: identity?.displayName,
       handle: r['pseudo']! as String,
       bio: r['bio']! as String,
       sports: [

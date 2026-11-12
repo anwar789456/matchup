@@ -205,8 +205,10 @@ void main() {
 
     expect(await repo.adoptOAuthUser(user()), 'alaa.b@gmail.com');
     expect(session, isNotNull);
-    // Coming back again (a reload) changes nothing.
-    expect(await repo.adoptOAuthUser(user()), isNull);
+    // Coming back again (a reload) reuses the same copy, still signed in.
+    final id = session;
+    expect(await repo.adoptOAuthUser(user()), 'alaa.b@gmail.com');
+    expect(session, id);
   });
 
   test('offline: sign-up says so; sign-in uses the phone copy', () async {

@@ -84,9 +84,10 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   /// The roles screen and the setup run once per account: an account that went through them
   /// opens its home (or dashboard) directly.
   Future<void> _goAfterSignIn() async {
-    final home = await ref.read(sessionProvider.notifier).setupDoneRoute();
-    if (home != null) await ref.read(onboardingProvider.notifier).complete();
-    if (mounted) context.go(home ?? Routes.roles);
+    final session = ref.read(sessionProvider.notifier);
+    final next = await session.nextRoute();
+    if (await session.setupDoneRoute() != null) await ref.read(onboardingProvider.notifier).complete();
+    if (mounted) context.go(next ?? Routes.roles);
   }
 
   Future<void> _social(SocialProvider provider) async {

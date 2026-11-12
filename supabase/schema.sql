@@ -268,3 +268,81 @@ drop policy if exists "recu_lignes_ecriture" on public.recu_lignes;
 create policy "recu_lignes_lecture" on public.recu_lignes for select to authenticated using (owner_id = auth.uid());
 create policy "recu_lignes_ecriture" on public.recu_lignes for all to authenticated using (owner_id = auth.uid()) with check (owner_id = auth.uid());
 
+-- reglages_compte (owner)
+create table if not exists public.reglages_compte (
+  owner_id uuid not null default auth.uid() references auth.users (id) on delete cascade,
+  "id" bigint,
+  "email" text not null,
+  "telephone" text not null,
+  "prenom" text not null,
+  "nom" text not null,
+  "date_naissance" text not null,
+  "genre" text not null,
+  "mdp_change" text not null,
+  "double_facteur" bigint not null,
+  "google_email" text,
+  "apple" bigint not null,
+  "profil_public" bigint not null,
+  "invitations" text not null,
+  "montrer_niveau" bigint not null,
+  "montrer_fiabilite" bigint not null,
+  "position_precise" bigint not null,
+  "bloques" bigint not null,
+  "resume_notifications" text not null,
+  primary key (owner_id, "id")
+);
+alter table public.reglages_compte add column if not exists "id" bigint;
+alter table public.reglages_compte add column if not exists "email" text;
+alter table public.reglages_compte add column if not exists "telephone" text;
+alter table public.reglages_compte add column if not exists "prenom" text;
+alter table public.reglages_compte add column if not exists "nom" text;
+alter table public.reglages_compte add column if not exists "date_naissance" text;
+alter table public.reglages_compte add column if not exists "genre" text;
+alter table public.reglages_compte add column if not exists "mdp_change" text;
+alter table public.reglages_compte add column if not exists "double_facteur" bigint;
+alter table public.reglages_compte add column if not exists "google_email" text;
+alter table public.reglages_compte add column if not exists "apple" bigint;
+alter table public.reglages_compte add column if not exists "profil_public" bigint;
+alter table public.reglages_compte add column if not exists "invitations" text;
+alter table public.reglages_compte add column if not exists "montrer_niveau" bigint;
+alter table public.reglages_compte add column if not exists "montrer_fiabilite" bigint;
+alter table public.reglages_compte add column if not exists "position_precise" bigint;
+alter table public.reglages_compte add column if not exists "bloques" bigint;
+alter table public.reglages_compte add column if not exists "resume_notifications" text;
+alter table public.reglages_compte enable row level security;
+drop policy if exists "reglages_compte_lecture" on public.reglages_compte;
+drop policy if exists "reglages_compte_ecriture" on public.reglages_compte;
+create policy "reglages_compte_lecture" on public.reglages_compte for select to authenticated using (owner_id = auth.uid());
+create policy "reglages_compte_ecriture" on public.reglages_compte for all to authenticated using (owner_id = auth.uid()) with check (owner_id = auth.uid());
+
+-- profil_joueur (owner)
+create table if not exists public.profil_joueur (
+  owner_id uuid not null default auth.uid() references auth.users (id) on delete cascade,
+  "id" bigint,
+  "pseudo" text not null,
+  "bio" text not null,
+  "sports" text not null,
+  "postes" text not null,
+  "zones" text not null,
+  "visibilite" text not null,
+  "montrer_niveau" bigint not null,
+  "montrer_fiabilite" bigint not null,
+  "suggerer_partenaire" bigint not null,
+  primary key (owner_id, "id")
+);
+alter table public.profil_joueur add column if not exists "id" bigint;
+alter table public.profil_joueur add column if not exists "pseudo" text;
+alter table public.profil_joueur add column if not exists "bio" text;
+alter table public.profil_joueur add column if not exists "sports" text;
+alter table public.profil_joueur add column if not exists "postes" text;
+alter table public.profil_joueur add column if not exists "zones" text;
+alter table public.profil_joueur add column if not exists "visibilite" text;
+alter table public.profil_joueur add column if not exists "montrer_niveau" bigint;
+alter table public.profil_joueur add column if not exists "montrer_fiabilite" bigint;
+alter table public.profil_joueur add column if not exists "suggerer_partenaire" bigint;
+alter table public.profil_joueur enable row level security;
+drop policy if exists "profil_joueur_lecture" on public.profil_joueur;
+drop policy if exists "profil_joueur_ecriture" on public.profil_joueur;
+create policy "profil_joueur_lecture" on public.profil_joueur for select to authenticated using (owner_id = auth.uid());
+create policy "profil_joueur_ecriture" on public.profil_joueur for all to authenticated using (owner_id = auth.uid()) with check (owner_id = auth.uid());
+

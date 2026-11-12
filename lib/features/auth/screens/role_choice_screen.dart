@@ -67,6 +67,8 @@ class _RoleChoiceScreenState extends ConsumerState<RoleChoiceScreen> {
     setState(() => _loading = true);
     try {
       await ref.read(authRepositoryProvider).saveRoles(_roles);
+      // The role is chosen once: the next sign-ins resume this role's setup, not this screen.
+      await ref.read(sessionProvider.notifier).markRoleChosen(first.route);
       // Pro accounts land on their dashboard from now on, which shows what is left to set up.
       // A player is marked at the end of the profile step (PLY-10).
       final dashboard = switch (first.role) {

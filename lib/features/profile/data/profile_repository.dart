@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 import '../../../core/db/app_database.dart';
+import '../../../core/sync/sync_service.dart';
 import '../../../core/format.dart';
 import '../../../theme/theme.dart';
 import '../../../ui/ui.dart';
@@ -216,6 +217,7 @@ class PlayerProfile {
   String get initials => initialsOf(name);
 
   PlayerProfile copyWith({
+    String? name,
     String? handle,
     String? bio,
     List<MuSport>? sports,
@@ -227,7 +229,7 @@ class PlayerProfile {
     bool? suggestPartner,
     bool? followed,
   }) => PlayerProfile(
-    name: name,
+    name: name ?? this.name,
     handle: handle ?? this.handle,
     zone: zone,
     bio: bio ?? this.bio,
@@ -521,9 +523,11 @@ final playerProfileRepositoryProvider = Provider<PlayerProfileRepository>(
   (ref) => SqlitePlayerProfileRepository(ref.watch(appDatabaseProvider)),
 );
 
-final myProfileProvider = FutureProvider<PlayerProfile>(
-  (ref) => ref.watch(playerProfileRepositoryProvider).me(),
-);
+final myProfileProvider = FutureProvider<PlayerProfile>((ref) {
+  // The account's profile may arrive from Supabase (sync_tables.dart): re-read it then.
+  ref.watch(syncRevisionProvider);
+  return ref.watch(playerProfileRepositoryProvider).me();
+});
 
 final playerProfileProvider = FutureProvider.family<PlayerProfile, String>(
   (ref, name) => ref.watch(playerProfileRepositoryProvider).player(name),

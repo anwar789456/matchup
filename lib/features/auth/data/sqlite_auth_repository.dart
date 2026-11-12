@@ -77,6 +77,9 @@ class SqliteAuthRepository implements AuthRepository {
 
   int? get _currentId => _userId ?? userId?.call();
 
+  /// An account is signed in on the phone.
+  bool get signedIn => _currentId != null;
+
   /// The signed-in account's email, read back from the database after a restart.
   Future<String?> currentEmail() async {
     if (_email != null) return _email;
