@@ -462,6 +462,13 @@ void main() {
       await settleFonts(tester);
     });
 
+    testWidgets('ENT-05 reopened for session 4: the next one is today', (tester) async {
+      await pumpApp(tester, TrainingRoutes.lessonDone('bandeja', 4));
+      expect(find.text('Séance 4 terminée'), findsWidgets);
+      expect(find.text('Prochaine : Séance 5 · Bandeja croisée · ven. 16 oct.'), findsOneWidget);
+      await settleFonts(tester);
+    });
+
     testWidgets('ENT-02 lists the programs and filters them', (tester) async {
       await pumpApp(tester, TrainingRoutes.programs);
       expect(find.text('Programmes'), findsWidgets);

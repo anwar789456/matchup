@@ -91,10 +91,12 @@ class LessonDoneScreen extends ConsumerWidget {
     final streak = progress.streak(now);
     final key = lesson.exercises.where((e) => e.counted).firstOrNull;
     final keyWords = (key?.counterLabel ?? '').split(' ');
-    // The next session: next Monday once the week is validated, else the next day.
+    // The next session: next Monday once the week is validated; else today if no session was
+    // done today (an older summary reopened), tomorrow if one was.
+    final doneToday = progress.daysDone(now).contains(now.weekday);
     final nextDay = validated
         ? TrainingProgress.weekStart(now).add(const Duration(days: 7))
-        : DateTime(now.year, now.month, now.day + 1);
+        : DateTime(now.year, now.month, now.day + (doneToday ? 1 : 0));
 
     Widget stat(String label, Widget value, String caption) => Expanded(
       child: Padding(
