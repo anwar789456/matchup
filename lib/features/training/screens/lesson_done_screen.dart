@@ -39,14 +39,47 @@ class LessonDoneScreen extends ConsumerWidget {
     final result = progress?.result(programId, index);
     void close() => context.go(TrainingRoutes.root);
 
-    if (program == null || progress == null || result == null) {
+    final lessonOrNull = program?.lessons.where((l) => l.index == index).firstOrNull;
+    final loading =
+        ref.watch(programsProvider).isLoading || ref.watch(trainingProgressProvider).isLoading;
+    if (program == null || progress == null || result == null || lessonOrNull == null) {
+      // Still loading; or a stale link: a session that does not exist or is not finished.
       return Scaffold(
         backgroundColor: c.surface,
-        body: const Center(child: MuSpinner()),
+        body: Column(
+          children: [
+            MuTopAppBar.compact(title: l10n.entSession, onBack: close),
+            Expanded(
+              child: loading
+                  ? const Center(child: MuSpinner())
+                  : Center(
+                      child: MuEmptyState(
+                        title: lessonOrNull == null
+                            ? l10n.entProgramGone
+                            : l10n.entLessonNotDone(index),
+                        description: lessonOrNull == null
+                            ? l10n.entProgramGoneText
+                            : l10n.entLessonNotDoneText,
+                        illustration: MuEmptyIllustration.programs,
+                        actions: [
+                          if (lessonOrNull != null && (progress?.isEnrolled(programId) ?? false))
+                            MuButton.primary(
+                              label: l10n.entStartSession,
+                              onPressed: () =>
+                                  context.pushReplacement(TrainingRoutes.lesson(programId, index)),
+                            )
+                          else
+                            MuButton.primary(label: l10n.entBackToTraining, onPressed: close),
+                        ],
+                      ),
+                    ),
+            ),
+          ],
+        ),
       );
     }
 
-    final lesson = program.lesson(index);
+    final lesson = lessonOrNull;
     final coach = TrainingStory.coach(program.coachId);
     final firstName = coach.name.split(' ').first;
     final done = progress.doneCount(program.id);

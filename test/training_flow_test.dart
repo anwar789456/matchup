@@ -449,6 +449,19 @@ void main() {
       await settleFonts(tester);
     });
 
+    testWidgets('stale links: an unknown program, a session not done yet', (tester) async {
+      await pumpApp(tester, TrainingRoutes.program('nope'));
+      expect(find.text('Programme introuvable'), findsOneWidget);
+      await pumpApp(tester, TrainingRoutes.lessonDone('bandeja', 9));
+      expect(find.text('Séance 9 pas encore faite'), findsOneWidget);
+      await tester.tap(find.text('Lancer la séance'));
+      await tester.pumpAndSettle();
+      expect(find.text('SÉANCE 9 · MONTER AU FILET'), findsOneWidget); // ENT-04
+      await pumpApp(tester, TrainingRoutes.lessonDone('bandeja', 99));
+      expect(find.text('Programme introuvable'), findsOneWidget);
+      await settleFonts(tester);
+    });
+
     testWidgets('ENT-02 lists the programs and filters them', (tester) async {
       await pumpApp(tester, TrainingRoutes.programs);
       expect(find.text('Programmes'), findsWidgets);

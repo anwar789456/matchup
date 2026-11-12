@@ -11513,6 +11513,15 @@ class AppLocalizationsFr extends AppLocalizations {
   String get entYourCoach => 'Ton coach';
 
   @override
+  String entLessonNotDone(int index) {
+    return 'Séance $index pas encore faite';
+  }
+
+  @override
+  String get entLessonNotDoneText =>
+      'Lance-la depuis ton programme : son bilan s’affiche ici à la fin.';
+
+  @override
   String entAcceptDetail(int count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,

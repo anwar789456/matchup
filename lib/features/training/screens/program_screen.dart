@@ -48,7 +48,9 @@ class ProgramScreen extends ConsumerWidget {
           children: [
             MuTopAppBar.compact(title: l10n.entProgram, onBack: back),
             Expanded(
-              child: programs.hasValue
+              // « Introuvable » only once the catalogue is loaded and the program is not in it;
+              // while the player's progress loads, the skeleton stays.
+              child: programs.hasValue && program == null
                   ? Center(
                       child: MuEmptyState(
                         title: l10n.entProgramGone,
@@ -62,10 +64,14 @@ class ProgramScreen extends ConsumerWidget {
                         ],
                       ),
                     )
-                  : programs.hasError
+                  : programs.hasError || ref.watch(trainingProgressProvider).hasError
                   ? Padding(
                       padding: const EdgeInsets.all(MuSpace.s4),
-                      child: TrainingRetry(onRetry: () => ref.invalidate(programsProvider)),
+                      child: TrainingRetry(
+                        onRetry: () => ref
+                          ..invalidate(programsProvider)
+                          ..invalidate(trainingProgressProvider),
+                      ),
                     )
                   : MuSkeletonGroup(
                       label: l10n.entLoadingPrograms,

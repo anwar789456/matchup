@@ -9781,6 +9781,15 @@
     }
   },
   "entYourCoach": "Ton coach",
+  "entLessonNotDone": "Séance {index} pas encore faite",
+  "@entLessonNotDone": {
+    "placeholders": {
+      "index": {
+        "type": "int"
+      }
+    }
+  },
+  "entLessonNotDoneText": "Lance-la depuis ton programme : son bilan s’affiche ici à la fin.",
   "entAcceptDetail": "{count, plural, =1{Ajoute 1 séance à ton agenda, avec un rappel 1 h avant.} other{Ajoute {count} séances à ton agenda, avec un rappel 1 h avant.}}",
   "@entAcceptDetail": {
     "placeholders": {

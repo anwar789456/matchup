@@ -19031,6 +19031,18 @@ abstract class AppLocalizations {
   /// **'Ton coach'**
   String get entYourCoach;
 
+  /// No description provided for @entLessonNotDone.
+  ///
+  /// In fr, this message translates to:
+  /// **'Séance {index} pas encore faite'**
+  String entLessonNotDone(int index);
+
+  /// No description provided for @entLessonNotDoneText.
+  ///
+  /// In fr, this message translates to:
+  /// **'Lance-la depuis ton programme : son bilan s’affiche ici à la fin.'**
+  String get entLessonNotDoneText;
+
   /// No description provided for @entAcceptDetail.
   ///
   /// In fr, this message translates to:
