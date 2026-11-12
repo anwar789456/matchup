@@ -63,6 +63,12 @@ export class CompteService {
     await this.mail.send(verificationEmail(address, link));
   }
 
+  /** AUTH-04: whether the link was opened. False for an unknown email. */
+  async isVerified(email: string): Promise<boolean> {
+    const user = await this.users.findOne({ where: { email: this.normalise(email) } });
+    return user?.emailVerifie ?? false;
+  }
+
   /** Opens from the email: marks the address as confirmed. */
   async confirm(token: string): Promise<boolean> {
     const code = await this.codes.findOne({

@@ -72,6 +72,14 @@ class ApiAuthRepository implements AuthRepository {
   }
 
   @override
+  Future<bool> isEmailVerified() async {
+    final email = await local.currentEmail();
+    if (email == null) return false;
+    final res = await _api.post('/compte/verification/statut', {'email': email});
+    return res['emailVerifie'] == true;
+  }
+
+  @override
   Future<void> sendPasswordResetCode(String email) async {
     _resetEmail = _key(email);
     _resetCode = null;

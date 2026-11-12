@@ -74,6 +74,9 @@ abstract interface class AuthRepository {
 
   Future<void> resendVerificationEmail();
 
+  /// AUTH-04: whether the confirmation link was opened. Always false without a backend.
+  Future<bool> isEmailVerified();
+
   Future<void> sendPasswordResetCode(String email);
 
   /// Throws [InvalidCode] or [TooManyCodeAttempts].

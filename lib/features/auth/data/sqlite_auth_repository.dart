@@ -272,6 +272,9 @@ class SqliteAuthRepository implements AuthRepository {
   Future<void> resendVerificationEmail() async {}
 
   @override
+  Future<bool> isEmailVerified() async => false;
+
+  @override
   Future<void> sendPasswordResetCode(String email) async {
     final address = _key(email);
     _resetEmail = address;

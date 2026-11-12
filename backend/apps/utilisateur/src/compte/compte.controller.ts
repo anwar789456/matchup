@@ -19,6 +19,13 @@ export class CompteController {
     return { envoye: true };
   }
 
+  @Post('verification/statut')
+  @HttpCode(200)
+  @ApiOperation({ summary: 'AUTH-04 : l’email est-il confirmé ? (l’app le demande toutes les 3 s)' })
+  async verificationStatus(@Body() body: EmailDto) {
+    return { emailVerifie: await this.service.isVerified(body.email) };
+  }
+
   @Get('verification/confirmer')
   @Header('Content-Type', 'text/html; charset=utf-8')
   @ApiOperation({ summary: 'Page ouverte depuis le lien de l’email' })

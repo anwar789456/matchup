@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -25,8 +27,41 @@ class _VerifyEmailScreenState extends ConsumerState<VerifyEmailScreen> {
   // AUTH-04: « Renvoyer l’email » is available again after 0:45.
   static const _resendDelay = Duration(seconds: 45);
 
+  // Asks the backend whether the link was opened (in the mail app or another tab), then moves on
+  // by itself, as « Continuer » does.
+  static const _checkEvery = Duration(seconds: 3);
+
   late DateTime _resendAt = DateTime.now().add(_resendDelay);
   bool _sending = false;
+  Timer? _check;
+  bool _checking = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _check = Timer.periodic(_checkEvery, (_) => _checkVerified());
+  }
+
+  @override
+  void dispose() {
+    _check?.cancel();
+    super.dispose();
+  }
+
+  Future<void> _checkVerified() async {
+    if (_checking) return;
+    _checking = true;
+    try {
+      final verified = await ref.read(authRepositoryProvider).isEmailVerified();
+      if (!verified || !mounted) return;
+      _check?.cancel();
+      context.push(Routes.roles);
+    } on Exception {
+      // Offline or server down: try again at the next tick.
+    } finally {
+      _checking = false;
+    }
+  }
 
   Future<void> _resend(String email) async {
     setState(() => _sending = true);
@@ -128,7 +163,10 @@ class _VerifyEmailScreenState extends ConsumerState<VerifyEmailScreen> {
           label: l10n.continuer,
           size: MuButtonSize.xl,
           fullWidth: true,
-          onPressed: () => context.push(Routes.roles),
+          onPressed: () {
+            _check?.cancel();
+            context.push(Routes.roles);
+          },
         ),
         Text(
           l10n.tuPourrasVerifierPlusTard,

@@ -107,6 +107,9 @@ class FakeAuthRepository implements AuthRepository {
   Future<void> resendVerificationEmail() => _wait();
 
   @override
+  Future<bool> isEmailVerified() async => false;
+
+  @override
   Future<void> sendPasswordResetCode(String email) async {
     await _wait();
     _resetEmail = _key(email);
