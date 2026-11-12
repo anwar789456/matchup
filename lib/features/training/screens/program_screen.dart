@@ -18,6 +18,7 @@ import '../controllers/training_providers.dart';
 import '../data/training_models.dart';
 import '../data/training_story.dart';
 import '../training_routes.dart';
+import '../widgets/review_widgets.dart';
 import '../widgets/training_widgets.dart';
 
 /// ENT-03 · Détail du programme: what it is, week by week, the coach, reviews, the price or
@@ -141,9 +142,21 @@ class ProgramScreen extends ConsumerWidget {
                   backLabel: l10n.entBackToCatalogue,
                   actions: [
                     MuBarAction(
-                      icon: PhosphorIcons.bookmarkSimple(),
-                      label: l10n.entSaveProgram,
-                      onPressed: () => showComingSoon(context),
+                      icon: progress.saved.contains(p.id)
+                          ? PhosphorIcons.bookmarkSimple(PhosphorIconsStyle.fill)
+                          : PhosphorIcons.bookmarkSimple(),
+                      label: progress.saved.contains(p.id) ? l10n.entUnsaveProgram : l10n.entSaveProgram,
+                      onPressed: () async {
+                        final wasSaved = progress.saved.contains(p.id);
+                        await ref.read(trainingProgressProvider.notifier).toggleSaved(p.id);
+                        if (context.mounted) {
+                          MuToast.show(
+                            context,
+                            tone: wasSaved ? MuToastTone.neutral : MuToastTone.success,
+                            title: wasSaved ? l10n.entProgramUnsaved : l10n.entProgramSaved,
+                          );
+                        }
+                      },
                     ),
                     MuBarAction(
                       icon: PhosphorIcons.shareNetwork(),
@@ -409,7 +422,7 @@ class _Body extends StatelessWidget {
           trailing: MuButton.tertiary(
             label: l10n.entSeeAllReviews(p.card.reviews),
             size: MuButtonSize.s,
-            onPressed: () => showComingSoon(context),
+            onPressed: () => context.push(TrainingRoutes.reviews(p.id)),
           ),
         ),
         const SizedBox(height: MuSpace.s3),
@@ -888,21 +901,34 @@ class _BottomBarState extends ConsumerState<_BottomBar> {
 
     if (widget.joined) {
       final next = widget.next;
+      final rating = ref.watch(trainingProgressProvider).value?.ratings[p.id];
+      Future<void> rate() async {
+        final res = await showRateSheet(context, programTitle: p.title, current: rating);
+        if (res == null) return;
+        await ref.read(trainingProgressProvider.notifier).rateProgram(p.id, res.$1, res.$2);
+        if (mounted) {
+          MuToast.show(this.context, tone: MuToastTone.success, title: l10n.entThanksForRating);
+        }
+      }
+
       return StickyActionBar(
         children: [
           Text(
             next == null
-                ? l10n.entProgramFinished(p.card.sessions)
+                ? (rating == null
+                      ? l10n.entProgramFinished(p.card.sessions)
+                      : l10n.entYouRated(rating.$1))
                 : l10n.entJoinedLine(widget.done, p.card.sessions, next.index, next.title),
             textAlign: TextAlign.center,
             style: caption,
           ),
           if (next == null)
             MuButton.secondary(
-              label: l10n.entRateProgram,
+              label: rating == null ? l10n.entRateProgram : l10n.entEditRating,
+              leading: PhosphorIcons.star(),
               size: MuButtonSize.xl,
               fullWidth: true,
-              onPressed: () => showComingSoon(context),
+              onPressed: rate,
             )
           else
             MuButton.primary(

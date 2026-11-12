@@ -235,6 +235,8 @@ class TrainingProgress {
     required this.streakBefore,
     required this.weeklyGoal,
     this.planCardHidden = false,
+    this.saved = const {},
+    this.ratings = const {},
   });
 
   /// Program id → date joined.
@@ -249,6 +251,12 @@ class TrainingProgress {
 
   /// « Plus tard » on the AI plan card (ENT-01).
   final bool planCardHidden;
+
+  /// Programs saved with 🔖 (ENT-03).
+  final Set<String> saved;
+
+  /// The player's rating of a finished program: stars and an optional comment.
+  final Map<String, (int, String?)> ratings;
 
   bool isEnrolled(String programId) => enrolled.containsKey(programId);
 
@@ -298,12 +306,16 @@ class TrainingProgress {
     Map<String, DateTime>? enrolled,
     List<LessonResult>? results,
     bool? planCardHidden,
+    Set<String>? saved,
+    Map<String, (int, String?)>? ratings,
   }) => TrainingProgress(
     enrolled: enrolled ?? this.enrolled,
     results: results ?? this.results,
     streakBefore: streakBefore,
     weeklyGoal: weeklyGoal,
     planCardHidden: planCardHidden ?? this.planCardHidden,
+    saved: saved ?? this.saved,
+    ratings: ratings ?? this.ratings,
   );
 }
 

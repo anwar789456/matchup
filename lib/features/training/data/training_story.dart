@@ -716,6 +716,50 @@ abstract final class TrainingStory {
 
   static final programs = [bandeja, service, endurance, basket];
 
+  // ── Reviews (« Voir les 64 avis ») ─────────────────────────────────────────────────────────
+
+  static const _reviewers = [
+    'Mariem K.', 'Ines M.', 'Omar D.', 'Salma G.', 'Hamza R.', 'Nour A.', 'Aziz H.', 'Lina F.',
+    'Skander T.', 'Amira S.', 'Fares Z.', 'Hiba L.',
+  ];
+
+  static const _texts = {
+    5: [
+      'Clair, progressif, et les vidéos vont droit au but. Je referais un programme du même coach.',
+      'Les séances tiennent en 20 minutes : parfait avant le travail.',
+      'J’ai senti la différence dès la deuxième semaine en match.',
+    ],
+    4: [
+      'Très bien construit. Une ou deux séances un peu longues à mon goût.',
+      'Bons exercices, il faut juste un partenaire pour la plupart.',
+    ],
+    3: ['Utile, mais j’aurais aimé plus de variantes pour mon niveau.'],
+    2: ['Trop rapide pour moi, j’ai dû refaire plusieurs séances.'],
+    1: ['Pas adapté à ce que je cherchais.'],
+  };
+
+  /// The program's reviews: the designed one first, then up to 11 more whose stars follow its
+  /// split ([TrainingProgram.ratingCounts]).
+  static List<ProgramReview> reviewsOf(TrainingProgram p) {
+    final total = p.ratingCounts.fold(0, (a, b) => a + b);
+    final shown = total < 12 ? total : 12;
+    final stars = <int>[
+      for (final (i, n) in p.ratingCounts.indexed)
+        for (var k = 0; k < (n * shown / (total == 0 ? 1 : total)).round(); k++) 5 - i,
+    ];
+    return [
+      ...p.reviews,
+      for (final (i, st) in stars.skip(p.reviews.length).indexed)
+        ProgramReview(
+          author: _reviewers[(i + p.id.length) % _reviewers.length],
+          daysAgo: 7 + i * 4,
+          stars: st,
+          text: _texts[st]![i % _texts[st]!.length],
+          finished: i.isEven,
+        ),
+    ];
+  }
+
   // ── Yassine's progress on ven. 16 oct. ────────────────────────────────────────────────────
 
   static final bandejaJoined = DateTime(2026, 10, 5, 19);

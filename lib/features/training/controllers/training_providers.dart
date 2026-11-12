@@ -41,6 +41,11 @@ class TrainingProgressController extends AsyncNotifier<TrainingProgress> {
   Future<void> hidePlanCard() => _run(_repo.hidePlanCard);
 
   Future<void> acceptPlan(TrainingPlan plan) => _run(() => _repo.acceptPlan(plan));
+
+  Future<void> toggleSaved(String programId) => _run(() => _repo.toggleSaved(programId));
+
+  Future<void> rateProgram(String programId, int stars, String? text) =>
+      _run(() => _repo.rateProgram(programId, stars, text));
 }
 
 final trainingProgressProvider =

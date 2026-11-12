@@ -10036,6 +10036,61 @@
   "entWhatAiSaw": "Ce que l’IA a vu",
   "entWhichMove": "Quel geste ?",
   "entYourVideo": "Ta vidéo",
+  "entAnyCoach": "Tous les coachs",
+  "entAnyLength": "Toutes les durées",
+  "entAnyPrice": "Tous les prix",
+  "entBestRated": "Mieux notés",
+  "entCheapest": "Prix croissant",
+  "entEditRating": "Modifier ma note",
+  "entFilterReviews": "Filtrer les avis",
+  "entLongLength": "5 sem. et plus",
+  "entProgramSaved": "Programme enregistré",
+  "entProgramUnsaved": "Retiré de tes programmes enregistrés",
+  "entPublishRating": "Publier ma note",
+  "entReviewPublic": "Ton avis s’affiche sur la page du programme, avec ton prénom.",
+  "entReviewsShown": "{shown} avis affichés sur {total}",
+  "@entReviewsShown": {
+    "placeholders": {
+      "shown": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "entSaved": "Enregistrés",
+  "entSeeCount": "{count, plural, =0{Aucun programme} =1{Voir 1 programme} other{Voir {count} programmes}}",
+  "@entSeeCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "entShortLength": "3 sem. et moins",
+  "entShortest": "Plus courts",
+  "entSortTitle": "Trier les programmes",
+  "entThanksForRating": "Merci pour ta note",
+  "entUnsaveProgram": "Retirer des programmes enregistrés",
+  "entUpTo": "{price} et moins",
+  "@entUpTo": {
+    "placeholders": {
+      "price": {
+        "type": "Object"
+      }
+    }
+  },
+  "entYouRated": "Tu as noté ce programme {stars} ★",
+  "@entYouRated": {
+    "placeholders": {
+      "stars": {
+        "type": "int"
+      }
+    }
+  },
+  "entYourRating": "Ta note",
+  "entYourReview": "Ton avis",
   "entCoachName": "Coach {name}",
   "@entCoachName": {
     "placeholders": {

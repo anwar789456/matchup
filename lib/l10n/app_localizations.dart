@@ -19684,6 +19684,150 @@ abstract class AppLocalizations {
   /// **'Ta vidéo'**
   String get entYourVideo;
 
+  /// No description provided for @entAnyCoach.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tous les coachs'**
+  String get entAnyCoach;
+
+  /// No description provided for @entAnyLength.
+  ///
+  /// In fr, this message translates to:
+  /// **'Toutes les durées'**
+  String get entAnyLength;
+
+  /// No description provided for @entAnyPrice.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tous les prix'**
+  String get entAnyPrice;
+
+  /// No description provided for @entBestRated.
+  ///
+  /// In fr, this message translates to:
+  /// **'Mieux notés'**
+  String get entBestRated;
+
+  /// No description provided for @entCheapest.
+  ///
+  /// In fr, this message translates to:
+  /// **'Prix croissant'**
+  String get entCheapest;
+
+  /// No description provided for @entEditRating.
+  ///
+  /// In fr, this message translates to:
+  /// **'Modifier ma note'**
+  String get entEditRating;
+
+  /// No description provided for @entFilterReviews.
+  ///
+  /// In fr, this message translates to:
+  /// **'Filtrer les avis'**
+  String get entFilterReviews;
+
+  /// No description provided for @entLongLength.
+  ///
+  /// In fr, this message translates to:
+  /// **'5 sem. et plus'**
+  String get entLongLength;
+
+  /// No description provided for @entProgramSaved.
+  ///
+  /// In fr, this message translates to:
+  /// **'Programme enregistré'**
+  String get entProgramSaved;
+
+  /// No description provided for @entProgramUnsaved.
+  ///
+  /// In fr, this message translates to:
+  /// **'Retiré de tes programmes enregistrés'**
+  String get entProgramUnsaved;
+
+  /// No description provided for @entPublishRating.
+  ///
+  /// In fr, this message translates to:
+  /// **'Publier ma note'**
+  String get entPublishRating;
+
+  /// No description provided for @entReviewPublic.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ton avis s’affiche sur la page du programme, avec ton prénom.'**
+  String get entReviewPublic;
+
+  /// No description provided for @entReviewsShown.
+  ///
+  /// In fr, this message translates to:
+  /// **'{shown} avis affichés sur {total}'**
+  String entReviewsShown(int shown, int total);
+
+  /// No description provided for @entSaved.
+  ///
+  /// In fr, this message translates to:
+  /// **'Enregistrés'**
+  String get entSaved;
+
+  /// No description provided for @entSeeCount.
+  ///
+  /// In fr, this message translates to:
+  /// **'{count, plural, =0{Aucun programme} =1{Voir 1 programme} other{Voir {count} programmes}}'**
+  String entSeeCount(int count);
+
+  /// No description provided for @entShortLength.
+  ///
+  /// In fr, this message translates to:
+  /// **'3 sem. et moins'**
+  String get entShortLength;
+
+  /// No description provided for @entShortest.
+  ///
+  /// In fr, this message translates to:
+  /// **'Plus courts'**
+  String get entShortest;
+
+  /// No description provided for @entSortTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Trier les programmes'**
+  String get entSortTitle;
+
+  /// No description provided for @entThanksForRating.
+  ///
+  /// In fr, this message translates to:
+  /// **'Merci pour ta note'**
+  String get entThanksForRating;
+
+  /// No description provided for @entUnsaveProgram.
+  ///
+  /// In fr, this message translates to:
+  /// **'Retirer des programmes enregistrés'**
+  String get entUnsaveProgram;
+
+  /// No description provided for @entUpTo.
+  ///
+  /// In fr, this message translates to:
+  /// **'{price} et moins'**
+  String entUpTo(Object price);
+
+  /// No description provided for @entYouRated.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tu as noté ce programme {stars} ★'**
+  String entYouRated(int stars);
+
+  /// No description provided for @entYourRating.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ta note'**
+  String get entYourRating;
+
+  /// No description provided for @entYourReview.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ton avis'**
+  String get entYourReview;
+
   /// No description provided for @entCoachName.
   ///
   /// In fr, this message translates to:

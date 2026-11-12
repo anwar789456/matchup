@@ -80,6 +80,8 @@ class SqliteTrainingRepository implements TrainingRepository {
     final enrolled = await db.query('entrainement_inscriptions');
     final results = await db.query('entrainement_seances', orderBy: 'faite_le');
     final profile = (await db.query('entrainement_profil')).single;
+    final saved = await db.query('entrainement_favoris');
+    final ratings = await db.query('entrainement_avis');
     return TrainingProgress(
       enrolled: {
         for (final r in enrolled)
@@ -89,6 +91,11 @@ class SqliteTrainingRepository implements TrainingRepository {
       streakBefore: profile['serie_semaines']! as int,
       weeklyGoal: profile['objectif_semaine']! as int,
       planCardHidden: profile['plan_masque'] == 1,
+      saved: {for (final r in saved) r['programme']! as String},
+      ratings: {
+        for (final r in ratings)
+          r['programme']! as String: (r['note']! as int, r['texte'] as String?),
+      },
     );
   }
 
@@ -196,6 +203,34 @@ class SqliteTrainingRepository implements TrainingRepository {
       whereArgs: [analysis.id],
     );
     return analysis.copyWith(sharedWithCoach: true);
+  }
+
+  @override
+  Future<TrainingProgress> toggleSaved(String programId) async {
+    final db = await _db;
+    final removed = await db.delete(
+      'entrainement_favoris',
+      where: 'programme = ?',
+      whereArgs: [programId],
+    );
+    if (removed == 0) {
+      await db.insert('entrainement_favoris', {
+        'programme': programId,
+        'ajoute_le': DateTime.now().toIso8601String(),
+      });
+    }
+    return progress();
+  }
+
+  @override
+  Future<TrainingProgress> rateProgram(String programId, int stars, String? text) async {
+    await (await _db).insert('entrainement_avis', {
+      'programme': programId,
+      'note': stars,
+      'texte': text,
+      'le': DateTime.now().toIso8601String(),
+    }, conflictAlgorithm: ConflictAlgorithm.replace);
+    return progress();
   }
 
   /// The plans accepted, latest first (one JSON row per week).

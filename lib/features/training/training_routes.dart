@@ -7,6 +7,7 @@ import 'screens/plan_goals_screen.dart';
 import 'screens/plan_screen.dart';
 import 'screens/program_screen.dart';
 import 'screens/programs_screen.dart';
+import 'screens/reviews_screen.dart';
 import 'screens/video_result_screen.dart';
 import 'screens/video_screen.dart';
 
@@ -17,6 +18,7 @@ abstract final class TrainingRoutes {
   static const programs = '/training/programs'; // ENT-02
   static String program(String id) => '/training/program/$id'; // ENT-03
   static String lesson(String id, int index) => '/training/program/$id/lesson/$index'; // ENT-04
+  static String reviews(String id) => '/training/program/$id/reviews'; // ENT-03 « Voir les avis »
   static String lessonDone(String id, int index) =>
       '/training/program/$id/lesson/$index/done'; // ENT-05
   static const planGoals = '/training/plan'; // ENT-06
@@ -38,6 +40,7 @@ List<RouteBase> trainingRoutes(GlobalKey<NavigatorState> rootKey) {
   return [
     GoRoute(path: 'programs', builder: (context, state) => const ProgramsScreen()),
     page('program/:id', (s) => ProgramScreen(programId: s.pathParameters['id']!)),
+    page('program/:id/reviews', (s) => ReviewsScreen(programId: s.pathParameters['id']!)),
     page(
       'program/:id/lesson/:index',
       (s) => LessonScreen(programId: s.pathParameters['id']!, index: _index(s)),

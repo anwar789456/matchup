@@ -52,6 +52,8 @@ const syncTables = <SyncTable>[
   SyncTable('entrainement_seances'),
   SyncTable('entrainement_plans'),
   SyncTable('entrainement_analyses'),
+  SyncTable('entrainement_favoris'),
+  SyncTable('entrainement_avis'),
   SyncTable('coach_brouillons'),
   SyncTable('coach_actions'),
   SyncTable('coach_retours'),

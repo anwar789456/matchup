@@ -11941,6 +11941,94 @@ class AppLocalizationsEn extends AppLocalizations {
   String get entYourVideo => 'Ta vidéo';
 
   @override
+  String get entAnyCoach => 'Tous les coachs';
+
+  @override
+  String get entAnyLength => 'Toutes les durées';
+
+  @override
+  String get entAnyPrice => 'Tous les prix';
+
+  @override
+  String get entBestRated => 'Mieux notés';
+
+  @override
+  String get entCheapest => 'Prix croissant';
+
+  @override
+  String get entEditRating => 'Modifier ma note';
+
+  @override
+  String get entFilterReviews => 'Filtrer les avis';
+
+  @override
+  String get entLongLength => '5 sem. et plus';
+
+  @override
+  String get entProgramSaved => 'Programme enregistré';
+
+  @override
+  String get entProgramUnsaved => 'Retiré de tes programmes enregistrés';
+
+  @override
+  String get entPublishRating => 'Publier ma note';
+
+  @override
+  String get entReviewPublic =>
+      'Ton avis s’affiche sur la page du programme, avec ton prénom.';
+
+  @override
+  String entReviewsShown(int shown, int total) {
+    return '$shown avis affichés sur $total';
+  }
+
+  @override
+  String get entSaved => 'Enregistrés';
+
+  @override
+  String entSeeCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Voir $count programmes',
+      one: 'Voir 1 programme',
+      zero: 'Aucun programme',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get entShortLength => '3 sem. et moins';
+
+  @override
+  String get entShortest => 'Plus courts';
+
+  @override
+  String get entSortTitle => 'Trier les programmes';
+
+  @override
+  String get entThanksForRating => 'Merci pour ta note';
+
+  @override
+  String get entUnsaveProgram => 'Retirer des programmes enregistrés';
+
+  @override
+  String entUpTo(Object price) {
+    return '$price et moins';
+  }
+
+  @override
+  String entYouRated(int stars) {
+    return 'Tu as noté ce programme $stars ★';
+  }
+
+  @override
+  String get entYourRating => 'Ta note';
+
+  @override
+  String get entYourReview => 'Ton avis';
+
+  @override
   String entCoachName(Object name) {
     return 'Coach $name';
   }

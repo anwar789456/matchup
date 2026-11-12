@@ -112,6 +112,15 @@ void main() {
       expect(p.planCardHidden, isFalse);
     });
 
+    test('saving a program and rating it are kept', () async {
+      await repo.toggleSaved('service-retour');
+      expect((await repo.progress()).saved, {'service-retour'});
+      await repo.toggleSaved('service-retour');
+      expect((await repo.progress()).saved, isEmpty);
+      await repo.rateProgram('bandeja', 5, 'Top');
+      expect((await repo.progress()).ratings['bandeja'], (5, 'Top'));
+    });
+
     test('enrolling, finishing and rating a session are kept', () async {
       await repo.enroll('service-retour');
       await repo.completeLesson(
@@ -466,6 +475,54 @@ void main() {
       await pumpApp(tester, TrainingRoutes.lessonDone('bandeja', 4));
       expect(find.text('Séance 4 terminée'), findsWidgets);
       expect(find.text('Prochaine : Séance 5 · Bandeja croisée · ven. 16 oct.'), findsOneWidget);
+      await settleFonts(tester);
+    });
+
+    testWidgets('ENT-02: « Durée » 5 sem. et plus, then « Prix croissant »', (tester) async {
+      await pumpApp(tester, TrainingRoutes.programs);
+      final duration = find.widgetWithText(MuChip, 'Durée');
+      await tester.ensureVisible(duration);
+      await tester.pumpAndSettle();
+      await tester.tap(duration);
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('5 sem. et plus'));
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('Voir 1 programme'));
+      await tester.pumpAndSettle();
+      expect(find.text('Endurance foot 5v5'), findsOneWidget);
+      expect(find.text('Service et retour'), findsNothing);
+      // Back to all, sorted by price: the free basket program first.
+      await tester.tap(find.widgetWithText(MuChip, '5 sem. et plus'));
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('Effacer les filtres'));
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('Voir 4 programmes'));
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('Pertinence'));
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('Prix croissant'));
+      await tester.pumpAndSettle();
+      expect(find.text('Pour toi'), findsNothing);
+      final basket = tester.getTopLeft(find.text('Bases du basket 3×3')).dy;
+      final service = tester.getTopLeft(find.text('Service et retour')).dy;
+      expect(basket, lessThan(service));
+      await settleFonts(tester);
+    });
+
+    testWidgets('ENT-03: 🔖 saves the program; « Voir les avis » filters by stars', (tester) async {
+      await pumpApp(tester, TrainingRoutes.program('service-retour'));
+      await tester.tap(find.bySemanticsLabel('Enregistrer le programme'));
+      await tester.pump(const Duration(milliseconds: 300));
+      expect(find.text('Programme enregistré'), findsOneWidget);
+      await tester.pumpAndSettle();
+      await see(tester, find.text('Voir les 29 avis'));
+      await tester.tap(find.text('Voir les 29 avis'));
+      await tester.pumpAndSettle();
+      expect(find.text('Avis des élèves'), findsOneWidget);
+      expect(find.text('12 avis affichés sur 29'), findsOneWidget);
+      await tester.tap(find.widgetWithText(MuChip, '4 ★'));
+      await tester.pumpAndSettle();
+      expect(find.byType(MuStarRating), findsWidgets);
       await settleFonts(tester);
     });
 

@@ -44,6 +44,12 @@ abstract interface class TrainingRepository {
 
   /// « Demander l’avis de Karim J. » (ENT-09).
   Future<VideoAnalysis> shareWithCoach(VideoAnalysis analysis);
+
+  /// 🔖 on ENT-03: saves the program, or forgets it.
+  Future<TrainingProgress> toggleSaved(String programId);
+
+  /// « Noter le programme » once it is finished.
+  Future<TrainingProgress> rateProgram(String programId, int stars, String? text);
 }
 
 /// The story in memory, for widget tests.
@@ -142,6 +148,20 @@ class FakeTrainingRepository implements TrainingRepository {
   @override
   Future<VideoAnalysis> shareWithCoach(VideoAnalysis analysis) =>
       _wait(analysis.copyWith(sharedWithCoach: true));
+
+  @override
+  Future<TrainingProgress> toggleSaved(String programId) => _wait(
+    _progress = _progress.copyWith(
+      saved: _progress.saved.contains(programId)
+          ? ({..._progress.saved}..remove(programId))
+          : {..._progress.saved, programId},
+    ),
+  );
+
+  @override
+  Future<TrainingProgress> rateProgram(String programId, int stars, String? text) => _wait(
+    _progress = _progress.copyWith(ratings: {..._progress.ratings, programId: (stars, text)}),
+  );
 }
 
 final trainingRepositoryProvider = Provider<TrainingRepository>(

@@ -658,6 +658,20 @@ const schemaVersions = <int, List<String>>{
       cree_le TEXT NOT NULL
     )''',
 
+    // Programs saved (🔖, ENT-03) and the player's rating of a finished program.
+    '''
+    CREATE TABLE entrainement_favoris (
+      programme TEXT PRIMARY KEY,
+      ajoute_le TEXT NOT NULL
+    )''',
+    '''
+    CREATE TABLE entrainement_avis (
+      programme TEXT PRIMARY KEY,
+      note INTEGER NOT NULL CHECK (note BETWEEN 1 AND 5),
+      texte TEXT,
+      le TEXT NOT NULL
+    )''',
+
     // Coach space (COA-04…12): the program being written, todos handled, feedback sent.
     '''
     CREATE TABLE coach_brouillons (
