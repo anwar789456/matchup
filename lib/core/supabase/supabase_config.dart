@@ -22,6 +22,10 @@ abstract final class SupabaseConfig {
   /// Supabase is initialised and the device has a session.
   static bool get ready => _ready;
 
+  /// The signed-in Supabase user: the author id of rows in shared tables. Null when Supabase is
+  /// not configured or not reached yet; use a local id then (the row stays on this phone).
+  static String? get userId => _ready ? Supabase.instance.client.auth.currentUser?.id : null;
+
   /// Connects and signs the device in (anonymously until the account module links a real user).
   /// Never throws: offline or misconfigured, the app keeps working on SQFlite and retries later.
   static Future<void> init() {

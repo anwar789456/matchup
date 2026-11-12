@@ -56,7 +56,8 @@ void main() {
         )
         ..writeln(
           'create policy "${t.name}_ecriture" on public.${t.name} for all to authenticated '
-          'using (owner_id = auth.uid()) with check (owner_id = auth.uid());',
+          'using (owner_id = auth.uid()) with check (owner_id = auth.uid()'
+          '${t.ownerColumn == null ? '' : ' and "${t.ownerColumn}" = auth.uid()::text'});',
         )
         ..writeln();
     }

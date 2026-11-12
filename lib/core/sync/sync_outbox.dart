@@ -38,8 +38,8 @@ Future<TableShape> tableShape(DatabaseExecutor db, String table) async {
 /// added by a later schema version is followed. Each change adds a `sync_outbox` row with the
 /// table and the key; the sync service reads the row itself when it sends it. While the service
 /// writes what it pulled, `sync_etat.application = 1` keeps the triggers quiet.
-Future<void> installSyncTriggers(DatabaseExecutor db) async {
-  for (final t in syncTables) {
+Future<void> installSyncTriggers(DatabaseExecutor db, {List<SyncTable> tables = syncTables}) async {
+  for (final t in tables) {
     final s = await tableShape(db, t.name);
     String keys(String row) => [
           for (var i = 0; i < 3; i++) i < s.keys.length ? 'CAST($row."${s.keys[i]}" AS TEXT)' : 'NULL',
