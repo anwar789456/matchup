@@ -34,6 +34,9 @@ class PaymentCard {
   /// « 08/27 ».
   String get expiry => '${expMonth.toString().padLeft(2, '0')}/${expYear % 100}';
 
+  /// Saved on the player's Stripe customer: it pays through Stripe.
+  bool get isStripe => id.startsWith('pm_');
+
   /// Expires next month from the story's « now » (oct. 2026).
   bool get expiresSoon => expYear == 2026 && expMonth == 11;
 }
@@ -118,7 +121,8 @@ abstract interface class PaymentRepository {
   Future<PaymentReceipt> pay(num amount, {required String reason});
 
   Future<List<PaymentCard>> cards();
-  Future<PaymentCard> addCard({required CardBrand brand, required String last4, required int expMonth, required int expYear, bool save = true});
+  /// [id]: a Stripe card keeps its PaymentMethod id (« pm_… »), so a saved card pays through Stripe.
+  Future<PaymentCard> addCard({required CardBrand brand, required String last4, required int expMonth, required int expYear, bool save = true, String? id});
 
   /// The checkout's payment; the status says what the screen does next. [reference] is what it
   /// pays for (booking « MU-48213 », game « g1 »), null for a top-up or Premium.
@@ -347,8 +351,8 @@ class FakePaymentRepository implements PaymentRepository {
   Future<List<PaymentCard>> cards() async => [..._cards];
 
   @override
-  Future<PaymentCard> addCard({required CardBrand brand, required String last4, required int expMonth, required int expYear, bool save = true}) async {
-    final card = PaymentCard(id: '${brand.name}-$last4-${_cards.length}', brand: brand, last4: last4, expMonth: expMonth, expYear: expYear);
+  Future<PaymentCard> addCard({required CardBrand brand, required String last4, required int expMonth, required int expYear, bool save = true, String? id}) async {
+    final card = PaymentCard(id: id ?? '${brand.name}-$last4-${_cards.length}', brand: brand, last4: last4, expMonth: expMonth, expYear: expYear);
     if (save) _cards.add(card);
     return card;
   }

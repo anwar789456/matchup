@@ -158,7 +158,9 @@ void main() {
 
     test('payments are numbered after the last receipt; cards and promo codes', () async {
       final pay = SqlitePaymentRepository(database, latency: Duration.zero);
-      expect((await pay.cards()).map((c) => c.last4), ['4242', '5454']);
+      expect(await pay.cards(), isEmpty, reason: 'a phone starts with no card');
+      final visa = await pay.addCard(brand: CardBrand.visa, last4: '4242', expMonth: 8, expYear: 2030);
+      expect(visa.isDefault, isTrue, reason: 'the first card is the default');
       final first = await pay.charge(amount: 15, reason: 'Part', method: PayWith.card);
       final second = await pay.charge(amount: 9, reason: 'Part', method: PayWith.balance);
       expect(first.receipt!.number, 'MU-R-2026-01482');

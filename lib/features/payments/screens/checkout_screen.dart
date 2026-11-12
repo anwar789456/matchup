@@ -34,6 +34,10 @@ class CheckoutScreen extends ConsumerStatefulWidget {
 
 class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
   _Mode _mode = _Mode.cards;
+
+  /// With no saved card yet, « Moyen de paiement » opens on the new card.
+  _Mode get _shownMode =>
+      _mode == _Mode.cards && (ref.read(paymentCardsProvider).value?.isEmpty ?? false) ? _Mode.newCard : _mode;
   bool _detail = false;
   bool _useBalance = false;
   bool _accepted = false;
@@ -100,12 +104,19 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
     PaymentCard? card;
     final method = _due == 0 && _useBalance ? PayWith.balance : PayWith.card;
 
-    if (method == PayWith.card && _mode == _Mode.newCard && StripeConfig.enabled) {
-      await _payWithStripe(req);
-      return;
+    if (method == PayWith.card && StripeConfig.enabled) {
+      if (_shownMode == _Mode.newCard) {
+        await _payWithStripe(req);
+        return;
+      }
+      final saved = cards.where((c) => c.id == _cardId).firstOrNull ?? cards.where((c) => c.isDefault).firstOrNull ?? cards.firstOrNull;
+      if (saved != null && saved.isStripe) {
+        await _payWithStripe(req, saved: saved);
+        return;
+      }
     }
     if (method == PayWith.card) {
-      if (_mode == _Mode.newCard) {
+      if (_shownMode == _Mode.newCard) {
         final errors = _validateCard();
         if (_promo?.valid == false) errors['promo'] = l10n.codePromoExpire;
         if (errors.isNotEmpty) {
@@ -184,10 +195,11 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
     }
   }
 
-  /// A new card through Stripe (test mode): the Edge Function makes the PaymentIntent, Stripe
-  /// checks the card and runs 3-D Secure itself, then the payment is kept like any other.
-  Future<void> _payWithStripe(CheckoutRequest req) async {
-    if (_stripeCard?.complete != true) {
+  /// Through Stripe (test mode): a new card typed in Stripe's field, or a [saved] Stripe card. The
+  /// Edge Function makes the PaymentIntent, Stripe checks the card and runs 3-D Secure itself,
+  /// then the payment is kept like any other. A new card is saved when « Enregistrer » is on.
+  Future<void> _payWithStripe(CheckoutRequest req, {PaymentCard? saved}) async {
+    if (saved == null && _stripeCard?.complete != true) {
       setState(() => _errors = {'stripe': l10n.numeroDeCarteInvalide});
       return;
     }
@@ -198,27 +210,46 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
     final amount = _due;
     final overlay = MuLoadingOverlay.show(context, amount: formatDT(amount), detail: '${req.sport.label} · ${req.title} · ${req.subtitle}');
     final gateway = ref.read(stripeGatewayProvider);
+    final repo = ref.read(paymentRepositoryProvider);
     try {
-      final intent = await gateway.createIntent(amount: amount, description: req.title, reference: req.reference);
+      final intent = await gateway.createIntent(
+        amount: amount,
+        description: req.title,
+        reference: req.reference,
+        save: saved == null && _saveCard,
+        paymentMethodId: saved?.id,
+      );
       overlay.close();
-      final outcome = await gateway.confirmCard(intent, holderName: _name.text);
+      final outcome = saved == null
+          ? await gateway.confirmCard(intent, holderName: _name.text)
+          : await gateway.confirmSaved(intent, saved.id);
       if (!mounted) return;
       if (!outcome.paid) {
-        _declined(PaymentResult(PaymentStatus.declined, reason: outcome.failure, attemptAt: DateTime.now()), null);
+        _declined(PaymentResult(PaymentStatus.declined, reason: outcome.failure, attemptAt: DateTime.now()), saved);
         return;
       }
-      final brand = switch (_stripeCard?.brand?.toLowerCase()) {
-        'mastercard' => CardBrand.mastercard,
-        'visa' => CardBrand.visa,
-        _ => null,
-      };
-      final receipt = await ref.read(paymentRepositoryProvider).recordStripe(
+      var brand = saved?.brand ?? cardBrandOf(_stripeCard?.brand);
+      var last4 = saved?.last4 ?? _stripeCard?.last4;
+      if (saved == null && outcome.paymentMethodId != null) {
+        try {
+          final card = await gateway.card(outcome.paymentMethodId!);
+          brand = cardBrandOf(card.brand) ?? brand;
+          last4 = card.last4;
+          if (_saveCard) {
+            await saveStripeCard(repo, card);
+            ref.invalidate(paymentCardsProvider);
+          }
+        } catch (_) {
+          // The payment went through; only the card's details are missing on the receipt.
+        }
+      }
+      final receipt = await repo.recordStripe(
         amount: amount,
         reason: req.title,
         intentId: outcome.intentId!,
         reference: req.reference,
         brand: brand,
-        last4: _stripeCard?.last4,
+        last4: last4,
       );
       if (!mounted) return;
       await _succeed(MuLoadingOverlay.show(context, amount: formatDT(amount)), receipt, req);
@@ -380,7 +411,7 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
       ],
     );
 
-    final methods = _mode == _Mode.newCard
+    final methods = _shownMode == _Mode.newCard
         ? Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [

@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_stripe/flutter_stripe.dart' show CardField, CardFieldInputDetails;
 
 import '../../../l10n/l10n.dart';
 import '../../../theme/theme.dart';
 import '../../../ui/ui.dart';
 import '../data/payment_repository.dart';
+import '../data/stripe_gateway.dart';
 import 'checkout_widgets.dart';
 
 /// PAY-03 outside the checkout (« Ajouter une carte », « Mettre à jour la carte » in SUB-02 and
-/// SUB-04): the same [CardInputZone] in a sheet; the card is saved and the lists refresh.
+/// SUB-04): the same [CardInputZone] in a sheet; the card is saved and the lists refresh. With
+/// Stripe, the card is typed in Stripe's field and saved on the player's Stripe customer (no
+/// charge), so it can pay later.
 Future<PaymentCard?> showAddCardSheet(BuildContext context) {
   final key = GlobalKey<_AddCardFormState>();
   return MuBottomSheet.show<PaymentCard>(
@@ -41,6 +45,7 @@ class _AddCardFormState extends ConsumerState<_AddCardForm> {
   String _country = CardInputZone.countries.first;
   Map<String, String> _errors = const {};
   bool _busy = false;
+  CardFieldInputDetails? _stripeCard;
 
   @override
   void dispose() {
@@ -52,6 +57,7 @@ class _AddCardFormState extends ConsumerState<_AddCardForm> {
 
   Future<void> save() async {
     if (_busy) return;
+    if (StripeConfig.enabled) return _saveWithStripe();
     final errors = CardInputZone.validate(number: _number.text, expiry: _expiry.text, cvc: _cvc.text);
     setState(() => _errors = errors);
     if (errors.isNotEmpty) return;
@@ -73,6 +79,37 @@ class _AddCardFormState extends ConsumerState<_AddCardForm> {
     MuToast.show(context, overlay: overlay, tone: MuToastTone.success, title: l10n.carteAjoutee, description: card.label);
   }
 
+  Future<void> _saveWithStripe() async {
+    if (_stripeCard?.complete != true) {
+      setState(() => _errors = {'stripe': l10n.numeroDeCarteInvalide});
+      return;
+    }
+    setState(() {
+      _busy = true;
+      _errors = const {};
+    });
+    final gateway = ref.read(stripeGatewayProvider);
+    try {
+      final outcome = await gateway.confirmSetup(await gateway.createSetup(), holderName: _name.text);
+      if (!outcome.paid || outcome.paymentMethodId == null) {
+        if (mounted) setState(() => _errors = {'stripe': outcome.failure ?? l10n.numeroDeCarteInvalide});
+        return;
+      }
+      final card = await saveStripeCard(ref.read(paymentRepositoryProvider), await gateway.card(outcome.paymentMethodId!));
+      ref.invalidate(paymentCardsProvider);
+      if (!mounted) return;
+      final overlay = Overlay.of(context, rootOverlay: true);
+      Navigator.of(context).pop(card);
+      if (card != null) {
+        MuToast.show(context, overlay: overlay, tone: MuToastTone.success, title: l10n.carteAjoutee, description: card.label);
+      }
+    } catch (e) {
+      if (mounted) setState(() => _errors = {'stripe': '$e'});
+    } finally {
+      _busy = false;
+    }
+  }
+
   @override
   Widget build(BuildContext context) => Padding(
     padding: const EdgeInsets.fromLTRB(MuSpace.s4, 0, MuSpace.s4, MuSpace.s4),
@@ -84,6 +121,17 @@ class _AddCardFormState extends ConsumerState<_AddCardForm> {
       country: _country,
       onCountry: (v) => setState(() => _country = v ?? _country),
       errors: _errors,
+      stripeField: StripeConfig.enabled
+          ? CardField(
+              countryCode: 'TN',
+              style: MuType.body.copyWith(color: context.mu.text),
+              decoration: InputDecoration(
+                border: OutlineInputBorder(borderRadius: MuRadius.smAll, borderSide: BorderSide(color: context.mu.borderControl)),
+                contentPadding: const EdgeInsets.symmetric(horizontal: MuSpace.s3, vertical: MuSpace.s3),
+              ),
+              onCardChanged: (d) => setState(() => _stripeCard = d),
+            )
+          : null,
     ),
   );
 }
