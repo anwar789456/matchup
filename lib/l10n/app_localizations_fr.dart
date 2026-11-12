@@ -10643,4 +10643,737 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get categorie => 'Catégorie';
+
+  @override
+  String get hier => 'hier';
+
+  @override
+  String get plusDOptions => 'Plus d’options';
+
+  @override
+  String get forumCatTechnique => 'Conseils & technique';
+
+  @override
+  String get forumCatEquipement => 'Équipement';
+
+  @override
+  String get forumCatTerrains => 'Terrains';
+
+  @override
+  String get forumCatTournois => 'Tournois';
+
+  @override
+  String get forumCatDiscussions => 'Discussions libres';
+
+  @override
+  String get forumTriTendance => 'Tendance';
+
+  @override
+  String get forumTriRecents => 'Récents';
+
+  @override
+  String get forumTriTop => 'Top';
+
+  @override
+  String get forumTriUtiles => 'Les plus utiles';
+
+  @override
+  String get forumTriRecentes => 'Les plus récentes';
+
+  @override
+  String get forumTriAnciennes => 'Les plus anciennes';
+
+  @override
+  String get forumMotifSpam => 'Spam ou publicité';
+
+  @override
+  String get forumMotifInsulte => 'Insulte ou harcèlement';
+
+  @override
+  String get forumMotifChoquant => 'Contenu choquant ou dangereux';
+
+  @override
+  String get forumMotifFausseInfo => 'Fausse information';
+
+  @override
+  String get forumMotifAutre => 'Autre chose';
+
+  @override
+  String get forumMembre => 'Membre';
+
+  @override
+  String get forumIaAucune => 'Aucune toxicité';
+
+  @override
+  String get forumIaAucuneExplication =>
+      'Rien de blessant ni de publicitaire détecté.';
+
+  @override
+  String get forumIaInsulte => 'Toxicité · insulte';
+
+  @override
+  String get forumIaInsulteExplication =>
+      'Insulte grossière visant une personne.';
+
+  @override
+  String get forumIaInsulteLegere => 'Toxicité · insulte légère';
+
+  @override
+  String get forumIaInsulteLegereExplication =>
+      'Moquerie entre joueurs, sans menace ni haine. L’IA peut se tromper sur le ton entre amis.';
+
+  @override
+  String get forumIaTonAgressif => 'Ton agressif';
+
+  @override
+  String get forumIaTonAgressifExplication =>
+      'Ton sec qui vise une personne plutôt que son avis. Pas d’insulte.';
+
+  @override
+  String get forumIaSpamContact => 'Spam · lien et contact';
+
+  @override
+  String get forumIaSpamPub => 'Spam · publicité';
+
+  @override
+  String get forumIaSpamExplication =>
+      'Vente ou publicité avec un moyen de contact hors de MatchUp.';
+
+  @override
+  String get forumIaCoordonnees => 'Coordonnées publiées';
+
+  @override
+  String get forumIaCoordonneesExplication =>
+      'Numéro ou adresse publiés : à faire passer en message privé.';
+
+  @override
+  String get forumTitreTropCourt =>
+      'Ton titre doit faire au moins 10 caractères.';
+
+  @override
+  String get forumMessageVide => 'Écris ton message avant de publier.';
+
+  @override
+  String get forumDiscussionSupprimee => 'Cette discussion a été supprimée.';
+
+  @override
+  String get forumReponseSupprimee => 'Cette réponse a été supprimée.';
+
+  @override
+  String get forumEnVerification => 'Ce contenu est en cours de vérification.';
+
+  @override
+  String get forumSeulLAuteur =>
+      'Seul l’auteur peut modifier ou supprimer ce message.';
+
+  @override
+  String get forumSeulLAuteurChoisit =>
+      'Seul l’auteur du post choisit la meilleure réponse.';
+
+  @override
+  String get forumReponseDirecte => 'Choisis une réponse directe au post.';
+
+  @override
+  String get forumPasTaPropreReponse =>
+      'Tu ne peux pas choisir ta propre réponse.';
+
+  @override
+  String get forumPasDeVotePourSoi =>
+      'Tu ne peux pas voter pour ton propre message.';
+
+  @override
+  String get forumPasDeReactionPourSoi =>
+      'Tu ne peux pas réagir à ton propre message.';
+
+  @override
+  String get forumPasTeSuivre => 'Tu ne peux pas te suivre toi-même.';
+
+  @override
+  String get forumPasTeMasquer => 'Tu ne peux pas te masquer toi-même.';
+
+  @override
+  String get forumPasTonPropreMessage =>
+      'Tu ne peux pas signaler ton propre message.';
+
+  @override
+  String get forumHorsLigne => 'Hors ligne';
+
+  @override
+  String get forumHorsLigneDetail => 'Vérifie ta connexion puis réessaie.';
+
+  @override
+  String get forumErreur => 'Ça n’a pas marché. Réessaie dans un instant.';
+
+  @override
+  String get forumSuspendu => 'Tu ne peux plus publier pour l’instant';
+
+  @override
+  String forumSuspenduJusquA(String date) {
+    return 'Suspendu de la communauté jusqu’au $date. Tu peux toujours lire.';
+  }
+
+  @override
+  String get forumRechercherDansLaCommunaute => 'Rechercher dans la communauté';
+
+  @override
+  String get forumMesPostsEtFavoris => 'Mes posts et favoris';
+
+  @override
+  String get forumPoseTaQuestionALaCommunaute =>
+      'Pose ta question à la communauté';
+
+  @override
+  String get forumEcrireUnNouveauPost => 'Écrire un nouveau post';
+
+  @override
+  String get forumCategories => 'Catégories';
+
+  @override
+  String get forumNouveauxDepuisTaDerniereVisite =>
+      'Nouveaux depuis ta dernière visite';
+
+  @override
+  String forumNNouveaux(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n nouveaux',
+      one: '1 nouveau',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get forumFiltrerParSport => 'Filtrer par sport';
+
+  @override
+  String get forumTousLesSports => 'Tous les sports';
+
+  @override
+  String get forumTrierLesDiscussions => 'Trier les discussions';
+
+  @override
+  String forumDiscussions(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'discussions',
+      one: 'discussion',
+      zero: 'discussion',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String forumTAMentionne(String time) {
+    return 't’a mentionné · $time';
+  }
+
+  @override
+  String get forumVoterPour => 'Voter pour';
+
+  @override
+  String get forumVoterContre => 'Voter contre';
+
+  @override
+  String forumVoterPourNVotes(String score) {
+    return 'Voter pour, $score votes';
+  }
+
+  @override
+  String forumNVotes(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n votes',
+      one: '1 vote',
+      zero: '0 vote',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String forumNReponses(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n réponses',
+      one: '1 réponse',
+      zero: '0 réponse',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get forumEpingle => 'Épinglé';
+
+  @override
+  String get forumMeilleureReponse => 'Meilleure réponse';
+
+  @override
+  String get forumMasqueParLaModeration =>
+      'Masqué par la modération · en cours de vérification';
+
+  @override
+  String get forumMessageMasque => 'Message masqué par la modération';
+
+  @override
+  String get forumTuAsSignale =>
+      'Tu as signalé ce message. La modération va le vérifier.';
+
+  @override
+  String forumTonPostSeulToi(String title) {
+    return 'Ton post « $title » · seul toi le vois. Réponse de la modération sous 24 h.';
+  }
+
+  @override
+  String get forumVoir => 'Voir';
+
+  @override
+  String get forumAucuneDiscussion => 'Pas encore de discussion ici';
+
+  @override
+  String get forumAucuneDiscussionDetail =>
+      'Lance la première : une question, une astuce ou un avis sur un terrain.';
+
+  @override
+  String get forumPoseTaQuestion => 'Pose ta question';
+
+  @override
+  String get forumTuAsToutVu =>
+      'Tu as tout vu. Reviens plus tard pour les nouvelles discussions.';
+
+  @override
+  String get forumEnregistrer => 'Enregistrer';
+
+  @override
+  String get forumRetirerDesFavoris => 'Retirer des favoris';
+
+  @override
+  String get forumSignaler => 'Signaler';
+
+  @override
+  String get forumMerciSignalement =>
+      'Merci, la modération va vérifier sous 24 h.';
+
+  @override
+  String get forumRechercheNPlaceholder => 'Mot, tag, titre…';
+
+  @override
+  String get forumRechercheVide => 'Cherche dans les discussions';
+
+  @override
+  String get forumRechercheVideDetail =>
+      'Un mot du titre, du texte ou un tag : « bandeja », « crampons », « lac2 ».';
+
+  @override
+  String forumAucunResultat(String q) {
+    return 'Rien pour « $q »';
+  }
+
+  @override
+  String get forumAucunResultatDetail =>
+      'Essaie un autre mot, ou pose ta question à la communauté.';
+
+  @override
+  String get forumFavoris => 'Favoris';
+
+  @override
+  String get forumMesPosts => 'Mes posts';
+
+  @override
+  String get forumAucunFavori => 'Aucun favori';
+
+  @override
+  String get forumAucunFavoriDetail =>
+      'Enregistre une discussion avec « Plus d’options » pour la retrouver ici.';
+
+  @override
+  String get forumAucunPost => 'Tu n’as encore rien publié';
+
+  @override
+  String get forumAucunPostDetail =>
+      'Une question sur ton jeu, ton matériel ou un terrain ? La communauté répond vite.';
+
+  @override
+  String get forumNouveauPost => 'Nouveau post';
+
+  @override
+  String get forumModifierLePost => 'Modifier le post';
+
+  @override
+  String get forumFermerSansPublier => 'Fermer sans publier';
+
+  @override
+  String get forumBrouillonEnregistre => 'Brouillon enregistré';
+
+  @override
+  String get forumCategorieEtSport => 'Catégorie et sport';
+
+  @override
+  String get forumCategorieDuPost => 'Catégorie du post';
+
+  @override
+  String get forumSportDuPost => 'Sport du post';
+
+  @override
+  String get forumTitre => 'Titre';
+
+  @override
+  String get forumTitrePlaceholder =>
+      'Une vraie question : « Crampons pour synthétique ? »';
+
+  @override
+  String get forumDiscussionsSimilaires => 'Discussions similaires';
+
+  @override
+  String get forumTaQuestionADejaDesReponses =>
+      'Ta question a peut-être déjà des réponses.';
+
+  @override
+  String get forumMasquerLesDiscussionsSimilaires =>
+      'Masquer les discussions similaires';
+
+  @override
+  String get forumMessage => 'Message';
+
+  @override
+  String get forumMessageHelper =>
+      'Reste précis : niveau, côté, ce que tu as déjà essayé.';
+
+  @override
+  String get forumEditeurPlaceholder =>
+      'Partage une astuce, une question ou une annonce…';
+
+  @override
+  String get forumImagesFacultatif => 'Images (facultatif)';
+
+  @override
+  String get forumImagesHint => 'JPG, PNG · 10 Mo max';
+
+  @override
+  String forumImageN(int n) {
+    return 'Image $n';
+  }
+
+  @override
+  String get forumImageDuPost => 'Image du post';
+
+  @override
+  String forumImageTropLourde(String name) {
+    return '$name dépasse 10 Mo.';
+  }
+
+  @override
+  String forumImagesMax(int n) {
+    return '$n images au maximum : les suivantes n’ont pas été ajoutées.';
+  }
+
+  @override
+  String get forumTags => 'Tags';
+
+  @override
+  String get forumTagsPlaceholder => 'Ajoute un tag';
+
+  @override
+  String get forumTagsHelper =>
+      'Les tags aident les joueurs à trouver ton post.';
+
+  @override
+  String get forumSuggeresParLIa => 'Suggérés par l’IA';
+
+  @override
+  String get forumDApresTonTitreEtTonTexte => 'D’après ton titre et ton texte';
+
+  @override
+  String get forumMasquerLesSuggestions => 'Masquer les suggestions';
+
+  @override
+  String forumAjouterLeTag(String tag) {
+    return 'Ajouter le tag $tag';
+  }
+
+  @override
+  String forumDApres(String word) {
+    return 'D’après « $word »';
+  }
+
+  @override
+  String get forumRespecteLes => 'Respecte les';
+
+  @override
+  String get forumReglesDeLaCommunaute => 'règles de la communauté';
+
+  @override
+  String get forumReglesSuite =>
+      ' : pas d’insultes, pas de pub. Les messages signalés sont relus par la modération.';
+
+  @override
+  String get forumReglesTitre => 'Règles de la communauté';
+
+  @override
+  String get forumReglesTexte =>
+      '1. **Respecte les joueurs.** Critique un avis, jamais une personne : pas d’insultes, de moqueries ni de menaces.\n2. **Pas de pub.** Pas de vente, de liens ou de numéros pour attirer des clients : les coachs et les terrains ont leur page.\n3. **Reste utile.** Une vraie question, un vrai avis, avec ton niveau et ce que tu as essayé.\n4. **Protège ta vie privée.** Pas de numéro ni d’adresse en public : passe par les messages.\n\nLes messages signalés sont relus par un modérateur sous 24 h. Après 3 avertissements, le compte est suspendu de la communauté pendant 7 jours.';
+
+  @override
+  String get forumApercu => 'Aperçu';
+
+  @override
+  String get forumPublier => 'Publier';
+
+  @override
+  String get forumPostPublie => 'Ton post est publié';
+
+  @override
+  String get forumPostModifie => 'Ton post est modifié';
+
+  @override
+  String get forumPostPublieMasque =>
+      'Publié, mais masqué le temps qu’un modérateur le relise';
+
+  @override
+  String forumRetireNCaracteres(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Retire $n caractères pour publier.',
+      one: 'Retire 1 caractère pour publier.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get forumMiseEnForme => 'Mise en forme';
+
+  @override
+  String get forumOutilGras => 'Gras';
+
+  @override
+  String get forumOutilItalique => 'Italique';
+
+  @override
+  String get forumOutilListe => 'Liste';
+
+  @override
+  String get forumOutilListeNumerotee => 'Liste numérotée';
+
+  @override
+  String get forumOutilCitation => 'Citation';
+
+  @override
+  String get forumOutilLien => 'Lien';
+
+  @override
+  String get forumOutilImage => 'Image';
+
+  @override
+  String get forumLien => 'lien';
+
+  @override
+  String get forumLienPlaceholder => 'https://…';
+
+  @override
+  String get forumAlerteTitre =>
+      'Ce message pourrait blesser. Le modifier avant de publier ?';
+
+  @override
+  String get forumAlerteConsequence =>
+      'Publié tel quel, il peut être masqué le temps qu’un modérateur le relise.';
+
+  @override
+  String forumTaReponseAPasEncorePubliee(String name) {
+    return 'Ta réponse à $name · pas encore publiée';
+  }
+
+  @override
+  String get forumTaReponsePasEncorePubliee =>
+      'Ta réponse · pas encore publiée';
+
+  @override
+  String get forumTonPostPasEncorePublie => 'Ton post · pas encore publié';
+
+  @override
+  String get forumReformulation => 'Reformulation';
+
+  @override
+  String get forumUneVersionPlusPosee => 'Une version plus posée';
+
+  @override
+  String forumGardeTonConseilSansViser(String name) {
+    return 'elle garde ton conseil sans viser $name.';
+  }
+
+  @override
+  String get forumGardeTonConseil =>
+      'elle garde ton conseil sans viser personne.';
+
+  @override
+  String get forumUtiliserCetteVersion => 'Utiliser cette version';
+
+  @override
+  String get forumPublierQuandMeme => 'Publier quand même';
+
+  @override
+  String get forumModifierMonMessage => 'Modifier mon message';
+
+  @override
+  String get forumPublieeMasquee =>
+      'Publiée, et masquée le temps qu’un modérateur la relise';
+
+  @override
+  String get forumDiscussion => 'Discussion';
+
+  @override
+  String get forumRetourALaCommunaute => 'Retour à la communauté';
+
+  @override
+  String get forumSuivreLaDiscussion => 'Suivre la discussion';
+
+  @override
+  String get forumNePlusSuivreLaDiscussion => 'Ne plus suivre la discussion';
+
+  @override
+  String get forumTuSuisLaDiscussion =>
+      'Tu seras prévenu des nouvelles réponses';
+
+  @override
+  String get forumTuNeSuisPlusLaDiscussion =>
+      'Tu ne suis plus cette discussion';
+
+  @override
+  String get forumPartagerLaDiscussion => 'Partager la discussion';
+
+  @override
+  String get forumPlusDOptionsSignalerCopier =>
+      'Plus d’options : signaler, copier le lien';
+
+  @override
+  String get forumSuivre => 'Suivre';
+
+  @override
+  String get forumSuivi => 'Suivi';
+
+  @override
+  String get forumUtile => 'Utile';
+
+  @override
+  String forumUtileN(int n) {
+    return 'Utile · $n';
+  }
+
+  @override
+  String get forumMerci => 'Merci';
+
+  @override
+  String forumChoisiePar(String name) {
+    return 'choisie par $name';
+  }
+
+  @override
+  String get forumToi => 'toi';
+
+  @override
+  String get forumModifie => 'modifié';
+
+  @override
+  String get forumRepondre => 'Répondre';
+
+  @override
+  String get forumAuteur => 'Auteur';
+
+  @override
+  String forumRepondsA(String name) {
+    return 'Réponds à $name…';
+  }
+
+  @override
+  String forumReponseA(String name) {
+    return 'Réponse à $name';
+  }
+
+  @override
+  String get forumModifierTaReponse => 'Modifier ta réponse';
+
+  @override
+  String forumTaReponseASeulToi(String name) {
+    return 'Ta réponse à $name · seul toi vois ce message. Réponse de la modération sous 24 h.';
+  }
+
+  @override
+  String get forumTaReponseSeulToi =>
+      'Ta réponse · seul toi vois ce message. Réponse de la modération sous 24 h.';
+
+  @override
+  String get forumTonPostSeulToiDetail =>
+      'Seul toi vois ce post. Réponse de la modération sous 24 h.';
+
+  @override
+  String get forumPourquoi => 'Pourquoi ?';
+
+  @override
+  String get forumPourquoiMasque => 'Pourquoi ce message est masqué';
+
+  @override
+  String forumPourquoiMasqueDetail(String reason) {
+    return 'Tu l’as publié malgré l’alerte (« $reason »). Un modérateur le relit sous 24 h : il sera republié ou supprimé. Tu peux aussi le modifier.';
+  }
+
+  @override
+  String get forumMessageSupprime => 'Message supprimé';
+
+  @override
+  String get forumMessageDUnMembreMasque =>
+      'Message d’un membre que tu as masqué';
+
+  @override
+  String get forumPasEncoreDeReponse => 'Pas encore de réponse';
+
+  @override
+  String get forumPasEncoreDeReponseDetail =>
+      'Sois le premier à aider : partage ton expérience.';
+
+  @override
+  String get forumChoisirCommeMeilleureReponse =>
+      'Choisir comme meilleure réponse';
+
+  @override
+  String get forumRetirerLaMeilleureReponse => 'Retirer la meilleure réponse';
+
+  @override
+  String get forumSupprimerCePost => 'Supprimer ce post ?';
+
+  @override
+  String get forumSupprimerCePostDetail =>
+      'Il disparaît de la communauté avec ses réponses. C’est définitif.';
+
+  @override
+  String get forumSupprimerCetteReponse => 'Supprimer ta réponse ?';
+
+  @override
+  String get forumSupprimerCetteReponseDetail =>
+      'Si on t’a déjà répondu, elle restera affichée comme « Message supprimé ».';
+
+  @override
+  String get forumPostSupprime => 'Post supprimé';
+
+  @override
+  String get forumSignalerCeCommentaire => 'Signaler ce commentaire';
+
+  @override
+  String get forumSignalerCePost => 'Signaler ce post';
+
+  @override
+  String get forumMotifDuSignalement => 'Motif du signalement';
+
+  @override
+  String get forumPrecise => 'Précise (facultatif)';
+
+  @override
+  String forumNePlusVoirLesMessagesDe(String name) {
+    return 'Ne plus voir les messages de $name';
+  }
+
+  @override
+  String get forumSignalementAnonyme =>
+      'Signalement anonyme · vérifié par un modérateur sous 24 h.';
 }

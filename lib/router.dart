@@ -57,6 +57,10 @@ import 'features/common/widgets/pro_gate.dart';
 import 'features/explore/controllers/explore_controller.dart';
 import 'features/explore/screens/explore_screen.dart';
 import 'features/explore/screens/search_screen.dart';
+import 'features/forum/screens/community_screen.dart';
+import 'features/forum/screens/discussion_screen.dart';
+import 'features/forum/screens/forum_search_screen.dart';
+import 'features/forum/screens/new_post_screen.dart';
 import 'features/home/screens/home_screen.dart';
 import 'features/home/widgets/player_shell.dart';
 import 'features/onboarding/screens/splash_screen.dart';
@@ -160,7 +164,12 @@ abstract final class Routes {
   static const exploreSearch = '/explore/search'; // EXP-05
   static const matches = '/matches'; // MAT-01 (phase 7)
   static const training = '/training'; // Milestone 6
-  static const community = '/community'; // Milestone 6
+  static const community = '/community'; // FRM-01
+  static const forumNew = '/frm/nouveau'; // FRM-02
+  static const forumSearch = '/frm/recherche'; // FRM-01 « Rechercher »
+  static const forumMine = '/frm/mes-posts'; // FRM-01 « Mes posts et favoris »
+  static String forumPost(String id) => '/frm/discussion/$id'; // FRM-04
+  static String forumEdit(String id) => '/frm/discussion/$id/modifier'; // FRM-02 in edit mode
   static String game(String id) => '/game/$id'; // GAM-01 / GAM-02
   static String gameWaitlist(String id) => '/game/$id/waitlist'; // GAM-03
   static String gameJoined(String id) => '/game/$id/joined'; // GAM-05
@@ -350,6 +359,11 @@ final routerProvider = Provider<GoRouter>((ref) {
       _route(Routes.playerLocationDenied, (_) => const LocationDeniedScreen()),
       _route(Routes.playerNotifications, (_) => const NotificationsScreen()),
       _route(Routes.playerProfile, (_) => const ProfileScreen()),
+      _root(Routes.forumNew, (_) => const NewPostScreen()),
+      _root(Routes.forumSearch, (_) => const ForumSearchScreen()),
+      _root(Routes.forumMine, (_) => const ForumMineScreen()),
+      _root('/frm/discussion/:id', (s) => DiscussionScreen(postId: s.pathParameters['id']!)),
+      _root('/frm/discussion/:id/modifier', (s) => NewPostScreen(editId: s.pathParameters['id']!)),
       StatefulShellRoute.indexedStack(
         builder: (context, state, shell) => PlayerShell(shell: shell),
         branches: [
@@ -376,7 +390,7 @@ final routerProvider = Provider<GoRouter>((ref) {
             routes: [_route(Routes.training, (_) => ComingSoonTab(title: l10n.entrainement))],
           ),
           StatefulShellBranch(
-            routes: [_route(Routes.community, (_) => ComingSoonTab(title: l10n.communaute))],
+            routes: [_route(Routes.community, (_) => const CommunityScreen())],
           ),
         ],
       ),
