@@ -76,6 +76,9 @@ class SyncService {
 
   SyncTable? _table(String name) => tables.where((t) => t.name == name).firstOrNull;
 
+  /// A Supabase user id (UUID), as opposed to a demo or local author id.
+  static final _supabaseUser = RegExp(r'^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$', caseSensitive: false);
+
   /// One run at a time; a call during a run waits for it.
   Future<SyncReport> sync() => _running ??= _run().whenComplete(() => _running = null);
 
@@ -195,6 +198,9 @@ class SyncService {
         final present = {for (final r in rows) key(r)};
         final others = await txn.query(t.name, where: '"$owner" IS NOT ?', whereArgs: [removeOthersMissing]);
         for (final local in others) {
+          // Only rows another Supabase user wrote (a UUID author) can have been pulled; the
+          // story's demo rows and rows written before sign-in (local author ids) stay.
+          if (!_supabaseUser.hasMatch('${local[owner]}')) continue;
           if (present.contains(key(local))) continue;
           await txn.delete(t.name, where: where, whereArgs: [for (final k in shape.keys) local[k]]);
           changed++;
