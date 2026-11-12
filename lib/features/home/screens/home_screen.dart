@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 import '../../../core/api/session.dart';
+import '../../../core/supabase/supabase_config.dart';
 import '../../../core/clock.dart';
 import '../../../core/connectivity.dart';
 import '../../../core/directions.dart';
@@ -94,9 +95,14 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     final fullName = onboarding.fullName?.trim();
     final onboardingFirst = (fullName?.isNotEmpty ?? false) ? fullName!.split(RegExp(r'\s+')).first : onboarding.pseudo;
     final onboardingName = (fullName?.isNotEmpty ?? false) ? fullName! : onboarding.pseudo;
-    final account = ref.watch(sessionProvider) != null ? me : null;
-    final firstName = account?.firstName ?? onboardingFirst ?? me?.firstName;
-    final userName = account?.displayName ?? onboardingName ?? me?.displayName ?? l10n.matchup;
+    final signedIn = ref.watch(sessionProvider) != null;
+    final account = signedIn ? me : null;
+    // With real accounts (Supabase) and nobody signed in, no one is named: the phone's onboarding
+    // answers may be someone else's. The demo without Supabase keeps them.
+    final anonymous = SupabaseConfig.configured && !signedIn;
+    final firstName = anonymous ? null : account?.firstName ?? onboardingFirst ?? me?.firstName;
+    final userName =
+        anonymous ? l10n.matchup : account?.displayName ?? onboardingName ?? me?.displayName ?? l10n.matchup;
     final zone = onboarding.zones.firstOrNull ?? onboarding.area ?? me?.zone ?? l10n.tunis;
     final photo = ref.watch(profilePhotoProvider);
     final level = onboarding.levels.values.firstOrNull ?? me?.levels.values.firstOrNull;
