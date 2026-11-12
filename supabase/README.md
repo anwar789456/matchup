@@ -69,6 +69,27 @@ The table must follow three rules, or rows clash or get refused:
 Lists refresh when new rows arrive if their provider watches the sync:
 `ref.watch(syncRevisionProvider);`
 
+## Stripe (test mode: free, fake money)
+
+The checkout's « Nouvelle carte » uses Stripe's own card field when Stripe is set up; saved
+cards and the debug menu's simulated bank keep working as before. The secret key stays on the
+server, in the `stripe-payment-intent` Edge Function (`supabase/functions/`).
+
+One person, once:
+
+1. Create a free account on stripe.com and stay in **Test mode**. Developers › API keys: copy the
+   publishable key (`pk_test_…`) and the secret key (`sk_test_…`).
+2. Supabase › Edge Functions › Secrets: add `STRIPE_SECRET_KEY` = the `sk_test_…` key. Never put
+   it in the app or the repo.
+3. Supabase › Edge Functions › Deploy a new function › Via editor: name it
+   `stripe-payment-intent`, paste `supabase/functions/stripe-payment-intent/index.ts`, deploy.
+4. Everyone adds `"STRIPE_PUBLISHABLE_KEY": "pk_test_…"` to their `supabase.json`.
+
+Test cards: 4242 4242 4242 4242 (paid), 4000 0025 0000 3155 (3-D Secure), 4000 0000 0000 9995
+(declined, insufficient funds); any future date, any CVC. Stripe does not take Tunisian dinars:
+the function charges the DT amount converted to euros (`TND_PER_UNIT`, default 3.4), the app's
+receipt keeps the DT amount. Payments show in the Stripe dashboard (Test mode › Payments).
+
 ## Good to know
 
 - The story's seed rows stay on each phone; only what the user changes is sent.

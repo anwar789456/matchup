@@ -9,6 +9,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'app.dart';
 import 'core/supabase/supabase_config.dart';
 import 'core/sync/sync_service.dart';
+import 'features/payments/data/stripe_gateway.dart';
 
 Future<void> main() async {
   // The fonts ship in assets/google_fonts (theme README « Fonts »): no download at first launch.
@@ -18,6 +19,8 @@ Future<void> main() async {
   loadArabicGlyphFallback();
   // Supabase when supabase.json was given (--dart-define-from-file); the app never waits on it.
   unawaited(SupabaseConfig.init());
+  // Stripe test mode when supabase.json also has STRIPE_PUBLISHABLE_KEY (pk_test_…).
+  unawaited(StripeConfig.init());
   final container = ProviderContainer();
   container.read(syncLoopProvider);
   runApp(UncontrolledProviderScope(container: container, child: const MatchUpApp()));

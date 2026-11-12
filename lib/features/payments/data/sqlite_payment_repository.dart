@@ -156,6 +156,17 @@ class SqlitePaymentRepository implements PaymentRepository {
   }
 
   @override
+  Future<PaymentReceipt> recordStripe({
+    required num amount,
+    required String reason,
+    required String intentId,
+    String? reference,
+    CardBrand? brand,
+    String? last4,
+  }) =>
+      _pay(amount, PayWith.stripe, stripeCard(intentId, brand, last4), reason, reference);
+
+  @override
   Future<PaymentReceipt> pay(num amount, {required String reason}) async {
     await Future<void>.delayed(latency);
     return _pay(amount, PayWith.card, null, reason, null);

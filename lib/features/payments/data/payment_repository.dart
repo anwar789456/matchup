@@ -39,7 +39,7 @@ class PaymentCard {
 }
 
 /// How the share is paid.
-enum PayWith { card, balance, applePay, googlePay }
+enum PayWith { card, balance, applePay, googlePay, stripe }
 
 /// The outcome the debug menu picks for the next fake payment (CLAUDE.md rule 10).
 enum PaymentOutcome { success, threeDSecure, declined, networkError, timeout }
@@ -80,6 +80,7 @@ class PaymentReceipt {
     PayWith.balance => 'Solde MatchUp',
     PayWith.applePay => 'Apple Pay',
     PayWith.googlePay => 'Google Pay',
+    PayWith.stripe => card != null && card!.last4.isNotEmpty ? '${card!.label} · Stripe' : 'Carte · Stripe',
   };
 }
 
@@ -142,7 +143,27 @@ abstract interface class PaymentRepository {
 
   /// Every try at the bank, failed ones included, newest first.
   Future<List<PaymentAttempt>> attempts({String? reference});
+
+  /// A card payment Stripe accepted (test mode): numbered and kept like the others, with the
+  /// PaymentIntent id (« pi_… ») in place of a saved card.
+  Future<PaymentReceipt> recordStripe({
+    required num amount,
+    required String reason,
+    required String intentId,
+    String? reference,
+    CardBrand? brand,
+    String? last4,
+  });
 }
+
+/// The stand-in card of a Stripe payment: its id is `stripe:<PaymentIntent id>`.
+PaymentCard stripeCard(String intentId, CardBrand? brand, String? last4) => PaymentCard(
+  id: 'stripe:$intentId',
+  brand: brand ?? CardBrand.visa,
+  last4: last4 ?? '',
+  expMonth: 0,
+  expYear: 0,
+);
 
 /// A payment that went through, as stored: paid, or refunded later.
 @immutable
@@ -168,6 +189,9 @@ class PaymentRecord {
   final DateTime? refundedAt;
 
   bool get refunded => refundedAt != null;
+
+  /// « pi_3Q… » for a payment made with Stripe.
+  String? get stripeIntentId => cardId != null && cardId!.startsWith('stripe:') ? cardId!.substring(7) : null;
 }
 
 enum AttemptState { pending, paid, failed }
@@ -292,6 +316,20 @@ class FakePaymentRepository implements PaymentRepository {
     for (final p in _payments)
       if (reference == null || p.reference == reference) p,
   ];
+
+  @override
+  Future<PaymentReceipt> recordStripe({
+    required num amount,
+    required String reason,
+    required String intentId,
+    String? reference,
+    CardBrand? brand,
+    String? last4,
+  }) async {
+    final receipt = _receipt(amount, PayWith.stripe, stripeCard(intentId, brand, last4), reason: reason, reference: reference);
+    _log(PaymentResult(PaymentStatus.success, receipt: receipt), amount: amount, method: PayWith.stripe, reason: reason, reference: reference);
+    return receipt;
+  }
 
   @override
   Future<List<PaymentAttempt>> attempts({String? reference}) async => [

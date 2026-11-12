@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_stripe/flutter_stripe.dart' show CardField, CardFieldInputDetails;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
@@ -13,6 +14,7 @@ import '../../home/controllers/home_providers.dart';
 import '../../settings/data/settings_repository.dart';
 import '../controllers/checkout_controller.dart';
 import '../data/payment_repository.dart';
+import '../data/stripe_gateway.dart';
 import '../widgets/checkout_widgets.dart';
 import '../widgets/secure_payment_takeover.dart';
 import '../../../l10n/l10n.dart';
@@ -36,6 +38,9 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
   bool _useBalance = false;
   bool _accepted = false;
   bool _saveCard = true;
+
+  /// What Stripe's card field says about the typed card (complete, brand, last 4).
+  CardFieldInputDetails? _stripeCard;
   bool _busy = false;
   String? _cardId;
   PromoResult? _promo;
@@ -95,6 +100,10 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
     PaymentCard? card;
     final method = _due == 0 && _useBalance ? PayWith.balance : PayWith.card;
 
+    if (method == PayWith.card && _mode == _Mode.newCard && StripeConfig.enabled) {
+      await _payWithStripe(req);
+      return;
+    }
     if (method == PayWith.card) {
       if (_mode == _Mode.newCard) {
         final errors = _validateCard();
@@ -172,6 +181,56 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
         });
       case PaymentStatus.needsAuthentication:
         break;
+    }
+  }
+
+  /// A new card through Stripe (test mode): the Edge Function makes the PaymentIntent, Stripe
+  /// checks the card and runs 3-D Secure itself, then the payment is kept like any other.
+  Future<void> _payWithStripe(CheckoutRequest req) async {
+    if (_stripeCard?.complete != true) {
+      setState(() => _errors = {'stripe': l10n.numeroDeCarteInvalide});
+      return;
+    }
+    setState(() {
+      _busy = true;
+      _errors = const {};
+    });
+    final amount = _due;
+    final overlay = MuLoadingOverlay.show(context, amount: formatDT(amount), detail: '${req.sport.label} · ${req.title} · ${req.subtitle}');
+    final gateway = ref.read(stripeGatewayProvider);
+    try {
+      final intent = await gateway.createIntent(amount: amount, description: req.title, reference: req.reference);
+      overlay.close();
+      final outcome = await gateway.confirmCard(intent, holderName: _name.text);
+      if (!mounted) return;
+      if (!outcome.paid) {
+        _declined(PaymentResult(PaymentStatus.declined, reason: outcome.failure, attemptAt: DateTime.now()), null);
+        return;
+      }
+      final brand = switch (_stripeCard?.brand?.toLowerCase()) {
+        'mastercard' => CardBrand.mastercard,
+        'visa' => CardBrand.visa,
+        _ => null,
+      };
+      final receipt = await ref.read(paymentRepositoryProvider).recordStripe(
+        amount: amount,
+        reason: req.title,
+        intentId: outcome.intentId!,
+        reference: req.reference,
+        brand: brand,
+        last4: _stripeCard?.last4,
+      );
+      if (!mounted) return;
+      await _succeed(MuLoadingOverlay.show(context, amount: formatDT(amount)), receipt, req);
+    } catch (_) {
+      overlay.close();
+      if (!mounted) return;
+      setState(() {
+        _busy = false;
+        _mode = _Mode.network;
+        _timeout = false;
+        _attemptAt = DateTime.now();
+      });
     }
   }
 
@@ -351,6 +410,17 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
                 country: _country,
                 onCountry: (v) => setState(() => _country = v ?? _country),
                 errors: _errors,
+                stripeField: StripeConfig.enabled
+                    ? CardField(
+                        countryCode: 'TN',
+                        style: MuType.body.copyWith(color: c.text),
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(borderRadius: MuRadius.smAll, borderSide: BorderSide(color: c.borderControl)),
+                          contentPadding: const EdgeInsets.symmetric(horizontal: MuSpace.s3, vertical: MuSpace.s3),
+                        ),
+                        onCardChanged: (d) => setState(() => _stripeCard = d),
+                      )
+                    : null,
               ),
               const SizedBox(height: MuSpace.s4),
               MuCheckbox(
