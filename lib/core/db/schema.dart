@@ -611,4 +611,81 @@ const schemaVersions = <int, List<String>>{
     )''',
     'INSERT INTO sync_etat (id) VALUES (1)',
   ],
+  // ── Tournois (Ayoub): tournaments made in the app, teams, members, the organiser's decisions,
+  // matches and announcements. Shared tables (lib/core/sync/sync_tables.dart): text ids, one
+  // author per row (`organisateur_id`, `capitaine_id`, `auteur_id`), so the organiser validates
+  // a team with a `tournoi_decisions` row instead of writing into the captain's team row.
+  5: [
+    // The story's tournaments (no organiser) stay demo rows; the app's own ones have one.
+    'ALTER TABLE tournois ADD COLUMN organisateur_id TEXT',
+    "ALTER TABLE tournois ADD COLUMN type TEXT NOT NULL DEFAULT 'tournoi'",
+    "ALTER TABLE tournois ADD COLUMN statut TEXT NOT NULL DEFAULT 'inscriptions_ouvertes'",
+    "ALTER TABLE tournois ADD COLUMN format TEXT NOT NULL DEFAULT 'poules_elimination'",
+    'ALTER TABLE tournois ADD COLUMN nb_poules INTEGER NOT NULL DEFAULT 2',
+    'ALTER TABLE tournois ADD COLUMN qualifies_par_poule INTEGER NOT NULL DEFAULT 2',
+    'ALTER TABLE tournois ADD COLUMN joueurs_par_equipe INTEGER NOT NULL DEFAULT 2',
+    'ALTER TABLE tournois ADD COLUMN description TEXT',
+    'ALTER TABLE tournois ADD COLUMN tableau_publie INTEGER NOT NULL DEFAULT 0',
+    'ALTER TABLE tournois ADD COLUMN cree_le TEXT',
+    '''
+    CREATE TABLE tournoi_equipes (
+      id TEXT PRIMARY KEY,
+      tournoi_id TEXT NOT NULL,
+      capitaine_id TEXT NOT NULL,
+      nom TEXT NOT NULL,
+      code_invitation TEXT NOT NULL,
+      paiement TEXT NOT NULL DEFAULT 'non_paye' CHECK (paiement IN ('non_paye', 'paye', 'gratuit')),
+      annulee INTEGER NOT NULL DEFAULT 0,
+      cree_le TEXT NOT NULL
+    )''',
+    'CREATE INDEX tournoi_equipes_tournoi ON tournoi_equipes (tournoi_id)',
+    // One row per member, written by whoever added them (the captain, or the player joining).
+    '''
+    CREATE TABLE tournoi_membres (
+      equipe_id TEXT NOT NULL,
+      joueur_id TEXT NOT NULL,
+      nom TEXT NOT NULL,
+      auteur_id TEXT NOT NULL,
+      rejoint_le TEXT NOT NULL,
+      PRIMARY KEY (equipe_id, joueur_id)
+    )''',
+    '''
+    CREATE TABLE tournoi_decisions (
+      equipe_id TEXT PRIMARY KEY,
+      organisateur_id TEXT NOT NULL,
+      statut TEXT NOT NULL CHECK (statut IN ('confirmee', 'refusee')),
+      motif TEXT,
+      le TEXT NOT NULL
+    )''',
+    '''
+    CREATE TABLE tournoi_matchs (
+      id TEXT PRIMARY KEY,
+      tournoi_id TEXT NOT NULL,
+      organisateur_id TEXT NOT NULL,
+      phase TEXT NOT NULL CHECK (phase IN ('poule', 'elimination')),
+      poule TEXT,
+      tour INTEGER NOT NULL,
+      ordre INTEGER NOT NULL,
+      equipe1 TEXT,
+      equipe2 TEXT,
+      source1 TEXT,
+      source2 TEXT,
+      statut TEXT NOT NULL DEFAULT 'a_jouer' CHECK (statut IN ('a_jouer', 'en_direct', 'termine')),
+      exempt INTEGER NOT NULL DEFAULT 0,
+      vainqueur TEXT,
+      score1 INTEGER,
+      score2 INTEGER,
+      debut TEXT,
+      terrain TEXT
+    )''',
+    'CREATE INDEX tournoi_matchs_tournoi ON tournoi_matchs (tournoi_id)',
+    '''
+    CREATE TABLE tournoi_annonces (
+      id TEXT PRIMARY KEY,
+      tournoi_id TEXT NOT NULL,
+      organisateur_id TEXT NOT NULL,
+      message TEXT NOT NULL,
+      le TEXT NOT NULL
+    )''',
+  ],
 };

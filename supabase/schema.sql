@@ -268,3 +268,197 @@ drop policy if exists "recu_lignes_ecriture" on public.recu_lignes;
 create policy "recu_lignes_lecture" on public.recu_lignes for select to authenticated using (owner_id = auth.uid());
 create policy "recu_lignes_ecriture" on public.recu_lignes for all to authenticated using (owner_id = auth.uid()) with check (owner_id = auth.uid());
 
+-- tournois (shared)
+create table if not exists public.tournois (
+  owner_id uuid not null default auth.uid() references auth.users (id) on delete cascade,
+  "id" text,
+  "sport" text not null,
+  "nom" text not null,
+  "debut" text not null,
+  "fin" text not null,
+  "etablissement" text not null,
+  "lieu" text not null,
+  "frais_equipe" double precision not null,
+  "dotation" double precision,
+  "equipes_total" bigint not null,
+  "equipes_inscrites" bigint not null,
+  "niveau_min" double precision,
+  "niveau_max" double precision,
+  "organisateur_id" text,
+  "type" text not null,
+  "statut" text not null,
+  "format" text not null,
+  "nb_poules" bigint not null,
+  "qualifies_par_poule" bigint not null,
+  "joueurs_par_equipe" bigint not null,
+  "description" text,
+  "tableau_publie" bigint not null,
+  "cree_le" text,
+  primary key (owner_id, "id")
+);
+alter table public.tournois add column if not exists "id" text;
+alter table public.tournois add column if not exists "sport" text;
+alter table public.tournois add column if not exists "nom" text;
+alter table public.tournois add column if not exists "debut" text;
+alter table public.tournois add column if not exists "fin" text;
+alter table public.tournois add column if not exists "etablissement" text;
+alter table public.tournois add column if not exists "lieu" text;
+alter table public.tournois add column if not exists "frais_equipe" double precision;
+alter table public.tournois add column if not exists "dotation" double precision;
+alter table public.tournois add column if not exists "equipes_total" bigint;
+alter table public.tournois add column if not exists "equipes_inscrites" bigint;
+alter table public.tournois add column if not exists "niveau_min" double precision;
+alter table public.tournois add column if not exists "niveau_max" double precision;
+alter table public.tournois add column if not exists "organisateur_id" text;
+alter table public.tournois add column if not exists "type" text;
+alter table public.tournois add column if not exists "statut" text;
+alter table public.tournois add column if not exists "format" text;
+alter table public.tournois add column if not exists "nb_poules" bigint;
+alter table public.tournois add column if not exists "qualifies_par_poule" bigint;
+alter table public.tournois add column if not exists "joueurs_par_equipe" bigint;
+alter table public.tournois add column if not exists "description" text;
+alter table public.tournois add column if not exists "tableau_publie" bigint;
+alter table public.tournois add column if not exists "cree_le" text;
+alter table public.tournois enable row level security;
+drop policy if exists "tournois_lecture" on public.tournois;
+drop policy if exists "tournois_ecriture" on public.tournois;
+create policy "tournois_lecture" on public.tournois for select to authenticated using (true);
+create policy "tournois_ecriture" on public.tournois for all to authenticated using (owner_id = auth.uid()) with check (owner_id = auth.uid() and "organisateur_id" = auth.uid()::text);
+
+-- tournoi_equipes (shared)
+create table if not exists public.tournoi_equipes (
+  owner_id uuid not null default auth.uid() references auth.users (id) on delete cascade,
+  "id" text,
+  "tournoi_id" text not null,
+  "capitaine_id" text not null,
+  "nom" text not null,
+  "code_invitation" text not null,
+  "paiement" text not null,
+  "annulee" bigint not null,
+  "cree_le" text not null,
+  primary key (owner_id, "id")
+);
+alter table public.tournoi_equipes add column if not exists "id" text;
+alter table public.tournoi_equipes add column if not exists "tournoi_id" text;
+alter table public.tournoi_equipes add column if not exists "capitaine_id" text;
+alter table public.tournoi_equipes add column if not exists "nom" text;
+alter table public.tournoi_equipes add column if not exists "code_invitation" text;
+alter table public.tournoi_equipes add column if not exists "paiement" text;
+alter table public.tournoi_equipes add column if not exists "annulee" bigint;
+alter table public.tournoi_equipes add column if not exists "cree_le" text;
+alter table public.tournoi_equipes enable row level security;
+drop policy if exists "tournoi_equipes_lecture" on public.tournoi_equipes;
+drop policy if exists "tournoi_equipes_ecriture" on public.tournoi_equipes;
+create policy "tournoi_equipes_lecture" on public.tournoi_equipes for select to authenticated using (true);
+create policy "tournoi_equipes_ecriture" on public.tournoi_equipes for all to authenticated using (owner_id = auth.uid()) with check (owner_id = auth.uid() and "capitaine_id" = auth.uid()::text);
+
+-- tournoi_membres (shared)
+create table if not exists public.tournoi_membres (
+  owner_id uuid not null default auth.uid() references auth.users (id) on delete cascade,
+  "equipe_id" text not null,
+  "joueur_id" text not null,
+  "nom" text not null,
+  "auteur_id" text not null,
+  "rejoint_le" text not null,
+  primary key (owner_id, "equipe_id", "joueur_id")
+);
+alter table public.tournoi_membres add column if not exists "equipe_id" text;
+alter table public.tournoi_membres add column if not exists "joueur_id" text;
+alter table public.tournoi_membres add column if not exists "nom" text;
+alter table public.tournoi_membres add column if not exists "auteur_id" text;
+alter table public.tournoi_membres add column if not exists "rejoint_le" text;
+alter table public.tournoi_membres enable row level security;
+drop policy if exists "tournoi_membres_lecture" on public.tournoi_membres;
+drop policy if exists "tournoi_membres_ecriture" on public.tournoi_membres;
+create policy "tournoi_membres_lecture" on public.tournoi_membres for select to authenticated using (true);
+create policy "tournoi_membres_ecriture" on public.tournoi_membres for all to authenticated using (owner_id = auth.uid()) with check (owner_id = auth.uid() and "auteur_id" = auth.uid()::text);
+
+-- tournoi_decisions (shared)
+create table if not exists public.tournoi_decisions (
+  owner_id uuid not null default auth.uid() references auth.users (id) on delete cascade,
+  "equipe_id" text,
+  "organisateur_id" text not null,
+  "statut" text not null,
+  "motif" text,
+  "le" text not null,
+  primary key (owner_id, "equipe_id")
+);
+alter table public.tournoi_decisions add column if not exists "equipe_id" text;
+alter table public.tournoi_decisions add column if not exists "organisateur_id" text;
+alter table public.tournoi_decisions add column if not exists "statut" text;
+alter table public.tournoi_decisions add column if not exists "motif" text;
+alter table public.tournoi_decisions add column if not exists "le" text;
+alter table public.tournoi_decisions enable row level security;
+drop policy if exists "tournoi_decisions_lecture" on public.tournoi_decisions;
+drop policy if exists "tournoi_decisions_ecriture" on public.tournoi_decisions;
+create policy "tournoi_decisions_lecture" on public.tournoi_decisions for select to authenticated using (true);
+create policy "tournoi_decisions_ecriture" on public.tournoi_decisions for all to authenticated using (owner_id = auth.uid()) with check (owner_id = auth.uid() and "organisateur_id" = auth.uid()::text);
+
+-- tournoi_matchs (shared)
+create table if not exists public.tournoi_matchs (
+  owner_id uuid not null default auth.uid() references auth.users (id) on delete cascade,
+  "id" text,
+  "tournoi_id" text not null,
+  "organisateur_id" text not null,
+  "phase" text not null,
+  "poule" text,
+  "tour" bigint not null,
+  "ordre" bigint not null,
+  "equipe1" text,
+  "equipe2" text,
+  "source1" text,
+  "source2" text,
+  "statut" text not null,
+  "exempt" bigint not null,
+  "vainqueur" text,
+  "score1" bigint,
+  "score2" bigint,
+  "debut" text,
+  "terrain" text,
+  primary key (owner_id, "id")
+);
+alter table public.tournoi_matchs add column if not exists "id" text;
+alter table public.tournoi_matchs add column if not exists "tournoi_id" text;
+alter table public.tournoi_matchs add column if not exists "organisateur_id" text;
+alter table public.tournoi_matchs add column if not exists "phase" text;
+alter table public.tournoi_matchs add column if not exists "poule" text;
+alter table public.tournoi_matchs add column if not exists "tour" bigint;
+alter table public.tournoi_matchs add column if not exists "ordre" bigint;
+alter table public.tournoi_matchs add column if not exists "equipe1" text;
+alter table public.tournoi_matchs add column if not exists "equipe2" text;
+alter table public.tournoi_matchs add column if not exists "source1" text;
+alter table public.tournoi_matchs add column if not exists "source2" text;
+alter table public.tournoi_matchs add column if not exists "statut" text;
+alter table public.tournoi_matchs add column if not exists "exempt" bigint;
+alter table public.tournoi_matchs add column if not exists "vainqueur" text;
+alter table public.tournoi_matchs add column if not exists "score1" bigint;
+alter table public.tournoi_matchs add column if not exists "score2" bigint;
+alter table public.tournoi_matchs add column if not exists "debut" text;
+alter table public.tournoi_matchs add column if not exists "terrain" text;
+alter table public.tournoi_matchs enable row level security;
+drop policy if exists "tournoi_matchs_lecture" on public.tournoi_matchs;
+drop policy if exists "tournoi_matchs_ecriture" on public.tournoi_matchs;
+create policy "tournoi_matchs_lecture" on public.tournoi_matchs for select to authenticated using (true);
+create policy "tournoi_matchs_ecriture" on public.tournoi_matchs for all to authenticated using (owner_id = auth.uid()) with check (owner_id = auth.uid() and "organisateur_id" = auth.uid()::text);
+
+-- tournoi_annonces (shared)
+create table if not exists public.tournoi_annonces (
+  owner_id uuid not null default auth.uid() references auth.users (id) on delete cascade,
+  "id" text,
+  "tournoi_id" text not null,
+  "organisateur_id" text not null,
+  "message" text not null,
+  "le" text not null,
+  primary key (owner_id, "id")
+);
+alter table public.tournoi_annonces add column if not exists "id" text;
+alter table public.tournoi_annonces add column if not exists "tournoi_id" text;
+alter table public.tournoi_annonces add column if not exists "organisateur_id" text;
+alter table public.tournoi_annonces add column if not exists "message" text;
+alter table public.tournoi_annonces add column if not exists "le" text;
+alter table public.tournoi_annonces enable row level security;
+drop policy if exists "tournoi_annonces_lecture" on public.tournoi_annonces;
+drop policy if exists "tournoi_annonces_ecriture" on public.tournoi_annonces;
+create policy "tournoi_annonces_lecture" on public.tournoi_annonces for select to authenticated using (true);
+create policy "tournoi_annonces_ecriture" on public.tournoi_annonces for all to authenticated using (owner_id = auth.uid()) with check (owner_id = auth.uid() and "organisateur_id" = auth.uid()::text);
+

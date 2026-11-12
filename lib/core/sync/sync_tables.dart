@@ -46,6 +46,14 @@ const syncTables = <SyncTable>[
   SyncTable('recus'),
   SyncTable('recu_lignes'),
 
+  // ── Tournois (Ayoub): everyone sees every tournament; each row has one author ──────────────
+  SyncTable('tournois', scope: SyncScope.shared, ownerColumn: 'organisateur_id'),
+  SyncTable('tournoi_equipes', scope: SyncScope.shared, ownerColumn: 'capitaine_id'),
+  SyncTable('tournoi_membres', scope: SyncScope.shared, ownerColumn: 'auteur_id'),
+  SyncTable('tournoi_decisions', scope: SyncScope.shared, ownerColumn: 'organisateur_id'),
+  SyncTable('tournoi_matchs', scope: SyncScope.shared, ownerColumn: 'organisateur_id'),
+  SyncTable('tournoi_annonces', scope: SyncScope.shared, ownerColumn: 'organisateur_id'),
+
   // ── Utilisateur (Alaa) · Réservation (Mahmoud) · Tournois (Ayoub) · Entraînement (Aziz) ·
   //    Forum (Hani): add your tables here.
 ];
