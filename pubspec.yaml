@@ -16,8 +16,9 @@ dependencies:
     sdk: flutter
   flutter_map: ^8.3.2
   flutter_riverpod: ^3.4.3
-  flutter_stripe: ^14.2.0
-  flutter_stripe_web: ^8.2.0
+  # Pinned together: flutter_stripe_web 8.2.0 only compiles against stripe_platform_interface 14.0.
+  flutter_stripe: 14.0.0
+  flutter_stripe_web: 8.2.0
   flutter_svg: ^2.3.0
   go_router: ^18.1.0
   google_fonts: ^9.0.0
@@ -56,3 +57,5 @@ flutter:
 dependency_overrides:
   phosphor_flutter:
     path: packages/phosphor_flutter
+  # See flutter_stripe above: 14.1+ adds an enum value flutter_stripe_web 8.2.0 does not handle.
+  stripe_platform_interface: 14.0.0

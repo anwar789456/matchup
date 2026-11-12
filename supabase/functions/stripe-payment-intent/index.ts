@@ -30,9 +30,11 @@ Deno.serve(async (req) => {
   if (req.method === "OPTIONS") return new Response("ok", { headers: cors });
   if (req.method !== "POST") return json({ error: "POST only" }, 405);
 
-  const secret = Deno.env.get("STRIPE_SECRET_KEY");
-  if (!secret?.startsWith("sk_test_")) {
-    return json({ error: "STRIPE_SECRET_KEY manquante ou pas en mode test (sk_test_…)." }, 500);
+  const secret = (Deno.env.get("STRIPE_SECRET_KEY") ?? "").trim();
+  if (!/^(sk|rk)_test_/.test(secret)) {
+    // Only the kind of key is reported (« pk_test », « sk_live »…), never the key itself.
+    const kind = /^(sk|rk|pk)_(test|live)_/.exec(secret)?.[0].slice(0, -1) ?? (secret ? "inconnue" : "vide");
+    return json({ error: `STRIPE_SECRET_KEY doit être une clé secrète de test (sk_test_…) ; reçu : ${kind}.` }, 500);
   }
   const stripe = new Stripe(secret);
   const currency = Deno.env.get("STRIPE_CURRENCY") ?? "eur";
