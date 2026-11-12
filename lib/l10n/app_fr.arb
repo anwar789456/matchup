@@ -8963,6 +8963,8 @@
   "forumTuAsToutVu": "Tu as tout vu. Reviens plus tard pour les nouvelles discussions.",
   "forumEnregistrer": "Enregistrer",
   "forumRetirerDesFavoris": "Retirer des favoris",
+  "forumAjouteAuxFavoris": "Ajouté à tes favoris",
+  "forumRetireDesFavoris": "Retiré de tes favoris",
   "forumSignaler": "Signaler",
   "forumMerciSignalement": "Merci, la modération va vérifier sous 24 h.",
   "forumRechercheNPlaceholder": "Mot, tag, titre…",

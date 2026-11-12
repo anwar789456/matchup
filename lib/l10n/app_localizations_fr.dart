@@ -10950,6 +10950,12 @@ class AppLocalizationsFr extends AppLocalizations {
   String get forumRetirerDesFavoris => 'Retirer des favoris';
 
   @override
+  String get forumAjouteAuxFavoris => 'Ajouté à tes favoris';
+
+  @override
+  String get forumRetireDesFavoris => 'Retiré de tes favoris';
+
+  @override
   String get forumSignaler => 'Signaler';
 
   @override

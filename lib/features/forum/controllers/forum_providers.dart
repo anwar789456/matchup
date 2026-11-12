@@ -4,6 +4,18 @@ import '../../../core/sync/sync_service.dart';
 import '../../../theme/theme.dart';
 import '../data/forum_repository.dart';
 
+/// Bumped after every change the member makes, so every list and thread already built shows it
+/// at once: a post saved from the feed is in « Favoris », a vote in FRM-04 is on the feed card
+/// when coming back, a new reply counts on the card…
+class ForumChanges extends Notifier<int> {
+  @override
+  int build() => 0;
+
+  void bump() => state++;
+}
+
+final forumChangesProvider = NotifierProvider<ForumChanges, int>(ForumChanges.new);
+
 /// The member using the app (avatar of the compose field and the reply bar).
 final forumMeProvider = FutureProvider<ForumAuthor>((ref) {
   ref.watch(syncRevisionProvider);
@@ -30,6 +42,7 @@ final forumPreviousVisitProvider = FutureProvider<DateTime?>((ref) => ref.watch(
 /// the sync brings new posts.
 final forumCategoriesProvider = FutureProvider<List<ForumCategoryCount>>((ref) async {
   ref.watch(syncRevisionProvider);
+  ref.watch(forumChangesProvider);
   final since = await ref.watch(forumPreviousVisitProvider.future);
   return ref.watch(forumRepositoryProvider).categories(since: since);
 });
@@ -62,9 +75,39 @@ class ForumFeedController extends AsyncNotifier<ForumFeedState> {
   Future<ForumFeedState> build() async {
     // New rows from other phones refresh the list, keeping the pages already loaded.
     ref.watch(syncRevisionProvider);
+    // The member's own changes refresh the cards where they are, without reordering the list.
+    ref.listen(forumChangesProvider, (_, _) => _refreshInPlace());
     final loaded = state.value?.posts.length ?? 0;
     final feed = await ref.watch(forumRepositoryProvider).feed(query, limit: loaded > pageSize ? loaded : pageSize);
     return ForumFeedState(total: feed.total, posts: feed.posts);
+  }
+
+  void _changed() => ref.read(forumChangesProvider.notifier).bump();
+
+  /// Reloads the pages already shown and keeps the cards in their place: a vote does not make
+  /// the card jump in « Tendance ». New posts (just published, just saved) come first, gone
+  /// ones leave.
+  Future<void> _refreshInPlace() async {
+    final s = state.value;
+    if (s == null) return;
+    try {
+      final fresh = await _repo.feed(query, limit: s.posts.length > pageSize ? s.posts.length : pageSize);
+      final byId = {for (final p in fresh.posts) p.id: p};
+      final shown = {for (final p in s.posts) p.id};
+      final now = state.value ?? s;
+      state = AsyncData(
+        now.copyWith(
+          total: fresh.total,
+          posts: [
+            for (final p in fresh.posts)
+              if (!shown.contains(p.id)) p,
+            for (final p in s.posts) ?byId[p.id],
+          ],
+        ),
+      );
+    } catch (_) {
+      // Offline or failing: the cards keep what they show; the next change or sync retries.
+    }
   }
 
   Future<void> loadMore() async {
@@ -102,6 +145,7 @@ class ForumFeedController extends AsyncNotifier<ForumFeedState> {
       final score = await _repo.vote(ForumTarget.post, postId, value);
       final now = _find(postId);
       if (now != null) _replace(now.copyWith(score: score));
+      _changed();
     } catch (_) {
       _replace(before);
       rethrow;
@@ -114,7 +158,7 @@ class ForumFeedController extends AsyncNotifier<ForumFeedState> {
     _replace(before.copyWith(mine: before.mine.copyWith(saved: on)));
     try {
       await _repo.save(postId, on: on);
-      if (!on && query.savedOnly) ref.invalidateSelf();
+      _changed();
     } catch (_) {
       _replace(before);
       rethrow;
@@ -126,6 +170,13 @@ class ForumFeedController extends AsyncNotifier<ForumFeedState> {
     if (before == null) return;
     _replace(before.copyWith(mine: before.mine.copyWith(reported: false)));
     await _repo.undoReport(ForumTarget.post, postId);
+    _changed();
+  }
+
+  /// FRM-05 from a card.
+  Future<void> report(String postId, ReportReason reason, {String? details, bool mute = false}) async {
+    await _repo.report(ForumTarget.post, postId, reason, details: details, muteAuthor: mute);
+    _changed();
   }
 }
 
@@ -144,7 +195,31 @@ class ForumThreadController extends AsyncNotifier<ForumThread> {
   Future<ForumThread> build() {
     // Replies, votes and reactions from other phones appear while the thread is open.
     ref.watch(syncRevisionProvider);
+    // A change made elsewhere (the post saved or voted from a feed) shows when coming back.
+    ref.listen(forumChangesProvider, (_, _) {
+      if (!_changing) _quietReload();
+    });
     return ref.watch(forumRepositoryProvider).thread(postId, sort: _sort);
+  }
+
+  /// True while this thread tells the others about its own change (it is already up to date).
+  bool _changing = false;
+
+  void _changed() {
+    _changing = true;
+    try {
+      ref.read(forumChangesProvider.notifier).bump();
+    } finally {
+      _changing = false;
+    }
+  }
+
+  Future<void> _quietReload() async {
+    try {
+      state = AsyncData(await _repo.thread(postId, sort: _sort));
+    } catch (_) {
+      // The post was deleted or the phone is offline: keep what is shown.
+    }
   }
 
   Future<void> sortBy(ReplySort sort) async {
@@ -201,6 +276,7 @@ class ForumThreadController extends AsyncNotifier<ForumThread> {
     try {
       final score = await _repo.vote(ForumTarget.post, postId, value);
       _setPost(_t!.post.copyWith(score: score));
+      _changed();
     } catch (_) {
       _setPost(before);
       rethrow;
@@ -224,6 +300,7 @@ class ForumThreadController extends AsyncNotifier<ForumThread> {
     );
     try {
       await _repo.react(ForumTarget.post, postId, reaction, on: on);
+      _changed();
     } catch (_) {
       _setPost(before);
       rethrow;
@@ -236,6 +313,7 @@ class ForumThreadController extends AsyncNotifier<ForumThread> {
     _setPost(before.copyWith(mine: before.mine.copyWith(following: on)));
     try {
       await _repo.follow(postId, on: on);
+      _changed();
     } catch (_) {
       _setPost(before);
       rethrow;
@@ -248,6 +326,7 @@ class ForumThreadController extends AsyncNotifier<ForumThread> {
     _setPost(before.copyWith(mine: before.mine.copyWith(saved: on)));
     try {
       await _repo.save(postId, on: on);
+      _changed();
     } catch (_) {
       _setPost(before);
       rethrow;
@@ -267,6 +346,7 @@ class ForumThreadController extends AsyncNotifier<ForumThread> {
       final score = await _repo.vote(ForumTarget.reply, id, value);
       final now = findReply(id);
       if (now != null) _setReply(now.copyWith(score: score));
+      _changed();
     } catch (_) {
       _setReply(before);
       rethrow;
@@ -290,6 +370,7 @@ class ForumThreadController extends AsyncNotifier<ForumThread> {
     );
     try {
       await _repo.react(ForumTarget.reply, id, reaction, on: on);
+      _changed();
     } catch (_) {
       _setReply(before);
       rethrow;
@@ -300,27 +381,32 @@ class ForumThreadController extends AsyncNotifier<ForumThread> {
   Future<ForumReply> reply(String body, {String? parentId, bool confirmed = false}) async {
     final r = await _repo.reply(postId, body, parentId: parentId, confirmed: confirmed);
     await reload();
+    _changed();
     return r;
   }
 
   Future<void> editReply(String id, String body, {bool confirmed = false}) async {
     await _repo.editReply(id, body, confirmed: confirmed);
     await reload();
+    _changed();
   }
 
   Future<void> deleteReply(String id) async {
     await _repo.deleteReply(id);
     await reload();
+    _changed();
   }
 
   Future<void> chooseBest(String? replyId) async {
     await _repo.chooseBestAnswer(postId, replyId);
     await reload();
+    _changed();
   }
 
   Future<void> report(ForumTarget target, String id, ReportReason reason, {String? details, bool mute = false}) async {
     await _repo.report(target, id, reason, details: details, muteAuthor: mute);
     await reload();
+    _changed();
   }
 }
 
@@ -329,5 +415,6 @@ final forumThreadProvider = AsyncNotifierProvider.family<ForumThreadController, 
 /// Whether the reader follows a member (FRM-04 « Suivre »).
 final forumFollowingMemberProvider = FutureProvider.family<bool, String>((ref, id) {
   ref.watch(syncRevisionProvider);
+  ref.watch(forumChangesProvider);
   return ref.watch(forumRepositoryProvider).isFollowingMember(id);
 });

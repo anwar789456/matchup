@@ -153,10 +153,7 @@ class ForumPostTile extends ConsumerWidget {
       final choice = await showReportSheet(context, target: ForumTarget.post, author: post.author);
       if (choice == null || !context.mounted) return;
       await run(() async {
-        await ref
-            .read(forumRepositoryProvider)
-            .report(ForumTarget.post, post.id, choice.reason, details: choice.details, muteAuthor: choice.mute);
-        ref.invalidate(forumFeedProvider(query));
+        await ctrl.report(post.id, choice.reason, details: choice.details, mute: choice.mute);
         if (context.mounted) MuToast.show(context, tone: MuToastTone.success, title: l10n.forumMerciSignalement);
       });
     }
@@ -165,7 +162,11 @@ class ForumPostTile extends ConsumerWidget {
       ForumMenuItem(
         post.mine.saved ? PhosphorIcons.bookmarkSimple(PhosphorIconsStyle.fill) : PhosphorIcons.bookmarkSimple(),
         post.mine.saved ? l10n.forumRetirerDesFavoris : l10n.forumEnregistrer,
-        () => run(() => ctrl.save(post.id, !post.mine.saved)),
+        () => run(() async {
+          final on = !post.mine.saved;
+          await ctrl.save(post.id, on);
+          if (context.mounted) showSavedToast(context, saved: on);
+        }),
       ),
       ForumMenuItem(
         PhosphorIcons.shareNetwork(),

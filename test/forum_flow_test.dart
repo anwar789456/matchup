@@ -100,6 +100,44 @@ void main() {
     expect(find.text('Bons Plans Sport TN'), findsNothing);
   });
 
+  testWidgets('Saving from the feed shows in « Favoris »; a vote in FRM-04 shows on the feed card', (tester) async {
+    await pumpApp(tester, Routes.community);
+    const title = 'Crampons pour synthétique ?';
+    await scrollTo(tester, find.text(title));
+    Finder card() => find.ancestor(of: find.text(title), matching: find.byType(MuForumPostCard));
+
+    // « Enregistrer » from the card's menu: a toast, then « Voir » opens the saved list.
+    await tap(tester, find.descendant(of: card(), matching: find.byTooltip('Plus d’options')));
+    await tester.tap(find.text('Enregistrer'));
+    await tester.pump(const Duration(milliseconds: 500));
+    expect(find.text('Ajouté à tes favoris'), findsOneWidget);
+    await tester.tap(find.text('Voir'));
+    await tester.pumpAndSettle();
+    expect(find.text('Mes posts et favoris'), findsOneWidget);
+    expect(find.text(title), findsOneWidget);
+    await tap(tester, find.byTooltip('Retour'));
+
+    // The menu now offers to remove it.
+    await tap(tester, find.descendant(of: card(), matching: find.byTooltip('Plus d’options')));
+    expect(find.text('Retirer des favoris'), findsOneWidget);
+    await tester.tap(find.text('Retirer des favoris'));
+    await tester.pump(const Duration(milliseconds: 500));
+    expect(find.text('Retiré de tes favoris'), findsOneWidget);
+    await tester.pumpAndSettle();
+
+    // A vote on another post inside FRM-04 is on its card when coming back.
+    const other = 'Padel Masters Lac 2 : toutes les infos et vos questions';
+    await tester.drag(find.byType(Scrollable).first, const Offset(0, 2000));
+    await tester.pumpAndSettle();
+    Finder score(String t, String n) =>
+        find.descendant(of: find.ancestor(of: find.text(t), matching: find.byType(MuForumPostCard)), matching: find.text(n));
+    expect(score(other, '41'), findsOneWidget);
+    await tap(tester, find.text(other));
+    await tap(tester, find.byTooltip('Voter pour').first);
+    await tap(tester, find.byTooltip('Retour à la communauté'));
+    expect(score(other, '42'), findsOneWidget);
+  });
+
   testWidgets('FRM-02: similar discussions, AI tags, publish', (tester) async {
     await pumpApp(tester, Routes.community);
     await tap(tester, find.text('Pose ta question à la communauté'));

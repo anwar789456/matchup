@@ -18347,6 +18347,18 @@ abstract class AppLocalizations {
   /// **'Retirer des favoris'**
   String get forumRetirerDesFavoris;
 
+  /// No description provided for @forumAjouteAuxFavoris.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ajouté à tes favoris'**
+  String get forumAjouteAuxFavoris;
+
+  /// No description provided for @forumRetireDesFavoris.
+  ///
+  /// In fr, this message translates to:
+  /// **'Retiré de tes favoris'**
+  String get forumRetireDesFavoris;
+
   /// No description provided for @forumSignaler.
   ///
   /// In fr, this message translates to:

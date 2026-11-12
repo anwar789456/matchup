@@ -139,7 +139,6 @@ class _DiscussionScreenState extends ConsumerState<DiscussionScreen> {
     if (choice == null || !mounted) return;
     await _run(() async {
       await _ctrl.report(target, id, choice.reason, details: choice.details, mute: choice.mute);
-      if (target == ForumTarget.post) ref.invalidate(forumFeedProvider);
       if (mounted) MuToast.show(context, tone: MuToastTone.success, title: l10n.forumMerciSignalement);
     });
   }
@@ -179,8 +178,9 @@ class _DiscussionScreenState extends ConsumerState<DiscussionScreen> {
         p.mine.saved ? PhosphorIcons.bookmarkSimple(PhosphorIconsStyle.fill) : PhosphorIcons.bookmarkSimple(),
         p.mine.saved ? l10n.forumRetirerDesFavoris : l10n.forumEnregistrer,
         () => _run(() async {
-          await _ctrl.save(!p.mine.saved);
-          ref.invalidate(forumFeedProvider);
+          final on = !p.mine.saved;
+          await _ctrl.save(on);
+          if (mounted) showSavedToast(context, saved: on);
         }),
       ),
       ForumMenuItem(
@@ -222,10 +222,7 @@ class _DiscussionScreenState extends ConsumerState<DiscussionScreen> {
             : ForumMenuItem(
                 PhosphorIcons.checkCircle(),
                 l10n.forumChoisirCommeMeilleureReponse,
-                () => _run(() async {
-                  await _ctrl.chooseBest(r.id);
-                  ref.invalidate(forumFeedProvider);
-                }),
+                () => _run(() => _ctrl.chooseBest(r.id)),
               ),
       if (mine && !r.deleted) ...[
         ForumMenuItem(PhosphorIcons.pencilSimple(), l10n.modifier, () => _startEdit(r)),
@@ -459,7 +456,7 @@ class _PostHeader extends ConsumerWidget {
                   onLabel: l10n.forumSuivi,
                   onChanged: (on) => onRun(() async {
                     await ref.read(forumRepositoryProvider).followMember(p.author.id, on: on);
-                    ref.invalidate(forumFollowingMemberProvider(p.author.id));
+                    ref.read(forumChangesProvider.notifier).bump();
                   }),
                 ),
             ],

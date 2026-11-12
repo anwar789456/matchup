@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:go_router/go_router.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 import '../../../core/connectivity.dart';
 import '../../../core/format.dart';
 import '../../../l10n/l10n.dart';
+import '../../../router.dart';
 import '../../../ui/ui.dart';
 import '../data/forum_models.dart';
 
@@ -42,6 +44,17 @@ Future<void> showForumMenu(BuildContext context, List<ForumMenuItem> items) asyn
     ),
   );
   chosen?.onTap();
+}
+
+/// « Enregistrer » / « Retirer des favoris » done: says so, with « Voir » to the saved list.
+void showSavedToast(BuildContext context, {required bool saved}) {
+  MuToast.show(
+    context,
+    tone: MuToastTone.success,
+    title: saved ? l10n.forumAjouteAuxFavoris : l10n.forumRetireDesFavoris,
+    icon: saved ? PhosphorIcons.bookmarkSimple(PhosphorIconsStyle.fill) : PhosphorIcons.bookmarkSimple(),
+    action: saved ? MuAction(l10n.forumVoir, () => context.push(Routes.forumMine)) : null,
+  );
 }
 
 /// « Copier le lien »: the discussion's link, then a toast.
