@@ -657,5 +657,27 @@ const schemaVersions = <int, List<String>>{
       partage INTEGER NOT NULL DEFAULT 0,
       cree_le TEXT NOT NULL
     )''',
+
+    // Coach space (COA-04…12): the program being written, todos handled, feedback sent.
+    '''
+    CREATE TABLE coach_brouillons (
+      id TEXT PRIMARY KEY,
+      contenu TEXT NOT NULL,
+      modifie_le TEXT NOT NULL,
+      supprime INTEGER NOT NULL DEFAULT 0
+    )''',
+    '''
+    CREATE TABLE coach_actions (
+      cle TEXT PRIMARY KEY,
+      faite_le TEXT NOT NULL
+    )''',
+    '''
+    CREATE TABLE coach_retours (
+      eleve TEXT PRIMARY KEY,
+      commentaires TEXT NOT NULL,
+      message TEXT NOT NULL,
+      nouvelle_video INTEGER NOT NULL DEFAULT 0,
+      envoye_le TEXT NOT NULL
+    )''',
   ],
 };

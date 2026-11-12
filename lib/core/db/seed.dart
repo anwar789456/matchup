@@ -1,6 +1,7 @@
 import 'package:sqflite/sqflite.dart';
 
 import '../../features/common/data/story_data.dart';
+import '../../features/coach/data/coach_repository.dart';
 import '../../features/training/data/sqlite_training_repository.dart';
 import '../../features/matches/data/booking_rows.dart';
 import '../../features/matches/data/bookings_repository.dart';
@@ -12,7 +13,7 @@ Future<void> seedVersion(DatabaseExecutor db, int version) => switch (version) {
       1 => _seedV1(db),
       2 => seedV2(db),
       3 => SqliteSplitRepository.seed(db),
-      5 => SqliteTrainingRepository.seed(db),
+      5 => _seedV5(db),
       _ => Future<void>.value(),
     };
 
@@ -34,4 +35,10 @@ Future<void> _seedV1(DatabaseExecutor db) async {
     'places_total': inv.spotsTotal,
     'places_restantes': inv.spotsLeft,
   });
+}
+
+/// Entraînement: the player's progress and the coach space's draft program.
+Future<void> _seedV5(DatabaseExecutor db) async {
+  await SqliteTrainingRepository.seed(db);
+  await SqliteCoachRepository.seed(db);
 }

@@ -52,6 +52,9 @@ const syncTables = <SyncTable>[
   SyncTable('entrainement_seances'),
   SyncTable('entrainement_plans'),
   SyncTable('entrainement_analyses'),
+  SyncTable('coach_brouillons'),
+  SyncTable('coach_actions'),
+  SyncTable('coach_retours'),
 
   // ── Utilisateur (Alaa) · Réservation (Mahmoud) · Tournois (Ayoub) · Forum (Hani): add your
   //    tables here.

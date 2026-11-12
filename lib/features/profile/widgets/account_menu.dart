@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import '../../coach/coach_routes.dart';
+import '../../coach/data/coach_story.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
@@ -196,12 +198,19 @@ Future<void> showRoleSwitcher(BuildContext context, {String current = 'player'})
       pending: 1,
       semanticLabel: l10n.passerEnProprietaireDeTerrain,
     ),
+    MuRole(
+      id: 'coach',
+      name: l10n.coach,
+      icon: PhosphorIcons.chalkboardTeacher(),
+      detail: l10n.coaRoleDetail(CoachStory.zone),
+    ),
     MuRole(id: 'admin', name: l10n.adminMatchup, icon: PhosphorIcons.shieldCheck()),
   ],
   onChanged: (r) {
     if (r.id == current) return;
     router.go(switch (r.id) {
       'owner' => Routes.ownerToday,
+      'coach' => CoachRoutes.dashboard,
       'admin' => Routes.adminOverview,
       _ => Routes.home,
     });

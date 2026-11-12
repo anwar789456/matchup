@@ -10645,149 +10645,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get categorie => 'Catégorie';
 
   @override
-  String entCoachName(Object name) {
-    return 'Coach $name';
-  }
-
-  @override
-  String entProgramMeta(int weeks, int sessions, int minutes) {
-    return '$weeks sem. · $sessions séances · $minutes min/jour';
-  }
-
-  @override
-  String entProgramMetaShort(int weeks, int sessions, int minutes) {
-    return '$weeks sem. · $sessions séances · $minutes min/j';
-  }
-
-  @override
-  String entSessionsOf(int done, int total) {
-    return '$done séances sur $total';
-  }
-
-  @override
-  String get entSessionsUnit => 'séances';
-
-  @override
-  String entRatingSemantics(Object rating, int count) {
-    return 'Note $rating sur 5, $count avis';
-  }
-
-  @override
-  String get entIncludedInPremium => 'Inclus dans Premium';
-
-  @override
-  String get entPremium => 'Premium';
-
-  @override
-  String get entVerifiedCoach => 'Coach vérifié';
-
-  @override
-  String get entVerificationPending => 'Vérification en cours';
-
-  @override
-  String entNextLesson(Object lesson) {
-    return 'Prochaine : $lesson';
-  }
-
-  @override
-  String get entRateProgram => 'Noter le programme';
-
-  @override
-  String get entToday => 'À faire aujourd’hui';
-
-  @override
-  String get entTodayShort => 'Aujourd’hui';
-
-  @override
-  String get entTodayLower => 'à faire aujourd’hui';
-
-  @override
-  String entLessonLabel(int index, Object title) {
-    return 'Séance $index · $title';
-  }
-
-  @override
-  String entLessonEyebrow(int index) {
-    return 'Séance $index';
-  }
-
-  @override
-  String entDrills(int count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: '$count exercices',
-      one: '1 exercice',
-    );
-    return '$_temp0';
-  }
-
-  @override
-  String entMinutes(int minutes) {
-    return '$minutes min';
-  }
-
-  @override
-  String entLessonMetaCompact(int minutes, Object drills) {
-    return '$minutes min · $drills';
-  }
-
-  @override
-  String entStudents(int count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: '$count élèves',
-      one: '1 élève',
-      zero: '0 élève',
-    );
-    return '$_temp0';
-  }
-
-  @override
-  String entStudentsUnit(int count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: 'élèves',
-      one: 'élève',
-      zero: 'élève',
-    );
-    return '$_temp0';
-  }
-
-  @override
-  String entReviews(int count) {
-    return '$count avis';
-  }
-
-  @override
-  String get entNoReviews => 'Aucun avis';
-
-  @override
-  String entLanguages(Object languages) {
-    return 'Langues : $languages';
-  }
-
-  @override
-  String entFrom(Object price) {
-    return 'dès $price';
-  }
-
-  @override
-  String get entPerSession => 'par séance';
-
-  @override
-  String get entPendingInfo =>
-      'On vérifie ton diplôme sous 48 h. Tes programmes seront visibles dès que c’est fait.';
-
-  @override
-  String get entCompleteProfile => 'Compléter mon profil';
-
-  @override
-  String get entSeePrograms => 'Voir les programmes';
-
-  @override
   String get entAllPrograms => 'Tous les programmes';
 
   @override
@@ -12082,4 +11939,653 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get entYourVideo => 'Ta vidéo';
+
+  @override
+  String entCoachName(Object name) {
+    return 'Coach $name';
+  }
+
+  @override
+  String entProgramMeta(int weeks, int sessions, int minutes) {
+    return '$weeks sem. · $sessions séances · $minutes min/jour';
+  }
+
+  @override
+  String entProgramMetaShort(int weeks, int sessions, int minutes) {
+    return '$weeks sem. · $sessions séances · $minutes min/j';
+  }
+
+  @override
+  String entSessionsOf(int done, int total) {
+    return '$done séances sur $total';
+  }
+
+  @override
+  String get entSessionsUnit => 'séances';
+
+  @override
+  String entRatingSemantics(Object rating, int count) {
+    return 'Note $rating sur 5, $count avis';
+  }
+
+  @override
+  String get entIncludedInPremium => 'Inclus dans Premium';
+
+  @override
+  String get entPremium => 'Premium';
+
+  @override
+  String get entVerifiedCoach => 'Coach vérifié';
+
+  @override
+  String get entVerificationPending => 'Vérification en cours';
+
+  @override
+  String entNextLesson(Object lesson) {
+    return 'Prochaine : $lesson';
+  }
+
+  @override
+  String get entRateProgram => 'Noter le programme';
+
+  @override
+  String get entToday => 'À faire aujourd’hui';
+
+  @override
+  String get entTodayShort => 'Aujourd’hui';
+
+  @override
+  String get entTodayLower => 'à faire aujourd’hui';
+
+  @override
+  String entLessonLabel(int index, Object title) {
+    return 'Séance $index · $title';
+  }
+
+  @override
+  String entLessonEyebrow(int index) {
+    return 'Séance $index';
+  }
+
+  @override
+  String entDrills(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count exercices',
+      one: '1 exercice',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String entMinutes(int minutes) {
+    return '$minutes min';
+  }
+
+  @override
+  String entLessonMetaCompact(int minutes, Object drills) {
+    return '$minutes min · $drills';
+  }
+
+  @override
+  String entStudents(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count élèves',
+      one: '1 élève',
+      zero: '0 élève',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String entStudentsUnit(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'élèves',
+      one: 'élève',
+      zero: 'élève',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String entReviews(int count) {
+    return '$count avis';
+  }
+
+  @override
+  String get entNoReviews => 'Aucun avis';
+
+  @override
+  String entLanguages(Object languages) {
+    return 'Langues : $languages';
+  }
+
+  @override
+  String entFrom(Object price) {
+    return 'dès $price';
+  }
+
+  @override
+  String get entPerSession => 'par séance';
+
+  @override
+  String get entPendingInfo =>
+      'On vérifie ton diplôme sous 48 h. Tes programmes seront visibles dès que c’est fait.';
+
+  @override
+  String get entCompleteProfile => 'Compléter mon profil';
+
+  @override
+  String get entSeePrograms => 'Voir les programmes';
+
+  @override
+  String get coaActiveEnrollments => 'Inscriptions actives';
+
+  @override
+  String get coaActiveStudents => 'Élèves actifs';
+
+  @override
+  String get coaActiveThisWeek => 'Actifs cette semaine';
+
+  @override
+  String get coaAiContent =>
+      'Découpe la vidéo de « Bandeja croisée » en 2 parties : rien ne change sans ta validation.';
+
+  @override
+  String get coaAiReason =>
+      '14 élèves sur 34 y sont bloqués depuis plus d’une semaine, et sa vidéo dure 9 min contre 4 min en moyenne.';
+
+  @override
+  String get coaAiSee => 'Voir la séance';
+
+  @override
+  String get coaAiTitle => 'La séance 5 freine tes élèves';
+
+  @override
+  String get coaAll => 'Tous';
+
+  @override
+  String get coaAnd => ' et ';
+
+  @override
+  String coaAverage(int percent) {
+    return '$percent % en moy.';
+  }
+
+  @override
+  String coaAverageProgress(int percent) {
+    return 'Progression moyenne $percent %';
+  }
+
+  @override
+  String get coaAverageRating => 'Note moyenne';
+
+  @override
+  String get coaBankDetails => 'Coordonnées bancaires';
+
+  @override
+  String coaBankDetailsLine(Object bank) {
+    return '$bank · versements chaque lundi';
+  }
+
+  @override
+  String get coaBuilder => 'Constructeur';
+
+  @override
+  String coaBySource(Object month) {
+    return 'Par source · $month';
+  }
+
+  @override
+  String coaBySourceDetail(Object day) {
+    return 'Revenus nets du 1er au $day';
+  }
+
+  @override
+  String get coaCoachPlan => 'Abonnement Coach';
+
+  @override
+  String coaCoachPlanLine(Object price, Object day) {
+    return '$price/mois · renouvelé le $day';
+  }
+
+  @override
+  String get coaComment => 'Commenter';
+
+  @override
+  String coaCommission(int percent) {
+    return 'Commission MatchUp · $percent %';
+  }
+
+  @override
+  String get coaCommissionInfo =>
+      'Revenus après la commission MatchUp de 10 %. Versés chaque lundi.';
+
+  @override
+  String get coaCreate => 'Créer';
+
+  @override
+  String get coaCreateProgram => 'Créer un programme';
+
+  @override
+  String get coaCreateProgramDetail => 'Semaines, séances, exercices et vidéos';
+
+  @override
+  String get coaDelete => 'Supprimer';
+
+  @override
+  String coaDeleteDraftText(Object title) {
+    return '« $title » et ses séances seront supprimés. Les vidéos envoyées aussi.';
+  }
+
+  @override
+  String get coaDeleteDraftTitle => 'Supprimer le brouillon ?';
+
+  @override
+  String coaDraftLine(Object sport, Object levels, Object when) {
+    return '$sport · niveau $levels · $when';
+  }
+
+  @override
+  String get coaDrafts => 'Brouillons';
+
+  @override
+  String coaEditedOn(Object day) {
+    return 'modifié le $day';
+  }
+
+  @override
+  String coaEditedToday(Object time) {
+    return 'modifié aujourd’hui à $time';
+  }
+
+  @override
+  String coaEditedYesterday(Object time) {
+    return 'modifié hier à $time';
+  }
+
+  @override
+  String get coaFeedback => 'Retour vidéo';
+
+  @override
+  String get coaFeedbackSent => 'Retour envoyé';
+
+  @override
+  String get coaFilterPrograms => 'Filtrer mes programmes';
+
+  @override
+  String get coaFilterStudents => 'Filtrer les élèves';
+
+  @override
+  String get coaFinished => 'Terminé';
+
+  @override
+  String coaFinishedOn(Object day) {
+    return 'Terminé le $day';
+  }
+
+  @override
+  String coaHello(Object name) {
+    return 'Salut $name';
+  }
+
+  @override
+  String coaHelloLine(Object day, Object sport, Object zone) {
+    return '$day · Coach $sport · $zone';
+  }
+
+  @override
+  String get coaIgnore => 'Ignorer';
+
+  @override
+  String coaLastPayout(Object amount, Object day, Object reference) {
+    return 'Dernier : $amount le $day · $reference';
+  }
+
+  @override
+  String get coaLastSixMonths => '6 derniers mois';
+
+  @override
+  String get coaLate => 'En retard';
+
+  @override
+  String coaLateSince(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: 'En retard · rien depuis $days jours',
+      one: 'En retard · rien depuis 1 jour',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get coaLatestOperations => 'Dernières opérations';
+
+  @override
+  String get coaLatestReviews => 'Derniers avis';
+
+  @override
+  String get coaMissingPrice => 'le prix';
+
+  @override
+  String coaMissingSessions(int count, int week) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count séances de la semaine $week',
+      one: '1 séance de la semaine $week',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get coaMonth => 'Mois';
+
+  @override
+  String coaMonthNet(Object month) {
+    return '$month · net';
+  }
+
+  @override
+  String get coaMonths =>
+      'janvier|février|mars|avril|mai|juin|juillet|août|septembre|octobre|novembre|décembre';
+
+  @override
+  String get coaMyPrograms => 'Mes programmes';
+
+  @override
+  String get coaNet => 'Revenus nets';
+
+  @override
+  String get coaNetSixMonths => 'Revenus nets · 6 mois';
+
+  @override
+  String coaNetSixMonthsDetail(Object month) {
+    return 'Après commission · $month en cours';
+  }
+
+  @override
+  String get coaNewProgram => 'Nouveau programme';
+
+  @override
+  String get coaNewWeek => 'Nouvelle semaine';
+
+  @override
+  String get coaNextPayout => 'Prochain versement';
+
+  @override
+  String get coaNoDraft => 'Aucun brouillon';
+
+  @override
+  String get coaNoDraftText =>
+      'Crée un programme : semaines, séances, exercices et vidéos.';
+
+  @override
+  String get coaNoStudent => 'Aucun élève';
+
+  @override
+  String get coaNoStudentText => 'Aucun élève ne correspond à cette recherche.';
+
+  @override
+  String coaNotifications(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Notifications, $count non lues',
+      one: 'Notifications, 1 non lue',
+      zero: 'Notifications',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get coaOr => 'ou';
+
+  @override
+  String get coaPeriod => 'Période';
+
+  @override
+  String get coaPriceTitle => 'Prix et publication';
+
+  @override
+  String coaProgramFinishedLine(Object program, int done, int total) {
+    return '$program · $done/$total séances';
+  }
+
+  @override
+  String coaProgramLine(int students, Object rating, int reviews) {
+    return '$students élèves actifs · ★ $rating ($reviews)';
+  }
+
+  @override
+  String coaProgramSessionLine(Object program, int current, int total) {
+    return '$program · séance $current/$total';
+  }
+
+  @override
+  String coaProgramShape(int weeks, int sessions, Object levels) {
+    return '$weeks sem. · $sessions séances · niveau $levels';
+  }
+
+  @override
+  String coaProgramsLine(int programs, int enrollments) {
+    return '$programs programmes · $enrollments inscriptions';
+  }
+
+  @override
+  String coaProgressOf(Object name) {
+    return 'Progression de $name';
+  }
+
+  @override
+  String get coaPublish => 'Publier';
+
+  @override
+  String get coaPublished => 'Publiés';
+
+  @override
+  String coaPublishedLine(int count) {
+    return 'Publiés · $count inscriptions actives';
+  }
+
+  @override
+  String get coaPublishedOne => 'Publié';
+
+  @override
+  String get coaRating => 'Note';
+
+  @override
+  String get coaRemind => 'Relancer';
+
+  @override
+  String coaReminderSent(Object name) {
+    return 'Message de relance envoyé à $name';
+  }
+
+  @override
+  String get coaReply => 'Répondre';
+
+  @override
+  String get coaReplyPublic =>
+      'Ta réponse s’affiche sous l’avis, sur la page du programme.';
+
+  @override
+  String get coaReplyPublished => 'Réponse publiée';
+
+  @override
+  String coaReplyTo(Object name) {
+    return 'Répondre à $name';
+  }
+
+  @override
+  String coaRevenueMonth(Object month) {
+    return 'Revenus $month · nets';
+  }
+
+  @override
+  String coaRevenueSemantics(Object amount) {
+    return 'Revenus du mois : $amount, voir le détail';
+  }
+
+  @override
+  String get coaRevenueTrend => 'Revenus nets des 6 derniers mois';
+
+  @override
+  String coaRoleDetail(Object zone) {
+    return 'Coach padel · $zone';
+  }
+
+  @override
+  String get coaSalesAndPremium => 'Ventes et part Premium';
+
+  @override
+  String get coaScheduled => 'Publication programmée';
+
+  @override
+  String get coaSearchStudent => 'Rechercher un élève';
+
+  @override
+  String get coaSeeAll => 'Tout voir';
+
+  @override
+  String get coaSeePage => 'Voir la page';
+
+  @override
+  String coaSessionOn(Object day) {
+    return 'Séance faite $day';
+  }
+
+  @override
+  String get coaSessionToday => 'Séance faite aujourd’hui';
+
+  @override
+  String get coaSessionYesterday => 'Séance faite hier';
+
+  @override
+  String coaSessionsReady(int done, int total) {
+    return '$done/$total séances';
+  }
+
+  @override
+  String get coaSessionsReadyLabel => 'Séances prêtes';
+
+  @override
+  String get coaSettings => 'Réglages';
+
+  @override
+  String get coaSixMonths => '6 mois';
+
+  @override
+  String get coaSortName => 'Nom';
+
+  @override
+  String get coaSortRecent => 'Activité récente';
+
+  @override
+  String get coaSource => 'Source';
+
+  @override
+  String get coaSpace => 'Espace coach';
+
+  @override
+  String get coaStatements => 'Relevés mensuels';
+
+  @override
+  String coaStatementsLine(Object month) {
+    return 'PDF · dernier : $month';
+  }
+
+  @override
+  String get coaStudent => 'Élève';
+
+  @override
+  String get coaStudents => 'Élèves';
+
+  @override
+  String coaSwitchRole(Object name) {
+    return '$name · changer de rôle';
+  }
+
+  @override
+  String get coaTabDashboard => 'Tableau';
+
+  @override
+  String get coaTabEarnings => 'Revenus';
+
+  @override
+  String get coaTabPrograms => 'Programmes';
+
+  @override
+  String get coaTabStudents => 'Élèves';
+
+  @override
+  String get coaThisMonth => 'Ce mois';
+
+  @override
+  String get coaToFinish => 'À terminer';
+
+  @override
+  String get coaToHandle => 'À traiter';
+
+  @override
+  String coaToPublish(Object what) {
+    return 'Pour publier : $what';
+  }
+
+  @override
+  String coaTodoDropped(Object name) {
+    return '$name a décroché';
+  }
+
+  @override
+  String coaTodoReview(int stars, Object name) {
+    return 'Avis $stars★ $name';
+  }
+
+  @override
+  String coaTodoVideo(Object name) {
+    return 'Vidéo $name';
+  }
+
+  @override
+  String coaUpTo(Object day) {
+    return 'au $day';
+  }
+
+  @override
+  String coaVideoSent(Object since) {
+    return 'Vidéo envoyée · $since';
+  }
+
+  @override
+  String coaVsLastMonth(Object month) {
+    return 'vs $month';
+  }
+
+  @override
+  String coaVsLastMonthNet(Object month) {
+    return 'vs $month à la même date · net';
+  }
+
+  @override
+  String coaVsLastMonthSameDay(Object month) {
+    return 'vs $month à la même date';
+  }
+
+  @override
+  String get coaYourNet => 'Tes revenus nets';
+
+  @override
+  String get coaYourReply => 'Ta réponse';
+
+  @override
+  String coaOfName(Object name) {
+    return 'de $name';
+  }
 }

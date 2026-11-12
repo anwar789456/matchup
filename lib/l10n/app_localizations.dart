@@ -17861,186 +17861,6 @@ abstract class AppLocalizations {
   /// **'Catégorie'**
   String get categorie;
 
-  /// No description provided for @entCoachName.
-  ///
-  /// In fr, this message translates to:
-  /// **'Coach {name}'**
-  String entCoachName(Object name);
-
-  /// No description provided for @entProgramMeta.
-  ///
-  /// In fr, this message translates to:
-  /// **'{weeks} sem. · {sessions} séances · {minutes} min/jour'**
-  String entProgramMeta(int weeks, int sessions, int minutes);
-
-  /// No description provided for @entProgramMetaShort.
-  ///
-  /// In fr, this message translates to:
-  /// **'{weeks} sem. · {sessions} séances · {minutes} min/j'**
-  String entProgramMetaShort(int weeks, int sessions, int minutes);
-
-  /// No description provided for @entSessionsOf.
-  ///
-  /// In fr, this message translates to:
-  /// **'{done} séances sur {total}'**
-  String entSessionsOf(int done, int total);
-
-  /// No description provided for @entSessionsUnit.
-  ///
-  /// In fr, this message translates to:
-  /// **'séances'**
-  String get entSessionsUnit;
-
-  /// No description provided for @entRatingSemantics.
-  ///
-  /// In fr, this message translates to:
-  /// **'Note {rating} sur 5, {count} avis'**
-  String entRatingSemantics(Object rating, int count);
-
-  /// No description provided for @entIncludedInPremium.
-  ///
-  /// In fr, this message translates to:
-  /// **'Inclus dans Premium'**
-  String get entIncludedInPremium;
-
-  /// No description provided for @entPremium.
-  ///
-  /// In fr, this message translates to:
-  /// **'Premium'**
-  String get entPremium;
-
-  /// No description provided for @entVerifiedCoach.
-  ///
-  /// In fr, this message translates to:
-  /// **'Coach vérifié'**
-  String get entVerifiedCoach;
-
-  /// No description provided for @entVerificationPending.
-  ///
-  /// In fr, this message translates to:
-  /// **'Vérification en cours'**
-  String get entVerificationPending;
-
-  /// No description provided for @entNextLesson.
-  ///
-  /// In fr, this message translates to:
-  /// **'Prochaine : {lesson}'**
-  String entNextLesson(Object lesson);
-
-  /// No description provided for @entRateProgram.
-  ///
-  /// In fr, this message translates to:
-  /// **'Noter le programme'**
-  String get entRateProgram;
-
-  /// No description provided for @entToday.
-  ///
-  /// In fr, this message translates to:
-  /// **'À faire aujourd’hui'**
-  String get entToday;
-
-  /// No description provided for @entTodayShort.
-  ///
-  /// In fr, this message translates to:
-  /// **'Aujourd’hui'**
-  String get entTodayShort;
-
-  /// No description provided for @entTodayLower.
-  ///
-  /// In fr, this message translates to:
-  /// **'à faire aujourd’hui'**
-  String get entTodayLower;
-
-  /// No description provided for @entLessonLabel.
-  ///
-  /// In fr, this message translates to:
-  /// **'Séance {index} · {title}'**
-  String entLessonLabel(int index, Object title);
-
-  /// No description provided for @entLessonEyebrow.
-  ///
-  /// In fr, this message translates to:
-  /// **'Séance {index}'**
-  String entLessonEyebrow(int index);
-
-  /// No description provided for @entDrills.
-  ///
-  /// In fr, this message translates to:
-  /// **'{count, plural, =1{1 exercice} other{{count} exercices}}'**
-  String entDrills(int count);
-
-  /// No description provided for @entMinutes.
-  ///
-  /// In fr, this message translates to:
-  /// **'{minutes} min'**
-  String entMinutes(int minutes);
-
-  /// No description provided for @entLessonMetaCompact.
-  ///
-  /// In fr, this message translates to:
-  /// **'{minutes} min · {drills}'**
-  String entLessonMetaCompact(int minutes, Object drills);
-
-  /// No description provided for @entStudents.
-  ///
-  /// In fr, this message translates to:
-  /// **'{count, plural, =0{0 élève} =1{1 élève} other{{count} élèves}}'**
-  String entStudents(int count);
-
-  /// No description provided for @entStudentsUnit.
-  ///
-  /// In fr, this message translates to:
-  /// **'{count, plural, =0{élève} =1{élève} other{élèves}}'**
-  String entStudentsUnit(int count);
-
-  /// No description provided for @entReviews.
-  ///
-  /// In fr, this message translates to:
-  /// **'{count} avis'**
-  String entReviews(int count);
-
-  /// No description provided for @entNoReviews.
-  ///
-  /// In fr, this message translates to:
-  /// **'Aucun avis'**
-  String get entNoReviews;
-
-  /// No description provided for @entLanguages.
-  ///
-  /// In fr, this message translates to:
-  /// **'Langues : {languages}'**
-  String entLanguages(Object languages);
-
-  /// No description provided for @entFrom.
-  ///
-  /// In fr, this message translates to:
-  /// **'dès {price}'**
-  String entFrom(Object price);
-
-  /// No description provided for @entPerSession.
-  ///
-  /// In fr, this message translates to:
-  /// **'par séance'**
-  String get entPerSession;
-
-  /// No description provided for @entPendingInfo.
-  ///
-  /// In fr, this message translates to:
-  /// **'On vérifie ton diplôme sous 48 h. Tes programmes seront visibles dès que c’est fait.'**
-  String get entPendingInfo;
-
-  /// No description provided for @entCompleteProfile.
-  ///
-  /// In fr, this message translates to:
-  /// **'Compléter mon profil'**
-  String get entCompleteProfile;
-
-  /// No description provided for @entSeePrograms.
-  ///
-  /// In fr, this message translates to:
-  /// **'Voir les programmes'**
-  String get entSeePrograms;
-
   /// No description provided for @entAllPrograms.
   ///
   /// In fr, this message translates to:
@@ -19863,6 +19683,960 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Ta vidéo'**
   String get entYourVideo;
+
+  /// No description provided for @entCoachName.
+  ///
+  /// In fr, this message translates to:
+  /// **'Coach {name}'**
+  String entCoachName(Object name);
+
+  /// No description provided for @entProgramMeta.
+  ///
+  /// In fr, this message translates to:
+  /// **'{weeks} sem. · {sessions} séances · {minutes} min/jour'**
+  String entProgramMeta(int weeks, int sessions, int minutes);
+
+  /// No description provided for @entProgramMetaShort.
+  ///
+  /// In fr, this message translates to:
+  /// **'{weeks} sem. · {sessions} séances · {minutes} min/j'**
+  String entProgramMetaShort(int weeks, int sessions, int minutes);
+
+  /// No description provided for @entSessionsOf.
+  ///
+  /// In fr, this message translates to:
+  /// **'{done} séances sur {total}'**
+  String entSessionsOf(int done, int total);
+
+  /// No description provided for @entSessionsUnit.
+  ///
+  /// In fr, this message translates to:
+  /// **'séances'**
+  String get entSessionsUnit;
+
+  /// No description provided for @entRatingSemantics.
+  ///
+  /// In fr, this message translates to:
+  /// **'Note {rating} sur 5, {count} avis'**
+  String entRatingSemantics(Object rating, int count);
+
+  /// No description provided for @entIncludedInPremium.
+  ///
+  /// In fr, this message translates to:
+  /// **'Inclus dans Premium'**
+  String get entIncludedInPremium;
+
+  /// No description provided for @entPremium.
+  ///
+  /// In fr, this message translates to:
+  /// **'Premium'**
+  String get entPremium;
+
+  /// No description provided for @entVerifiedCoach.
+  ///
+  /// In fr, this message translates to:
+  /// **'Coach vérifié'**
+  String get entVerifiedCoach;
+
+  /// No description provided for @entVerificationPending.
+  ///
+  /// In fr, this message translates to:
+  /// **'Vérification en cours'**
+  String get entVerificationPending;
+
+  /// No description provided for @entNextLesson.
+  ///
+  /// In fr, this message translates to:
+  /// **'Prochaine : {lesson}'**
+  String entNextLesson(Object lesson);
+
+  /// No description provided for @entRateProgram.
+  ///
+  /// In fr, this message translates to:
+  /// **'Noter le programme'**
+  String get entRateProgram;
+
+  /// No description provided for @entToday.
+  ///
+  /// In fr, this message translates to:
+  /// **'À faire aujourd’hui'**
+  String get entToday;
+
+  /// No description provided for @entTodayShort.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aujourd’hui'**
+  String get entTodayShort;
+
+  /// No description provided for @entTodayLower.
+  ///
+  /// In fr, this message translates to:
+  /// **'à faire aujourd’hui'**
+  String get entTodayLower;
+
+  /// No description provided for @entLessonLabel.
+  ///
+  /// In fr, this message translates to:
+  /// **'Séance {index} · {title}'**
+  String entLessonLabel(int index, Object title);
+
+  /// No description provided for @entLessonEyebrow.
+  ///
+  /// In fr, this message translates to:
+  /// **'Séance {index}'**
+  String entLessonEyebrow(int index);
+
+  /// No description provided for @entDrills.
+  ///
+  /// In fr, this message translates to:
+  /// **'{count, plural, =1{1 exercice} other{{count} exercices}}'**
+  String entDrills(int count);
+
+  /// No description provided for @entMinutes.
+  ///
+  /// In fr, this message translates to:
+  /// **'{minutes} min'**
+  String entMinutes(int minutes);
+
+  /// No description provided for @entLessonMetaCompact.
+  ///
+  /// In fr, this message translates to:
+  /// **'{minutes} min · {drills}'**
+  String entLessonMetaCompact(int minutes, Object drills);
+
+  /// No description provided for @entStudents.
+  ///
+  /// In fr, this message translates to:
+  /// **'{count, plural, =0{0 élève} =1{1 élève} other{{count} élèves}}'**
+  String entStudents(int count);
+
+  /// No description provided for @entStudentsUnit.
+  ///
+  /// In fr, this message translates to:
+  /// **'{count, plural, =0{élève} =1{élève} other{élèves}}'**
+  String entStudentsUnit(int count);
+
+  /// No description provided for @entReviews.
+  ///
+  /// In fr, this message translates to:
+  /// **'{count} avis'**
+  String entReviews(int count);
+
+  /// No description provided for @entNoReviews.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucun avis'**
+  String get entNoReviews;
+
+  /// No description provided for @entLanguages.
+  ///
+  /// In fr, this message translates to:
+  /// **'Langues : {languages}'**
+  String entLanguages(Object languages);
+
+  /// No description provided for @entFrom.
+  ///
+  /// In fr, this message translates to:
+  /// **'dès {price}'**
+  String entFrom(Object price);
+
+  /// No description provided for @entPerSession.
+  ///
+  /// In fr, this message translates to:
+  /// **'par séance'**
+  String get entPerSession;
+
+  /// No description provided for @entPendingInfo.
+  ///
+  /// In fr, this message translates to:
+  /// **'On vérifie ton diplôme sous 48 h. Tes programmes seront visibles dès que c’est fait.'**
+  String get entPendingInfo;
+
+  /// No description provided for @entCompleteProfile.
+  ///
+  /// In fr, this message translates to:
+  /// **'Compléter mon profil'**
+  String get entCompleteProfile;
+
+  /// No description provided for @entSeePrograms.
+  ///
+  /// In fr, this message translates to:
+  /// **'Voir les programmes'**
+  String get entSeePrograms;
+
+  /// No description provided for @coaActiveEnrollments.
+  ///
+  /// In fr, this message translates to:
+  /// **'Inscriptions actives'**
+  String get coaActiveEnrollments;
+
+  /// No description provided for @coaActiveStudents.
+  ///
+  /// In fr, this message translates to:
+  /// **'Élèves actifs'**
+  String get coaActiveStudents;
+
+  /// No description provided for @coaActiveThisWeek.
+  ///
+  /// In fr, this message translates to:
+  /// **'Actifs cette semaine'**
+  String get coaActiveThisWeek;
+
+  /// No description provided for @coaAiContent.
+  ///
+  /// In fr, this message translates to:
+  /// **'Découpe la vidéo de « Bandeja croisée » en 2 parties : rien ne change sans ta validation.'**
+  String get coaAiContent;
+
+  /// No description provided for @coaAiReason.
+  ///
+  /// In fr, this message translates to:
+  /// **'14 élèves sur 34 y sont bloqués depuis plus d’une semaine, et sa vidéo dure 9 min contre 4 min en moyenne.'**
+  String get coaAiReason;
+
+  /// No description provided for @coaAiSee.
+  ///
+  /// In fr, this message translates to:
+  /// **'Voir la séance'**
+  String get coaAiSee;
+
+  /// No description provided for @coaAiTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'La séance 5 freine tes élèves'**
+  String get coaAiTitle;
+
+  /// No description provided for @coaAll.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tous'**
+  String get coaAll;
+
+  /// No description provided for @coaAnd.
+  ///
+  /// In fr, this message translates to:
+  /// **' et '**
+  String get coaAnd;
+
+  /// No description provided for @coaAverage.
+  ///
+  /// In fr, this message translates to:
+  /// **'{percent} % en moy.'**
+  String coaAverage(int percent);
+
+  /// No description provided for @coaAverageProgress.
+  ///
+  /// In fr, this message translates to:
+  /// **'Progression moyenne {percent} %'**
+  String coaAverageProgress(int percent);
+
+  /// No description provided for @coaAverageRating.
+  ///
+  /// In fr, this message translates to:
+  /// **'Note moyenne'**
+  String get coaAverageRating;
+
+  /// No description provided for @coaBankDetails.
+  ///
+  /// In fr, this message translates to:
+  /// **'Coordonnées bancaires'**
+  String get coaBankDetails;
+
+  /// No description provided for @coaBankDetailsLine.
+  ///
+  /// In fr, this message translates to:
+  /// **'{bank} · versements chaque lundi'**
+  String coaBankDetailsLine(Object bank);
+
+  /// No description provided for @coaBuilder.
+  ///
+  /// In fr, this message translates to:
+  /// **'Constructeur'**
+  String get coaBuilder;
+
+  /// No description provided for @coaBySource.
+  ///
+  /// In fr, this message translates to:
+  /// **'Par source · {month}'**
+  String coaBySource(Object month);
+
+  /// No description provided for @coaBySourceDetail.
+  ///
+  /// In fr, this message translates to:
+  /// **'Revenus nets du 1er au {day}'**
+  String coaBySourceDetail(Object day);
+
+  /// No description provided for @coaCoachPlan.
+  ///
+  /// In fr, this message translates to:
+  /// **'Abonnement Coach'**
+  String get coaCoachPlan;
+
+  /// No description provided for @coaCoachPlanLine.
+  ///
+  /// In fr, this message translates to:
+  /// **'{price}/mois · renouvelé le {day}'**
+  String coaCoachPlanLine(Object price, Object day);
+
+  /// No description provided for @coaComment.
+  ///
+  /// In fr, this message translates to:
+  /// **'Commenter'**
+  String get coaComment;
+
+  /// No description provided for @coaCommission.
+  ///
+  /// In fr, this message translates to:
+  /// **'Commission MatchUp · {percent} %'**
+  String coaCommission(int percent);
+
+  /// No description provided for @coaCommissionInfo.
+  ///
+  /// In fr, this message translates to:
+  /// **'Revenus après la commission MatchUp de 10 %. Versés chaque lundi.'**
+  String get coaCommissionInfo;
+
+  /// No description provided for @coaCreate.
+  ///
+  /// In fr, this message translates to:
+  /// **'Créer'**
+  String get coaCreate;
+
+  /// No description provided for @coaCreateProgram.
+  ///
+  /// In fr, this message translates to:
+  /// **'Créer un programme'**
+  String get coaCreateProgram;
+
+  /// No description provided for @coaCreateProgramDetail.
+  ///
+  /// In fr, this message translates to:
+  /// **'Semaines, séances, exercices et vidéos'**
+  String get coaCreateProgramDetail;
+
+  /// No description provided for @coaDelete.
+  ///
+  /// In fr, this message translates to:
+  /// **'Supprimer'**
+  String get coaDelete;
+
+  /// No description provided for @coaDeleteDraftText.
+  ///
+  /// In fr, this message translates to:
+  /// **'« {title} » et ses séances seront supprimés. Les vidéos envoyées aussi.'**
+  String coaDeleteDraftText(Object title);
+
+  /// No description provided for @coaDeleteDraftTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Supprimer le brouillon ?'**
+  String get coaDeleteDraftTitle;
+
+  /// No description provided for @coaDraftLine.
+  ///
+  /// In fr, this message translates to:
+  /// **'{sport} · niveau {levels} · {when}'**
+  String coaDraftLine(Object sport, Object levels, Object when);
+
+  /// No description provided for @coaDrafts.
+  ///
+  /// In fr, this message translates to:
+  /// **'Brouillons'**
+  String get coaDrafts;
+
+  /// No description provided for @coaEditedOn.
+  ///
+  /// In fr, this message translates to:
+  /// **'modifié le {day}'**
+  String coaEditedOn(Object day);
+
+  /// No description provided for @coaEditedToday.
+  ///
+  /// In fr, this message translates to:
+  /// **'modifié aujourd’hui à {time}'**
+  String coaEditedToday(Object time);
+
+  /// No description provided for @coaEditedYesterday.
+  ///
+  /// In fr, this message translates to:
+  /// **'modifié hier à {time}'**
+  String coaEditedYesterday(Object time);
+
+  /// No description provided for @coaFeedback.
+  ///
+  /// In fr, this message translates to:
+  /// **'Retour vidéo'**
+  String get coaFeedback;
+
+  /// No description provided for @coaFeedbackSent.
+  ///
+  /// In fr, this message translates to:
+  /// **'Retour envoyé'**
+  String get coaFeedbackSent;
+
+  /// No description provided for @coaFilterPrograms.
+  ///
+  /// In fr, this message translates to:
+  /// **'Filtrer mes programmes'**
+  String get coaFilterPrograms;
+
+  /// No description provided for @coaFilterStudents.
+  ///
+  /// In fr, this message translates to:
+  /// **'Filtrer les élèves'**
+  String get coaFilterStudents;
+
+  /// No description provided for @coaFinished.
+  ///
+  /// In fr, this message translates to:
+  /// **'Terminé'**
+  String get coaFinished;
+
+  /// No description provided for @coaFinishedOn.
+  ///
+  /// In fr, this message translates to:
+  /// **'Terminé le {day}'**
+  String coaFinishedOn(Object day);
+
+  /// No description provided for @coaHello.
+  ///
+  /// In fr, this message translates to:
+  /// **'Salut {name}'**
+  String coaHello(Object name);
+
+  /// No description provided for @coaHelloLine.
+  ///
+  /// In fr, this message translates to:
+  /// **'{day} · Coach {sport} · {zone}'**
+  String coaHelloLine(Object day, Object sport, Object zone);
+
+  /// No description provided for @coaIgnore.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ignorer'**
+  String get coaIgnore;
+
+  /// No description provided for @coaLastPayout.
+  ///
+  /// In fr, this message translates to:
+  /// **'Dernier : {amount} le {day} · {reference}'**
+  String coaLastPayout(Object amount, Object day, Object reference);
+
+  /// No description provided for @coaLastSixMonths.
+  ///
+  /// In fr, this message translates to:
+  /// **'6 derniers mois'**
+  String get coaLastSixMonths;
+
+  /// No description provided for @coaLate.
+  ///
+  /// In fr, this message translates to:
+  /// **'En retard'**
+  String get coaLate;
+
+  /// No description provided for @coaLateSince.
+  ///
+  /// In fr, this message translates to:
+  /// **'{days, plural, =1{En retard · rien depuis 1 jour} other{En retard · rien depuis {days} jours}}'**
+  String coaLateSince(int days);
+
+  /// No description provided for @coaLatestOperations.
+  ///
+  /// In fr, this message translates to:
+  /// **'Dernières opérations'**
+  String get coaLatestOperations;
+
+  /// No description provided for @coaLatestReviews.
+  ///
+  /// In fr, this message translates to:
+  /// **'Derniers avis'**
+  String get coaLatestReviews;
+
+  /// No description provided for @coaMissingPrice.
+  ///
+  /// In fr, this message translates to:
+  /// **'le prix'**
+  String get coaMissingPrice;
+
+  /// No description provided for @coaMissingSessions.
+  ///
+  /// In fr, this message translates to:
+  /// **'{count, plural, =1{1 séance de la semaine {week}} other{{count} séances de la semaine {week}}}'**
+  String coaMissingSessions(int count, int week);
+
+  /// No description provided for @coaMonth.
+  ///
+  /// In fr, this message translates to:
+  /// **'Mois'**
+  String get coaMonth;
+
+  /// No description provided for @coaMonthNet.
+  ///
+  /// In fr, this message translates to:
+  /// **'{month} · net'**
+  String coaMonthNet(Object month);
+
+  /// No description provided for @coaMonths.
+  ///
+  /// In fr, this message translates to:
+  /// **'janvier|février|mars|avril|mai|juin|juillet|août|septembre|octobre|novembre|décembre'**
+  String get coaMonths;
+
+  /// No description provided for @coaMyPrograms.
+  ///
+  /// In fr, this message translates to:
+  /// **'Mes programmes'**
+  String get coaMyPrograms;
+
+  /// No description provided for @coaNet.
+  ///
+  /// In fr, this message translates to:
+  /// **'Revenus nets'**
+  String get coaNet;
+
+  /// No description provided for @coaNetSixMonths.
+  ///
+  /// In fr, this message translates to:
+  /// **'Revenus nets · 6 mois'**
+  String get coaNetSixMonths;
+
+  /// No description provided for @coaNetSixMonthsDetail.
+  ///
+  /// In fr, this message translates to:
+  /// **'Après commission · {month} en cours'**
+  String coaNetSixMonthsDetail(Object month);
+
+  /// No description provided for @coaNewProgram.
+  ///
+  /// In fr, this message translates to:
+  /// **'Nouveau programme'**
+  String get coaNewProgram;
+
+  /// No description provided for @coaNewWeek.
+  ///
+  /// In fr, this message translates to:
+  /// **'Nouvelle semaine'**
+  String get coaNewWeek;
+
+  /// No description provided for @coaNextPayout.
+  ///
+  /// In fr, this message translates to:
+  /// **'Prochain versement'**
+  String get coaNextPayout;
+
+  /// No description provided for @coaNoDraft.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucun brouillon'**
+  String get coaNoDraft;
+
+  /// No description provided for @coaNoDraftText.
+  ///
+  /// In fr, this message translates to:
+  /// **'Crée un programme : semaines, séances, exercices et vidéos.'**
+  String get coaNoDraftText;
+
+  /// No description provided for @coaNoStudent.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucun élève'**
+  String get coaNoStudent;
+
+  /// No description provided for @coaNoStudentText.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucun élève ne correspond à cette recherche.'**
+  String get coaNoStudentText;
+
+  /// No description provided for @coaNotifications.
+  ///
+  /// In fr, this message translates to:
+  /// **'{count, plural, =0{Notifications} =1{Notifications, 1 non lue} other{Notifications, {count} non lues}}'**
+  String coaNotifications(int count);
+
+  /// No description provided for @coaOr.
+  ///
+  /// In fr, this message translates to:
+  /// **'ou'**
+  String get coaOr;
+
+  /// No description provided for @coaPeriod.
+  ///
+  /// In fr, this message translates to:
+  /// **'Période'**
+  String get coaPeriod;
+
+  /// No description provided for @coaPriceTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Prix et publication'**
+  String get coaPriceTitle;
+
+  /// No description provided for @coaProgramFinishedLine.
+  ///
+  /// In fr, this message translates to:
+  /// **'{program} · {done}/{total} séances'**
+  String coaProgramFinishedLine(Object program, int done, int total);
+
+  /// No description provided for @coaProgramLine.
+  ///
+  /// In fr, this message translates to:
+  /// **'{students} élèves actifs · ★ {rating} ({reviews})'**
+  String coaProgramLine(int students, Object rating, int reviews);
+
+  /// No description provided for @coaProgramSessionLine.
+  ///
+  /// In fr, this message translates to:
+  /// **'{program} · séance {current}/{total}'**
+  String coaProgramSessionLine(Object program, int current, int total);
+
+  /// No description provided for @coaProgramShape.
+  ///
+  /// In fr, this message translates to:
+  /// **'{weeks} sem. · {sessions} séances · niveau {levels}'**
+  String coaProgramShape(int weeks, int sessions, Object levels);
+
+  /// No description provided for @coaProgramsLine.
+  ///
+  /// In fr, this message translates to:
+  /// **'{programs} programmes · {enrollments} inscriptions'**
+  String coaProgramsLine(int programs, int enrollments);
+
+  /// No description provided for @coaProgressOf.
+  ///
+  /// In fr, this message translates to:
+  /// **'Progression de {name}'**
+  String coaProgressOf(Object name);
+
+  /// No description provided for @coaPublish.
+  ///
+  /// In fr, this message translates to:
+  /// **'Publier'**
+  String get coaPublish;
+
+  /// No description provided for @coaPublished.
+  ///
+  /// In fr, this message translates to:
+  /// **'Publiés'**
+  String get coaPublished;
+
+  /// No description provided for @coaPublishedLine.
+  ///
+  /// In fr, this message translates to:
+  /// **'Publiés · {count} inscriptions actives'**
+  String coaPublishedLine(int count);
+
+  /// No description provided for @coaPublishedOne.
+  ///
+  /// In fr, this message translates to:
+  /// **'Publié'**
+  String get coaPublishedOne;
+
+  /// No description provided for @coaRating.
+  ///
+  /// In fr, this message translates to:
+  /// **'Note'**
+  String get coaRating;
+
+  /// No description provided for @coaRemind.
+  ///
+  /// In fr, this message translates to:
+  /// **'Relancer'**
+  String get coaRemind;
+
+  /// No description provided for @coaReminderSent.
+  ///
+  /// In fr, this message translates to:
+  /// **'Message de relance envoyé à {name}'**
+  String coaReminderSent(Object name);
+
+  /// No description provided for @coaReply.
+  ///
+  /// In fr, this message translates to:
+  /// **'Répondre'**
+  String get coaReply;
+
+  /// No description provided for @coaReplyPublic.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ta réponse s’affiche sous l’avis, sur la page du programme.'**
+  String get coaReplyPublic;
+
+  /// No description provided for @coaReplyPublished.
+  ///
+  /// In fr, this message translates to:
+  /// **'Réponse publiée'**
+  String get coaReplyPublished;
+
+  /// No description provided for @coaReplyTo.
+  ///
+  /// In fr, this message translates to:
+  /// **'Répondre à {name}'**
+  String coaReplyTo(Object name);
+
+  /// No description provided for @coaRevenueMonth.
+  ///
+  /// In fr, this message translates to:
+  /// **'Revenus {month} · nets'**
+  String coaRevenueMonth(Object month);
+
+  /// No description provided for @coaRevenueSemantics.
+  ///
+  /// In fr, this message translates to:
+  /// **'Revenus du mois : {amount}, voir le détail'**
+  String coaRevenueSemantics(Object amount);
+
+  /// No description provided for @coaRevenueTrend.
+  ///
+  /// In fr, this message translates to:
+  /// **'Revenus nets des 6 derniers mois'**
+  String get coaRevenueTrend;
+
+  /// No description provided for @coaRoleDetail.
+  ///
+  /// In fr, this message translates to:
+  /// **'Coach padel · {zone}'**
+  String coaRoleDetail(Object zone);
+
+  /// No description provided for @coaSalesAndPremium.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ventes et part Premium'**
+  String get coaSalesAndPremium;
+
+  /// No description provided for @coaScheduled.
+  ///
+  /// In fr, this message translates to:
+  /// **'Publication programmée'**
+  String get coaScheduled;
+
+  /// No description provided for @coaSearchStudent.
+  ///
+  /// In fr, this message translates to:
+  /// **'Rechercher un élève'**
+  String get coaSearchStudent;
+
+  /// No description provided for @coaSeeAll.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tout voir'**
+  String get coaSeeAll;
+
+  /// No description provided for @coaSeePage.
+  ///
+  /// In fr, this message translates to:
+  /// **'Voir la page'**
+  String get coaSeePage;
+
+  /// No description provided for @coaSessionOn.
+  ///
+  /// In fr, this message translates to:
+  /// **'Séance faite {day}'**
+  String coaSessionOn(Object day);
+
+  /// No description provided for @coaSessionToday.
+  ///
+  /// In fr, this message translates to:
+  /// **'Séance faite aujourd’hui'**
+  String get coaSessionToday;
+
+  /// No description provided for @coaSessionYesterday.
+  ///
+  /// In fr, this message translates to:
+  /// **'Séance faite hier'**
+  String get coaSessionYesterday;
+
+  /// No description provided for @coaSessionsReady.
+  ///
+  /// In fr, this message translates to:
+  /// **'{done}/{total} séances'**
+  String coaSessionsReady(int done, int total);
+
+  /// No description provided for @coaSessionsReadyLabel.
+  ///
+  /// In fr, this message translates to:
+  /// **'Séances prêtes'**
+  String get coaSessionsReadyLabel;
+
+  /// No description provided for @coaSettings.
+  ///
+  /// In fr, this message translates to:
+  /// **'Réglages'**
+  String get coaSettings;
+
+  /// No description provided for @coaSixMonths.
+  ///
+  /// In fr, this message translates to:
+  /// **'6 mois'**
+  String get coaSixMonths;
+
+  /// No description provided for @coaSortName.
+  ///
+  /// In fr, this message translates to:
+  /// **'Nom'**
+  String get coaSortName;
+
+  /// No description provided for @coaSortRecent.
+  ///
+  /// In fr, this message translates to:
+  /// **'Activité récente'**
+  String get coaSortRecent;
+
+  /// No description provided for @coaSource.
+  ///
+  /// In fr, this message translates to:
+  /// **'Source'**
+  String get coaSource;
+
+  /// No description provided for @coaSpace.
+  ///
+  /// In fr, this message translates to:
+  /// **'Espace coach'**
+  String get coaSpace;
+
+  /// No description provided for @coaStatements.
+  ///
+  /// In fr, this message translates to:
+  /// **'Relevés mensuels'**
+  String get coaStatements;
+
+  /// No description provided for @coaStatementsLine.
+  ///
+  /// In fr, this message translates to:
+  /// **'PDF · dernier : {month}'**
+  String coaStatementsLine(Object month);
+
+  /// No description provided for @coaStudent.
+  ///
+  /// In fr, this message translates to:
+  /// **'Élève'**
+  String get coaStudent;
+
+  /// No description provided for @coaStudents.
+  ///
+  /// In fr, this message translates to:
+  /// **'Élèves'**
+  String get coaStudents;
+
+  /// No description provided for @coaSwitchRole.
+  ///
+  /// In fr, this message translates to:
+  /// **'{name} · changer de rôle'**
+  String coaSwitchRole(Object name);
+
+  /// No description provided for @coaTabDashboard.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tableau'**
+  String get coaTabDashboard;
+
+  /// No description provided for @coaTabEarnings.
+  ///
+  /// In fr, this message translates to:
+  /// **'Revenus'**
+  String get coaTabEarnings;
+
+  /// No description provided for @coaTabPrograms.
+  ///
+  /// In fr, this message translates to:
+  /// **'Programmes'**
+  String get coaTabPrograms;
+
+  /// No description provided for @coaTabStudents.
+  ///
+  /// In fr, this message translates to:
+  /// **'Élèves'**
+  String get coaTabStudents;
+
+  /// No description provided for @coaThisMonth.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ce mois'**
+  String get coaThisMonth;
+
+  /// No description provided for @coaToFinish.
+  ///
+  /// In fr, this message translates to:
+  /// **'À terminer'**
+  String get coaToFinish;
+
+  /// No description provided for @coaToHandle.
+  ///
+  /// In fr, this message translates to:
+  /// **'À traiter'**
+  String get coaToHandle;
+
+  /// No description provided for @coaToPublish.
+  ///
+  /// In fr, this message translates to:
+  /// **'Pour publier : {what}'**
+  String coaToPublish(Object what);
+
+  /// No description provided for @coaTodoDropped.
+  ///
+  /// In fr, this message translates to:
+  /// **'{name} a décroché'**
+  String coaTodoDropped(Object name);
+
+  /// No description provided for @coaTodoReview.
+  ///
+  /// In fr, this message translates to:
+  /// **'Avis {stars}★ {name}'**
+  String coaTodoReview(int stars, Object name);
+
+  /// No description provided for @coaTodoVideo.
+  ///
+  /// In fr, this message translates to:
+  /// **'Vidéo {name}'**
+  String coaTodoVideo(Object name);
+
+  /// No description provided for @coaUpTo.
+  ///
+  /// In fr, this message translates to:
+  /// **'au {day}'**
+  String coaUpTo(Object day);
+
+  /// No description provided for @coaVideoSent.
+  ///
+  /// In fr, this message translates to:
+  /// **'Vidéo envoyée · {since}'**
+  String coaVideoSent(Object since);
+
+  /// No description provided for @coaVsLastMonth.
+  ///
+  /// In fr, this message translates to:
+  /// **'vs {month}'**
+  String coaVsLastMonth(Object month);
+
+  /// No description provided for @coaVsLastMonthNet.
+  ///
+  /// In fr, this message translates to:
+  /// **'vs {month} à la même date · net'**
+  String coaVsLastMonthNet(Object month);
+
+  /// No description provided for @coaVsLastMonthSameDay.
+  ///
+  /// In fr, this message translates to:
+  /// **'vs {month} à la même date'**
+  String coaVsLastMonthSameDay(Object month);
+
+  /// No description provided for @coaYourNet.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tes revenus nets'**
+  String get coaYourNet;
+
+  /// No description provided for @coaYourReply.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ta réponse'**
+  String get coaYourReply;
+
+  /// No description provided for @coaOfName.
+  ///
+  /// In fr, this message translates to:
+  /// **'de {name}'**
+  String coaOfName(Object name);
 }
 
 class _AppLocalizationsDelegate
