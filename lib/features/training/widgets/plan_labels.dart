@@ -66,3 +66,28 @@ IconData planItemIcon(PlanItem i) => switch (i.kind) {
   PlanItemKind.match => PhosphorIcons.soccerBall(),
   PlanItemKind.tournament => PhosphorIcons.trophy(),
 };
+
+String videoMoveLabel(VideoMove m) => switch (m) {
+  VideoMove.bandeja => l10n.entMoveBandeja,
+  VideoMove.vibora => l10n.entMoveVibora,
+  VideoMove.service => l10n.entMoveService,
+  VideoMove.volee => l10n.entMoveVolley,
+  VideoMove.smash => l10n.entMoveSmash,
+};
+
+/// « ta bandeja », « ton service » — the move with its possessive.
+String videoMoveYour(VideoMove m) => switch (m) {
+  VideoMove.bandeja => l10n.entYourBandeja,
+  VideoMove.vibora => l10n.entYourVibora,
+  VideoMove.service => l10n.entYourService,
+  VideoMove.volee => l10n.entYourVolley,
+  VideoMove.smash => l10n.entYourSmash,
+};
+
+/// The AI's four steps, worded for the move.
+List<String> videoSteps(VideoMove m, int tips) => [
+  l10n.entStepSent,
+  l10n.entStepDetect(videoMoveYour(m)),
+  l10n.entStepCompare,
+  l10n.entStepWriting(tips),
+];

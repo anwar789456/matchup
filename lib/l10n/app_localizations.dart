@@ -19389,6 +19389,468 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'{max} objectifs maximum : retire-en un pour en choisir un autre.'**
   String entMaxGoalsReached(int max);
+
+  /// No description provided for @entAboutAMinute.
+  ///
+  /// In fr, this message translates to:
+  /// **'Encore 1 min environ. Tu peux quitter cet écran, on te prévient.'**
+  String get entAboutAMinute;
+
+  /// No description provided for @entAddExercisesToPlan.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ajouter les exercices à mon plan'**
+  String get entAddExercisesToPlan;
+
+  /// No description provided for @entAiAnalysing.
+  ///
+  /// In fr, this message translates to:
+  /// **'L’IA analyse {move}'**
+  String entAiAnalysing(Object move);
+
+  /// No description provided for @entAiFootnote.
+  ///
+  /// In fr, this message translates to:
+  /// **'L’IA peut se tromper. Vérifie les infos importantes.'**
+  String get entAiFootnote;
+
+  /// No description provided for @entAiMoments.
+  ///
+  /// In fr, this message translates to:
+  /// **'{count, plural, =1{IA · 1 moment} other{IA · {count} moments}}'**
+  String entAiMoments(int count);
+
+  /// No description provided for @entAiReady.
+  ///
+  /// In fr, this message translates to:
+  /// **'C’est prêt'**
+  String get entAiReady;
+
+  /// No description provided for @entAiRereading.
+  ///
+  /// In fr, this message translates to:
+  /// **'L’IA relit ta vidéo…'**
+  String get entAiRereading;
+
+  /// No description provided for @entAiRewriting.
+  ///
+  /// In fr, this message translates to:
+  /// **'L’IA réécrit le texte…'**
+  String get entAiRewriting;
+
+  /// No description provided for @entAnalysedAt.
+  ///
+  /// In fr, this message translates to:
+  /// **'Analysé à {time} · {confidence}'**
+  String entAnalysedAt(Object time, Object confidence);
+
+  /// No description provided for @entConfidenceMedium.
+  ///
+  /// In fr, this message translates to:
+  /// **'confiance moyenne'**
+  String get entConfidenceMedium;
+
+  /// No description provided for @entAnalysisReady.
+  ///
+  /// In fr, this message translates to:
+  /// **'{count, plural, =1{Ton analyse est prête : 1 conseil t’attend.} other{Ton analyse est prête : {count} conseils t’attendent.}}'**
+  String entAnalysisReady(int count);
+
+  /// No description provided for @entAnalysisRunning.
+  ///
+  /// In fr, this message translates to:
+  /// **'L’IA analyse ta vidéo · étape {step} sur {total}'**
+  String entAnalysisRunning(int step, int total);
+
+  /// No description provided for @entAnalysisUploading.
+  ///
+  /// In fr, this message translates to:
+  /// **'Envoi de ta vidéo en cours…'**
+  String get entAnalysisUploading;
+
+  /// No description provided for @entAskCoach.
+  ///
+  /// In fr, this message translates to:
+  /// **'Demander l’avis de {coach}'**
+  String entAskCoach(Object coach);
+
+  /// No description provided for @entSentToCoach.
+  ///
+  /// In fr, this message translates to:
+  /// **'Envoyé à {coach}'**
+  String entSentToCoach(Object coach);
+
+  /// No description provided for @entSentToCoachText.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ton coach voit ta vidéo et tes conseils, il te répond ici.'**
+  String get entSentToCoachText;
+
+  /// No description provided for @entBeta.
+  ///
+  /// In fr, this message translates to:
+  /// **'Bêta'**
+  String get entBeta;
+
+  /// No description provided for @entClipAt.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ta vidéo, image à {time}'**
+  String entClipAt(Object time);
+
+  /// No description provided for @entCopied.
+  ///
+  /// In fr, this message translates to:
+  /// **'Copié'**
+  String get entCopied;
+
+  /// No description provided for @entCopy.
+  ///
+  /// In fr, this message translates to:
+  /// **'Copier'**
+  String get entCopy;
+
+  /// No description provided for @entTextCopied.
+  ///
+  /// In fr, this message translates to:
+  /// **'Texte copié'**
+  String get entTextCopied;
+
+  /// No description provided for @entEditedByYou.
+  ///
+  /// In fr, this message translates to:
+  /// **'modifié par toi'**
+  String get entEditedByYou;
+
+  /// No description provided for @entFilmOrChoose.
+  ///
+  /// In fr, this message translates to:
+  /// **'Filme ou choisis une vidéo'**
+  String get entFilmOrChoose;
+
+  /// No description provided for @entFilmTip.
+  ///
+  /// In fr, this message translates to:
+  /// **'Filme de côté à 3 m, corps entier dans le cadre.'**
+  String get entFilmTip;
+
+  /// No description provided for @entFilmedAt.
+  ///
+  /// In fr, this message translates to:
+  /// **'Filmée {day} · {venue}'**
+  String entFilmedAt(Object day, Object venue);
+
+  /// No description provided for @entMomentsLine.
+  ///
+  /// In fr, this message translates to:
+  /// **'{count, plural, =1{1 moment à revoir · vidéo du {day} · {duration}} other{{count} moments à revoir · vidéo du {day} · {duration}}}'**
+  String entMomentsLine(int count, Object day, Object duration);
+
+  /// No description provided for @entMoveBandeja.
+  ///
+  /// In fr, this message translates to:
+  /// **'Bandeja'**
+  String get entMoveBandeja;
+
+  /// No description provided for @entMoveVibora.
+  ///
+  /// In fr, this message translates to:
+  /// **'Víbora'**
+  String get entMoveVibora;
+
+  /// No description provided for @entMoveService.
+  ///
+  /// In fr, this message translates to:
+  /// **'Service'**
+  String get entMoveService;
+
+  /// No description provided for @entMoveVolley.
+  ///
+  /// In fr, this message translates to:
+  /// **'Volée'**
+  String get entMoveVolley;
+
+  /// No description provided for @entMoveSmash.
+  ///
+  /// In fr, this message translates to:
+  /// **'Smash'**
+  String get entMoveSmash;
+
+  /// No description provided for @entYourBandeja.
+  ///
+  /// In fr, this message translates to:
+  /// **'ta bandeja'**
+  String get entYourBandeja;
+
+  /// No description provided for @entYourVibora.
+  ///
+  /// In fr, this message translates to:
+  /// **'ta víbora'**
+  String get entYourVibora;
+
+  /// No description provided for @entYourService.
+  ///
+  /// In fr, this message translates to:
+  /// **'ton service'**
+  String get entYourService;
+
+  /// No description provided for @entYourVolley.
+  ///
+  /// In fr, this message translates to:
+  /// **'ta volée'**
+  String get entYourVolley;
+
+  /// No description provided for @entYourSmash.
+  ///
+  /// In fr, this message translates to:
+  /// **'ton smash'**
+  String get entYourSmash;
+
+  /// No description provided for @entNoAnalysisTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Pas encore d’analyse'**
+  String get entNoAnalysisTitle;
+
+  /// No description provided for @entNoAnalysisText.
+  ///
+  /// In fr, this message translates to:
+  /// **'Envoie une vidéo de ton geste : l’IA te donne 3 conseils, avec le moment exact.'**
+  String get entNoAnalysisText;
+
+  /// No description provided for @entNotUseful.
+  ///
+  /// In fr, this message translates to:
+  /// **'Pas utile'**
+  String get entNotUseful;
+
+  /// No description provided for @entUseful.
+  ///
+  /// In fr, this message translates to:
+  /// **'Utile'**
+  String get entUseful;
+
+  /// No description provided for @entThanksForFeedback.
+  ///
+  /// In fr, this message translates to:
+  /// **'Merci pour ton retour'**
+  String get entThanksForFeedback;
+
+  /// No description provided for @entNotifyMe.
+  ///
+  /// In fr, this message translates to:
+  /// **'Me prévenir'**
+  String get entNotifyMe;
+
+  /// No description provided for @entPlayFrom.
+  ///
+  /// In fr, this message translates to:
+  /// **'Lire la vidéo depuis {time}'**
+  String entPlayFrom(Object time);
+
+  /// No description provided for @entPlayback.
+  ///
+  /// In fr, this message translates to:
+  /// **'Position de lecture'**
+  String get entPlayback;
+
+  /// No description provided for @entPlaybackValue.
+  ///
+  /// In fr, this message translates to:
+  /// **'{at} sur {total}'**
+  String entPlaybackValue(Object at, Object total);
+
+  /// No description provided for @entPlayingNow.
+  ///
+  /// In fr, this message translates to:
+  /// **'En lecture'**
+  String get entPlayingNow;
+
+  /// No description provided for @entReplayAt.
+  ///
+  /// In fr, this message translates to:
+  /// **'Revoir à {time}'**
+  String entReplayAt(Object time);
+
+  /// No description provided for @entSeeResult.
+  ///
+  /// In fr, this message translates to:
+  /// **'Voir le résultat'**
+  String get entSeeResult;
+
+  /// No description provided for @entSeeTips.
+  ///
+  /// In fr, this message translates to:
+  /// **'{count, plural, =1{Voir mon conseil} other{Voir mes {count} conseils}}'**
+  String entSeeTips(int count);
+
+  /// No description provided for @entShareAnalysis.
+  ///
+  /// In fr, this message translates to:
+  /// **'Partager l’analyse'**
+  String get entShareAnalysis;
+
+  /// No description provided for @entShareAnalysisText.
+  ///
+  /// In fr, this message translates to:
+  /// **'L’IA de MatchUp a analysé {move} : « {tip} ».'**
+  String entShareAnalysisText(Object move, Object tip);
+
+  /// No description provided for @entShareWith.
+  ///
+  /// In fr, this message translates to:
+  /// **'Partager le résultat avec {coach}'**
+  String entShareWith(Object coach);
+
+  /// No description provided for @entShareWithDetail.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ton coach pourra commenter. Désactivé par défaut.'**
+  String get entShareWithDetail;
+
+  /// No description provided for @entStep.
+  ///
+  /// In fr, this message translates to:
+  /// **'Étape'**
+  String get entStep;
+
+  /// No description provided for @entStepOutOf.
+  ///
+  /// In fr, this message translates to:
+  /// **'sur'**
+  String get entStepOutOf;
+
+  /// No description provided for @entStepDone.
+  ///
+  /// In fr, this message translates to:
+  /// **'terminé'**
+  String get entStepDone;
+
+  /// No description provided for @entStepRunning.
+  ///
+  /// In fr, this message translates to:
+  /// **'en cours'**
+  String get entStepRunning;
+
+  /// No description provided for @entStepTodo.
+  ///
+  /// In fr, this message translates to:
+  /// **'à venir'**
+  String get entStepTodo;
+
+  /// No description provided for @entStepSent.
+  ///
+  /// In fr, this message translates to:
+  /// **'Vidéo envoyée'**
+  String get entStepSent;
+
+  /// No description provided for @entStepDetect.
+  ///
+  /// In fr, this message translates to:
+  /// **'Détection de {move}'**
+  String entStepDetect(Object move);
+
+  /// No description provided for @entStepCompare.
+  ///
+  /// In fr, this message translates to:
+  /// **'Comparaison à la référence'**
+  String get entStepCompare;
+
+  /// No description provided for @entStepWriting.
+  ///
+  /// In fr, this message translates to:
+  /// **'{count, plural, =1{Rédaction de ton conseil} other{Rédaction de tes {count} conseils}}'**
+  String entStepWriting(int count);
+
+  /// No description provided for @entSuggestedExercise.
+  ///
+  /// In fr, this message translates to:
+  /// **'Exercice conseillé'**
+  String get entSuggestedExercise;
+
+  /// No description provided for @entYourNextSession.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ta prochaine séance du programme'**
+  String get entYourNextSession;
+
+  /// No description provided for @entTapMoment.
+  ///
+  /// In fr, this message translates to:
+  /// **'Touche un moment pour revoir le geste au ralenti.'**
+  String get entTapMoment;
+
+  /// No description provided for @entTipAt.
+  ///
+  /// In fr, this message translates to:
+  /// **'Conseil {index} · {time}'**
+  String entTipAt(int index, Object time);
+
+  /// No description provided for @entTipsByPriority.
+  ///
+  /// In fr, this message translates to:
+  /// **'{count, plural, =1{1 conseil} other{{count} conseils, par priorité}}'**
+  String entTipsByPriority(int count);
+
+  /// No description provided for @entVideoHint.
+  ///
+  /// In fr, this message translates to:
+  /// **'MP4, MOV · 60 s · 100 Mo max'**
+  String get entVideoHint;
+
+  /// No description provided for @entVideoIntro.
+  ///
+  /// In fr, this message translates to:
+  /// **'Envoie 30 s de ton geste : l’IA le compare à un geste de référence et te donne 3 conseils, avec le moment exact.'**
+  String get entVideoIntro;
+
+  /// No description provided for @entVideoPrivate.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ta vidéo reste privée et est supprimée après 30 jours.'**
+  String get entVideoPrivate;
+
+  /// No description provided for @entVideoTooBig.
+  ///
+  /// In fr, this message translates to:
+  /// **'Cette vidéo dépasse 100 Mo. Coupe-la à 60 s.'**
+  String get entVideoTooBig;
+
+  /// No description provided for @entVideoWrongFormat.
+  ///
+  /// In fr, this message translates to:
+  /// **'Choisis une vidéo MP4 ou MOV.'**
+  String get entVideoWrongFormat;
+
+  /// No description provided for @entWeLetYouKnow.
+  ///
+  /// In fr, this message translates to:
+  /// **'On te prévient'**
+  String get entWeLetYouKnow;
+
+  /// No description provided for @entWeLetYouKnowText.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ton analyse continue. Retrouve-la dans Entraînement dès qu’elle est prête.'**
+  String get entWeLetYouKnowText;
+
+  /// No description provided for @entWhatAiSaw.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ce que l’IA a vu'**
+  String get entWhatAiSaw;
+
+  /// No description provided for @entWhichMove.
+  ///
+  /// In fr, this message translates to:
+  /// **'Quel geste ?'**
+  String get entWhichMove;
+
+  /// No description provided for @entYourVideo.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ta vidéo'**
+  String get entYourVideo;
 }
 
 class _AppLocalizationsDelegate

@@ -433,3 +433,90 @@ class TrainingPlan {
 
   List<PlanItem> get sessions => [for (final i in items) if (i.isSession) i];
 }
+
+// ── AI video analysis (ENT-08, ENT-09) ─────────────────────────────────────────────────────────
+
+/// « Quel geste ? ».
+enum VideoMove { bandeja, vibora, service, volee, smash }
+
+/// What a tip points to: an exercise of the program, or the next session.
+enum TipLinkKind { exercise, nextSession }
+
+/// One of « 3 conseils, par priorité »: the moment in the video and what to change.
+@immutable
+class AnalysisTip {
+  const AnalysisTip({
+    required this.priority,
+    required this.at,
+    required this.title,
+    required this.text,
+    required this.link,
+    required this.linkKind,
+    this.programId,
+  });
+
+  final int priority;
+
+  /// The moment in the video (« 0:21 »).
+  final Duration at;
+  final String title;
+  final String text;
+
+  /// « Séance 2 · Le contact devant l’épaule », « Armé face au grillage · 3 × 10 ».
+  final String link;
+  final TipLinkKind linkKind;
+
+  /// The program the link opens (ENT-03).
+  final String? programId;
+}
+
+/// What the AI found in the player's video.
+@immutable
+class VideoAnalysis {
+  const VideoAnalysis({
+    required this.id,
+    required this.move,
+    required this.fileName,
+    required this.sizeBytes,
+    required this.duration,
+    required this.filmedAt,
+    required this.venue,
+    required this.analysedAt,
+    required this.summary,
+    required this.tips,
+    required this.confidenceNote,
+    this.sharedWithCoach = false,
+  });
+
+  final int id;
+  final VideoMove move;
+  final String fileName;
+  final int sizeBytes;
+  final Duration duration;
+  final DateTime filmedAt;
+  final String venue;
+  final DateTime analysedAt;
+
+  /// « Ce que l’IA a vu »: paragraphs split by a blank line.
+  final String summary;
+  final List<AnalysisTip> tips;
+
+  /// « Confiance moyenne : la vidéo est filmée de trois quarts… ».
+  final String confidenceNote;
+  final bool sharedWithCoach;
+
+  VideoAnalysis copyWith({String? summary, bool? sharedWithCoach}) => VideoAnalysis(
+    id: id,
+    move: move,
+    fileName: fileName,
+    sizeBytes: sizeBytes,
+    duration: duration,
+    filmedAt: filmedAt,
+    venue: venue,
+    analysedAt: analysedAt,
+    summary: summary ?? this.summary,
+    tips: tips,
+    confidenceNote: confidenceNote,
+    sharedWithCoach: sharedWithCoach ?? this.sharedWithCoach,
+  );
+}

@@ -1,14 +1,14 @@
 import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../l10n/l10n.dart';
-import '../common/widgets/coming_soon.dart';
 import 'screens/lesson_done_screen.dart';
 import 'screens/lesson_screen.dart';
 import 'screens/plan_goals_screen.dart';
 import 'screens/plan_screen.dart';
 import 'screens/program_screen.dart';
 import 'screens/programs_screen.dart';
+import 'screens/video_result_screen.dart';
+import 'screens/video_screen.dart';
 
 /// The Entraînement tab's routes, named by screen code (ENT-01…09). [trainingRoutes] are the
 /// children of `/training` (the tab root, ENT-01) in the player shell.
@@ -35,8 +35,6 @@ List<RouteBase> trainingRoutes(GlobalKey<NavigatorState> rootKey) {
     builder: (context, state) => build(state),
   );
 
-  Widget soon(String title) => ComingSoonScreen(title: title, fallback: TrainingRoutes.root);
-
   return [
     GoRoute(path: 'programs', builder: (context, state) => const ProgramsScreen()),
     page('program/:id', (s) => ProgramScreen(programId: s.pathParameters['id']!)),
@@ -50,7 +48,7 @@ List<RouteBase> trainingRoutes(GlobalKey<NavigatorState> rootKey) {
     ),
     page('plan', (s) => const PlanGoalsScreen()),
     page('plan/week', (s) => const PlanScreen()),
-    page('video', (s) => soon(l10n.entAnalyseVideoTitle)),
-    page('video/result', (s) => soon(l10n.entAnalyseVideoTitle)),
+    page('video', (s) => const VideoScreen()),
+    page('video/result', (s) => const VideoResultScreen()),
   ];
 }

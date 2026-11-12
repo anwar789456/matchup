@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/db/app_database.dart';
 import '../../../ui/ui.dart';
 import 'plan_generator.dart';
+import 'video_analyst.dart';
 import 'sqlite_training_repository.dart';
 import 'training_models.dart';
 import 'training_story.dart';
@@ -31,6 +32,18 @@ abstract interface class TrainingRepository {
 
   /// « Accepter le plan » (ENT-07): the sessions go to the agenda; the ENT-01 card is done.
   Future<TrainingProgress> acceptPlan(TrainingPlan plan);
+
+  /// Keeps the video's record (ENT-08) and returns what the AI found (ENT-09).
+  Future<VideoAnalysis> analyseVideo({
+    required VideoMove move,
+    required String fileName,
+    required int sizeBytes,
+    required bool share,
+    required DateTime now,
+  });
+
+  /// « Demander l’avis de Karim J. » (ENT-09).
+  Future<VideoAnalysis> shareWithCoach(VideoAnalysis analysis);
 }
 
 /// The story in memory, for widget tests.
@@ -105,6 +118,30 @@ class FakeTrainingRepository implements TrainingRepository {
     accepted.add(plan);
     return hidePlanCard();
   }
+
+  int _analyses = 0;
+
+  @override
+  Future<VideoAnalysis> analyseVideo({
+    required VideoMove move,
+    required String fileName,
+    required int sizeBytes,
+    required bool share,
+    required DateTime now,
+  }) => _wait(
+    VideoAnalyst.analyse(
+      id: ++_analyses,
+      move: move,
+      fileName: fileName,
+      sizeBytes: sizeBytes,
+      share: share,
+      now: now,
+    ),
+  );
+
+  @override
+  Future<VideoAnalysis> shareWithCoach(VideoAnalysis analysis) =>
+      _wait(analysis.copyWith(sharedWithCoach: true));
 }
 
 final trainingRepositoryProvider = Provider<TrainingRepository>(

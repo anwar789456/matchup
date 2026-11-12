@@ -5,6 +5,7 @@ import 'package:sqflite/sqflite.dart';
 import '../../../core/db/app_database.dart';
 import '../../../ui/ui.dart';
 import 'plan_generator.dart';
+import 'video_analyst.dart';
 import 'training_models.dart';
 import 'training_repository.dart';
 import 'training_story.dart';
@@ -155,6 +156,42 @@ class SqliteTrainingRepository implements TrainingRepository {
       await txn.update('entrainement_profil', {'plan_masque': 1});
     });
     return progress();
+  }
+
+  @override
+  Future<VideoAnalysis> analyseVideo({
+    required VideoMove move,
+    required String fileName,
+    required int sizeBytes,
+    required bool share,
+    required DateTime now,
+  }) async {
+    final id = await (await _db).insert('entrainement_analyses', {
+      'geste': move.name,
+      'fichier': fileName,
+      'taille': sizeBytes,
+      'partage': share ? 1 : 0,
+      'cree_le': DateTime.now().toIso8601String(),
+    });
+    return VideoAnalyst.analyse(
+      id: id,
+      move: move,
+      fileName: fileName,
+      sizeBytes: sizeBytes,
+      share: share,
+      now: now,
+    );
+  }
+
+  @override
+  Future<VideoAnalysis> shareWithCoach(VideoAnalysis analysis) async {
+    await (await _db).update(
+      'entrainement_analyses',
+      {'partage': 1},
+      where: 'id = ?',
+      whereArgs: [analysis.id],
+    );
+    return analysis.copyWith(sharedWithCoach: true);
   }
 
   /// The plans accepted, latest first (one JSON row per week).

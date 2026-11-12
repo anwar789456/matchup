@@ -11,7 +11,9 @@ import '../../../ui/ui.dart';
 import '../../subscription/controllers/subscription_controller.dart';
 import '../../subscription/data/subscription_repository.dart';
 import '../controllers/training_providers.dart';
+import '../controllers/video_analysis_controller.dart';
 import '../data/training_models.dart';
+import '../data/video_analyst.dart';
 import '../training_routes.dart';
 import '../widgets/training_widgets.dart';
 
@@ -187,7 +189,7 @@ class _Content extends ConsumerWidget {
         pad(_PlanSuggestion(program: active, subscription: subscription)),
       ],
       const SizedBox(height: MuSpace.s6),
-      pad(_VideoCard(onTap: () => context.push(TrainingRoutes.video))),
+      pad(const _VideoCard()),
       if (others.isNotEmpty) ...[
         const SizedBox(height: TrainingScreen._sectionGap),
         TrainingSectionHeader(
@@ -450,11 +452,10 @@ class _PlanSuggestion extends ConsumerWidget {
   }
 }
 
-/// « Analyse ta bandeja »: the entry of the AI video analysis (ENT-08).
-class _VideoCard extends StatelessWidget {
-  const _VideoCard({required this.onTap});
-
-  final VoidCallback onTap;
+/// « Analyse ta bandeja »: the entry of the AI video analysis (ENT-08) — or, while one runs in
+/// the background (« Me prévenir »), its progress, then « prête » with a link to the result.
+class _VideoCard extends ConsumerWidget {
+  const _VideoCard();
 
   static const double _thumbWidth = 100;
   static const double _thumbHeight = 72;
@@ -462,12 +463,20 @@ class _VideoCard extends StatelessWidget {
   static const double _discIcon = 16;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final c = context.mu;
+    final a = ref.watch(videoAnalysisProvider);
+    final text = a.done
+        ? l10n.entAnalysisReady(a.result!.tips.length)
+        : a.uploading
+        ? l10n.entAnalysisUploading
+        : a.analysing
+        ? l10n.entAnalysisRunning(a.step + 1, VideoAnalyst.stepCount)
+        : l10n.entAnalyseYourBandejaText;
     return MuCardSurface(
-      onTap: onTap,
+      onTap: () => context.push(a.done ? TrainingRoutes.videoResult : TrainingRoutes.video),
       padding: const EdgeInsets.all(MuSpace.s3),
-      semanticLabel: '${l10n.entAnalyseYourBandeja}. ${l10n.entAnalyseYourBandejaText}',
+      semanticLabel: '${l10n.entAnalyseYourBandeja}. $text',
       child: Row(
         children: [
           ClipRRect(
@@ -515,8 +524,10 @@ class _VideoCard extends StatelessWidget {
                 ),
                 const SizedBox(height: MuSpace.s1),
                 Text(
-                  l10n.entAnalyseYourBandejaText,
-                  style: MuType.caption.copyWith(color: c.textSecondary),
+                  text,
+                  style: MuType.caption.copyWith(
+                    color: a.done ? c.successText : c.textSecondary,
+                  ),
                 ),
               ],
             ),

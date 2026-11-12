@@ -9951,5 +9951,246 @@
         "type": "int"
       }
     }
-  }
+  },
+  "entAboutAMinute": "Encore 1 min environ. Tu peux quitter cet écran, on te prévient.",
+  "entAddExercisesToPlan": "Ajouter les exercices à mon plan",
+  "entAiAnalysing": "L’IA analyse {move}",
+  "@entAiAnalysing": {
+    "placeholders": {
+      "move": {
+        "type": "Object"
+      }
+    }
+  },
+  "entAiFootnote": "L’IA peut se tromper. Vérifie les infos importantes.",
+  "entAiMoments": "{count, plural, =1{IA · 1 moment} other{IA · {count} moments}}",
+  "@entAiMoments": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "entAiReady": "C’est prêt",
+  "entAiRereading": "L’IA relit ta vidéo…",
+  "entAiRewriting": "L’IA réécrit le texte…",
+  "entAnalysedAt": "Analysé à {time} · {confidence}",
+  "@entAnalysedAt": {
+    "placeholders": {
+      "time": {
+        "type": "Object"
+      },
+      "confidence": {
+        "type": "Object"
+      }
+    }
+  },
+  "entConfidenceMedium": "confiance moyenne",
+  "entAnalysisReady": "{count, plural, =1{Ton analyse est prête : 1 conseil t’attend.} other{Ton analyse est prête : {count} conseils t’attendent.}}",
+  "@entAnalysisReady": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "entAnalysisRunning": "L’IA analyse ta vidéo · étape {step} sur {total}",
+  "@entAnalysisRunning": {
+    "placeholders": {
+      "step": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "entAnalysisUploading": "Envoi de ta vidéo en cours…",
+  "entAskCoach": "Demander l’avis de {coach}",
+  "@entAskCoach": {
+    "placeholders": {
+      "coach": {
+        "type": "Object"
+      }
+    }
+  },
+  "entSentToCoach": "Envoyé à {coach}",
+  "@entSentToCoach": {
+    "placeholders": {
+      "coach": {
+        "type": "Object"
+      }
+    }
+  },
+  "entSentToCoachText": "Ton coach voit ta vidéo et tes conseils, il te répond ici.",
+  "entBeta": "Bêta",
+  "entClipAt": "Ta vidéo, image à {time}",
+  "@entClipAt": {
+    "placeholders": {
+      "time": {
+        "type": "Object"
+      }
+    }
+  },
+  "entCopied": "Copié",
+  "entCopy": "Copier",
+  "entTextCopied": "Texte copié",
+  "entEditedByYou": "modifié par toi",
+  "entFilmOrChoose": "Filme ou choisis une vidéo",
+  "entFilmTip": "Filme de côté à 3 m, corps entier dans le cadre.",
+  "entFilmedAt": "Filmée {day} · {venue}",
+  "@entFilmedAt": {
+    "placeholders": {
+      "day": {
+        "type": "Object"
+      },
+      "venue": {
+        "type": "Object"
+      }
+    }
+  },
+  "entMomentsLine": "{count, plural, =1{1 moment à revoir · vidéo du {day} · {duration}} other{{count} moments à revoir · vidéo du {day} · {duration}}}",
+  "@entMomentsLine": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "day": {
+        "type": "Object"
+      },
+      "duration": {
+        "type": "Object"
+      }
+    }
+  },
+  "entMoveBandeja": "Bandeja",
+  "entMoveVibora": "Víbora",
+  "entMoveService": "Service",
+  "entMoveVolley": "Volée",
+  "entMoveSmash": "Smash",
+  "entYourBandeja": "ta bandeja",
+  "entYourVibora": "ta víbora",
+  "entYourService": "ton service",
+  "entYourVolley": "ta volée",
+  "entYourSmash": "ton smash",
+  "entNoAnalysisTitle": "Pas encore d’analyse",
+  "entNoAnalysisText": "Envoie une vidéo de ton geste : l’IA te donne 3 conseils, avec le moment exact.",
+  "entNotUseful": "Pas utile",
+  "entUseful": "Utile",
+  "entThanksForFeedback": "Merci pour ton retour",
+  "entNotifyMe": "Me prévenir",
+  "entPlayFrom": "Lire la vidéo depuis {time}",
+  "@entPlayFrom": {
+    "placeholders": {
+      "time": {
+        "type": "Object"
+      }
+    }
+  },
+  "entPlayback": "Position de lecture",
+  "entPlaybackValue": "{at} sur {total}",
+  "@entPlaybackValue": {
+    "placeholders": {
+      "at": {
+        "type": "Object"
+      },
+      "total": {
+        "type": "Object"
+      }
+    }
+  },
+  "entPlayingNow": "En lecture",
+  "entReplayAt": "Revoir à {time}",
+  "@entReplayAt": {
+    "placeholders": {
+      "time": {
+        "type": "Object"
+      }
+    }
+  },
+  "entSeeResult": "Voir le résultat",
+  "entSeeTips": "{count, plural, =1{Voir mon conseil} other{Voir mes {count} conseils}}",
+  "@entSeeTips": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "entShareAnalysis": "Partager l’analyse",
+  "entShareAnalysisText": "L’IA de MatchUp a analysé {move} : « {tip} ».",
+  "@entShareAnalysisText": {
+    "placeholders": {
+      "move": {
+        "type": "Object"
+      },
+      "tip": {
+        "type": "Object"
+      }
+    }
+  },
+  "entShareWith": "Partager le résultat avec {coach}",
+  "@entShareWith": {
+    "placeholders": {
+      "coach": {
+        "type": "Object"
+      }
+    }
+  },
+  "entShareWithDetail": "Ton coach pourra commenter. Désactivé par défaut.",
+  "entStep": "Étape",
+  "entStepOutOf": "sur",
+  "entStepDone": "terminé",
+  "entStepRunning": "en cours",
+  "entStepTodo": "à venir",
+  "entStepSent": "Vidéo envoyée",
+  "entStepDetect": "Détection de {move}",
+  "@entStepDetect": {
+    "placeholders": {
+      "move": {
+        "type": "Object"
+      }
+    }
+  },
+  "entStepCompare": "Comparaison à la référence",
+  "entStepWriting": "{count, plural, =1{Rédaction de ton conseil} other{Rédaction de tes {count} conseils}}",
+  "@entStepWriting": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "entSuggestedExercise": "Exercice conseillé",
+  "entYourNextSession": "Ta prochaine séance du programme",
+  "entTapMoment": "Touche un moment pour revoir le geste au ralenti.",
+  "entTipAt": "Conseil {index} · {time}",
+  "@entTipAt": {
+    "placeholders": {
+      "index": {
+        "type": "int"
+      },
+      "time": {
+        "type": "Object"
+      }
+    }
+  },
+  "entTipsByPriority": "{count, plural, =1{1 conseil} other{{count} conseils, par priorité}}",
+  "@entTipsByPriority": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "entVideoHint": "MP4, MOV · 60 s · 100 Mo max",
+  "entVideoIntro": "Envoie 30 s de ton geste : l’IA le compare à un geste de référence et te donne 3 conseils, avec le moment exact.",
+  "entVideoPrivate": "Ta vidéo reste privée et est supprimée après 30 jours.",
+  "entVideoTooBig": "Cette vidéo dépasse 100 Mo. Coupe-la à 60 s.",
+  "entVideoWrongFormat": "Choisis une vidéo MP4 ou MOV.",
+  "entWeLetYouKnow": "On te prévient",
+  "entWeLetYouKnowText": "Ton analyse continue. Retrouve-la dans Entraînement dès qu’elle est prête.",
+  "entWhatAiSaw": "Ce que l’IA a vu",
+  "entWhichMove": "Quel geste ?",
+  "entYourVideo": "Ta vidéo"
 }

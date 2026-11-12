@@ -8,6 +8,9 @@ import 'package:matchup/core/db/app_database.dart';
 import 'package:matchup/features/player_onboarding/controllers/onboarding_controller.dart';
 import 'package:matchup/features/player_onboarding/data/onboarding_state.dart';
 import 'package:matchup/features/player_onboarding/data/onboarding_store.dart';
+import 'package:matchup/features/common/data/file_services.dart';
+import 'package:matchup/features/common/data/pro_providers.dart' show fileSourceProvider;
+import 'package:matchup/features/training/controllers/video_analysis_controller.dart';
 import 'package:matchup/features/training/data/sqlite_training_repository.dart';
 import 'package:matchup/features/training/data/training_models.dart';
 import 'package:matchup/features/training/data/training_repository.dart';
@@ -15,6 +18,19 @@ import 'package:matchup/features/training/data/training_story.dart';
 import 'package:matchup/features/training/training_routes.dart';
 import 'package:matchup/router.dart';
 import 'package:matchup/ui/ui.dart';
+
+/// The phone's picker, answering with one clip.
+class _PickOne implements FileSource {
+  _PickOne(this.file);
+
+  final PickedFile? file;
+
+  @override
+  Future<List<PickedFile>> pickImages() async => const [];
+
+  @override
+  Future<PickedFile?> pickOne(List<String> extensions) async => file;
+}
 
 void main() {
   setUpAll(() => GoogleFonts.config.allowRuntimeFetching = false);
@@ -123,7 +139,12 @@ void main() {
   });
 
   group('Entraînement tab', () {
-    Future<void> pumpApp(WidgetTester tester, String at) async {
+    Future<void> pumpApp(
+      WidgetTester tester,
+      String at, {
+      PickedFile? clip,
+      Duration step = const Duration(milliseconds: 300),
+    }) async {
       tester.view.physicalSize = const Size(390, 844);
       tester.view.devicePixelRatio = 1;
       addTearDown(tester.view.reset);
@@ -140,6 +161,12 @@ void main() {
             ),
           ),
           trainingRepositoryProvider.overrideWithValue(FakeTrainingRepository()),
+          fileSourceProvider.overrideWithValue(
+            _PickOne(clip ?? const PickedFile(name: 'bandeja-ven16.mp4', sizeBytes: 19293798)),
+          ),
+          videoAnalysisTimingProvider.overrideWithValue(
+            VideoAnalysisTiming(upload: const Duration(milliseconds: 500), step: step),
+          ),
         ],
       );
       addTearDown(container.dispose);
@@ -307,6 +334,79 @@ void main() {
       await tester.tap(find.text('Modifier'));
       await tester.pumpAndSettle();
       expect(find.text('Ton plan de la semaine'), findsOneWidget);
+      await settleFonts(tester);
+    });
+
+    testWidgets('ENT-08 → ENT-09: the clip is sent, analysed, then the 3 tips', (tester) async {
+      await pumpApp(tester, TrainingRoutes.video);
+      expect(find.text('Analyse vidéo'), findsOneWidget);
+      expect(find.text('Quel geste ?'), findsOneWidget);
+      await tester.tap(find.text('Filme ou choisis une vidéo'));
+      await tester.pump();
+      expect(find.text('bandeja-ven16.mp4'), findsOneWidget);
+      await tester.pump(const Duration(milliseconds: 600));
+      expect(find.text('L’IA analyse ta bandeja'), findsOneWidget);
+      expect(find.text('Détection de ta bandeja…'), findsOneWidget);
+      await tester.pump(const Duration(milliseconds: 300));
+      expect(find.text('Comparaison à la référence…'), findsOneWidget);
+      await tester.pump(const Duration(seconds: 1));
+      await see(tester, find.text('Voir mes 3 conseils'));
+      expect(find.text('C’est prêt'), findsOneWidget);
+      await tester.tap(find.text('Voir mes 3 conseils'));
+      await tester.pumpAndSettle();
+      expect(find.text('Ta bandeja'), findsOneWidget);
+      expect(find.text('Ce que l’IA a vu'), findsOneWidget);
+      expect(find.textContaining('Bons appuis et épaule bien de profil'), findsOneWidget);
+      await see(tester, find.text('Frappe devant l’épaule'));
+      expect(find.text('En lecture'), findsOneWidget);
+      await see(tester, find.text('0:08'));
+      await tester.tap(find.text('0:08'));
+      await tester.pumpAndSettle();
+      // « En lecture » moved to tip 2.
+      expect(
+        find.descendant(
+          of: find.ancestor(of: find.text('Arme plus tôt'), matching: find.byType(MuCardSurface)),
+          matching: find.text('En lecture'),
+        ),
+        findsOneWidget,
+      );
+      await tester.tap(find.text('Demander l’avis de Karim J.'));
+      await tester.pumpAndSettle();
+      expect(find.text('Envoyé à Karim J.'), findsWidgets);
+      await settleFonts(tester);
+    });
+
+    testWidgets('ENT-08 « Me prévenir »: ENT-01 follows the analysis, then opens ENT-09', (
+      tester,
+    ) async {
+      await pumpApp(tester, TrainingRoutes.video, step: const Duration(seconds: 3));
+      await tester.tap(find.text('Filme ou choisis une vidéo'));
+      await tester.pump(const Duration(milliseconds: 600));
+      await tester.tap(find.text('Me prévenir'));
+      await tester.pump(const Duration(milliseconds: 100));
+      await tester.pump(const Duration(milliseconds: 100));
+      expect(find.text('Mes programmes'), findsOneWidget);
+      await see(tester, find.text('Analyse ta bandeja'));
+      expect(find.textContaining('L’IA analyse ta vidéo · étape'), findsOneWidget);
+      await tester.pump(const Duration(seconds: 10));
+      await tester.pumpAndSettle();
+      expect(find.text('Ton analyse est prête : 3 conseils t’attendent.'), findsOneWidget);
+      await tester.tap(find.text('Analyse ta bandeja'));
+      await tester.pumpAndSettle();
+      expect(find.text('Ta bandeja'), findsOneWidget);
+      await settleFonts(tester);
+    });
+
+    testWidgets('ENT-08 refuses a clip over 100 Mo', (tester) async {
+      await pumpApp(
+        tester,
+        TrainingRoutes.video,
+        clip: const PickedFile(name: 'match.mp4', sizeBytes: 250 * 1000 * 1000),
+      );
+      await tester.tap(find.text('Filme ou choisis une vidéo'));
+      await tester.pumpAndSettle();
+      expect(find.text('Cette vidéo dépasse 100 Mo. Coupe-la à 60 s.'), findsOneWidget);
+      expect(find.text('match.mp4'), findsNothing);
       await settleFonts(tester);
     });
 

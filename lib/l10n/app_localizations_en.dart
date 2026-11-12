@@ -11757,4 +11757,320 @@ class AppLocalizationsEn extends AppLocalizations {
   String entMaxGoalsReached(int max) {
     return '$max objectifs maximum : retire-en un pour en choisir un autre.';
   }
+
+  @override
+  String get entAboutAMinute =>
+      'Encore 1 min environ. Tu peux quitter cet écran, on te prévient.';
+
+  @override
+  String get entAddExercisesToPlan => 'Ajouter les exercices à mon plan';
+
+  @override
+  String entAiAnalysing(Object move) {
+    return 'L’IA analyse $move';
+  }
+
+  @override
+  String get entAiFootnote =>
+      'L’IA peut se tromper. Vérifie les infos importantes.';
+
+  @override
+  String entAiMoments(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'IA · $count moments',
+      one: 'IA · 1 moment',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get entAiReady => 'C’est prêt';
+
+  @override
+  String get entAiRereading => 'L’IA relit ta vidéo…';
+
+  @override
+  String get entAiRewriting => 'L’IA réécrit le texte…';
+
+  @override
+  String entAnalysedAt(Object time, Object confidence) {
+    return 'Analysé à $time · $confidence';
+  }
+
+  @override
+  String get entConfidenceMedium => 'confiance moyenne';
+
+  @override
+  String entAnalysisReady(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Ton analyse est prête : $count conseils t’attendent.',
+      one: 'Ton analyse est prête : 1 conseil t’attend.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String entAnalysisRunning(int step, int total) {
+    return 'L’IA analyse ta vidéo · étape $step sur $total';
+  }
+
+  @override
+  String get entAnalysisUploading => 'Envoi de ta vidéo en cours…';
+
+  @override
+  String entAskCoach(Object coach) {
+    return 'Demander l’avis de $coach';
+  }
+
+  @override
+  String entSentToCoach(Object coach) {
+    return 'Envoyé à $coach';
+  }
+
+  @override
+  String get entSentToCoachText =>
+      'Ton coach voit ta vidéo et tes conseils, il te répond ici.';
+
+  @override
+  String get entBeta => 'Bêta';
+
+  @override
+  String entClipAt(Object time) {
+    return 'Ta vidéo, image à $time';
+  }
+
+  @override
+  String get entCopied => 'Copié';
+
+  @override
+  String get entCopy => 'Copier';
+
+  @override
+  String get entTextCopied => 'Texte copié';
+
+  @override
+  String get entEditedByYou => 'modifié par toi';
+
+  @override
+  String get entFilmOrChoose => 'Filme ou choisis une vidéo';
+
+  @override
+  String get entFilmTip => 'Filme de côté à 3 m, corps entier dans le cadre.';
+
+  @override
+  String entFilmedAt(Object day, Object venue) {
+    return 'Filmée $day · $venue';
+  }
+
+  @override
+  String entMomentsLine(int count, Object day, Object duration) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count moments à revoir · vidéo du $day · $duration',
+      one: '1 moment à revoir · vidéo du $day · $duration',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get entMoveBandeja => 'Bandeja';
+
+  @override
+  String get entMoveVibora => 'Víbora';
+
+  @override
+  String get entMoveService => 'Service';
+
+  @override
+  String get entMoveVolley => 'Volée';
+
+  @override
+  String get entMoveSmash => 'Smash';
+
+  @override
+  String get entYourBandeja => 'ta bandeja';
+
+  @override
+  String get entYourVibora => 'ta víbora';
+
+  @override
+  String get entYourService => 'ton service';
+
+  @override
+  String get entYourVolley => 'ta volée';
+
+  @override
+  String get entYourSmash => 'ton smash';
+
+  @override
+  String get entNoAnalysisTitle => 'Pas encore d’analyse';
+
+  @override
+  String get entNoAnalysisText =>
+      'Envoie une vidéo de ton geste : l’IA te donne 3 conseils, avec le moment exact.';
+
+  @override
+  String get entNotUseful => 'Pas utile';
+
+  @override
+  String get entUseful => 'Utile';
+
+  @override
+  String get entThanksForFeedback => 'Merci pour ton retour';
+
+  @override
+  String get entNotifyMe => 'Me prévenir';
+
+  @override
+  String entPlayFrom(Object time) {
+    return 'Lire la vidéo depuis $time';
+  }
+
+  @override
+  String get entPlayback => 'Position de lecture';
+
+  @override
+  String entPlaybackValue(Object at, Object total) {
+    return '$at sur $total';
+  }
+
+  @override
+  String get entPlayingNow => 'En lecture';
+
+  @override
+  String entReplayAt(Object time) {
+    return 'Revoir à $time';
+  }
+
+  @override
+  String get entSeeResult => 'Voir le résultat';
+
+  @override
+  String entSeeTips(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Voir mes $count conseils',
+      one: 'Voir mon conseil',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get entShareAnalysis => 'Partager l’analyse';
+
+  @override
+  String entShareAnalysisText(Object move, Object tip) {
+    return 'L’IA de MatchUp a analysé $move : « $tip ».';
+  }
+
+  @override
+  String entShareWith(Object coach) {
+    return 'Partager le résultat avec $coach';
+  }
+
+  @override
+  String get entShareWithDetail =>
+      'Ton coach pourra commenter. Désactivé par défaut.';
+
+  @override
+  String get entStep => 'Étape';
+
+  @override
+  String get entStepOutOf => 'sur';
+
+  @override
+  String get entStepDone => 'terminé';
+
+  @override
+  String get entStepRunning => 'en cours';
+
+  @override
+  String get entStepTodo => 'à venir';
+
+  @override
+  String get entStepSent => 'Vidéo envoyée';
+
+  @override
+  String entStepDetect(Object move) {
+    return 'Détection de $move';
+  }
+
+  @override
+  String get entStepCompare => 'Comparaison à la référence';
+
+  @override
+  String entStepWriting(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Rédaction de tes $count conseils',
+      one: 'Rédaction de ton conseil',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get entSuggestedExercise => 'Exercice conseillé';
+
+  @override
+  String get entYourNextSession => 'Ta prochaine séance du programme';
+
+  @override
+  String get entTapMoment =>
+      'Touche un moment pour revoir le geste au ralenti.';
+
+  @override
+  String entTipAt(int index, Object time) {
+    return 'Conseil $index · $time';
+  }
+
+  @override
+  String entTipsByPriority(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count conseils, par priorité',
+      one: '1 conseil',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get entVideoHint => 'MP4, MOV · 60 s · 100 Mo max';
+
+  @override
+  String get entVideoIntro =>
+      'Envoie 30 s de ton geste : l’IA le compare à un geste de référence et te donne 3 conseils, avec le moment exact.';
+
+  @override
+  String get entVideoPrivate =>
+      'Ta vidéo reste privée et est supprimée après 30 jours.';
+
+  @override
+  String get entVideoTooBig => 'Cette vidéo dépasse 100 Mo. Coupe-la à 60 s.';
+
+  @override
+  String get entVideoWrongFormat => 'Choisis une vidéo MP4 ou MOV.';
+
+  @override
+  String get entWeLetYouKnow => 'On te prévient';
+
+  @override
+  String get entWeLetYouKnowText =>
+      'Ton analyse continue. Retrouve-la dans Entraînement dès qu’elle est prête.';
+
+  @override
+  String get entWhatAiSaw => 'Ce que l’IA a vu';
+
+  @override
+  String get entWhichMove => 'Quel geste ?';
+
+  @override
+  String get entYourVideo => 'Ta vidéo';
 }
