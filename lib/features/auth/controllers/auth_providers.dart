@@ -4,7 +4,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/api/api_client.dart';
 import '../../../core/api/session.dart';
 import '../../../core/db/app_database.dart';
+import 'package:supabase_flutter/supabase_flutter.dart' show Supabase;
+
 import '../../../core/sms/sms_sender.dart';
+import '../../../core/supabase/supabase_config.dart';
+import '../data/supabase_auth_repository.dart';
 import '../data/api_auth_repository.dart';
 import '../data/auth_repository.dart';
 import '../data/sqlite_auth_repository.dart';
@@ -18,6 +22,14 @@ final authRepositoryProvider = Provider<AuthRepository>((ref) {
     onSignedIn: (id) => ref.read(sessionProvider.notifier).signIn(id),
     userId: () => ref.read(sessionProvider),
   );
+  // With supabase.json, Supabase Auth owns the accounts and sends the emails.
+  if (SupabaseConfig.configured) {
+    return SupabaseAuthRepository(
+      () async => Supabase.instance.client.auth,
+      local,
+      ready: SupabaseConfig.ensureSession,
+    );
+  }
   final api = ref.read(apiClientProvider);
   return api == null ? local : ApiAuthRepository(api, local);
 });
