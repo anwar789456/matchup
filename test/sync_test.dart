@@ -140,19 +140,26 @@ void main() {
       return d;
     }
 
+    // Supabase user ids are UUIDs; demo and pre-sign-in authors are not.
+    const ua = '0b6f1c2e-1111-4a1b-9c2d-aaaaaaaaaaaa';
+    const ub = '7d3e9f40-2222-4c5d-8e6f-bbbbbbbbbbbb';
     final store = <String, Map<String, Map<String, Object?>>>{};
     final a = await phone('a');
     final b = await phone('b');
-    final syncA = SyncService(a, MemoryRemote('user-a', store: store), tables: tables);
-    final syncB = SyncService(b, MemoryRemote('user-b', store: store), tables: tables);
+    final syncA = SyncService(a, MemoryRemote(ua, store: store), tables: tables);
+    final syncB = SyncService(b, MemoryRemote(ub, store: store), tables: tables);
     Future<List<String>> texts(AppDatabase d) async =>
         [for (final r in await (await d.db).query('test_posts', orderBy: 'id')) r['texte']! as String];
 
-    await (await a.db).insert('test_posts', {'id': 'p-a', 'auteur_id': 'user-a', 'texte': 'Salut de A'});
+    // On B: a demo row and one written before sign-in. Neither is ever sent nor removed.
+    await (await b.db).insert('test_posts', {'id': 'demo-1', 'auteur_id': '1', 'texte': 'Démo'});
+    await (await b.db).insert('test_posts', {'id': 'hors-ligne', 'auteur_id': 'local', 'texte': 'Avant connexion'});
+    await (await a.db).insert('test_posts', {'id': 'p-a', 'auteur_id': ua, 'texte': 'Salut de A'});
     await syncA.sync();
     expect((await syncB.sync()).received, 1);
-    expect(await texts(b), ['Salut de A']);
-    expect(await syncB.pending(), 0, reason: 'pulled rows are not queued');
+    expect(await texts(b), ['Démo', 'Avant connexion', 'Salut de A']);
+    expect(await syncB.pending(), 0, reason: 'pulled rows are not queued; local-author rows are not sent');
+    expect(store['test_posts']!.values.map((r) => r['id']), ['p-a']);
 
     // B edits A's post on its phone: never sent as B's.
     await (await b.db).update('test_posts', {'texte': 'Modifié par B'}, where: 'id = ?', whereArgs: ['p-a']);
@@ -160,7 +167,7 @@ void main() {
     expect(store['test_posts']!.values.single['texte'], 'Salut de A');
     expect(await syncB.pending(), 0);
 
-    await (await b.db).insert('test_posts', {'id': 'p-b', 'auteur_id': 'user-b', 'texte': 'Salut de B'});
+    await (await b.db).insert('test_posts', {'id': 'p-b', 'auteur_id': ub, 'texte': 'Salut de B'});
     await syncB.sync();
     await syncA.sync();
     expect(await texts(a), ['Salut de A', 'Salut de B']);
@@ -169,6 +176,6 @@ void main() {
     await (await a.db).delete('test_posts', where: 'id = ?', whereArgs: ['p-a']);
     await syncA.sync();
     await syncB.sync();
-    expect(await texts(b), ['Salut de B']);
+    expect(await texts(b), ['Démo', 'Avant connexion', 'Salut de B']);
   });
 }
