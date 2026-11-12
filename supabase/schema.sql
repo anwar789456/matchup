@@ -268,3 +268,247 @@ drop policy if exists "recu_lignes_ecriture" on public.recu_lignes;
 create policy "recu_lignes_lecture" on public.recu_lignes for select to authenticated using (owner_id = auth.uid());
 create policy "recu_lignes_ecriture" on public.recu_lignes for all to authenticated using (owner_id = auth.uid()) with check (owner_id = auth.uid());
 
+-- forum_membres (shared)
+create table if not exists public.forum_membres (
+  owner_id uuid not null default auth.uid() references auth.users (id) on delete cascade,
+  "id" text,
+  "auteur_id" text not null,
+  "nom" text not null,
+  "pseudo" text,
+  "niveau" double precision,
+  "sport" text,
+  "maj_le" text not null,
+  primary key (owner_id, "id")
+);
+alter table public.forum_membres add column if not exists "id" text;
+alter table public.forum_membres add column if not exists "auteur_id" text;
+alter table public.forum_membres add column if not exists "nom" text;
+alter table public.forum_membres add column if not exists "pseudo" text;
+alter table public.forum_membres add column if not exists "niveau" double precision;
+alter table public.forum_membres add column if not exists "sport" text;
+alter table public.forum_membres add column if not exists "maj_le" text;
+alter table public.forum_membres enable row level security;
+drop policy if exists "forum_membres_lecture" on public.forum_membres;
+drop policy if exists "forum_membres_ecriture" on public.forum_membres;
+create policy "forum_membres_lecture" on public.forum_membres for select to authenticated using (true);
+create policy "forum_membres_ecriture" on public.forum_membres for all to authenticated using (owner_id = auth.uid()) with check (owner_id = auth.uid() and "auteur_id" = auth.uid()::text);
+
+-- forum_sujets (shared)
+create table if not exists public.forum_sujets (
+  owner_id uuid not null default auth.uid() references auth.users (id) on delete cascade,
+  "id" text,
+  "auteur_id" text not null,
+  "titre" text not null,
+  "contenu" text not null,
+  "categorie" text not null,
+  "sport" text,
+  "tags" text not null,
+  "images" text not null,
+  "mentions" text not null,
+  "epingle" bigint not null,
+  "statut" text not null,
+  "meilleure_reponse_id" text,
+  "score_ia" double precision not null,
+  "motif_ia" text,
+  "publie_malgre_alerte" bigint not null,
+  "modifie_le" text,
+  "cree_le" text not null,
+  primary key (owner_id, "id")
+);
+alter table public.forum_sujets add column if not exists "id" text;
+alter table public.forum_sujets add column if not exists "auteur_id" text;
+alter table public.forum_sujets add column if not exists "titre" text;
+alter table public.forum_sujets add column if not exists "contenu" text;
+alter table public.forum_sujets add column if not exists "categorie" text;
+alter table public.forum_sujets add column if not exists "sport" text;
+alter table public.forum_sujets add column if not exists "tags" text;
+alter table public.forum_sujets add column if not exists "images" text;
+alter table public.forum_sujets add column if not exists "mentions" text;
+alter table public.forum_sujets add column if not exists "epingle" bigint;
+alter table public.forum_sujets add column if not exists "statut" text;
+alter table public.forum_sujets add column if not exists "meilleure_reponse_id" text;
+alter table public.forum_sujets add column if not exists "score_ia" double precision;
+alter table public.forum_sujets add column if not exists "motif_ia" text;
+alter table public.forum_sujets add column if not exists "publie_malgre_alerte" bigint;
+alter table public.forum_sujets add column if not exists "modifie_le" text;
+alter table public.forum_sujets add column if not exists "cree_le" text;
+alter table public.forum_sujets enable row level security;
+drop policy if exists "forum_sujets_lecture" on public.forum_sujets;
+drop policy if exists "forum_sujets_ecriture" on public.forum_sujets;
+create policy "forum_sujets_lecture" on public.forum_sujets for select to authenticated using (true);
+create policy "forum_sujets_ecriture" on public.forum_sujets for all to authenticated using (owner_id = auth.uid()) with check (owner_id = auth.uid() and "auteur_id" = auth.uid()::text);
+
+-- forum_messages (shared)
+create table if not exists public.forum_messages (
+  owner_id uuid not null default auth.uid() references auth.users (id) on delete cascade,
+  "id" text,
+  "sujet_id" text not null,
+  "parent_id" text,
+  "auteur_id" text not null,
+  "en_reponse_a_id" text,
+  "contenu" text not null,
+  "mentions" text not null,
+  "statut" text not null,
+  "score_ia" double precision not null,
+  "motif_ia" text,
+  "publie_malgre_alerte" bigint not null,
+  "modifie_le" text,
+  "cree_le" text not null,
+  primary key (owner_id, "id")
+);
+alter table public.forum_messages add column if not exists "id" text;
+alter table public.forum_messages add column if not exists "sujet_id" text;
+alter table public.forum_messages add column if not exists "parent_id" text;
+alter table public.forum_messages add column if not exists "auteur_id" text;
+alter table public.forum_messages add column if not exists "en_reponse_a_id" text;
+alter table public.forum_messages add column if not exists "contenu" text;
+alter table public.forum_messages add column if not exists "mentions" text;
+alter table public.forum_messages add column if not exists "statut" text;
+alter table public.forum_messages add column if not exists "score_ia" double precision;
+alter table public.forum_messages add column if not exists "motif_ia" text;
+alter table public.forum_messages add column if not exists "publie_malgre_alerte" bigint;
+alter table public.forum_messages add column if not exists "modifie_le" text;
+alter table public.forum_messages add column if not exists "cree_le" text;
+alter table public.forum_messages enable row level security;
+drop policy if exists "forum_messages_lecture" on public.forum_messages;
+drop policy if exists "forum_messages_ecriture" on public.forum_messages;
+create policy "forum_messages_lecture" on public.forum_messages for select to authenticated using (true);
+create policy "forum_messages_ecriture" on public.forum_messages for all to authenticated using (owner_id = auth.uid()) with check (owner_id = auth.uid() and "auteur_id" = auth.uid()::text);
+
+-- forum_votes (shared)
+create table if not exists public.forum_votes (
+  owner_id uuid not null default auth.uid() references auth.users (id) on delete cascade,
+  "id" text,
+  "auteur_id" text not null,
+  "cible" text not null,
+  "cible_id" text not null,
+  "valeur" bigint not null,
+  "cree_le" text not null,
+  primary key (owner_id, "id")
+);
+alter table public.forum_votes add column if not exists "id" text;
+alter table public.forum_votes add column if not exists "auteur_id" text;
+alter table public.forum_votes add column if not exists "cible" text;
+alter table public.forum_votes add column if not exists "cible_id" text;
+alter table public.forum_votes add column if not exists "valeur" bigint;
+alter table public.forum_votes add column if not exists "cree_le" text;
+alter table public.forum_votes enable row level security;
+drop policy if exists "forum_votes_lecture" on public.forum_votes;
+drop policy if exists "forum_votes_ecriture" on public.forum_votes;
+create policy "forum_votes_lecture" on public.forum_votes for select to authenticated using (true);
+create policy "forum_votes_ecriture" on public.forum_votes for all to authenticated using (owner_id = auth.uid()) with check (owner_id = auth.uid() and "auteur_id" = auth.uid()::text);
+
+-- forum_reactions (shared)
+create table if not exists public.forum_reactions (
+  owner_id uuid not null default auth.uid() references auth.users (id) on delete cascade,
+  "id" text,
+  "auteur_id" text not null,
+  "cible" text not null,
+  "cible_id" text not null,
+  "type" text not null,
+  "cree_le" text not null,
+  primary key (owner_id, "id")
+);
+alter table public.forum_reactions add column if not exists "id" text;
+alter table public.forum_reactions add column if not exists "auteur_id" text;
+alter table public.forum_reactions add column if not exists "cible" text;
+alter table public.forum_reactions add column if not exists "cible_id" text;
+alter table public.forum_reactions add column if not exists "type" text;
+alter table public.forum_reactions add column if not exists "cree_le" text;
+alter table public.forum_reactions enable row level security;
+drop policy if exists "forum_reactions_lecture" on public.forum_reactions;
+drop policy if exists "forum_reactions_ecriture" on public.forum_reactions;
+create policy "forum_reactions_lecture" on public.forum_reactions for select to authenticated using (true);
+create policy "forum_reactions_ecriture" on public.forum_reactions for all to authenticated using (owner_id = auth.uid()) with check (owner_id = auth.uid() and "auteur_id" = auth.uid()::text);
+
+-- forum_signalements (owner)
+create table if not exists public.forum_signalements (
+  owner_id uuid not null default auth.uid() references auth.users (id) on delete cascade,
+  "id" text,
+  "auteur_id" text not null,
+  "cible" text not null,
+  "cible_id" text not null,
+  "motif" text not null,
+  "details" text,
+  "statut" text not null,
+  "cree_le" text not null,
+  primary key (owner_id, "id")
+);
+alter table public.forum_signalements add column if not exists "id" text;
+alter table public.forum_signalements add column if not exists "auteur_id" text;
+alter table public.forum_signalements add column if not exists "cible" text;
+alter table public.forum_signalements add column if not exists "cible_id" text;
+alter table public.forum_signalements add column if not exists "motif" text;
+alter table public.forum_signalements add column if not exists "details" text;
+alter table public.forum_signalements add column if not exists "statut" text;
+alter table public.forum_signalements add column if not exists "cree_le" text;
+alter table public.forum_signalements enable row level security;
+drop policy if exists "forum_signalements_lecture" on public.forum_signalements;
+drop policy if exists "forum_signalements_ecriture" on public.forum_signalements;
+create policy "forum_signalements_lecture" on public.forum_signalements for select to authenticated using (owner_id = auth.uid());
+create policy "forum_signalements_ecriture" on public.forum_signalements for all to authenticated using (owner_id = auth.uid()) with check (owner_id = auth.uid());
+
+-- forum_favoris (owner)
+create table if not exists public.forum_favoris (
+  owner_id uuid not null default auth.uid() references auth.users (id) on delete cascade,
+  "utilisateur_id" text not null,
+  "sujet_id" text not null,
+  "cree_le" text not null,
+  primary key (owner_id, "utilisateur_id", "sujet_id")
+);
+alter table public.forum_favoris add column if not exists "utilisateur_id" text;
+alter table public.forum_favoris add column if not exists "sujet_id" text;
+alter table public.forum_favoris add column if not exists "cree_le" text;
+alter table public.forum_favoris enable row level security;
+drop policy if exists "forum_favoris_lecture" on public.forum_favoris;
+drop policy if exists "forum_favoris_ecriture" on public.forum_favoris;
+create policy "forum_favoris_lecture" on public.forum_favoris for select to authenticated using (owner_id = auth.uid());
+create policy "forum_favoris_ecriture" on public.forum_favoris for all to authenticated using (owner_id = auth.uid()) with check (owner_id = auth.uid());
+
+-- forum_suivis (owner)
+create table if not exists public.forum_suivis (
+  owner_id uuid not null default auth.uid() references auth.users (id) on delete cascade,
+  "utilisateur_id" text not null,
+  "type" text not null,
+  "cible_id" text not null,
+  primary key (owner_id, "utilisateur_id", "type", "cible_id")
+);
+alter table public.forum_suivis add column if not exists "utilisateur_id" text;
+alter table public.forum_suivis add column if not exists "type" text;
+alter table public.forum_suivis add column if not exists "cible_id" text;
+alter table public.forum_suivis enable row level security;
+drop policy if exists "forum_suivis_lecture" on public.forum_suivis;
+drop policy if exists "forum_suivis_ecriture" on public.forum_suivis;
+create policy "forum_suivis_lecture" on public.forum_suivis for select to authenticated using (owner_id = auth.uid());
+create policy "forum_suivis_ecriture" on public.forum_suivis for all to authenticated using (owner_id = auth.uid()) with check (owner_id = auth.uid());
+
+-- forum_blocages (owner)
+create table if not exists public.forum_blocages (
+  owner_id uuid not null default auth.uid() references auth.users (id) on delete cascade,
+  "utilisateur_id" text not null,
+  "bloque_id" text not null,
+  primary key (owner_id, "utilisateur_id", "bloque_id")
+);
+alter table public.forum_blocages add column if not exists "utilisateur_id" text;
+alter table public.forum_blocages add column if not exists "bloque_id" text;
+alter table public.forum_blocages enable row level security;
+drop policy if exists "forum_blocages_lecture" on public.forum_blocages;
+drop policy if exists "forum_blocages_ecriture" on public.forum_blocages;
+create policy "forum_blocages_lecture" on public.forum_blocages for select to authenticated using (owner_id = auth.uid());
+create policy "forum_blocages_ecriture" on public.forum_blocages for all to authenticated using (owner_id = auth.uid()) with check (owner_id = auth.uid());
+
+-- forum_visites (owner)
+create table if not exists public.forum_visites (
+  owner_id uuid not null default auth.uid() references auth.users (id) on delete cascade,
+  "utilisateur_id" text,
+  "derniere_visite" text not null,
+  primary key (owner_id, "utilisateur_id")
+);
+alter table public.forum_visites add column if not exists "utilisateur_id" text;
+alter table public.forum_visites add column if not exists "derniere_visite" text;
+alter table public.forum_visites enable row level security;
+drop policy if exists "forum_visites_lecture" on public.forum_visites;
+drop policy if exists "forum_visites_ecriture" on public.forum_visites;
+create policy "forum_visites_lecture" on public.forum_visites for select to authenticated using (owner_id = auth.uid());
+create policy "forum_visites_ecriture" on public.forum_visites for all to authenticated using (owner_id = auth.uid()) with check (owner_id = auth.uid());
+
