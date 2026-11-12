@@ -133,7 +133,7 @@ class SubscriptionController extends AsyncNotifier<Subscription> {
       );
       await _repo.addReceipt(entry);
       // EML-07 « Premium est renouvelé », with the invoice; only for invoices seen for the first time.
-      unawaited(ref.read(mailerProvider).premiumRenewed(entry, next: next));
+      unawaited(ref.read(mailerProvider).premiumRenewed(entry, next: next, invoiceUrl: i.pdf));
       if (i.paymentIntentId != null) {
         await payments.recordStripe(
           amount: i.amount,

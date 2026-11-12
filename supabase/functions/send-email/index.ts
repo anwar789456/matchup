@@ -48,8 +48,11 @@ const dt = (n: unknown) => {
 const row = (label: string, value: string) =>
   `<tr><td style="padding:8px 0;color:${C.ink500};font-size:14px">${esc(label)}</td><td style="padding:8px 0;text-align:right;color:${C.ink900};font-size:14px;font-weight:600">${value}</td></tr>`;
 
+/** Only real https links become buttons: an email never shows a button that leads nowhere. */
+const safeUrl = (u: unknown) => (typeof u === "string" && /^https:\/\/[^\s"<>]+$/.test(u) ? u : null);
+
 /** The shell shared by every email (the « coque » of EML-05 and EML-07). */
-function shell(o: { overline: string; title: string; intro: string; key?: string; rows?: string; button?: string; after?: string; why: string }) {
+function shell(o: { overline: string; title: string; intro: string; key?: string; rows?: string; button?: { label: string; url: string | null }; after?: string; why: string }) {
   return `<!doctype html><html lang="fr"><body style="margin:0;background:${C.ink50};font-family:'Plus Jakarta Sans',Arial,sans-serif">
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:${C.ink50};padding:24px 12px"><tr><td align="center">
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:520px;background:${C.white};border-radius:16px;overflow:hidden">
@@ -60,7 +63,7 @@ function shell(o: { overline: string; title: string; intro: string; key?: string
 <p style="margin:0 0 20px;font-size:15px;line-height:1.5;color:${C.ink500}">${o.intro}</p>
 ${o.key ?? ""}
 ${o.rows ? `<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border-top:1px solid ${C.ink100};margin-top:8px">${o.rows}</table>` : ""}
-${o.button ? `<p style="margin:24px 0 8px"><span style="display:inline-block;background:${C.volt};color:${C.ink900};font-weight:700;font-size:15px;padding:14px 22px;border-radius:12px">${esc(o.button)}</span></p>` : ""}
+${o.button?.url ? `<p style="margin:24px 0 8px"><a href="${esc(o.button.url)}" style="display:inline-block;background:${C.volt};color:${C.ink900};font-weight:700;font-size:15px;padding:14px 22px;border-radius:12px;text-decoration:none">${esc(o.button.label)}</a></p>` : ""}
 ${o.after ?? ""}
 <p style="margin:28px 0 4px;font-size:15px;color:${C.ink900}">À très vite sur le terrain,<br><strong>L’équipe MatchUp</strong></p>
 <p style="margin:0 0 24px;font-size:13px;color:${C.ink500}">Joue. Réserve. Progresse.</p>
@@ -118,7 +121,8 @@ function render(template: string, d: Data): { subject: string; html: string } | 
           title: "Premium est renouvelé",
           intro: `${dt(d.amount)} prélevés le ${esc(d.date)} sur ${esc(d.card)}.${d.next ? ` Prochain prélèvement le ${esc(d.next)}.` : ""} La facture est en pièce jointe.`,
           rows: row("Facture N°", esc(d.number)) + row("Montant", dt(d.amount)) + row("Carte", esc(d.card)),
-          button: "Voir le reçu",
+          // Stripe's own invoice PDF, when the app passes its link.
+          button: { label: "Voir le reçu", url: safeUrl(d.url) },
           why: "Tu reçois cet email car tu as un abonnement Premium. Les emails de facturation sont toujours envoyés.",
         }),
       };
@@ -128,8 +132,7 @@ function render(template: string, d: Data): { subject: string; html: string } | 
         html: shell({
           overline: "Abonnement",
           title: `Ton paiement de ${dt(d.amount)} n’est pas passé`,
-          intro: `Ta banque a refusé le prélèvement du ${esc(d.date)}. Rien n’a été débité. Mets ta carte à jour${d.deadline ? ` avant le ${esc(d.deadline)}` : ""}.`,
-          button: "Mettre à jour ma carte",
+          intro: `Ta banque a refusé le prélèvement du ${esc(d.date)}. Rien n’a été débité. Mets ta carte à jour dans l’app${d.deadline ? ` avant le ${esc(d.deadline)}` : ""} (Profil › Abonnement).`,
           why: "Tu reçois cet email car tu as un abonnement Premium. Les emails de facturation sont toujours envoyés.",
         }),
       };
@@ -141,8 +144,7 @@ function render(template: string, d: Data): { subject: string; html: string } | 
           title: "Ton essai Premium se termine dans 3 jours",
           intro: `Ton essai gratuit s’arrête le ${esc(d.date)}. Si tu ne fais rien, Premium continue à ${dt(d.amount)} par mois.`,
           rows: row("Premier prélèvement", `${esc(d.date)} · ${dt(d.amount)}`) + row("Carte", esc(d.card)) + row("Engagement", "Aucun · résiliable à tout moment"),
-          button: "Gérer mon abonnement",
-          after: `<p style="margin:20px 0 0;font-size:14px;line-height:1.5;color:${C.ink500}"><strong style="color:${C.ink900}">Tu ne veux pas continuer ?</strong> Résilie avant le ${esc(d.date)} : aucun prélèvement, et Premium reste actif jusqu’à cette date.</p>`,
+          after: `<p style="margin:20px 0 0;font-size:14px;line-height:1.5;color:${C.ink500}"><strong style="color:${C.ink900}">Tu ne veux pas continuer ?</strong> Résilie dans l’app (Profil › Abonnement) avant le ${esc(d.date)} : aucun prélèvement, et Premium reste actif jusqu’à cette date.</p>`,
           why: "Tu reçois cet email car tu as un essai Premium en cours. Les emails de facturation sont toujours envoyés.",
         }),
       };

@@ -18,7 +18,8 @@ import 'receipt_pdf.dart';
 /// Never blocks a screen and never fails one: without Supabase, or offline, nothing is sent.
 abstract interface class Mailer {
   Future<void> receipt(ReceiptEntry r);
-  Future<void> premiumRenewed(ReceiptEntry r, {DateTime? next});
+  /// [invoiceUrl]: Stripe's PDF of the invoice, behind the email's « Voir le reçu ».
+  Future<void> premiumRenewed(ReceiptEntry r, {DateTime? next, String? invoiceUrl});
   Future<void> refund({required String number, required String label, required num amount, required bool toCard, required String card});
 }
 
@@ -64,12 +65,13 @@ class SupabaseMailer implements Mailer {
   }, pdf: r);
 
   @override
-  Future<void> premiumRenewed(ReceiptEntry r, {DateTime? next}) => _send('premium_renewed', {
+  Future<void> premiumRenewed(ReceiptEntry r, {DateTime? next, String? invoiceUrl}) => _send('premium_renewed', {
     'number': r.number,
     'amount': r.amount,
     'card': r.card,
     'date': formatDay(r.date),
     'next': next == null ? null : formatDay(next),
+    'url': invoiceUrl,
   }, pdf: r);
 
   @override
