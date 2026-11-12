@@ -27,6 +27,21 @@ class Session extends Notifier<int?> {
     state = null;
     await _prefs.set(_key, null);
   }
+
+  /// The signed-in account went through its setup once: the next sign-ins open [route] (its
+  /// home or dashboard) instead of the roles screen.
+  Future<void> markSetupDone(String route) async {
+    final id = state;
+    if (id != null) await _prefs.set(_setupKey(id), route);
+  }
+
+  /// Where the signed-in account lands after signing in, or null while its setup was never done.
+  Future<String?> setupDoneRoute() async {
+    final id = state;
+    return id == null ? null : _prefs.get(_setupKey(id));
+  }
+
+  static String _setupKey(int id) => 'compte.$id.accueil';
 }
 
 final sessionProvider = NotifierProvider<Session, int?>(Session.new);
