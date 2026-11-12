@@ -98,7 +98,9 @@ Future<void> showDebugMenu(BuildContext context, WidgetRef ref) => MuBottomSheet
                 ? null
                 : () async {
                     if (!await SupabaseConfig.ensureSession()) return;
-                    ref.read(lastSyncProvider.notifier).set(await ref.read(syncServiceProvider).sync());
+                    final report = await ref.read(syncServiceProvider).sync();
+                    ref.read(lastSyncProvider.notifier).set(report);
+                    if (report.received > 0) ref.read(syncRevisionProvider.notifier).bump();
                   },
           ),
           section('Paiement'),

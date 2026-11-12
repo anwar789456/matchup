@@ -46,6 +46,29 @@ The debug menu (bug button) shows the last sync and has « Synchroniser maintena
 Your repositories do not change. The same goes for a new column: add it with a new schema
 version in `lib/core/db/schema.dart`, then steps 2 and 3.
 
+## Shared tables (forum, tournaments: what everyone must see)
+
+`SyncScope.owner` rows are private and come down once per phone. `SyncScope.shared` rows come
+down from **everyone at every sync** (every 30 s), and rows others deleted disappear. Declare:
+
+```dart
+SyncTable('forum_sujets', scope: SyncScope.shared, ownerColumn: 'auteur_id'),
+```
+
+The table must follow three rules, or rows clash or get refused:
+
+1. **Text ids made on the phone** (a random UUID), never 1, 2, 3 per phone.
+2. **An author column** (`ownerColumn`) holding `SupabaseConfig.userId`, the signed-in Supabase
+   user. A phone only sends rows it authored; Supabase refuses a row whose author is someone
+   else. When `SupabaseConfig.userId` is null (no Supabase, or not reached yet) use a local id:
+   the row stays on that phone.
+3. **One row per person** for what several people change: a vote, a report, a registration.
+   Count them; never write a counter into someone else's row. Moderation of other people's rows
+   (« hidden after 3 reports ») belongs in a Supabase trigger, not on the phone.
+
+Lists refresh when new rows arrive if their provider watches the sync:
+`ref.watch(syncRevisionProvider);`
+
 ## Good to know
 
 - The story's seed rows stay on each phone; only what the user changes is sent.
