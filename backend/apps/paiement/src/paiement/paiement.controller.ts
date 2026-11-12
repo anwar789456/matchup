@@ -1,19 +1,22 @@
-import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, Query } from '@nestjs/common';
+import { Body, Controller, Get, Param, ParseIntPipe, Post, Query } from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 
-import { CreatePaiementDto, UpdatePaiementDto, QueryPaiementDto } from './paiement.dto';
+import { AuthentifierDto, PayerDto, QueryPaiementDto, RembourserDto } from './paiement.dto';
 import { PaiementService } from './paiement.service';
 
-/** /api/paiement/paiements */
+/**
+ * /api/paiement/paiements. Pas de POST/PATCH/DELETE « bruts » : un paiement ne passe à `paye`
+ * qu’à travers la banque (simulée) ou le guichet.
+ */
 @ApiTags('paiements')
 @Controller('paiements')
 export class PaiementController {
   constructor(private readonly service: PaiementService) {}
 
   @Get()
-  @ApiOperation({ summary: 'Liste (filtres facultatifs en query)' })
+  @ApiOperation({ summary: 'Liste (filtres facultatifs), le plus récent d’abord' })
   findAll(@Query() query: QueryPaiementDto) {
-    return this.service.findAll(query);
+    return this.service.liste(query);
   }
 
   @Get(':id')
@@ -22,21 +25,27 @@ export class PaiementController {
     return this.service.findOne(id);
   }
 
+  @Get(':id/recu')
+  @ApiOperation({ summary: 'Reçu d’un paiement passé (PAY-09)' })
+  recu(@Param('id', ParseIntPipe) id: number) {
+    return this.service.recu(id);
+  }
+
   @Post()
-  @ApiOperation({ summary: 'Créer' })
-  create(@Body() body: CreatePaiementDto) {
-    return this.service.create(body);
+  @ApiOperation({ summary: 'Payer (checkout PAY-01) : statut paye, a_authentifier (3-D Secure) ou echoue' })
+  payer(@Body() body: PayerDto) {
+    return this.service.payer(body);
   }
 
-  @Patch(':id')
-  @ApiOperation({ summary: 'Modifier (champs envoyés seulement)' })
-  update(@Param('id', ParseIntPipe) id: number, @Body() body: UpdatePaiementDto) {
-    return this.service.update(id, body);
+  @Post(':id/authentifier')
+  @ApiOperation({ summary: 'Réponse 3-D Secure (PAY-07)' })
+  authentifier(@Param('id', ParseIntPipe) id: number, @Body() body: AuthentifierDto) {
+    return this.service.authentifier(id, body.approuve);
   }
 
-  @Delete(':id')
-  @ApiOperation({ summary: 'Supprimer' })
-  remove(@Param('id', ParseIntPipe) id: number) {
-    return this.service.remove(id);
+  @Post(':id/rembourser')
+  @ApiOperation({ summary: 'Rembourser tout ou partie (annulation, admin)' })
+  rembourser(@Param('id', ParseIntPipe) id: number, @Body() body: RembourserDto) {
+    return this.service.rembourser(id, body);
   }
 }
