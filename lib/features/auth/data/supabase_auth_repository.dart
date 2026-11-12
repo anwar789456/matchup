@@ -1,3 +1,6 @@
+import 'dart:async';
+import 'dart:math';
+
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -96,8 +99,35 @@ class SupabaseAuthRepository implements AuthRepository {
     await local.adoptAccount(address, password);
   }
 
+  /// Google: Supabase's OAuth page. On the web the tab leaves for Google and comes back to
+  /// [_redirectTo] signed in; `oauthReturnProvider` then finishes with [adoptOAuthUser], so this
+  /// never completes there. Apple stays simulated.
   @override
-  Future<void> signInWithProvider(SocialProvider provider) => local.signInWithProvider(provider);
+  Future<void> signInWithProvider(SocialProvider provider) async {
+    if (provider != SocialProvider.google) return local.signInWithProvider(provider);
+    final opened = await _call((auth) => auth.signInWithOAuth(
+          OAuthProvider.google,
+          redirectTo: _redirectTo,
+          authScreenLaunchMode: LaunchMode.platformDefault,
+        ));
+    if (!opened) throw const ProviderSignInFailed();
+    if (kIsWeb) await Completer<void>().future;
+  }
+
+  /// The device came back from Google signed in as [user] (`oauthReturnProvider`): the phone's
+  /// copy of the account is made or reused and signed in. Returns its email, or null when there
+  /// is nothing to do (anonymous, email/password, or already this account).
+  Future<String?> adoptOAuthUser(User user) async {
+    final email = user.email;
+    final provider = user.appMetadata['provider'];
+    if (user.isAnonymous || email == null || provider == null || provider == 'email') return null;
+    if (await local.currentEmail() == _key(email)) return null;
+    // The phone's copy needs a password; Google accounts sign in through Google, never with it.
+    final random = Random.secure();
+    final password = List.generate(32, (_) => random.nextInt(36).toRadixString(36)).join();
+    await local.adoptAccount(email, password);
+    return _key(email);
+  }
 
   @override
   DateTime? lockedUntil() => local.lockedUntil();

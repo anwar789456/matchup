@@ -188,6 +188,27 @@ void main() {
     expect(session, isNotNull);
   });
 
+  test('back from Google: the phone copy is made and signed in once', () async {
+    User user({String provider = 'google', bool anonymous = false}) => User(
+          id: 'g-1',
+          appMetadata: {'provider': provider},
+          userMetadata: const {},
+          aud: 'authenticated',
+          createdAt: '2026-11-12T10:00:00Z',
+          email: 'Alaa.B@gmail.com',
+          isAnonymous: anonymous,
+        );
+
+    expect(await repo.adoptOAuthUser(user(anonymous: true)), isNull);
+    expect(await repo.adoptOAuthUser(user(provider: 'email')), isNull);
+    expect(session, isNull);
+
+    expect(await repo.adoptOAuthUser(user()), 'alaa.b@gmail.com');
+    expect(session, isNotNull);
+    // Coming back again (a reload) changes nothing.
+    expect(await repo.adoptOAuthUser(user()), isNull);
+  });
+
   test('offline: sign-up says so; sign-in uses the phone copy', () async {
     server.offline = true;
     await expectLater(repo.signUp(email: 'alaa.b@email.tn', password: 'Marsa2026'),
