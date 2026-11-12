@@ -68,7 +68,7 @@ class SupabaseOwnerRepository implements OwnerRepository {
       start: b.start,
       hours: hours,
       organiser: b.players.isEmpty ? '—' : b.players.first.name,
-      kind: OwnerBookingKind.private,
+      kind: b.isPublic ? OwnerBookingKind.public : OwnerBookingKind.private,
       players: b.players.length,
       capacity: capacity,
       price: price,

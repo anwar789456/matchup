@@ -61,6 +61,8 @@ create table if not exists public.reservations (
   ) where (statut <> 'cancelled')
 );
 create index if not exists reservations_organisateur on public.reservations (organisateur_id);
+-- A public game (BKG-02) or invitation only: the owner's day and list show which.
+alter table public.reservations add column if not exists publique boolean not null default false;
 
 create table if not exists public.reservation_joueurs (
   reference text not null references public.reservations (reference) on delete cascade,
@@ -123,11 +125,12 @@ begin
   end if;
   perform public.liberer_reservations_expirees();
   insert into public.reservations
-    (reference, organisateur_id, sport, etablissement, terrain, lieu, debut, fin, part, statut, payer_avant)
+    (reference, organisateur_id, sport, etablissement, terrain, lieu, debut, fin, part, statut, payer_avant,
+     publique)
   values
     (r->>'reference', auth.uid(), r->>'sport', r->>'etablissement', r->>'terrain', r->>'lieu',
      (r->>'debut')::timestamptz, (r->>'fin')::timestamptz, (r->>'part')::numeric,
-     'pendingPayment', now() + interval '15 minutes');
+     'pendingPayment', now() + interval '15 minutes', coalesce((r->>'publique')::boolean, false));
 end $$;
 
 -- After payment: the hold becomes the booking, with its players. If the hold had expired, the
@@ -136,15 +139,17 @@ create or replace function public.confirmer_reservation(r jsonb, joueurs jsonb) 
 language plpgsql security definer set search_path = public as $$
 begin
   if auth.uid() is null then raise exception 'non connecté' using errcode = '28000'; end if;
-  update public.reservations set statut = 'upcoming', payer_avant = null
+  update public.reservations set statut = 'upcoming', payer_avant = null,
+      publique = coalesce((r->>'publique')::boolean, publique)
     where reference = r->>'reference' and organisateur_id = auth.uid();
   if not found then
     perform public.liberer_reservations_expirees();
     insert into public.reservations
-      (reference, organisateur_id, sport, etablissement, terrain, lieu, debut, fin, part, statut)
+      (reference, organisateur_id, sport, etablissement, terrain, lieu, debut, fin, part, statut, publique)
     values
       (r->>'reference', auth.uid(), r->>'sport', r->>'etablissement', r->>'terrain', r->>'lieu',
-       (r->>'debut')::timestamptz, (r->>'fin')::timestamptz, (r->>'part')::numeric, 'upcoming');
+       (r->>'debut')::timestamptz, (r->>'fin')::timestamptz, (r->>'part')::numeric, 'upcoming',
+       coalesce((r->>'publique')::boolean, false));
   end if;
   delete from public.reservation_joueurs where reference = r->>'reference';
   insert into public.reservation_joueurs (reference, position, nom, image_url)

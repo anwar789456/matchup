@@ -200,6 +200,44 @@ void main() {
     expect(scan.status, CheckInStatus.valid);
   });
 
+  test('the owner sees whether a player’s game is public or private', () async {
+    MuBooking at(String id, int hour, {required bool isPublic}) => MuBooking(
+          id: id,
+          sport: MuSport.football,
+          venue: Story.arenaFive.name,
+          court: 'Terrain 2',
+          place: 'La Marsa',
+          start: DateTime(2026, 10, 16, hour),
+          end: DateTime(2026, 10, 16, hour + 1),
+          share: 12,
+          players: const [MuPerson('Rami S.')],
+          isPublic: isPublic,
+        );
+    final remote = _Venues()
+      ..atVenue.add((booking: at('MU-50001', 9, isPublic: true), cancellation: null))
+      ..atVenue.add((booking: at('MU-50002', 10, isPublic: false), cancellation: null));
+    final owner = SupabaseOwnerRepository(SqliteOwnerRepository(phone()), OwnerVenueLink(remote, connect: () async => true));
+    final today = await owner.bookingsOn(DateTime(2026, 10, 16));
+    expect(today.firstWhere((b) => b.ref == 'MU-50001').kind, OwnerBookingKind.public);
+    expect(today.firstWhere((b) => b.ref == 'MU-50002').kind, OwnerBookingKind.private);
+  });
+
+  test('a booking’s public flag goes to Supabase and comes back', () {
+    final row = SupabaseReservationRemote.readRemote({
+      'reference': 'MU-50003',
+      'sport': 'football',
+      'etablissement': 'Arena Five',
+      'terrain': 'Terrain 1',
+      'lieu': 'La Marsa',
+      'debut': '2026-10-16T19:00:00Z',
+      'fin': '2026-10-16T20:00:00Z',
+      'part': 12,
+      'statut': 'upcoming',
+      'publique': true,
+    });
+    expect(row.booking.isPublic, isTrue);
+  });
+
   test('saved tariffs reach the players; a non-owner changes nothing on Supabase', () async {
     final remote = _Venues();
     final tariffs = SupabaseTariffsRepository(

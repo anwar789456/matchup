@@ -321,6 +321,7 @@ class BookingController extends Notifier<BookingDraft> {
       end: slot.end,
       share: state.share,
       players: people,
+      isPublic: state.type == BookingType.public,
     );
   }
 

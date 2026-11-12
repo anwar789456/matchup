@@ -63,6 +63,7 @@ class SupabaseReservationRemote implements ReservationRemote {
         'debut': _utc(b.start),
         'fin': _utc(b.end),
         'part': b.share,
+        'publique': b.isPublic,
       };
 
   /// Runs [call], turning the no-overlap error into [SlotTaken].
@@ -135,6 +136,7 @@ class SupabaseReservationRemote implements ReservationRemote {
       share: r['part']! as num,
       status: MuBookingStatus.values.byName(r['statut']! as String),
       refund: r['remboursement'] as num?,
+      isPublic: r['publique'] == true,
       players: [
         for (final p in players)
           MuPerson((p as Map)['nom'] as String, imageUrl: p['image_url'] as String?),
