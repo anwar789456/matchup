@@ -183,7 +183,7 @@ class _ExploreScreenState extends ConsumerState<ExploreScreen> {
                     // TRN-02 (Tournois module): the detail, where the team registers.
                     onTap: t.id == null ? null : () => context.push(Routes.tournoi(t.id!)),
                     onRegister: t.id == null ? null : () => context.push(Routes.tournoi(t.id!)),
-                    onWaitlist: () => showComingSoon(context),
+                    onWaitlist: t.id == null ? null : () => context.push(Routes.tournoi(t.id!)),
                   ),
               ],
             }.expand((card) => [card, const SizedBox(height: MuSpace.s3)]),

@@ -125,6 +125,28 @@ void main() {
     expect(await repo.monEquipe(id), isNull);
   });
 
+  test('an event (TRN-03): one player per registration, validated like a team', () async {
+    final id = await repo.create(TournoiDraft(
+      nom: 'Initiation padel',
+      sport: MuSport.padel,
+      debut: DateTime(2026, 11, 22, 10),
+      fin: DateTime(2026, 11, 22, 13),
+      etablissement: 'Padel Lac 2',
+      lieu: 'Lac 2',
+      fraisEquipe: 0,
+      equipesMax: 16,
+      joueursParEquipe: 1,
+      type: TournoiType.evenement,
+    ));
+    expect((await repo.tournoi(id))!.draft.evenement, isTrue);
+    me = 'p1';
+    final reg = await repo.inscrire(id, nom: 'Alaa', capitaineNom: 'Alaa');
+    expect(reg.paye, isTrue, reason: 'free event');
+    me = 'orga';
+    await repo.valider(reg.id);
+    expect((await repo.equipe(reg.id))!.statut, EquipeStatut.confirmee);
+  });
+
   test('announcements are the organiser’s', () async {
     final id = await repo.create(draft());
     await repo.annoncer(id, 'Rendez-vous 8h30 au club.');

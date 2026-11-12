@@ -34,10 +34,17 @@ final monEquipeProvider = FutureProvider.family<Equipe?, String>((ref, id) {
   return ref.watch(tournoiRepositoryProvider).monEquipe(id);
 });
 
+/// ORG-14: the organiser's announcements, newest first.
+final annoncesProvider = FutureProvider.family<List<(String, DateTime)>, String>((ref, id) {
+  ref.watch(syncRevisionProvider);
+  return ref.watch(tournoiRepositoryProvider).annonces(id);
+});
+
 /// Re-reads one tournament's screens after a write.
 void refreshTournoi(WidgetRef ref, String id) {
   ref
     ..invalidate(monEquipeProvider(id))
+    ..invalidate(annoncesProvider(id))
     ..invalidate(mesTournoisProvider)
     ..invalidate(tournoiProvider(id))
     ..invalidate(equipesProvider(id))

@@ -19096,6 +19096,216 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'{name} · toi'**
   String trnToi(String name);
+
+  /// No description provided for @trnAJouer.
+  ///
+  /// In fr, this message translates to:
+  /// **'À jouer'**
+  String get trnAJouer;
+
+  /// No description provided for @trnAnnonceVisible.
+  ///
+  /// In fr, this message translates to:
+  /// **'Les équipes la voient sur la page du tournoi et de leur équipe.'**
+  String get trnAnnonceVisible;
+
+  /// No description provided for @trnAnnoncesOrga.
+  ///
+  /// In fr, this message translates to:
+  /// **'Annonces de l’organisateur'**
+  String get trnAnnoncesOrga;
+
+  /// No description provided for @trnAucunPlanning.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucun planning pour l’instant'**
+  String get trnAucunPlanning;
+
+  /// No description provided for @trnAucuneAnnonce.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucune annonce envoyée'**
+  String get trnAucuneAnnonce;
+
+  /// No description provided for @trnContre.
+  ///
+  /// In fr, this message translates to:
+  /// **'contre'**
+  String get trnContre;
+
+  /// No description provided for @trnDejaEnvoyees.
+  ///
+  /// In fr, this message translates to:
+  /// **'Déjà envoyées'**
+  String get trnDejaEnvoyees;
+
+  /// No description provided for @trnMatch.
+  ///
+  /// In fr, this message translates to:
+  /// **'Match'**
+  String get trnMatch;
+
+  /// No description provided for @trnMatchEnDirect.
+  ///
+  /// In fr, this message translates to:
+  /// **'Match en direct'**
+  String get trnMatchEnDirect;
+
+  /// No description provided for @trnMonInscription.
+  ///
+  /// In fr, this message translates to:
+  /// **'Mon inscription'**
+  String get trnMonInscription;
+
+  /// No description provided for @trnNombrePlaces.
+  ///
+  /// In fr, this message translates to:
+  /// **'Nombre de places'**
+  String get trnNombrePlaces;
+
+  /// No description provided for @trnOu.
+  ///
+  /// In fr, this message translates to:
+  /// **'Où'**
+  String get trnOu;
+
+  /// No description provided for @trnParPersonne.
+  ///
+  /// In fr, this message translates to:
+  /// **'par personne'**
+  String get trnParPersonne;
+
+  /// No description provided for @trnPartagerResume.
+  ///
+  /// In fr, this message translates to:
+  /// **'Partager le résumé'**
+  String get trnPartagerResume;
+
+  /// No description provided for @trnProchainsMatchs.
+  ///
+  /// In fr, this message translates to:
+  /// **'Prochains matchs'**
+  String get trnProchainsMatchs;
+
+  /// No description provided for @trnQuand.
+  ///
+  /// In fr, this message translates to:
+  /// **'Quand'**
+  String get trnQuand;
+
+  /// No description provided for @trnResume.
+  ///
+  /// In fr, this message translates to:
+  /// **'Résumé du match'**
+  String get trnResume;
+
+  /// No description provided for @trnSInscrire.
+  ///
+  /// In fr, this message translates to:
+  /// **'S’inscrire'**
+  String get trnSInscrire;
+
+  /// No description provided for @trnScoreMisAJour.
+  ///
+  /// In fr, this message translates to:
+  /// **'Le score se met à jour pendant que l’organisateur le saisit.'**
+  String get trnScoreMisAJour;
+
+  /// No description provided for @trnTabAnnonces.
+  ///
+  /// In fr, this message translates to:
+  /// **'Annonces'**
+  String get trnTabAnnonces;
+
+  /// No description provided for @trnTabTableau.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tableau'**
+  String get trnTabTableau;
+
+  /// No description provided for @trnTabTournois.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tournois'**
+  String get trnTabTournois;
+
+  /// No description provided for @trnTableauDeBord.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tableau de bord'**
+  String get trnTableauDeBord;
+
+  /// No description provided for @trnTermine.
+  ///
+  /// In fr, this message translates to:
+  /// **'Terminé'**
+  String get trnTermine;
+
+  /// No description provided for @trnType.
+  ///
+  /// In fr, this message translates to:
+  /// **'Type'**
+  String get trnType;
+
+  /// No description provided for @trnTypeEvenement.
+  ///
+  /// In fr, this message translates to:
+  /// **'Événement'**
+  String get trnTypeEvenement;
+
+  /// No description provided for @trnTypeEvenementDescription.
+  ///
+  /// In fr, this message translates to:
+  /// **'Journée initiation ou soirée : inscription individuelle, sans tableau.'**
+  String get trnTypeEvenementDescription;
+
+  /// No description provided for @trnTypeTournoi.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tournoi'**
+  String get trnTypeTournoi;
+
+  /// No description provided for @trnTypeTournoiDescription.
+  ///
+  /// In fr, this message translates to:
+  /// **'Des équipes, des poules ou un tableau, un vainqueur.'**
+  String get trnTypeTournoiDescription;
+
+  /// No description provided for @trnVoir.
+  ///
+  /// In fr, this message translates to:
+  /// **'Voir'**
+  String get trnVoir;
+
+  /// No description provided for @trnEquipesAValider.
+  ///
+  /// In fr, this message translates to:
+  /// **'{n, plural, =1{1 équipe à valider} other{{n} équipes à valider}}'**
+  String trnEquipesAValider(int n);
+
+  /// No description provided for @trnEvenementResume.
+  ///
+  /// In fr, this message translates to:
+  /// **'Inscription individuelle · {n} places'**
+  String trnEvenementResume(int n);
+
+  /// No description provided for @trnParticipantsN.
+  ///
+  /// In fr, this message translates to:
+  /// **'Participants · {n}'**
+  String trnParticipantsN(int n);
+
+  /// No description provided for @trnRecapTexte.
+  ///
+  /// In fr, this message translates to:
+  /// **'{winner} gagne {score} contre {loser} ({stage}, {tournament}). Résultat publié sur MatchUp.'**
+  String trnRecapTexte(
+    String winner,
+    String loser,
+    String score,
+    String stage,
+    String tournament,
+  );
 }
 
 class _AppLocalizationsDelegate

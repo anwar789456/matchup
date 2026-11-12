@@ -11,12 +11,16 @@ import '../../../theme/theme.dart';
 import '../../../ui/ui.dart';
 import '../../common/widgets/pro_wizard_scaffold.dart';
 import '../controllers/tournoi_providers.dart';
+import '../../organizer_onboarding/data/organizer_draft.dart';
 import '../data/tournoi_repository.dart';
 
 /// ORG-05 → ORG-09 · Créer un tournoi: infos, format, terrains et dates, frais et prix, aperçu,
 /// then « Publier le tournoi ». One screen, the step in its state; the draft stays in memory.
 class CreateTournoiScreen extends ConsumerStatefulWidget {
-  const CreateTournoiScreen({super.key});
+  const CreateTournoiScreen({super.key, this.depuis});
+
+  /// ORG-02 « Reprendre … »: a past event whose name, sport, size and venue prefill the steps.
+  final PastEvent? depuis;
 
   @override
   ConsumerState<CreateTournoiScreen> createState() => _CreateTournoiScreenState();
@@ -34,6 +38,7 @@ class _CreateTournoiScreenState extends ConsumerState<CreateTournoiScreen> {
   String? _nomError;
 
   // ORG-06 Format
+  TournoiType _type = TournoiType.tournoi;
   TournoiFormat _format = TournoiFormat.poulesElimination;
   int _equipes = 8;
 
@@ -52,6 +57,20 @@ class _CreateTournoiScreenState extends ConsumerState<CreateTournoiScreen> {
   final _troisieme = TextEditingController();
 
   @override
+  void initState() {
+    super.initState();
+    final e = widget.depuis;
+    if (e == null) return;
+    _nom.text = e.name;
+    _club.text = e.venue;
+    if (const [MuSport.football, MuSport.padel, MuSport.basketball].contains(e.sport)) _sport = e.sport;
+    final teams = e.teams;
+    if (teams != null) {
+      _equipes = const [4, 8, 16, 32].firstWhere((n) => n >= teams, orElse: () => 32);
+    }
+  }
+
+  @override
   void dispose() {
     for (final c in [_nom, _presentation, _club, _adresse, _frais, _vainqueurs, _finalistes, _troisieme]) {
       c.dispose();
@@ -63,7 +82,7 @@ class _CreateTournoiScreenState extends ConsumerState<CreateTournoiScreen> {
   int get _dotation => _amount(_vainqueurs) + _amount(_finalistes) + _amount(_troisieme);
 
   /// Players per team: 2 at padel, 5 at five-a-side, 3 at 3x3 basketball.
-  int get _joueurs => switch (_sport) {
+  int get _joueurs => _type == TournoiType.evenement ? 1 : switch (_sport) {
         MuSport.padel => 2,
         MuSport.basketball => 3,
         _ => 5,
@@ -122,6 +141,7 @@ class _CreateTournoiScreenState extends ConsumerState<CreateTournoiScreen> {
         qualifiesParPoule: 2,
         joueursParEquipe: _joueurs,
         description: _presentation.text.trim().isEmpty ? null : _presentation.text.trim(),
+        type: _type,
       );
 
   Future<void> _continue() async {
@@ -251,6 +271,33 @@ class _CreateTournoiScreenState extends ConsumerState<CreateTournoiScreen> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           MuChoiceGroup(
+            label: l10n.trnType,
+            children: [
+              MuChoiceCard(
+                title: l10n.trnTypeTournoi,
+                description: l10n.trnTypeTournoiDescription,
+                leading: Icon(PhosphorIcons.trophy()),
+                selected: _type == TournoiType.tournoi,
+                onTap: () => setState(() {
+                  _type = TournoiType.tournoi;
+                  if (_equipes > 32) _equipes = 32;
+                }),
+              ),
+              MuChoiceCard(
+                title: l10n.trnTypeEvenement,
+                description: l10n.trnTypeEvenementDescription,
+                leading: Icon(PhosphorIcons.confetti()),
+                selected: _type == TournoiType.evenement,
+                onTap: () => setState(() {
+                  _type = TournoiType.evenement;
+                  if (_equipes < 8) _equipes = 16;
+                }),
+              ),
+            ],
+          ),
+          _gap,
+          if (_type == TournoiType.tournoi) ...[
+          MuChoiceGroup(
             label: l10n.trnFormat,
             children: [
               MuChoiceCard(
@@ -270,27 +317,36 @@ class _CreateTournoiScreenState extends ConsumerState<CreateTournoiScreen> {
             ],
           ),
           _gap,
-          Text(l10n.trnNombreEquipes, style: MuType.label.copyWith(color: context.mu.text)),
+          ],
+          Text(_type == TournoiType.evenement ? l10n.trnNombrePlaces : l10n.trnNombreEquipes,
+              style: MuType.label.copyWith(color: context.mu.text)),
           const SizedBox(height: MuSpace.s2),
           MuSegmentedControl<int>(
             semanticLabel: l10n.trnNombreEquipes,
             expand: true,
             value: _equipes,
             onChanged: (v) => setState(() => _equipes = v),
-            segments: [for (final n in const [4, 8, 16, 32]) MuSegment(value: n, label: '$n')],
+            segments: [
+              for (final n in _type == TournoiType.evenement ? const [8, 16, 32, 64] : const [4, 8, 16, 32])
+                MuSegment(value: n, label: '$n'),
+            ],
           ),
           const SizedBox(height: MuSpace.s2),
           Text(
-            _format == TournoiFormat.elimination
-                ? l10n.trnEliminationResume(_equipes)
-                : l10n.trnPoulesResume(_poules),
+            _type == TournoiType.evenement
+                ? l10n.trnEvenementResume(_equipes)
+                : (_format == TournoiFormat.elimination
+                    ? l10n.trnEliminationResume(_equipes)
+                    : l10n.trnPoulesResume(_poules)),
             style: MuType.caption.copyWith(color: context.mu.textSecondary),
           ),
-          _gap,
-          Text(
-            l10n.trnJoueursParEquipe(_joueurs),
-            style: MuType.body.copyWith(color: context.mu.textSecondary),
-          ),
+          if (_type == TournoiType.tournoi) ...[
+            _gap,
+            Text(
+              l10n.trnJoueursParEquipe(_joueurs),
+              style: MuType.body.copyWith(color: context.mu.textSecondary),
+            ),
+          ],
         ],
       );
 
@@ -425,9 +481,11 @@ class _CreateTournoiScreenState extends ConsumerState<CreateTournoiScreen> {
             recap(
               1,
               l10n.trnStepFormat,
-              d.format == TournoiFormat.elimination
-                  ? l10n.trnEliminationResume(d.equipesMax)
-                  : l10n.trnPoulesResume(d.nbPoules),
+              d.evenement
+                  ? l10n.trnEvenementResume(d.equipesMax)
+                  : (d.format == TournoiFormat.elimination
+                      ? l10n.trnEliminationResume(d.equipesMax)
+                      : l10n.trnPoulesResume(d.nbPoules)),
             ),
             recap(2, l10n.trnStepTerrains, '${d.etablissement} · ${formatDateRange(d.debut, d.fin)}'),
             recap(3, l10n.trnStepFrais,

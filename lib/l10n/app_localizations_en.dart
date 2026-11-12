@@ -11389,4 +11389,130 @@ class AppLocalizationsEn extends AppLocalizations {
   String trnToi(String name) {
     return '$name · toi';
   }
+
+  @override
+  String get trnAJouer => 'À jouer';
+
+  @override
+  String get trnAnnonceVisible =>
+      'Les équipes la voient sur la page du tournoi et de leur équipe.';
+
+  @override
+  String get trnAnnoncesOrga => 'Annonces de l’organisateur';
+
+  @override
+  String get trnAucunPlanning => 'Aucun planning pour l’instant';
+
+  @override
+  String get trnAucuneAnnonce => 'Aucune annonce envoyée';
+
+  @override
+  String get trnContre => 'contre';
+
+  @override
+  String get trnDejaEnvoyees => 'Déjà envoyées';
+
+  @override
+  String get trnMatch => 'Match';
+
+  @override
+  String get trnMatchEnDirect => 'Match en direct';
+
+  @override
+  String get trnMonInscription => 'Mon inscription';
+
+  @override
+  String get trnNombrePlaces => 'Nombre de places';
+
+  @override
+  String get trnOu => 'Où';
+
+  @override
+  String get trnParPersonne => 'par personne';
+
+  @override
+  String get trnPartagerResume => 'Partager le résumé';
+
+  @override
+  String get trnProchainsMatchs => 'Prochains matchs';
+
+  @override
+  String get trnQuand => 'Quand';
+
+  @override
+  String get trnResume => 'Résumé du match';
+
+  @override
+  String get trnSInscrire => 'S’inscrire';
+
+  @override
+  String get trnScoreMisAJour =>
+      'Le score se met à jour pendant que l’organisateur le saisit.';
+
+  @override
+  String get trnTabAnnonces => 'Annonces';
+
+  @override
+  String get trnTabTableau => 'Tableau';
+
+  @override
+  String get trnTabTournois => 'Tournois';
+
+  @override
+  String get trnTableauDeBord => 'Tableau de bord';
+
+  @override
+  String get trnTermine => 'Terminé';
+
+  @override
+  String get trnType => 'Type';
+
+  @override
+  String get trnTypeEvenement => 'Événement';
+
+  @override
+  String get trnTypeEvenementDescription =>
+      'Journée initiation ou soirée : inscription individuelle, sans tableau.';
+
+  @override
+  String get trnTypeTournoi => 'Tournoi';
+
+  @override
+  String get trnTypeTournoiDescription =>
+      'Des équipes, des poules ou un tableau, un vainqueur.';
+
+  @override
+  String get trnVoir => 'Voir';
+
+  @override
+  String trnEquipesAValider(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n équipes à valider',
+      one: '1 équipe à valider',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String trnEvenementResume(int n) {
+    return 'Inscription individuelle · $n places';
+  }
+
+  @override
+  String trnParticipantsN(int n) {
+    return 'Participants · $n';
+  }
+
+  @override
+  String trnRecapTexte(
+    String winner,
+    String loser,
+    String score,
+    String stage,
+    String tournament,
+  ) {
+    return '$winner gagne $score contre $loser ($stage, $tournament). Résultat publié sur MatchUp.';
+  }
 }

@@ -15,7 +15,7 @@ class OrgPage extends StatelessWidget {
     super.key,
     required this.title,
     required this.children,
-    required this.back,
+    this.back,
     this.subtitle,
     this.bottom,
   });
@@ -23,8 +23,8 @@ class OrgPage extends StatelessWidget {
   final String title;
   final String? subtitle;
 
-  /// Where « Retour » goes when there is nothing to pop.
-  final String back;
+  /// Where « Retour » goes when there is nothing to pop; null on a tab's first page.
+  final String? back;
   final List<Widget> children;
   final Widget? bottom;
 
@@ -35,7 +35,11 @@ class OrgPage extends StatelessWidget {
       backgroundColor: c.bg,
       body: Column(
         children: [
-          MuTopAppBar.compact(title: title, subtitle: subtitle, onBack: () => goBack(context, back)),
+          MuTopAppBar.compact(
+            title: title,
+            subtitle: subtitle,
+            onBack: back == null ? null : () => goBack(context, back!),
+          ),
           Expanded(
             child: ListView(
               padding: const EdgeInsetsDirectional.fromSTEB(MuSpace.s4, MuSpace.s4, MuSpace.s4, MuSpace.s8),

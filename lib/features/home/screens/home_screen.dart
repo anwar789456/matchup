@@ -354,9 +354,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                       for (final t in tournaments.value!.take(1))
                         MuTournamentCard(
                           tournament: t,
-                          onTap: () => showComingSoon(context),
-                          onRegister: () => showComingSoon(context),
-                          onWaitlist: () => showComingSoon(context),
+                          onTap: t.id == null ? null : () => context.push(Routes.tournoi(t.id!)),
+                          onRegister: t.id == null ? null : () => context.push(Routes.tournoi(t.id!)),
+                          onWaitlist: t.id == null ? null : () => context.push(Routes.tournoi(t.id!)),
                         ),
                     ],
                   )

@@ -15,6 +15,9 @@ enum TournoiStatut { brouillon, inscriptionsOuvertes, inscriptionsFermees, enCou
 
 enum TournoiFormat { poulesElimination, elimination }
 
+/// TRN-03: an event (initiation day, social game) takes individual sign-ups and has no bracket.
+enum TournoiType { tournoi, evenement }
+
 /// A registered team's state for the organiser (ORG-10) and the captain (TRN-06/07).
 enum EquipeStatut { enAttente, confirmee, refusee, annulee }
 
@@ -59,7 +62,11 @@ class TournoiDraft {
     this.qualifiesParPoule = 2,
     this.joueursParEquipe = 2,
     this.description,
+    this.type = TournoiType.tournoi,
   });
+
+  final TournoiType type;
+  bool get evenement => type == TournoiType.evenement;
 
   final String nom;
   final MuSport sport;
@@ -206,6 +213,7 @@ class TournoiRepository {
         'qualifies_par_poule': d.qualifiesParPoule,
         'joueurs_par_equipe': d.joueursParEquipe,
         'description': d.description,
+        'type': d.type.name,
       };
 
   Tournoi _tournoi(Map<String, Object?> r) => Tournoi(
@@ -230,6 +238,7 @@ class TournoiRepository {
           qualifiesParPoule: (r['qualifies_par_poule'] as int?) ?? 2,
           joueursParEquipe: (r['joueurs_par_equipe'] as int?) ?? 2,
           description: r['description'] as String?,
+          type: r['type'] == 'evenement' ? TournoiType.evenement : TournoiType.tournoi,
         ),
       );
 

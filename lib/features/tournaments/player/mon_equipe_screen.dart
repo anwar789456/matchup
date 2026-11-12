@@ -15,6 +15,7 @@ import '../logic/bracket_logic.dart';
 import '../organizer/org_widgets.dart';
 import '../organizer/planning_screen.dart';
 import 'inscrire_equipe_screen.dart';
+import 'match_screen.dart';
 
 /// TRN-06 / TRN-07 · Mon équipe: where the registration stands (paid, validation, draw), the
 /// invite code, the members and my matches once the bracket is out.
@@ -137,8 +138,15 @@ class MonEquipeScreen extends ConsumerWidget {
                 const SizedBox(height: MuSpace.s5),
                 Text(l10n.trnTesMatchs, style: MuType.h3.copyWith(color: c.text)),
                 const SizedBox(height: MuSpace.s2),
-                for (final m in mine) MatchLine(match: m, names: names, sizes: roundSizes(matches)),
+                for (final m in mine)
+                  MatchLine(
+                    match: m,
+                    names: names,
+                    sizes: roundSizes(matches),
+                    onTap: () => context.push(Routes.tournoiMatch(id, TournoiRepository.matchId(id, m))),
+                  ),
               ],
+              AnnoncesSection(id: id),
               if (captain && team.statut == EquipeStatut.enAttente) ...[
                 const SizedBox(height: MuSpace.s5),
                 MuButton.tertiary(

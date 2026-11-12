@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../l10n/l10n.dart';
 import '../../../router.dart';
@@ -71,7 +72,12 @@ class _TableauScreenState extends ConsumerState<TableauScreen> {
                 ..add(_Standings(rows: table, names: names, mine: mine?.id))
                 ..add(const SizedBox(height: MuSpace.s3));
               for (final m in played) {
-                children.add(MatchLine(match: m, names: names, sizes: sizes));
+                children.add(MatchLine(
+                  match: m,
+                  names: names,
+                  sizes: sizes,
+                  onTap: () => context.push(Routes.tournoiMatch(widget.id, TournoiRepository.matchId(widget.id, m))),
+                ));
               }
               children.add(const SizedBox(height: MuSpace.s4));
             }
@@ -84,7 +90,12 @@ class _TableauScreenState extends ConsumerState<TableauScreen> {
                 ..add(Text(_roundName(sizes[tour]), style: MuType.h3.copyWith(color: c.text)))
                 ..add(const SizedBox(height: MuSpace.s2));
               for (final m in round) {
-                children.add(MatchLine(match: m, names: names, sizes: sizes));
+                children.add(MatchLine(
+                  match: m,
+                  names: names,
+                  sizes: sizes,
+                  onTap: () => context.push(Routes.tournoiMatch(widget.id, TournoiRepository.matchId(widget.id, m))),
+                ));
               }
               children.add(const SizedBox(height: MuSpace.s4));
             }

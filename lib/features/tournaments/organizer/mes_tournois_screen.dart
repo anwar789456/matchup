@@ -26,7 +26,6 @@ class MesTournoisScreen extends ConsumerWidget {
     final finished = [for (final t in all) if (done.contains(t.statut)) t];
     return OrgPage(
       title: l10n.trnMesTournois,
-      back: Routes.organizerDashboard,
       bottom: MuButton.primary(
         label: l10n.creerUnTournoi,
         leading: PhosphorIcons.plus(),
@@ -159,7 +158,7 @@ class TournoiHubScreen extends ConsumerWidget {
                     description: pending == 0 ? l10n.trnRienAValider : l10n.trnAValiderN(pending),
                     onTap: () => context.push(Routes.organizerInscriptions(id)),
                   ),
-                  MuSettingsRow(
+                  if (!t.draft.evenement) MuSettingsRow(
                     icon: PhosphorIcons.calendarDots(),
                     title: l10n.trnPlanning,
                     description: matches.isEmpty
@@ -167,7 +166,7 @@ class TournoiHubScreen extends ConsumerWidget {
                         : (t.tableauPublie ? l10n.trnPlanningPublie : l10n.trnPlanningBrouillon),
                     onTap: () => context.push(Routes.organizerPlanning(id)),
                   ),
-                  MuSettingsRow(
+                  if (!t.draft.evenement) MuSettingsRow(
                     icon: PhosphorIcons.scroll(),
                     title: l10n.trnScores,
                     description: matches.isEmpty ? l10n.trnScoresApresPlanning : l10n.trnScoresDescription,
@@ -177,7 +176,7 @@ class TournoiHubScreen extends ConsumerWidget {
                     icon: PhosphorIcons.megaphone(),
                     title: l10n.trnAnnonce,
                     description: l10n.trnAnnonceDescription(confirmed),
-                    onTap: () => _annoncer(context, ref, t),
+                    onTap: () => context.push(Routes.organizerAnnonce(id)),
                   ),
                 ],
               ),
@@ -208,27 +207,5 @@ class TournoiHubScreen extends ConsumerWidget {
       if (context.mounted) toastRefus(context, e);
     }
     refreshTournoi(ref, id);
-  }
-
-  /// ORG-14, short: a message to every registered team.
-  Future<void> _annoncer(BuildContext context, WidgetRef ref, Tournoi t) async {
-    final text = TextEditingController();
-    final sent = await MuDialog.show<bool>(
-      context,
-      title: l10n.trnAnnonce,
-      description: l10n.trnAnnonceDescription(0),
-      content: MuTextField(label: l10n.trnMessage, controller: text, maxLines: 4),
-      actions: [
-        MuButton.tertiary(label: l10n.annuler, onPressed: () => Navigator.of(context, rootNavigator: true).pop(false)),
-        MuButton.primary(label: l10n.trnEnvoyer, onPressed: () => Navigator.of(context, rootNavigator: true).pop(true)),
-      ],
-    );
-    if (sent != true || text.text.trim().isEmpty) return;
-    try {
-      await ref.read(tournoiRepositoryProvider).annoncer(id, text.text);
-      if (context.mounted) MuToast.show(context, tone: MuToastTone.success, title: l10n.trnAnnonceEnvoyee);
-    } on TournoiRefus catch (e) {
-      if (context.mounted) toastRefus(context, e);
-    }
   }
 }
