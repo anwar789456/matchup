@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 
+import '../../../core/api/session.dart';
 import '../../../core/clock.dart';
 import '../../../core/connectivity.dart';
 import '../../../core/directions.dart';
@@ -88,13 +89,14 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     final tournaments = ref.watch(nearbyTournamentsProvider);
     final favourites = ref.watch(favouriteVenuesProvider);
 
+    // The signed-in account (Supabase, then its cache) names the player; the onboarding answers
+    // are kept per phone, not per account, so they only fill in before the account is known.
     final fullName = onboarding.fullName?.trim();
-    final firstName = (fullName?.isNotEmpty ?? false)
-        ? fullName!.split(RegExp(r'\s+')).first
-        : onboarding.pseudo ?? me?.firstName;
-    final userName = (fullName?.isNotEmpty ?? false)
-        ? fullName!
-        : onboarding.pseudo ?? me?.displayName ?? l10n.matchup;
+    final onboardingFirst = (fullName?.isNotEmpty ?? false) ? fullName!.split(RegExp(r'\s+')).first : onboarding.pseudo;
+    final onboardingName = (fullName?.isNotEmpty ?? false) ? fullName! : onboarding.pseudo;
+    final account = ref.watch(sessionProvider) != null ? me : null;
+    final firstName = account?.firstName ?? onboardingFirst ?? me?.firstName;
+    final userName = account?.displayName ?? onboardingName ?? me?.displayName ?? l10n.matchup;
     final zone = onboarding.zones.firstOrNull ?? onboarding.area ?? me?.zone ?? l10n.tunis;
     final photo = ref.watch(profilePhotoProvider);
     final level = onboarding.levels.values.firstOrNull ?? me?.levels.values.firstOrNull;
