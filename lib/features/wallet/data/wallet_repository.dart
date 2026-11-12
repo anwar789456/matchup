@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -6,6 +8,7 @@ import '../../../theme/theme.dart';
 import '../../../ui/ui.dart';
 import '../../common/data/story_data.dart';
 import '../../home/controllers/home_providers.dart';
+import '../../payments/data/mailer.dart';
 import '../../payments/data/payment_repository.dart';
 import '../../payments/data/stripe_gateway.dart';
 import '../../profile/data/me_repository.dart';
@@ -290,6 +293,13 @@ class WalletActions {
       if (intent != null) await _ref.read(stripeGatewayProvider).refund(intent, amount: r.amount);
     }
     final done = await _ref.read(walletRepositoryProvider).completeRefund(r.id);
+    unawaited(_ref.read(mailerProvider).refund(
+      number: txId.startsWith('tx-') ? txId.substring(3) : txId,
+      label: r.transaction.label,
+      amount: r.amount,
+      toCard: r.target == RefundTarget.card,
+      card: r.transaction.meta.split(' · ').skip(2).join(' · '),
+    ));
     _ref
       ..invalidate(refundRequestsProvider)
       ..invalidate(walletHistoryProvider)

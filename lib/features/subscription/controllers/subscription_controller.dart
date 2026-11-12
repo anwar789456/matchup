@@ -1,7 +1,10 @@
+import 'dart:async';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../ui/ui.dart';
+import '../../payments/data/mailer.dart';
 import '../../payments/data/payment_repository.dart';
 import '../../payments/data/stripe_gateway.dart';
 import '../data/subscription_repository.dart';
@@ -109,17 +112,17 @@ class SubscriptionController extends AsyncNotifier<Subscription> {
       cancelReason: clearReason ? () => null : null,
     );
     await _repo.save(next);
-    await _keepInvoices(sub.invoices);
+    await _keepInvoices(sub.invoices, next: sub.ended || sub.cancelAtPeriodEnd ? null : sub.nextDate);
     return next;
   }
 
-  Future<void> _keepInvoices(List<StripeInvoice> invoices) async {
+  Future<void> _keepInvoices(List<StripeInvoice> invoices, {DateTime? next}) async {
     if (invoices.isEmpty) return;
     final kept = {for (final r in await _repo.receipts()) r.number};
     final payments = ref.read(paymentRepositoryProvider);
     for (final i in invoices.where((i) => !kept.contains(i.number))) {
       final card = i.last4 == null ? 'Carte · Stripe' : '${i.brand == 'mastercard' ? 'Mastercard' : 'Visa'} •••• ${i.last4} · Stripe';
-      await _repo.addReceipt(ReceiptEntry(
+      final entry = ReceiptEntry(
         number: i.number,
         label: 'MatchUp Premium',
         date: i.paidAt,
@@ -127,7 +130,10 @@ class SubscriptionController extends AsyncNotifier<Subscription> {
         card: card,
         reference: i.paymentIntentId,
         lines: [ReceiptLine('MatchUp Premium', i.amount, details: [card])],
-      ));
+      );
+      await _repo.addReceipt(entry);
+      // EML-07 « Premium est renouvelé », with the invoice; only for invoices seen for the first time.
+      unawaited(ref.read(mailerProvider).premiumRenewed(entry, next: next));
       if (i.paymentIntentId != null) {
         await payments.recordStripe(
           amount: i.amount,

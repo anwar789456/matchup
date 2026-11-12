@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_stripe/flutter_stripe.dart' show CardField, CardFieldInputDetails;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -13,6 +15,8 @@ import '../../common/widgets/flow_scaffold.dart';
 import '../../home/controllers/home_providers.dart';
 import '../../settings/data/settings_repository.dart';
 import '../controllers/checkout_controller.dart';
+import '../data/mailer.dart';
+import 'receipt_screen.dart';
 import '../data/payment_repository.dart';
 import '../data/stripe_gateway.dart';
 import '../widgets/checkout_widgets.dart';
@@ -297,6 +301,8 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
     final pause = MuMotion.durationOf(context, MuMotion.success);
     await req.onPaid(receipt, _fromBalance);
     ref.read(lastPaymentProvider.notifier).set(req, receipt);
+    // EML-05, in the background: the screen never waits for the email.
+    unawaited(ref.read(mailerProvider).receipt(receiptFromPayment(req, receipt)));
     await Future<void>.delayed(pause);
     if (!mounted) return;
     overlay.close();
