@@ -188,7 +188,8 @@ class SupabaseStripeGateway implements StripeGateway {
         paymentIntentClientSecret: setup.clientSecret,
         params: PaymentMethodParams.card(paymentMethodData: PaymentMethodData(billingDetails: _billing(holderName))),
       );
-      return si.status.toLowerCase() == 'succeeded'
+      // The status reads « Succeeded » or « SetupIntentsStatus.succeeded » depending on the platform.
+      return si.status.toLowerCase().endsWith('succeeded')
           ? StripeOutcome.paid(si.id, paymentMethodId: si.paymentMethodId)
           : StripeOutcome.failed(si.status);
     } on StripeException catch (e) {
