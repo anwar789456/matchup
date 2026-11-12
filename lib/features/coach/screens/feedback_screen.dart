@@ -480,6 +480,8 @@ class _Player extends StatelessWidget {
                       context,
                       title: l10n.coaVideoOf(studentName),
                       videoKey: 'student/$studentName',
+                      // Karim coaches padel (COA-11: a bandeja).
+                      sport: MuSport.padel,
                       startAt: at,
                     ),
                     child: SizedBox.square(

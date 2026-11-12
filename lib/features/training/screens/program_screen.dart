@@ -119,6 +119,7 @@ class ProgramScreen extends ConsumerWidget {
                                 context,
                                 title: l10n.entProgramPreview(p.title),
                                 videoKey: 'preview/${p.id}',
+                                sport: p.sport,
                               ),
                             ),
                           ),

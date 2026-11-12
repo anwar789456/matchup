@@ -218,6 +218,7 @@ class _PlayerState extends ConsumerState<_Player> {
                     context,
                     title: e.title,
                     videoKey: '${widget.program.id}/${widget.lesson.index}/$_current',
+                    sport: widget.program.sport,
                     loop: true,
                   ),
                   onIndex: _show,

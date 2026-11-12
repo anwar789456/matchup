@@ -292,6 +292,8 @@ class _Player extends StatelessWidget {
                       context,
                       title: playing.title,
                       videoKey: 'analysis/${analysis.id}',
+                      // The moves analysed are padel strokes (ENT-08).
+                      sport: MuSport.padel,
                       startAt: playing.at,
                     ),
                     child: SizedBox.square(

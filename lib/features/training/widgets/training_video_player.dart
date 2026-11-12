@@ -20,6 +20,7 @@ Future<void> showTrainingVideo(
   BuildContext context, {
   required String title,
   required String videoKey,
+  required MuSport sport,
   Duration startAt = Duration.zero,
   bool loop = false,
 }) {
@@ -30,7 +31,13 @@ Future<void> showTrainingVideo(
       // A media screen: the Night match surfaces in both themes.
       builder: (_) => Theme(
         data: MuTheme.dark(arabic: arabic),
-        child: TrainingVideoPlayer(title: title, videoKey: videoKey, startAt: startAt, loop: loop),
+        child: TrainingVideoPlayer(
+          title: title,
+          videoKey: videoKey,
+          sport: sport,
+          startAt: startAt,
+          loop: loop,
+        ),
       ),
     ),
   );
@@ -42,12 +49,16 @@ class TrainingVideoPlayer extends ConsumerStatefulWidget {
     super.key,
     required this.title,
     required this.videoKey,
+    required this.sport,
     this.startAt = Duration.zero,
     this.loop = false,
   });
 
   final String title;
   final String videoKey;
+
+  /// The sport of the clip (a padel program shows padel).
+  final MuSport sport;
   final Duration startAt;
   final bool loop;
 
@@ -75,7 +86,7 @@ class _TrainingVideoPlayerState extends ConsumerState<TrainingVideoPlayer> {
       _failed = false;
     });
     old?.dispose();
-    final url = ref.read(trainingVideoSourceProvider).urlFor(widget.videoKey);
+    final url = ref.read(trainingVideoSourceProvider).urlFor(widget.videoKey, widget.sport);
     final video = ref.read(videoControllerFactoryProvider)(url);
     try {
       await video.initialize();
