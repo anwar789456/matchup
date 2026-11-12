@@ -1,21 +1,26 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/api/api_client.dart';
 import '../../../core/api/session.dart';
 import '../../../core/db/app_database.dart';
 import '../../../core/sms/sms_sender.dart';
+import '../data/api_auth_repository.dart';
 import '../data/auth_repository.dart';
 import '../data/sqlite_auth_repository.dart';
 
-/// Accounts live in the phone's database; codes leave by SMS. Tests override it with the fake.
-final authRepositoryProvider = Provider<AuthRepository>(
-  (ref) => SqliteAuthRepository(
+/// Accounts live in the phone's database; the SMS code leaves by SMS. Built with `API_URL`, the
+/// backend also holds the account and sends the emails. Tests override it with the fake.
+final authRepositoryProvider = Provider<AuthRepository>((ref) {
+  final local = SqliteAuthRepository(
     ref.read(appDatabaseProvider),
     sms: ref.read(smsSenderProvider),
     onSignedIn: (id) => ref.read(sessionProvider.notifier).signIn(id),
     userId: () => ref.read(sessionProvider),
-  ),
-);
+  );
+  final api = ref.read(apiClientProvider);
+  return api == null ? local : ApiAuthRepository(api, local);
+});
 
 /// What the sign-up and reset flows carry from one screen to the next.
 @immutable

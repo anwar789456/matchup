@@ -1,8 +1,6 @@
 /**
  * The 6 backend modules. Each one is its own NestJS app (own process, own port, own Postgres
- * schema) so a push to one module rebuilds and restarts only that module.
- *
- * On the server, Nginx routes http://92.222.36.107/api/<module>/... to the module's port.
+ * schema), all running on this PC: http://localhost:<port>/api/<module>.
  */
 export const MODULES = {
   utilisateur: { port: 3001, title: 'Utilisateur' },

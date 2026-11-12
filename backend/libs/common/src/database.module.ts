@@ -2,6 +2,7 @@ import { DynamicModule, Logger, Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { DataSource, DataSourceOptions, EntitySchema } from 'typeorm';
+import { PostgresConnectionOptions } from 'typeorm/driver/postgres/PostgresConnectionOptions';
 
 import { ModuleName } from './modules';
 
@@ -9,15 +10,14 @@ import { ModuleName } from './modules';
 type EntityClass = Function | EntitySchema;
 
 /**
- * Connects a module to the shared PostgreSQL database (settings from backend/.env).
+ * Connects a module to the local PostgreSQL database (settings from backend/.env). The database
+ * itself (DB_NAME, default `matchup`) is created on the first start if it does not exist yet.
  *
  * Every module keeps its tables in its own schema (`reservation.terrain`, `forum.sujet`…), so
  * modules never step on each other's tables. Link to another module's rows by id
  * (`utilisateurId`), not with a foreign key.
  *
  * Tables are created/updated from the entities when DB_SYNC names this module (or `all`).
- * Keep DB_SYNC on YOUR module only on your laptop: running an old copy of someone else's
- * module with sync on would rewrite their tables.
  */
 @Module({})
 export class DatabaseModule {
@@ -32,7 +32,7 @@ export class DatabaseModule {
             type: 'postgres' as const,
             host: config.get<string>('DB_HOST', 'localhost'),
             port: Number(config.get('DB_PORT', 5432)),
-            username: config.get<string>('DB_USER', 'matchup'),
+            username: config.get<string>('DB_USER', 'postgres'),
             password: config.get<string>('DB_PASSWORD', ''),
             database: config.get<string>('DB_NAME', 'matchup'),
             schema: module,
@@ -45,7 +45,7 @@ export class DatabaseModule {
           }),
           dataSourceFactory: async (options) => {
             const { syncSchema, ...rest } = options as DataSourceOptions & { syncSchema: boolean };
-            const dataSource = await new DataSource(rest as DataSourceOptions).initialize();
+            const dataSource = await initializeCreatingDatabase(rest as PostgresConnectionOptions);
             await dataSource.query(`CREATE SCHEMA IF NOT EXISTS "${module}"`);
             if (syncSchema) {
               await dataSource.synchronize();
@@ -59,6 +59,43 @@ export class DatabaseModule {
       exports: [TypeOrmModule],
     };
   }
+}
+
+/** PostgreSQL's "database does not exist" error. */
+const INVALID_CATALOG_NAME = '3D000';
+/**
+ * PostgreSQL's "database already exists" errors: 42P04 when it existed before, 23505 (unique
+ * pg_database_datname_index) when another module created it at the same moment.
+ */
+const DATABASE_EXISTS = ['42P04', '23505'];
+
+/**
+ * Opens the connection; if the database does not exist yet, creates it through the built-in
+ * `postgres` database (same user) and connects again. Two modules starting at the same time may
+ * both try to create it: the loser's "already exists" is ignored.
+ */
+async function initializeCreatingDatabase(options: PostgresConnectionOptions): Promise<DataSource> {
+  try {
+    return await new DataSource(options).initialize();
+  } catch (error) {
+    if ((error as { code?: string }).code !== INVALID_CATALOG_NAME) throw error;
+  }
+  const name = String(options.database);
+  const admin = await new DataSource({
+    ...options,
+    database: 'postgres',
+    schema: undefined,
+    entities: [],
+  }).initialize();
+  try {
+    await admin.query(`CREATE DATABASE "${name.replace(/"/g, '""')}"`);
+    new Logger('Database').log(`Database "${name}" created`);
+  } catch (error) {
+    if (!DATABASE_EXISTS.includes((error as { code?: string }).code ?? '')) throw error;
+  } finally {
+    await admin.destroy();
+  }
+  return new DataSource(options).initialize();
 }
 
 /** `all`, `none`, or a comma-separated list of modules (`reservation,paiement`). */

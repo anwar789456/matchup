@@ -56,6 +56,11 @@ class _NewPasswordScreenState extends ConsumerState<NewPasswordScreen> {
       if (mounted) context.go(Routes.passwordChanged);
     } on SamePassword {
       setState(() => _passwordError = AuthMessages.samePassword);
+    } on Exception catch (e) {
+      // The code ran out between the two steps, or the server can't be reached.
+      final message = AuthMessages.codeFailure(e);
+      if (message == null) rethrow;
+      if (mounted) MuToast.show(context, tone: MuToastTone.error, title: message);
     } finally {
       if (mounted) setState(() => _loading = false);
     }

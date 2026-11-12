@@ -3,6 +3,16 @@ import 'package:flutter/material.dart';
 import '../../../theme/theme.dart';
 import '../../../ui/ui.dart';
 import '../../../l10n/l10n.dart';
+import 'auth_messages.dart';
+
+/// Shows the error toast when [error] is a network or server failure. False for any other error,
+/// which the caller then lets through.
+bool toastNetworkFailure(BuildContext context, Object error) {
+  final message = AuthMessages.networkFailure(error);
+  if (message == null) return false;
+  if (context.mounted) MuToast.show(context, tone: MuToastTone.error, title: message);
+  return true;
+}
 
 /// A link inside a sentence (« Modifier », « Se connecter », « Créer un compte »).
 InlineSpan inlineLink(String label, VoidCallback onTap, TextStyle style) => WidgetSpan(

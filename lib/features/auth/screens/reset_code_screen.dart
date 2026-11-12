@@ -6,6 +6,7 @@ import '../../../router.dart';
 import '../../../theme/theme.dart';
 import '../../../ui/ui.dart';
 import '../controllers/auth_providers.dart';
+import '../widgets/auth_messages.dart';
 import '../widgets/auth_widgets.dart';
 import '../widgets/code_entry.dart';
 import '../../../l10n/l10n.dart';
@@ -33,6 +34,7 @@ class ResetCodeScreen extends ConsumerWidget {
       buttonLabel: l10n.verifierLeCode,
       verify: repo.verifyPasswordResetCode,
       onResend: () => repo.sendPasswordResetCode(email),
+      resendFailure: (e) => AuthMessages.networkFailure(e) ?? l10n.nosServeursOntUnSouci,
       onVerified: () => context.push(Routes.newPassword),
     );
   }
