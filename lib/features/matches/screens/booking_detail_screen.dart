@@ -6,6 +6,7 @@ import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:share_plus/share_plus.dart';
 
 import '../../../core/clock.dart';
+import '../../../core/connectivity.dart';
 import '../../../core/directions.dart';
 import '../../../core/format.dart';
 import '../../../router.dart';
@@ -149,7 +150,20 @@ class _BookingDetailScreenState extends ConsumerState<BookingDetailScreen> {
     setState(() => _cancelling = true);
     // The page closes on « Mes matchs »: the toast lives in the app's overlay.
     final overlay = Overlay.of(context, rootOverlay: true);
-    final c = await ref.read(matchesActionsProvider).cancel(widget.bookingId);
+    final CancelledBooking c;
+    try {
+      c = await ref.read(matchesActionsProvider).cancel(widget.bookingId);
+    } on OfflineException {
+      if (!mounted) return;
+      setState(() => _cancelling = false);
+      MuToast.show(
+        context,
+        tone: MuToastTone.error,
+        title: l10n.pasDeConnexion,
+        description: l10n.reserverDemandeUneConnexion,
+      );
+      return;
+    }
     if (!mounted) return;
     context.go(Routes.matches);
     if (!overlay.mounted) return;

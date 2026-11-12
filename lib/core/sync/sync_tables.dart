@@ -47,10 +47,9 @@ const syncTables = <SyncTable>[
   SyncTable('recu_lignes'),
 
   // ── Réservation (Mahmoud) ────────────────────────────────────────────────────────────────
-  // The player's side: booked courts, who plays, cancellations, invitations, ratings, scores.
-  SyncTable('reservations'),
-  SyncTable('reservation_joueurs'),
-  SyncTable('annulations'),
+  // Booked courts (reservations, reservation_joueurs, annulations) are not copied: Supabase is
+  // their source of truth (supabase/reservation.sql, SupabaseBookingsRepository). Copied here:
+  // what only concerns the player (invitations, ratings, scores)…
   SyncTable('invitations'),
   SyncTable('matchs_notes'),
   SyncTable('matchs_scores'),

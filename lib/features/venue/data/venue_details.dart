@@ -4,6 +4,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../ui/ui.dart';
 import '../../common/data/story_data.dart';
 import '../../matches/data/bookings_repository.dart';
+import '../../matches/data/reservation_remote.dart';
+import '../../matches/data/supabase_bookings_repository.dart';
 
 /// One court of a venue.
 @immutable
@@ -159,7 +161,8 @@ abstract interface class VenueDetailsRepository {
 class FakeVenueDetailsRepository implements VenueDetailsRepository {
   FakeVenueDetailsRepository({required this.bookings, this.latency = Duration.zero});
 
-  /// The player's bookings, shown as « Ta réservation ».
+  /// The player's bookings, shown as « Ta réservation ». With Supabase, also the slots other
+  /// players booked ([SupabaseBookingsRepository.taken]), shown as « Réservé ».
   final BookingsRepository bookings;
   final Duration latency;
 
@@ -295,6 +298,10 @@ class FakeVenueDetailsRepository implements VenueDetailsRepository {
     final d = await details(venueId);
     final mine = (await bookings.upcoming()).bookings;
     final date = DateTime(day.year, day.month, day.day);
+    final repo = bookings;
+    final others = repo is SupabaseBookingsRepository
+        ? await repo.taken(d.venue.name, date, date.add(const Duration(days: 1)))
+        : const <TakenSlot>[];
     final slots = <String, List<CourtSlot>>{};
     for (final (i, court) in d.courts.indexed) {
       final list = <CourtSlot>[];
@@ -308,12 +315,17 @@ class FakeVenueDetailsRepository implements VenueDetailsRepository {
               !start.isBefore(b.start) &&
               start.isBefore(b.end),
         );
+        final takenByOthers = others.any(
+          (t) => t.court == court.name && !start.isBefore(t.start) && start.isBefore(t.end),
+        );
         list.add(
           CourtSlot(
             start: start,
             status: isMine
                 ? MuSlotStatus.mine
-                : (_taken(d, i, date, m) ? MuSlotStatus.booked : MuSlotStatus.available),
+                : (takenByOthers || _taken(d, i, date, m)
+                    ? MuSlotStatus.booked
+                    : MuSlotStatus.available),
             price: d.priceAt(m),
             peak: d.peakAt(m),
           ),

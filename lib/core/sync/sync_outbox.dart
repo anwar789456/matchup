@@ -39,6 +39,18 @@ Future<TableShape> tableShape(DatabaseExecutor db, String table) async {
 /// table and the key; the sync service reads the row itself when it sends it. While the service
 /// writes what it pulled, `sync_etat.application = 1` keeps the triggers quiet.
 Future<void> installSyncTriggers(DatabaseExecutor db, {List<SyncTable> tables = syncTables}) async {
+  // A table taken off the list keeps no trigger and no waiting change (they would fail forever).
+  final names = {for (final t in tables) t.name};
+  for (final r in await db.rawQuery("SELECT name, tbl_name FROM sqlite_master WHERE type = 'trigger'")) {
+    final name = r['name']! as String;
+    if (name.startsWith('sync_') && !names.contains(r['tbl_name'])) {
+      await db.execute('DROP TRIGGER IF EXISTS "$name"');
+    }
+  }
+  if (names.isNotEmpty) {
+    await db.delete('sync_outbox',
+        where: 'tableau NOT IN (${List.filled(names.length, '?').join(', ')})', whereArgs: [...names]);
+  }
   for (final t in tables) {
     final s = await tableShape(db, t.name);
     String keys(String row) => [

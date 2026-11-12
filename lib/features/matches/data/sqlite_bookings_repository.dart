@@ -69,6 +69,22 @@ class SqliteBookingsRepository implements BookingsRepository {
     return 'MU-${last + 1}';
   }
 
+  /// Nothing to hold on the phone alone: the slot is the player's as soon as they pay.
+  @override
+  Future<void> hold(MuBooking booking) async {}
+
+  /// Stores [booking] as Supabase has it (the cache of [SupabaseBookingsRepository]): replaces
+  /// the booking, its players and its cancellation.
+  Future<void> keep(MuBooking booking, CancelledBooking? cancellation) async {
+    final db = await _db;
+    await db.transaction((txn) async {
+      // Cascades to reservation_joueurs and annulations.
+      await txn.delete('reservations', where: 'reference = ?', whereArgs: [booking.id]);
+      await BookingRows.insert(txn, booking, booking.id!);
+      if (cancellation != null) await BookingRows.insertCancellation(txn, cancellation);
+    });
+  }
+
   @override
   Future<MuBooking> add(MuBooking booking) async {
     final reference = booking.id ?? await nextReference();

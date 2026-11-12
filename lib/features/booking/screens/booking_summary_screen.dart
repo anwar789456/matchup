@@ -3,12 +3,14 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 
+import '../../../core/connectivity.dart';
 import '../../../core/format.dart';
 import '../../../router.dart';
 import '../../../theme/theme.dart';
 import '../../../ui/ui.dart';
 import '../../home/controllers/home_providers.dart';
 import '../../matches/data/bookings_repository.dart';
+import '../../matches/data/reservation_remote.dart';
 import '../../payments/controllers/checkout_controller.dart';
 import '../../venue/data/venue_details.dart';
 import '../../venue/widgets/venue_widgets.dart';
@@ -34,7 +36,32 @@ class _BookingSummaryScreenState extends ConsumerState<BookingSummaryScreen> {
     try {
       final draft = ref.read(bookingProvider);
       final slot = draft.slot!;
-      final reference = await ref.read(bookingsRepositoryProvider).nextReference();
+      final String reference;
+      try {
+        reference = await ref.read(bookingsRepositoryProvider).nextReference();
+        // Supabase holds the slot while the player pays: nobody else can take it meanwhile.
+        await ref.read(bookingProvider.notifier).holdSlot(reference);
+      } on SlotTaken {
+        if (mounted) {
+          MuToast.show(
+            context,
+            tone: MuToastTone.error,
+            title: l10n.creneauDejaPris,
+            description: l10n.creneauDejaPrisDetail,
+          );
+        }
+        return;
+      } on OfflineException {
+        if (mounted) {
+          MuToast.show(
+            context,
+            tone: MuToastTone.error,
+            title: l10n.pasDeConnexion,
+            description: l10n.reserverDemandeUneConnexion,
+          );
+        }
+        return;
+      }
       if (!mounted) return;
       final v = slot.venue;
       final public = draft.type == BookingType.public;

@@ -76,3 +76,19 @@ Lists refresh when new rows arrive if their provider watches the sync:
   same user. Prefer text ids for data a user creates on two phones.
 - Synced today: Paiement (balance, history, refunds, cards, payments, attempts, split shares,
   Premium, receipts). The other modules add theirs.
+
+## Réservation: Supabase decides, SQFlite keeps a copy
+
+Booked courts are shared data with a rule (two players can never get the same slot), so they
+do not use the copy above. `supabase/reservation.sql` (written by hand, run it once in the SQL
+editor, safe to run again) creates `reservations` and `reservation_joueurs` with:
+
+- an exclusion constraint: no two live bookings overlap on a court;
+- `prochaine_reference()`: « MU-48214 », one sequence for every phone;
+- `bloquer_creneau()` before the checkout (a 15-minute hold), `confirmer_reservation()` after
+  payment, `creneaux_pris()` for the slot grid (taken slots, not who took them);
+- Row Level Security: a player reads and changes only their own bookings.
+
+In the app, `SupabaseBookingsRepository` books and cancels on Supabase (network needed) and keeps
+the phone's tables as its cache (shown first, refreshed, used offline). Invitations, ratings,
+scores and the owner's tables still use the copy above.

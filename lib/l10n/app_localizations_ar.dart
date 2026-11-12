@@ -1395,6 +1395,17 @@ class AppLocalizationsAr extends AppLocalizations {
   String get pasDeConnexion => 'Pas de connexion';
 
   @override
+  String get creneauDejaPris => 'Ce créneau vient d’être pris';
+
+  @override
+  String get creneauDejaPrisDetail =>
+      'Quelqu’un l’a réservé juste avant toi. Choisis un autre créneau.';
+
+  @override
+  String get reserverDemandeUneConnexion =>
+      'Réserver ou annuler un terrain demande une connexion.';
+
+  @override
   String get impossibleDeCharger => 'Impossible de charger';
 
   @override

@@ -308,6 +308,30 @@ class BookingController extends Notifier<BookingDraft> {
   num balanceUsed(num balance) =>
       state.useBalance ? (balance < state.amount ? balance : state.amount) : 0;
 
+  /// The booking the draft makes, under [reference], with [people] playing.
+  MuBooking _draftBooking(String? reference, List<MuPerson> people) {
+    final slot = state.slot!;
+    return MuBooking(
+      id: reference,
+      sport: slot.venue.venue.sport,
+      venue: slot.venue.venue.name,
+      court: slot.court.name,
+      place: slot.venue.venue.place,
+      start: slot.start,
+      end: slot.end,
+      share: state.share,
+      players: people,
+    );
+  }
+
+  /// Before the checkout: holds the slot under [reference] while the player pays. Throws
+  /// `SlotTaken` when someone else booked it first, `OfflineException` without network.
+  Future<void> holdSlot(String reference) async {
+    final me = await ref.read(meRepositoryProvider).me();
+    final people = [MuPerson(me.displayName), for (final n in state.invited) MuPerson(n)];
+    await ref.read(bookingsRepositoryProvider).hold(_draftBooking(reference, people));
+  }
+
   /// « Payer ma part » went through the checkout (PAY-01): the booking is saved under
   /// [reference], a public game goes to Explorer, the wallet gets its line, and Home and Mes
   /// matchs refresh. [fromBalance] is what the checkout took from the balance.
@@ -320,21 +344,7 @@ class BookingController extends Notifier<BookingDraft> {
     final slot = d.slot!;
     final me = await ref.read(meRepositoryProvider).me();
     final people = [MuPerson(me.displayName), for (final n in d.invited) MuPerson(n)];
-    final booking = await ref
-        .read(bookingsRepositoryProvider)
-        .add(
-          MuBooking(
-            id: reference,
-            sport: slot.venue.venue.sport,
-            venue: slot.venue.venue.name,
-            court: slot.court.name,
-            place: slot.venue.venue.place,
-            start: slot.start,
-            end: slot.end,
-            share: d.share,
-            players: people,
-          ),
-        );
+    final booking = await ref.read(bookingsRepositoryProvider).add(_draftBooking(reference, people));
     if (d.type == BookingType.public && d.visibility == GameVisibility.everyone) {
       await ref
           .read(gamesRepositoryProvider)

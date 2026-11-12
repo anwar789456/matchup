@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter_test/flutter_test.dart';
 import 'package:matchup/core/db/app_database.dart';
 import 'package:matchup/core/sync/sync_service.dart';
@@ -33,12 +31,13 @@ void main() {
         players: const [MuPerson('Yassine B.'), MuPerson('Mariem K.')],
       );
 
-  test('a booking, its players, its cancellation and the player’s answers are sent', () async {
+  test('the player’s answers, ratings and scores are copied; booked courts are not', () async {
     final remote = MemoryRemote('user-a');
     final sync = SyncService(database, remote);
     final bookings = SqliteBookingsRepository(database);
     expect(await sync.pending(), 0); // the story's MU-48213 stays on the phone
 
+    // Booked courts live in Supabase's own tables (supabase/reservation.sql), not in the copy.
     final saved = await bookings.add(padel());
     await bookings.cancel(saved.id!);
     await bookings.respond('inv-mariem', accept: true);
@@ -48,13 +47,7 @@ void main() {
     final report = await sync.sync();
     expect(report.errors, isEmpty);
     expect(await sync.pending(), 0);
-
-    final reservation = remote.tables['reservations']!.values.single;
-    expect(reservation['reference'], 'MU-48214');
-    expect(reservation['statut'], MuBookingStatus.cancelled.name); // the row as it is now
-    expect(reservation['owner_id'], 'user-a');
-    expect(remote.tables['reservation_joueurs']!.values.map((r) => r['nom']), ['Yassine B.', 'Mariem K.']);
-    expect(remote.tables['annulations']!.values.single['reference'], 'MU-48214');
+    expect(remote.tables.keys, isNot(contains('reservations')));
     expect(remote.tables['invitations']!.values.single['statut'], 'acceptee');
     expect(remote.tables['matchs_notes']!.values.single['match_id'], 'pm-padel-oct9');
     expect(remote.tables['matchs_scores'], hasLength(2));
@@ -93,32 +86,5 @@ void main() {
     await owner.unblock(block.id);
     expect((await sync.sync()).errors, isEmpty);
     expect(remote.tables['proprio_blocages'], isEmpty);
-  });
-
-  test('a new phone of the same player gets their bookings back', () async {
-    final dir = await Directory.systemTemp.createTemp('matchup_sync_resa');
-    addTearDown(() => dir.delete(recursive: true));
-    AppDatabase phone(String name) {
-      final d = AppDatabase(factory: databaseFactoryFfi, path: '${dir.path}${Platform.pathSeparator}$name.db');
-      addTearDown(d.close);
-      return d;
-    }
-
-    final remote = MemoryRemote('user-a');
-    final first = phone('first');
-    await SqliteBookingsRepository(first).add(padel());
-    expect((await SyncService(first, remote).sync()).errors, isEmpty);
-
-    final second = phone('second');
-    final sync = SyncService(second, remote);
-    final report = await sync.sync();
-    expect(report.errors, isEmpty);
-    expect(report.received, 3); // the booking and its two players
-    expect(await sync.pending(), 0); // pulled rows are not sent back
-
-    final upcoming = await SqliteBookingsRepository(second).upcoming();
-    final back = upcoming.bookings.firstWhere((b) => b.id == 'MU-48214');
-    expect(back.players.map((p) => p.name), ['Yassine B.', 'Mariem K.']);
-    expect(back.share, 22.5);
   });
 }
