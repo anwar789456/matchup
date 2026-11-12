@@ -13073,4 +13073,266 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get coaYouGetPerSale => 'Tu reçois par vente';
+
+  @override
+  String coaAfterSession(int index, Object title) {
+    return 'Après la séance $index · $title';
+  }
+
+  @override
+  String coaAiMomentFrom(Object name) {
+    return 'Repéré par l’analyse vidéo de $name. À toi de valider.';
+  }
+
+  @override
+  String coaAiVideoOf(Object name, int count) {
+    return 'Analyse vidéo de $name · $count conseils';
+  }
+
+  @override
+  String get coaAskNewVideo => 'Demander une nouvelle vidéo';
+
+  @override
+  String get coaAwaitsFeedback => 'Attend ton retour';
+
+  @override
+  String coaBackToFile(Object name) {
+    return 'Retour à la fiche de $name';
+  }
+
+  @override
+  String get coaBackToStudents => 'Retour aux élèves';
+
+  @override
+  String get coaBold => 'Gras';
+
+  @override
+  String get coaBullets => 'Liste à puces';
+
+  @override
+  String coaCommentAt(Object time) {
+    return 'Commenter à $time';
+  }
+
+  @override
+  String get coaCommentHere => 'Commentaire à la position actuelle';
+
+  @override
+  String coaCommentOptions(Object time) {
+    return 'Options du commentaire à $time';
+  }
+
+  @override
+  String get coaCommentVideo => 'Commenter la vidéo';
+
+  @override
+  String coaFeedbackLine(Object length, int session, Object program) {
+    return 'Bandeja · $length · séance $session · $program';
+  }
+
+  @override
+  String coaFeedbackSentTo(Object name) {
+    return 'Retour envoyé à $name';
+  }
+
+  @override
+  String coaFeedbackTo(Object name) {
+    return 'Retour à $name';
+  }
+
+  @override
+  String get coaGeneralMessage => 'Message général';
+
+  @override
+  String coaGeneralMessageHelper(Object name) {
+    return 'Affiché au-dessus de tes commentaires, dans la séance de $name.';
+  }
+
+  @override
+  String get coaGiveFeedback => 'Faire un retour';
+
+  @override
+  String get coaItalic => 'Italique';
+
+  @override
+  String get coaMessage => 'Message';
+
+  @override
+  String get coaMinutes => 'Minutes';
+
+  @override
+  String get coaMoreActions => 'Plus d’actions';
+
+  @override
+  String get coaNextFrame => '+1 image';
+
+  @override
+  String get coaNoVideoToComment => 'Pas de vidéo à commenter';
+
+  @override
+  String get coaNoVideoToCommentText =>
+      'Cet élève ne t’a pas encore envoyé de vidéo.';
+
+  @override
+  String coaNoteOf(Object name, int session, Object day) {
+    return 'Note de $name · séance $session · $day';
+  }
+
+  @override
+  String get coaNotesAndFeedback => 'Notes et retours';
+
+  @override
+  String coaOnVideo(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count sur la vidéo',
+      one: '1 sur la vidéo',
+      zero: 'Aucun sur la vidéo',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String coaPlayClip(int seconds) {
+    return 'Lire la vidéo Bandeja, $seconds secondes';
+  }
+
+  @override
+  String get coaPlayVideo => 'Lire la vidéo';
+
+  @override
+  String get coaPosition => 'Position dans la vidéo';
+
+  @override
+  String coaPositionValue(Object at, Object length, int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count commentaires',
+      one: '1 commentaire',
+      zero: 'aucun commentaire',
+    );
+    return '$at sur $length, $_temp0';
+  }
+
+  @override
+  String get coaPrevFrame => '−1 image';
+
+  @override
+  String coaProgramOf(Object program, Object name) {
+    return '$program · $name';
+  }
+
+  @override
+  String get coaProgress => 'Avancement';
+
+  @override
+  String get coaSeeMyFeedback => 'Voir mon retour';
+
+  @override
+  String get coaSendFeedback => 'Envoyer le retour';
+
+  @override
+  String coaSessionsDone(int done, int total) {
+    String _temp0 = intl.Intl.pluralLogic(
+      done,
+      locale: localeName,
+      other: '$done terminées',
+      one: '1 terminée',
+      zero: 'Aucune terminée',
+    );
+    return '$_temp0 sur $total';
+  }
+
+  @override
+  String get coaSessionsTitle => 'Séances';
+
+  @override
+  String coaSince(Object day) {
+    return 'depuis le $day';
+  }
+
+  @override
+  String get coaSpeed => 'Vitesse de lecture';
+
+  @override
+  String get coaStreak => 'Série';
+
+  @override
+  String coaStreakWeeks(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count semaines',
+      one: '1 semaine',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get coaStudentGone => 'Élève introuvable';
+
+  @override
+  String get coaStudentGoneText =>
+      'Cet élève n’est plus inscrit à tes programmes.';
+
+  @override
+  String coaStudentNotified(Object name) {
+    return '$name reçoit la notification « Retour du coach ».';
+  }
+
+  @override
+  String get coaThisWeek => 'Cette semaine';
+
+  @override
+  String coaThisWeekValue(int done, int goal) {
+    return '$done/$goal séances';
+  }
+
+  @override
+  String get coaTimedComments => 'Commentaires horodatés';
+
+  @override
+  String get coaTrainingMinutes => 'Minutes d’entraînement';
+
+  @override
+  String get coaTrainingMinutesDetail =>
+      '6 dernières semaines · séances faites dans l’app';
+
+  @override
+  String coaVideoOf(Object name) {
+    return 'Vidéo de $name : bandeja sur le court 3 de Smash Padel Club';
+  }
+
+  @override
+  String coaVideoSentOn(Object when, int session) {
+    return 'Envoyée $when · séance $session';
+  }
+
+  @override
+  String get coaVideoToComment => 'Vidéo à commenter';
+
+  @override
+  String get coaWeekLabel => 'Semaine';
+
+  @override
+  String coaWeekOf(Object day) {
+    return 'Semaine du $day';
+  }
+
+  @override
+  String coaWeekOutOf(int week, int weeks) {
+    return '$week sur $weeks';
+  }
+
+  @override
+  String coaYourCommentAt(Object time) {
+    return 'Ton commentaire à $time';
+  }
+
+  @override
+  String coaYourFeedbackOn(int session, Object day) {
+    return 'Ton retour · séance $session · $day';
+  }
 }

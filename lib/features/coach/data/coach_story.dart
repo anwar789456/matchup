@@ -230,7 +230,7 @@ abstract final class CoachStory {
     fromAi: true,
   );
   static const message =
-      'Belle progression, Yassine ! La trajectoire est là, il reste le **timing**.\n'
+      'Belle progression, Yassine ! La trajectoire est là, il reste le timing.\n'
       '• Laisse descendre la balle avant de frapper.\n'
       '• Vise la grille latérale, pas le centre.\n'
       'Refais l’exercice 3 de la séance 5 au ralenti avant de passer à la vitesse match.';

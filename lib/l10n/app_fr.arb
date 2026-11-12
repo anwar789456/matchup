@@ -11162,5 +11162,289 @@
       }
     }
   },
-  "coaYouGetPerSale": "Tu reçois par vente"
+  "coaYouGetPerSale": "Tu reçois par vente",
+  "coaAfterSession": "Après la séance {index} · {title}",
+  "@coaAfterSession": {
+    "placeholders": {
+      "index": {
+        "type": "int"
+      },
+      "title": {
+        "type": "Object"
+      }
+    }
+  },
+  "coaAiMomentFrom": "Repéré par l’analyse vidéo de {name}. À toi de valider.",
+  "@coaAiMomentFrom": {
+    "placeholders": {
+      "name": {
+        "type": "Object"
+      }
+    }
+  },
+  "coaAiVideoOf": "Analyse vidéo de {name} · {count} conseils",
+  "@coaAiVideoOf": {
+    "placeholders": {
+      "name": {
+        "type": "Object"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "coaAskNewVideo": "Demander une nouvelle vidéo",
+  "coaAwaitsFeedback": "Attend ton retour",
+  "coaBackToFile": "Retour à la fiche de {name}",
+  "@coaBackToFile": {
+    "placeholders": {
+      "name": {
+        "type": "Object"
+      }
+    }
+  },
+  "coaBackToStudents": "Retour aux élèves",
+  "coaBold": "Gras",
+  "coaBullets": "Liste à puces",
+  "coaCommentAt": "Commenter à {time}",
+  "@coaCommentAt": {
+    "placeholders": {
+      "time": {
+        "type": "Object"
+      }
+    }
+  },
+  "coaCommentHere": "Commentaire à la position actuelle",
+  "coaCommentOptions": "Options du commentaire à {time}",
+  "@coaCommentOptions": {
+    "placeholders": {
+      "time": {
+        "type": "Object"
+      }
+    }
+  },
+  "coaCommentVideo": "Commenter la vidéo",
+  "coaFeedbackLine": "Bandeja · {length} · séance {session} · {program}",
+  "@coaFeedbackLine": {
+    "placeholders": {
+      "length": {
+        "type": "Object"
+      },
+      "session": {
+        "type": "int"
+      },
+      "program": {
+        "type": "Object"
+      }
+    }
+  },
+  "coaFeedbackSentTo": "Retour envoyé à {name}",
+  "@coaFeedbackSentTo": {
+    "placeholders": {
+      "name": {
+        "type": "Object"
+      }
+    }
+  },
+  "coaFeedbackTo": "Retour à {name}",
+  "@coaFeedbackTo": {
+    "placeholders": {
+      "name": {
+        "type": "Object"
+      }
+    }
+  },
+  "coaGeneralMessage": "Message général",
+  "coaGeneralMessageHelper": "Affiché au-dessus de tes commentaires, dans la séance de {name}.",
+  "@coaGeneralMessageHelper": {
+    "placeholders": {
+      "name": {
+        "type": "Object"
+      }
+    }
+  },
+  "coaGiveFeedback": "Faire un retour",
+  "coaItalic": "Italique",
+  "coaMessage": "Message",
+  "coaMinutes": "Minutes",
+  "coaMoreActions": "Plus d’actions",
+  "coaNextFrame": "+1 image",
+  "coaNoVideoToComment": "Pas de vidéo à commenter",
+  "coaNoVideoToCommentText": "Cet élève ne t’a pas encore envoyé de vidéo.",
+  "coaNoteOf": "Note de {name} · séance {session} · {day}",
+  "@coaNoteOf": {
+    "placeholders": {
+      "name": {
+        "type": "Object"
+      },
+      "session": {
+        "type": "int"
+      },
+      "day": {
+        "type": "Object"
+      }
+    }
+  },
+  "coaNotesAndFeedback": "Notes et retours",
+  "coaOnVideo": "{count, plural, =0{Aucun sur la vidéo} =1{1 sur la vidéo} other{{count} sur la vidéo}}",
+  "@coaOnVideo": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "coaPlayClip": "Lire la vidéo Bandeja, {seconds} secondes",
+  "@coaPlayClip": {
+    "placeholders": {
+      "seconds": {
+        "type": "int"
+      }
+    }
+  },
+  "coaPlayVideo": "Lire la vidéo",
+  "coaPosition": "Position dans la vidéo",
+  "coaPositionValue": "{at} sur {length}, {count, plural, =0{aucun commentaire} =1{1 commentaire} other{{count} commentaires}}",
+  "@coaPositionValue": {
+    "placeholders": {
+      "at": {
+        "type": "Object"
+      },
+      "length": {
+        "type": "Object"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "coaPrevFrame": "−1 image",
+  "coaProgramOf": "{program} · {name}",
+  "@coaProgramOf": {
+    "placeholders": {
+      "program": {
+        "type": "Object"
+      },
+      "name": {
+        "type": "Object"
+      }
+    }
+  },
+  "coaProgress": "Avancement",
+  "coaSeeMyFeedback": "Voir mon retour",
+  "coaSendFeedback": "Envoyer le retour",
+  "coaSessionsDone": "{done, plural, =0{Aucune terminée} =1{1 terminée} other{{done} terminées}} sur {total}",
+  "@coaSessionsDone": {
+    "placeholders": {
+      "done": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "coaSessionsTitle": "Séances",
+  "coaSince": "depuis le {day}",
+  "@coaSince": {
+    "placeholders": {
+      "day": {
+        "type": "Object"
+      }
+    }
+  },
+  "coaSpeed": "Vitesse de lecture",
+  "coaStreak": "Série",
+  "coaStreakWeeks": "{count, plural, =1{1 semaine} other{{count} semaines}}",
+  "@coaStreakWeeks": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "coaStudentGone": "Élève introuvable",
+  "coaStudentGoneText": "Cet élève n’est plus inscrit à tes programmes.",
+  "coaStudentNotified": "{name} reçoit la notification « Retour du coach ».",
+  "@coaStudentNotified": {
+    "placeholders": {
+      "name": {
+        "type": "Object"
+      }
+    }
+  },
+  "coaThisWeek": "Cette semaine",
+  "coaThisWeekValue": "{done}/{goal} séances",
+  "@coaThisWeekValue": {
+    "placeholders": {
+      "done": {
+        "type": "int"
+      },
+      "goal": {
+        "type": "int"
+      }
+    }
+  },
+  "coaTimedComments": "Commentaires horodatés",
+  "coaTrainingMinutes": "Minutes d’entraînement",
+  "coaTrainingMinutesDetail": "6 dernières semaines · séances faites dans l’app",
+  "coaVideoOf": "Vidéo de {name} : bandeja sur le court 3 de Smash Padel Club",
+  "@coaVideoOf": {
+    "placeholders": {
+      "name": {
+        "type": "Object"
+      }
+    }
+  },
+  "coaVideoSentOn": "Envoyée {when} · séance {session}",
+  "@coaVideoSentOn": {
+    "placeholders": {
+      "when": {
+        "type": "Object"
+      },
+      "session": {
+        "type": "int"
+      }
+    }
+  },
+  "coaVideoToComment": "Vidéo à commenter",
+  "coaWeekLabel": "Semaine",
+  "coaWeekOf": "Semaine du {day}",
+  "@coaWeekOf": {
+    "placeholders": {
+      "day": {
+        "type": "Object"
+      }
+    }
+  },
+  "coaWeekOutOf": "{week} sur {weeks}",
+  "@coaWeekOutOf": {
+    "placeholders": {
+      "week": {
+        "type": "int"
+      },
+      "weeks": {
+        "type": "int"
+      }
+    }
+  },
+  "coaYourCommentAt": "Ton commentaire à {time}",
+  "@coaYourCommentAt": {
+    "placeholders": {
+      "time": {
+        "type": "Object"
+      }
+    }
+  },
+  "coaYourFeedbackOn": "Ton retour · séance {session} · {day}",
+  "@coaYourFeedbackOn": {
+    "placeholders": {
+      "session": {
+        "type": "int"
+      },
+      "day": {
+        "type": "Object"
+      }
+    }
+  }
 }

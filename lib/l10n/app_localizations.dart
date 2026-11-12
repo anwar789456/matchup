@@ -21381,6 +21381,366 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Tu reçois par vente'**
   String get coaYouGetPerSale;
+
+  /// No description provided for @coaAfterSession.
+  ///
+  /// In fr, this message translates to:
+  /// **'Après la séance {index} · {title}'**
+  String coaAfterSession(int index, Object title);
+
+  /// No description provided for @coaAiMomentFrom.
+  ///
+  /// In fr, this message translates to:
+  /// **'Repéré par l’analyse vidéo de {name}. À toi de valider.'**
+  String coaAiMomentFrom(Object name);
+
+  /// No description provided for @coaAiVideoOf.
+  ///
+  /// In fr, this message translates to:
+  /// **'Analyse vidéo de {name} · {count} conseils'**
+  String coaAiVideoOf(Object name, int count);
+
+  /// No description provided for @coaAskNewVideo.
+  ///
+  /// In fr, this message translates to:
+  /// **'Demander une nouvelle vidéo'**
+  String get coaAskNewVideo;
+
+  /// No description provided for @coaAwaitsFeedback.
+  ///
+  /// In fr, this message translates to:
+  /// **'Attend ton retour'**
+  String get coaAwaitsFeedback;
+
+  /// No description provided for @coaBackToFile.
+  ///
+  /// In fr, this message translates to:
+  /// **'Retour à la fiche de {name}'**
+  String coaBackToFile(Object name);
+
+  /// No description provided for @coaBackToStudents.
+  ///
+  /// In fr, this message translates to:
+  /// **'Retour aux élèves'**
+  String get coaBackToStudents;
+
+  /// No description provided for @coaBold.
+  ///
+  /// In fr, this message translates to:
+  /// **'Gras'**
+  String get coaBold;
+
+  /// No description provided for @coaBullets.
+  ///
+  /// In fr, this message translates to:
+  /// **'Liste à puces'**
+  String get coaBullets;
+
+  /// No description provided for @coaCommentAt.
+  ///
+  /// In fr, this message translates to:
+  /// **'Commenter à {time}'**
+  String coaCommentAt(Object time);
+
+  /// No description provided for @coaCommentHere.
+  ///
+  /// In fr, this message translates to:
+  /// **'Commentaire à la position actuelle'**
+  String get coaCommentHere;
+
+  /// No description provided for @coaCommentOptions.
+  ///
+  /// In fr, this message translates to:
+  /// **'Options du commentaire à {time}'**
+  String coaCommentOptions(Object time);
+
+  /// No description provided for @coaCommentVideo.
+  ///
+  /// In fr, this message translates to:
+  /// **'Commenter la vidéo'**
+  String get coaCommentVideo;
+
+  /// No description provided for @coaFeedbackLine.
+  ///
+  /// In fr, this message translates to:
+  /// **'Bandeja · {length} · séance {session} · {program}'**
+  String coaFeedbackLine(Object length, int session, Object program);
+
+  /// No description provided for @coaFeedbackSentTo.
+  ///
+  /// In fr, this message translates to:
+  /// **'Retour envoyé à {name}'**
+  String coaFeedbackSentTo(Object name);
+
+  /// No description provided for @coaFeedbackTo.
+  ///
+  /// In fr, this message translates to:
+  /// **'Retour à {name}'**
+  String coaFeedbackTo(Object name);
+
+  /// No description provided for @coaGeneralMessage.
+  ///
+  /// In fr, this message translates to:
+  /// **'Message général'**
+  String get coaGeneralMessage;
+
+  /// No description provided for @coaGeneralMessageHelper.
+  ///
+  /// In fr, this message translates to:
+  /// **'Affiché au-dessus de tes commentaires, dans la séance de {name}.'**
+  String coaGeneralMessageHelper(Object name);
+
+  /// No description provided for @coaGiveFeedback.
+  ///
+  /// In fr, this message translates to:
+  /// **'Faire un retour'**
+  String get coaGiveFeedback;
+
+  /// No description provided for @coaItalic.
+  ///
+  /// In fr, this message translates to:
+  /// **'Italique'**
+  String get coaItalic;
+
+  /// No description provided for @coaMessage.
+  ///
+  /// In fr, this message translates to:
+  /// **'Message'**
+  String get coaMessage;
+
+  /// No description provided for @coaMinutes.
+  ///
+  /// In fr, this message translates to:
+  /// **'Minutes'**
+  String get coaMinutes;
+
+  /// No description provided for @coaMoreActions.
+  ///
+  /// In fr, this message translates to:
+  /// **'Plus d’actions'**
+  String get coaMoreActions;
+
+  /// No description provided for @coaNextFrame.
+  ///
+  /// In fr, this message translates to:
+  /// **'+1 image'**
+  String get coaNextFrame;
+
+  /// No description provided for @coaNoVideoToComment.
+  ///
+  /// In fr, this message translates to:
+  /// **'Pas de vidéo à commenter'**
+  String get coaNoVideoToComment;
+
+  /// No description provided for @coaNoVideoToCommentText.
+  ///
+  /// In fr, this message translates to:
+  /// **'Cet élève ne t’a pas encore envoyé de vidéo.'**
+  String get coaNoVideoToCommentText;
+
+  /// No description provided for @coaNoteOf.
+  ///
+  /// In fr, this message translates to:
+  /// **'Note de {name} · séance {session} · {day}'**
+  String coaNoteOf(Object name, int session, Object day);
+
+  /// No description provided for @coaNotesAndFeedback.
+  ///
+  /// In fr, this message translates to:
+  /// **'Notes et retours'**
+  String get coaNotesAndFeedback;
+
+  /// No description provided for @coaOnVideo.
+  ///
+  /// In fr, this message translates to:
+  /// **'{count, plural, =0{Aucun sur la vidéo} =1{1 sur la vidéo} other{{count} sur la vidéo}}'**
+  String coaOnVideo(int count);
+
+  /// No description provided for @coaPlayClip.
+  ///
+  /// In fr, this message translates to:
+  /// **'Lire la vidéo Bandeja, {seconds} secondes'**
+  String coaPlayClip(int seconds);
+
+  /// No description provided for @coaPlayVideo.
+  ///
+  /// In fr, this message translates to:
+  /// **'Lire la vidéo'**
+  String get coaPlayVideo;
+
+  /// No description provided for @coaPosition.
+  ///
+  /// In fr, this message translates to:
+  /// **'Position dans la vidéo'**
+  String get coaPosition;
+
+  /// No description provided for @coaPositionValue.
+  ///
+  /// In fr, this message translates to:
+  /// **'{at} sur {length}, {count, plural, =0{aucun commentaire} =1{1 commentaire} other{{count} commentaires}}'**
+  String coaPositionValue(Object at, Object length, int count);
+
+  /// No description provided for @coaPrevFrame.
+  ///
+  /// In fr, this message translates to:
+  /// **'−1 image'**
+  String get coaPrevFrame;
+
+  /// No description provided for @coaProgramOf.
+  ///
+  /// In fr, this message translates to:
+  /// **'{program} · {name}'**
+  String coaProgramOf(Object program, Object name);
+
+  /// No description provided for @coaProgress.
+  ///
+  /// In fr, this message translates to:
+  /// **'Avancement'**
+  String get coaProgress;
+
+  /// No description provided for @coaSeeMyFeedback.
+  ///
+  /// In fr, this message translates to:
+  /// **'Voir mon retour'**
+  String get coaSeeMyFeedback;
+
+  /// No description provided for @coaSendFeedback.
+  ///
+  /// In fr, this message translates to:
+  /// **'Envoyer le retour'**
+  String get coaSendFeedback;
+
+  /// No description provided for @coaSessionsDone.
+  ///
+  /// In fr, this message translates to:
+  /// **'{done, plural, =0{Aucune terminée} =1{1 terminée} other{{done} terminées}} sur {total}'**
+  String coaSessionsDone(int done, int total);
+
+  /// No description provided for @coaSessionsTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Séances'**
+  String get coaSessionsTitle;
+
+  /// No description provided for @coaSince.
+  ///
+  /// In fr, this message translates to:
+  /// **'depuis le {day}'**
+  String coaSince(Object day);
+
+  /// No description provided for @coaSpeed.
+  ///
+  /// In fr, this message translates to:
+  /// **'Vitesse de lecture'**
+  String get coaSpeed;
+
+  /// No description provided for @coaStreak.
+  ///
+  /// In fr, this message translates to:
+  /// **'Série'**
+  String get coaStreak;
+
+  /// No description provided for @coaStreakWeeks.
+  ///
+  /// In fr, this message translates to:
+  /// **'{count, plural, =1{1 semaine} other{{count} semaines}}'**
+  String coaStreakWeeks(int count);
+
+  /// No description provided for @coaStudentGone.
+  ///
+  /// In fr, this message translates to:
+  /// **'Élève introuvable'**
+  String get coaStudentGone;
+
+  /// No description provided for @coaStudentGoneText.
+  ///
+  /// In fr, this message translates to:
+  /// **'Cet élève n’est plus inscrit à tes programmes.'**
+  String get coaStudentGoneText;
+
+  /// No description provided for @coaStudentNotified.
+  ///
+  /// In fr, this message translates to:
+  /// **'{name} reçoit la notification « Retour du coach ».'**
+  String coaStudentNotified(Object name);
+
+  /// No description provided for @coaThisWeek.
+  ///
+  /// In fr, this message translates to:
+  /// **'Cette semaine'**
+  String get coaThisWeek;
+
+  /// No description provided for @coaThisWeekValue.
+  ///
+  /// In fr, this message translates to:
+  /// **'{done}/{goal} séances'**
+  String coaThisWeekValue(int done, int goal);
+
+  /// No description provided for @coaTimedComments.
+  ///
+  /// In fr, this message translates to:
+  /// **'Commentaires horodatés'**
+  String get coaTimedComments;
+
+  /// No description provided for @coaTrainingMinutes.
+  ///
+  /// In fr, this message translates to:
+  /// **'Minutes d’entraînement'**
+  String get coaTrainingMinutes;
+
+  /// No description provided for @coaTrainingMinutesDetail.
+  ///
+  /// In fr, this message translates to:
+  /// **'6 dernières semaines · séances faites dans l’app'**
+  String get coaTrainingMinutesDetail;
+
+  /// No description provided for @coaVideoOf.
+  ///
+  /// In fr, this message translates to:
+  /// **'Vidéo de {name} : bandeja sur le court 3 de Smash Padel Club'**
+  String coaVideoOf(Object name);
+
+  /// No description provided for @coaVideoSentOn.
+  ///
+  /// In fr, this message translates to:
+  /// **'Envoyée {when} · séance {session}'**
+  String coaVideoSentOn(Object when, int session);
+
+  /// No description provided for @coaVideoToComment.
+  ///
+  /// In fr, this message translates to:
+  /// **'Vidéo à commenter'**
+  String get coaVideoToComment;
+
+  /// No description provided for @coaWeekLabel.
+  ///
+  /// In fr, this message translates to:
+  /// **'Semaine'**
+  String get coaWeekLabel;
+
+  /// No description provided for @coaWeekOf.
+  ///
+  /// In fr, this message translates to:
+  /// **'Semaine du {day}'**
+  String coaWeekOf(Object day);
+
+  /// No description provided for @coaWeekOutOf.
+  ///
+  /// In fr, this message translates to:
+  /// **'{week} sur {weeks}'**
+  String coaWeekOutOf(int week, int weeks);
+
+  /// No description provided for @coaYourCommentAt.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ton commentaire à {time}'**
+  String coaYourCommentAt(Object time);
+
+  /// No description provided for @coaYourFeedbackOn.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ton retour · séance {session} · {day}'**
+  String coaYourFeedbackOn(int session, Object day);
 }
 
 class _AppLocalizationsDelegate

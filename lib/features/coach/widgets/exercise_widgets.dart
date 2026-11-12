@@ -40,25 +40,42 @@ Future<({List<LibraryExercise> picked, bool createNew})?> showAddExerciseSheet(
   BuildContext context, {
   required String sessionLabel,
 }) {
+  final picked = ValueNotifier<Set<String>>({});
   return MuBottomSheet.show<({List<LibraryExercise> picked, bool createNew})>(
     context,
     title: l10n.coaAddExercise,
     height: MuSheetHeight.full,
-    child: _AddExercise(sessionLabel: sessionLabel),
-  );
+    child: _AddExercise(sessionLabel: sessionLabel, picked: picked),
+    footer: ValueListenableBuilder<Set<String>>(
+      valueListenable: picked,
+      builder: (context, ids, _) => MuButton.primary(
+        label: ids.isEmpty ? l10n.coaPickExercise : l10n.coaAddExercises(ids.length),
+        size: MuButtonSize.xl,
+        fullWidth: true,
+        onPressed: ids.isEmpty
+            ? null
+            : () => Navigator.of(context).pop((
+                picked: [for (final e in CoachStory.library) if (ids.contains(e.id)) e],
+                createNew: false,
+              )),
+      ),
+    ),
+  ).whenComplete(picked.dispose);
 }
 
 class _AddExercise extends StatefulWidget {
-  const _AddExercise({required this.sessionLabel});
+  const _AddExercise({required this.sessionLabel, required this.picked});
 
   final String sessionLabel;
+
+  /// The exercises ticked, shared with the sheet's footer button.
+  final ValueNotifier<Set<String>> picked;
 
   @override
   State<_AddExercise> createState() => _AddExerciseState();
 }
 
 class _AddExerciseState extends State<_AddExercise> {
-  final Set<String> _picked = {};
   String _query = '';
   String? _category;
 
@@ -73,9 +90,15 @@ class _AddExerciseState extends State<_AddExercise> {
             (q.isEmpty || e.name.toLowerCase().contains(q)))
           e,
     ];
-    final n = _picked.length;
+    final picked = widget.picked.value;
+    void toggle(String id) {
+      widget.picked.value = picked.contains(id) ? ({...picked}..remove(id)) : {...picked, id};
+      setState(() {});
+    }
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
+      mainAxisSize: MainAxisSize.min,
       children: [
         Padding(
           padding: const EdgeInsets.fromLTRB(MuSpace.s4, 0, MuSpace.s4, MuSpace.s3),
@@ -126,15 +149,15 @@ class _AddExerciseState extends State<_AddExercise> {
           ),
         ),
         const SizedBox(height: MuSpace.s2),
-        Flexible(
-          child: ListView(
-            shrinkWrap: true,
-            padding: const EdgeInsets.symmetric(horizontal: MuSpace.s4),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: MuSpace.s4),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               for (final (i, e) in shown.indexed) ...[
                 if (i > 0) Divider(height: 1, thickness: 1, color: c.border),
                 InkWell(
-                  onTap: () => setState(() => _picked.contains(e.id) ? _picked.remove(e.id) : _picked.add(e.id)),
+                  onTap: () => toggle(e.id),
                   child: Padding(
                     padding: const EdgeInsets.symmetric(vertical: MuSpace.s3),
                     child: Row(
@@ -161,9 +184,9 @@ class _AddExerciseState extends State<_AddExercise> {
                           ),
                         ),
                         MuCheckbox(
-                          value: _picked.contains(e.id),
+                          value: picked.contains(e.id),
                           semanticLabel: l10n.coaAddThis(e.name),
-                          onChanged: (v) => setState(() => v == true ? _picked.add(e.id) : _picked.remove(e.id)),
+                          onChanged: (_) => toggle(e.id),
                         ),
                       ],
                     ),
@@ -182,20 +205,7 @@ class _AddExerciseState extends State<_AddExercise> {
             ],
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.all(MuSpace.s4),
-          child: MuButton.primary(
-            label: n == 0 ? l10n.coaPickExercise : l10n.coaAddExercises(n),
-            size: MuButtonSize.xl,
-            fullWidth: true,
-            onPressed: n == 0
-                ? null
-                : () => Navigator.of(context).pop((
-                    picked: [for (final e in lib) if (_picked.contains(e.id)) e],
-                    createNew: false,
-                  )),
-          ),
-        ),
+        const SizedBox(height: MuSpace.s2),
       ],
     );
   }

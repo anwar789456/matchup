@@ -1,15 +1,15 @@
 import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../l10n/l10n.dart';
-import '../common/widgets/coming_soon.dart';
 import 'screens/builder_screen.dart';
 import 'screens/coach_earnings_screen.dart';
 import 'screens/coach_home_screen.dart';
 import 'screens/coach_programs_screen.dart';
 import 'screens/coach_students_screen.dart';
+import 'screens/feedback_screen.dart';
 import 'screens/publish_screen.dart';
 import 'screens/session_editor_screen.dart';
+import 'screens/student_screen.dart';
 import 'widgets/coach_shell.dart';
 
 /// The coach space's routes (COA-04…12), one per screen code.
@@ -32,8 +32,6 @@ StatefulShellRoute coachShellRoute(GlobalKey<NavigatorState> rootKey) {
     parentNavigatorKey: rootKey,
     builder: (context, state) => build(state),
   );
-
-  Widget soon(String title, String fallback) => ComingSoonScreen(title: title, fallback: fallback);
 
   return StatefulShellRoute.indexedStack(
     builder: (context, state, shell) => CoachShell(shell: shell),
@@ -68,8 +66,8 @@ StatefulShellRoute coachShellRoute(GlobalKey<NavigatorState> rootKey) {
             path: CoachRoutes.students,
             builder: (context, state) => const CoachStudentsScreen(),
             routes: [
-              page(':id', (s) => soon(l10n.coaStudent, CoachRoutes.students)),
-              page(':id/retour', (s) => soon(l10n.coaFeedback, CoachRoutes.students)),
+              page(':id', (s) => StudentScreen(studentId: s.pathParameters['id']!)),
+              page(':id/retour', (s) => FeedbackScreen(studentId: s.pathParameters['id']!)),
             ],
           ),
         ],
