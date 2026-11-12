@@ -11511,4 +11511,250 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get entYourCoach => 'Ton coach';
+
+  @override
+  String entAcceptDetail(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Ajoute $count séances à ton agenda, avec un rappel 1 h avant.',
+      one: 'Ajoute 1 séance à ton agenda, avec un rappel 1 h avant.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get entAcceptPlan => 'Accepter le plan';
+
+  @override
+  String get entAiCanBeWrong =>
+      'L’IA peut se tromper. Ajuste ce qui ne te va pas.';
+
+  @override
+  String get entAiPreparing => 'L’IA prépare ta semaine…';
+
+  @override
+  String entAiSourceMatches(int count, Object level) {
+    return 'Tes $count matchs de padel et ton niveau $level';
+  }
+
+  @override
+  String entAiSourceReviews(int count) {
+    return 'Les $count avis de tes coéquipiers';
+  }
+
+  @override
+  String get entBackToGoals => 'Retour aux objectifs';
+
+  @override
+  String get entCalendarTournament => 'Tournoi';
+
+  @override
+  String entDaysCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count jours',
+      one: '1 jour',
+      zero: '0 jour',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get entEdit => 'Modifier';
+
+  @override
+  String get entEvening => 'Soir';
+
+  @override
+  String get entMorning => 'Matin';
+
+  @override
+  String get entNoon => 'Midi';
+
+  @override
+  String get entGeneratePlan => 'Générer mon plan';
+
+  @override
+  String entGeneratedAt(Object time) {
+    return 'Généré à $time';
+  }
+
+  @override
+  String get entGoalPlacement => 'Placement';
+
+  @override
+  String get entGoalEndurance => 'Endurance';
+
+  @override
+  String get entGoalService => 'Service';
+
+  @override
+  String get entGoalReturn => 'Retour';
+
+  @override
+  String get entGoalVolley => 'Volée';
+
+  @override
+  String get entGoalBandeja => 'Bandeja';
+
+  @override
+  String get entGoalSpeed => 'Vitesse';
+
+  @override
+  String entIncludeProgram(Object program) {
+    return 'Inclure mon programme $program';
+  }
+
+  @override
+  String entIncludeProgramDetail(int places, int index) {
+    String _temp0 = intl.Intl.pluralLogic(
+      places,
+      locale: localeName,
+      other: 'La séance $index prend une de tes $places places.',
+      one: 'La séance $index prend ta seule place.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get entIntensity => 'Intensité';
+
+  @override
+  String get entIntensitySoft => 'Douce';
+
+  @override
+  String get entIntensityModerate => 'Modérée';
+
+  @override
+  String get entIntensityHigh => 'Intense';
+
+  @override
+  String get entIntensitySoftCaption =>
+      'Douce : des séances légères, pour récupérer entre tes matchs.';
+
+  @override
+  String get entIntensityModerateCaption =>
+      'Modérée : tu restes frais pour tes matchs du week-end.';
+
+  @override
+  String get entIntensityHighCaption =>
+      'Intense : plus de volume, à éviter juste avant un tournoi.';
+
+  @override
+  String get entLegendProgram => 'Programme';
+
+  @override
+  String get entLegendAi => 'Proposé par l’IA';
+
+  @override
+  String get entLegendMatch => 'Match prévu';
+
+  @override
+  String get entLegendTournament => 'Tournoi';
+
+  @override
+  String entMaxGoals(int max) {
+    return '$max max';
+  }
+
+  @override
+  String get entMomentOfDay => 'Moment de la journée';
+
+  @override
+  String get entPlanAdded => 'Plan ajouté à ton agenda';
+
+  @override
+  String entPlanAddedText(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count séances, avec un rappel 1 h avant.',
+      one: '1 séance, avec un rappel 1 h avant.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get entPlanDoesNotSuit => 'Ce plan ne me convient pas';
+
+  @override
+  String get entPlanSuitsMe => 'Ce plan me convient';
+
+  @override
+  String get entPlanFailed => 'Impossible de préparer ton plan';
+
+  @override
+  String get entPlanIntro =>
+      'Dis-nous ce que tu veux travailler et quand tu es libre. L’IA prépare 3 séances autour de ton programme.';
+
+  @override
+  String entPlanSummary(
+    Object goals,
+    Object intensity,
+    int count,
+    Object moment,
+  ) {
+    return '$goals · intensité $intensity · $count séances le $moment, allégées avant ton tournoi';
+  }
+
+  @override
+  String get entPrefilled =>
+      'Pré-rempli avec tes disponibilités du profil. Tes matchs déjà prévus sont évités.';
+
+  @override
+  String get entRegenerate => 'Régénérer';
+
+  @override
+  String get entSeePlanFirst =>
+      'Tu verras le plan avant qu’il entre dans ton agenda.';
+
+  @override
+  String get entSessionLength => 'Durée d’une séance';
+
+  @override
+  String get entThanksFeedback => 'Merci, c’est noté';
+
+  @override
+  String get entWeekCalendar => 'Calendrier de la semaine';
+
+  @override
+  String entWeekOfRange(Object start, Object end, Object month) {
+    return 'Ta semaine du $start au $end $month';
+  }
+
+  @override
+  String get entWhatAiUses => 'Ce que l’IA utilise';
+
+  @override
+  String get entWhyThisPlan => 'Pourquoi ce plan';
+
+  @override
+  String get entYourFreeDays => 'Tes jours libres';
+
+  @override
+  String get entYourGoal => 'Ton objectif';
+
+  @override
+  String get entYourProgram => 'Ton programme';
+
+  @override
+  String entYourSessions(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Tes $count séances',
+      one: 'Ta séance',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get entYourWeekPlan => 'Ton plan de la semaine';
+
+  @override
+  String entMaxGoalsReached(int max) {
+    return '$max objectifs maximum : retire-en un pour en choisir un autre.';
+  }
 }

@@ -1,7 +1,10 @@
+import 'dart:convert';
+
 import 'package:sqflite/sqflite.dart';
 
 import '../../../core/db/app_database.dart';
 import '../../../ui/ui.dart';
+import 'plan_generator.dart';
 import 'training_models.dart';
 import 'training_repository.dart';
 import 'training_story.dart';
@@ -11,9 +14,12 @@ import 'training_story.dart';
 /// card in `entrainement_profil`. The catalogue itself is the story's content until the
 /// entrainement API serves it.
 class SqliteTrainingRepository implements TrainingRepository {
-  SqliteTrainingRepository(this._database);
+  SqliteTrainingRepository(this._database, {this.aiDelay = const Duration(milliseconds: 1200)});
 
   final AppDatabase _database;
+
+  /// How long the fake AI « thinks » before answering.
+  final Duration aiDelay;
 
   Future<Database> get _db => _database.db;
 
@@ -120,4 +126,38 @@ class SqliteTrainingRepository implements TrainingRepository {
     await (await _db).update('entrainement_profil', {'plan_masque': 1});
     return progress();
   }
+
+  @override
+  Future<TrainingPlan> generatePlan(PlanRequest request, DateTime now) async {
+    await Future<void>.delayed(aiDelay);
+    return PlanGenerator.generate(request, now);
+  }
+
+  @override
+  Future<TrainingProgress> acceptPlan(TrainingPlan plan) async {
+    final db = await _db;
+    await db.transaction((txn) async {
+      await txn.insert('entrainement_plans', {
+        'semaine': plan.weekStart.toIso8601String(),
+        'objectifs': jsonEncode([for (final g in plan.request.goals) g.name]),
+        'contenu': jsonEncode([
+          for (final i in plan.sessions)
+            {
+              'type': i.kind.name,
+              'debut': i.start.toIso8601String(),
+              'minutes': i.minutes,
+              'titre': i.title,
+              'objectif': i.goal?.name,
+            },
+        ]),
+        'accepte_le': DateTime.now().toIso8601String(),
+      });
+      await txn.update('entrainement_profil', {'plan_masque': 1});
+    });
+    return progress();
+  }
+
+  /// The plans accepted, latest first (one JSON row per week).
+  Future<List<Map<String, Object?>>> acceptedPlans() async =>
+      (await _db).query('entrainement_plans', orderBy: 'id DESC');
 }

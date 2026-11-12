@@ -2,6 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/db/app_database.dart';
 import '../../../ui/ui.dart';
+import 'plan_generator.dart';
 import 'sqlite_training_repository.dart';
 import 'training_models.dart';
 import 'training_story.dart';
@@ -24,6 +25,12 @@ abstract interface class TrainingRepository {
 
   /// « Plus tard » on the AI plan card (ENT-01).
   Future<TrainingProgress> hidePlanCard();
+
+  /// « Générer mon plan » (ENT-06 → ENT-07): a proposal, nothing is saved.
+  Future<TrainingPlan> generatePlan(PlanRequest request, DateTime now);
+
+  /// « Accepter le plan » (ENT-07): the sessions go to the agenda; the ENT-01 card is done.
+  Future<TrainingProgress> acceptPlan(TrainingPlan plan);
 }
 
 /// The story in memory, for widget tests.
@@ -85,6 +92,19 @@ class FakeTrainingRepository implements TrainingRepository {
   @override
   Future<TrainingProgress> hidePlanCard() =>
       _wait(_progress = _progress.copyWith(planCardHidden: true));
+
+  /// Plans accepted, latest last.
+  final List<TrainingPlan> accepted = [];
+
+  @override
+  Future<TrainingPlan> generatePlan(PlanRequest request, DateTime now) =>
+      _wait(PlanGenerator.generate(request, now));
+
+  @override
+  Future<TrainingProgress> acceptPlan(TrainingPlan plan) {
+    accepted.add(plan);
+    return hidePlanCard();
+  }
 }
 
 final trainingRepositoryProvider = Provider<TrainingRepository>(

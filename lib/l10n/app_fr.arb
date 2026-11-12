@@ -9780,5 +9780,176 @@
       }
     }
   },
-  "entYourCoach": "Ton coach"
+  "entYourCoach": "Ton coach",
+  "entAcceptDetail": "{count, plural, =1{Ajoute 1 séance à ton agenda, avec un rappel 1 h avant.} other{Ajoute {count} séances à ton agenda, avec un rappel 1 h avant.}}",
+  "@entAcceptDetail": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "entAcceptPlan": "Accepter le plan",
+  "entAiCanBeWrong": "L’IA peut se tromper. Ajuste ce qui ne te va pas.",
+  "entAiPreparing": "L’IA prépare ta semaine…",
+  "entAiSourceMatches": "Tes {count} matchs de padel et ton niveau {level}",
+  "@entAiSourceMatches": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "level": {
+        "type": "Object"
+      }
+    }
+  },
+  "entAiSourceReviews": "Les {count} avis de tes coéquipiers",
+  "@entAiSourceReviews": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "entBackToGoals": "Retour aux objectifs",
+  "entCalendarTournament": "Tournoi",
+  "entDaysCount": "{count, plural, =0{0 jour} =1{1 jour} other{{count} jours}}",
+  "@entDaysCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "entEdit": "Modifier",
+  "entEvening": "Soir",
+  "entMorning": "Matin",
+  "entNoon": "Midi",
+  "entGeneratePlan": "Générer mon plan",
+  "entGeneratedAt": "Généré à {time}",
+  "@entGeneratedAt": {
+    "placeholders": {
+      "time": {
+        "type": "Object"
+      }
+    }
+  },
+  "entGoalPlacement": "Placement",
+  "entGoalEndurance": "Endurance",
+  "entGoalService": "Service",
+  "entGoalReturn": "Retour",
+  "entGoalVolley": "Volée",
+  "entGoalBandeja": "Bandeja",
+  "entGoalSpeed": "Vitesse",
+  "entIncludeProgram": "Inclure mon programme {program}",
+  "@entIncludeProgram": {
+    "placeholders": {
+      "program": {
+        "type": "Object"
+      }
+    }
+  },
+  "entIncludeProgramDetail": "{places, plural, =1{La séance {index} prend ta seule place.} other{La séance {index} prend une de tes {places} places.}}",
+  "@entIncludeProgramDetail": {
+    "placeholders": {
+      "places": {
+        "type": "int"
+      },
+      "index": {
+        "type": "int"
+      }
+    }
+  },
+  "entIntensity": "Intensité",
+  "entIntensitySoft": "Douce",
+  "entIntensityModerate": "Modérée",
+  "entIntensityHigh": "Intense",
+  "entIntensitySoftCaption": "Douce : des séances légères, pour récupérer entre tes matchs.",
+  "entIntensityModerateCaption": "Modérée : tu restes frais pour tes matchs du week-end.",
+  "entIntensityHighCaption": "Intense : plus de volume, à éviter juste avant un tournoi.",
+  "entLegendProgram": "Programme",
+  "entLegendAi": "Proposé par l’IA",
+  "entLegendMatch": "Match prévu",
+  "entLegendTournament": "Tournoi",
+  "entMaxGoals": "{max} max",
+  "@entMaxGoals": {
+    "placeholders": {
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "entMomentOfDay": "Moment de la journée",
+  "entPlanAdded": "Plan ajouté à ton agenda",
+  "entPlanAddedText": "{count, plural, =1{1 séance, avec un rappel 1 h avant.} other{{count} séances, avec un rappel 1 h avant.}}",
+  "@entPlanAddedText": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "entPlanDoesNotSuit": "Ce plan ne me convient pas",
+  "entPlanSuitsMe": "Ce plan me convient",
+  "entPlanFailed": "Impossible de préparer ton plan",
+  "entPlanIntro": "Dis-nous ce que tu veux travailler et quand tu es libre. L’IA prépare 3 séances autour de ton programme.",
+  "entPlanSummary": "{goals} · intensité {intensity} · {count} séances le {moment}, allégées avant ton tournoi",
+  "@entPlanSummary": {
+    "placeholders": {
+      "goals": {
+        "type": "Object"
+      },
+      "intensity": {
+        "type": "Object"
+      },
+      "count": {
+        "type": "int"
+      },
+      "moment": {
+        "type": "Object"
+      }
+    }
+  },
+  "entPrefilled": "Pré-rempli avec tes disponibilités du profil. Tes matchs déjà prévus sont évités.",
+  "entRegenerate": "Régénérer",
+  "entSeePlanFirst": "Tu verras le plan avant qu’il entre dans ton agenda.",
+  "entSessionLength": "Durée d’une séance",
+  "entThanksFeedback": "Merci, c’est noté",
+  "entWeekCalendar": "Calendrier de la semaine",
+  "entWeekOfRange": "Ta semaine du {start} au {end} {month}",
+  "@entWeekOfRange": {
+    "placeholders": {
+      "start": {
+        "type": "Object"
+      },
+      "end": {
+        "type": "Object"
+      },
+      "month": {
+        "type": "Object"
+      }
+    }
+  },
+  "entWhatAiUses": "Ce que l’IA utilise",
+  "entWhyThisPlan": "Pourquoi ce plan",
+  "entYourFreeDays": "Tes jours libres",
+  "entYourGoal": "Ton objectif",
+  "entYourProgram": "Ton programme",
+  "entYourSessions": "{count, plural, =1{Ta séance} other{Tes {count} séances}}",
+  "@entYourSessions": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "entYourWeekPlan": "Ton plan de la semaine",
+  "entMaxGoalsReached": "{max} objectifs maximum : retire-en un pour en choisir un autre.",
+  "@entMaxGoalsReached": {
+    "placeholders": {
+      "max": {
+        "type": "int"
+      }
+    }
+  }
 }

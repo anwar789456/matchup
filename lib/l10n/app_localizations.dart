@@ -19030,6 +19030,365 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Ton coach'**
   String get entYourCoach;
+
+  /// No description provided for @entAcceptDetail.
+  ///
+  /// In fr, this message translates to:
+  /// **'{count, plural, =1{Ajoute 1 séance à ton agenda, avec un rappel 1 h avant.} other{Ajoute {count} séances à ton agenda, avec un rappel 1 h avant.}}'**
+  String entAcceptDetail(int count);
+
+  /// No description provided for @entAcceptPlan.
+  ///
+  /// In fr, this message translates to:
+  /// **'Accepter le plan'**
+  String get entAcceptPlan;
+
+  /// No description provided for @entAiCanBeWrong.
+  ///
+  /// In fr, this message translates to:
+  /// **'L’IA peut se tromper. Ajuste ce qui ne te va pas.'**
+  String get entAiCanBeWrong;
+
+  /// No description provided for @entAiPreparing.
+  ///
+  /// In fr, this message translates to:
+  /// **'L’IA prépare ta semaine…'**
+  String get entAiPreparing;
+
+  /// No description provided for @entAiSourceMatches.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tes {count} matchs de padel et ton niveau {level}'**
+  String entAiSourceMatches(int count, Object level);
+
+  /// No description provided for @entAiSourceReviews.
+  ///
+  /// In fr, this message translates to:
+  /// **'Les {count} avis de tes coéquipiers'**
+  String entAiSourceReviews(int count);
+
+  /// No description provided for @entBackToGoals.
+  ///
+  /// In fr, this message translates to:
+  /// **'Retour aux objectifs'**
+  String get entBackToGoals;
+
+  /// No description provided for @entCalendarTournament.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tournoi'**
+  String get entCalendarTournament;
+
+  /// No description provided for @entDaysCount.
+  ///
+  /// In fr, this message translates to:
+  /// **'{count, plural, =0{0 jour} =1{1 jour} other{{count} jours}}'**
+  String entDaysCount(int count);
+
+  /// No description provided for @entEdit.
+  ///
+  /// In fr, this message translates to:
+  /// **'Modifier'**
+  String get entEdit;
+
+  /// No description provided for @entEvening.
+  ///
+  /// In fr, this message translates to:
+  /// **'Soir'**
+  String get entEvening;
+
+  /// No description provided for @entMorning.
+  ///
+  /// In fr, this message translates to:
+  /// **'Matin'**
+  String get entMorning;
+
+  /// No description provided for @entNoon.
+  ///
+  /// In fr, this message translates to:
+  /// **'Midi'**
+  String get entNoon;
+
+  /// No description provided for @entGeneratePlan.
+  ///
+  /// In fr, this message translates to:
+  /// **'Générer mon plan'**
+  String get entGeneratePlan;
+
+  /// No description provided for @entGeneratedAt.
+  ///
+  /// In fr, this message translates to:
+  /// **'Généré à {time}'**
+  String entGeneratedAt(Object time);
+
+  /// No description provided for @entGoalPlacement.
+  ///
+  /// In fr, this message translates to:
+  /// **'Placement'**
+  String get entGoalPlacement;
+
+  /// No description provided for @entGoalEndurance.
+  ///
+  /// In fr, this message translates to:
+  /// **'Endurance'**
+  String get entGoalEndurance;
+
+  /// No description provided for @entGoalService.
+  ///
+  /// In fr, this message translates to:
+  /// **'Service'**
+  String get entGoalService;
+
+  /// No description provided for @entGoalReturn.
+  ///
+  /// In fr, this message translates to:
+  /// **'Retour'**
+  String get entGoalReturn;
+
+  /// No description provided for @entGoalVolley.
+  ///
+  /// In fr, this message translates to:
+  /// **'Volée'**
+  String get entGoalVolley;
+
+  /// No description provided for @entGoalBandeja.
+  ///
+  /// In fr, this message translates to:
+  /// **'Bandeja'**
+  String get entGoalBandeja;
+
+  /// No description provided for @entGoalSpeed.
+  ///
+  /// In fr, this message translates to:
+  /// **'Vitesse'**
+  String get entGoalSpeed;
+
+  /// No description provided for @entIncludeProgram.
+  ///
+  /// In fr, this message translates to:
+  /// **'Inclure mon programme {program}'**
+  String entIncludeProgram(Object program);
+
+  /// No description provided for @entIncludeProgramDetail.
+  ///
+  /// In fr, this message translates to:
+  /// **'{places, plural, =1{La séance {index} prend ta seule place.} other{La séance {index} prend une de tes {places} places.}}'**
+  String entIncludeProgramDetail(int places, int index);
+
+  /// No description provided for @entIntensity.
+  ///
+  /// In fr, this message translates to:
+  /// **'Intensité'**
+  String get entIntensity;
+
+  /// No description provided for @entIntensitySoft.
+  ///
+  /// In fr, this message translates to:
+  /// **'Douce'**
+  String get entIntensitySoft;
+
+  /// No description provided for @entIntensityModerate.
+  ///
+  /// In fr, this message translates to:
+  /// **'Modérée'**
+  String get entIntensityModerate;
+
+  /// No description provided for @entIntensityHigh.
+  ///
+  /// In fr, this message translates to:
+  /// **'Intense'**
+  String get entIntensityHigh;
+
+  /// No description provided for @entIntensitySoftCaption.
+  ///
+  /// In fr, this message translates to:
+  /// **'Douce : des séances légères, pour récupérer entre tes matchs.'**
+  String get entIntensitySoftCaption;
+
+  /// No description provided for @entIntensityModerateCaption.
+  ///
+  /// In fr, this message translates to:
+  /// **'Modérée : tu restes frais pour tes matchs du week-end.'**
+  String get entIntensityModerateCaption;
+
+  /// No description provided for @entIntensityHighCaption.
+  ///
+  /// In fr, this message translates to:
+  /// **'Intense : plus de volume, à éviter juste avant un tournoi.'**
+  String get entIntensityHighCaption;
+
+  /// No description provided for @entLegendProgram.
+  ///
+  /// In fr, this message translates to:
+  /// **'Programme'**
+  String get entLegendProgram;
+
+  /// No description provided for @entLegendAi.
+  ///
+  /// In fr, this message translates to:
+  /// **'Proposé par l’IA'**
+  String get entLegendAi;
+
+  /// No description provided for @entLegendMatch.
+  ///
+  /// In fr, this message translates to:
+  /// **'Match prévu'**
+  String get entLegendMatch;
+
+  /// No description provided for @entLegendTournament.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tournoi'**
+  String get entLegendTournament;
+
+  /// No description provided for @entMaxGoals.
+  ///
+  /// In fr, this message translates to:
+  /// **'{max} max'**
+  String entMaxGoals(int max);
+
+  /// No description provided for @entMomentOfDay.
+  ///
+  /// In fr, this message translates to:
+  /// **'Moment de la journée'**
+  String get entMomentOfDay;
+
+  /// No description provided for @entPlanAdded.
+  ///
+  /// In fr, this message translates to:
+  /// **'Plan ajouté à ton agenda'**
+  String get entPlanAdded;
+
+  /// No description provided for @entPlanAddedText.
+  ///
+  /// In fr, this message translates to:
+  /// **'{count, plural, =1{1 séance, avec un rappel 1 h avant.} other{{count} séances, avec un rappel 1 h avant.}}'**
+  String entPlanAddedText(int count);
+
+  /// No description provided for @entPlanDoesNotSuit.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ce plan ne me convient pas'**
+  String get entPlanDoesNotSuit;
+
+  /// No description provided for @entPlanSuitsMe.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ce plan me convient'**
+  String get entPlanSuitsMe;
+
+  /// No description provided for @entPlanFailed.
+  ///
+  /// In fr, this message translates to:
+  /// **'Impossible de préparer ton plan'**
+  String get entPlanFailed;
+
+  /// No description provided for @entPlanIntro.
+  ///
+  /// In fr, this message translates to:
+  /// **'Dis-nous ce que tu veux travailler et quand tu es libre. L’IA prépare 3 séances autour de ton programme.'**
+  String get entPlanIntro;
+
+  /// No description provided for @entPlanSummary.
+  ///
+  /// In fr, this message translates to:
+  /// **'{goals} · intensité {intensity} · {count} séances le {moment}, allégées avant ton tournoi'**
+  String entPlanSummary(
+    Object goals,
+    Object intensity,
+    int count,
+    Object moment,
+  );
+
+  /// No description provided for @entPrefilled.
+  ///
+  /// In fr, this message translates to:
+  /// **'Pré-rempli avec tes disponibilités du profil. Tes matchs déjà prévus sont évités.'**
+  String get entPrefilled;
+
+  /// No description provided for @entRegenerate.
+  ///
+  /// In fr, this message translates to:
+  /// **'Régénérer'**
+  String get entRegenerate;
+
+  /// No description provided for @entSeePlanFirst.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tu verras le plan avant qu’il entre dans ton agenda.'**
+  String get entSeePlanFirst;
+
+  /// No description provided for @entSessionLength.
+  ///
+  /// In fr, this message translates to:
+  /// **'Durée d’une séance'**
+  String get entSessionLength;
+
+  /// No description provided for @entThanksFeedback.
+  ///
+  /// In fr, this message translates to:
+  /// **'Merci, c’est noté'**
+  String get entThanksFeedback;
+
+  /// No description provided for @entWeekCalendar.
+  ///
+  /// In fr, this message translates to:
+  /// **'Calendrier de la semaine'**
+  String get entWeekCalendar;
+
+  /// No description provided for @entWeekOfRange.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ta semaine du {start} au {end} {month}'**
+  String entWeekOfRange(Object start, Object end, Object month);
+
+  /// No description provided for @entWhatAiUses.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ce que l’IA utilise'**
+  String get entWhatAiUses;
+
+  /// No description provided for @entWhyThisPlan.
+  ///
+  /// In fr, this message translates to:
+  /// **'Pourquoi ce plan'**
+  String get entWhyThisPlan;
+
+  /// No description provided for @entYourFreeDays.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tes jours libres'**
+  String get entYourFreeDays;
+
+  /// No description provided for @entYourGoal.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ton objectif'**
+  String get entYourGoal;
+
+  /// No description provided for @entYourProgram.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ton programme'**
+  String get entYourProgram;
+
+  /// No description provided for @entYourSessions.
+  ///
+  /// In fr, this message translates to:
+  /// **'{count, plural, =1{Ta séance} other{Tes {count} séances}}'**
+  String entYourSessions(int count);
+
+  /// No description provided for @entYourWeekPlan.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ton plan de la semaine'**
+  String get entYourWeekPlan;
+
+  /// No description provided for @entMaxGoalsReached.
+  ///
+  /// In fr, this message translates to:
+  /// **'{max} objectifs maximum : retire-en un pour en choisir un autre.'**
+  String entMaxGoalsReached(int max);
 }
 
 class _AppLocalizationsDelegate

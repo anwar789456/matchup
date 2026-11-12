@@ -5,6 +5,8 @@ import '../../l10n/l10n.dart';
 import '../common/widgets/coming_soon.dart';
 import 'screens/lesson_done_screen.dart';
 import 'screens/lesson_screen.dart';
+import 'screens/plan_goals_screen.dart';
+import 'screens/plan_screen.dart';
 import 'screens/program_screen.dart';
 import 'screens/programs_screen.dart';
 
@@ -46,8 +48,8 @@ List<RouteBase> trainingRoutes(GlobalKey<NavigatorState> rootKey) {
       'program/:id/lesson/:index/done',
       (s) => LessonDoneScreen(programId: s.pathParameters['id']!, index: _index(s)),
     ),
-    page('plan', (s) => soon(l10n.entTrainingPlan)),
-    page('plan/week', (s) => soon(l10n.entTrainingPlan)),
+    page('plan', (s) => const PlanGoalsScreen()),
+    page('plan/week', (s) => const PlanScreen()),
     page('video', (s) => soon(l10n.entAnalyseVideoTitle)),
     page('video/result', (s) => soon(l10n.entAnalyseVideoTitle)),
   ];

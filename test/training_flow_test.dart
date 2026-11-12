@@ -265,6 +265,51 @@ void main() {
       await settleFonts(tester);
     });
 
+    testWidgets('ENT-01 → ENT-06 → ENT-07 → « Accepter le plan »', (tester) async {
+      await pumpApp(tester, TrainingRoutes.root);
+      await see(tester, find.text('Créer mon plan'));
+      await tester.tap(find.text('Créer mon plan'));
+      await tester.pumpAndSettle();
+      expect(find.text('Ton plan de la semaine'), findsOneWidget);
+      expect(find.text('3 jours'), findsOneWidget);
+      expect(find.text('La séance 5 prend une de tes 3 places.'), findsOneWidget);
+      // Two goals already: a third one is refused with a toast.
+      await tester.tap(find.text('Service'));
+      await tester.pump();
+      expect(find.textContaining('2 objectifs maximum'), findsOneWidget);
+      await tester.pumpAndSettle(const Duration(seconds: 5));
+      await tester.tap(find.text('Générer mon plan'));
+      await tester.pumpAndSettle();
+      expect(find.text('Ta semaine du 19 au 25 oct.'), findsOneWidget);
+      expect(find.text('Tes 3 séances'), findsOneWidget);
+      expect(find.text('Séance 6 · Bandeja sous pression'), findsOneWidget);
+      expect(find.text('Placement au filet, sans sauter'), findsOneWidget);
+      expect(find.text('Étirements après le tournoi'), findsOneWidget);
+      expect(find.text('Généré à 18h00'), findsOneWidget);
+      await tester.tap(find.text('Accepter le plan'));
+      await tester.pumpAndSettle();
+      expect(find.text('Mes programmes'), findsOneWidget);
+      expect(find.text('Crée ton plan de la semaine'), findsNothing);
+      await settleFonts(tester);
+    });
+
+    testWidgets('ENT-06 without the program: the AI proposes the Monday session', (tester) async {
+      await pumpApp(tester, TrainingRoutes.planGoals);
+      await see(tester, find.text('Inclure mon programme Bandeja'));
+      await tester.tap(find.text('Inclure mon programme Bandeja'));
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('Générer mon plan'));
+      await tester.pumpAndSettle();
+      expect(find.text('Séance 6 · Bandeja sous pression'), findsNothing);
+      expect(find.text('Fractionné court, 30/30'), findsOneWidget);
+      // « Modifier » goes back to the goals with the answers kept.
+      await see(tester, find.text('Modifier'));
+      await tester.tap(find.text('Modifier'));
+      await tester.pumpAndSettle();
+      expect(find.text('Ton plan de la semaine'), findsOneWidget);
+      await settleFonts(tester);
+    });
+
     testWidgets('ENT-02 lists the programs and filters them', (tester) async {
       await pumpApp(tester, TrainingRoutes.programs);
       expect(find.text('Programmes'), findsWidgets);

@@ -306,3 +306,130 @@ class TrainingProgress {
     planCardHidden: planCardHidden ?? this.planCardHidden,
   );
 }
+
+// ── AI weekly plan (ENT-06, ENT-07) ───────────────────────────────────────────────────────────
+
+/// « Ton objectif » (2 max).
+enum PlanGoal { placement, endurance, service, retour, volee, bandeja, vitesse }
+
+/// « Matin », « Midi », « Soir ».
+enum DayMoment { morning, noon, evening }
+
+/// « Douce », « Modérée », « Intense ».
+enum PlanIntensity { soft, moderate, intense }
+
+/// What the player asks the AI for (ENT-06).
+@immutable
+class PlanRequest {
+  const PlanRequest({
+    required this.goals,
+    required this.days,
+    required this.moment,
+    required this.minutes,
+    required this.intensity,
+    required this.includeProgram,
+  });
+
+  /// Placement + endurance, lun. mer. sam. soir, 20 min, modérée, with the program.
+  static const story = PlanRequest(
+    goals: {PlanGoal.placement, PlanGoal.endurance},
+    days: {DateTime.monday, DateTime.wednesday, DateTime.saturday},
+    moment: DayMoment.evening,
+    minutes: 20,
+    intensity: PlanIntensity.moderate,
+    includeProgram: true,
+  );
+
+  static const maxGoals = 2;
+  static const durations = [15, 20, 30, 45];
+
+  final Set<PlanGoal> goals;
+
+  /// Weekdays (1 = Monday).
+  final Set<int> days;
+  final DayMoment moment;
+  final int minutes;
+  final PlanIntensity intensity;
+  final bool includeProgram;
+
+  bool get complete => goals.isNotEmpty && days.isNotEmpty;
+
+  PlanRequest copyWith({
+    Set<PlanGoal>? goals,
+    Set<int>? days,
+    DayMoment? moment,
+    int? minutes,
+    PlanIntensity? intensity,
+    bool? includeProgram,
+  }) => PlanRequest(
+    goals: goals ?? this.goals,
+    days: days ?? this.days,
+    moment: moment ?? this.moment,
+    minutes: minutes ?? this.minutes,
+    intensity: intensity ?? this.intensity,
+    includeProgram: includeProgram ?? this.includeProgram,
+  );
+}
+
+/// What a calendar entry is: a session of the program, one the AI proposes, a recovery, or
+/// something already in the agenda (a match, a tournament).
+enum PlanItemKind { program, ai, recovery, match, tournament }
+
+/// One entry of the week (ENT-07): a session to accept, or a fixed event it works around.
+@immutable
+class PlanItem {
+  const PlanItem({
+    required this.kind,
+    required this.start,
+    required this.minutes,
+    required this.title,
+    this.tag,
+    this.details,
+    this.goal,
+    this.calendarLabel,
+  });
+
+  final PlanItemKind kind;
+  final DateTime start;
+  final int minutes;
+
+  /// « Séance 6 · Bandeja sous pression », « Placement au filet, sans sauter ».
+  final String title;
+
+  /// « Placement · légère », « Récupération · 10 min » (sessions only).
+  final String? tag;
+
+  /// « 20 min · 3 exercices · avancée à 18h30 car tu joues à Arena Five à 21h00 ».
+  final String? details;
+  final PlanGoal? goal;
+
+  /// Under the time in the week's calendar: « Bandeja » for the program's session.
+  final String? calendarLabel;
+
+  bool get isSession =>
+      kind == PlanItemKind.program || kind == PlanItemKind.ai || kind == PlanItemKind.recovery;
+}
+
+/// A week proposed by the AI: shown, editable, applied only on « Accepter le plan ».
+@immutable
+class TrainingPlan {
+  const TrainingPlan({
+    required this.request,
+    required this.weekStart,
+    required this.generatedAt,
+    required this.items,
+    required this.reason,
+  });
+
+  final PlanRequest request;
+
+  /// Monday of the planned week.
+  final DateTime weekStart;
+  final DateTime generatedAt;
+  final List<PlanItem> items;
+
+  /// « Recommandé car … » (the end of the sentence).
+  final String reason;
+
+  List<PlanItem> get sessions => [for (final i in items) if (i.isSession) i];
+}
