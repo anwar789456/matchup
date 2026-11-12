@@ -58,7 +58,13 @@ class OrganizerDashboardScreen extends ConsumerWidget {
                 label: l10n.creerUnTournoi,
                 leading: PhosphorIcons.plus(),
                 size: MuButtonSize.l,
-                onPressed: () => showComingSoon(context),
+                onPressed: () => context.push(Routes.organizerCreer),
+              ),
+              MuButton.secondary(
+                label: l10n.trnMesTournois,
+                leading: PhosphorIcons.trophy(),
+                size: MuButtonSize.l,
+                onPressed: () => context.push(Routes.organizerTournois),
               ),
               if (last != null)
                 MuButton.secondary(

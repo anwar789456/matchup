@@ -79,6 +79,11 @@ import 'features/wallet/screens/topup_screen.dart';
 import 'features/wallet/screens/wallet_screen.dart';
 import 'features/organizer_onboarding/screens/organisation_screen.dart';
 import 'features/organizer_onboarding/screens/organizer_dashboard_screen.dart';
+import 'features/tournaments/organizer/create_tournoi_screen.dart';
+import 'features/tournaments/organizer/inscriptions_screen.dart';
+import 'features/tournaments/organizer/mes_tournois_screen.dart';
+import 'features/tournaments/organizer/planning_screen.dart';
+import 'features/tournaments/organizer/scores_screen.dart';
 import 'features/onboarding/screens/welcome_screen.dart';
 import 'features/owner/data/owner_drafts.dart';
 import 'features/owner/data/owner_repository.dart';
@@ -247,6 +252,12 @@ abstract final class Routes {
   static const coachDashboard = '/coa/dashboard'; // COA-03
   static const organizerOrganisation = '/org/organisation'; // ORG-01
   static const organizerDashboard = '/org/dashboard'; // ORG-02
+  static const organizerTournois = '/org/tournois'; // ORG-04
+  static const organizerCreer = '/org/creer'; // ORG-05 → ORG-09
+  static String organizerTournoi(String id) => '/org/tournoi/$id';
+  static String organizerInscriptions(String id) => '/org/tournoi/$id/inscriptions'; // ORG-10
+  static String organizerPlanning(String id) => '/org/tournoi/$id/planning'; // ORG-11
+  static String organizerScores(String id) => '/org/tournoi/$id/scores'; // ORG-12, ORG-13
 
   /// The owner wizard, in order.
   static const owner = [
@@ -587,6 +598,30 @@ final routerProvider = Provider<GoRouter>((ref) {
       _coach(Routes.coachDashboard, const CoachDashboardScreen()),
       _organizer(Routes.organizerOrganisation, const OrganisationScreen()),
       _organizer(Routes.organizerDashboard, const OrganizerDashboardScreen()),
+      _root(Routes.organizerTournois, (_) => const MesTournoisScreen()),
+      _root(Routes.organizerCreer, (_) => const CreateTournoiScreen()),
+      GoRoute(
+        path: '/org/tournoi/:id',
+        parentNavigatorKey: _rootKey,
+        builder: (context, state) => TournoiHubScreen(id: state.pathParameters['id']!),
+        routes: [
+          GoRoute(
+            path: 'inscriptions',
+            parentNavigatorKey: _rootKey,
+            builder: (context, state) => InscriptionsScreen(id: state.pathParameters['id']!),
+          ),
+          GoRoute(
+            path: 'planning',
+            parentNavigatorKey: _rootKey,
+            builder: (context, state) => PlanningScreen(id: state.pathParameters['id']!),
+          ),
+          GoRoute(
+            path: 'scores',
+            parentNavigatorKey: _rootKey,
+            builder: (context, state) => ScoresScreen(id: state.pathParameters['id']!),
+          ),
+        ],
+      ),
       if (kDebugMode) _route(Routes.gallery, (_) => const GalleryScreen()),
     ],
   );
