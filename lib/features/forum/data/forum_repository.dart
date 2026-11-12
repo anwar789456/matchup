@@ -31,10 +31,10 @@ abstract interface class ForumRepository {
   Future<ForumFeed> feed(ForumQuery query, {int limit = 20, int offset = 0});
 
   /// The 5 categories with « nouveaux depuis ta dernière visite ».
-  Future<List<ForumCategoryCount>> categories({MuSport? sport});
+  Future<List<ForumCategoryCount>> categories({MuSport? sport, DateTime? since});
 
   /// Saves the visit (call it when leaving the Communauté), so the badges count from now.
-  Future<void> markVisited();
+  Future<DateTime?> markVisited();
 
   /// FRM-04.
   Future<ForumThread> thread(String postId, {ReplySort sort = ReplySort.useful});

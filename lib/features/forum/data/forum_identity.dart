@@ -1,7 +1,5 @@
 import 'dart:math';
 
-import 'package:supabase_flutter/supabase_flutter.dart';
-
 import '../../../core/supabase/supabase_config.dart';
 import 'forum_seed.dart';
 
@@ -17,14 +15,7 @@ String newForumId() {
   return '${h.substring(0, 8)}-${h.substring(8, 12)}-${h.substring(12, 16)}-${h.substring(16, 20)}-${h.substring(20)}';
 }
 
-/// The member using the app, as written in `auteur_id`: the Supabase user id once the phone has
-/// a session, else the story's demo player (no Supabase configured, offline start, tests).
-///
-/// TODO(forum): read `SupabaseConfig.userId` once Anwar's sync change is on main.
-String forumUserId() {
-  if (SupabaseConfig.configured && SupabaseConfig.ready) {
-    final id = Supabase.instance.client.auth.currentUser?.id;
-    if (id != null) return id;
-  }
-  return ForumSeed.me;
-}
+/// The member using the app, as written in `auteur_id`: the signed-in Supabase user, else the
+/// story's demo player (no Supabase configured, not reached yet, tests). Rows written under the
+/// demo id are never sent (supabase/README.md « Shared tables »).
+String forumUserId() => SupabaseConfig.userId ?? ForumSeed.me;

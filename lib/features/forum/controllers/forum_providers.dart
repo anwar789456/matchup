@@ -1,10 +1,14 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/sync/sync_service.dart';
 import '../../../theme/theme.dart';
 import '../data/forum_repository.dart';
 
 /// The member using the app (avatar of the compose field and the reply bar).
-final forumMeProvider = FutureProvider<ForumAuthor>((ref) => ref.watch(forumRepositoryProvider).me());
+final forumMeProvider = FutureProvider<ForumAuthor>((ref) {
+  ref.watch(syncRevisionProvider);
+  return ref.watch(forumRepositoryProvider).me();
+});
 
 /// FRM-01 filters: category tile, sport chip, sort.
 class ForumQueryController extends Notifier<ForumQuery> {
@@ -18,13 +22,16 @@ class ForumQueryController extends Notifier<ForumQuery> {
 
 final forumQueryProvider = NotifierProvider<ForumQueryController, ForumQuery>(ForumQueryController.new);
 
-/// The 5 category tiles with their « nouveaux » badges, read once per visit: the visit is saved
-/// right after, so the badges count from now the next time.
+/// The previous visit, read once per session; the visit is saved at the same time, so the
+/// « nouveaux » badges count from it all session long and from now next time.
+final forumPreviousVisitProvider = FutureProvider<DateTime?>((ref) => ref.watch(forumRepositoryProvider).markVisited());
+
+/// The 5 category tiles with their « nouveaux depuis ta dernière visite » badges, refreshed when
+/// the sync brings new posts.
 final forumCategoriesProvider = FutureProvider<List<ForumCategoryCount>>((ref) async {
-  final repo = ref.watch(forumRepositoryProvider);
-  final counts = await repo.categories();
-  await repo.markVisited();
-  return counts;
+  ref.watch(syncRevisionProvider);
+  final since = await ref.watch(forumPreviousVisitProvider.future);
+  return ref.watch(forumRepositoryProvider).categories(since: since);
 });
 
 /// A page of the feed plus the paging state.
@@ -53,7 +60,10 @@ class ForumFeedController extends AsyncNotifier<ForumFeedState> {
 
   @override
   Future<ForumFeedState> build() async {
-    final feed = await ref.watch(forumRepositoryProvider).feed(query, limit: pageSize);
+    // New rows from other phones refresh the list, keeping the pages already loaded.
+    ref.watch(syncRevisionProvider);
+    final loaded = state.value?.posts.length ?? 0;
+    final feed = await ref.watch(forumRepositoryProvider).feed(query, limit: loaded > pageSize ? loaded : pageSize);
     return ForumFeedState(total: feed.total, posts: feed.posts);
   }
 
@@ -131,7 +141,11 @@ class ForumThreadController extends AsyncNotifier<ForumThread> {
   ForumRepository get _repo => ref.read(forumRepositoryProvider);
 
   @override
-  Future<ForumThread> build() => ref.watch(forumRepositoryProvider).thread(postId, sort: _sort);
+  Future<ForumThread> build() {
+    // Replies, votes and reactions from other phones appear while the thread is open.
+    ref.watch(syncRevisionProvider);
+    return ref.watch(forumRepositoryProvider).thread(postId, sort: _sort);
+  }
 
   Future<void> sortBy(ReplySort sort) async {
     _sort = sort;
@@ -313,6 +327,7 @@ class ForumThreadController extends AsyncNotifier<ForumThread> {
 final forumThreadProvider = AsyncNotifierProvider.family<ForumThreadController, ForumThread, String>(ForumThreadController.new);
 
 /// Whether the reader follows a member (FRM-04 « Suivre »).
-final forumFollowingMemberProvider = FutureProvider.family<bool, String>(
-  (ref, id) => ref.watch(forumRepositoryProvider).isFollowingMember(id),
-);
+final forumFollowingMemberProvider = FutureProvider.family<bool, String>((ref, id) {
+  ref.watch(syncRevisionProvider);
+  return ref.watch(forumRepositoryProvider).isFollowingMember(id);
+});

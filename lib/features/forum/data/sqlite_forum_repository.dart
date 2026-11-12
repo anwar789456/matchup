@@ -298,18 +298,19 @@ class SqliteForumRepository implements ForumRepository {
   }
 
   @override
-  Future<List<ForumCategoryCount>> categories({MuSport? sport}) async {
+  Future<List<ForumCategoryCount>> categories({MuSport? sport, DateTime? since}) async {
     final db = await _db;
     final me = meId;
-    final visit = (await db.query('forum_visites', where: 'utilisateur_id = ?', whereArgs: [me])).firstOrNull;
-    final since = visit?['derniere_visite'] as String?;
+    final visit =
+        since?.toIso8601String() ??
+        (await db.query('forum_visites', where: 'utilisateur_id = ?', whereArgs: [me])).firstOrNull?['derniere_visite'] as String?;
     final rows = await db.rawQuery(
       '''
       SELECT categorie, COUNT(*) AS n,
         SUM(CASE WHEN ? IS NOT NULL AND cree_le > ? AND auteur_id <> ? THEN 1 ELSE 0 END) AS nouveaux
       FROM forum_sujets WHERE statut = 'publie' ${sport != null ? 'AND sport = ?' : ''}
       GROUP BY categorie''',
-      [since, since, me, if (sport != null) sport.name],
+      [visit, visit, me, if (sport != null) sport.name],
     );
     return [
       for (final c in ForumCategory.values)
@@ -321,9 +322,12 @@ class SqliteForumRepository implements ForumRepository {
   }
 
   @override
-  Future<void> markVisited() async {
+  Future<DateTime?> markVisited() async {
     final db = await _db;
+    final before =
+        (await db.query('forum_visites', where: 'utilisateur_id = ?', whereArgs: [meId])).firstOrNull?['derniere_visite'] as String?;
     await db.insert('forum_visites', {'utilisateur_id': meId, 'derniere_visite': _nowIso}, conflictAlgorithm: ConflictAlgorithm.replace);
+    return before == null ? null : DateTime.parse(before);
   }
 
   // ── FRM-04 ────────────────────────────────────────────────────────────────────────────────
