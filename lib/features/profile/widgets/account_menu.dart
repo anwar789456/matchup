@@ -116,6 +116,7 @@ Future<void> showAccountMenu(BuildContext context, WidgetRef ref) {
                 title: l10n.matchupPremium,
                 detail: switch (ref.watch(subscriptionProvider).value?.status) {
                   PremiumStatus.trial => l10n.essaiGratuitEnCours,
+                  PremiumStatus.active => l10n.premiumActif,
                   PremiumStatus.cancelled => l10n.resilieActifJusquAuOct,
                   _ => l10n.joursGratuitsSansEngagement,
                 },

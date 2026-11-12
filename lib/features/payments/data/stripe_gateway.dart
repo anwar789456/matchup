@@ -78,6 +78,82 @@ class StripeCard {
   final int expYear;
 }
 
+/// A paid invoice of the Premium subscription (Stripe charged the saved card).
+@immutable
+class StripeInvoice {
+  const StripeInvoice({required this.number, required this.paidAt, required this.amount, this.paymentIntentId, this.brand, this.last4, this.pdf});
+
+  /// Stripe's invoice number (« 1A2B3C4D-0001 »).
+  final String number;
+  final DateTime paidAt;
+
+  /// In DT.
+  final num amount;
+  final String? paymentIntentId;
+  final String? brand;
+  final String? last4;
+
+  /// Stripe's PDF of the invoice.
+  final String? pdf;
+
+  static StripeInvoice fromJson(Map<String, Object?> j) => StripeInvoice(
+    number: '${j['number']}',
+    paidAt: DateTime.parse(j['paidAt']! as String).toLocal(),
+    amount: j['amount']! as num,
+    paymentIntentId: j['paymentIntentId'] as String?,
+    brand: j['brand'] as String?,
+    last4: j['last4'] as String?,
+    pdf: j['pdf'] as String?,
+  );
+}
+
+/// Premium as Stripe sees it.
+@immutable
+class StripeSubscription {
+  const StripeSubscription({
+    required this.status,
+    required this.yearly,
+    required this.currentPeriodEnd,
+    required this.cancelAtPeriodEnd,
+    required this.discount,
+    required this.invoices,
+    this.trialEnd,
+  });
+
+  /// trialing, active, past_due, canceled…
+  final String status;
+  final bool yearly;
+  final DateTime? trialEnd;
+  final DateTime currentPeriodEnd;
+  final bool cancelAtPeriodEnd;
+
+  /// The −30 % retention offer is on.
+  final bool discount;
+  final List<StripeInvoice> invoices;
+
+  bool get trialing => status == 'trialing';
+  bool get ended => status == 'canceled' || status == 'incomplete_expired';
+
+  /// The next charge (or the end of access once cancelled).
+  DateTime get nextDate => trialing && trialEnd != null ? trialEnd! : currentPeriodEnd;
+
+  static StripeSubscription? fromJson(Object? data) {
+    if (data is! Map || data['status'] == null) return null;
+    final j = Map<String, Object?>.from(data);
+    return StripeSubscription(
+      status: j['status']! as String,
+      yearly: j['period'] == 'year',
+      trialEnd: j['trialEnd'] == null ? null : DateTime.parse(j['trialEnd']! as String).toLocal(),
+      currentPeriodEnd: DateTime.parse(j['currentPeriodEnd']! as String).toLocal(),
+      cancelAtPeriodEnd: j['cancelAtPeriodEnd'] == true,
+      discount: j['discount'] == true,
+      invoices: [
+        for (final i in (j['invoices'] as List? ?? const [])) StripeInvoice.fromJson(Map<String, Object?>.from(i as Map)),
+      ],
+    );
+  }
+}
+
 /// Our card brands (the cards table knows Visa and Mastercard); null for another brand.
 CardBrand? cardBrandOf(String? stripeBrand) => switch (stripeBrand?.toLowerCase()) {
   'visa' => CardBrand.visa,
@@ -115,6 +191,16 @@ abstract interface class StripeGateway {
   Future<StripeOutcome> confirmSetup(StripeIntent setup, {String? holderName});
 
   Future<StripeCard> card(String paymentMethodId);
+
+  /// Refunds a Stripe payment of this user, all of it or [amount] DT.
+  Future<void> refund(String paymentIntentId, {num? amount});
+
+  /// Starts Premium on a Stripe subscription (14-day trial, then Stripe charges the card).
+  Future<StripeSubscription?> subscribe({required bool yearly, required num amount, required String paymentMethodId});
+
+  /// The current subscription (null when there is none). [action]: « change » (with
+  /// [yearly] and [amount]), « cancel », « resume », « discount », « end_trial ».
+  Future<StripeSubscription?> subscription([String action = 'subscription', bool? yearly, num? amount]);
 }
 
 class SupabaseStripeGateway implements StripeGateway {
@@ -195,6 +281,35 @@ class SupabaseStripeGateway implements StripeGateway {
     } on StripeException catch (e) {
       return _failure(e);
     }
+  }
+
+  @override
+  Future<void> refund(String paymentIntentId, {num? amount}) async {
+    await _call({'action': 'refund', 'paymentIntentId': paymentIntentId, 'amount': amount});
+  }
+
+  @override
+  Future<StripeSubscription?> subscribe({required bool yearly, required num amount, required String paymentMethodId}) async =>
+      StripeSubscription.fromJson(await _raw({
+        'action': 'subscribe',
+        'period': yearly ? 'year' : 'month',
+        'amount': amount,
+        'paymentMethodId': paymentMethodId,
+      }));
+
+  @override
+  Future<StripeSubscription?> subscription([String action = 'subscription', bool? yearly, num? amount]) async =>
+      StripeSubscription.fromJson(await _raw({
+        'action': action,
+        if (yearly != null) 'period': yearly ? 'year' : 'month',
+        'amount': ?amount,
+      }));
+
+  /// Like [_call], but the answer may be `null` (no subscription).
+  Future<Object?> _raw(Map<String, Object?> body) async {
+    final res = await Supabase.instance.client.functions.invoke('stripe-payment-intent', body: body);
+    if (res.data is Map && (res.data as Map)['error'] != null) throw StateError('${(res.data as Map)['error']}');
+    return res.data;
   }
 
   @override

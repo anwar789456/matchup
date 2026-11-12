@@ -198,9 +198,17 @@ void main() {
       expect((await sub.current()).yearlyPlan, isTrue);
       expect((await sub.reactivate()).status, PremiumStatus.trial);
 
+      // No invented receipt; a Stripe invoice is kept once, with its lines.
+      expect(await sub.receipts(), isEmpty);
+      final invoice = FakeSubscriptionRepository.storyReceipts.first;
+      await sub.addReceipt(invoice);
+      await sub.addReceipt(invoice);
       final receipts = await sub.receipts();
-      expect(receipts.map((r) => r.number), ['MU-R-2026-01482', 'MU-R-2026-01437', 'MU-R-2026-01391']);
+      expect(receipts.map((r) => r.number), [invoice.number]);
       expect(receipts.first.lines.first.details, hasLength(3));
+
+      final active = await sub.save((await sub.current()).copyWith(status: PremiumStatus.active));
+      expect((await sub.current()).status, active.status);
     });
   });
 

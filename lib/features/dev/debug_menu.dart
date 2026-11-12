@@ -17,6 +17,8 @@ import '../notifications/controllers/live_events.dart';
 import '../owner/data/camera.dart';
 import '../notifications/data/push_service.dart';
 import '../payments/data/payment_repository.dart';
+import '../payments/data/stripe_gateway.dart';
+import '../subscription/controllers/subscription_controller.dart';
 import '../wallet/data/wallet_repository.dart';
 import '../states/data/account_status.dart';
 import '../states/widgets/state_widgets.dart';
@@ -78,6 +80,19 @@ Future<void> showDebugMenu(BuildContext context, WidgetRef ref) => MuBottomSheet
         shrinkWrap: true,
         padding: const EdgeInsets.fromLTRB(MuSpace.s4, 0, MuSpace.s4, MuSpace.s8),
         children: [
+          section('Premium (Stripe)'),
+          MuButton.tertiary(
+            label: 'Terminer l’essai maintenant (prélèvement Stripe)',
+            leading: PhosphorIcons.crownSimple(),
+            fullWidth: true,
+            onPressed: !StripeConfig.enabled
+                ? null
+                : () async {
+                    await ref.read(subscriptionProvider.notifier).endTrialNow();
+                    if (!context.mounted) return;
+                    MuToast.show(context, tone: MuToastTone.success, title: 'Essai terminé : Stripe a prélevé la période');
+                  },
+          ),
           section('Supabase'),
           Text(
             !SupabaseConfig.configured
@@ -124,7 +139,7 @@ Future<void> showDebugMenu(BuildContext context, WidgetRef ref) => MuBottomSheet
                   if (r.stage != RefundStage.refunded) r,
               ];
               for (final r in open) {
-                await wallet.completeRefund(r.id);
+                await ref.read(walletActionsProvider).completeRefund(r);
               }
               ref
                 ..invalidate(refundRequestsProvider)

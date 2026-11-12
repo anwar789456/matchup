@@ -43,7 +43,7 @@ class _PremiumCheckoutScreenState extends ConsumerState<PremiumCheckoutScreen> {
       return;
     }
     setState(() => _busy = true);
-    await ref.read(subscriptionProvider.notifier).startTrial(period, card.label);
+    await ref.read(subscriptionProvider.notifier).startTrial(period, card);
     if (!mounted) return;
     context.go(Routes.premiumWelcome);
   }
