@@ -17,7 +17,8 @@ import 'fake_auth_repository.dart';
 ///   a verified number for a reset, the code is `123456`.
 /// - Codes are stored hashed: 3 wrong codes block for 10 minutes; one SMS per 30 s and 5 per
 ///   hour per account.
-/// - There is no mail server: the confirmation email (AUTH-04) is not sent.
+/// - No mail server on the phone: the confirmation email (AUTH-04) is not sent. With a backend,
+///   `ApiAuthRepository` sends the emails and keeps this copy of the account in step.
 /// - Google/Apple sign-in stays simulated by [FakeAuthRepository].
 class SqliteAuthRepository implements AuthRepository {
   SqliteAuthRepository(
@@ -77,7 +78,7 @@ class SqliteAuthRepository implements AuthRepository {
   int? get _currentId => _userId ?? userId?.call();
 
   /// The signed-in account's email, read back from the database after a restart.
-  Future<String?> _currentEmail() async {
+  Future<String?> currentEmail() async {
     if (_email != null) return _email;
     final id = _currentId;
     if (id == null) return null;
@@ -134,12 +135,41 @@ class SqliteAuthRepository implements AuthRepository {
       await _signedIn(user['id']! as int, user['email']! as String);
       return;
     }
+    failSignIn();
+  }
+
+  /// Counts a wrong email or password: [InvalidCredentials], or [AccountLocked] on the last try.
+  Never failSignIn() {
     _signInFailures++;
     if (_signInFailures >= FakeAuthRepository.maxSignInAttempts) {
       _lockedUntil = _now().add(FakeAuthRepository.lockDuration);
       throw AccountLocked(_lockedUntil!);
     }
     throw InvalidCredentials(FakeAuthRepository.maxSignInAttempts - _signInFailures);
+  }
+
+  /// The server accepted [email] and [password] (sign-up or sign-in): the phone's copy of the
+  /// account gets that password, is created when the account was made elsewhere, and is signed in.
+  Future<void> adoptAccount(String email, String password) async {
+    final address = _key(email);
+    await storePassword(address, password, create: true);
+    final user = await _user(await _db, address);
+    await _signedIn(user!['id']! as int, address);
+  }
+
+  /// Saves [password] on the phone's copy of [email] (after a reset on the server) and lifts the
+  /// sign-in lock. [create] adds the account when the phone doesn't have it yet.
+  Future<void> storePassword(String email, String password, {bool create = false}) async {
+    final address = _key(email);
+    final db = await _db;
+    final salt = _salt();
+    final hashed = {'mot_de_passe': hashPassword(salt, password), 'sel': salt};
+    final updated = await db.update('utilisateurs', hashed, where: 'email = ?', whereArgs: [address]);
+    if (updated == 0 && create) {
+      await db.insert('utilisateurs', {...hashed, 'email': address, 'cree_le': _iso(_now())});
+    }
+    _signInFailures = 0;
+    _lockedUntil = null;
   }
 
   /// Saves a new code for [email] (the older ones are used up) and returns it in clear.
@@ -199,7 +229,7 @@ class SqliteAuthRepository implements AuthRepository {
 
   @override
   Future<void> sendPhoneCode(String digits) async {
-    final email = await _currentEmail();
+    final email = await currentEmail();
     if (email == null) return _simulated.sendPhoneCode(digits);
     _phone = digits;
     final db = await _db;
@@ -225,7 +255,7 @@ class SqliteAuthRepository implements AuthRepository {
 
   @override
   Future<void> verifyPhoneCode(String code) async {
-    final email = await _currentEmail();
+    final email = await currentEmail();
     final phone = _phone;
     if (email == null || phone == null) return _simulated.verifyPhoneCode(code);
     final id = await _checkCode(email, 'telephone', code, salt: '$phone:');

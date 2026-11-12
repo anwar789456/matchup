@@ -4,7 +4,8 @@
   "private": true,
   "description": "MatchUp backend: 6 NestJS apps (one per module) sharing one PostgreSQL database",
   "scripts": {
-    "build": "node deploy/build-all.js",
+    "build": "node scripts/build-all.js",
+    "start:all": "node scripts/start-all.js",
     "build:module": "nest build",
     "start:utilisateur": "nest start utilisateur --watch",
     "start:reservation": "nest start reservation --watch",

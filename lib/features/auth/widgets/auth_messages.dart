@@ -1,3 +1,4 @@
+import '../../../core/connectivity.dart';
 import '../data/auth_repository.dart';
 import '../../../l10n/l10n.dart';
 
@@ -45,6 +46,13 @@ abstract final class AuthMessages {
   static String? codeFailure(Object e) => switch (e) {
         InvalidCode(:final attemptsLeft) => wrongCode(attemptsLeft),
         TooManyCodeAttempts() => tooManyCodes,
+        _ => networkFailure(e),
+      };
+
+  /// The backend could not be reached or failed (only with `API_URL`), or null.
+  static String? networkFailure(Object e) => switch (e) {
+        OfflineException() => l10n.pasDeConnexion,
+        ServerException() => l10n.nosServeursOntUnSouci,
         _ => null,
       };
 }

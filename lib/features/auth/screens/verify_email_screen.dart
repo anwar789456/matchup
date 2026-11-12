@@ -30,7 +30,13 @@ class _VerifyEmailScreenState extends ConsumerState<VerifyEmailScreen> {
 
   Future<void> _resend(String email) async {
     setState(() => _sending = true);
-    await ref.read(authRepositoryProvider).resendVerificationEmail();
+    try {
+      await ref.read(authRepositoryProvider).resendVerificationEmail();
+    } on Exception catch (e) {
+      if (mounted) setState(() => _sending = false);
+      if (mounted && toastNetworkFailure(context, e)) return;
+      rethrow;
+    }
     if (!mounted) return;
     setState(() {
       _sending = false;

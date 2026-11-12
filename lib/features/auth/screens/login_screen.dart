@@ -71,6 +71,9 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
       setState(() => _attemptsLeft = e.attemptsLeft);
     } on AccountLocked {
       if (mounted) context.push(Routes.accountLocked);
+    } on Exception catch (e) {
+      if (AuthMessages.networkFailure(e) == null) rethrow;
+      if (mounted) toastNetworkFailure(context, e);
     } finally {
       if (mounted) setState(() => _loading = false);
     }

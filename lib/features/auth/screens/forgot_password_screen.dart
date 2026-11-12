@@ -8,6 +8,7 @@ import '../../../ui/ui.dart';
 import '../../common/widgets/flow_scaffold.dart';
 import '../controllers/auth_providers.dart';
 import '../widgets/auth_messages.dart';
+import '../widgets/auth_widgets.dart';
 import '../../../l10n/l10n.dart';
 
 /// AUTH-06 · Mot de passe oublié 1/3: the account email, to receive a 6-digit code.
@@ -40,6 +41,9 @@ class _ForgotPasswordScreenState extends ConsumerState<ForgotPasswordScreen> {
       await ref.read(authRepositoryProvider).sendPasswordResetCode(_email.text);
       ref.read(authFlowProvider.notifier).setResetEmail(_email.text);
       if (mounted) context.push(Routes.resetCode);
+    } on Exception catch (e) {
+      if (AuthMessages.networkFailure(e) == null) rethrow;
+      if (mounted) toastNetworkFailure(context, e);
     } finally {
       if (mounted) setState(() => _loading = false);
     }

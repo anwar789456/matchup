@@ -11,11 +11,11 @@ export interface MailMessage {
 }
 
 /**
- * Sends email from noreply@minolingo.online through OVH's mail server (settings in backend/.env:
- * SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASS, MAIL_FROM).
+ * Sends email through Gmail's SMTP server (settings in backend/.env: SMTP_HOST, SMTP_PORT,
+ * SMTP_USER, SMTP_PASS, MAIL_FROM).
  *
- * Without SMTP_PASS (a laptop without the mailbox password) nothing is sent: the message is
- * printed in the terminal instead, so you can still read the code or the link.
+ * Without SMTP_PASS nothing is sent: the message is printed in the terminal instead, so you can
+ * still read the code or the link.
  */
 @Injectable()
 export class MailService {
@@ -25,11 +25,11 @@ export class MailService {
 
   constructor(config: ConfigService) {
     const pass = config.get<string>('SMTP_PASS', '');
-    const user = config.get<string>('SMTP_USER', 'noreply@minolingo.online');
+    const user = config.get<string>('SMTP_USER', '');
     this.from = config.get<string>('MAIL_FROM', `MatchUp <${user}>`);
     this.transport = pass
       ? createTransport({
-          host: config.get<string>('SMTP_HOST', 'ssl0.ovh.net'),
+          host: config.get<string>('SMTP_HOST', 'smtp.gmail.com'),
           port: Number(config.get('SMTP_PORT', 465)),
           secure: Number(config.get('SMTP_PORT', 465)) === 465,
           auth: { user, pass },

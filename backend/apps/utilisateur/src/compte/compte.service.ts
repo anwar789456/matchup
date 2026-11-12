@@ -58,7 +58,7 @@ export class CompteService {
         expireA: new Date(Date.now() + CompteService.linkValidity),
       }),
     );
-    const base = this.config.get<string>('PUBLIC_URL', 'https://minolingo.online');
+    const base = this.config.get<string>('PUBLIC_URL', 'http://localhost:3001');
     const link = `${base}/api/utilisateur/compte/verification/confirmer?token=${token}`;
     await this.mail.send(verificationEmail(address, link));
   }

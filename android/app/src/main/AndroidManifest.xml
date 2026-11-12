@@ -4,7 +4,7 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <!-- PLY-09: freed spots, invitations and match reminders (Android 13+). -->
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
-    <!-- The team's API (http://92.222.36.107, no HTTPS yet). -->
+    <!-- Optional local backend (http://10.0.2.2:3001 from the emulator, no HTTPS). -->
     <uses-permission android:name="android.permission.INTERNET" />
     <application
         android:usesCleartextTraffic="true"

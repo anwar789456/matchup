@@ -85,6 +85,9 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
         _emailTaken = true;
       });
       _emailFocus.requestFocus();
+    } on Exception catch (e) {
+      if (AuthMessages.networkFailure(e) == null) rethrow;
+      if (mounted) toastNetworkFailure(context, e);
     } finally {
       if (mounted) setState(() => _loading = false);
     }
