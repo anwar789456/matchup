@@ -15,6 +15,7 @@ import '../notifications/controllers/live_events.dart';
 import '../owner/data/camera.dart';
 import '../notifications/data/push_service.dart';
 import '../payments/data/payment_repository.dart';
+import '../wallet/data/wallet_repository.dart';
 import '../states/data/account_status.dart';
 import '../states/widgets/state_widgets.dart';
 
@@ -83,6 +84,32 @@ Future<void> showDebugMenu(BuildContext context, WidgetRef ref) => MuBottomSheet
               for (final o in PaymentOutcome.values) MuSelectOption(value: o, label: o.label),
             ],
             onChanged: (o) => ref.read(paymentOutcomeProvider.notifier).select(o),
+          ),
+          const SizedBox(height: MuSpace.s2),
+          MuButton.tertiary(
+            label: 'Rembourser les demandes en cours (WAL-05)',
+            leading: PhosphorIcons.arrowUUpLeft(),
+            fullWidth: true,
+            onPressed: () async {
+              final wallet = ref.read(walletRepositoryProvider);
+              final open = [
+                for (final r in await wallet.refunds())
+                  if (r.stage != RefundStage.refunded) r,
+              ];
+              for (final r in open) {
+                await wallet.completeRefund(r.id);
+              }
+              ref
+                ..invalidate(refundRequestsProvider)
+                ..invalidate(walletHistoryProvider)
+                ..invalidate(meProvider);
+              if (!context.mounted) return;
+              MuToast.show(
+                context,
+                tone: open.isEmpty ? MuToastTone.info : MuToastTone.success,
+                title: open.isEmpty ? 'Aucune demande en cours' : '${open.length} demande(s) remboursée(s)',
+              );
+            },
           ),
           section('États (STA-01 à STA-09)'),
           MuSwitch(

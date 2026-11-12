@@ -3,12 +3,14 @@ import 'package:sqflite/sqflite.dart';
 import '../../features/common/data/story_data.dart';
 import '../../features/matches/data/booking_rows.dart';
 import '../../features/matches/data/bookings_repository.dart';
+import '../../features/payments/data/split_repository.dart';
 import 'seed_v2.dart';
 
 /// What each schema version starts with (design/screens/STORY-DATA.md).
 Future<void> seedVersion(DatabaseExecutor db, int version) => switch (version) {
       1 => _seedV1(db),
       2 => seedV2(db),
+      3 => SqliteSplitRepository.seed(db),
       _ => Future<void>.value(),
     };
 

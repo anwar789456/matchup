@@ -38,6 +38,7 @@ class RefundRequest {
     this.reviewingSince,
     this.photos = 0,
     this.stage = RefundStage.sent,
+    this.refundedAt,
   });
 
   final String id;
@@ -49,6 +50,7 @@ class RefundRequest {
   final DateTime? reviewingSince;
   final int photos;
   final RefundStage stage;
+  final DateTime? refundedAt;
 
   num get amount => transaction.amount.abs();
 }
@@ -67,6 +69,10 @@ abstract interface class WalletRepository {
     required RefundTarget target,
     int photos = 0,
   });
+
+  /// The request is paid back: its payment is marked refunded and, to the balance, the amount is
+  /// credited with a « Remboursement » line.
+  Future<RefundRequest> completeRefund(String id);
 }
 
 /// The story's history (STORY-DATA « Wallet »), newest first, and the Hoop Zone refund request.
@@ -202,6 +208,55 @@ class FakeWalletRepository implements WalletRepository {
     _refunds.insert(0, r);
     return r;
   }
+
+  /// In memory the balance itself does not move (it lives in [MeRepository]).
+  @override
+  Future<RefundRequest> completeRefund(String id) async {
+    final i = _refunds.indexWhere((r) => r.id == id);
+    final r = _refunds[i];
+    if (r.stage == RefundStage.refunded) return r;
+    final now = DateTime.now();
+    final t = r.transaction;
+    final refunded = MuTransaction(
+      id: t.id,
+      kind: t.kind,
+      label: t.label,
+      meta: t.meta,
+      amount: t.amount,
+      date: t.date,
+      sport: t.sport,
+      status: MuTransactionStatus.refunded,
+      fromBalance: t.fromBalance,
+    );
+    final done = RefundRequest(
+      id: r.id,
+      transaction: refunded,
+      reason: r.reason,
+      note: r.note,
+      target: r.target,
+      sentAt: r.sentAt,
+      reviewingSince: r.reviewingSince,
+      photos: r.photos,
+      stage: RefundStage.refunded,
+      refundedAt: now,
+    );
+    _refunds[i] = done;
+    final h = _history.indexWhere((x) => x.id == t.id);
+    if (h >= 0) _history[h] = refunded;
+    if (r.target == RefundTarget.balance) _history.insert(0, refundLine(done, now));
+    return done;
+  }
+
+  /// The « Remboursement · Hoop Zone » credit of a refund paid to the balance.
+  static MuTransaction refundLine(RefundRequest r, DateTime at) => MuTransaction(
+    id: 'tx-${r.id}',
+    kind: MuTransactionKind.refund,
+    label: 'Remboursement · ${r.transaction.label.split(' · ').last}',
+    meta: '${WalletActions.when(at)} · Solde MatchUp',
+    amount: r.amount,
+    date: at,
+    fromBalance: true,
+  );
 }
 
 /// The wallet lives in the phone's database. Tests override it with the fake.
@@ -232,7 +287,7 @@ class WalletActions {
             id: 'tx-${receipt.number}',
             kind: MuTransactionKind.topup,
             label: 'Recharge',
-            meta: '${_when(receipt.paidAt)} · ${receipt.methodLabel}',
+            meta: '${when(receipt.paidAt)} · ${receipt.methodLabel}',
             amount: amount,
             date: receipt.paidAt,
             fromBalance: true,
@@ -261,7 +316,7 @@ class WalletActions {
             kind: MuTransactionKind.booking,
             sport: sport,
             label: label,
-            meta: '${_when(receipt.paidAt)} · ${receipt.methodLabel}',
+            meta: '${when(receipt.paidAt)} · ${receipt.methodLabel}',
             amount: -receipt.amount,
             date: receipt.paidAt,
             fromBalance: receipt.method == PayWith.balance,
@@ -272,7 +327,8 @@ class WalletActions {
       ..invalidate(walletHistoryProvider);
   }
 
-  static String _when(DateTime d) {
+  /// « ven. 16 oct. · 18h02 ».
+  static String when(DateTime d) {
     const days = ['lun.', 'mar.', 'mer.', 'jeu.', 'ven.', 'sam.', 'dim.'];
     const months = ['janv.', 'févr.', 'mars', 'avr.', 'mai', 'juin', 'juil.', 'août', 'sept.', 'oct.', 'nov.', 'déc.'];
     return '${days[d.weekday - 1]} ${d.day} ${months[d.month - 1]} · ${d.hour}h${d.minute.toString().padLeft(2, '0')}';

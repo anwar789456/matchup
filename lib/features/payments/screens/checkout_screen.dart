@@ -147,6 +147,7 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
       reason: req.title,
       method: method,
       card: card,
+      reference: req.reference,
     );
     if (!mounted) return;
 

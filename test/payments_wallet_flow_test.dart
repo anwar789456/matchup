@@ -220,4 +220,35 @@ void main() {
     expect(find.text('Où en est ta demande ?'), findsOneWidget);
     expect(tester.takeException(), isNull);
   });
+
+  testWidgets('suivi des parts: « Relancer » and « Payer le reste » are kept (PAY-11, PAY-12)', (
+    tester,
+  ) async {
+    final tracker = Routes.bookingPayments('MU-48213');
+    await pumpApp(tester, tracker);
+    expect(find.text('Lina F.'), findsOneWidget);
+    await see(tester, find.text('Relancer').first);
+    await tap(tester, find.text('Relancer').first);
+    expect(find.text('Relancée'), findsOneWidget);
+
+    // Leave PAY-11 and come back: the reminder was saved.
+    container.read(routerProvider).go(Routes.wallet);
+    await tester.pumpAndSettle();
+    container.read(routerProvider).go(tracker);
+    await tester.pumpAndSettle();
+    await see(tester, find.text('Relancée'));
+    expect(find.text('Relancée'), findsOneWidget);
+
+    // PAY-12 by card, then the checkout brings PAY-11 back with everything paid.
+    await tap(tester, find.widgetWithText(MuButton, 'Payer le reste'));
+    await tap(tester, find.widgetWithText(MuButton, 'Payer ${formatDT(30)}'));
+    await see(tester, find.byType(MuCheckbox));
+    await tap(tester, find.byType(MuCheckbox));
+    await tap(tester, payButton());
+    expect(find.text('Tout est payé'), findsOneWidget);
+    expect(find.widgetWithText(MuButton, 'Payer le reste'), findsNothing);
+    await see(tester, find.text('Avancée par toi').first);
+    expect(find.text('Avancée par toi'), findsNWidgets(2));
+    expect(tester.takeException(), isNull);
+  });
 }

@@ -14,6 +14,7 @@ import '../../matches/data/bookings_repository.dart';
 import '../../wallet/data/wallet_repository.dart';
 import '../controllers/checkout_controller.dart';
 import '../data/payment_repository.dart';
+import '../data/split_repository.dart';
 import '../../../l10n/l10n.dart';
 
 /// PAY-11 · Suivi des paiements: collected so far, the deadline (3 h before), who still owes,
@@ -28,25 +29,26 @@ class SplitTrackerScreen extends ConsumerStatefulWidget {
 }
 
 class _SplitTrackerScreenState extends ConsumerState<SplitTrackerScreen> {
-  final _reminded = <String>{};
-  bool _advanced = false;
-
-  // STORY-DATA PAY-11: Ines joined the public game; Lina and Rami still owe.
-  static const _joined = [Story.ines];
-  static const _pending = [Story.lina, Story.rami];
+  /// « Relancer »: stored, so the reminder still shows after leaving the screen.
+  Future<void> _remind(Iterable<String> names) async {
+    await ref.read(splitRepositoryProvider).remind(widget.bookingId, names);
+    ref.invalidate(splitSharesProvider(widget.bookingId));
+  }
 
   @override
   Widget build(BuildContext context) {
     final c = context.mu;
     final details = ref.watch(bookingDetailsProvider(widget.bookingId));
+    final shares = ref.watch(splitSharesProvider(widget.bookingId));
+    final split = _Split(shares.value ?? const []);
     return Scaffold(
       backgroundColor: c.bg,
-      body: switch (details) {
-        AsyncData(:final value) => _body(context, value),
-        AsyncError() => Center(child: MuButton.primary(label: l10n.retour, onPressed: () => context.pop())),
+      body: switch ((details, shares)) {
+        (AsyncData(:final value), AsyncData()) => _body(context, value, split),
+        (AsyncError(), _) || (_, AsyncError()) => Center(child: MuButton.primary(label: l10n.retour, onPressed: () => context.pop())),
         _ => Center(child: MuSpinner(semanticLabel: l10n.chargement)),
       },
-      bottomNavigationBar: details.value == null || _advanced
+      bottomNavigationBar: details.value == null || split.pending.isEmpty
           ? null
           : StickyActionBar(
               children: [
@@ -57,7 +59,7 @@ class _SplitTrackerScreenState extends ConsumerState<SplitTrackerScreen> {
                     const SizedBox(width: MuSpace.s2),
                     Expanded(
                       child: Text(
-                        l10n.organisateurAvanceLesPartsPour(_pending.length, _pending.map((p) => p.name.split(' ').first).join(' et ')),
+                        l10n.organisateurAvanceLesPartsPour(split.pending.length, split.pending.map((p) => p.name.split(' ').first).join(' et ')),
                         style: MuType.caption.copyWith(color: c.textSecondary),
                       ),
                     ),
@@ -65,10 +67,10 @@ class _SplitTrackerScreenState extends ConsumerState<SplitTrackerScreen> {
                 ),
                 MuButton.primary(
                   label: l10n.payerLeReste,
-                  price: formatDT(details.value!.booking.share * _pending.length),
+                  price: formatDT(details.value!.booking.share * split.pending.length),
                   size: MuButtonSize.xl,
                   fullWidth: true,
-                  onPressed: () => _payRest(details.value!),
+                  onPressed: () => _payRest(details.value!, split),
                 ),
               ],
             ),
@@ -76,9 +78,12 @@ class _SplitTrackerScreenState extends ConsumerState<SplitTrackerScreen> {
   }
 
   /// PAY-12 · Payer le reste.
-  Future<void> _payRest(BookingDetails d) async {
+  Future<void> _payRest(BookingDetails d, _Split split) async {
     final b = d.booking;
-    final rest = b.share * _pending.length;
+    final pending = split.pending;
+    final rest = b.share * pending.length;
+    // Kept apart from this screen's ref: the payment ends after the checkout replaced it.
+    final container = ProviderScope.containerOf(context, listen: false);
     final balance = ref.read(meProvider).value?.balance ?? 0;
     var method = PayWith.card;
     final go = await MuBottomSheet.show<bool>(
@@ -125,7 +130,7 @@ class _SplitTrackerScreenState extends ConsumerState<SplitTrackerScreen> {
                   TextSpan(children: [
                     TextSpan(text: l10n.tuAvances),
                     TextSpan(text: formatDT(rest), style: MuType.numM.copyWith(color: c.text)),
-                    TextSpan(text: l10n.pourIlsPourrontTeRembourser(_pending.map((p) => p.name).join(' et '))),
+                    TextSpan(text: l10n.pourIlsPourrontTeRembourser(pending.map((p) => p.name).join(' et '))),
                   ]),
                   style: MuType.body.copyWith(color: c.textSecondary),
                 ),
@@ -137,14 +142,14 @@ class _SplitTrackerScreenState extends ConsumerState<SplitTrackerScreen> {
                     decoration: BoxDecoration(color: c.surfaceMuted, borderRadius: MuRadius.smAll),
                     child: Row(
                       children: [
-                        const MuAvatarStack(people: _pending, size: MuAvatarSize.xs),
+                        MuAvatarStack(people: pending, size: MuAvatarSize.xs),
                         const SizedBox(width: MuSpace.s2),
                         Expanded(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(l10n.partsDe(_pending.map((p) => p.name).join(' et ')), style: MuType.label.copyWith(color: c.text)),
-                              Text('${_pending.length} × ${formatDT(b.share)}', style: caption),
+                              Text(l10n.partsDe(pending.map((p) => p.name).join(' et ')), style: MuType.label.copyWith(color: c.text)),
+                              Text('${pending.length} × ${formatDT(b.share)}', style: caption),
                             ],
                           ),
                         ),
@@ -193,7 +198,7 @@ class _SplitTrackerScreenState extends ConsumerState<SplitTrackerScreen> {
         title: b.title,
         subtitle: '${formatDay(b.start)} · ${b.timeRange}',
         amount: rest,
-        lineLabel: l10n.partsDe2(_pending.map((p) => p.name.split(' ').first).join(' et '), _pending.length, formatDT(b.share)),
+        lineLabel: l10n.partsDe2(pending.map((p) => p.name.split(' ').first).join(' et '), pending.length, formatDT(b.share)),
         sport: b.sport,
         reference: b.id,
         balanceAllowed: method == PayWith.balance,
@@ -204,22 +209,23 @@ class _SplitTrackerScreenState extends ConsumerState<SplitTrackerScreen> {
         successRoute: Routes.bookingPayments(b.id!),
         onPaid: (receipt, fromBalance) async {
           await ref.read(walletActionsProvider).paid(receipt: receipt, label: l10n.partsAvancees(b.venue), sport: b.sport, fromBalance: fromBalance);
-          if (mounted) setState(() => _advanced = true);
+          await container.read(splitRepositoryProvider).advance(b.id!, receiptNumber: receipt.number);
+          container.invalidate(splitSharesProvider(b.id!));
         },
       ),
     );
     context.push(Routes.checkout);
   }
 
-  Widget _body(BuildContext context, BookingDetails d) {
+  Widget _body(BuildContext context, BookingDetails d, _Split s) {
     final c = context.mu;
     final b = d.booking;
     final caption = MuType.caption.copyWith(color: c.textSecondary);
-    final paidPeople = [...b.players, ..._joined];
-    final pending = _advanced ? const <MuPerson>[] : _pending;
-    final collected = b.share * (paidPeople.length + (_advanced ? _pending.length : 0));
+    final paidPeople = [...b.players, ...s.joined];
+    final pending = s.pending;
+    final collected = b.share * (paidPeople.length + s.advanced.length);
     final deadline = b.start.subtract(const Duration(hours: 3));
-    final free = d.spotsTotal - paidPeople.length - _pending.length;
+    final free = d.spotsTotal - paidPeople.length - pending.length - s.advanced.length;
 
     Widget head(String title, String count, Widget end) => Row(
       children: [
@@ -291,7 +297,7 @@ class _SplitTrackerScreenState extends ConsumerState<SplitTrackerScreen> {
                           MuProgressBar(
                             variant: MuProgressVariant.spots,
                             size: MuProgressSize.s,
-                            value: paidPeople.length.toDouble() + (_advanced ? _pending.length : 0),
+                            value: paidPeople.length.toDouble() + s.advanced.length,
                             pending: pending.length.toDouble(),
                             max: d.spotsTotal.toDouble(),
                             showValue: false,
@@ -301,7 +307,7 @@ class _SplitTrackerScreenState extends ConsumerState<SplitTrackerScreen> {
                           Wrap(
                             spacing: MuSpace.s3,
                             children: [
-                              Text(l10n.partsPayees(paidPeople.length + (_advanced ? _pending.length : 0)), style: caption),
+                              Text(l10n.partsPayees(paidPeople.length + s.advanced.length), style: caption),
                               if (pending.isNotEmpty) Text(l10n.enAttente2(pending.length), style: caption),
                               if (free > 0) Text(l10n.placeLibre2(free, free > 1 ? 's' : '', free > 1 ? 's' : ''), style: caption),
                             ],
@@ -385,18 +391,18 @@ class _SplitTrackerScreenState extends ConsumerState<SplitTrackerScreen> {
                                   ],
                                 ),
                               ),
-                              if (_reminded.contains(p.name))
+                              if (s.reminded.contains(p.name))
                                 Row(children: [Icon(PhosphorIcons.check(), size: MuSize.iconXs, color: c.successText), const SizedBox(width: MuSpace.s1), Text(p.name.startsWith('Lina') ? l10n.relancee : l10n.relance, style: MuType.labelS.copyWith(color: c.successText))])
                               else
-                                MuButton.secondary(label: l10n.relancer, leading: PhosphorIcons.bellRinging(), size: MuButtonSize.s, onPressed: () => setState(() => _reminded.add(p.name))),
+                                MuButton.secondary(label: l10n.relancer, leading: PhosphorIcons.bellRinging(), size: MuButtonSize.s, onPressed: () => _remind([p.name])),
                             ],
                           ),
                         ),
                       const SizedBox(height: MuSpace.s2),
-                      if (_reminded.length >= pending.length)
+                      if (s.reminded.length >= pending.length)
                         Row(mainAxisAlignment: MainAxisAlignment.center, children: [Icon(PhosphorIcons.check(), size: MuSize.iconXs, color: c.successText), const SizedBox(width: MuSpace.s1), Text(l10n.rappelsEnvoyes, style: MuType.label.copyWith(color: c.successText))])
                       else
-                        MuButton.secondary(label: l10n.relancerToutLeMonde, leading: PhosphorIcons.megaphone(), fullWidth: true, onPressed: () => setState(() => _reminded.addAll(pending.map((p) => p.name)))),
+                        MuButton.secondary(label: l10n.relancerToutLeMonde, leading: PhosphorIcons.megaphone(), fullWidth: true, onPressed: () => _remind(pending.map((p) => p.name))),
                       const SizedBox(height: MuSpace.s2),
                       Text(l10n.notificationEtEmailAvecLe(formatDT(b.share)), textAlign: TextAlign.center, style: caption),
                     ],
@@ -404,7 +410,7 @@ class _SplitTrackerScreenState extends ConsumerState<SplitTrackerScreen> {
                 ),
               ],
               const SizedBox(height: MuSpace.s6),
-              head(l10n.paye, '${paidPeople.length + (_advanced ? _pending.length : 0)}', Text.rich(TextSpan(children: [TextSpan(text: formatDT(collected), style: MuType.numS.copyWith(color: c.text)), TextSpan(text: l10n.recus)]), style: caption)),
+              head(l10n.paye, '${paidPeople.length + s.advanced.length}', Text.rich(TextSpan(children: [TextSpan(text: formatDT(collected), style: MuType.numS.copyWith(color: c.text)), TextSpan(text: l10n.recus)]), style: caption)),
               const SizedBox(height: MuSpace.s3),
               MuCardSurface(
                 padding: const EdgeInsets.symmetric(horizontal: MuSpace.s4),
@@ -412,9 +418,8 @@ class _SplitTrackerScreenState extends ConsumerState<SplitTrackerScreen> {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     for (final p in paidPeople)
-                      person(p, sub: p.name == Story.myName ? 'Organisateur' : (_joined.contains(p) ? l10n.aRejointLaPartiePublique : null), end: MuStatusBadge(status: MuStatus.paid, label: l10n.paye, size: MuBadgeSize.s)),
-                    if (_advanced)
-                      for (final p in _pending) person(p, sub: l10n.avanceeParToi, end: MuStatusBadge(status: MuStatus.paid, label: l10n.paye, size: MuBadgeSize.s)),
+                      person(p, sub: p.name == Story.myName ? 'Organisateur' : (s.joined.any((j) => j.name == p.name) ? l10n.aRejointLaPartiePublique : null), end: MuStatusBadge(status: MuStatus.paid, label: l10n.paye, size: MuBadgeSize.s)),
+                    for (final p in s.advanced) person(p, sub: l10n.avanceeParToi, end: MuStatusBadge(status: MuStatus.paid, label: l10n.paye, size: MuBadgeSize.s)),
                   ],
                 ),
               ),
@@ -447,4 +452,21 @@ class _SplitTrackerScreenState extends ConsumerState<SplitTrackerScreen> {
       ],
     );
   }
+}
+
+/// The stored shares of PAY-11, sorted by where they stand.
+class _Split {
+  _Split(List<SplitShare> shares)
+    : joined = [for (final x in shares) if (x.state == ShareState.paid) x.person],
+      pending = [for (final x in shares) if (x.state == ShareState.pending) x.person],
+      advanced = [for (final x in shares) if (x.state == ShareState.advanced) x.person],
+      reminded = {for (final x in shares) if (x.state == ShareState.pending && x.reminded) x.person.name};
+
+  /// Joined the public game and paid.
+  final List<MuPerson> joined;
+  final List<MuPerson> pending;
+
+  /// Paid by the organiser (« Avancée par toi »).
+  final List<MuPerson> advanced;
+  final Set<String> reminded;
 }

@@ -542,4 +542,49 @@ const schemaVersions = <int, List<String>>{
       le TEXT NOT NULL
     )''',
   ],
+
+  // ── v3 · Paiement: payment lifecycle, every attempt, split shares, finished refunds ─────────
+  3: [
+    // A payment that went through can later be refunded; `reference` is what it paid for
+    // (booking « MU-48213 », game « g1 »…), null for a top-up or Premium.
+    "ALTER TABLE paiements ADD COLUMN statut TEXT NOT NULL DEFAULT 'paye' "
+        "CHECK (statut IN ('paye', 'rembourse'))",
+    'ALTER TABLE paiements ADD COLUMN reference TEXT',
+    'ALTER TABLE paiements ADD COLUMN rembourse_le TEXT',
+    'CREATE INDEX paiements_reference ON paiements (reference)',
+
+    // Every try at the bank, failed ones included (3-D Secure waits as « en_attente »).
+    '''
+    CREATE TABLE tentatives_paiement (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      montant REAL NOT NULL,
+      moyen TEXT NOT NULL,
+      carte_id TEXT,
+      motif TEXT,
+      reference TEXT,
+      statut TEXT NOT NULL CHECK (statut IN ('en_attente', 'paye', 'echoue')),
+      raison TEXT,
+      tentee_le TEXT NOT NULL,
+      numero TEXT REFERENCES paiements (numero)
+    )''',
+
+    // PAY-11: the shares collected after the booking (who joined, who still owes, who the
+    // organiser paid for). The organiser's friends paid with the booking itself.
+    '''
+    CREATE TABLE parts_paiement (
+      reservation_id TEXT NOT NULL,
+      joueur TEXT NOT NULL,
+      montant REAL NOT NULL,
+      statut TEXT NOT NULL CHECK (statut IN ('payee', 'en_attente', 'avancee')),
+      partie_publique INTEGER NOT NULL DEFAULT 0,
+      relancee_le TEXT,
+      payee_le TEXT,
+      numero TEXT,
+      position INTEGER NOT NULL,
+      PRIMARY KEY (reservation_id, joueur)
+    )''',
+
+    // When a refund request was paid back.
+    'ALTER TABLE demandes_remboursement ADD COLUMN rembourse_le TEXT',
+  ],
 };

@@ -82,8 +82,59 @@ class SqliteWalletRepository implements WalletRepository {
           reviewingSince: DateTime.tryParse('${r['examen_depuis']}'),
           photos: r['photos']! as int,
           stage: RefundStage.values.byName(r['etape']! as String),
+          refundedAt: DateTime.tryParse('${r['rembourse_le']}'),
         ),
     ];
+  }
+
+  /// One transaction: the request is refunded, its line shows « Remboursé », its payment in
+  /// `paiements` (line id `tx-` + receipt number) turns `rembourse` and, to the balance, `porte_monnaie`
+  /// is credited with a « Remboursement » line.
+  @override
+  Future<RefundRequest> completeRefund(String id) async {
+    final db = await _db;
+    final now = DateTime.now();
+    await db.transaction((txn) async {
+      final row = (await txn.query('demandes_remboursement', where: 'id = ?', whereArgs: [id]))
+          .firstOrNull;
+      if (row == null) throw StateError('Demande de remboursement inconnue : $id');
+      if (row['etape'] == RefundStage.refunded.name) return;
+      final txId = row['transaction_id']! as String;
+      await txn.update(
+        'demandes_remboursement',
+        {'etape': RefundStage.refunded.name, 'rembourse_le': now.toIso8601String()},
+        where: 'id = ?',
+        whereArgs: [id],
+      );
+      await txn.update('transactions', {'statut': MuTransactionStatus.refunded.name},
+          where: 'id = ?', whereArgs: [txId]);
+      if (txId.startsWith('tx-')) {
+        await txn.update(
+          'paiements',
+          {'statut': 'rembourse', 'rembourse_le': now.toIso8601String()},
+          where: 'numero = ?',
+          whereArgs: [txId.substring(3)],
+        );
+      }
+      if (row['cible'] == RefundTarget.balance.name) {
+        final t = transaction(
+            (await txn.query('transactions', where: 'id = ?', whereArgs: [txId])).first);
+        final amount = t.amount.abs();
+        await txn.rawUpdate(
+            'UPDATE porte_monnaie SET solde = solde + ? WHERE id = 1', [amount]);
+        final request = RefundRequest(
+          id: id,
+          transaction: t,
+          reason: RefundReason.values.byName(row['motif']! as String),
+          note: row['note']! as String,
+          target: RefundTarget.balance,
+          sentAt: DateTime.parse(row['envoyee_le']! as String),
+        );
+        await txn.insert('transactions', transactionRow(FakeWalletRepository.refundLine(request, now)),
+            conflictAlgorithm: ConflictAlgorithm.replace);
+      }
+    });
+    return (await refunds()).firstWhere((r) => r.id == id);
   }
 
   @override
