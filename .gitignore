@@ -46,3 +46,6 @@ app.*.map.json
 
 # Widget Preview related
 .widget_preview/
+
+# Keys for SMS and email codes (copy dart_defines.example.json); never committed.
+dart_defines.json
