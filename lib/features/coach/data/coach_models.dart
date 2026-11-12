@@ -113,10 +113,11 @@ class DraftExercise {
   final String? fileName;
   final int? fileBytes;
 
-  /// Minutes the exercise takes (rough: time × sets, or 4 s a rep, plus rest).
+  /// Minutes the exercise takes: the work (time × sets, or 4 s a rep), 1 min of rest between
+  /// sets and 2 min to set it up.
   int get minutes {
     final work = mode == DrillMode.time ? seconds * sets : reps * sets * 4;
-    return ((work + 30 * (sets - 1)) / 60).ceil().clamp(1, 60);
+    return ((work + 60 * (sets - 1)) / 60).ceil() + 2;
   }
 
   DraftExercise copyWith({

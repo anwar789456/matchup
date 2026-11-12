@@ -12580,4 +12580,497 @@ class AppLocalizationsAr extends AppLocalizations {
   String coaOfName(Object name) {
     return 'de $name';
   }
+
+  @override
+  String get coaAboutAMinute => '≈ 1 min';
+
+  @override
+  String get coaAddExercise => 'Ajouter un exercice';
+
+  @override
+  String coaAddExercises(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Ajouter $count exercices',
+      one: 'Ajouter 1 exercice',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String coaAddSeconds(int seconds) {
+    return 'Ajouter $seconds secondes';
+  }
+
+  @override
+  String get coaAddSession => 'Ajouter une séance';
+
+  @override
+  String get coaAddSet => 'Ajouter une série';
+
+  @override
+  String coaAddThis(Object name) {
+    return 'Ajouter $name';
+  }
+
+  @override
+  String get coaAddVideo => 'Ajouter une vidéo';
+
+  @override
+  String get coaAddWeek => 'Ajouter une semaine';
+
+  @override
+  String coaAdvisedPrice(Object range) {
+    return 'Prix conseillé : $range';
+  }
+
+  @override
+  String coaAdvisedPriceWhy(Object zone, Object levels) {
+    return 'Recommandé car les programmes padel de 4 semaines se vendent entre 30 et 45 DT autour de $zone, et le tien vise un niveau $levels.';
+  }
+
+  @override
+  String coaAllCount(int count) {
+    return 'Tous · $count';
+  }
+
+  @override
+  String get coaBackToPrograms => 'Retour à mes programmes';
+
+  @override
+  String get coaBeforeOnline => 'Avant la mise en ligne';
+
+  @override
+  String get coaCheckBasics => 'Titre, description et couverture';
+
+  @override
+  String get coaCheckBasicsOk => 'Prêts';
+
+  @override
+  String coaCheckCoachOk(Object certification) {
+    return '$certification validé';
+  }
+
+  @override
+  String coaCheckSessions(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count séances à ajouter',
+      one: '1 séance à ajouter',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String coaCheckSessionsDetail(int week, int done, int total) {
+    return 'Semaine $week · $done séances sur $total';
+  }
+
+  @override
+  String coaCheckVideos(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count vidéos en traitement',
+      one: '1 vidéo en traitement',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String coaCheckVideosDetail(int index) {
+    return 'Séance $index · prête dans 1 min environ';
+  }
+
+  @override
+  String coaCommissionLine(int percent) {
+    return 'Commission de $percent % par vente · versements chaque lundi';
+  }
+
+  @override
+  String get coaComplete => 'Compléter';
+
+  @override
+  String get coaContent => 'Contenu';
+
+  @override
+  String get coaContinueToPrice => 'Continuer vers le prix';
+
+  @override
+  String get coaCreateExercise => 'Créer un nouvel exercice';
+
+  @override
+  String get coaDeleteExercise => 'Supprimer l’exercice';
+
+  @override
+  String coaDraftOf(Object title) {
+    return '$title · brouillon';
+  }
+
+  @override
+  String coaDraftSaved(Object since) {
+    return 'Brouillon enregistré · $since';
+  }
+
+  @override
+  String get coaDraftSavedToast => 'Brouillon enregistré';
+
+  @override
+  String coaDraftShape(int weeks, int sessions, int exercises) {
+    return '$weeks sem. · $sessions séances · $exercises exercices';
+  }
+
+  @override
+  String get coaDragHint =>
+      'Maintiens la poignée pour réordonner semaines, séances et exercices.';
+
+  @override
+  String get coaDuration => 'Durée';
+
+  @override
+  String get coaDurationSeconds => 'Durée (s)';
+
+  @override
+  String get coaEdit => 'Modifier';
+
+  @override
+  String coaEditExercise(Object name) {
+    return 'Modifier $name';
+  }
+
+  @override
+  String get coaExerciseCategory => 'Catégorie d’exercice';
+
+  @override
+  String get coaExerciseName => 'Nom de l’exercice';
+
+  @override
+  String coaExerciseOptions(Object name) {
+    return 'Options de $name';
+  }
+
+  @override
+  String get coaExerciseType => 'Type d’exercice';
+
+  @override
+  String get coaExerciseVideo => 'Vidéo de l’exercice';
+
+  @override
+  String coaExercisesAdded(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count exercices ajoutés',
+      one: '1 exercice ajouté',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String coaFoldExercise(Object name) {
+    return 'Replier $name';
+  }
+
+  @override
+  String coaFoldSession(int index) {
+    return 'Replier les exercices de la séance $index';
+  }
+
+  @override
+  String coaFoldWeek(int index) {
+    return 'Replier la semaine $index';
+  }
+
+  @override
+  String get coaHowPlayersGetIt => 'Comment les joueurs y accèdent';
+
+  @override
+  String get coaIn => 'Dans';
+
+  @override
+  String get coaInPremium => 'Inclure dans Premium';
+
+  @override
+  String get coaInPremiumDetail =>
+      'Les abonnés Premium le suivent sans payer. Tu touches une part de l’abonnement selon leurs séances faites.';
+
+  @override
+  String get coaInfo => 'Infos';
+
+  @override
+  String get coaInstruction => 'Consigne pour tes élèves';
+
+  @override
+  String get coaInstructionHelper =>
+      'Affichée sous la vidéo dans le lecteur de séance.';
+
+  @override
+  String get coaKeepEditing =>
+      'Continue à modifier la séance : la vidéo sera visible par tes élèves dès qu’elle est prête.';
+
+  @override
+  String get coaLevel => 'Niveau';
+
+  @override
+  String coaMinTimes(int minutes, int sets) {
+    return '$minutes min × $sets';
+  }
+
+  @override
+  String coaMoveExercise(Object name) {
+    return 'Déplacer $name';
+  }
+
+  @override
+  String coaMoveSession(int index) {
+    return 'Déplacer la séance $index';
+  }
+
+  @override
+  String coaMoveWeek(int index) {
+    return 'Déplacer la semaine $index';
+  }
+
+  @override
+  String get coaNewExercise => 'Nouvel exercice';
+
+  @override
+  String get coaNewSession => 'Nouvelle séance';
+
+  @override
+  String get coaNoAccess =>
+      'Choisis au moins une façon d’y accéder : vendu, ou inclus dans Premium.';
+
+  @override
+  String get coaNoVideo => 'sans vidéo';
+
+  @override
+  String get coaPickExercise => 'Choisis un exercice';
+
+  @override
+  String get coaPlayer => 'Joueur';
+
+  @override
+  String get coaPreview => 'Aperçu';
+
+  @override
+  String get coaPreviewNoRating =>
+      'Sans avis pour l’instant : la note apparaît après les 3 premiers retours d’élèves.';
+
+  @override
+  String get coaPreviewPremium =>
+      'Les abonnés Premium voient « Inclus dans Premium » à la place du prix.';
+
+  @override
+  String get coaPriceForStudent => 'Prix pour un élève';
+
+  @override
+  String get coaPricePaid => 'Prix payé par l’élève';
+
+  @override
+  String get coaProcessing => 'En traitement';
+
+  @override
+  String get coaProcessingDetail =>
+      'Optimisation pour mobile et sous-titres · environ 1 min';
+
+  @override
+  String get coaProcessingLabel => 'Traitement';
+
+  @override
+  String get coaProcessingVideo => 'Traitement de la vidéo…';
+
+  @override
+  String get coaProgramInfo => 'Infos du programme';
+
+  @override
+  String get coaProgramTitle => 'Titre du programme';
+
+  @override
+  String get coaPublishDate => 'Date de publication';
+
+  @override
+  String get coaPublishScheduled => 'Publication programmée';
+
+  @override
+  String get coaPublishScheduledText =>
+      'On te prévient dès que le programme est en ligne.';
+
+  @override
+  String get coaReady => 'Prête';
+
+  @override
+  String coaRemoveSeconds(int seconds) {
+    return 'Retirer $seconds secondes';
+  }
+
+  @override
+  String get coaRemoveSet => 'Retirer une série';
+
+  @override
+  String get coaRepetitions => 'Répétitions';
+
+  @override
+  String get coaReplace => 'Remplacer';
+
+  @override
+  String coaRepsSets(int reps, int sets) {
+    return '$reps rép. × $sets séries';
+  }
+
+  @override
+  String coaRepsTimes(int reps, int sets) {
+    return '$reps rép. × $sets';
+  }
+
+  @override
+  String get coaSaveDraft => 'Enregistrer le brouillon';
+
+  @override
+  String get coaSaveSession => 'Enregistrer la séance';
+
+  @override
+  String get coaSaved => 'Enregistrée';
+
+  @override
+  String get coaSchedulePublish => 'Programmer la publication';
+
+  @override
+  String get coaSearchExercise => 'Rechercher un exercice';
+
+  @override
+  String coaSecSets(int seconds, int sets) {
+    return '$seconds s × $sets séries';
+  }
+
+  @override
+  String coaSecTimes(int seconds, int sets) {
+    return '$seconds s × $sets';
+  }
+
+  @override
+  String coaSeconds(int seconds) {
+    return '$seconds s';
+  }
+
+  @override
+  String get coaSeenBy => 'Vu par';
+
+  @override
+  String get coaSell => 'Vendre le programme';
+
+  @override
+  String get coaSellDetail => 'Paiement unique, accès sans limite de durée.';
+
+  @override
+  String get coaSent => 'envoyée';
+
+  @override
+  String get coaSessionGone => 'Séance introuvable';
+
+  @override
+  String get coaSessionGoneText => 'Cette séance n’est plus dans le brouillon.';
+
+  @override
+  String get coaSessionSaved => 'Séance enregistrée';
+
+  @override
+  String get coaSessionTitle => 'Titre de la séance';
+
+  @override
+  String get coaSessionVideo => 'Vidéo de la séance';
+
+  @override
+  String get coaSets => 'Séries';
+
+  @override
+  String get coaStudentPreview => 'Aperçu élève';
+
+  @override
+  String coaUnfoldSession(int index) {
+    return 'Déplier les exercices de la séance $index';
+  }
+
+  @override
+  String coaUnfoldWeek(int index) {
+    return 'Déplier la semaine $index';
+  }
+
+  @override
+  String get coaVideo => 'Vidéo';
+
+  @override
+  String get coaVideoHintExercise => 'MP4, MOV · 500 Mo max · 3 min max';
+
+  @override
+  String get coaVideoHintSession => 'MP4, MOV · 2 Go max · 10 min max';
+
+  @override
+  String coaVideoLength(Object length) {
+    return 'vidéo $length';
+  }
+
+  @override
+  String get coaVideoProcessing => 'vidéo en traitement';
+
+  @override
+  String get coaVideoReady => 'vidéo prête';
+
+  @override
+  String get coaVideoTooBig => 'Cette vidéo dépasse 500 Mo.';
+
+  @override
+  String coaVideoUploading(int percent) {
+    return 'vidéo : envoi $percent %';
+  }
+
+  @override
+  String coaWeekLacking(int count, int lacking) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count séances',
+      one: '1 séance',
+      zero: 'Aucune séance',
+    );
+    return '$_temp0 · ajoute-en $lacking pour publier';
+  }
+
+  @override
+  String coaWeekN(int index) {
+    return 'Semaine $index';
+  }
+
+  @override
+  String coaWeekOfProgram(int week, Object program) {
+    return 'Semaine $week · $program';
+  }
+
+  @override
+  String coaWeekShape(int sessions, int exercises, int minutes) {
+    return '$sessions séances · $exercises exercices · $minutes min';
+  }
+
+  @override
+  String get coaWhatYouGet => 'Ce que tu reçois par vente';
+
+  @override
+  String get coaWhenDateDetail =>
+      'On te prévient la veille s’il manque encore quelque chose.';
+
+  @override
+  String get coaWhenPublish => 'Quand publier ?';
+
+  @override
+  String get coaWhenReady => 'Dès que tout est prêt';
+
+  @override
+  String coaWhenReadyDetail(int count) {
+    return 'On le met en ligne quand les $count séances et leurs vidéos sont prêtes. Tu reçois une notification.';
+  }
+
+  @override
+  String get coaYouGetPerSale => 'Tu reçois par vente';
 }

@@ -10716,5 +10716,451 @@
         "type": "Object"
       }
     }
-  }
+  },
+  "coaAboutAMinute": "≈ 1 min",
+  "coaAddExercise": "Ajouter un exercice",
+  "coaAddExercises": "{count, plural, =1{Ajouter 1 exercice} other{Ajouter {count} exercices}}",
+  "@coaAddExercises": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "coaAddSeconds": "Ajouter {seconds} secondes",
+  "@coaAddSeconds": {
+    "placeholders": {
+      "seconds": {
+        "type": "int"
+      }
+    }
+  },
+  "coaAddSession": "Ajouter une séance",
+  "coaAddSet": "Ajouter une série",
+  "coaAddThis": "Ajouter {name}",
+  "@coaAddThis": {
+    "placeholders": {
+      "name": {
+        "type": "Object"
+      }
+    }
+  },
+  "coaAddVideo": "Ajouter une vidéo",
+  "coaAddWeek": "Ajouter une semaine",
+  "coaAdvisedPrice": "Prix conseillé : {range}",
+  "@coaAdvisedPrice": {
+    "placeholders": {
+      "range": {
+        "type": "Object"
+      }
+    }
+  },
+  "coaAdvisedPriceWhy": "Recommandé car les programmes padel de 4 semaines se vendent entre 30 et 45 DT autour de {zone}, et le tien vise un niveau {levels}.",
+  "@coaAdvisedPriceWhy": {
+    "placeholders": {
+      "zone": {
+        "type": "Object"
+      },
+      "levels": {
+        "type": "Object"
+      }
+    }
+  },
+  "coaAllCount": "Tous · {count}",
+  "@coaAllCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "coaBackToPrograms": "Retour à mes programmes",
+  "coaBeforeOnline": "Avant la mise en ligne",
+  "coaCheckBasics": "Titre, description et couverture",
+  "coaCheckBasicsOk": "Prêts",
+  "coaCheckCoachOk": "{certification} validé",
+  "@coaCheckCoachOk": {
+    "placeholders": {
+      "certification": {
+        "type": "Object"
+      }
+    }
+  },
+  "coaCheckSessions": "{count, plural, =1{1 séance à ajouter} other{{count} séances à ajouter}}",
+  "@coaCheckSessions": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "coaCheckSessionsDetail": "Semaine {week} · {done} séances sur {total}",
+  "@coaCheckSessionsDetail": {
+    "placeholders": {
+      "week": {
+        "type": "int"
+      },
+      "done": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "coaCheckVideos": "{count, plural, =1{1 vidéo en traitement} other{{count} vidéos en traitement}}",
+  "@coaCheckVideos": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "coaCheckVideosDetail": "Séance {index} · prête dans 1 min environ",
+  "@coaCheckVideosDetail": {
+    "placeholders": {
+      "index": {
+        "type": "int"
+      }
+    }
+  },
+  "coaCommissionLine": "Commission de {percent} % par vente · versements chaque lundi",
+  "@coaCommissionLine": {
+    "placeholders": {
+      "percent": {
+        "type": "int"
+      }
+    }
+  },
+  "coaComplete": "Compléter",
+  "coaContent": "Contenu",
+  "coaContinueToPrice": "Continuer vers le prix",
+  "coaCreateExercise": "Créer un nouvel exercice",
+  "coaDeleteExercise": "Supprimer l’exercice",
+  "coaDraftOf": "{title} · brouillon",
+  "@coaDraftOf": {
+    "placeholders": {
+      "title": {
+        "type": "Object"
+      }
+    }
+  },
+  "coaDraftSaved": "Brouillon enregistré · {since}",
+  "@coaDraftSaved": {
+    "placeholders": {
+      "since": {
+        "type": "Object"
+      }
+    }
+  },
+  "coaDraftSavedToast": "Brouillon enregistré",
+  "coaDraftShape": "{weeks} sem. · {sessions} séances · {exercises} exercices",
+  "@coaDraftShape": {
+    "placeholders": {
+      "weeks": {
+        "type": "int"
+      },
+      "sessions": {
+        "type": "int"
+      },
+      "exercises": {
+        "type": "int"
+      }
+    }
+  },
+  "coaDragHint": "Maintiens la poignée pour réordonner semaines, séances et exercices.",
+  "coaDuration": "Durée",
+  "coaDurationSeconds": "Durée (s)",
+  "coaEdit": "Modifier",
+  "coaEditExercise": "Modifier {name}",
+  "@coaEditExercise": {
+    "placeholders": {
+      "name": {
+        "type": "Object"
+      }
+    }
+  },
+  "coaExerciseCategory": "Catégorie d’exercice",
+  "coaExerciseName": "Nom de l’exercice",
+  "coaExerciseOptions": "Options de {name}",
+  "@coaExerciseOptions": {
+    "placeholders": {
+      "name": {
+        "type": "Object"
+      }
+    }
+  },
+  "coaExerciseType": "Type d’exercice",
+  "coaExerciseVideo": "Vidéo de l’exercice",
+  "coaExercisesAdded": "{count, plural, =1{1 exercice ajouté} other{{count} exercices ajoutés}}",
+  "@coaExercisesAdded": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "coaFoldExercise": "Replier {name}",
+  "@coaFoldExercise": {
+    "placeholders": {
+      "name": {
+        "type": "Object"
+      }
+    }
+  },
+  "coaFoldSession": "Replier les exercices de la séance {index}",
+  "@coaFoldSession": {
+    "placeholders": {
+      "index": {
+        "type": "int"
+      }
+    }
+  },
+  "coaFoldWeek": "Replier la semaine {index}",
+  "@coaFoldWeek": {
+    "placeholders": {
+      "index": {
+        "type": "int"
+      }
+    }
+  },
+  "coaHowPlayersGetIt": "Comment les joueurs y accèdent",
+  "coaIn": "Dans",
+  "coaInPremium": "Inclure dans Premium",
+  "coaInPremiumDetail": "Les abonnés Premium le suivent sans payer. Tu touches une part de l’abonnement selon leurs séances faites.",
+  "coaInfo": "Infos",
+  "coaInstruction": "Consigne pour tes élèves",
+  "coaInstructionHelper": "Affichée sous la vidéo dans le lecteur de séance.",
+  "coaKeepEditing": "Continue à modifier la séance : la vidéo sera visible par tes élèves dès qu’elle est prête.",
+  "coaLevel": "Niveau",
+  "coaMinTimes": "{minutes} min × {sets}",
+  "@coaMinTimes": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      },
+      "sets": {
+        "type": "int"
+      }
+    }
+  },
+  "coaMoveExercise": "Déplacer {name}",
+  "@coaMoveExercise": {
+    "placeholders": {
+      "name": {
+        "type": "Object"
+      }
+    }
+  },
+  "coaMoveSession": "Déplacer la séance {index}",
+  "@coaMoveSession": {
+    "placeholders": {
+      "index": {
+        "type": "int"
+      }
+    }
+  },
+  "coaMoveWeek": "Déplacer la semaine {index}",
+  "@coaMoveWeek": {
+    "placeholders": {
+      "index": {
+        "type": "int"
+      }
+    }
+  },
+  "coaNewExercise": "Nouvel exercice",
+  "coaNewSession": "Nouvelle séance",
+  "coaNoAccess": "Choisis au moins une façon d’y accéder : vendu, ou inclus dans Premium.",
+  "coaNoVideo": "sans vidéo",
+  "coaPickExercise": "Choisis un exercice",
+  "coaPlayer": "Joueur",
+  "coaPreview": "Aperçu",
+  "coaPreviewNoRating": "Sans avis pour l’instant : la note apparaît après les 3 premiers retours d’élèves.",
+  "coaPreviewPremium": "Les abonnés Premium voient « Inclus dans Premium » à la place du prix.",
+  "coaPriceForStudent": "Prix pour un élève",
+  "coaPricePaid": "Prix payé par l’élève",
+  "coaProcessing": "En traitement",
+  "coaProcessingDetail": "Optimisation pour mobile et sous-titres · environ 1 min",
+  "coaProcessingLabel": "Traitement",
+  "coaProcessingVideo": "Traitement de la vidéo…",
+  "coaProgramInfo": "Infos du programme",
+  "coaProgramTitle": "Titre du programme",
+  "coaPublishDate": "Date de publication",
+  "coaPublishScheduled": "Publication programmée",
+  "coaPublishScheduledText": "On te prévient dès que le programme est en ligne.",
+  "coaReady": "Prête",
+  "coaRemoveSeconds": "Retirer {seconds} secondes",
+  "@coaRemoveSeconds": {
+    "placeholders": {
+      "seconds": {
+        "type": "int"
+      }
+    }
+  },
+  "coaRemoveSet": "Retirer une série",
+  "coaRepetitions": "Répétitions",
+  "coaReplace": "Remplacer",
+  "coaRepsSets": "{reps} rép. × {sets} séries",
+  "@coaRepsSets": {
+    "placeholders": {
+      "reps": {
+        "type": "int"
+      },
+      "sets": {
+        "type": "int"
+      }
+    }
+  },
+  "coaRepsTimes": "{reps} rép. × {sets}",
+  "@coaRepsTimes": {
+    "placeholders": {
+      "reps": {
+        "type": "int"
+      },
+      "sets": {
+        "type": "int"
+      }
+    }
+  },
+  "coaSaveDraft": "Enregistrer le brouillon",
+  "coaSaveSession": "Enregistrer la séance",
+  "coaSaved": "Enregistrée",
+  "coaSchedulePublish": "Programmer la publication",
+  "coaSearchExercise": "Rechercher un exercice",
+  "coaSecSets": "{seconds} s × {sets} séries",
+  "@coaSecSets": {
+    "placeholders": {
+      "seconds": {
+        "type": "int"
+      },
+      "sets": {
+        "type": "int"
+      }
+    }
+  },
+  "coaSecTimes": "{seconds} s × {sets}",
+  "@coaSecTimes": {
+    "placeholders": {
+      "seconds": {
+        "type": "int"
+      },
+      "sets": {
+        "type": "int"
+      }
+    }
+  },
+  "coaSeconds": "{seconds} s",
+  "@coaSeconds": {
+    "placeholders": {
+      "seconds": {
+        "type": "int"
+      }
+    }
+  },
+  "coaSeenBy": "Vu par",
+  "coaSell": "Vendre le programme",
+  "coaSellDetail": "Paiement unique, accès sans limite de durée.",
+  "coaSent": "envoyée",
+  "coaSessionGone": "Séance introuvable",
+  "coaSessionGoneText": "Cette séance n’est plus dans le brouillon.",
+  "coaSessionSaved": "Séance enregistrée",
+  "coaSessionTitle": "Titre de la séance",
+  "coaSessionVideo": "Vidéo de la séance",
+  "coaSets": "Séries",
+  "coaStudentPreview": "Aperçu élève",
+  "coaUnfoldSession": "Déplier les exercices de la séance {index}",
+  "@coaUnfoldSession": {
+    "placeholders": {
+      "index": {
+        "type": "int"
+      }
+    }
+  },
+  "coaUnfoldWeek": "Déplier la semaine {index}",
+  "@coaUnfoldWeek": {
+    "placeholders": {
+      "index": {
+        "type": "int"
+      }
+    }
+  },
+  "coaVideo": "Vidéo",
+  "coaVideoHintExercise": "MP4, MOV · 500 Mo max · 3 min max",
+  "coaVideoHintSession": "MP4, MOV · 2 Go max · 10 min max",
+  "coaVideoLength": "vidéo {length}",
+  "@coaVideoLength": {
+    "placeholders": {
+      "length": {
+        "type": "Object"
+      }
+    }
+  },
+  "coaVideoProcessing": "vidéo en traitement",
+  "coaVideoReady": "vidéo prête",
+  "coaVideoTooBig": "Cette vidéo dépasse 500 Mo.",
+  "coaVideoUploading": "vidéo : envoi {percent} %",
+  "@coaVideoUploading": {
+    "placeholders": {
+      "percent": {
+        "type": "int"
+      }
+    }
+  },
+  "coaWeekLacking": "{count, plural, =0{Aucune séance} =1{1 séance} other{{count} séances}} · ajoute-en {lacking} pour publier",
+  "@coaWeekLacking": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "lacking": {
+        "type": "int"
+      }
+    }
+  },
+  "coaWeekN": "Semaine {index}",
+  "@coaWeekN": {
+    "placeholders": {
+      "index": {
+        "type": "int"
+      }
+    }
+  },
+  "coaWeekOfProgram": "Semaine {week} · {program}",
+  "@coaWeekOfProgram": {
+    "placeholders": {
+      "week": {
+        "type": "int"
+      },
+      "program": {
+        "type": "Object"
+      }
+    }
+  },
+  "coaWeekShape": "{sessions} séances · {exercises} exercices · {minutes} min",
+  "@coaWeekShape": {
+    "placeholders": {
+      "sessions": {
+        "type": "int"
+      },
+      "exercises": {
+        "type": "int"
+      },
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "coaWhatYouGet": "Ce que tu reçois par vente",
+  "coaWhenDateDetail": "On te prévient la veille s’il manque encore quelque chose.",
+  "coaWhenPublish": "Quand publier ?",
+  "coaWhenReady": "Dès que tout est prêt",
+  "coaWhenReadyDetail": "On le met en ligne quand les {count} séances et leurs vidéos sont prêtes. Tu reçois une notification.",
+  "@coaWhenReadyDetail": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "coaYouGetPerSale": "Tu reçois par vente"
 }

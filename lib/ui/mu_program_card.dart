@@ -256,7 +256,8 @@ class MuProgramCard extends StatelessWidget {
         MuProgramStatus.available => [
           Row(
             children: [
-              _rating(context, p, withCount: true),
+              // A new program has no rating yet (COA-08 preview).
+              if (p.reviews > 0) _rating(context, p, withCount: true),
               const Spacer(),
               _price(context, p, compact: false),
             ],
@@ -379,8 +380,10 @@ class MuProgramCard extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           _price(context, p, compact: true),
-          const SizedBox(height: MuSpace.s1),
-          _rating(context, p, withCount: false),
+          if (p.reviews > 0) ...[
+            const SizedBox(height: MuSpace.s1),
+            _rating(context, p, withCount: false),
+          ],
         ],
       ),
     };

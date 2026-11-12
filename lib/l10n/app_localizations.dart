@@ -20637,6 +20637,750 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'de {name}'**
   String coaOfName(Object name);
+
+  /// No description provided for @coaAboutAMinute.
+  ///
+  /// In fr, this message translates to:
+  /// **'≈ 1 min'**
+  String get coaAboutAMinute;
+
+  /// No description provided for @coaAddExercise.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ajouter un exercice'**
+  String get coaAddExercise;
+
+  /// No description provided for @coaAddExercises.
+  ///
+  /// In fr, this message translates to:
+  /// **'{count, plural, =1{Ajouter 1 exercice} other{Ajouter {count} exercices}}'**
+  String coaAddExercises(int count);
+
+  /// No description provided for @coaAddSeconds.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ajouter {seconds} secondes'**
+  String coaAddSeconds(int seconds);
+
+  /// No description provided for @coaAddSession.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ajouter une séance'**
+  String get coaAddSession;
+
+  /// No description provided for @coaAddSet.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ajouter une série'**
+  String get coaAddSet;
+
+  /// No description provided for @coaAddThis.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ajouter {name}'**
+  String coaAddThis(Object name);
+
+  /// No description provided for @coaAddVideo.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ajouter une vidéo'**
+  String get coaAddVideo;
+
+  /// No description provided for @coaAddWeek.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ajouter une semaine'**
+  String get coaAddWeek;
+
+  /// No description provided for @coaAdvisedPrice.
+  ///
+  /// In fr, this message translates to:
+  /// **'Prix conseillé : {range}'**
+  String coaAdvisedPrice(Object range);
+
+  /// No description provided for @coaAdvisedPriceWhy.
+  ///
+  /// In fr, this message translates to:
+  /// **'Recommandé car les programmes padel de 4 semaines se vendent entre 30 et 45 DT autour de {zone}, et le tien vise un niveau {levels}.'**
+  String coaAdvisedPriceWhy(Object zone, Object levels);
+
+  /// No description provided for @coaAllCount.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tous · {count}'**
+  String coaAllCount(int count);
+
+  /// No description provided for @coaBackToPrograms.
+  ///
+  /// In fr, this message translates to:
+  /// **'Retour à mes programmes'**
+  String get coaBackToPrograms;
+
+  /// No description provided for @coaBeforeOnline.
+  ///
+  /// In fr, this message translates to:
+  /// **'Avant la mise en ligne'**
+  String get coaBeforeOnline;
+
+  /// No description provided for @coaCheckBasics.
+  ///
+  /// In fr, this message translates to:
+  /// **'Titre, description et couverture'**
+  String get coaCheckBasics;
+
+  /// No description provided for @coaCheckBasicsOk.
+  ///
+  /// In fr, this message translates to:
+  /// **'Prêts'**
+  String get coaCheckBasicsOk;
+
+  /// No description provided for @coaCheckCoachOk.
+  ///
+  /// In fr, this message translates to:
+  /// **'{certification} validé'**
+  String coaCheckCoachOk(Object certification);
+
+  /// No description provided for @coaCheckSessions.
+  ///
+  /// In fr, this message translates to:
+  /// **'{count, plural, =1{1 séance à ajouter} other{{count} séances à ajouter}}'**
+  String coaCheckSessions(int count);
+
+  /// No description provided for @coaCheckSessionsDetail.
+  ///
+  /// In fr, this message translates to:
+  /// **'Semaine {week} · {done} séances sur {total}'**
+  String coaCheckSessionsDetail(int week, int done, int total);
+
+  /// No description provided for @coaCheckVideos.
+  ///
+  /// In fr, this message translates to:
+  /// **'{count, plural, =1{1 vidéo en traitement} other{{count} vidéos en traitement}}'**
+  String coaCheckVideos(int count);
+
+  /// No description provided for @coaCheckVideosDetail.
+  ///
+  /// In fr, this message translates to:
+  /// **'Séance {index} · prête dans 1 min environ'**
+  String coaCheckVideosDetail(int index);
+
+  /// No description provided for @coaCommissionLine.
+  ///
+  /// In fr, this message translates to:
+  /// **'Commission de {percent} % par vente · versements chaque lundi'**
+  String coaCommissionLine(int percent);
+
+  /// No description provided for @coaComplete.
+  ///
+  /// In fr, this message translates to:
+  /// **'Compléter'**
+  String get coaComplete;
+
+  /// No description provided for @coaContent.
+  ///
+  /// In fr, this message translates to:
+  /// **'Contenu'**
+  String get coaContent;
+
+  /// No description provided for @coaContinueToPrice.
+  ///
+  /// In fr, this message translates to:
+  /// **'Continuer vers le prix'**
+  String get coaContinueToPrice;
+
+  /// No description provided for @coaCreateExercise.
+  ///
+  /// In fr, this message translates to:
+  /// **'Créer un nouvel exercice'**
+  String get coaCreateExercise;
+
+  /// No description provided for @coaDeleteExercise.
+  ///
+  /// In fr, this message translates to:
+  /// **'Supprimer l’exercice'**
+  String get coaDeleteExercise;
+
+  /// No description provided for @coaDraftOf.
+  ///
+  /// In fr, this message translates to:
+  /// **'{title} · brouillon'**
+  String coaDraftOf(Object title);
+
+  /// No description provided for @coaDraftSaved.
+  ///
+  /// In fr, this message translates to:
+  /// **'Brouillon enregistré · {since}'**
+  String coaDraftSaved(Object since);
+
+  /// No description provided for @coaDraftSavedToast.
+  ///
+  /// In fr, this message translates to:
+  /// **'Brouillon enregistré'**
+  String get coaDraftSavedToast;
+
+  /// No description provided for @coaDraftShape.
+  ///
+  /// In fr, this message translates to:
+  /// **'{weeks} sem. · {sessions} séances · {exercises} exercices'**
+  String coaDraftShape(int weeks, int sessions, int exercises);
+
+  /// No description provided for @coaDragHint.
+  ///
+  /// In fr, this message translates to:
+  /// **'Maintiens la poignée pour réordonner semaines, séances et exercices.'**
+  String get coaDragHint;
+
+  /// No description provided for @coaDuration.
+  ///
+  /// In fr, this message translates to:
+  /// **'Durée'**
+  String get coaDuration;
+
+  /// No description provided for @coaDurationSeconds.
+  ///
+  /// In fr, this message translates to:
+  /// **'Durée (s)'**
+  String get coaDurationSeconds;
+
+  /// No description provided for @coaEdit.
+  ///
+  /// In fr, this message translates to:
+  /// **'Modifier'**
+  String get coaEdit;
+
+  /// No description provided for @coaEditExercise.
+  ///
+  /// In fr, this message translates to:
+  /// **'Modifier {name}'**
+  String coaEditExercise(Object name);
+
+  /// No description provided for @coaExerciseCategory.
+  ///
+  /// In fr, this message translates to:
+  /// **'Catégorie d’exercice'**
+  String get coaExerciseCategory;
+
+  /// No description provided for @coaExerciseName.
+  ///
+  /// In fr, this message translates to:
+  /// **'Nom de l’exercice'**
+  String get coaExerciseName;
+
+  /// No description provided for @coaExerciseOptions.
+  ///
+  /// In fr, this message translates to:
+  /// **'Options de {name}'**
+  String coaExerciseOptions(Object name);
+
+  /// No description provided for @coaExerciseType.
+  ///
+  /// In fr, this message translates to:
+  /// **'Type d’exercice'**
+  String get coaExerciseType;
+
+  /// No description provided for @coaExerciseVideo.
+  ///
+  /// In fr, this message translates to:
+  /// **'Vidéo de l’exercice'**
+  String get coaExerciseVideo;
+
+  /// No description provided for @coaExercisesAdded.
+  ///
+  /// In fr, this message translates to:
+  /// **'{count, plural, =1{1 exercice ajouté} other{{count} exercices ajoutés}}'**
+  String coaExercisesAdded(int count);
+
+  /// No description provided for @coaFoldExercise.
+  ///
+  /// In fr, this message translates to:
+  /// **'Replier {name}'**
+  String coaFoldExercise(Object name);
+
+  /// No description provided for @coaFoldSession.
+  ///
+  /// In fr, this message translates to:
+  /// **'Replier les exercices de la séance {index}'**
+  String coaFoldSession(int index);
+
+  /// No description provided for @coaFoldWeek.
+  ///
+  /// In fr, this message translates to:
+  /// **'Replier la semaine {index}'**
+  String coaFoldWeek(int index);
+
+  /// No description provided for @coaHowPlayersGetIt.
+  ///
+  /// In fr, this message translates to:
+  /// **'Comment les joueurs y accèdent'**
+  String get coaHowPlayersGetIt;
+
+  /// No description provided for @coaIn.
+  ///
+  /// In fr, this message translates to:
+  /// **'Dans'**
+  String get coaIn;
+
+  /// No description provided for @coaInPremium.
+  ///
+  /// In fr, this message translates to:
+  /// **'Inclure dans Premium'**
+  String get coaInPremium;
+
+  /// No description provided for @coaInPremiumDetail.
+  ///
+  /// In fr, this message translates to:
+  /// **'Les abonnés Premium le suivent sans payer. Tu touches une part de l’abonnement selon leurs séances faites.'**
+  String get coaInPremiumDetail;
+
+  /// No description provided for @coaInfo.
+  ///
+  /// In fr, this message translates to:
+  /// **'Infos'**
+  String get coaInfo;
+
+  /// No description provided for @coaInstruction.
+  ///
+  /// In fr, this message translates to:
+  /// **'Consigne pour tes élèves'**
+  String get coaInstruction;
+
+  /// No description provided for @coaInstructionHelper.
+  ///
+  /// In fr, this message translates to:
+  /// **'Affichée sous la vidéo dans le lecteur de séance.'**
+  String get coaInstructionHelper;
+
+  /// No description provided for @coaKeepEditing.
+  ///
+  /// In fr, this message translates to:
+  /// **'Continue à modifier la séance : la vidéo sera visible par tes élèves dès qu’elle est prête.'**
+  String get coaKeepEditing;
+
+  /// No description provided for @coaLevel.
+  ///
+  /// In fr, this message translates to:
+  /// **'Niveau'**
+  String get coaLevel;
+
+  /// No description provided for @coaMinTimes.
+  ///
+  /// In fr, this message translates to:
+  /// **'{minutes} min × {sets}'**
+  String coaMinTimes(int minutes, int sets);
+
+  /// No description provided for @coaMoveExercise.
+  ///
+  /// In fr, this message translates to:
+  /// **'Déplacer {name}'**
+  String coaMoveExercise(Object name);
+
+  /// No description provided for @coaMoveSession.
+  ///
+  /// In fr, this message translates to:
+  /// **'Déplacer la séance {index}'**
+  String coaMoveSession(int index);
+
+  /// No description provided for @coaMoveWeek.
+  ///
+  /// In fr, this message translates to:
+  /// **'Déplacer la semaine {index}'**
+  String coaMoveWeek(int index);
+
+  /// No description provided for @coaNewExercise.
+  ///
+  /// In fr, this message translates to:
+  /// **'Nouvel exercice'**
+  String get coaNewExercise;
+
+  /// No description provided for @coaNewSession.
+  ///
+  /// In fr, this message translates to:
+  /// **'Nouvelle séance'**
+  String get coaNewSession;
+
+  /// No description provided for @coaNoAccess.
+  ///
+  /// In fr, this message translates to:
+  /// **'Choisis au moins une façon d’y accéder : vendu, ou inclus dans Premium.'**
+  String get coaNoAccess;
+
+  /// No description provided for @coaNoVideo.
+  ///
+  /// In fr, this message translates to:
+  /// **'sans vidéo'**
+  String get coaNoVideo;
+
+  /// No description provided for @coaPickExercise.
+  ///
+  /// In fr, this message translates to:
+  /// **'Choisis un exercice'**
+  String get coaPickExercise;
+
+  /// No description provided for @coaPlayer.
+  ///
+  /// In fr, this message translates to:
+  /// **'Joueur'**
+  String get coaPlayer;
+
+  /// No description provided for @coaPreview.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aperçu'**
+  String get coaPreview;
+
+  /// No description provided for @coaPreviewNoRating.
+  ///
+  /// In fr, this message translates to:
+  /// **'Sans avis pour l’instant : la note apparaît après les 3 premiers retours d’élèves.'**
+  String get coaPreviewNoRating;
+
+  /// No description provided for @coaPreviewPremium.
+  ///
+  /// In fr, this message translates to:
+  /// **'Les abonnés Premium voient « Inclus dans Premium » à la place du prix.'**
+  String get coaPreviewPremium;
+
+  /// No description provided for @coaPriceForStudent.
+  ///
+  /// In fr, this message translates to:
+  /// **'Prix pour un élève'**
+  String get coaPriceForStudent;
+
+  /// No description provided for @coaPricePaid.
+  ///
+  /// In fr, this message translates to:
+  /// **'Prix payé par l’élève'**
+  String get coaPricePaid;
+
+  /// No description provided for @coaProcessing.
+  ///
+  /// In fr, this message translates to:
+  /// **'En traitement'**
+  String get coaProcessing;
+
+  /// No description provided for @coaProcessingDetail.
+  ///
+  /// In fr, this message translates to:
+  /// **'Optimisation pour mobile et sous-titres · environ 1 min'**
+  String get coaProcessingDetail;
+
+  /// No description provided for @coaProcessingLabel.
+  ///
+  /// In fr, this message translates to:
+  /// **'Traitement'**
+  String get coaProcessingLabel;
+
+  /// No description provided for @coaProcessingVideo.
+  ///
+  /// In fr, this message translates to:
+  /// **'Traitement de la vidéo…'**
+  String get coaProcessingVideo;
+
+  /// No description provided for @coaProgramInfo.
+  ///
+  /// In fr, this message translates to:
+  /// **'Infos du programme'**
+  String get coaProgramInfo;
+
+  /// No description provided for @coaProgramTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Titre du programme'**
+  String get coaProgramTitle;
+
+  /// No description provided for @coaPublishDate.
+  ///
+  /// In fr, this message translates to:
+  /// **'Date de publication'**
+  String get coaPublishDate;
+
+  /// No description provided for @coaPublishScheduled.
+  ///
+  /// In fr, this message translates to:
+  /// **'Publication programmée'**
+  String get coaPublishScheduled;
+
+  /// No description provided for @coaPublishScheduledText.
+  ///
+  /// In fr, this message translates to:
+  /// **'On te prévient dès que le programme est en ligne.'**
+  String get coaPublishScheduledText;
+
+  /// No description provided for @coaReady.
+  ///
+  /// In fr, this message translates to:
+  /// **'Prête'**
+  String get coaReady;
+
+  /// No description provided for @coaRemoveSeconds.
+  ///
+  /// In fr, this message translates to:
+  /// **'Retirer {seconds} secondes'**
+  String coaRemoveSeconds(int seconds);
+
+  /// No description provided for @coaRemoveSet.
+  ///
+  /// In fr, this message translates to:
+  /// **'Retirer une série'**
+  String get coaRemoveSet;
+
+  /// No description provided for @coaRepetitions.
+  ///
+  /// In fr, this message translates to:
+  /// **'Répétitions'**
+  String get coaRepetitions;
+
+  /// No description provided for @coaReplace.
+  ///
+  /// In fr, this message translates to:
+  /// **'Remplacer'**
+  String get coaReplace;
+
+  /// No description provided for @coaRepsSets.
+  ///
+  /// In fr, this message translates to:
+  /// **'{reps} rép. × {sets} séries'**
+  String coaRepsSets(int reps, int sets);
+
+  /// No description provided for @coaRepsTimes.
+  ///
+  /// In fr, this message translates to:
+  /// **'{reps} rép. × {sets}'**
+  String coaRepsTimes(int reps, int sets);
+
+  /// No description provided for @coaSaveDraft.
+  ///
+  /// In fr, this message translates to:
+  /// **'Enregistrer le brouillon'**
+  String get coaSaveDraft;
+
+  /// No description provided for @coaSaveSession.
+  ///
+  /// In fr, this message translates to:
+  /// **'Enregistrer la séance'**
+  String get coaSaveSession;
+
+  /// No description provided for @coaSaved.
+  ///
+  /// In fr, this message translates to:
+  /// **'Enregistrée'**
+  String get coaSaved;
+
+  /// No description provided for @coaSchedulePublish.
+  ///
+  /// In fr, this message translates to:
+  /// **'Programmer la publication'**
+  String get coaSchedulePublish;
+
+  /// No description provided for @coaSearchExercise.
+  ///
+  /// In fr, this message translates to:
+  /// **'Rechercher un exercice'**
+  String get coaSearchExercise;
+
+  /// No description provided for @coaSecSets.
+  ///
+  /// In fr, this message translates to:
+  /// **'{seconds} s × {sets} séries'**
+  String coaSecSets(int seconds, int sets);
+
+  /// No description provided for @coaSecTimes.
+  ///
+  /// In fr, this message translates to:
+  /// **'{seconds} s × {sets}'**
+  String coaSecTimes(int seconds, int sets);
+
+  /// No description provided for @coaSeconds.
+  ///
+  /// In fr, this message translates to:
+  /// **'{seconds} s'**
+  String coaSeconds(int seconds);
+
+  /// No description provided for @coaSeenBy.
+  ///
+  /// In fr, this message translates to:
+  /// **'Vu par'**
+  String get coaSeenBy;
+
+  /// No description provided for @coaSell.
+  ///
+  /// In fr, this message translates to:
+  /// **'Vendre le programme'**
+  String get coaSell;
+
+  /// No description provided for @coaSellDetail.
+  ///
+  /// In fr, this message translates to:
+  /// **'Paiement unique, accès sans limite de durée.'**
+  String get coaSellDetail;
+
+  /// No description provided for @coaSent.
+  ///
+  /// In fr, this message translates to:
+  /// **'envoyée'**
+  String get coaSent;
+
+  /// No description provided for @coaSessionGone.
+  ///
+  /// In fr, this message translates to:
+  /// **'Séance introuvable'**
+  String get coaSessionGone;
+
+  /// No description provided for @coaSessionGoneText.
+  ///
+  /// In fr, this message translates to:
+  /// **'Cette séance n’est plus dans le brouillon.'**
+  String get coaSessionGoneText;
+
+  /// No description provided for @coaSessionSaved.
+  ///
+  /// In fr, this message translates to:
+  /// **'Séance enregistrée'**
+  String get coaSessionSaved;
+
+  /// No description provided for @coaSessionTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Titre de la séance'**
+  String get coaSessionTitle;
+
+  /// No description provided for @coaSessionVideo.
+  ///
+  /// In fr, this message translates to:
+  /// **'Vidéo de la séance'**
+  String get coaSessionVideo;
+
+  /// No description provided for @coaSets.
+  ///
+  /// In fr, this message translates to:
+  /// **'Séries'**
+  String get coaSets;
+
+  /// No description provided for @coaStudentPreview.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aperçu élève'**
+  String get coaStudentPreview;
+
+  /// No description provided for @coaUnfoldSession.
+  ///
+  /// In fr, this message translates to:
+  /// **'Déplier les exercices de la séance {index}'**
+  String coaUnfoldSession(int index);
+
+  /// No description provided for @coaUnfoldWeek.
+  ///
+  /// In fr, this message translates to:
+  /// **'Déplier la semaine {index}'**
+  String coaUnfoldWeek(int index);
+
+  /// No description provided for @coaVideo.
+  ///
+  /// In fr, this message translates to:
+  /// **'Vidéo'**
+  String get coaVideo;
+
+  /// No description provided for @coaVideoHintExercise.
+  ///
+  /// In fr, this message translates to:
+  /// **'MP4, MOV · 500 Mo max · 3 min max'**
+  String get coaVideoHintExercise;
+
+  /// No description provided for @coaVideoHintSession.
+  ///
+  /// In fr, this message translates to:
+  /// **'MP4, MOV · 2 Go max · 10 min max'**
+  String get coaVideoHintSession;
+
+  /// No description provided for @coaVideoLength.
+  ///
+  /// In fr, this message translates to:
+  /// **'vidéo {length}'**
+  String coaVideoLength(Object length);
+
+  /// No description provided for @coaVideoProcessing.
+  ///
+  /// In fr, this message translates to:
+  /// **'vidéo en traitement'**
+  String get coaVideoProcessing;
+
+  /// No description provided for @coaVideoReady.
+  ///
+  /// In fr, this message translates to:
+  /// **'vidéo prête'**
+  String get coaVideoReady;
+
+  /// No description provided for @coaVideoTooBig.
+  ///
+  /// In fr, this message translates to:
+  /// **'Cette vidéo dépasse 500 Mo.'**
+  String get coaVideoTooBig;
+
+  /// No description provided for @coaVideoUploading.
+  ///
+  /// In fr, this message translates to:
+  /// **'vidéo : envoi {percent} %'**
+  String coaVideoUploading(int percent);
+
+  /// No description provided for @coaWeekLacking.
+  ///
+  /// In fr, this message translates to:
+  /// **'{count, plural, =0{Aucune séance} =1{1 séance} other{{count} séances}} · ajoute-en {lacking} pour publier'**
+  String coaWeekLacking(int count, int lacking);
+
+  /// No description provided for @coaWeekN.
+  ///
+  /// In fr, this message translates to:
+  /// **'Semaine {index}'**
+  String coaWeekN(int index);
+
+  /// No description provided for @coaWeekOfProgram.
+  ///
+  /// In fr, this message translates to:
+  /// **'Semaine {week} · {program}'**
+  String coaWeekOfProgram(int week, Object program);
+
+  /// No description provided for @coaWeekShape.
+  ///
+  /// In fr, this message translates to:
+  /// **'{sessions} séances · {exercises} exercices · {minutes} min'**
+  String coaWeekShape(int sessions, int exercises, int minutes);
+
+  /// No description provided for @coaWhatYouGet.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ce que tu reçois par vente'**
+  String get coaWhatYouGet;
+
+  /// No description provided for @coaWhenDateDetail.
+  ///
+  /// In fr, this message translates to:
+  /// **'On te prévient la veille s’il manque encore quelque chose.'**
+  String get coaWhenDateDetail;
+
+  /// No description provided for @coaWhenPublish.
+  ///
+  /// In fr, this message translates to:
+  /// **'Quand publier ?'**
+  String get coaWhenPublish;
+
+  /// No description provided for @coaWhenReady.
+  ///
+  /// In fr, this message translates to:
+  /// **'Dès que tout est prêt'**
+  String get coaWhenReady;
+
+  /// No description provided for @coaWhenReadyDetail.
+  ///
+  /// In fr, this message translates to:
+  /// **'On le met en ligne quand les {count} séances et leurs vidéos sont prêtes. Tu reçois une notification.'**
+  String coaWhenReadyDetail(int count);
+
+  /// No description provided for @coaYouGetPerSale.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tu reçois par vente'**
+  String get coaYouGetPerSale;
 }
 
 class _AppLocalizationsDelegate

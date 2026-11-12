@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/clock.dart';
 import '../../../l10n/l10n.dart';
 import '../../../theme/theme.dart';
 
@@ -59,7 +60,7 @@ class CoachDraftController extends AsyncNotifier<ProgramDraft?> {
   Future<void> edit(ProgramDraft Function(ProgramDraft d) change) async {
     final d = state.value;
     if (d == null) return;
-    final next = change(d).copyWith(updatedAt: DateTime.now());
+    final next = change(d).copyWith(updatedAt: ref.read(clockProvider)());
     state = AsyncData(next);
     await ref.read(coachRepositoryProvider).saveDraft(next);
     _scheduleProcessing(next);
@@ -82,7 +83,7 @@ class CoachDraftController extends AsyncNotifier<ProgramDraft?> {
   /// « Créer »: a blank program (one empty week) when none is being written.
   Future<void> create() async {
     if (state.value != null) return;
-    final now = DateTime.now();
+    final now = ref.read(clockProvider)();
     final d = ProgramDraft(
       id: 'programme-${now.millisecondsSinceEpoch}',
       title: l10n.coaNewProgram,

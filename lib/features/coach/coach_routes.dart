@@ -3,10 +3,13 @@ import 'package:go_router/go_router.dart';
 
 import '../../l10n/l10n.dart';
 import '../common/widgets/coming_soon.dart';
+import 'screens/builder_screen.dart';
 import 'screens/coach_earnings_screen.dart';
 import 'screens/coach_home_screen.dart';
 import 'screens/coach_programs_screen.dart';
 import 'screens/coach_students_screen.dart';
+import 'screens/publish_screen.dart';
+import 'screens/session_editor_screen.dart';
 import 'widgets/coach_shell.dart';
 
 /// The coach space's routes (COA-04…12), one per screen code.
@@ -49,9 +52,12 @@ StatefulShellRoute coachShellRoute(GlobalKey<NavigatorState> rootKey) {
             path: CoachRoutes.programs,
             builder: (context, state) => const CoachProgramsScreen(),
             routes: [
-              page('brouillon', (s) => soon(l10n.coaBuilder, CoachRoutes.programs)),
-              page('brouillon/seance/:id', (s) => soon(l10n.entSession, CoachRoutes.builder)),
-              page('brouillon/publication', (s) => soon(l10n.coaPriceTitle, CoachRoutes.builder)),
+              page('brouillon', (s) => const BuilderScreen()),
+              page(
+                'brouillon/seance/:id',
+                (s) => SessionEditorScreen(sessionId: s.pathParameters['id']!),
+              ),
+              page('brouillon/publication', (s) => const PublishScreen()),
             ],
           ),
         ],
