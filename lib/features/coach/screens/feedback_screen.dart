@@ -8,9 +8,9 @@ import '../../../core/format.dart';
 import '../../../l10n/l10n.dart';
 import '../../../theme/theme.dart';
 import '../../../ui/ui.dart';
-import '../../common/widgets/coming_soon.dart';
 import '../../common/widgets/flow_scaffold.dart';
 import '../../training/data/training_story.dart';
+import '../../training/widgets/training_video_player.dart';
 import '../coach_routes.dart';
 import '../controllers/coach_providers.dart';
 import '../data/coach_models.dart';
@@ -476,7 +476,12 @@ class _Player extends StatelessWidget {
                   shape: const CircleBorder(),
                   child: InkWell(
                     customBorder: const CircleBorder(),
-                    onTap: () => showComingSoon(context),
+                    onTap: () => showTrainingVideo(
+                      context,
+                      title: l10n.coaVideoOf(studentName),
+                      videoKey: 'student/$studentName',
+                      startAt: at,
+                    ),
                     child: SizedBox.square(
                       dimension: _play,
                       child: Icon(PhosphorIcons.play(PhosphorIconsStyle.fill), size: MuSize.iconM, color: MuPalette.ink900),

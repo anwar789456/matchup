@@ -19828,6 +19828,30 @@ abstract class AppLocalizations {
   /// **'Ton avis'**
   String get entYourReview;
 
+  /// No description provided for @entVideoError.
+  ///
+  /// In fr, this message translates to:
+  /// **'Impossible de lire la vidéo. Vérifie ta connexion et réessaie.'**
+  String get entVideoError;
+
+  /// No description provided for @entVideoLoading.
+  ///
+  /// In fr, this message translates to:
+  /// **'Chargement de la vidéo'**
+  String get entVideoLoading;
+
+  /// No description provided for @entVideoPlay.
+  ///
+  /// In fr, this message translates to:
+  /// **'Lire la vidéo'**
+  String get entVideoPlay;
+
+  /// No description provided for @entProgramPreview.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aperçu · {title}'**
+  String entProgramPreview(Object title);
+
   /// No description provided for @entCoachName.
   ///
   /// In fr, this message translates to:

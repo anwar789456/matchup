@@ -11,11 +11,11 @@ import '../../../core/format.dart';
 import '../../../l10n/l10n.dart';
 import '../../../theme/theme.dart';
 import '../../../ui/ui.dart';
-import '../../common/widgets/coming_soon.dart';
 import '../controllers/training_providers.dart';
 import '../data/training_models.dart';
 import '../data/training_story.dart';
 import '../training_routes.dart';
+import '../widgets/training_video_player.dart';
 
 /// ENT-04 · Séance: the exercise's video, instructions and coach tip, the set counter and rest
 /// timer, private notes, what comes next, and « Marquer comme fait ». Night match in both themes.
@@ -214,7 +214,12 @@ class _PlayerState extends ConsumerState<_Player> {
                   onShare: () => SharePlus.instance.share(
                     ShareParams(text: l10n.entShareExercise(e.title, widget.program.title)),
                   ),
-                  onPlay: () => showComingSoon(context),
+                  onPlay: () => showTrainingVideo(
+                    context,
+                    title: e.title,
+                    videoKey: '${widget.program.id}/${widget.lesson.index}/$_current',
+                    loop: true,
+                  ),
                   onIndex: _show,
                 ),
                 Padding(

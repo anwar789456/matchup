@@ -9,7 +9,6 @@ import '../../../l10n/l10n.dart';
 import '../../../router.dart';
 import '../../../theme/theme.dart';
 import '../../../ui/ui.dart';
-import '../../common/widgets/coming_soon.dart';
 import '../../common/widgets/flow_scaffold.dart';
 import '../../payments/controllers/checkout_controller.dart';
 import '../../subscription/controllers/subscription_controller.dart';
@@ -18,6 +17,7 @@ import '../controllers/training_providers.dart';
 import '../data/training_models.dart';
 import '../data/training_story.dart';
 import '../training_routes.dart';
+import '../widgets/training_video_player.dart';
 import '../widgets/review_widgets.dart';
 import '../widgets/training_widgets.dart';
 
@@ -115,7 +115,11 @@ class ProgramScreen extends ConsumerWidget {
                             bottom: _overlap + MuSpace.s4,
                             child: _PreviewPill(
                               duration: p.preview,
-                              onTap: () => showComingSoon(context),
+                              onTap: () => showTrainingVideo(
+                                context,
+                                title: l10n.entProgramPreview(p.title),
+                                videoKey: 'preview/${p.id}',
+                              ),
                             ),
                           ),
                         ],

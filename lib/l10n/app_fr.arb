@@ -10091,6 +10091,17 @@
   },
   "entYourRating": "Ta note",
   "entYourReview": "Ton avis",
+  "entVideoError": "Impossible de lire la vidéo. Vérifie ta connexion et réessaie.",
+  "entVideoLoading": "Chargement de la vidéo",
+  "entVideoPlay": "Lire la vidéo",
+  "entProgramPreview": "Aperçu · {title}",
+  "@entProgramPreview": {
+    "placeholders": {
+      "title": {
+        "type": "Object"
+      }
+    }
+  },
   "entCoachName": "Coach {name}",
   "@entCoachName": {
     "placeholders": {

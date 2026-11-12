@@ -8,12 +8,12 @@ import '../../../core/format.dart';
 import '../../../l10n/l10n.dart';
 import '../../../theme/theme.dart';
 import '../../../ui/ui.dart';
-import '../../common/widgets/coming_soon.dart';
 import '../../common/widgets/flow_scaffold.dart';
 import '../controllers/video_analysis_controller.dart';
 import '../data/training_models.dart';
 import '../data/training_story.dart';
 import '../training_routes.dart';
+import '../widgets/training_video_player.dart';
 import '../widgets/plan_labels.dart';
 
 /// ENT-09 · Analyse vidéo · résultats: the clip with its three moments, what the AI saw (to
@@ -288,7 +288,12 @@ class _Player extends StatelessWidget {
                   shape: const CircleBorder(),
                   child: InkWell(
                     customBorder: const CircleBorder(),
-                    onTap: () => showComingSoon(context),
+                    onTap: () => showTrainingVideo(
+                      context,
+                      title: playing.title,
+                      videoKey: 'analysis/${analysis.id}',
+                      startAt: playing.at,
+                    ),
                     child: SizedBox.square(
                       dimension: _play,
                       child: Icon(

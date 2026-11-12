@@ -12029,6 +12029,21 @@ class AppLocalizationsEn extends AppLocalizations {
   String get entYourReview => 'Ton avis';
 
   @override
+  String get entVideoError =>
+      'Impossible de lire la vidéo. Vérifie ta connexion et réessaie.';
+
+  @override
+  String get entVideoLoading => 'Chargement de la vidéo';
+
+  @override
+  String get entVideoPlay => 'Lire la vidéo';
+
+  @override
+  String entProgramPreview(Object title) {
+    return 'Aperçu · $title';
+  }
+
+  @override
   String entCoachName(Object name) {
     return 'Coach $name';
   }

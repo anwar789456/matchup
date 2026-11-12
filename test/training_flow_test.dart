@@ -16,6 +16,7 @@ import 'package:matchup/features/training/data/training_models.dart';
 import 'package:matchup/features/training/data/training_repository.dart';
 import 'package:matchup/features/training/data/training_story.dart';
 import 'package:matchup/features/training/training_routes.dart';
+import 'package:matchup/features/training/widgets/training_video_player.dart';
 import 'package:matchup/router.dart';
 import 'package:matchup/ui/ui.dart';
 
@@ -506,6 +507,21 @@ void main() {
       final basket = tester.getTopLeft(find.text('Bases du basket 3×3')).dy;
       final service = tester.getTopLeft(find.text('Service et retour')).dy;
       expect(basket, lessThan(service));
+      await settleFonts(tester);
+    });
+
+    testWidgets('ENT-04 ▶ opens the video player; without a player it offers « Réessayer »', (tester) async {
+      await pumpApp(tester, TrainingRoutes.lesson('bandeja', 5));
+      await tester.tap(find.bySemanticsLabel(RegExp('^Lire la vidéo, ')));
+      await tester.pumpAndSettle();
+      expect(find.byType(TrainingVideoPlayer), findsOneWidget);
+      // Tests have no video platform: the player reports it and can try again.
+      expect(find.textContaining('Impossible de lire la vidéo'), findsOneWidget);
+      expect(find.text('Réessayer'), findsOneWidget);
+      await tester.tap(find.bySemanticsLabel('Fermer'));
+      await tester.pumpAndSettle();
+      expect(find.byType(TrainingVideoPlayer), findsNothing);
+      expect(find.text('1 / 4'), findsOneWidget);
       await settleFonts(tester);
     });
 
