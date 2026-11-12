@@ -4,6 +4,7 @@ import 'package:sqflite/sqflite.dart';
 
 import '../../../core/db/app_database.dart';
 import '../../../core/sync/sync_service.dart';
+import '../../profile/data/account_profile.dart';
 
 /// A signed-in device (SET-03 « Sessions actives »).
 @immutable
@@ -159,6 +160,7 @@ class AccountSettingsController extends Notifier<AccountSettings> {
     state = next;
     _database.db
         .then((db) => db.transaction((txn) => AccountSettingsRows.write(txn, next)))
+        .then((_) => ref.read(accountProfileProvider).pushNow())
         .catchError((Object _) {});
   }
 

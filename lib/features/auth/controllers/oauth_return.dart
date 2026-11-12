@@ -33,8 +33,7 @@ final oauthReturnProvider = Provider<void>((ref) {
       final email = await repo.adoptOAuthUser(user);
       if (email == null) return;
       ref.read(authFlowProvider.notifier).setEmail(email);
-      final meta = user.userMetadata ?? const {};
-      await ref.read(accountProfileProvider).fillNames((meta['full_name'] ?? meta['name']) as String?);
+      await ref.read(accountProfileProvider).loadFromServer();
       final next = await ref.read(sessionProvider.notifier).nextRoute();
       await _goWhenStarted(ref.read(routerProvider), next ?? Routes.roles);
       // Signed out later on this phone, then Google again: handled again then.
@@ -48,6 +47,12 @@ final oauthReturnProvider = Provider<void>((ref) {
   SupabaseConfig.init().then((_) {
     if (!SupabaseConfig.ready) return;
     final auth = Supabase.instance.client.auth;
+    // Already signed in to a real account at start: refresh the profile cache from Supabase
+    // (edits made on another phone).
+    final current = auth.currentUser;
+    if (current != null && !current.isAnonymous) {
+      unawaited(ref.read(accountProfileProvider).loadFromServer());
+    }
     handle(auth.currentUser);
     sub = auth.onAuthStateChange.listen((s) {
       if (s.event == AuthChangeEvent.signedIn) handle(s.session?.user);

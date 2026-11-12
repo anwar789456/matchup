@@ -13,6 +13,7 @@ import '../../../theme/theme.dart';
 import '../../../ui/ui.dart';
 import '../../common/widgets/flow_scaffold.dart';
 import '../controllers/auth_providers.dart';
+import '../../profile/data/account_profile.dart';
 import '../widgets/auth_widgets.dart';
 import '../../../l10n/l10n.dart';
 
@@ -56,7 +57,9 @@ class _VerifyEmailScreenState extends ConsumerState<VerifyEmailScreen> {
       final verified = await ref.read(authRepositoryProvider).isEmailVerified();
       if (!verified || !mounted) return;
       _check?.cancel();
-      // Confirmed: the role and setup chosen meanwhile now reach the Supabase account too.
+      // Confirmed: the device's session is the real account; its profile and the role and setup
+      // chosen meanwhile now meet the Supabase account.
+      await ref.read(accountProfileProvider).loadFromServer();
       final next = await ref.read(sessionProvider.notifier).nextRoute();
       if (mounted) context.push(next ?? Routes.roles);
     } on Exception {

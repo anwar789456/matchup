@@ -10,6 +10,7 @@ import '../../common/data/story_data.dart';
 import '../../common/widgets/coming_soon.dart';
 import '../../common/widgets/flow_scaffold.dart';
 import '../data/profile_repository.dart';
+import '../data/account_profile.dart';
 import '../../../l10n/l10n.dart';
 
 /// PRF-04 · Modifier le profil: cover and photo, handle and bio, sports and positions, zones,
@@ -48,6 +49,7 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
     final d = _draft!.copyWith(handle: _handle.text.trim(), bio: _bio.text.trim());
     setState(() => _saving = true);
     await ref.read(playerProfileRepositoryProvider).save(d);
+    ref.read(accountProfileProvider).pushNow();
     ref.invalidate(myProfileProvider);
     if (!mounted) return;
     MuToast.show(context, tone: MuToastTone.success, title: l10n.profilEnregistre);
