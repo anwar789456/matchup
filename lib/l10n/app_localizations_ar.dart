@@ -12021,6 +12021,141 @@ class AppLocalizationsAr extends AppLocalizations {
   String get entYourReview => 'Ton avis';
 
   @override
+  String get entHistory => 'Historique';
+
+  @override
+  String get entSeeHistory => 'Voir l’historique';
+
+  @override
+  String entHistoryWeek(Object date) {
+    return 'Semaine du $date';
+  }
+
+  @override
+  String entHistoryReps(Object reps, Object target) {
+    return '$reps/$target réussis';
+  }
+
+  @override
+  String entMinutesTotal(Object minutes) {
+    return '$minutes min';
+  }
+
+  @override
+  String entHoursTotal(Object hours, Object minutes) {
+    return '$hours h $minutes';
+  }
+
+  @override
+  String entHistoryTotals(int sessions, Object time, int weeks) {
+    String _temp0 = intl.Intl.pluralLogic(
+      sessions,
+      locale: localeName,
+      other: '$sessions séances',
+      one: '1 séance',
+    );
+    return '$_temp0, $time d’entraînement, $weeks semaines de suite';
+  }
+
+  @override
+  String entSessionsDone(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'séances faites',
+      one: 'séance faite',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get entTrainedTime => 'd’entraînement';
+
+  @override
+  String get entNoHistory => 'Aucune séance pour l’instant';
+
+  @override
+  String get entNoHistoryHelp =>
+      'Tes séances terminées s’afficheront ici, semaine par semaine.';
+
+  @override
+  String get entReminders => 'Rappels de séance';
+
+  @override
+  String get entRemindersOff => 'Désactivés';
+
+  @override
+  String entNextReminder(Object when) {
+    return 'Prochain rappel : $when';
+  }
+
+  @override
+  String entTodayAt(Object time) {
+    return 'aujourd’hui à $time';
+  }
+
+  @override
+  String entTomorrowAt(Object time) {
+    return 'demain à $time';
+  }
+
+  @override
+  String entDayAt(Object day, Object time) {
+    return '$day à $time';
+  }
+
+  @override
+  String get entTurnOn => 'Activer';
+
+  @override
+  String get entTestReminder => 'Tester';
+
+  @override
+  String get entReminderSent => 'Rappel envoyé';
+
+  @override
+  String get entSave => 'Enregistrer';
+
+  @override
+  String get entRemindMe => 'Me rappeler mes séances';
+
+  @override
+  String get entRemindMeHelp =>
+      'Pas de rappel un jour où ta séance est déjà faite.';
+
+  @override
+  String get entReminderDays => 'Les jours';
+
+  @override
+  String get entPickADay => 'Choisis au moins un jour.';
+
+  @override
+  String get entReminderTime => 'Heure du rappel';
+
+  @override
+  String get entRemindersSaved => 'Rappels enregistrés';
+
+  @override
+  String get entRemindersOffSaved => 'Rappels désactivés';
+
+  @override
+  String get entReminderTitle => 'C’est l’heure de ta séance';
+
+  @override
+  String entReminderBody(int index, Object title, int minutes) {
+    return 'Séance $index · $title · $minutes min';
+  }
+
+  @override
+  String get entReminderNoSession => 'Choisis un programme et garde ta série.';
+
+  @override
+  String get entReminderStart => 'Commencer';
+
+  @override
+  String get entReminderLater => 'Plus tard';
+
+  @override
   String get entVideoError =>
       'Impossible de lire la vidéo. Vérifie ta connexion et réessaie.';
 

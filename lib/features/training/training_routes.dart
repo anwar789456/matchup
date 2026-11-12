@@ -2,6 +2,7 @@ import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
 
 import 'screens/lesson_done_screen.dart';
+import 'screens/history_screen.dart';
 import 'screens/lesson_screen.dart';
 import 'screens/plan_goals_screen.dart';
 import 'screens/plan_screen.dart';
@@ -23,6 +24,7 @@ abstract final class TrainingRoutes {
       '/training/program/$id/lesson/$index/done'; // ENT-05
   static const planGoals = '/training/plan'; // ENT-06
   static const plan = '/training/plan/week'; // ENT-07
+  static const history = '/training/history'; // « Historique » and « Rappels de séance »
   static const video = '/training/video'; // ENT-08
   static const videoResult = '/training/video/result'; // ENT-09
 }
@@ -51,6 +53,7 @@ List<RouteBase> trainingRoutes(GlobalKey<NavigatorState> rootKey) {
     ),
     page('plan', (s) => const PlanGoalsScreen()),
     page('plan/week', (s) => const PlanScreen()),
+    page('history', (s) => const HistoryScreen()),
     page('video', (s) => const VideoScreen()),
     page('video/result', (s) => const VideoResultScreen()),
   ];

@@ -275,12 +275,18 @@ create table if not exists public.entrainement_profil (
   "serie_semaines" bigint not null,
   "objectif_semaine" bigint not null,
   "plan_masque" bigint not null,
+  "rappel_actif" bigint not null,
+  "rappel_jours" text not null,
+  "rappel_heure" bigint not null,
   primary key (owner_id, "id")
 );
 alter table public.entrainement_profil add column if not exists "id" bigint;
 alter table public.entrainement_profil add column if not exists "serie_semaines" bigint;
 alter table public.entrainement_profil add column if not exists "objectif_semaine" bigint;
 alter table public.entrainement_profil add column if not exists "plan_masque" bigint;
+alter table public.entrainement_profil add column if not exists "rappel_actif" bigint;
+alter table public.entrainement_profil add column if not exists "rappel_jours" text;
+alter table public.entrainement_profil add column if not exists "rappel_heure" bigint;
 alter table public.entrainement_profil enable row level security;
 drop policy if exists "entrainement_profil_lecture" on public.entrainement_profil;
 drop policy if exists "entrainement_profil_ecriture" on public.entrainement_profil;

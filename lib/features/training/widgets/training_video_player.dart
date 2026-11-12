@@ -10,10 +10,9 @@ import '../../../ui/ui.dart';
 import '../data/training_videos.dart';
 
 /// Builds the player for a URL (tests swap it for one that never touches the platform).
-final videoControllerFactoryProvider =
-    Provider<VideoPlayerController Function(Uri)>(
-      (ref) => VideoPlayerController.networkUrl,
-    );
+final videoControllerFactoryProvider = Provider<VideoPlayerController Function(Uri)>(
+  (ref) => VideoPlayerController.networkUrl,
+);
 
 /// Opens the full-screen player for the video [videoKey] (see [TrainingVideoSource]),
 /// from [startAt]. Exercise demos [loop].
@@ -31,12 +30,7 @@ Future<void> showTrainingVideo(
       // A media screen: the Night match surfaces in both themes.
       builder: (_) => Theme(
         data: MuTheme.dark(arabic: arabic),
-        child: TrainingVideoPlayer(
-          title: title,
-          videoKey: videoKey,
-          startAt: startAt,
-          loop: loop,
-        ),
+        child: TrainingVideoPlayer(title: title, videoKey: videoKey, startAt: startAt, loop: loop),
       ),
     ),
   );
@@ -58,8 +52,7 @@ class TrainingVideoPlayer extends ConsumerStatefulWidget {
   final bool loop;
 
   @override
-  ConsumerState<TrainingVideoPlayer> createState() =>
-      _TrainingVideoPlayerState();
+  ConsumerState<TrainingVideoPlayer> createState() => _TrainingVideoPlayerState();
 }
 
 class _TrainingVideoPlayerState extends ConsumerState<TrainingVideoPlayer> {
@@ -87,8 +80,7 @@ class _TrainingVideoPlayerState extends ConsumerState<TrainingVideoPlayer> {
     try {
       await video.initialize();
       await video.setLooping(widget.loop);
-      if (widget.startAt > Duration.zero &&
-          widget.startAt < video.value.duration) {
+      if (widget.startAt > Duration.zero && widget.startAt < video.value.duration) {
         await video.seekTo(widget.startAt);
       }
       if (!mounted) {
@@ -169,11 +161,7 @@ class _TrainingVideoPlayerState extends ConsumerState<TrainingVideoPlayer> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(
-              PhosphorIcons.videoCamera(),
-              size: MuSize.iconL,
-              color: c.textSecondary,
-            ),
+            Icon(PhosphorIcons.videoCamera(), size: MuSize.iconL, color: c.textSecondary),
             const SizedBox(height: MuSpace.s3),
             Text(
               l10n.entVideoError,
@@ -230,12 +218,7 @@ class _TrainingVideoPlayerState extends ConsumerState<TrainingVideoPlayer> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.fromLTRB(
-              MuSpace.s2,
-              MuSpace.s3,
-              MuSpace.s4,
-              0,
-            ),
+            padding: const EdgeInsets.fromLTRB(MuSpace.s2, MuSpace.s3, MuSpace.s4, 0),
             // A timeline runs left to right in every language.
             child: Directionality(
               textDirection: TextDirection.ltr,

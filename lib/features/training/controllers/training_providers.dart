@@ -44,6 +44,9 @@ class TrainingProgressController extends AsyncNotifier<TrainingProgress> {
 
   Future<void> toggleSaved(String programId) => _run(() => _repo.toggleSaved(programId));
 
+  Future<void> saveReminder(TrainingReminder reminder) =>
+      _run(() => _repo.saveReminder(reminder));
+
   Future<void> rateProgram(String programId, int stars, String? text) =>
       _run(() => _repo.rateProgram(programId, stars, text));
 }

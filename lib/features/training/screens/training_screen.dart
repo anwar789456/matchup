@@ -38,6 +38,11 @@ class TrainingScreen extends ConsumerWidget {
       title: l10n.entrainement,
       actions: [
         MuBarAction(
+          icon: PhosphorIcons.clockCounterClockwise(),
+          label: l10n.entHistory,
+          onPressed: () => context.push(TrainingRoutes.history),
+        ),
+        MuBarAction(
           icon: PhosphorIcons.videoCamera(),
           label: l10n.entAnalyseVideo,
           onPressed: () => context.push(TrainingRoutes.video),

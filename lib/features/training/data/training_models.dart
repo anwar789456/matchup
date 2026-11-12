@@ -226,6 +226,45 @@ class LessonResult {
   );
 }
 
+/// « Rappels de séance »: the days (1 = Monday) and the time (minutes after midnight) the
+/// player wants to be reminded to train. Skipped on a day the session is already done.
+@immutable
+class TrainingReminder {
+  const TrainingReminder({this.on = false, this.days = const {1, 3, 5}, this.minutes = 19 * 60});
+
+  final bool on;
+  final Set<int> days;
+  final int minutes;
+
+  /// The next reminder strictly after [now] (null when off or no day is picked).
+  DateTime? next(DateTime now) {
+    if (!on || days.isEmpty) return null;
+    final today = DateTime(now.year, now.month, now.day);
+    for (var i = 0; i <= 7; i++) {
+      final day = DateTime(today.year, today.month, today.day + i);
+      final at = day.add(Duration(minutes: minutes));
+      if (days.contains(day.weekday) && at.isAfter(now)) return at;
+    }
+    return null;
+  }
+
+  TrainingReminder copyWith({bool? on, Set<int>? days, int? minutes}) => TrainingReminder(
+    on: on ?? this.on,
+    days: days ?? this.days,
+    minutes: minutes ?? this.minutes,
+  );
+
+  @override
+  bool operator ==(Object other) =>
+      other is TrainingReminder &&
+      other.on == on &&
+      other.minutes == minutes &&
+      setEquals(other.days, days);
+
+  @override
+  int get hashCode => Object.hash(on, minutes, Object.hashAllUnordered(days));
+}
+
 /// Where the player stands: programs joined, sessions done, weekly streak.
 @immutable
 class TrainingProgress {
@@ -237,6 +276,7 @@ class TrainingProgress {
     this.planCardHidden = false,
     this.saved = const {},
     this.ratings = const {},
+    this.reminder = const TrainingReminder(),
   });
 
   /// Program id → date joined.
@@ -257,6 +297,17 @@ class TrainingProgress {
 
   /// The player's rating of a finished program: stars and an optional comment.
   final Map<String, (int, String?)> ratings;
+
+  /// « Rappels de séance » (history page).
+  final TrainingReminder reminder;
+
+  /// Minutes trained, all sessions together.
+  int get totalMinutes => results.fold(0, (a, r) => a + r.minutes);
+
+  /// A session was already done on [now]'s day (the reminder stays quiet).
+  bool doneOn(DateTime now) => results.any(
+    (r) => r.doneAt.year == now.year && r.doneAt.month == now.month && r.doneAt.day == now.day,
+  );
 
   bool isEnrolled(String programId) => enrolled.containsKey(programId);
 
@@ -308,6 +359,7 @@ class TrainingProgress {
     bool? planCardHidden,
     Set<String>? saved,
     Map<String, (int, String?)>? ratings,
+    TrainingReminder? reminder,
   }) => TrainingProgress(
     enrolled: enrolled ?? this.enrolled,
     results: results ?? this.results,
@@ -316,6 +368,7 @@ class TrainingProgress {
     planCardHidden: planCardHidden ?? this.planCardHidden,
     saved: saved ?? this.saved,
     ratings: ratings ?? this.ratings,
+    reminder: reminder ?? this.reminder,
   );
 }
 

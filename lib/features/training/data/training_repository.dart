@@ -50,6 +50,9 @@ abstract interface class TrainingRepository {
 
   /// « Noter le programme » once it is finished.
   Future<TrainingProgress> rateProgram(String programId, int stars, String? text);
+
+  /// « Rappels de séance » (history page).
+  Future<TrainingProgress> saveReminder(TrainingReminder reminder);
 }
 
 /// The story in memory, for widget tests.
@@ -162,6 +165,10 @@ class FakeTrainingRepository implements TrainingRepository {
   Future<TrainingProgress> rateProgram(String programId, int stars, String? text) => _wait(
     _progress = _progress.copyWith(ratings: {..._progress.ratings, programId: (stars, text)}),
   );
+
+  @override
+  Future<TrainingProgress> saveReminder(TrainingReminder reminder) =>
+      _wait(_progress = _progress.copyWith(reminder: reminder));
 }
 
 final trainingRepositoryProvider = Provider<TrainingRepository>(

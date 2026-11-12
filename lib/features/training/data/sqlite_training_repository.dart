@@ -96,7 +96,25 @@ class SqliteTrainingRepository implements TrainingRepository {
         for (final r in ratings)
           r['programme']! as String: (r['note']! as int, r['texte'] as String?),
       },
+      reminder: TrainingReminder(
+        on: profile['rappel_actif'] == 1,
+        days: {
+          for (final d in (profile['rappel_jours']! as String).split(','))
+            if (d.isNotEmpty) int.parse(d),
+        },
+        minutes: profile['rappel_heure']! as int,
+      ),
     );
+  }
+
+  @override
+  Future<TrainingProgress> saveReminder(TrainingReminder reminder) async {
+    await (await _db).update('entrainement_profil', {
+      'rappel_actif': reminder.on ? 1 : 0,
+      'rappel_jours': (reminder.days.toList()..sort()).join(','),
+      'rappel_heure': reminder.minutes,
+    });
+    return progress();
   }
 
   @override

@@ -10,11 +10,14 @@ import 'package:matchup/features/player_onboarding/data/onboarding_state.dart';
 import 'package:matchup/features/player_onboarding/data/onboarding_store.dart';
 import 'package:matchup/features/common/data/file_services.dart';
 import 'package:matchup/features/common/data/pro_providers.dart' show fileSourceProvider;
+import 'package:matchup/features/notifications/data/push_service.dart';
+import 'package:matchup/features/training/controllers/training_reminders.dart';
 import 'package:matchup/features/training/controllers/video_analysis_controller.dart';
 import 'package:matchup/features/training/data/sqlite_training_repository.dart';
 import 'package:matchup/features/training/data/training_models.dart';
 import 'package:matchup/features/training/data/training_repository.dart';
 import 'package:matchup/features/training/data/training_story.dart';
+import 'package:matchup/features/training/screens/history_screen.dart';
 import 'package:matchup/features/training/training_routes.dart';
 import 'package:matchup/features/training/widgets/training_video_player.dart';
 import 'package:matchup/router.dart';
@@ -49,6 +52,25 @@ void main() {
       expect(progress.doneThisWeek(storyNow), 2);
       expect(progress.weekValidated(storyNow), isFalse);
       expect(progress.streak(storyNow), 6);
+    });
+
+    test('reminders: lun./mer./ven. 19h00 → today 19h00; 17h00 → lun. 19 oct.; off → none', () {
+      const r = TrainingReminder(on: true);
+      expect(r.next(storyNow), DateTime(2026, 10, 16, 19));
+      expect(r.copyWith(minutes: 17 * 60).next(storyNow), DateTime(2026, 10, 19, 17));
+      expect(r.copyWith(days: {7}).next(storyNow), DateTime(2026, 10, 18, 19));
+      expect(r.copyWith(on: false).next(storyNow), isNull);
+      expect(r.copyWith(days: {}).next(storyNow), isNull);
+      expect(progress.totalMinutes, greaterThan(0));
+      expect(progress.doneOn(DateTime(2026, 10, 14, 21)), isTrue);
+      expect(progress.doneOn(storyNow), isFalse);
+    });
+
+    test('the reminder push opens session 5', () {
+      final m = trainingReminderMessage(progress, [TrainingStory.bandeja]);
+      expect(m.title, 'C’est l’heure de ta séance');
+      expect(m.body, startsWith('Séance 5 · Bandeja croisée · '));
+      expect(m.route, TrainingRoutes.lesson('bandeja', 5));
     });
 
     test('session 5 « Bandeja croisée » is next, in week 2 of 4', () {
@@ -122,6 +144,13 @@ void main() {
       expect((await repo.progress()).ratings['bandeja'], (5, 'Top'));
     });
 
+    test('the reminders are off at first, then kept', () async {
+      expect((await repo.progress()).reminder, const TrainingReminder());
+      const r = TrainingReminder(on: true, days: {2, 6}, minutes: 7 * 60 + 30);
+      await repo.saveReminder(r);
+      expect((await repo.progress()).reminder, r);
+    });
+
     test('enrolling, finishing and rating a session are kept', () async {
       await repo.enroll('service-retour');
       await repo.completeLesson(
@@ -188,6 +217,9 @@ void main() {
   });
 
   group('Entraînement tab', () {
+    late RecordingPushService push;
+    setUp(() => push = RecordingPushService());
+
     Future<void> pumpApp(
       WidgetTester tester,
       String at, {
@@ -213,6 +245,8 @@ void main() {
           fileSourceProvider.overrideWithValue(
             _PickOne(clip ?? const PickedFile(name: 'bandeja-ven16.mp4', sizeBytes: 19293798)),
           ),
+          pushServiceProvider.overrideWithValue(push),
+          trainingRemindersLiveProvider.overrideWithValue(false),
           videoAnalysisTimingProvider.overrideWithValue(
             VideoAnalysisTiming(upload: const Duration(milliseconds: 500), step: step),
           ),
@@ -522,6 +556,40 @@ void main() {
       await tester.pumpAndSettle();
       expect(find.byType(TrainingVideoPlayer), findsNothing);
       expect(find.text('1 / 4'), findsOneWidget);
+      await settleFonts(tester);
+    });
+
+    testWidgets('ENT-01 → « Historique »: totals, sessions by week; reminders set and tested', (
+      tester,
+    ) async {
+      await pumpApp(tester, TrainingRoutes.root);
+      await tester.tap(find.bySemanticsLabel('Historique'));
+      await tester.pumpAndSettle();
+      expect(find.text('Historique'), findsOneWidget);
+      expect(find.text('Désactivés'), findsOneWidget);
+      expect(find.text('SEMAINE DU 12 OCT.'), findsOneWidget);
+      expect(find.text('SEMAINE DU 5 OCT.'), findsOneWidget);
+      expect(find.text('Séance 4 · ${TrainingStory.bandeja.lesson(4).title}'), findsOneWidget);
+
+      await tester.tap(find.text('Activer'));
+      await tester.pumpAndSettle();
+      expect(find.text('Me rappeler mes séances'), findsOneWidget);
+      await tester.tap(find.text('Tester'));
+      await tester.pump(const Duration(milliseconds: 300));
+      expect(push.shown.single.route, TrainingRoutes.lesson('bandeja', 5));
+      await tester.pumpAndSettle();
+      await tester.tap(find.widgetWithText(MuChip, 'dim.'));
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('Enregistrer'));
+      await tester.pump(const Duration(milliseconds: 300));
+      expect(find.text('Rappels enregistrés'), findsOneWidget);
+      await tester.pumpAndSettle();
+      expect(find.text('Prochain rappel : aujourd’hui à 19h00'), findsOneWidget);
+
+      // A session reopens its summary (ENT-05).
+      await tester.tap(find.text('Séance 4 · ${TrainingStory.bandeja.lesson(4).title}'));
+      await tester.pumpAndSettle();
+      expect(find.byType(HistoryScreen), findsNothing);
       await settleFonts(tester);
     });
 

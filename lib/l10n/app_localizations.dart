@@ -19828,6 +19828,204 @@ abstract class AppLocalizations {
   /// **'Ton avis'**
   String get entYourReview;
 
+  /// No description provided for @entHistory.
+  ///
+  /// In fr, this message translates to:
+  /// **'Historique'**
+  String get entHistory;
+
+  /// No description provided for @entSeeHistory.
+  ///
+  /// In fr, this message translates to:
+  /// **'Voir l’historique'**
+  String get entSeeHistory;
+
+  /// No description provided for @entHistoryWeek.
+  ///
+  /// In fr, this message translates to:
+  /// **'Semaine du {date}'**
+  String entHistoryWeek(Object date);
+
+  /// No description provided for @entHistoryReps.
+  ///
+  /// In fr, this message translates to:
+  /// **'{reps}/{target} réussis'**
+  String entHistoryReps(Object reps, Object target);
+
+  /// No description provided for @entMinutesTotal.
+  ///
+  /// In fr, this message translates to:
+  /// **'{minutes} min'**
+  String entMinutesTotal(Object minutes);
+
+  /// No description provided for @entHoursTotal.
+  ///
+  /// In fr, this message translates to:
+  /// **'{hours} h {minutes}'**
+  String entHoursTotal(Object hours, Object minutes);
+
+  /// No description provided for @entHistoryTotals.
+  ///
+  /// In fr, this message translates to:
+  /// **'{sessions, plural, =1{1 séance} other{{sessions} séances}}, {time} d’entraînement, {weeks} semaines de suite'**
+  String entHistoryTotals(int sessions, Object time, int weeks);
+
+  /// No description provided for @entSessionsDone.
+  ///
+  /// In fr, this message translates to:
+  /// **'{count, plural, =1{séance faite} other{séances faites}}'**
+  String entSessionsDone(int count);
+
+  /// No description provided for @entTrainedTime.
+  ///
+  /// In fr, this message translates to:
+  /// **'d’entraînement'**
+  String get entTrainedTime;
+
+  /// No description provided for @entNoHistory.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucune séance pour l’instant'**
+  String get entNoHistory;
+
+  /// No description provided for @entNoHistoryHelp.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tes séances terminées s’afficheront ici, semaine par semaine.'**
+  String get entNoHistoryHelp;
+
+  /// No description provided for @entReminders.
+  ///
+  /// In fr, this message translates to:
+  /// **'Rappels de séance'**
+  String get entReminders;
+
+  /// No description provided for @entRemindersOff.
+  ///
+  /// In fr, this message translates to:
+  /// **'Désactivés'**
+  String get entRemindersOff;
+
+  /// No description provided for @entNextReminder.
+  ///
+  /// In fr, this message translates to:
+  /// **'Prochain rappel : {when}'**
+  String entNextReminder(Object when);
+
+  /// No description provided for @entTodayAt.
+  ///
+  /// In fr, this message translates to:
+  /// **'aujourd’hui à {time}'**
+  String entTodayAt(Object time);
+
+  /// No description provided for @entTomorrowAt.
+  ///
+  /// In fr, this message translates to:
+  /// **'demain à {time}'**
+  String entTomorrowAt(Object time);
+
+  /// No description provided for @entDayAt.
+  ///
+  /// In fr, this message translates to:
+  /// **'{day} à {time}'**
+  String entDayAt(Object day, Object time);
+
+  /// No description provided for @entTurnOn.
+  ///
+  /// In fr, this message translates to:
+  /// **'Activer'**
+  String get entTurnOn;
+
+  /// No description provided for @entTestReminder.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tester'**
+  String get entTestReminder;
+
+  /// No description provided for @entReminderSent.
+  ///
+  /// In fr, this message translates to:
+  /// **'Rappel envoyé'**
+  String get entReminderSent;
+
+  /// No description provided for @entSave.
+  ///
+  /// In fr, this message translates to:
+  /// **'Enregistrer'**
+  String get entSave;
+
+  /// No description provided for @entRemindMe.
+  ///
+  /// In fr, this message translates to:
+  /// **'Me rappeler mes séances'**
+  String get entRemindMe;
+
+  /// No description provided for @entRemindMeHelp.
+  ///
+  /// In fr, this message translates to:
+  /// **'Pas de rappel un jour où ta séance est déjà faite.'**
+  String get entRemindMeHelp;
+
+  /// No description provided for @entReminderDays.
+  ///
+  /// In fr, this message translates to:
+  /// **'Les jours'**
+  String get entReminderDays;
+
+  /// No description provided for @entPickADay.
+  ///
+  /// In fr, this message translates to:
+  /// **'Choisis au moins un jour.'**
+  String get entPickADay;
+
+  /// No description provided for @entReminderTime.
+  ///
+  /// In fr, this message translates to:
+  /// **'Heure du rappel'**
+  String get entReminderTime;
+
+  /// No description provided for @entRemindersSaved.
+  ///
+  /// In fr, this message translates to:
+  /// **'Rappels enregistrés'**
+  String get entRemindersSaved;
+
+  /// No description provided for @entRemindersOffSaved.
+  ///
+  /// In fr, this message translates to:
+  /// **'Rappels désactivés'**
+  String get entRemindersOffSaved;
+
+  /// No description provided for @entReminderTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'C’est l’heure de ta séance'**
+  String get entReminderTitle;
+
+  /// No description provided for @entReminderBody.
+  ///
+  /// In fr, this message translates to:
+  /// **'Séance {index} · {title} · {minutes} min'**
+  String entReminderBody(int index, Object title, int minutes);
+
+  /// No description provided for @entReminderNoSession.
+  ///
+  /// In fr, this message translates to:
+  /// **'Choisis un programme et garde ta série.'**
+  String get entReminderNoSession;
+
+  /// No description provided for @entReminderStart.
+  ///
+  /// In fr, this message translates to:
+  /// **'Commencer'**
+  String get entReminderStart;
+
+  /// No description provided for @entReminderLater.
+  ///
+  /// In fr, this message translates to:
+  /// **'Plus tard'**
+  String get entReminderLater;
+
   /// No description provided for @entVideoError.
   ///
   /// In fr, this message translates to:

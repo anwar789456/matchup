@@ -638,7 +638,10 @@ const schemaVersions = <int, List<String>>{
       id INTEGER PRIMARY KEY CHECK (id = 1),
       serie_semaines INTEGER NOT NULL,
       objectif_semaine INTEGER NOT NULL,
-      plan_masque INTEGER NOT NULL DEFAULT 0
+      plan_masque INTEGER NOT NULL DEFAULT 0,
+      rappel_actif INTEGER NOT NULL DEFAULT 0,
+      rappel_jours TEXT NOT NULL DEFAULT '1,3,5',
+      rappel_heure INTEGER NOT NULL DEFAULT 1140
     )''',
     '''
     CREATE TABLE entrainement_plans (

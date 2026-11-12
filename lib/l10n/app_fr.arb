@@ -10091,6 +10091,137 @@
   },
   "entYourRating": "Ta note",
   "entYourReview": "Ton avis",
+  "entHistory": "Historique",
+  "entSeeHistory": "Voir l’historique",
+  "entHistoryWeek": "Semaine du {date}",
+  "@entHistoryWeek": {
+    "placeholders": {
+      "date": {
+        "type": "Object"
+      }
+    }
+  },
+  "entHistoryReps": "{reps}/{target} réussis",
+  "@entHistoryReps": {
+    "placeholders": {
+      "reps": {
+        "type": "Object"
+      },
+      "target": {
+        "type": "Object"
+      }
+    }
+  },
+  "entMinutesTotal": "{minutes} min",
+  "@entMinutesTotal": {
+    "placeholders": {
+      "minutes": {
+        "type": "Object"
+      }
+    }
+  },
+  "entHoursTotal": "{hours} h {minutes}",
+  "@entHoursTotal": {
+    "placeholders": {
+      "hours": {
+        "type": "Object"
+      },
+      "minutes": {
+        "type": "Object"
+      }
+    }
+  },
+  "entHistoryTotals": "{sessions, plural, =1{1 séance} other{{sessions} séances}}, {time} d’entraînement, {weeks} semaines de suite",
+  "@entHistoryTotals": {
+    "placeholders": {
+      "sessions": {
+        "type": "int"
+      },
+      "time": {
+        "type": "Object"
+      },
+      "weeks": {
+        "type": "int"
+      }
+    }
+  },
+  "entSessionsDone": "{count, plural, =1{séance faite} other{séances faites}}",
+  "@entSessionsDone": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "entTrainedTime": "d’entraînement",
+  "entNoHistory": "Aucune séance pour l’instant",
+  "entNoHistoryHelp": "Tes séances terminées s’afficheront ici, semaine par semaine.",
+  "entReminders": "Rappels de séance",
+  "entRemindersOff": "Désactivés",
+  "entNextReminder": "Prochain rappel : {when}",
+  "@entNextReminder": {
+    "placeholders": {
+      "when": {
+        "type": "Object"
+      }
+    }
+  },
+  "entTodayAt": "aujourd’hui à {time}",
+  "@entTodayAt": {
+    "placeholders": {
+      "time": {
+        "type": "Object"
+      }
+    }
+  },
+  "entTomorrowAt": "demain à {time}",
+  "@entTomorrowAt": {
+    "placeholders": {
+      "time": {
+        "type": "Object"
+      }
+    }
+  },
+  "entDayAt": "{day} à {time}",
+  "@entDayAt": {
+    "placeholders": {
+      "day": {
+        "type": "Object"
+      },
+      "time": {
+        "type": "Object"
+      }
+    }
+  },
+  "entTurnOn": "Activer",
+  "entTestReminder": "Tester",
+  "entReminderSent": "Rappel envoyé",
+  "entSave": "Enregistrer",
+  "entRemindMe": "Me rappeler mes séances",
+  "entRemindMeHelp": "Pas de rappel un jour où ta séance est déjà faite.",
+  "entReminderDays": "Les jours",
+  "entPickADay": "Choisis au moins un jour.",
+  "entReminderTime": "Heure du rappel",
+  "entRemindersSaved": "Rappels enregistrés",
+  "entRemindersOffSaved": "Rappels désactivés",
+  "entReminderTitle": "C’est l’heure de ta séance",
+  "entReminderBody": "Séance {index} · {title} · {minutes} min",
+  "@entReminderBody": {
+    "placeholders": {
+      "index": {
+        "type": "int"
+      },
+      "title": {
+        "type": "Object"
+      },
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "entReminderNoSession": "Choisis un programme et garde ta série.",
+  "entReminderStart": "Commencer",
+  "entReminderLater": "Plus tard",
   "entVideoError": "Impossible de lire la vidéo. Vérifie ta connexion et réessaie.",
   "entVideoLoading": "Chargement de la vidéo",
   "entVideoPlay": "Lire la vidéo",
