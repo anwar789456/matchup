@@ -611,4 +611,51 @@ const schemaVersions = <int, List<String>>{
     )''',
     'INSERT INTO sync_etat (id) VALUES (1)',
   ],
+
+  // ── v5 · Entraînement (ENT-01…09): programs joined, sessions done, streak, AI plans, videos ──
+  5: [
+    '''
+    CREATE TABLE entrainement_inscriptions (
+      programme TEXT PRIMARY KEY,
+      inscrit_le TEXT NOT NULL
+    )''',
+    '''
+    CREATE TABLE entrainement_seances (
+      programme TEXT NOT NULL,
+      seance INTEGER NOT NULL,
+      faite_le TEXT NOT NULL,
+      minutes INTEGER NOT NULL,
+      exercices_faits INTEGER NOT NULL,
+      exercices_total INTEGER NOT NULL,
+      reussis INTEGER,
+      objectif INTEGER,
+      ressenti TEXT CHECK (ressenti IN ('easy', 'right', 'hard')),
+      notes TEXT,
+      PRIMARY KEY (programme, seance)
+    )''',
+    '''
+    CREATE TABLE entrainement_profil (
+      id INTEGER PRIMARY KEY CHECK (id = 1),
+      serie_semaines INTEGER NOT NULL,
+      objectif_semaine INTEGER NOT NULL,
+      plan_masque INTEGER NOT NULL DEFAULT 0
+    )''',
+    '''
+    CREATE TABLE entrainement_plans (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      semaine TEXT NOT NULL,
+      objectifs TEXT NOT NULL,
+      contenu TEXT NOT NULL,
+      accepte_le TEXT NOT NULL
+    )''',
+    '''
+    CREATE TABLE entrainement_analyses (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      geste TEXT NOT NULL,
+      fichier TEXT NOT NULL,
+      taille INTEGER NOT NULL,
+      partage INTEGER NOT NULL DEFAULT 0,
+      cree_le TEXT NOT NULL
+    )''',
+  ],
 };

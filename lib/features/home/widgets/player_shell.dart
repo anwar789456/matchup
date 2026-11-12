@@ -14,8 +14,8 @@ class PlayerShell extends ConsumerWidget {
 
   final StatefulNavigationShell shell;
 
-  // The FAB sits on Accueil and Explorer (HOM-01, EXP-01); the other tabs are placeholders.
-  static const _fabTabs = {0, 1};
+  // The FAB sits on Accueil, Explorer and Entraînement (HOM-01, EXP-01, ENT-01/02).
+  static const _fabTabs = {0, 1, 3};
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

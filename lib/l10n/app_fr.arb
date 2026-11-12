@@ -8825,5 +8825,389 @@
   "duTotal": "du total",
   "partText2": "Part",
   "valeur": "Valeur",
-  "categorie": "Catégorie"
+  "categorie": "Catégorie",
+  "entCoachName": "Coach {name}",
+  "@entCoachName": {
+    "placeholders": {
+      "name": {
+        "type": "Object"
+      }
+    }
+  },
+  "entProgramMeta": "{weeks} sem. · {sessions} séances · {minutes} min/jour",
+  "@entProgramMeta": {
+    "placeholders": {
+      "weeks": {
+        "type": "int"
+      },
+      "sessions": {
+        "type": "int"
+      },
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "entProgramMetaShort": "{weeks} sem. · {sessions} séances · {minutes} min/j",
+  "@entProgramMetaShort": {
+    "placeholders": {
+      "weeks": {
+        "type": "int"
+      },
+      "sessions": {
+        "type": "int"
+      },
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "entSessionsOf": "{done} séances sur {total}",
+  "@entSessionsOf": {
+    "placeholders": {
+      "done": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "entSessionsUnit": "séances",
+  "entRatingSemantics": "Note {rating} sur 5, {count} avis",
+  "@entRatingSemantics": {
+    "placeholders": {
+      "rating": {
+        "type": "Object"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "entIncludedInPremium": "Inclus dans Premium",
+  "entPremium": "Premium",
+  "entVerifiedCoach": "Coach vérifié",
+  "entVerificationPending": "Vérification en cours",
+  "entNextLesson": "Prochaine : {lesson}",
+  "@entNextLesson": {
+    "placeholders": {
+      "lesson": {
+        "type": "Object"
+      }
+    }
+  },
+  "entRateProgram": "Noter le programme",
+  "entToday": "À faire aujourd’hui",
+  "entTodayShort": "Aujourd’hui",
+  "entTodayLower": "à faire aujourd’hui",
+  "entLessonLabel": "Séance {index} · {title}",
+  "@entLessonLabel": {
+    "placeholders": {
+      "index": {
+        "type": "int"
+      },
+      "title": {
+        "type": "Object"
+      }
+    }
+  },
+  "entLessonEyebrow": "Séance {index}",
+  "@entLessonEyebrow": {
+    "placeholders": {
+      "index": {
+        "type": "int"
+      }
+    }
+  },
+  "entDrills": "{count, plural, =1{1 exercice} other{{count} exercices}}",
+  "@entDrills": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "entMinutes": "{minutes} min",
+  "@entMinutes": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "entLessonMetaCompact": "{minutes} min · {drills}",
+  "@entLessonMetaCompact": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      },
+      "drills": {
+        "type": "Object"
+      }
+    }
+  },
+  "entStudents": "{count, plural, =0{0 élève} =1{1 élève} other{{count} élèves}}",
+  "@entStudents": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "entStudentsUnit": "{count, plural, =0{élève} =1{élève} other{élèves}}",
+  "@entStudentsUnit": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "entReviews": "{count} avis",
+  "@entReviews": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "entNoReviews": "Aucun avis",
+  "entLanguages": "Langues : {languages}",
+  "@entLanguages": {
+    "placeholders": {
+      "languages": {
+        "type": "Object"
+      }
+    }
+  },
+  "entFrom": "dès {price}",
+  "@entFrom": {
+    "placeholders": {
+      "price": {
+        "type": "Object"
+      }
+    }
+  },
+  "entPerSession": "par séance",
+  "entPendingInfo": "On vérifie ton diplôme sous 48 h. Tes programmes seront visibles dès que c’est fait.",
+  "entCompleteProfile": "Compléter mon profil",
+  "entSeePrograms": "Voir les programmes",
+  "entAllPrograms": "Tous les programmes",
+  "entAnalyseVideo": "Analyser une vidéo",
+  "entAnalyseVideoTitle": "Analyse vidéo",
+  "entAnalyseYourBandeja": "Analyse ta bandeja",
+  "entAnalyseYourBandejaText": "Filme 30 s de jeu : l’IA repère ce qui coince et te donne 3 conseils, avec le moment exact.",
+  "entCatalogue": "Catalogue",
+  "entClearFilters": "Effacer les filtres",
+  "entCoach": "Coach",
+  "entCoachPace": "{coach} · {count, plural, =1{1 séance par semaine} other{{count} séances par semaine}}",
+  "@entCoachPace": {
+    "placeholders": {
+      "coach": {
+        "type": "Object"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "entCoaches": "Les coachs",
+  "entCoachesCaption": "Diplômes vérifiés par MatchUp.",
+  "entCreateMyPlan": "Créer mon plan",
+  "entCreateWeekPlan": "Crée ton plan de la semaine",
+  "entDayDone": "séance faite",
+  "entDayRest": "repos",
+  "entDaySemantics": "{day} : {state}",
+  "@entDaySemantics": {
+    "placeholders": {
+      "day": {
+        "type": "Object"
+      },
+      "state": {
+        "type": "Object"
+      }
+    }
+  },
+  "entDayToDo": "séance {index} à faire",
+  "@entDayToDo": {
+    "placeholders": {
+      "index": {
+        "type": "int"
+      }
+    }
+  },
+  "entDoTodayToValidate": "Fais la séance {index} aujourd’hui pour valider ta {week}e semaine.",
+  "@entDoTodayToValidate": {
+    "placeholders": {
+      "index": {
+        "type": "int"
+      },
+      "week": {
+        "type": "int"
+      }
+    }
+  },
+  "entDuration": "Durée",
+  "entFilters": "Filtres",
+  "entForYou": "Pour toi",
+  "entInPremiumTrialUntil": "Inclus dans ton essai Premium · jusqu’au {date}",
+  "@entInPremiumTrialUntil": {
+    "placeholders": {
+      "date": {
+        "type": "Object"
+      }
+    }
+  },
+  "entLater": "Plus tard",
+  "entLevelRange": "niveau {range}",
+  "@entLevelRange": {
+    "placeholders": {
+      "range": {
+        "type": "Object"
+      }
+    }
+  },
+  "entLoadingPrograms": "Chargement des programmes",
+  "entLoadingTraining": "Chargement de ton entraînement",
+  "entMyLevel": "Mon niveau",
+  "entMyPrograms": "Mes programmes",
+  "entNextSession": "Prochaine séance",
+  "entNoMatchText": "Aucun programme ne correspond à ces filtres. Élargis ta recherche.",
+  "entNoMatchTitle": "Aucun programme",
+  "entNoProgramText": "Choisis un programme dans le catalogue : une séance courte par jour, à ton niveau.",
+  "entNoProgramTitle": "Pas encore de programme",
+  "entPlanPitch": "3 séances courtes autour de ton programme {program}, calées sur tes matchs et ton tournoi. Rien n’est ajouté à ton agenda sans ta validation.",
+  "@entPlanPitch": {
+    "placeholders": {
+      "program": {
+        "type": "Object"
+      }
+    }
+  },
+  "entPlanReason": "tu es dispo lun., mer. et sam. soir et tes 3 derniers avis de coéquipiers parlent de ton placement au filet.",
+  "entPrice": "Prix",
+  "entProgram": "Programme",
+  "entProgramByCoach": "{program} · {coach}",
+  "@entProgramByCoach": {
+    "placeholders": {
+      "program": {
+        "type": "Object"
+      },
+      "coach": {
+        "type": "Object"
+      }
+    }
+  },
+  "entProgramCount": "{count, plural, =0{Aucun programme} =1{1 programme} other{{count} programmes}}",
+  "@entProgramCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "entProgramLabel": "Programme {title}",
+  "@entProgramLabel": {
+    "placeholders": {
+      "title": {
+        "type": "Object"
+      }
+    }
+  },
+  "entPrograms": "Programmes",
+  "entQuickFilters": "Filtres rapides",
+  "entRecommendedBecause": "Recommandé car {reason}",
+  "@entRecommendedBecause": {
+    "placeholders": {
+      "reason": {
+        "type": "Object"
+      }
+    }
+  },
+  "entRelevance": "Pertinence",
+  "entSearchPlaceholder": "Geste, sport, coach…",
+  "entSearchProgram": "Chercher un programme",
+  "entSession": "Séance",
+  "entSessionsLeft": "{count, plural, =1{Encore 1 séance pour valider ta semaine.} other{Encore {count} séances pour valider ta semaine.}}",
+  "@entSessionsLeft": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "entSortBy": "Trier par : {sort}",
+  "@entSortBy": {
+    "placeholders": {
+      "sort": {
+        "type": "Object"
+      }
+    }
+  },
+  "entToProgress": "Pour progresser",
+  "entToProgressCaption": "Padel et foot, à ton niveau.",
+  "entTodayAbbr": "auj.",
+  "entTodayDay": "Aujourd’hui, {date}",
+  "@entTodayDay": {
+    "placeholders": {
+      "date": {
+        "type": "Object"
+      }
+    }
+  },
+  "entTrainingPlan": "Plan d’entraînement",
+  "entWeekDays": "Séances de la semaine",
+  "entWeekDone": "Semaine validée : ta série passe à {weeks} semaines de suite.",
+  "@entWeekDone": {
+    "placeholders": {
+      "weeks": {
+        "type": "int"
+      }
+    }
+  },
+  "entWeekOf": "Semaine {week} sur {weeks} · {percent}",
+  "@entWeekOf": {
+    "placeholders": {
+      "week": {
+        "type": "int"
+      },
+      "weeks": {
+        "type": "int"
+      },
+      "percent": {
+        "type": "Object"
+      }
+    }
+  },
+  "entWeekSemantics": "{streak} semaines de suite, {done} séances sur {goal} cette semaine",
+  "@entWeekSemantics": {
+    "placeholders": {
+      "streak": {
+        "type": "int"
+      },
+      "done": {
+        "type": "int"
+      },
+      "goal": {
+        "type": "int"
+      }
+    }
+  },
+  "entWeeksInARow": "{count, plural, =1{semaine de suite} other{semaines de suite}}",
+  "@entWeeksInARow": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "entYourTraining": "ton entraînement",
+  "entYourWeek": "Ta semaine · {range}",
+  "@entYourWeek": {
+    "placeholders": {
+      "range": {
+        "type": "Object"
+      }
+    }
+  }
 }

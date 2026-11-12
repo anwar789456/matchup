@@ -10635,4 +10635,397 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get categorie => 'Catégorie';
+
+  @override
+  String entCoachName(Object name) {
+    return 'Coach $name';
+  }
+
+  @override
+  String entProgramMeta(int weeks, int sessions, int minutes) {
+    return '$weeks sem. · $sessions séances · $minutes min/jour';
+  }
+
+  @override
+  String entProgramMetaShort(int weeks, int sessions, int minutes) {
+    return '$weeks sem. · $sessions séances · $minutes min/j';
+  }
+
+  @override
+  String entSessionsOf(int done, int total) {
+    return '$done séances sur $total';
+  }
+
+  @override
+  String get entSessionsUnit => 'séances';
+
+  @override
+  String entRatingSemantics(Object rating, int count) {
+    return 'Note $rating sur 5, $count avis';
+  }
+
+  @override
+  String get entIncludedInPremium => 'Inclus dans Premium';
+
+  @override
+  String get entPremium => 'Premium';
+
+  @override
+  String get entVerifiedCoach => 'Coach vérifié';
+
+  @override
+  String get entVerificationPending => 'Vérification en cours';
+
+  @override
+  String entNextLesson(Object lesson) {
+    return 'Prochaine : $lesson';
+  }
+
+  @override
+  String get entRateProgram => 'Noter le programme';
+
+  @override
+  String get entToday => 'À faire aujourd’hui';
+
+  @override
+  String get entTodayShort => 'Aujourd’hui';
+
+  @override
+  String get entTodayLower => 'à faire aujourd’hui';
+
+  @override
+  String entLessonLabel(int index, Object title) {
+    return 'Séance $index · $title';
+  }
+
+  @override
+  String entLessonEyebrow(int index) {
+    return 'Séance $index';
+  }
+
+  @override
+  String entDrills(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count exercices',
+      one: '1 exercice',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String entMinutes(int minutes) {
+    return '$minutes min';
+  }
+
+  @override
+  String entLessonMetaCompact(int minutes, Object drills) {
+    return '$minutes min · $drills';
+  }
+
+  @override
+  String entStudents(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count élèves',
+      one: '1 élève',
+      zero: '0 élève',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String entStudentsUnit(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'élèves',
+      one: 'élève',
+      zero: 'élève',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String entReviews(int count) {
+    return '$count avis';
+  }
+
+  @override
+  String get entNoReviews => 'Aucun avis';
+
+  @override
+  String entLanguages(Object languages) {
+    return 'Langues : $languages';
+  }
+
+  @override
+  String entFrom(Object price) {
+    return 'dès $price';
+  }
+
+  @override
+  String get entPerSession => 'par séance';
+
+  @override
+  String get entPendingInfo =>
+      'On vérifie ton diplôme sous 48 h. Tes programmes seront visibles dès que c’est fait.';
+
+  @override
+  String get entCompleteProfile => 'Compléter mon profil';
+
+  @override
+  String get entSeePrograms => 'Voir les programmes';
+
+  @override
+  String get entAllPrograms => 'Tous les programmes';
+
+  @override
+  String get entAnalyseVideo => 'Analyser une vidéo';
+
+  @override
+  String get entAnalyseVideoTitle => 'Analyse vidéo';
+
+  @override
+  String get entAnalyseYourBandeja => 'Analyse ta bandeja';
+
+  @override
+  String get entAnalyseYourBandejaText =>
+      'Filme 30 s de jeu : l’IA repère ce qui coince et te donne 3 conseils, avec le moment exact.';
+
+  @override
+  String get entCatalogue => 'Catalogue';
+
+  @override
+  String get entClearFilters => 'Effacer les filtres';
+
+  @override
+  String get entCoach => 'Coach';
+
+  @override
+  String entCoachPace(Object coach, int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count séances par semaine',
+      one: '1 séance par semaine',
+    );
+    return '$coach · $_temp0';
+  }
+
+  @override
+  String get entCoaches => 'Les coachs';
+
+  @override
+  String get entCoachesCaption => 'Diplômes vérifiés par MatchUp.';
+
+  @override
+  String get entCreateMyPlan => 'Créer mon plan';
+
+  @override
+  String get entCreateWeekPlan => 'Crée ton plan de la semaine';
+
+  @override
+  String get entDayDone => 'séance faite';
+
+  @override
+  String get entDayRest => 'repos';
+
+  @override
+  String entDaySemantics(Object day, Object state) {
+    return '$day : $state';
+  }
+
+  @override
+  String entDayToDo(int index) {
+    return 'séance $index à faire';
+  }
+
+  @override
+  String entDoTodayToValidate(int index, int week) {
+    return 'Fais la séance $index aujourd’hui pour valider ta ${week}e semaine.';
+  }
+
+  @override
+  String get entDuration => 'Durée';
+
+  @override
+  String get entFilters => 'Filtres';
+
+  @override
+  String get entForYou => 'Pour toi';
+
+  @override
+  String entInPremiumTrialUntil(Object date) {
+    return 'Inclus dans ton essai Premium · jusqu’au $date';
+  }
+
+  @override
+  String get entLater => 'Plus tard';
+
+  @override
+  String entLevelRange(Object range) {
+    return 'niveau $range';
+  }
+
+  @override
+  String get entLoadingPrograms => 'Chargement des programmes';
+
+  @override
+  String get entLoadingTraining => 'Chargement de ton entraînement';
+
+  @override
+  String get entMyLevel => 'Mon niveau';
+
+  @override
+  String get entMyPrograms => 'Mes programmes';
+
+  @override
+  String get entNextSession => 'Prochaine séance';
+
+  @override
+  String get entNoMatchText =>
+      'Aucun programme ne correspond à ces filtres. Élargis ta recherche.';
+
+  @override
+  String get entNoMatchTitle => 'Aucun programme';
+
+  @override
+  String get entNoProgramText =>
+      'Choisis un programme dans le catalogue : une séance courte par jour, à ton niveau.';
+
+  @override
+  String get entNoProgramTitle => 'Pas encore de programme';
+
+  @override
+  String entPlanPitch(Object program) {
+    return '3 séances courtes autour de ton programme $program, calées sur tes matchs et ton tournoi. Rien n’est ajouté à ton agenda sans ta validation.';
+  }
+
+  @override
+  String get entPlanReason =>
+      'tu es dispo lun., mer. et sam. soir et tes 3 derniers avis de coéquipiers parlent de ton placement au filet.';
+
+  @override
+  String get entPrice => 'Prix';
+
+  @override
+  String get entProgram => 'Programme';
+
+  @override
+  String entProgramByCoach(Object program, Object coach) {
+    return '$program · $coach';
+  }
+
+  @override
+  String entProgramCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count programmes',
+      one: '1 programme',
+      zero: 'Aucun programme',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String entProgramLabel(Object title) {
+    return 'Programme $title';
+  }
+
+  @override
+  String get entPrograms => 'Programmes';
+
+  @override
+  String get entQuickFilters => 'Filtres rapides';
+
+  @override
+  String entRecommendedBecause(Object reason) {
+    return 'Recommandé car $reason';
+  }
+
+  @override
+  String get entRelevance => 'Pertinence';
+
+  @override
+  String get entSearchPlaceholder => 'Geste, sport, coach…';
+
+  @override
+  String get entSearchProgram => 'Chercher un programme';
+
+  @override
+  String get entSession => 'Séance';
+
+  @override
+  String entSessionsLeft(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Encore $count séances pour valider ta semaine.',
+      one: 'Encore 1 séance pour valider ta semaine.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String entSortBy(Object sort) {
+    return 'Trier par : $sort';
+  }
+
+  @override
+  String get entToProgress => 'Pour progresser';
+
+  @override
+  String get entToProgressCaption => 'Padel et foot, à ton niveau.';
+
+  @override
+  String get entTodayAbbr => 'auj.';
+
+  @override
+  String entTodayDay(Object date) {
+    return 'Aujourd’hui, $date';
+  }
+
+  @override
+  String get entTrainingPlan => 'Plan d’entraînement';
+
+  @override
+  String get entWeekDays => 'Séances de la semaine';
+
+  @override
+  String entWeekDone(int weeks) {
+    return 'Semaine validée : ta série passe à $weeks semaines de suite.';
+  }
+
+  @override
+  String entWeekOf(int week, int weeks, Object percent) {
+    return 'Semaine $week sur $weeks · $percent';
+  }
+
+  @override
+  String entWeekSemantics(int streak, int done, int goal) {
+    return '$streak semaines de suite, $done séances sur $goal cette semaine';
+  }
+
+  @override
+  String entWeeksInARow(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'semaines de suite',
+      one: 'semaine de suite',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get entYourTraining => 'ton entraînement';
+
+  @override
+  String entYourWeek(Object range) {
+    return 'Ta semaine · $range';
+  }
 }
