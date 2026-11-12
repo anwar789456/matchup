@@ -194,6 +194,11 @@ Deno.serve(async (req) => {
   } catch (e) {
     return json({ error: `Envoi impossible : ${(e as Error).message}` }, 502);
   } finally {
-    await client.close().catch(() => {});
+    // close() is not async in denomailer; never let it hide the answer.
+    try {
+      await client.close();
+    } catch {
+      // already closed
+    }
   }
 });
