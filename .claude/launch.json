@@ -8,6 +8,12 @@
       "port": 8080
     },
     {
+      "name": "matchup-web-supabase",
+      "runtimeExecutable": "flutter",
+      "runtimeArgs": ["run", "-d", "web-server", "--web-port", "8080", "--web-hostname", "localhost", "--dart-define-from-file=supabase.json"],
+      "port": 8080
+    },
+    {
       "name": "matchup-web-static",
       "runtimeExecutable": "python",
       "runtimeArgs": ["-m", "http.server", "8081", "--bind", "localhost", "--directory", "build/web"],

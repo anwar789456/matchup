@@ -31,6 +31,26 @@ const syncTables = <SyncTable>[
   SyncTable('recus'),
   SyncTable('recu_lignes'),
 
-  // ── Utilisateur (Alaa) · Réservation (Mahmoud) · Tournois (Ayoub) · Entraînement (Aziz) ·
-  //    Forum (Hani): add your tables here.
+  // ── Réservation (Mahmoud) ────────────────────────────────────────────────────────────────
+  // The player's side: booked courts, who plays, cancellations, invitations, ratings, scores.
+  SyncTable('reservations'),
+  SyncTable('reservation_joueurs'),
+  SyncTable('annulations'),
+  SyncTable('invitations'),
+  SyncTable('matchs_notes'),
+  SyncTable('matchs_scores'),
+  // The venue owner's side: courts, bookings and arrivals, closed slots, prices and promos.
+  // (`terrains` from the owner onboarding waits for `utilisateurs`: it points at an account id.)
+  SyncTable('proprio_terrains'),
+  SyncTable('proprio_reservations'),
+  SyncTable('proprio_presences'),
+  SyncTable('proprio_blocages'),
+  SyncTable('tarifs'),
+  SyncTable('tarif_groupes'),
+  SyncTable('tarif_groupe_terrains'),
+  SyncTable('dates_speciales'),
+  SyncTable('promos'),
+
+  // ── Utilisateur (Alaa) · Tournois (Ayoub) · Entraînement (Aziz) · Forum (Hani): add your
+  //    tables here.
 ];
