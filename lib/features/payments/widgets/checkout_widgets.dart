@@ -383,6 +383,7 @@ class CardInputZone extends StatelessWidget {
     required this.country,
     required this.onCountry,
     this.errors = const {},
+    this.stripeField,
   });
 
   final TextEditingController name;
@@ -392,8 +393,11 @@ class CardInputZone extends StatelessWidget {
   final String country;
   final ValueChanged<String?> onCountry;
 
-  /// Field key → message (« number », « expiry », « cvc »).
+  /// Field key → message (« number », « expiry », « cvc », « stripe »).
   final Map<String, String> errors;
+
+  /// Stripe's card field (test mode): replaces number, expiry, CVC and country when given.
+  final Widget? stripeField;
 
   static final countries = [l10n.tunisie, l10n.france, l10n.algerie, l10n.maroc, l10n.italie];
 
@@ -471,66 +475,74 @@ class CardInputZone extends StatelessWidget {
                     ],
                   ),
                   const SizedBox(height: MuSpace.s4),
-                  MuTextField(
-                    label: l10n.numeroDeCarte,
-                    controller: number,
-                    leadingIcon: PhosphorIcons.creditCard(),
-                    keyboardType: TextInputType.number,
-                    textDirection: TextDirection.ltr,
-                    inputFormatters: [
-                      FilteringTextInputFormatter.digitsOnly,
-                      LengthLimitingTextInputFormatter(16),
-                      const _GroupFormatter(4),
+                  if (stripeField != null) ...[
+                    stripeField!,
+                    if (errors['stripe'] != null) ...[
+                      const SizedBox(height: MuSpace.s2),
+                      Text(errors['stripe']!, style: MuType.caption.copyWith(color: c.errorText)),
                     ],
-                    error: errors['number'],
-                    autofillHints: const [AutofillHints.creditCardNumber],
-                  ),
-                  const SizedBox(height: MuSpace.s4),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Expanded(
-                        child: MuTextField(
-                          label: l10n.expiration,
-                          controller: expiry,
-                          placeholder: l10n.mmAa,
-                          keyboardType: TextInputType.number,
-                          textDirection: TextDirection.ltr,
-                          inputFormatters: [
-                            FilteringTextInputFormatter.digitsOnly,
-                            LengthLimitingTextInputFormatter(4),
-                            const _ExpiryFormatter(),
-                          ],
-                          error: errors['expiry'],
-                          autofillHints: const [AutofillHints.creditCardExpirationDate],
+                  ] else ...[
+                    MuTextField(
+                      label: l10n.numeroDeCarte,
+                      controller: number,
+                      leadingIcon: PhosphorIcons.creditCard(),
+                      keyboardType: TextInputType.number,
+                      textDirection: TextDirection.ltr,
+                      inputFormatters: [
+                        FilteringTextInputFormatter.digitsOnly,
+                        LengthLimitingTextInputFormatter(16),
+                        const _GroupFormatter(4),
+                      ],
+                      error: errors['number'],
+                      autofillHints: const [AutofillHints.creditCardNumber],
+                    ),
+                    const SizedBox(height: MuSpace.s4),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Expanded(
+                          child: MuTextField(
+                            label: l10n.expiration,
+                            controller: expiry,
+                            placeholder: l10n.mmAa,
+                            keyboardType: TextInputType.number,
+                            textDirection: TextDirection.ltr,
+                            inputFormatters: [
+                              FilteringTextInputFormatter.digitsOnly,
+                              LengthLimitingTextInputFormatter(4),
+                              const _ExpiryFormatter(),
+                            ],
+                            error: errors['expiry'],
+                            autofillHints: const [AutofillHints.creditCardExpirationDate],
+                          ),
                         ),
-                      ),
-                      const SizedBox(width: MuSpace.s3),
-                      Expanded(
-                        child: MuTextField(
-                          label: l10n.cvc,
-                          controller: cvc,
-                          helper: l10n.chiffresAuDos,
-                          keyboardType: TextInputType.number,
-                          obscureText: true,
-                          textDirection: TextDirection.ltr,
-                          inputFormatters: [
-                            FilteringTextInputFormatter.digitsOnly,
-                            LengthLimitingTextInputFormatter(4),
-                          ],
-                          error: errors['cvc'],
-                          autofillHints: const [AutofillHints.creditCardSecurityCode],
+                        const SizedBox(width: MuSpace.s3),
+                        Expanded(
+                          child: MuTextField(
+                            label: l10n.cvc,
+                            controller: cvc,
+                            helper: l10n.chiffresAuDos,
+                            keyboardType: TextInputType.number,
+                            obscureText: true,
+                            textDirection: TextDirection.ltr,
+                            inputFormatters: [
+                              FilteringTextInputFormatter.digitsOnly,
+                              LengthLimitingTextInputFormatter(4),
+                            ],
+                            error: errors['cvc'],
+                            autofillHints: const [AutofillHints.creditCardSecurityCode],
+                          ),
                         ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: MuSpace.s4),
-                  MuSelect<String>(
-                    label: l10n.pays,
-                    value: country,
-                    options: [for (final k in countries) MuSelectOption(value: k, label: k)],
-                    onChanged: onCountry,
-                  ),
+                      ],
+                    ),
+                    const SizedBox(height: MuSpace.s4),
+                    MuSelect<String>(
+                      label: l10n.pays,
+                      value: country,
+                      options: [for (final k in countries) MuSelectOption(value: k, label: k)],
+                      onChanged: onCountry,
+                    ),
+                  ],
                 ],
               ),
             ),

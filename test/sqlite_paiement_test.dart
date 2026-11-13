@@ -91,7 +91,7 @@ void main() {
 
       final forBooking = await repo.payments(reference: 'MU-48213');
       expect(forBooking.single.number, ok.receipt!.number);
-      expect(forBooking.single.cardId, 'visa-4242');
+      expect(forBooking.single.cardId, isNull, reason: 'no saved card: the bank answered for a typed one');
       expect(await repo.payments(), hasLength(2));
     });
 
