@@ -61,6 +61,12 @@ abstract interface class MessagesRepository {
   /// A voice message.
   Future<ChatMessage> sendVoice(String conversationId, String src, Duration duration);
 
+  /// « Faire une offre » on a listing, or a counter-offer: [price] in dinars.
+  Future<ChatMessage> sendOffer(String conversationId, String postId, double price);
+
+  /// The other side's answer to an offer (once).
+  Future<void> answerOffer(String messageId, {required bool accept});
+
   /// « Envoyer à un ami » on a discussion.
   Future<ChatMessage> sharePost(String conversationId, String postId);
 

@@ -35,6 +35,9 @@ import 'seed.dart';
 /// sync has a « participants only » scope.
 ///
 /// v7: « Cherche joueurs » (`forum_recherches`, `forum_participations`), synced.
+///
+/// v8: saved searches (`forum_alertes`) and the forum events already notified
+/// (`forum_evenements_vus`).
 class AppDatabase {
   /// [factory] and [path] default to [defaultFactory] / [defaultPath].
   AppDatabase({DatabaseFactory? factory, String? path})

@@ -90,8 +90,21 @@ abstract interface class ForumRepository {
   /// « Annuler » on the « Tu as signalé ce message » strip.
   Future<void> undoReport(ForumTarget target, String id);
 
+  /// The reader's saved searches, with how many posts match each now.
+  Future<List<ForumAlert>> alerts();
+
+  /// « Créer une alerte »: at least one criterion.
+  Future<ForumAlert> saveAlert(AlertKind kind, {String words = '', MuSport? sport, double? maxPrice, String? size});
+
+  Future<void> setAlertActive(String id, {required bool active});
+  Future<void> deleteAlert(String id);
+
   /// « Cherche joueurs » « Je viens »: the reader plays, or waits once it is full.
   Future<SearchStatus> join(String postId);
+
+  /// While there is no server: a story friend whose level fits joins the reader's new search
+  /// (never a real member). False when nobody fits.
+  Future<bool> demoJoin(String postId);
 
   /// « Je ne viens plus »: the first one waiting moves up.
   Future<void> leave(String postId);

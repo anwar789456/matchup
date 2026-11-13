@@ -35,6 +35,10 @@ enum ChatKind {
   /// A voice message.
   voice('vocal'),
 
+  /// « Faire une offre » on an Équipement listing: a price the other side accepts, refuses or
+  /// answers with a counter-offer.
+  offer('offre'),
+
   /// « Yassine B. a créé le groupe », « Omar D. a quitté le groupe »…
   system('systeme');
 
@@ -183,6 +187,46 @@ class ChatSharedPost {
   final String? image;
 }
 
+/// Where an offer stands.
+enum OfferStatus {
+  pending,
+  accepted,
+  declined,
+
+  /// A newer offer on the same item followed in the conversation.
+  replaced,
+}
+
+/// « Faire une offre »: the item, its asking price, the offered price and the answer.
+@immutable
+class ChatOffer {
+  const ChatOffer({
+    required this.postId,
+    required this.title,
+    required this.price,
+    required this.status,
+    this.asking,
+    this.image,
+    this.sold = false,
+    this.sellerId,
+  });
+
+  final String postId;
+  final String title;
+
+  /// Offered, in dinars.
+  final double price;
+
+  /// The listing's price.
+  final double? asking;
+  final String? image;
+  final bool sold;
+  final OfferStatus status;
+
+  /// The listing's author: the one who accepts an offer marks the item sold.
+  final String? sellerId;
+}
+
 /// A photo, a video or a voice message in a chat.
 @immutable
 class ChatMedia {
@@ -211,6 +255,7 @@ class ChatMessage {
     this.match,
     this.shared,
     this.media,
+    this.offer,
     this.event,
     this.eventName,
     this.editedAt,
@@ -231,6 +276,9 @@ class ChatMessage {
 
   /// [ChatKind.image], [ChatKind.video], [ChatKind.voice].
   final ChatMedia? media;
+
+  /// [ChatKind.offer].
+  final ChatOffer? offer;
 
   /// [ChatKind.system]: what happened, and the group's new name for [ChatEvent.renamed].
   final ChatEvent? event;

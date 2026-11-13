@@ -16,14 +16,17 @@ import '../../../l10n/l10n.dart';
 /// the filter chips, the unread count with « Tout marquer comme lu », then Aujourd’hui / Cette
 /// semaine / Plus ancien. Rows swipe to « Lu » / « Supprimer ».
 class NotificationCenterScreen extends ConsumerStatefulWidget {
-  const NotificationCenterScreen({super.key});
+  const NotificationCenterScreen({super.key, this.initialFilter});
+
+  /// The category chip selected on opening (the Communauté opens on its own).
+  final NotificationCategory? initialFilter;
 
   @override
   ConsumerState<NotificationCenterScreen> createState() => _NotificationCenterScreenState();
 }
 
 class _NotificationCenterScreenState extends ConsumerState<NotificationCenterScreen> {
-  NotificationCategory? _filter;
+  late NotificationCategory? _filter = widget.initialFilter;
 
   static const _filters = [
     NotificationCategory.matches,

@@ -274,6 +274,65 @@ class ForumPost {
   );
 }
 
+/// What a saved search watches.
+enum AlertKind {
+  /// Équipement listings (words, sport, max price, size).
+  listing('annonce'),
+
+  /// « Cherche joueurs » games (words, sport) the reader's level fits.
+  game('partie');
+
+  const AlertKind(this.code);
+  final String code;
+
+  static AlertKind fromCode(String? code) => values.firstWhere((k) => k.code == code, orElse: () => listing);
+}
+
+/// A saved search: the reader is told when a new post matches (« Alerte prix »).
+@immutable
+class ForumAlert {
+  const ForumAlert({
+    required this.id,
+    required this.kind,
+    required this.createdAt,
+    this.words = '',
+    this.sport,
+    this.maxPrice,
+    this.size,
+    this.active = true,
+    this.matches = 0,
+  });
+
+  final String id;
+  final AlertKind kind;
+
+  /// « crampons », « Arena Five »… (empty: anything).
+  final String words;
+  final MuSport? sport;
+
+  /// Listings at most this price.
+  final double? maxPrice;
+
+  /// Listings of this size (« 42 »).
+  final String? size;
+  final bool active;
+  final DateTime createdAt;
+
+  /// Posts matching it now.
+  final int matches;
+
+  /// The feed showing what it matches.
+  ForumQuery get query => ForumQuery(
+    search: words.trim().isEmpty ? null : words.trim(),
+    sport: sport,
+    category: kind == AlertKind.listing ? ForumCategory.equipment : null,
+    listingsOnly: kind == AlertKind.listing,
+    lookingOnly: kind == AlertKind.game,
+    maxPrice: maxPrice,
+    size: size,
+  );
+}
+
 /// Where the reader stands in a « Cherche joueurs ».
 enum SearchStatus {
   /// Not in it.
@@ -531,6 +590,9 @@ class ForumQuery {
     this.authorId,
     this.savedOnly = false,
     this.lookingOnly = false,
+    this.listingsOnly = false,
+    this.maxPrice,
+    this.size,
   });
 
   final ForumCategory? category;
@@ -543,6 +605,11 @@ class ForumQuery {
 
   /// Only « Cherche joueurs » that can still be joined, the soonest first.
   final bool lookingOnly;
+
+  /// Only listings for sale (not sold), at most [maxPrice], of [size].
+  final bool listingsOnly;
+  final double? maxPrice;
+  final String? size;
 
   ForumQuery copyWith({
     ForumCategory? Function()? category,
@@ -560,6 +627,9 @@ class ForumQuery {
     authorId: authorId,
     savedOnly: savedOnly ?? this.savedOnly,
     lookingOnly: lookingOnly ?? this.lookingOnly,
+    listingsOnly: listingsOnly,
+    maxPrice: maxPrice,
+    size: size,
   );
 
   @override
@@ -572,10 +642,13 @@ class ForumQuery {
       other.tag == tag &&
       other.authorId == authorId &&
       other.savedOnly == savedOnly &&
-      other.lookingOnly == lookingOnly;
+      other.lookingOnly == lookingOnly &&
+      other.listingsOnly == listingsOnly &&
+      other.maxPrice == maxPrice &&
+      other.size == size;
 
   @override
-  int get hashCode => Object.hash(category, sport, sort, search, tag, authorId, savedOnly, lookingOnly);
+  int get hashCode => Object.hash(category, sport, sort, search, tag, authorId, savedOnly, lookingOnly, listingsOnly, maxPrice, size);
 }
 
 @immutable

@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 import '../../../l10n/l10n.dart';
 import '../../../router.dart';
@@ -11,6 +12,7 @@ import '../../../ui/ui.dart';
 import '../controllers/forum_providers.dart';
 import '../data/forum_repository.dart';
 import '../widgets/forum_feed_list.dart';
+import 'alerts_screen.dart' show createAlert;
 
 /// « Rechercher dans la communauté » (FRM-01 magnifier): titles, texts and tags, most recent
 /// first, as the member types.
@@ -48,6 +50,9 @@ class _ForumSearchScreenState extends ConsumerState<ForumSearchScreen> {
             MuTopAppBar.compact(
               title: l10n.forumRechercherDansLaCommunaute,
               onBack: () => context.canPop() ? context.pop() : context.go(Routes.community),
+              actions: [
+                MuBarAction(icon: PhosphorIcons.bellRinging(), label: l10n.alMesAlertes, onPressed: () => context.push(Routes.forumAlerts)),
+              ],
             ),
             Padding(
               padding: const EdgeInsets.fromLTRB(MuSpace.s4, MuSpace.s2, MuSpace.s4, MuSpace.s3),
@@ -67,6 +72,20 @@ class _ForumSearchScreenState extends ConsumerState<ForumSearchScreen> {
                     )
                   : ForumFeedList(
                       query: ForumQuery(search: _q, sort: ForumSort.recent),
+                      header: [
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(MuSpace.s4, 0, MuSpace.s4, MuSpace.s2),
+                          child: Align(
+                            alignment: AlignmentDirectional.centerStart,
+                            child: MuButton.tertiary(
+                              label: l10n.alCreerPourX(_q),
+                              leading: PhosphorIcons.bellRinging(),
+                              size: MuButtonSize.s,
+                              onPressed: () => createAlert(context, ref, words: _q),
+                            ),
+                          ),
+                        ),
+                      ],
                       empty: MuEmptyState(title: l10n.forumAucunResultat(_q), description: l10n.forumAucunResultatDetail),
                     ),
             ),

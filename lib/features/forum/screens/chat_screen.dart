@@ -11,6 +11,7 @@ import '../../../l10n/l10n.dart';
 import '../../../router.dart';
 import '../../../theme/theme.dart';
 import '../../../ui/ui.dart';
+import '../controllers/forum_providers.dart';
 import '../controllers/messages_providers.dart';
 import '../data/forum_repository.dart';
 import '../data/messages_repository.dart';
@@ -451,6 +452,7 @@ class _MessageRow extends StatelessWidget {
       ChatKind.share => _SharedCard(message: m),
       ChatKind.image || ChatKind.video => _MediaBubble(message: m),
       ChatKind.voice => _VoiceBubble(message: m),
+      ChatKind.offer => _OfferCard(message: m, conversationId: m.conversationId),
       _ => _Bubble(message: m),
     };
 
@@ -1065,6 +1067,163 @@ class _VoiceBubble extends StatelessWidget {
         src: m.media!.src,
         duration: m.media!.duration ?? Duration.zero,
         foreground: m.mine ? c.onPrimary : c.text,
+      ),
+    );
+  }
+}
+
+/// « Offre · 150 DT » on an item: its photo and title, the asking price and how far under,
+/// the status; for the other side « Accepter », « Refuser », « Contre-offre ». The seller who
+/// accepts can mark the item sold.
+class _OfferCard extends ConsumerWidget {
+  const _OfferCard({required this.message, required this.conversationId});
+
+  final ChatMessage message;
+  final String conversationId;
+
+  static const double _thumb = 56;
+
+  Future<void> _run(BuildContext context, Future<void> Function() f) async {
+    try {
+      await f();
+    } catch (e) {
+      if (context.mounted) showForumError(context, e);
+    }
+  }
+
+  Future<void> _accept(BuildContext context, WidgetRef ref, ChatOffer o) async {
+    final ctrl = ref.read(chatProvider(conversationId).notifier);
+    await _run(context, () => ctrl.answerOffer(message.id, accept: true));
+    final me = ref.read(messagesRepositoryProvider).meId;
+    if (!context.mounted || o.sellerId != me || o.sold) return;
+    final sold = await MuDialog.show<bool>(
+      context,
+      tone: MuDialogTone.success,
+      title: l10n.ofMarquerVenduQ,
+      description: l10n.ofMarquerVenduDetail(formatDT(o.price)),
+      actions: [
+        Builder(
+          builder: (context) => MuButton.secondary(
+            label: l10n.ofPasEncore,
+            fullWidth: true,
+            size: MuButtonSize.l,
+            onPressed: () => Navigator.of(context, rootNavigator: true).pop(false),
+          ),
+        ),
+        Builder(
+          builder: (context) => MuButton.primary(
+            label: l10n.mktMarquerCommeVendu,
+            fullWidth: true,
+            size: MuButtonSize.l,
+            onPressed: () => Navigator.of(context, rootNavigator: true).pop(true),
+          ),
+        ),
+      ],
+    );
+    if (sold != true || !context.mounted) return;
+    await _run(context, () async {
+      await ref.read(forumRepositoryProvider).markSold(o.postId, sold: true);
+      ref.read(forumChangesProvider.notifier).bump();
+      ref.read(messagesChangesProvider.notifier).bump();
+    });
+  }
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final c = context.mu;
+    final m = message;
+    final o = m.offer!;
+    final ctrl = ref.read(chatProvider(conversationId).notifier);
+    final under = o.asking == null || o.price >= o.asking! ? null : ((1 - o.price / o.asking!) * 100).round();
+    final (status, label) = switch (o.status) {
+      OfferStatus.accepted => (MuStatus.confirmed, l10n.ofAcceptee),
+      OfferStatus.declined => (MuStatus.cancelled, l10n.ofRefusee),
+      OfferStatus.replaced => (MuStatus.neutral, l10n.ofRemplacee),
+      OfferStatus.pending => (MuStatus.pending, m.mine ? l10n.ofEnAttenteReponse : l10n.ofATaReponse),
+    };
+    return _CardFrame(
+      icon: PhosphorIcons.tag(),
+      overline: m.mine ? l10n.ofTonOffre : l10n.ofOffreDe(m.author.name),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          InkWell(
+            borderRadius: MuRadius.mdAll,
+            onTap: () => context.push(Routes.forumPost(o.postId)),
+            child: Row(
+              children: [
+                ClipRRect(
+                  borderRadius: MuRadius.mdAll,
+                  child: SizedBox(
+                    width: _thumb,
+                    height: _thumb,
+                    child: o.image != null
+                        ? ForumImage(o.image!)
+                        : ColoredBox(color: c.surfaceMuted, child: Icon(PhosphorIcons.tShirt(), color: c.textSecondary)),
+                  ),
+                ),
+                const SizedBox(width: MuSpace.s3),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(o.title, style: MuType.labelS, maxLines: 2, overflow: TextOverflow.ellipsis),
+                      if (o.asking != null)
+                        Text(
+                          [l10n.ofPrixDemande(formatDT(o.asking!)), if (under != null) l10n.ofMoinsN(under)].join(' · '),
+                          style: MuType.caption.copyWith(color: c.textSecondary),
+                        ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: MuSpace.s3),
+          Row(
+            children: [
+              Directionality(textDirection: TextDirection.ltr, child: Text(formatDT(o.price), style: MuType.numL)),
+              const Spacer(),
+              MuStatusBadge(status: status, label: label, size: MuBadgeSize.s),
+            ],
+          ),
+          if (!m.mine && o.status == OfferStatus.pending && !o.sold) ...[
+            const SizedBox(height: MuSpace.s3),
+            Row(
+              children: [
+                Expanded(
+                  child: MuButton.primary(
+                    label: l10n.ofAccepter,
+                    size: MuButtonSize.s,
+                    onPressed: () => _accept(context, ref, o),
+                  ),
+                ),
+                const SizedBox(width: MuSpace.s2),
+                Expanded(
+                  child: MuButton.secondary(
+                    label: l10n.ofRefuser,
+                    size: MuButtonSize.s,
+                    onPressed: () => _run(context, () => ctrl.answerOffer(m.id, accept: false)),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: MuSpace.s2),
+            MuButton.tertiary(
+              label: l10n.ofContreOffre,
+              leading: PhosphorIcons.arrowsLeftRight(),
+              size: MuButtonSize.s,
+              onPressed: () async {
+                final price = await showOfferSheet(context, title: o.title, asking: o.asking, counter: true);
+                if (price != null && context.mounted) await _run(context, () => ctrl.sendOffer(o.postId, price));
+              },
+            ),
+          ],
+          if (o.status == OfferStatus.accepted) ...[
+            const SizedBox(height: MuSpace.s2),
+            Text(l10n.ofAccepteeDetail, style: MuType.caption.copyWith(color: c.textSecondary)),
+          ],
+        ],
       ),
     );
   }

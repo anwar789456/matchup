@@ -43,6 +43,7 @@ String chatSummary(ChatMessage m) {
     ChatKind.image => m.body.isEmpty ? l10n.msgApercuPhoto : l10n.msgApercuPhotoTexte(m.body),
     ChatKind.video => m.body.isEmpty ? l10n.msgApercuVideo : l10n.msgApercuVideoTexte(m.body),
     ChatKind.voice => l10n.msgApercuVocal(formatClock(m.media?.duration ?? Duration.zero)),
+    ChatKind.offer => l10n.ofApercu(formatDT(m.offer?.price ?? 0), m.offer?.title ?? ''),
     ChatKind.system => chatEventLine(m),
   };
 }

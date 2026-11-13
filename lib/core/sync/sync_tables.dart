@@ -66,6 +66,7 @@ const syncTables = <SyncTable>[
   SyncTable('forum_suivis'),
   SyncTable('forum_blocages'),
   SyncTable('forum_visites'),
+  SyncTable('forum_alertes'),
 
   // ── Utilisateur (Alaa) · Réservation (Mahmoud) · Tournois (Ayoub) · Entraînement (Aziz):
   //    add your tables here.

@@ -12,8 +12,10 @@ import '../../../ui/ui.dart';
 import '../controllers/forum_providers.dart';
 import '../controllers/messages_providers.dart';
 import '../data/forum_repository.dart';
-import '../data/messages_repository.dart';
 import '../widgets/forum_feed_list.dart';
+import '../../notifications/data/notification_models.dart';
+import '../../notifications/data/notification_repository.dart';
+import 'alerts_screen.dart' show createAlert;
 import 'messages_screen.dart' show UnreadBadge;
 
 /// FRM-01 · Communauté: « Pose ta question à la communauté », the 5 categories with their
@@ -69,6 +71,7 @@ class CommunityScreen extends ConsumerWidget {
                   const SizedBox(height: MuSpace.s3),
                   _SortRow(query: query, total: feed.value?.total),
                   const SizedBox(height: MuSpace.s3),
+                  if (query.category == ForumCategory.equipment || query.lookingOnly) _AlertPrompt(query: query),
                 ],
                 empty: MuEmptyState(
                   title: l10n.forumAucuneDiscussion,
@@ -148,57 +151,113 @@ class _Compose extends ConsumerWidget {
   }
 }
 
-/// « Messages »: the way to the conversations with friends and groups, with the unread count
-/// and who wrote.
+/// « Messages » and « Notifications » side by side: the conversations (unread messages) and the
+/// Communauté's notifications (unread replies, players, offers, alerts).
 class _MessagesEntry extends ConsumerWidget {
   const _MessagesEntry();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final messages = ref.watch(unreadMessagesProvider).value ?? 0;
+    final notifications = [
+      for (final n in ref.watch(notificationsProvider).value ?? const <AppNotification>[])
+        if (n.unread && n.category == NotificationCategory.community) n,
+    ].length;
+    return Row(
+      children: [
+        Expanded(
+          child: _HubTile(
+            icon: PhosphorIcons.chatsCircle(),
+            label: l10n.msgMessages,
+            count: messages,
+            onTap: () => context.push(Routes.messages),
+          ),
+        ),
+        const SizedBox(width: MuSpace.s3),
+        Expanded(
+          child: _HubTile(
+            icon: PhosphorIcons.bell(),
+            label: l10n.ntNotifications,
+            count: notifications,
+            onTap: () => context.push(Routes.notificationsCommunity),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _HubTile extends StatelessWidget {
+  const _HubTile({required this.icon, required this.label, required this.count, required this.onTap});
+
+  final IconData icon;
+  final String label;
+  final int count;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
     final c = context.mu;
-    final unread = ref.watch(unreadMessagesProvider).value ?? 0;
-    final conversations = ref.watch(conversationsProvider).value ?? const [];
-    final me = ref.read(messagesRepositoryProvider).meId;
-    final waiting = [for (final cv in conversations) if (cv.unread > 0 && !cv.muted) cv.title(me)];
-    final detail = unread > 0 ? l10n.msgNNonLusDe(unread, waiting.take(2).join(', ')) : l10n.msgTesAmisEtTesGroupes;
     return Semantics(
       button: true,
-      label: [l10n.msgMessages, detail].join(', '),
+      label: [label, if (count > 0) l10n.msgNNonLus(count)].join(', '),
       excludeSemantics: true,
       child: Material(
         color: c.surface,
         shape: RoundedRectangleBorder(borderRadius: MuRadius.lgAll, side: BorderSide(color: c.border)),
         child: InkWell(
           borderRadius: MuRadius.lgAll,
-          onTap: () => context.push(Routes.messages),
+          onTap: onTap,
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: MuSpace.s4, vertical: MuSpace.s3),
+            padding: const EdgeInsets.symmetric(horizontal: MuSpace.s3, vertical: MuSpace.s3),
             child: Row(
               children: [
                 Container(
                   width: MuSize.controlM,
                   height: MuSize.controlM,
                   decoration: BoxDecoration(color: c.surfaceMuted, shape: BoxShape.circle),
-                  child: Icon(PhosphorIcons.chatsCircle(), size: MuSize.iconS, color: c.text),
+                  child: Icon(icon, size: MuSize.iconS, color: c.text),
                 ),
-                const SizedBox(width: MuSpace.s3),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(l10n.msgMessages, style: MuType.label),
-                      Text(
-                        detail,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: MuType.caption.copyWith(color: c.textSecondary),
-                      ),
-                    ],
-                  ),
-                ),
-                if (unread > 0) ...[const SizedBox(width: MuSpace.s2), UnreadBadge(count: unread)],
                 const SizedBox(width: MuSpace.s2),
-                MuDirectionalIcon(PhosphorIcons.caretRight(), size: MuSize.iconS, color: c.textSecondary),
+                Expanded(child: Text(label, style: MuType.label, maxLines: 1, overflow: TextOverflow.ellipsis)),
+                if (count > 0) UnreadBadge(count: count),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+/// « Être prévenu » above the Équipement or « Cherche joueurs » feed: a saved search in one tap.
+class _AlertPrompt extends ConsumerWidget {
+  const _AlertPrompt({required this.query});
+
+  final ForumQuery query;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final c = context.mu;
+    final listing = !query.lookingOnly;
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(MuSpace.s4, 0, MuSpace.s4, MuSpace.s3),
+      child: Material(
+        color: c.surfaceMuted,
+        borderRadius: MuRadius.mdAll,
+        child: InkWell(
+          borderRadius: MuRadius.mdAll,
+          onTap: () => createAlert(context, ref, kind: listing ? AlertKind.listing : AlertKind.game, sport: query.sport),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: MuSpace.s3, vertical: MuSpace.s2),
+            child: Row(
+              children: [
+                Icon(PhosphorIcons.bellRinging(), size: MuSize.iconS, color: c.text),
+                const SizedBox(width: MuSpace.s2),
+                Expanded(
+                  child: Text(listing ? l10n.alPrevenirAnnonces : l10n.alPrevenirParties, style: MuType.labelS),
+                ),
+                Text(l10n.alCreer, style: MuType.labelS.copyWith(color: c.link)),
               ],
             ),
           ),

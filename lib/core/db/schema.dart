@@ -861,4 +861,30 @@ const schemaVersions = <int, List<String>>{
     )''',
     'CREATE INDEX forum_participations_sujet ON forum_participations (sujet_id, cree_le)',
   ],
+
+  // ── v8 · Communauté: saved searches and the forum's notifications — Hani ───────────────────
+  // `forum_alertes` (the member's saved searches, private, synced to that member) and
+  // `forum_evenements_vus` (what was already notified on this phone, so nothing is said twice;
+  // not synced).
+  8: [
+    '''
+    CREATE TABLE forum_alertes (
+      id TEXT PRIMARY KEY,
+      utilisateur_id TEXT NOT NULL,
+      type TEXT NOT NULL,
+      mots TEXT NOT NULL DEFAULT '',
+      sport TEXT,
+      prix_max REAL,
+      taille TEXT,
+      actif INTEGER NOT NULL DEFAULT 1,
+      cree_le TEXT NOT NULL
+    )''',
+    '''
+    CREATE TABLE forum_evenements_vus (
+      cle TEXT NOT NULL,
+      utilisateur_id TEXT NOT NULL,
+      vu_le TEXT NOT NULL,
+      PRIMARY KEY (cle, utilisateur_id)
+    )''',
+  ],
 };

@@ -104,6 +104,17 @@ class ChatController extends AsyncNotifier<List<ChatMessage>> {
     _expectAnswer(typing: true);
   }
 
+  Future<void> sendOffer(String postId, double price) async {
+    await _repo.sendOffer(conversationId, postId, price);
+    _changed();
+    _expectAnswer(typing: true);
+  }
+
+  Future<void> answerOffer(String messageId, {required bool accept}) async {
+    await _repo.answerOffer(messageId, accept: accept);
+    _changed();
+  }
+
   Future<void> sharePost(String postId) async {
     await _repo.sharePost(conversationId, postId);
     _changed();

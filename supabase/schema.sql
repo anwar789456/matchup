@@ -620,3 +620,32 @@ drop policy if exists "forum_visites_ecriture" on public.forum_visites;
 create policy "forum_visites_lecture" on public.forum_visites for select to authenticated using (owner_id = auth.uid());
 create policy "forum_visites_ecriture" on public.forum_visites for all to authenticated using (owner_id = auth.uid()) with check (owner_id = auth.uid());
 
+-- forum_alertes (owner)
+create table if not exists public.forum_alertes (
+  owner_id uuid not null default auth.uid() references auth.users (id) on delete cascade,
+  "id" text,
+  "utilisateur_id" text not null,
+  "type" text not null,
+  "mots" text not null,
+  "sport" text,
+  "prix_max" double precision,
+  "taille" text,
+  "actif" bigint not null,
+  "cree_le" text not null,
+  primary key (owner_id, "id")
+);
+alter table public.forum_alertes add column if not exists "id" text;
+alter table public.forum_alertes add column if not exists "utilisateur_id" text;
+alter table public.forum_alertes add column if not exists "type" text;
+alter table public.forum_alertes add column if not exists "mots" text;
+alter table public.forum_alertes add column if not exists "sport" text;
+alter table public.forum_alertes add column if not exists "prix_max" double precision;
+alter table public.forum_alertes add column if not exists "taille" text;
+alter table public.forum_alertes add column if not exists "actif" bigint;
+alter table public.forum_alertes add column if not exists "cree_le" text;
+alter table public.forum_alertes enable row level security;
+drop policy if exists "forum_alertes_lecture" on public.forum_alertes;
+drop policy if exists "forum_alertes_ecriture" on public.forum_alertes;
+create policy "forum_alertes_lecture" on public.forum_alertes for select to authenticated using (owner_id = auth.uid());
+create policy "forum_alertes_ecriture" on public.forum_alertes for all to authenticated using (owner_id = auth.uid()) with check (owner_id = auth.uid());
+

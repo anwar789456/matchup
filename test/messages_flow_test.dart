@@ -46,7 +46,7 @@ void main() {
   testWidgets('Communauté → Messages → a group: vote, write, a friend answers', (tester) async {
     await pumpApp(tester, Routes.community);
     expect(find.text('Messages'), findsOneWidget);
-    expect(find.textContaining('5 non lus'), findsOneWidget);
+    expect(find.bySemanticsLabel('Messages, 5 non lus'), findsOneWidget);
     await tap(tester, find.text('Messages'));
 
     expect(find.text('Tes amis'), findsOneWidget);

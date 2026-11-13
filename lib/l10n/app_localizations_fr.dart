@@ -12430,4 +12430,308 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get cjTuNeViensPlus => 'C’est noté, tu ne viens plus';
+
+  @override
+  String get alMesAlertes => 'Mes alertes';
+
+  @override
+  String get alNouvelleAlerte => 'Nouvelle alerte';
+
+  @override
+  String get alCeQueTuSurveilles => 'Ce que tu surveilles';
+
+  @override
+  String get alAnnonces => 'Annonces';
+
+  @override
+  String get alAnnoncesDetail =>
+      'Tu es prévenu dès qu’une annonce d’Équipement correspond (prix maximum, taille…).';
+
+  @override
+  String get alPartiesDetail =>
+      'Tu es prévenu dès qu’un « Cherche joueurs » correspond.';
+
+  @override
+  String get alMotsCles => 'Mots-clés';
+
+  @override
+  String get alMotsClesAnnonce => 'Ex. : crampons, raquette Bullpadel';
+
+  @override
+  String get alMotsClesPartie => 'Ex. : Arena Five, 5v5';
+
+  @override
+  String get alPrixMax => 'Prix maximum';
+
+  @override
+  String get alNiveauAuto =>
+      'Seules les parties encore ouvertes te sont proposées.';
+
+  @override
+  String get alCreerLAlerte => 'Créer l’alerte';
+
+  @override
+  String get alAuMoinsUnCritere =>
+      'Choisis au moins un critère : un mot-clé, un sport, un prix ou une taille.';
+
+  @override
+  String get alAlerteCreee => 'Alerte créée';
+
+  @override
+  String get alAlerteCreeeDetail =>
+      'Tu recevras une notification à chaque nouveau post qui correspond.';
+
+  @override
+  String get alAucuneAlerte => 'Pas encore d’alerte';
+
+  @override
+  String get alAucuneAlerteDetail =>
+      'Crée une alerte pour être prévenu d’une bonne affaire ou d’une partie à ton niveau.';
+
+  @override
+  String get alExplication =>
+      'Une notification arrive à chaque nouveau post qui correspond. Touche une alerte pour voir ce qu’elle trouve déjà.';
+
+  @override
+  String alNAnnonces(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n annonces',
+      one: '1 annonce',
+      zero: 'aucune annonce',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String alNParties(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n parties',
+      one: '1 partie',
+      zero: 'aucune partie',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get alEnPause => 'en pause';
+
+  @override
+  String alActiverX(String label) {
+    return 'Alerte $label';
+  }
+
+  @override
+  String get alSupprimerLAlerte => 'Supprimer l’alerte';
+
+  @override
+  String alMaxPrix(String price) {
+    return '≤ $price';
+  }
+
+  @override
+  String get alRienPourLInstant => 'Rien pour l’instant';
+
+  @override
+  String get alRienPourLInstantDetail =>
+      'Tu seras prévenu dès qu’un post correspond.';
+
+  @override
+  String get alPrevenirAnnonces => 'Être prévenu des nouvelles annonces';
+
+  @override
+  String get alPrevenirParties => 'Être prévenu des nouvelles parties';
+
+  @override
+  String get alCreer => 'Créer une alerte';
+
+  @override
+  String alCreerPourX(String query) {
+    return 'Créer une alerte pour « $query »';
+  }
+
+  @override
+  String get ntNotifications => 'Notifications';
+
+  @override
+  String ntARepondu(String name) {
+    return '$name a répondu à ta discussion';
+  }
+
+  @override
+  String ntTARepondu(String name) {
+    return '$name t’a répondu';
+  }
+
+  @override
+  String ntCitationSur(String excerpt, String title) {
+    return '« $excerpt » — $title';
+  }
+
+  @override
+  String ntTAMentionne(String name) {
+    return '$name t’a mentionné';
+  }
+
+  @override
+  String ntMeilleureReponse(String name) {
+    return '$name a choisi ta réponse comme meilleure réponse';
+  }
+
+  @override
+  String ntVientATonMatch(String name) {
+    return '$name vient à ton match';
+  }
+
+  @override
+  String ntLieuEtHeure(String place, String date) {
+    return '$place · $date';
+  }
+
+  @override
+  String get ntPlaceLiberee => 'Une place s’est libérée : tu joues !';
+
+  @override
+  String ntTuJoues(String place, String date) {
+    return '$place · $date. Tu es passé de la liste d’attente à l’équipe.';
+  }
+
+  @override
+  String ntAvisRecu(String name, int stars) {
+    String _temp0 = intl.Intl.pluralLogic(
+      stars,
+      locale: localeName,
+      other: '$stars étoiles',
+      one: '1 étoile',
+    );
+    return '$name t’a laissé un avis · $_temp0';
+  }
+
+  @override
+  String get ntAvisSansTexte => 'Un nouvel avis sur toi comme vendeur.';
+
+  @override
+  String ntOffreRecue(String name, String price) {
+    return '$name te propose $price';
+  }
+
+  @override
+  String ntOffreAcceptee(String name, String price) {
+    return '$name a accepté ton offre de $price 🎉';
+  }
+
+  @override
+  String ntOffreRefusee(String name, String price) {
+    return '$name a refusé ton offre de $price';
+  }
+
+  @override
+  String ntNouvelleAnnonce(String alert) {
+    return 'Nouvelle annonce · $alert';
+  }
+
+  @override
+  String ntNouvellePartie(String alert) {
+    return 'Nouvelle partie · $alert';
+  }
+
+  @override
+  String get ofFaireUneOffre => 'Faire une offre';
+
+  @override
+  String get ofContreOffre => 'Contre-offre';
+
+  @override
+  String ofPrixDemande(String price) {
+    return 'Prix demandé : $price';
+  }
+
+  @override
+  String get ofTonPrix => 'Ton prix';
+
+  @override
+  String ofSousLePrix(int n) {
+    return '$n % sous le prix demandé';
+  }
+
+  @override
+  String ofEnvoyerX(String price) {
+    return 'Proposer $price';
+  }
+
+  @override
+  String get ofExplication =>
+      'Ton offre arrive dans la conversation avec le vendeur : il peut l’accepter, la refuser ou te faire une contre-offre.';
+
+  @override
+  String get ofIndiqueUnPrix => 'Indique ton prix.';
+
+  @override
+  String get ofPasTaPropreOffre =>
+      'C’est ton offre : l’autre personne y répond.';
+
+  @override
+  String get ofDejaRepondu => 'Cette offre a déjà une réponse.';
+
+  @override
+  String ofOffreX(String price) {
+    return 'Offre · $price';
+  }
+
+  @override
+  String ofApercu(String price, String title) {
+    return '💰 Offre $price · $title';
+  }
+
+  @override
+  String get ofTonOffre => 'Ton offre';
+
+  @override
+  String ofOffreDe(String name) {
+    return 'Offre de $name';
+  }
+
+  @override
+  String ofMoinsN(int n) {
+    return '−$n %';
+  }
+
+  @override
+  String get ofAcceptee => 'Acceptée';
+
+  @override
+  String get ofRefusee => 'Refusée';
+
+  @override
+  String get ofRemplacee => 'Remplacée';
+
+  @override
+  String get ofEnAttenteReponse => 'En attente';
+
+  @override
+  String get ofATaReponse => 'À toi de répondre';
+
+  @override
+  String get ofAccepter => 'Accepter';
+
+  @override
+  String get ofRefuser => 'Refuser';
+
+  @override
+  String get ofAccepteeDetail =>
+      'Offre acceptée : convenez du lieu et de l’heure de la remise ici.';
+
+  @override
+  String get ofMarquerVenduQ => 'Marquer l’annonce comme vendue ?';
+
+  @override
+  String ofMarquerVenduDetail(String price) {
+    return 'Tu as accepté $price. Les autres membres verront « Vendu ».';
+  }
+
+  @override
+  String get ofPasEncore => 'Pas encore';
 }

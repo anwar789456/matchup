@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import '../../../theme/theme.dart';
 import '../../../ui/ui.dart';
 import '../../common/widgets/coming_soon.dart';
+import '../../forum/data/forum_watcher.dart';
 import '../controllers/home_providers.dart';
 
 /// The player app's frame: the five tabs (TabBar.md) around the current branch, each tab keeping
@@ -21,6 +22,8 @@ class PlayerShell extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final c = context.mu;
     final invitations = ref.watch(upcomingMatchesProvider).value?.invitations.length ?? 0;
+    // The Communauté's notifications (replies, « Cherche joueurs », offers, alerts) in every tab.
+    ref.watch(forumWatcherProvider);
     return Scaffold(
       backgroundColor: c.bg,
       body: shell,

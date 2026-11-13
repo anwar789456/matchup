@@ -4,6 +4,7 @@ import 'dart:math' as math;
 import 'package:sqflite/sqflite.dart';
 
 import '../../../core/connectivity.dart';
+import '../../../core/format.dart';
 import '../../../core/db/app_database.dart';
 import '../../../l10n/l10n.dart';
 import '../../../theme/theme.dart';
@@ -385,7 +386,7 @@ class SqliteMessagesRepository implements MessagesRepository {
 
     final posts = <String, Map<String, Object?>>{};
     for (final r in rows) {
-      if (r['type'] != ChatKind.share.code) continue;
+      if (r['type'] != ChatKind.share.code && r['type'] != ChatKind.offer.code) continue;
       final postId = (jsonDecode(r['donnees']! as String) as Map)['sujet_id'] as String;
       if (posts.containsKey(postId)) continue;
       final post = (await db.query('forum_sujets', where: 'id = ?', whereArgs: [postId])).firstOrNull;
@@ -393,11 +394,22 @@ class SqliteMessagesRepository implements MessagesRepository {
       posts[postId] = {...?post, 'annonce': ?listing};
     }
 
+    final latestOffer = <String, String>{};
+    for (final o in await db.rawQuery(
+      "SELECT id, conversation_id, donnees FROM msg_messages WHERE type = 'offre' AND conversation_id IN "
+      '(${_marks({for (final r in rows) r['conversation_id']}.length)}) ORDER BY cree_le, rowid',
+      {for (final r in rows) r['conversation_id']}.toList(),
+    )) {
+      final postId = (jsonDecode(o['donnees']! as String) as Map)['sujet_id'] as String;
+      latestOffer['${o['conversation_id']}|$postId'] = o['id']! as String;
+    }
+
     return [
       for (final r in rows)
         _message(
           r,
           members,
+          latestOffer: latestOffer,
           muted: muted,
           reactions: reactions[r['id']] ?? const {},
           votes: votes[r['id']] ?? const [],
@@ -417,6 +429,7 @@ class SqliteMessagesRepository implements MessagesRepository {
       ChatKind.image => caption.isEmpty ? l10n.msgPhoto : caption,
       ChatKind.video => caption.isEmpty ? l10n.msgVideo : caption,
       ChatKind.voice => l10n.msgMessageVocal,
+      ChatKind.offer => l10n.ofOffreX(formatDT((data['prix'] as num? ?? 0))),
       _ => caption,
     };
   }
@@ -429,6 +442,7 @@ class SqliteMessagesRepository implements MessagesRepository {
     required List<(String, String)> votes,
     required ChatQuote? quote,
     required Map<String, Map<String, Object?>> posts,
+    Map<String, String> latestOffer = const {},
   }) {
     final authorId = r['auteur_id']! as String;
     final kind = ChatKind.fromCode(r['type']! as String);
@@ -442,7 +456,29 @@ class SqliteMessagesRepository implements MessagesRepository {
     ChatMatch? match;
     ChatSharedPost? shared;
     ChatMedia? media;
-    if (kind == ChatKind.image || kind == ChatKind.video || kind == ChatKind.voice) {
+    ChatOffer? offer;
+    if (kind == ChatKind.offer) {
+      final postId = data['sujet_id']! as String;
+      final post = posts[postId] ?? const {};
+      final a = post['annonce'] as Map<String, Object?>?;
+      final answer = votes.where((v) => v.$1 != authorId).firstOrNull?.$2;
+      final images = post['images'] == null ? const [] : jsonDecode(post['images']! as String) as List;
+      offer = ChatOffer(
+        postId: postId,
+        title: post['titre'] as String? ?? l10n.msgDiscussionSupprimee,
+        price: (data['prix']! as num).toDouble(),
+        asking: (a?['prix'] as num?)?.toDouble(),
+        image: images.whereType<String>().where((s) => !s.startsWith('data:video/')).firstOrNull,
+        sold: a?['statut'] == 'vendu',
+        sellerId: post['auteur_id'] as String?,
+        status: switch (answer) {
+          'accepte' => OfferStatus.accepted,
+          'refuse' => OfferStatus.declined,
+          _ when latestOffer['${r['conversation_id']}|$postId'] != r['id'] => OfferStatus.replaced,
+          _ => OfferStatus.pending,
+        },
+      );
+    } else if (kind == ChatKind.image || kind == ChatKind.video || kind == ChatKind.voice) {
       final ms = data['duree'] as int?;
       media = ChatMedia(data['src']! as String, duration: ms == null ? null : Duration(milliseconds: ms));
     } else if (kind == ChatKind.poll) {
@@ -503,6 +539,7 @@ class SqliteMessagesRepository implements MessagesRepository {
       match: match,
       shared: shared,
       media: media,
+      offer: offer,
       event: kind == ChatKind.system ? ChatEvent.fromCode(data['action'] as String?) : null,
       eventName: data['nom'] as String?,
       createdAt: DateTime.parse(r['cree_le']! as String),
@@ -574,6 +611,36 @@ class SqliteMessagesRepository implements MessagesRepository {
     'type': ChatKind.voice.code,
     'donnees': jsonEncode({'src': src, 'duree': duration.inMilliseconds}),
   });
+
+  @override
+  Future<ChatMessage> sendOffer(String conversationId, String postId, double price) async {
+    if (price <= 0) throw ForumRuleException(l10n.ofIndiqueUnPrix);
+    final db = await _db;
+    final listing = (await db.query('forum_annonces', where: 'sujet_id = ?', whereArgs: [postId])).firstOrNull;
+    if (listing == null) throw ForumRuleException(l10n.msgDiscussionSupprimee);
+    if (listing['statut'] == 'vendu') throw ForumRuleException(l10n.mktCetArticleEstVendu);
+    return _insert(conversationId, {
+      'type': ChatKind.offer.code,
+      'donnees': jsonEncode({'sujet_id': postId, 'prix': price}),
+    });
+  }
+
+  @override
+  Future<void> answerOffer(String messageId, {required bool accept}) async {
+    final db = await _db;
+    final row = await _row(db, messageId);
+    if (row['type'] != ChatKind.offer.code) return;
+    if (_isMe(row['auteur_id']! as String)) throw ForumRuleException(l10n.ofPasTaPropreOffre);
+    final answered = (await db.query('msg_votes', where: 'message_id = ?', whereArgs: [messageId])).any((v) => v['auteur_id'] != row['auteur_id']);
+    if (answered) throw ForumRuleException(l10n.ofDejaRepondu);
+    await db.insert('msg_votes', {
+      'id': newForumId(),
+      'message_id': messageId,
+      'auteur_id': meId,
+      'choix': accept ? 'accepte' : 'refuse',
+      'cree_le': _now().toIso8601String(),
+    });
+  }
 
   @override
   Future<ChatMessage> sendPoll(String conversationId, String question, List<String> options) async {
@@ -693,6 +760,53 @@ class SqliteMessagesRepository implements MessagesRepository {
 
   // ── The story's friends answer (demo only) ────────────────────────────────────────────────
 
+  /// A demo seller accepts an offer from 85 % of the price, else counters halfway (rounded to
+  /// 5 DT); a demo buyer accepts the reader's counter-offer.
+  Future<bool> _demoOffer(DatabaseExecutor db, Map<String, Object?> offer, List<String> demo) async {
+    final data = jsonDecode(offer['donnees']! as String) as Map;
+    final postId = data['sujet_id'] as String;
+    final price = (data['prix'] as num).toDouble();
+    final post = (await db.query('forum_sujets', where: 'id = ?', whereArgs: [postId])).firstOrNull;
+    final listing = (await db.query('forum_annonces', where: 'sujet_id = ?', whereArgs: [postId])).firstOrNull;
+    if (post == null || listing == null) return false;
+    final seller = post['auteur_id']! as String;
+    final other = demo.first;
+    final now = await _stamp(db, offer['conversation_id']! as String);
+    Future<void> answer(String choice) => db.insert('msg_votes', {
+      'id': newForumId(),
+      'message_id': offer['id'],
+      'auteur_id': other,
+      'choix': choice,
+      'cree_le': now,
+    });
+    if (seller != other) {
+      // The reader sells, the demo friend bought: they take the counter-offer.
+      await answer('accepte');
+      return true;
+    }
+    final asking = (listing['prix']! as num).toDouble();
+    if (price >= asking * acceptShare) {
+      await answer('accepte');
+      return true;
+    }
+    final counter = ((price + asking) / 2 / counterStep).round() * counterStep;
+    await db.insert('msg_messages', {
+      'id': newForumId(),
+      'conversation_id': offer['conversation_id'],
+      'auteur_id': other,
+      'type': ChatKind.offer.code,
+      'donnees': jsonEncode({'sujet_id': postId, 'prix': counter}),
+      'cree_le': now,
+    });
+    return true;
+  }
+
+  /// Demo sellers take offers from this share of their price.
+  static const double acceptShare = 0.85;
+
+  /// Counter-offers are rounded to 5 DT.
+  static const double counterStep = 5;
+
   @override
   Future<bool> demoAnswer(String conversationId) async {
     final db = await _db;
@@ -726,6 +840,8 @@ class SqliteMessagesRepository implements MessagesRepository {
       return true;
     }
     if (kind == ChatKind.system) return false;
+
+    if (kind == ChatKind.offer) return _demoOffer(db, last, demo);
 
     final who = demo[random.nextInt(demo.length)];
     final text = (last['contenu'] as String? ?? '').toLowerCase();

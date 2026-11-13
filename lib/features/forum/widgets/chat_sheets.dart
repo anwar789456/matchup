@@ -3,6 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 
+import 'package:flutter/services.dart';
+
 import '../../../core/format.dart';
 import '../../../l10n/l10n.dart';
 import '../../../router.dart';
@@ -710,5 +712,127 @@ class _ConversationInfo extends ConsumerWidget {
         ),
       ],
     );
+  }
+}
+
+// ── Faire une offre ─────────────────────────────────────────────────────────────────────────
+
+/// The price of an offer (or a counter-offer): quick picks under the asking price, or any
+/// amount.
+Future<double?> showOfferSheet(BuildContext context, {required String title, double? asking, bool counter = false}) =>
+    MuBottomSheet.show<double>(
+      context,
+      title: counter ? l10n.ofContreOffre : l10n.ofFaireUneOffre,
+      height: MuSheetHeight.full,
+      child: _OfferForm(title: title, asking: asking),
+    );
+
+class _OfferForm extends StatefulWidget {
+  const _OfferForm({required this.title, this.asking});
+
+  final String title;
+  final double? asking;
+
+  @override
+  State<_OfferForm> createState() => _OfferFormState();
+}
+
+class _OfferFormState extends State<_OfferForm> {
+  final _price = TextEditingController();
+
+  /// The quick picks: 5, 10 and 15 % under the asking price, rounded to 5 DT.
+  static const _cuts = [0.05, 0.10, 0.15];
+  static const double _round = 5;
+  static const int _priceMax = 6;
+
+  @override
+  void initState() {
+    super.initState();
+    _price.addListener(() => setState(() {}));
+  }
+
+  @override
+  void dispose() {
+    _price.dispose();
+    super.dispose();
+  }
+
+  double? get _value {
+    final p = double.tryParse(_price.text.replaceAll(',', '.').trim());
+    return p == null || p <= 0 ? null : p;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final c = context.mu;
+    final asking = widget.asking;
+    final picks = asking == null ? const <double>[] : {for (final cut in _cuts) ((asking * (1 - cut)) / _round).round() * _round}.toList();
+    final v = _value;
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(MuSpace.s4, MuSpace.s2, MuSpace.s4, MuSpace.s6),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Text(widget.title, style: MuType.label),
+          if (asking != null) Text(l10n.ofPrixDemande(formatDT(asking)), style: MuType.caption.copyWith(color: c.textSecondary)),
+          const SizedBox(height: MuSpace.s4),
+          if (picks.isNotEmpty) ...[
+            Wrap(
+              spacing: MuSpace.s2,
+              runSpacing: MuSpace.s2,
+              children: [
+                for (final p in picks)
+                  MuChip(
+                    kind: MuChipKind.choice,
+                    label: formatDT(p),
+                    selected: v == p,
+                    onSelected: (_) => _price.text = formatAmount(p).replaceAll(RegExp(r'\s'), ''),
+                  ),
+              ],
+            ),
+            const SizedBox(height: MuSpace.s4),
+          ],
+          MuTextField(
+            label: l10n.ofTonPrix,
+            controller: _price,
+            suffixText: dtUnit,
+            maxLength: _priceMax,
+            keyboardType: const TextInputType.numberWithOptions(decimal: true),
+            inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[0-9.,]'))],
+            leadingIcon: PhosphorIcons.tag(),
+            helper: asking != null && v != null && v < asking ? l10n.ofSousLePrix(((1 - v / asking) * 100).round()) : null,
+          ),
+          const SizedBox(height: MuSpace.s5),
+          MuButton.primary(
+            label: v == null ? l10n.ofFaireUneOffre : l10n.ofEnvoyerX(formatDT(v)),
+            leading: PhosphorIcons.paperPlaneRight(),
+            fullWidth: true,
+            size: MuButtonSize.l,
+            onPressed: v == null ? null : () => _pop(context, v),
+          ),
+          const SizedBox(height: MuSpace.s2),
+          Text(l10n.ofExplication, textAlign: TextAlign.center, style: MuType.caption.copyWith(color: c.textSecondary)),
+        ],
+      ),
+    );
+  }
+}
+
+/// « Faire une offre » on a listing: the price, then the private conversation with the seller,
+/// the listing shared there once, and the offer card.
+Future<void> makeOffer(BuildContext context, WidgetRef ref, ForumPost post) async {
+  final price = await showOfferSheet(context, title: post.title, asking: post.listing?.price);
+  if (price == null || !context.mounted) return;
+  final repo = ref.read(messagesRepositoryProvider);
+  final router = GoRouter.of(context);
+  final container = ProviderScope.containerOf(context, listen: false);
+  try {
+    final id = await repo.openDirect(post.author.id);
+    final shared = (await repo.messages(id)).any((m) => m.shared?.postId == post.id || m.offer?.postId == post.id);
+    if (!shared) await repo.sharePost(id, post.id);
+    router.push(Routes.chat(id));
+    await container.read(chatProvider(id).notifier).sendOffer(post.id, price);
+  } catch (e) {
+    if (context.mounted) showForumError(context, e);
   }
 }

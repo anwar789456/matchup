@@ -152,6 +152,18 @@ class _NewPostScreenState extends ConsumerState<NewPostScreen> {
     if (mounted && video != null) _change(_draft.copyWith(images: [..._draft.images, video]));
   }
 
+  /// The demo's friends answer a new « Cherche joueurs » a few seconds later (notified).
+  void _demoJoinLater(String postId) {
+    final container = ProviderScope.containerOf(context, listen: false);
+    Future<void>.delayed(demoJoinDelay, () async {
+      try {
+        if (await container.read(forumRepositoryProvider).demoJoin(postId)) container.read(forumChangesProvider.notifier).bump();
+      } catch (_) {}
+    });
+  }
+
+  static const demoJoinDelay = Duration(seconds: 5);
+
   bool get _selling => _draft.listing != null;
   bool get _looking => _draft.search != null;
 
@@ -188,6 +200,7 @@ class _NewPostScreenState extends ConsumerState<NewPostScreen> {
           ? await _repo.editPost(widget.editId!, _draft, confirmed: confirmed)
           : await _repo.publish(_draft, confirmed: confirmed);
       if (!_editing) await _repo.clearDraft();
+      if (!_editing && post.search != null) _demoJoinLater(post.id);
       ref.invalidate(forumFeedProvider);
       ref.invalidate(forumCategoriesProvider);
       if (_editing) ref.invalidate(forumThreadProvider(post.id));

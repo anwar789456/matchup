@@ -21,7 +21,6 @@ import '../../../l10n/l10n.dart';
 bool targetAvailable(NotificationTarget? target) => switch (target) {
   null => false,
   NotificationTarget.tournament ||
-  NotificationTarget.community ||
   NotificationTarget.training ||
   NotificationTarget.ownerSpace ||
   NotificationTarget.organizerSpace => false,
@@ -80,8 +79,10 @@ Future<void> openNotification(
     case NotificationTarget.directions:
       final to = Story.arenaFive.position;
       if (to != null) await openDirections(to);
+    case NotificationTarget.community:
+      // The Communauté's notifications carry the route of what they are about.
+      if (id != null) context.push(id);
     case NotificationTarget.tournament ||
-        NotificationTarget.community ||
         NotificationTarget.training ||
         NotificationTarget.ownerSpace ||
         NotificationTarget.organizerSpace:

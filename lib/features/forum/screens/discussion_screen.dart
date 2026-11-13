@@ -598,12 +598,24 @@ class _ListingActions extends ConsumerWidget {
     if (l.sold) {
       return Text(l10n.mktCetArticleEstVendu, style: MuType.body.copyWith(color: context.mu.textSecondary));
     }
-    return MuButton.primary(
-      label: l10n.mktEcrireAuVendeur,
-      leading: PhosphorIcons.chatCircle(),
-      fullWidth: true,
-      size: MuButtonSize.l,
-      onPressed: () => contactSeller(context, ref, post),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        MuButton.primary(
+          label: l10n.mktEcrireAuVendeur,
+          leading: PhosphorIcons.chatCircle(),
+          fullWidth: true,
+          size: MuButtonSize.l,
+          onPressed: () => contactSeller(context, ref, post),
+        ),
+        const SizedBox(height: MuSpace.s2),
+        MuButton.secondary(
+          label: l10n.ofFaireUneOffre,
+          leading: PhosphorIcons.tag(),
+          fullWidth: true,
+          onPressed: () => makeOffer(context, ref, post),
+        ),
+      ],
     );
   }
 }

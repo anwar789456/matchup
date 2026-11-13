@@ -20668,6 +20668,444 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'C’est noté, tu ne viens plus'**
   String get cjTuNeViensPlus;
+
+  /// No description provided for @alMesAlertes.
+  ///
+  /// In fr, this message translates to:
+  /// **'Mes alertes'**
+  String get alMesAlertes;
+
+  /// No description provided for @alNouvelleAlerte.
+  ///
+  /// In fr, this message translates to:
+  /// **'Nouvelle alerte'**
+  String get alNouvelleAlerte;
+
+  /// No description provided for @alCeQueTuSurveilles.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ce que tu surveilles'**
+  String get alCeQueTuSurveilles;
+
+  /// No description provided for @alAnnonces.
+  ///
+  /// In fr, this message translates to:
+  /// **'Annonces'**
+  String get alAnnonces;
+
+  /// No description provided for @alAnnoncesDetail.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tu es prévenu dès qu’une annonce d’Équipement correspond (prix maximum, taille…).'**
+  String get alAnnoncesDetail;
+
+  /// No description provided for @alPartiesDetail.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tu es prévenu dès qu’un « Cherche joueurs » correspond.'**
+  String get alPartiesDetail;
+
+  /// No description provided for @alMotsCles.
+  ///
+  /// In fr, this message translates to:
+  /// **'Mots-clés'**
+  String get alMotsCles;
+
+  /// No description provided for @alMotsClesAnnonce.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ex. : crampons, raquette Bullpadel'**
+  String get alMotsClesAnnonce;
+
+  /// No description provided for @alMotsClesPartie.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ex. : Arena Five, 5v5'**
+  String get alMotsClesPartie;
+
+  /// No description provided for @alPrixMax.
+  ///
+  /// In fr, this message translates to:
+  /// **'Prix maximum'**
+  String get alPrixMax;
+
+  /// No description provided for @alNiveauAuto.
+  ///
+  /// In fr, this message translates to:
+  /// **'Seules les parties encore ouvertes te sont proposées.'**
+  String get alNiveauAuto;
+
+  /// No description provided for @alCreerLAlerte.
+  ///
+  /// In fr, this message translates to:
+  /// **'Créer l’alerte'**
+  String get alCreerLAlerte;
+
+  /// No description provided for @alAuMoinsUnCritere.
+  ///
+  /// In fr, this message translates to:
+  /// **'Choisis au moins un critère : un mot-clé, un sport, un prix ou une taille.'**
+  String get alAuMoinsUnCritere;
+
+  /// No description provided for @alAlerteCreee.
+  ///
+  /// In fr, this message translates to:
+  /// **'Alerte créée'**
+  String get alAlerteCreee;
+
+  /// No description provided for @alAlerteCreeeDetail.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tu recevras une notification à chaque nouveau post qui correspond.'**
+  String get alAlerteCreeeDetail;
+
+  /// No description provided for @alAucuneAlerte.
+  ///
+  /// In fr, this message translates to:
+  /// **'Pas encore d’alerte'**
+  String get alAucuneAlerte;
+
+  /// No description provided for @alAucuneAlerteDetail.
+  ///
+  /// In fr, this message translates to:
+  /// **'Crée une alerte pour être prévenu d’une bonne affaire ou d’une partie à ton niveau.'**
+  String get alAucuneAlerteDetail;
+
+  /// No description provided for @alExplication.
+  ///
+  /// In fr, this message translates to:
+  /// **'Une notification arrive à chaque nouveau post qui correspond. Touche une alerte pour voir ce qu’elle trouve déjà.'**
+  String get alExplication;
+
+  /// No description provided for @alNAnnonces.
+  ///
+  /// In fr, this message translates to:
+  /// **'{n, plural, =0{aucune annonce} =1{1 annonce} other{{n} annonces}}'**
+  String alNAnnonces(int n);
+
+  /// No description provided for @alNParties.
+  ///
+  /// In fr, this message translates to:
+  /// **'{n, plural, =0{aucune partie} =1{1 partie} other{{n} parties}}'**
+  String alNParties(int n);
+
+  /// No description provided for @alEnPause.
+  ///
+  /// In fr, this message translates to:
+  /// **'en pause'**
+  String get alEnPause;
+
+  /// No description provided for @alActiverX.
+  ///
+  /// In fr, this message translates to:
+  /// **'Alerte {label}'**
+  String alActiverX(String label);
+
+  /// No description provided for @alSupprimerLAlerte.
+  ///
+  /// In fr, this message translates to:
+  /// **'Supprimer l’alerte'**
+  String get alSupprimerLAlerte;
+
+  /// No description provided for @alMaxPrix.
+  ///
+  /// In fr, this message translates to:
+  /// **'≤ {price}'**
+  String alMaxPrix(String price);
+
+  /// No description provided for @alRienPourLInstant.
+  ///
+  /// In fr, this message translates to:
+  /// **'Rien pour l’instant'**
+  String get alRienPourLInstant;
+
+  /// No description provided for @alRienPourLInstantDetail.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tu seras prévenu dès qu’un post correspond.'**
+  String get alRienPourLInstantDetail;
+
+  /// No description provided for @alPrevenirAnnonces.
+  ///
+  /// In fr, this message translates to:
+  /// **'Être prévenu des nouvelles annonces'**
+  String get alPrevenirAnnonces;
+
+  /// No description provided for @alPrevenirParties.
+  ///
+  /// In fr, this message translates to:
+  /// **'Être prévenu des nouvelles parties'**
+  String get alPrevenirParties;
+
+  /// No description provided for @alCreer.
+  ///
+  /// In fr, this message translates to:
+  /// **'Créer une alerte'**
+  String get alCreer;
+
+  /// No description provided for @alCreerPourX.
+  ///
+  /// In fr, this message translates to:
+  /// **'Créer une alerte pour « {query} »'**
+  String alCreerPourX(String query);
+
+  /// No description provided for @ntNotifications.
+  ///
+  /// In fr, this message translates to:
+  /// **'Notifications'**
+  String get ntNotifications;
+
+  /// No description provided for @ntARepondu.
+  ///
+  /// In fr, this message translates to:
+  /// **'{name} a répondu à ta discussion'**
+  String ntARepondu(String name);
+
+  /// No description provided for @ntTARepondu.
+  ///
+  /// In fr, this message translates to:
+  /// **'{name} t’a répondu'**
+  String ntTARepondu(String name);
+
+  /// No description provided for @ntCitationSur.
+  ///
+  /// In fr, this message translates to:
+  /// **'« {excerpt} » — {title}'**
+  String ntCitationSur(String excerpt, String title);
+
+  /// No description provided for @ntTAMentionne.
+  ///
+  /// In fr, this message translates to:
+  /// **'{name} t’a mentionné'**
+  String ntTAMentionne(String name);
+
+  /// No description provided for @ntMeilleureReponse.
+  ///
+  /// In fr, this message translates to:
+  /// **'{name} a choisi ta réponse comme meilleure réponse'**
+  String ntMeilleureReponse(String name);
+
+  /// No description provided for @ntVientATonMatch.
+  ///
+  /// In fr, this message translates to:
+  /// **'{name} vient à ton match'**
+  String ntVientATonMatch(String name);
+
+  /// No description provided for @ntLieuEtHeure.
+  ///
+  /// In fr, this message translates to:
+  /// **'{place} · {date}'**
+  String ntLieuEtHeure(String place, String date);
+
+  /// No description provided for @ntPlaceLiberee.
+  ///
+  /// In fr, this message translates to:
+  /// **'Une place s’est libérée : tu joues !'**
+  String get ntPlaceLiberee;
+
+  /// No description provided for @ntTuJoues.
+  ///
+  /// In fr, this message translates to:
+  /// **'{place} · {date}. Tu es passé de la liste d’attente à l’équipe.'**
+  String ntTuJoues(String place, String date);
+
+  /// No description provided for @ntAvisRecu.
+  ///
+  /// In fr, this message translates to:
+  /// **'{name} t’a laissé un avis · {stars, plural, =1{1 étoile} other{{stars} étoiles}}'**
+  String ntAvisRecu(String name, int stars);
+
+  /// No description provided for @ntAvisSansTexte.
+  ///
+  /// In fr, this message translates to:
+  /// **'Un nouvel avis sur toi comme vendeur.'**
+  String get ntAvisSansTexte;
+
+  /// No description provided for @ntOffreRecue.
+  ///
+  /// In fr, this message translates to:
+  /// **'{name} te propose {price}'**
+  String ntOffreRecue(String name, String price);
+
+  /// No description provided for @ntOffreAcceptee.
+  ///
+  /// In fr, this message translates to:
+  /// **'{name} a accepté ton offre de {price} 🎉'**
+  String ntOffreAcceptee(String name, String price);
+
+  /// No description provided for @ntOffreRefusee.
+  ///
+  /// In fr, this message translates to:
+  /// **'{name} a refusé ton offre de {price}'**
+  String ntOffreRefusee(String name, String price);
+
+  /// No description provided for @ntNouvelleAnnonce.
+  ///
+  /// In fr, this message translates to:
+  /// **'Nouvelle annonce · {alert}'**
+  String ntNouvelleAnnonce(String alert);
+
+  /// No description provided for @ntNouvellePartie.
+  ///
+  /// In fr, this message translates to:
+  /// **'Nouvelle partie · {alert}'**
+  String ntNouvellePartie(String alert);
+
+  /// No description provided for @ofFaireUneOffre.
+  ///
+  /// In fr, this message translates to:
+  /// **'Faire une offre'**
+  String get ofFaireUneOffre;
+
+  /// No description provided for @ofContreOffre.
+  ///
+  /// In fr, this message translates to:
+  /// **'Contre-offre'**
+  String get ofContreOffre;
+
+  /// No description provided for @ofPrixDemande.
+  ///
+  /// In fr, this message translates to:
+  /// **'Prix demandé : {price}'**
+  String ofPrixDemande(String price);
+
+  /// No description provided for @ofTonPrix.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ton prix'**
+  String get ofTonPrix;
+
+  /// No description provided for @ofSousLePrix.
+  ///
+  /// In fr, this message translates to:
+  /// **'{n} % sous le prix demandé'**
+  String ofSousLePrix(int n);
+
+  /// No description provided for @ofEnvoyerX.
+  ///
+  /// In fr, this message translates to:
+  /// **'Proposer {price}'**
+  String ofEnvoyerX(String price);
+
+  /// No description provided for @ofExplication.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ton offre arrive dans la conversation avec le vendeur : il peut l’accepter, la refuser ou te faire une contre-offre.'**
+  String get ofExplication;
+
+  /// No description provided for @ofIndiqueUnPrix.
+  ///
+  /// In fr, this message translates to:
+  /// **'Indique ton prix.'**
+  String get ofIndiqueUnPrix;
+
+  /// No description provided for @ofPasTaPropreOffre.
+  ///
+  /// In fr, this message translates to:
+  /// **'C’est ton offre : l’autre personne y répond.'**
+  String get ofPasTaPropreOffre;
+
+  /// No description provided for @ofDejaRepondu.
+  ///
+  /// In fr, this message translates to:
+  /// **'Cette offre a déjà une réponse.'**
+  String get ofDejaRepondu;
+
+  /// No description provided for @ofOffreX.
+  ///
+  /// In fr, this message translates to:
+  /// **'Offre · {price}'**
+  String ofOffreX(String price);
+
+  /// No description provided for @ofApercu.
+  ///
+  /// In fr, this message translates to:
+  /// **'💰 Offre {price} · {title}'**
+  String ofApercu(String price, String title);
+
+  /// No description provided for @ofTonOffre.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ton offre'**
+  String get ofTonOffre;
+
+  /// No description provided for @ofOffreDe.
+  ///
+  /// In fr, this message translates to:
+  /// **'Offre de {name}'**
+  String ofOffreDe(String name);
+
+  /// No description provided for @ofMoinsN.
+  ///
+  /// In fr, this message translates to:
+  /// **'−{n} %'**
+  String ofMoinsN(int n);
+
+  /// No description provided for @ofAcceptee.
+  ///
+  /// In fr, this message translates to:
+  /// **'Acceptée'**
+  String get ofAcceptee;
+
+  /// No description provided for @ofRefusee.
+  ///
+  /// In fr, this message translates to:
+  /// **'Refusée'**
+  String get ofRefusee;
+
+  /// No description provided for @ofRemplacee.
+  ///
+  /// In fr, this message translates to:
+  /// **'Remplacée'**
+  String get ofRemplacee;
+
+  /// No description provided for @ofEnAttenteReponse.
+  ///
+  /// In fr, this message translates to:
+  /// **'En attente'**
+  String get ofEnAttenteReponse;
+
+  /// No description provided for @ofATaReponse.
+  ///
+  /// In fr, this message translates to:
+  /// **'À toi de répondre'**
+  String get ofATaReponse;
+
+  /// No description provided for @ofAccepter.
+  ///
+  /// In fr, this message translates to:
+  /// **'Accepter'**
+  String get ofAccepter;
+
+  /// No description provided for @ofRefuser.
+  ///
+  /// In fr, this message translates to:
+  /// **'Refuser'**
+  String get ofRefuser;
+
+  /// No description provided for @ofAccepteeDetail.
+  ///
+  /// In fr, this message translates to:
+  /// **'Offre acceptée : convenez du lieu et de l’heure de la remise ici.'**
+  String get ofAccepteeDetail;
+
+  /// No description provided for @ofMarquerVenduQ.
+  ///
+  /// In fr, this message translates to:
+  /// **'Marquer l’annonce comme vendue ?'**
+  String get ofMarquerVenduQ;
+
+  /// No description provided for @ofMarquerVenduDetail.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tu as accepté {price}. Les autres membres verront « Vendu ».'**
+  String ofMarquerVenduDetail(String price);
+
+  /// No description provided for @ofPasEncore.
+  ///
+  /// In fr, this message translates to:
+  /// **'Pas encore'**
+  String get ofPasEncore;
 }
 
 class _AppLocalizationsDelegate

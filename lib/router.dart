@@ -57,6 +57,7 @@ import 'features/common/widgets/pro_gate.dart';
 import 'features/explore/controllers/explore_controller.dart';
 import 'features/explore/screens/explore_screen.dart';
 import 'features/explore/screens/search_screen.dart';
+import 'features/forum/screens/alerts_screen.dart';
 import 'features/forum/screens/chat_screen.dart';
 import 'features/forum/screens/community_screen.dart';
 import 'features/forum/screens/discussion_screen.dart';
@@ -69,6 +70,7 @@ import 'features/home/widgets/player_shell.dart';
 import 'features/onboarding/screens/splash_screen.dart';
 import 'features/organizer_onboarding/controllers/organizer_controller.dart';
 import 'features/notifications/screens/notification_prefs_screen.dart';
+import 'features/notifications/data/notification_models.dart';
 import 'features/notifications/screens/notifications_screen.dart';
 import 'features/payments/screens/checkout_screen.dart';
 import 'features/payments/data/receipt.dart';
@@ -220,6 +222,9 @@ abstract final class Routes {
   static const subscriptionCancelled = '/premium/cancelled'; // SUB-08
   static const receipt = '/receipt'; // SUB-09 (extra: ReceiptEntry)
   static const notifications = '/notifications'; // NOT-01 / NOT-02 / NOT-03
+  static const notificationsCommunity = '/notifications?filtre=community'; // the same, on « Communauté »
+  static const forumAlerts = '/frm/alertes'; // « Mes alertes » (saved searches)
+  static String forumAlert(String id) => '/frm/alertes/$id'; // what an alert matches
   static const notificationSettings = '/settings/notifications'; // NOT-10
 
   // Pro onboardings (phase 4).
@@ -373,6 +378,8 @@ final routerProvider = Provider<GoRouter>((ref) {
       _root('/frm/discussion/:id', (s) => DiscussionScreen(postId: s.pathParameters['id']!)),
       _root('/frm/discussion/:id/modifier', (s) => NewPostScreen(editId: s.pathParameters['id']!)),
       _root(Routes.messages, (_) => const MessagesScreen()),
+      _root(Routes.forumAlerts, (_) => const AlertsScreen()),
+      _root('/frm/alertes/:id', (s) => AlertResultsScreen(alertId: s.pathParameters['id']!)),
       _root(Routes.messagesNew, (s) => NewConversationScreen(addTo: s.uri.queryParameters['ajouter'])),
       _root(
         '/frm/messages/c/:id',
@@ -599,7 +606,12 @@ final routerProvider = Provider<GoRouter>((ref) {
       _root(Routes.subscriptionRetention, (_) => const RetentionOfferScreen()),
       _root(Routes.subscriptionCancelled, (_) => const CancelledScreen()),
       _root(Routes.receipt, (s) => ReceiptScreen(entry: s.extra! as ReceiptEntry)),
-      _root(Routes.notifications, (_) => const NotificationCenterScreen()),
+      _root(
+        Routes.notifications,
+        (s) => NotificationCenterScreen(
+          initialFilter: NotificationCategory.values.where((c) => c.name == s.uri.queryParameters['filtre']).firstOrNull,
+        ),
+      ),
       _root(Routes.notificationSettings, (_) => const NotificationPrefsScreen()),
       _owner(Routes.ownerCompany, const CompanyScreen()),
       _owner(Routes.ownerAddress, const AddressScreen()),

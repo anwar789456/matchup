@@ -357,6 +357,18 @@ class SqliteForumRepository implements ForumRepository {
       where.add("id IN (SELECT sujet_id FROM forum_recherches WHERE statut = 'ouverte' AND le > ?)");
       args.add(_nowIso);
     }
+    if (query.listingsOnly || query.maxPrice != null || query.size != null) {
+      final listing = ["statut = 'disponible'"];
+      if (query.maxPrice != null) {
+        listing.add('prix <= ?');
+        args.add(query.maxPrice);
+      }
+      if (query.size != null && query.size!.trim().isNotEmpty) {
+        listing.add('LOWER(taille) = ?');
+        args.add(query.size!.trim().toLowerCase());
+      }
+      where.add('id IN (SELECT sujet_id FROM forum_annonces WHERE ${listing.join(' AND ')})');
+    }
     final rows = await _rows(db, await db.query('forum_sujets', where: where.join(' AND '), whereArgs: args));
     rows.sort((a, b) {
       // Pinned posts lead « Tendance »; « Récents » is the plain timeline, newest first.
@@ -701,6 +713,74 @@ class SqliteForumRepository implements ForumRepository {
     await db.update('forum_sujets', {'statut': ForumStatus.deleted.code}, where: 'id = ? AND auteur_id = ?', whereArgs: [postId, meId]);
   }
 
+  // ── Saved searches ────────────────────────────────────────────────────────────────────────
+
+  @override
+  Future<List<ForumAlert>> alerts() async {
+    final db = await _db;
+    final rows = await db.query('forum_alertes', where: 'utilisateur_id = ?', whereArgs: [meId], orderBy: 'cree_le DESC');
+    return [
+      for (final r in rows)
+        await () async {
+          final a = _alert(r);
+          return ForumAlert(
+            id: a.id,
+            kind: a.kind,
+            createdAt: a.createdAt,
+            words: a.words,
+            sport: a.sport,
+            maxPrice: a.maxPrice,
+            size: a.size,
+            active: a.active,
+            matches: (await feed(a.query, limit: 1)).total,
+          );
+        }(),
+    ];
+  }
+
+  static ForumAlert _alert(Map<String, Object?> r) => ForumAlert(
+    id: r['id']! as String,
+    kind: AlertKind.fromCode(r['type'] as String?),
+    createdAt: DateTime.parse(r['cree_le']! as String),
+    words: r['mots'] as String? ?? '',
+    sport: MuSport.values.where((s) => s.name == r['sport']).firstOrNull,
+    maxPrice: (r['prix_max'] as num?)?.toDouble(),
+    size: r['taille'] as String?,
+    active: r['actif'] == 1,
+  );
+
+  @override
+  Future<ForumAlert> saveAlert(AlertKind kind, {String words = '', MuSport? sport, double? maxPrice, String? size}) async {
+    if (words.trim().isEmpty && sport == null && maxPrice == null && (size ?? '').trim().isEmpty) {
+      throw ForumRuleException(l10n.alAuMoinsUnCritere);
+    }
+    final db = await _db;
+    final id = newForumId();
+    await db.insert('forum_alertes', {
+      'id': id,
+      'utilisateur_id': meId,
+      'type': kind.code,
+      'mots': words.trim(),
+      'sport': sport?.name,
+      'prix_max': maxPrice,
+      'taille': _blankToNull(size),
+      'cree_le': _nowIso,
+    });
+    return _alert((await db.query('forum_alertes', where: 'id = ?', whereArgs: [id])).single);
+  }
+
+  @override
+  Future<void> setAlertActive(String id, {required bool active}) async {
+    final db = await _db;
+    await db.update('forum_alertes', {'actif': active ? 1 : 0}, where: 'id = ? AND utilisateur_id = ?', whereArgs: [id, meId]);
+  }
+
+  @override
+  Future<void> deleteAlert(String id) async {
+    final db = await _db;
+    await db.delete('forum_alertes', where: 'id = ? AND utilisateur_id = ?', whereArgs: [id, meId]);
+  }
+
   // ── Cherche joueurs ───────────────────────────────────────────────────────────────────────
 
   Future<Map<String, Object?>> _search(DatabaseExecutor db, String postId) async {
@@ -727,6 +807,33 @@ class SqliteForumRepository implements ForumRepository {
       }, conflictAlgorithm: ConflictAlgorithm.ignore);
     });
     return (await _post(db, postId)).search!.status;
+  }
+
+  @override
+  Future<bool> demoJoin(String postId) async {
+    final db = await _db;
+    final r = (await db.query('forum_recherches', where: 'sujet_id = ?', whereArgs: [postId])).firstOrNull;
+    if (r == null || r['statut'] != 'ouverte') return false;
+    final joined = {
+      for (final p in await db.query('forum_participations', where: 'sujet_id = ?', whereArgs: [postId])) p['auteur_id']! as String,
+    };
+    final min = (r['niveau_min'] as num?)?.toDouble();
+    final max = (r['niveau_max'] as num?)?.toDouble();
+    final candidates = [
+      for (final m in await db.query('forum_membres', where: "id LIKE 'demo-%' AND id <> ? AND niveau IS NOT NULL", whereArgs: [ForumSeed.me]))
+        if (m['id'] != r['auteur_id'] && !joined.contains(m['id']))
+          (id: m['id']! as String, level: (m['niveau']! as num).toDouble(), sport: m['sport'] as String?),
+    ].where((m) => (min == null || m.level >= min) && (max == null || m.level <= max)).toList()
+      // Someone who plays that sport first.
+      ..sort((a, b) => (a.sport == r['sport'] ? 0 : 1).compareTo(b.sport == r['sport'] ? 0 : 1));
+    if (candidates.isEmpty) return false;
+    await db.insert('forum_participations', {
+      'id': newForumId(),
+      'auteur_id': candidates.first.id,
+      'sujet_id': postId,
+      'cree_le': _nowIso,
+    }, conflictAlgorithm: ConflictAlgorithm.ignore);
+    return true;
   }
 
   @override

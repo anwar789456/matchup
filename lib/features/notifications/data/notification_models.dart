@@ -129,7 +129,12 @@ enum NotificationType {
   refundRequested(0, NotificationCategory.payments),
   topUpDone(0, NotificationCategory.payments),
   playersJoined(0, NotificationCategory.matches),
-  playerJoinedLive(0, NotificationCategory.matches);
+  playerJoinedLive(0, NotificationCategory.matches),
+  // Communauté beside the catalog: Marketplace and saved searches.
+  sellerReview(0, NotificationCategory.community),
+  offerReceived(0, NotificationCategory.community),
+  offerAnswered(0, NotificationCategory.community),
+  savedSearchMatch(0, NotificationCategory.community);
 
   const NotificationType(this.number, this.category);
 

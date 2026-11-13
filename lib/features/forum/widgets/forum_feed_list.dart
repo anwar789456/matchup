@@ -165,6 +165,8 @@ class ForumPostTile extends ConsumerWidget {
     void more() => showForumMenu(context, [
       if (post.listing != null && !post.mine.author && !post.listing!.sold)
         ForumMenuItem(PhosphorIcons.chatCircle(), l10n.mktEcrireAuVendeur, () => contactSeller(context, ref, post)),
+      if (post.listing != null && !post.mine.author && !post.listing!.sold)
+        ForumMenuItem(PhosphorIcons.tag(), l10n.ofFaireUneOffre, () => makeOffer(context, ref, post)),
       ForumMenuItem(
         post.mine.saved ? PhosphorIcons.bookmarkSimple(PhosphorIconsStyle.fill) : PhosphorIcons.bookmarkSimple(),
         post.mine.saved ? l10n.forumRetirerDesFavoris : l10n.forumEnregistrer,
