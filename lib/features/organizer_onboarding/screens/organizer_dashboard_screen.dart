@@ -8,7 +8,7 @@ import '../../../theme/theme.dart';
 import '../../../ui/ui.dart';
 import '../../common/data/pro_providers.dart';
 import '../../common/widgets/pro_dashboard_scaffold.dart';
-import '../../common/widgets/pro_wizard_scaffold.dart' show ProSpace, showComingSoon;
+import '../../common/widgets/pro_wizard_scaffold.dart' show ProSpace;
 import '../controllers/organizer_controller.dart';
 import '../../../l10n/l10n.dart';
 
@@ -58,14 +58,20 @@ class OrganizerDashboardScreen extends ConsumerWidget {
                 label: l10n.creerUnTournoi,
                 leading: PhosphorIcons.plus(),
                 size: MuButtonSize.l,
-                onPressed: () => showComingSoon(context),
+                onPressed: () => context.push(Routes.organizerCreer),
+              ),
+              MuButton.secondary(
+                label: l10n.trnMesTournois,
+                leading: PhosphorIcons.trophy(),
+                size: MuButtonSize.l,
+                onPressed: () => context.push(Routes.organizerTournois),
               ),
               if (last != null)
                 MuButton.secondary(
                   label: l10n.reprendre(last.name),
                   leading: PhosphorIcons.copy(),
                   size: MuButtonSize.l,
-                  onPressed: () => showComingSoon(context),
+                  onPressed: () => context.push(Routes.organizerCreer, extra: last),
                 ),
             ],
           ),

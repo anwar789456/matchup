@@ -14608,4 +14608,876 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get forumSignalementAnonyme =>
       'Signalement anonyme · vérifié par un modérateur sous 24 h.';
+
+  @override
+  String get trnA => 'À';
+
+  @override
+  String get trnADeterminer => 'À déterminer';
+
+  @override
+  String get trnAValider => 'À valider';
+
+  @override
+  String get trnAdresse => 'Adresse';
+
+  @override
+  String get trnAnnonce => 'Annonce';
+
+  @override
+  String get trnAnnonceEnvoyee => 'Annonce envoyée aux équipes';
+
+  @override
+  String get trnAnnulee => 'Annulée';
+
+  @override
+  String get trnApercuJoueur => 'Aperçu joueur';
+
+  @override
+  String get trnApercuLead => 'Voici ce que les joueurs verront dans Explorer.';
+
+  @override
+  String get trnApercuNote =>
+      'Le format et les frais ne peuvent plus changer. Les dates et les horaires restent modifiables : les équipes sont alors prévenues.';
+
+  @override
+  String get trnApercuTitre => 'Vérifie avant de publier';
+
+  @override
+  String get trnAucunMatchPret => 'Aucun match prêt à jouer pour l’instant.';
+
+  @override
+  String get trnAucuneEquipe => 'Aucune équipe ici pour l’instant.';
+
+  @override
+  String get trnCapitaine => 'Capitaine';
+
+  @override
+  String get trnChoisirDates => 'Choisir les dates';
+
+  @override
+  String get trnChoisisVainqueur =>
+      'Match nul en phase finale : choisis le vainqueur.';
+
+  @override
+  String get trnCloturer => 'Clôturer les inscriptions';
+
+  @override
+  String get trnClub => 'Club';
+
+  @override
+  String get trnClubRequis => 'Indique le club où se joue le tournoi.';
+
+  @override
+  String get trnConfirmerNote =>
+      'Le classement et le tableau se mettent à jour. Les joueurs reçoivent le résultat.';
+
+  @override
+  String get trnConfirmerScoreFinal => 'Confirmer le score final';
+
+  @override
+  String get trnCourtsDisponibles => 'Courts disponibles';
+
+  @override
+  String get trnCreerDescription => 'Poules ou élimination directe : 5 étapes.';
+
+  @override
+  String get trnDates => 'Dates';
+
+  @override
+  String get trnDatesRequises => 'Choisis les dates du tournoi.';
+
+  @override
+  String get trnDe => 'De';
+
+  @override
+  String get trnDotation => 'Dotation';
+
+  @override
+  String get trnDureeMatch => 'Durée d’un créneau';
+
+  @override
+  String get trnEliminationDescription =>
+      'Un match perdu et c’est fini. Plus court, 1 seul match garanti.';
+
+  @override
+  String get trnEliminationDirecte => 'Élimination directe';
+
+  @override
+  String get trnEnDirect => 'En direct';
+
+  @override
+  String get trnEncaisse => 'Encaissé';
+
+  @override
+  String get trnEnvoyer => 'Envoyer';
+
+  @override
+  String get trnEquipes => 'Équipes';
+
+  @override
+  String get trnEtapes => '5 étapes';
+
+  @override
+  String get trnFiltrerEquipes => 'Filtrer les équipes';
+
+  @override
+  String get trnFinale => 'Finale';
+
+  @override
+  String get trnFinalistes => 'Finalistes';
+
+  @override
+  String get trnFormat => 'Format';
+
+  @override
+  String get trnFormatLead =>
+      'Tu peux tout modifier tant qu’aucune équipe n’est inscrite.';
+
+  @override
+  String get trnFormatTitre => 'Format et règles';
+
+  @override
+  String get trnFraisLead =>
+      'Les équipes paient en ligne pour réserver leur place.';
+
+  @override
+  String get trnFraisParEquipe => 'Frais d’inscription par équipe';
+
+  @override
+  String get trnFraisTitre => 'Frais et prix';
+
+  @override
+  String get trnGenerer => 'Générer';
+
+  @override
+  String get trnInfosLead =>
+      'C’est ce que les joueurs voient en premier dans Explorer.';
+
+  @override
+  String get trnInfosTitre => 'Les infos de base';
+
+  @override
+  String get trnInscriptions => 'Inscriptions';
+
+  @override
+  String get trnIntrouvable => 'Ce tournoi n’existe plus';
+
+  @override
+  String get trnMesTournois => 'Mes tournois';
+
+  @override
+  String get trnMessage => 'Message';
+
+  @override
+  String get trnMotifAutre => 'Autre raison';
+
+  @override
+  String get trnMotifComplet => 'Tournoi complet';
+
+  @override
+  String get trnMotifDuRefus => 'Motif du refus';
+
+  @override
+  String get trnMotifNiveau => 'Niveau hors fourchette';
+
+  @override
+  String get trnNiveauMoyen => 'Niveau moyen des équipes';
+
+  @override
+  String get trnNomDuTournoi => 'Nom du tournoi';
+
+  @override
+  String get trnNomHelper =>
+      'Court et facile à retenir : il apparaît sur l’affiche.';
+
+  @override
+  String get trnNomTropCourt => 'Donne un nom d’au moins 3 caractères.';
+
+  @override
+  String get trnNombreEquipes => 'Nombre d’équipes';
+
+  @override
+  String get trnNonPaye => 'Non payé';
+
+  @override
+  String get trnPaye => 'Payé';
+
+  @override
+  String get trnPlanning => 'Planning';
+
+  @override
+  String get trnPlanningAGenerer => 'À générer quand les équipes sont validées';
+
+  @override
+  String get trnPlanningBrouillon => 'Proposé, pas encore publié';
+
+  @override
+  String get trnPlanningGenere => 'Planning généré';
+
+  @override
+  String get trnPlanningPropose => 'Planning proposé';
+
+  @override
+  String get trnPlanningPublie => 'Publié : les joueurs voient le tableau';
+
+  @override
+  String get trnPlanningVide =>
+      'Valide au moins 2 équipes, puis touche « Générer ».';
+
+  @override
+  String get trnPoulesDescription =>
+      'Les 2 premiers de chaque poule passent en phase finale.';
+
+  @override
+  String get trnPoulesPhaseFinale => 'Poules + phase finale';
+
+  @override
+  String get trnPresentation => 'Présentation';
+
+  @override
+  String get trnPublie => 'Tournoi publié';
+
+  @override
+  String get trnPublie2 => 'Publié';
+
+  @override
+  String get trnPublier => 'Publier le tournoi';
+
+  @override
+  String get trnPublierTableau => 'Publier';
+
+  @override
+  String get trnRecapitulatif => 'Récapitulatif';
+
+  @override
+  String get trnRefusDescription =>
+      'Choisis un motif : il accompagne la notification envoyée au capitaine.';
+
+  @override
+  String get trnRefusee => 'Refusée';
+
+  @override
+  String get trnRefusees => 'Refusées';
+
+  @override
+  String get trnRegenerer => 'Régénérer';
+
+  @override
+  String get trnReposEntreMatchs => 'Repos entre 2 matchs';
+
+  @override
+  String get trnResteImpourToi => 'Reste pour toi';
+
+  @override
+  String get trnRienAValider => 'Rien à valider';
+
+  @override
+  String get trnRienPublie =>
+      'Rien n’est envoyé aux équipes avant ta publication.';
+
+  @override
+  String get trnRouvrir => 'Rouvrir les inscriptions';
+
+  @override
+  String get trnScoreConfirme => 'Score confirmé';
+
+  @override
+  String get trnScores => 'Scores';
+
+  @override
+  String get trnScoresApresPlanning => 'Disponible une fois le planning généré';
+
+  @override
+  String get trnScoresDescription => 'Saisie au bord du court';
+
+  @override
+  String get trnScoresEnDirect => 'Scores en direct';
+
+  @override
+  String get trnStatutAnnule => 'Annulé';
+
+  @override
+  String get trnStatutBrouillon => 'Brouillon';
+
+  @override
+  String get trnStatutEnCours => 'En cours';
+
+  @override
+  String get trnStatutFerme => 'Inscriptions closes';
+
+  @override
+  String get trnStatutOuvert => 'Inscriptions ouvertes';
+
+  @override
+  String get trnStatutTermine => 'Terminé';
+
+  @override
+  String get trnStepApercu => 'Aperçu';
+
+  @override
+  String get trnStepFormat => 'Format & règles';
+
+  @override
+  String get trnStepFrais => 'Frais & prix';
+
+  @override
+  String get trnStepInfos => 'Infos';
+
+  @override
+  String get trnStepTerrains => 'Terrains & dates';
+
+  @override
+  String get trnTableauPublie => 'Tableau publié';
+
+  @override
+  String get trnTerrainsLead =>
+      'On calcule le planning des matchs à partir de ces créneaux.';
+
+  @override
+  String get trnTerrainsPlanningNote =>
+      'Les courts et les horaires se règlent dans le planning, une fois les équipes validées.';
+
+  @override
+  String get trnTerrainsTitre => 'Terrains et dates';
+
+  @override
+  String get trnTesContraintes => 'Tes contraintes';
+
+  @override
+  String get trnToucheUnMatch => 'Touche un match pour saisir le score.';
+
+  @override
+  String get trnTroisieme => '3e place';
+
+  @override
+  String get trnVainqueur => 'Vainqueur';
+
+  @override
+  String get trnVainqueurs => 'Vainqueurs';
+
+  @override
+  String get trnValidee => 'Validée';
+
+  @override
+  String get trnValidees => 'Validées';
+
+  @override
+  String get trnVisibleExplorer =>
+      'Le tournoi est visible par tous les joueurs dans Explorer.';
+
+  @override
+  String get trnVoirApercu => 'Voir l’aperçu';
+
+  @override
+  String trnAValiderN(int n) {
+    return '$n à valider';
+  }
+
+  @override
+  String trnAVenirN(int n) {
+    return 'À venir · $n';
+  }
+
+  @override
+  String trnAjouterPoint(String name) {
+    return 'Ajouter un point à $name';
+  }
+
+  @override
+  String trnAnnonceDescription(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Aux $n équipes inscrites',
+      one: 'À 1 équipe inscrite',
+      zero: 'À toutes les équipes inscrites',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String trnCourtN(int n) {
+    return 'Court $n';
+  }
+
+  @override
+  String trnDemie(int n) {
+    return 'Demie $n';
+  }
+
+  @override
+  String trnEliminationResume(int n) {
+    return 'Élimination directe · $n équipes';
+  }
+
+  @override
+  String trnEnCoursN(int n) {
+    return 'En cours · $n';
+  }
+
+  @override
+  String trnEnDirectN(int n) {
+    return 'En direct · $n';
+  }
+
+  @override
+  String trnEquipesSur(int a, int b) {
+    return '$a/$b équipes';
+  }
+
+  @override
+  String trnFraisHelper(String amount) {
+    return 'Soit $amount par joueur. Paiement en ligne obligatoire pour s’inscrire.';
+  }
+
+  @override
+  String trnJoueursManquants(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Il manque $n joueurs',
+      one: 'Il manque 1 joueur',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String trnJoueursParEquipe(int n) {
+    return '$n joueurs par équipe, capitaine compris.';
+  }
+
+  @override
+  String trnPasAssezCreneaux(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n matchs sans horaire',
+      one: '1 match sans horaire',
+    );
+    return 'Pas assez de créneaux : $_temp0. Ajoute un court ou une plage horaire.';
+  }
+
+  @override
+  String trnPouleJ(String p, int j) {
+    return 'Poule $p · J$j';
+  }
+
+  @override
+  String trnPoulesResume(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n poules',
+      one: '1 poule',
+    );
+    return '$_temp0 puis phase finale';
+  }
+
+  @override
+  String trnQuart(int n) {
+    return 'QF $n';
+  }
+
+  @override
+  String trnRecapFrais(String fee, String prize) {
+    return '$fee par équipe · dotation $prize';
+  }
+
+  @override
+  String trnRecapInfos(String sport, String min, String max) {
+    return '$sport · niveau moyen $min – $max';
+  }
+
+  @override
+  String trnRefusRembourse(String amount) {
+    return 'Une équipe refusée est remboursée en entier ($amount) et prévenue avec ton message.';
+  }
+
+  @override
+  String trnRefuserEquipe(String name) {
+    return 'Refuser $name ?';
+  }
+
+  @override
+  String trnRetirerPoint(String name) {
+    return 'Retirer un point à $name';
+  }
+
+  @override
+  String trnSiToutesInscrites(int n) {
+    return 'Si les $n équipes s’inscrivent';
+  }
+
+  @override
+  String trnTerminesN(int n) {
+    return 'Terminés · $n';
+  }
+
+  @override
+  String trnTourDe(int size, int n) {
+    return 'Tour de $size · $n';
+  }
+
+  @override
+  String get trnAnnulerInscription => 'Annuler l’inscription';
+
+  @override
+  String get trnAuTotal => 'au total';
+
+  @override
+  String get trnAucuneEquipeValidee => 'Aucune équipe validée pour l’instant.';
+
+  @override
+  String get trnCodeCopie => 'Code copié';
+
+  @override
+  String get trnCodeInvitation => 'Code d’invitation';
+
+  @override
+  String get trnCoequipiersNote =>
+      'Les autres te rejoignent avec le code d’invitation, sans payer : tu règles l’inscription de l’équipe.';
+
+  @override
+  String get trnComplet => 'Complet';
+
+  @override
+  String get trnCopierCode => 'Copier le code';
+
+  @override
+  String get trnCreeTonEquipe => 'Crée ton équipe';
+
+  @override
+  String get trnCreeTonEquipeLead =>
+      'Un nom, un capitaine. Tes coéquipiers peuvent aussi te rejoindre avec un code.';
+
+  @override
+  String get trnCreerEquipe => 'Créer l’équipe';
+
+  @override
+  String get trnDemiFinales => 'Demi-finales';
+
+  @override
+  String get trnDetailDuTournoi => 'Détail du tournoi';
+
+  @override
+  String get trnDiff => 'Diff.';
+
+  @override
+  String get trnEnCoursValidation =>
+      'L’organisateur vérifie le niveau et les places.';
+
+  @override
+  String get trnEquipe => 'Équipe';
+
+  @override
+  String get trnEquipeCreee => 'Équipe créée';
+
+  @override
+  String get trnGererTournoi => 'Gérer le tournoi';
+
+  @override
+  String get trnHuitiemes => 'Huitièmes de finale';
+
+  @override
+  String get trnInscription => 'Inscription';
+
+  @override
+  String get trnInscriptionConfirmee => 'Inscription confirmée';
+
+  @override
+  String get trnInscriptionEnvoyee => 'Inscription envoyée';
+
+  @override
+  String get trnInscriptionsBientot => 'Inscriptions bientôt';
+
+  @override
+  String get trnInscrireEquipe => 'Inscrire mon équipe';
+
+  @override
+  String get trnJ => 'J';
+
+  @override
+  String get trnJaiUnCode => 'J’ai un code d’invitation';
+
+  @override
+  String get trnLeTableau => 'Le tableau';
+
+  @override
+  String get trnLesPoules => 'Les poules';
+
+  @override
+  String get trnLieu => 'Lieu';
+
+  @override
+  String get trnNomEquipe => 'Nom de l’équipe';
+
+  @override
+  String get trnNomEquipeRequis => 'Donne un nom à ton équipe.';
+
+  @override
+  String get trnPaiementAttendu => 'Paie pour réserver ta place.';
+
+  @override
+  String get trnPartageCode => 'Partage ce code à tes coéquipiers';
+
+  @override
+  String get trnPasDEquipe => 'Tu n’as pas d’équipe dans ce tournoi.';
+
+  @override
+  String get trnPayerInscription => 'Payer l’inscription';
+
+  @override
+  String get trnPhaseFinale => 'Phase finale';
+
+  @override
+  String get trnPlaces => 'Places';
+
+  @override
+  String get trnPointsNote =>
+      'Victoire = 3 pts, nul = 1 pt. À égalité : différence, puis points marqués.';
+
+  @override
+  String get trnPts => 'Pts';
+
+  @override
+  String get trnQualifie => 'Qualifié';
+
+  @override
+  String get trnQuartsDeFinale => 'Quarts de finale';
+
+  @override
+  String get trnRefuseeParOrga => 'Refusée par l’organisateur';
+
+  @override
+  String get trnRejoindre => 'Rejoindre';
+
+  @override
+  String get trnRejoindreDescription =>
+      'Le capitaine de l’équipe t’a envoyé un code de 6 lettres.';
+
+  @override
+  String get trnRejoindreEquipe => 'Rejoindre une équipe';
+
+  @override
+  String get trnRembourseSiRefus => 'Refusée ? Tu es remboursé en entier.';
+
+  @override
+  String get trnTableauDuTournoi => 'Tableau du tournoi';
+
+  @override
+  String get trnTableauPasPublie => 'Le tableau n’est pas encore publié.';
+
+  @override
+  String get trnTesMatchs => 'Tes matchs';
+
+  @override
+  String get trnTirage => 'Tirage et calendrier';
+
+  @override
+  String get trnTirageNote =>
+      'Ton calendrier arrive dès que l’organisateur publie le tableau.';
+
+  @override
+  String get trnV => 'V';
+
+  @override
+  String get trnValidationOrga => 'Validation par l’organisateur';
+
+  @override
+  String trnCapitaineNom(String name) {
+    return 'Capitaine : $name';
+  }
+
+  @override
+  String trnCoequipiers(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Tes $n coéquipiers',
+      one: 'Ton partenaire',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String trnEquipesInscrites(int n) {
+    return 'Équipes inscrites · $n';
+  }
+
+  @override
+  String trnInscriptionEyebrow(String team) {
+    return 'INSCRIPTION · $team';
+  }
+
+  @override
+  String trnInscriptionPayee(String amount) {
+    return 'Inscription payée · $amount';
+  }
+
+  @override
+  String trnInscritesSur(int a, int b) {
+    return '$a/$b inscrites';
+  }
+
+  @override
+  String trnJoueurN(int n) {
+    return 'Joueur $n';
+  }
+
+  @override
+  String trnMembresN(int a, int b) {
+    return 'Membres · $a/$b';
+  }
+
+  @override
+  String trnMonEquipe(String name) {
+    return 'Mon équipe $name';
+  }
+
+  @override
+  String trnNiveauFourchette(String min, String max) {
+    return 'Niveau $min – $max';
+  }
+
+  @override
+  String trnParEquipeDe(int n) {
+    return 'par équipe de $n';
+  }
+
+  @override
+  String trnPouleX(String p) {
+    return 'Poule $p';
+  }
+
+  @override
+  String trnToi(String name) {
+    return '$name · toi';
+  }
+
+  @override
+  String get trnAJouer => 'À jouer';
+
+  @override
+  String get trnAnnonceVisible =>
+      'Les équipes la voient sur la page du tournoi et de leur équipe.';
+
+  @override
+  String get trnAnnoncesOrga => 'Annonces de l’organisateur';
+
+  @override
+  String get trnAucunPlanning => 'Aucun planning pour l’instant';
+
+  @override
+  String get trnAucuneAnnonce => 'Aucune annonce envoyée';
+
+  @override
+  String get trnContre => 'contre';
+
+  @override
+  String get trnDejaEnvoyees => 'Déjà envoyées';
+
+  @override
+  String get trnMatch => 'Match';
+
+  @override
+  String get trnMatchEnDirect => 'Match en direct';
+
+  @override
+  String get trnMonInscription => 'Mon inscription';
+
+  @override
+  String get trnNombrePlaces => 'Nombre de places';
+
+  @override
+  String get trnOu => 'Où';
+
+  @override
+  String get trnParPersonne => 'par personne';
+
+  @override
+  String get trnPartagerResume => 'Partager le résumé';
+
+  @override
+  String get trnProchainsMatchs => 'Prochains matchs';
+
+  @override
+  String get trnQuand => 'Quand';
+
+  @override
+  String get trnResume => 'Résumé du match';
+
+  @override
+  String get trnSInscrire => 'S’inscrire';
+
+  @override
+  String get trnScoreMisAJour =>
+      'Le score se met à jour pendant que l’organisateur le saisit.';
+
+  @override
+  String get trnTabAnnonces => 'Annonces';
+
+  @override
+  String get trnTabTableau => 'Tableau';
+
+  @override
+  String get trnTabTournois => 'Tournois';
+
+  @override
+  String get trnTableauDeBord => 'Tableau de bord';
+
+  @override
+  String get trnTermine => 'Terminé';
+
+  @override
+  String get trnType => 'Type';
+
+  @override
+  String get trnTypeEvenement => 'Événement';
+
+  @override
+  String get trnTypeEvenementDescription =>
+      'Journée initiation ou soirée : inscription individuelle, sans tableau.';
+
+  @override
+  String get trnTypeTournoi => 'Tournoi';
+
+  @override
+  String get trnTypeTournoiDescription =>
+      'Des équipes, des poules ou un tableau, un vainqueur.';
+
+  @override
+  String get trnVoir => 'Voir';
+
+  @override
+  String trnEquipesAValider(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n équipes à valider',
+      one: '1 équipe à valider',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String trnEvenementResume(int n) {
+    return 'Inscription individuelle · $n places';
+  }
+
+  @override
+  String trnParticipantsN(int n) {
+    return 'Participants · $n';
+  }
+
+  @override
+  String trnRecapTexte(
+    String winner,
+    String loser,
+    String score,
+    String stage,
+    String tournament,
+  ) {
+    return '$winner gagne $score contre $loser ($stage, $tournament). Résultat publié sur MatchUp.';
+  }
 }

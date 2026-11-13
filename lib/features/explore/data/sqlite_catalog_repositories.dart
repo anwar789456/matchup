@@ -40,7 +40,15 @@ class SqliteTournamentsRepository implements TournamentsRepository {
   Future<List<MuTournament>> nearby() async {
     if (_offline()) throw const OfflineException();
     return [
-      for (final r in await (await _database.db).query('tournois', orderBy: 'debut'))
+      // The app's own tournaments (Tournois module) count their validated teams and hide while
+      // drafted or cancelled; the story's demo rows keep their numbers.
+      for (final r in await (await _database.db).rawQuery('''
+        SELECT t.*, CASE WHEN t.organisateur_id IS NULL THEN t.equipes_inscrites ELSE (
+          SELECT COUNT(*) FROM tournoi_equipes e JOIN tournoi_decisions d ON d.equipe_id = e.id
+          WHERE e.tournoi_id = t.id AND e.annulee = 0 AND d.statut = 'confirmee') END AS inscrites
+        FROM tournois t
+        WHERE t.statut NOT IN ('brouillon', 'annule')
+        ORDER BY t.debut'''))
         MuTournament(
           id: r['id']! as String,
           sport: MuSport.values.byName(r['sport']! as String),
@@ -52,7 +60,7 @@ class SqliteTournamentsRepository implements TournamentsRepository {
           feePerTeam: r['frais_equipe']! as num,
           prize: r['dotation'] as num?,
           teamsTotal: r['equipes_total']! as int,
-          teamsRegistered: r['equipes_inscrites']! as int,
+          teamsRegistered: r['inscrites']! as int,
           levelMin: (r['niveau_min'] as num?)?.toDouble(),
           levelMax: (r['niveau_max'] as num?)?.toDouble(),
         ),

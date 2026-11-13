@@ -1,0 +1,52 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import '../../../core/sync/sync_service.dart';
+import '../data/tournoi_repository.dart';
+import '../logic/bracket_logic.dart';
+
+// Every list watches the sync, so rows written on another phone (a team registering, a score)
+// show up within one sync (30 s). Screens invalidate them after their own writes.
+
+/// ORG-04: the tournaments I organise, soonest first.
+final mesTournoisProvider = FutureProvider<List<Tournoi>>((ref) {
+  ref.watch(syncRevisionProvider);
+  return ref.watch(tournoiRepositoryProvider).tournois(mine: true);
+});
+
+final tournoiProvider = FutureProvider.family<Tournoi?, String>((ref, id) {
+  ref.watch(syncRevisionProvider);
+  return ref.watch(tournoiRepositoryProvider).tournoi(id);
+});
+
+final equipesProvider = FutureProvider.family<List<Equipe>, String>((ref, id) {
+  ref.watch(syncRevisionProvider);
+  return ref.watch(tournoiRepositoryProvider).equipes(id);
+});
+
+final matchsProvider = FutureProvider.family<List<MatchPlan>, String>((ref, id) {
+  ref.watch(syncRevisionProvider);
+  return ref.watch(tournoiRepositoryProvider).matchs(id);
+});
+
+/// TRN-02/06/07: my team in this tournament, or null.
+final monEquipeProvider = FutureProvider.family<Equipe?, String>((ref, id) {
+  ref.watch(syncRevisionProvider);
+  return ref.watch(tournoiRepositoryProvider).monEquipe(id);
+});
+
+/// ORG-14: the organiser's announcements, newest first.
+final annoncesProvider = FutureProvider.family<List<(String, DateTime)>, String>((ref, id) {
+  ref.watch(syncRevisionProvider);
+  return ref.watch(tournoiRepositoryProvider).annonces(id);
+});
+
+/// Re-reads one tournament's screens after a write.
+void refreshTournoi(WidgetRef ref, String id) {
+  ref
+    ..invalidate(monEquipeProvider(id))
+    ..invalidate(annoncesProvider(id))
+    ..invalidate(mesTournoisProvider)
+    ..invalidate(tournoiProvider(id))
+    ..invalidate(equipesProvider(id))
+    ..invalidate(matchsProvider(id));
+}

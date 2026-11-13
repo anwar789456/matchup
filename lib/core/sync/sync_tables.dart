@@ -96,5 +96,13 @@ const syncTables = <SyncTable>[
   SyncTable('forum_blocages'),
   SyncTable('forum_visites'),
 
-  // ── Tournois (Ayoub): add your tables here.
+  // ── Tournois (Ayoub): everyone sees every tournament; each row has one author ──────────────
+  SyncTable('tournois', scope: SyncScope.shared, ownerColumn: 'organisateur_id'),
+  SyncTable('tournoi_equipes', scope: SyncScope.shared, ownerColumn: 'capitaine_id'),
+  SyncTable('tournoi_membres', scope: SyncScope.shared, ownerColumn: 'auteur_id'),
+  SyncTable('tournoi_decisions', scope: SyncScope.shared, ownerColumn: 'organisateur_id'),
+  SyncTable('tournoi_matchs', scope: SyncScope.shared, ownerColumn: 'organisateur_id'),
+  SyncTable('tournoi_annonces', scope: SyncScope.shared, ownerColumn: 'organisateur_id'),
+
+  // ── New tables: add them in their module's section above.
 ];
