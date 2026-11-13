@@ -477,6 +477,58 @@ drop policy if exists "forum_avis_ecriture" on public.forum_avis;
 create policy "forum_avis_lecture" on public.forum_avis for select to authenticated using (true);
 create policy "forum_avis_ecriture" on public.forum_avis for all to authenticated using (owner_id = auth.uid()) with check (owner_id = auth.uid() and "auteur_id" = auth.uid()::text);
 
+-- forum_recherches (shared)
+create table if not exists public.forum_recherches (
+  owner_id uuid not null default auth.uid() references auth.users (id) on delete cascade,
+  "sujet_id" text,
+  "auteur_id" text not null,
+  "sport" text not null,
+  "lieu" text not null,
+  "le" text not null,
+  "places" bigint not null,
+  "niveau_min" double precision,
+  "niveau_max" double precision,
+  "prix" double precision,
+  "statut" text not null,
+  "maj_le" text not null,
+  primary key (owner_id, "sujet_id")
+);
+alter table public.forum_recherches add column if not exists "sujet_id" text;
+alter table public.forum_recherches add column if not exists "auteur_id" text;
+alter table public.forum_recherches add column if not exists "sport" text;
+alter table public.forum_recherches add column if not exists "lieu" text;
+alter table public.forum_recherches add column if not exists "le" text;
+alter table public.forum_recherches add column if not exists "places" bigint;
+alter table public.forum_recherches add column if not exists "niveau_min" double precision;
+alter table public.forum_recherches add column if not exists "niveau_max" double precision;
+alter table public.forum_recherches add column if not exists "prix" double precision;
+alter table public.forum_recherches add column if not exists "statut" text;
+alter table public.forum_recherches add column if not exists "maj_le" text;
+alter table public.forum_recherches enable row level security;
+drop policy if exists "forum_recherches_lecture" on public.forum_recherches;
+drop policy if exists "forum_recherches_ecriture" on public.forum_recherches;
+create policy "forum_recherches_lecture" on public.forum_recherches for select to authenticated using (true);
+create policy "forum_recherches_ecriture" on public.forum_recherches for all to authenticated using (owner_id = auth.uid()) with check (owner_id = auth.uid() and "auteur_id" = auth.uid()::text);
+
+-- forum_participations (shared)
+create table if not exists public.forum_participations (
+  owner_id uuid not null default auth.uid() references auth.users (id) on delete cascade,
+  "id" text,
+  "auteur_id" text not null,
+  "sujet_id" text not null,
+  "cree_le" text not null,
+  primary key (owner_id, "id")
+);
+alter table public.forum_participations add column if not exists "id" text;
+alter table public.forum_participations add column if not exists "auteur_id" text;
+alter table public.forum_participations add column if not exists "sujet_id" text;
+alter table public.forum_participations add column if not exists "cree_le" text;
+alter table public.forum_participations enable row level security;
+drop policy if exists "forum_participations_lecture" on public.forum_participations;
+drop policy if exists "forum_participations_ecriture" on public.forum_participations;
+create policy "forum_participations_lecture" on public.forum_participations for select to authenticated using (true);
+create policy "forum_participations_ecriture" on public.forum_participations for all to authenticated using (owner_id = auth.uid()) with check (owner_id = auth.uid() and "auteur_id" = auth.uid()::text);
+
 -- forum_signalements (owner)
 create table if not exists public.forum_signalements (
   owner_id uuid not null default auth.uid() references auth.users (id) on delete cascade,

@@ -79,12 +79,12 @@ void main() {
     expect(list.first.id, id);
     expect(list.first.title(me.meId), 'Karim J.');
     expect(await me.openDirect(skander), MessagesSeed.conversationId('skander'));
-    expect(() => me.openDirect(ForumSeed.me), throwsA(isA<ForumRuleException>()));
+    await expectLater(() => me.openDirect(ForumSeed.me), throwsA(isA<ForumRuleException>()));
   });
 
   test('a group needs a name and 2 friends; it starts with « a créé le groupe »', () async {
-    expect(() => me.createGroup('', [skander, mariem]), throwsA(isA<ForumRuleException>()));
-    expect(() => me.createGroup('Duo', [skander]), throwsA(isA<ForumRuleException>()));
+    await expectLater(() => me.createGroup('', [skander, mariem]), throwsA(isA<ForumRuleException>()));
+    await expectLater(() => me.createGroup('Duo', [skander]), throwsA(isA<ForumRuleException>()));
     final id = await me.createGroup('Foot du dimanche', [skander, mariem]);
     final c = await me.conversation(id);
     expect(c.group, isTrue);
@@ -96,7 +96,7 @@ void main() {
   test('FRM-03 in a chat: a hurtful text is stopped, sent masked when confirmed', () async {
     final id = MessagesSeed.conversationId('skander');
     const text = 'T’es nul, t’as jamais touché un ballon.';
-    expect(() => me.send(id, text), throwsA(isA<ForumAlertException>()));
+    await expectLater(() => me.send(id, text), throwsA(isA<ForumAlertException>()));
     final sent = await me.send(id, text, confirmed: true);
     expect(sent.hidden, isTrue);
     // Skander does not read it.
@@ -107,7 +107,7 @@ void main() {
 
   test('only the reader deletes their messages; reports and mutes the others', () async {
     final id = MessagesSeed.conversationId('skander');
-    expect(() => me.deleteMessage(MessagesSeed.messageId('sk1')), throwsA(isA<ForumRuleException>()));
+    await expectLater(() => me.deleteMessage(MessagesSeed.messageId('sk1')), throwsA(isA<ForumRuleException>()));
     final mine = await me.send(id, 'Oups, mauvais message');
     await me.deleteMessage(mine.id);
     expect((await me.messages(id)).last.deleted, isTrue);
@@ -129,7 +129,7 @@ void main() {
   test('leaving a group: a line for the others, gone from the list', () async {
     await me.leave(group);
     expect((await me.conversations()).any((c) => c.id == group), isFalse);
-    expect(() => me.messages(group), throwsA(isA<ForumRuleException>()));
+    await expectLater(() => me.messages(group), throwsA(isA<ForumRuleException>()));
     final line = (await as(skander).messages(group)).last;
     expect(line.event, ChatEvent.left);
     expect(line.author.name, 'Yassine B.');

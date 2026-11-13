@@ -90,6 +90,15 @@ abstract interface class ForumRepository {
   /// « Annuler » on the « Tu as signalé ce message » strip.
   Future<void> undoReport(ForumTarget target, String id);
 
+  /// « Cherche joueurs » « Je viens »: the reader plays, or waits once it is full.
+  Future<SearchStatus> join(String postId);
+
+  /// « Je ne viens plus »: the first one waiting moves up.
+  Future<void> leave(String postId);
+
+  /// The organiser stops (or reopens) the search.
+  Future<void> closeSearch(String postId, {required bool closed});
+
   /// Équipement · Marketplace: the seller marks the item sold, or for sale again.
   Future<void> markSold(String postId, {required bool sold});
 

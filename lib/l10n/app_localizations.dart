@@ -20344,6 +20344,330 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Impossible de lire ce message vocal'**
   String get msgVocalIllisible;
+
+  /// No description provided for @cjChercheJoueurs.
+  ///
+  /// In fr, this message translates to:
+  /// **'Cherche joueurs'**
+  String get cjChercheJoueurs;
+
+  /// No description provided for @cjJeChercheDesJoueurs.
+  ///
+  /// In fr, this message translates to:
+  /// **'Je cherche des joueurs'**
+  String get cjJeChercheDesJoueurs;
+
+  /// No description provided for @cjJeChercheDesJoueursDetail.
+  ///
+  /// In fr, this message translates to:
+  /// **'Le lieu, l’heure, le niveau : les membres répondent « Je viens ».'**
+  String get cjJeChercheDesJoueursDetail;
+
+  /// No description provided for @cjTitrePlaceholder.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ex. : Il manque 2 joueurs dimanche 20h à Arena Five'**
+  String get cjTitrePlaceholder;
+
+  /// No description provided for @cjJoueursRecherches.
+  ///
+  /// In fr, this message translates to:
+  /// **'Joueurs recherchés'**
+  String get cjJoueursRecherches;
+
+  /// No description provided for @cjJoueursUnit.
+  ///
+  /// In fr, this message translates to:
+  /// **'{n, plural, =1{joueur} other{joueurs}}'**
+  String cjJoueursUnit(int n);
+
+  /// No description provided for @cjUnJoueurDeMoins.
+  ///
+  /// In fr, this message translates to:
+  /// **'Un joueur de moins'**
+  String get cjUnJoueurDeMoins;
+
+  /// No description provided for @cjUnJoueurDePlus.
+  ///
+  /// In fr, this message translates to:
+  /// **'Un joueur de plus'**
+  String get cjUnJoueurDePlus;
+
+  /// No description provided for @cjTousNiveaux.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tous niveaux'**
+  String get cjTousNiveaux;
+
+  /// No description provided for @cjPrixParJoueur.
+  ///
+  /// In fr, this message translates to:
+  /// **'Prix par joueur'**
+  String get cjPrixParJoueur;
+
+  /// No description provided for @cjPrixParJoueurPlaceholder.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ex. : 15'**
+  String get cjPrixParJoueurPlaceholder;
+
+  /// No description provided for @cjIndiqueLeLieu.
+  ///
+  /// In fr, this message translates to:
+  /// **'Indique où vous jouez.'**
+  String get cjIndiqueLeLieu;
+
+  /// No description provided for @cjEntre1EtNJoueurs.
+  ///
+  /// In fr, this message translates to:
+  /// **'Cherche entre 1 et {n} joueurs.'**
+  String cjEntre1EtNJoueurs(int n);
+
+  /// No description provided for @cjHeurePassee.
+  ///
+  /// In fr, this message translates to:
+  /// **'Cette heure est déjà passée : choisis plus tard.'**
+  String get cjHeurePassee;
+
+  /// No description provided for @cjNiveauxInverses.
+  ///
+  /// In fr, this message translates to:
+  /// **'Le niveau minimum dépasse le maximum.'**
+  String get cjNiveauxInverses;
+
+  /// No description provided for @cjRechercheIntrouvable.
+  ///
+  /// In fr, this message translates to:
+  /// **'Cette recherche n’existe plus.'**
+  String get cjRechercheIntrouvable;
+
+  /// No description provided for @cjTuOrganises.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tu organises ce match.'**
+  String get cjTuOrganises;
+
+  /// No description provided for @cjRechercheFermee.
+  ///
+  /// In fr, this message translates to:
+  /// **'L’organisateur a fermé cette recherche.'**
+  String get cjRechercheFermee;
+
+  /// No description provided for @cjDejaJoue.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ce match a déjà eu lieu.'**
+  String get cjDejaJoue;
+
+  /// No description provided for @cjChercheNJoueurs.
+  ///
+  /// In fr, this message translates to:
+  /// **'{n, plural, =1{Cherche 1 joueur} other{Cherche {n} joueurs}}'**
+  String cjChercheNJoueurs(int n);
+
+  /// No description provided for @cjEquipeComplete.
+  ///
+  /// In fr, this message translates to:
+  /// **'Équipe au complet'**
+  String get cjEquipeComplete;
+
+  /// No description provided for @cjNiveauX.
+  ///
+  /// In fr, this message translates to:
+  /// **'Niveau {range}'**
+  String cjNiveauX(String range);
+
+  /// No description provided for @cjPrixX.
+  ///
+  /// In fr, this message translates to:
+  /// **'{price} par joueur'**
+  String cjPrixX(String price);
+
+  /// No description provided for @cjJoueursTrouves.
+  ///
+  /// In fr, this message translates to:
+  /// **'Joueurs trouvés'**
+  String get cjJoueursTrouves;
+
+  /// No description provided for @cjNSurM.
+  ///
+  /// In fr, this message translates to:
+  /// **'{n} / {total}'**
+  String cjNSurM(int n, int total);
+
+  /// No description provided for @cjNEnAttente.
+  ///
+  /// In fr, this message translates to:
+  /// **'{n, plural, =1{1 en liste d’attente} other{{n} en liste d’attente}}'**
+  String cjNEnAttente(int n);
+
+  /// No description provided for @cjHorsNiveau.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ton niveau {level} est hors de la fourchette demandée : tu peux quand même proposer.'**
+  String cjHorsNiveau(String level);
+
+  /// No description provided for @cjTonNiveauCorrespond.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ton niveau {level} correspond'**
+  String cjTonNiveauCorrespond(String level);
+
+  /// No description provided for @cjJeViens.
+  ///
+  /// In fr, this message translates to:
+  /// **'Je viens'**
+  String get cjJeViens;
+
+  /// No description provided for @cjListeDAttente.
+  ///
+  /// In fr, this message translates to:
+  /// **'Liste d’attente'**
+  String get cjListeDAttente;
+
+  /// No description provided for @cjTuJoues.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tu joues · Je ne viens plus'**
+  String get cjTuJoues;
+
+  /// No description provided for @cjEnAttenteN.
+  ///
+  /// In fr, this message translates to:
+  /// **'{n, plural, =1{En attente · 1er} other{En attente · {n}e}}'**
+  String cjEnAttenteN(int n);
+
+  /// No description provided for @cjOuverte.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ouverte'**
+  String get cjOuverte;
+
+  /// No description provided for @cjComplet.
+  ///
+  /// In fr, this message translates to:
+  /// **'Complet'**
+  String get cjComplet;
+
+  /// No description provided for @cjFermee.
+  ///
+  /// In fr, this message translates to:
+  /// **'Fermée'**
+  String get cjFermee;
+
+  /// No description provided for @cjTermine.
+  ///
+  /// In fr, this message translates to:
+  /// **'Terminé'**
+  String get cjTermine;
+
+  /// No description provided for @cjJoueurs.
+  ///
+  /// In fr, this message translates to:
+  /// **'Joueurs'**
+  String get cjJoueurs;
+
+  /// No description provided for @cjOrganisateur.
+  ///
+  /// In fr, this message translates to:
+  /// **'Organisateur'**
+  String get cjOrganisateur;
+
+  /// No description provided for @cjNieme.
+  ///
+  /// In fr, this message translates to:
+  /// **'{n, plural, =1{1er} other{{n}e}}'**
+  String cjNieme(int n);
+
+  /// No description provided for @cjPlaceLibre.
+  ///
+  /// In fr, this message translates to:
+  /// **'Place libre'**
+  String get cjPlaceLibre;
+
+  /// No description provided for @cjCreerLeGroupe.
+  ///
+  /// In fr, this message translates to:
+  /// **'Créer le groupe avec les joueurs'**
+  String get cjCreerLeGroupe;
+
+  /// No description provided for @cjNomDuGroupe.
+  ///
+  /// In fr, this message translates to:
+  /// **'{place} · {day}'**
+  String cjNomDuGroupe(String place, String day);
+
+  /// No description provided for @cjFermerLaRecherche.
+  ///
+  /// In fr, this message translates to:
+  /// **'Fermer la recherche'**
+  String get cjFermerLaRecherche;
+
+  /// No description provided for @cjRouvrir.
+  ///
+  /// In fr, this message translates to:
+  /// **'Rouvrir la recherche'**
+  String get cjRouvrir;
+
+  /// No description provided for @cjRechercheFermeeToast.
+  ///
+  /// In fr, this message translates to:
+  /// **'Recherche fermée'**
+  String get cjRechercheFermeeToast;
+
+  /// No description provided for @cjRechercheRouverte.
+  ///
+  /// In fr, this message translates to:
+  /// **'Recherche rouverte'**
+  String get cjRechercheRouverte;
+
+  /// No description provided for @cjTuEsDansLEquipe.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tu es dans l’équipe !'**
+  String get cjTuEsDansLEquipe;
+
+  /// No description provided for @cjTuEsDansLEquipeDetail.
+  ///
+  /// In fr, this message translates to:
+  /// **'{name} compte sur toi le {date}.'**
+  String cjTuEsDansLEquipeDetail(String name, String date);
+
+  /// No description provided for @cjTuEsSurLaListe.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tu es sur la liste d’attente : tu passes dès qu’une place se libère.'**
+  String get cjTuEsSurLaListe;
+
+  /// No description provided for @cjTuNeViensPlusQ.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tu ne viens plus ?'**
+  String get cjTuNeViensPlusQ;
+
+  /// No description provided for @cjTaPlaceIraA.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ta place ira à {name}, premier sur la liste d’attente.'**
+  String cjTaPlaceIraA(String name);
+
+  /// No description provided for @cjTaPlaceSeLibere.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ta place se libère pour un autre joueur.'**
+  String get cjTaPlaceSeLibere;
+
+  /// No description provided for @cjJeNeViensPlus.
+  ///
+  /// In fr, this message translates to:
+  /// **'Je ne viens plus'**
+  String get cjJeNeViensPlus;
+
+  /// No description provided for @cjTuNeViensPlus.
+  ///
+  /// In fr, this message translates to:
+  /// **'C’est noté, tu ne viens plus'**
+  String get cjTuNeViensPlus;
 }
 
 class _AppLocalizationsDelegate

@@ -210,6 +210,7 @@ class SqliteForumRepository implements ForumRepository {
         ),
     };
     final ratings = await _sellerRatings(db, {for (final p in rows) if (listings.containsKey(p.id)) p.author});
+    final searches = await _searches(db, ids, members);
     return [
       for (final p in rows)
         () {
@@ -241,9 +242,50 @@ class SqliteForumRepository implements ForumRepository {
             mine: mine[p.id]!.copyWith(saved: saved.contains(p.id), following: followed.contains(p.id)),
             listing: listings[p.id],
             sellerRating: listings.containsKey(p.id) ? ratings[p.author] : null,
+            search: searches[p.id],
           );
         }(),
     ];
+  }
+
+  /// The « Cherche joueurs » of [ids]: the first [PlayerSearch.needed] members who joined play,
+  /// the next ones wait (the organiser and muted members aside).
+  Future<Map<String, PlayerSearch>> _searches(DatabaseExecutor db, List<String> ids, Map<String, ForumAuthor> members) async {
+    if (ids.isEmpty) return const {};
+    final rows = await db.rawQuery('SELECT * FROM forum_recherches WHERE sujet_id IN (${_marks(ids.length)})', ids);
+    if (rows.isEmpty) return const {};
+    final found = [for (final r in rows) r['sujet_id']! as String];
+    final joined = <String, List<String>>{};
+    for (final j in await db.rawQuery(
+      'SELECT sujet_id, auteur_id FROM forum_participations WHERE sujet_id IN (${_marks(found.length)}) ORDER BY cree_le, rowid',
+      found,
+    )) {
+      (joined[j['sujet_id']! as String] ??= []).add(j['auteur_id']! as String);
+    }
+    final me = meId;
+    return {
+      for (final r in rows)
+        r['sujet_id']! as String: () {
+          final needed = r['places']! as int;
+          final everyone = [for (final id in joined[r['sujet_id']] ?? const <String>[]) if (id != r['auteur_id']) id];
+          final playing = everyone.take(needed).toList();
+          final waiting = everyone.skip(needed).toList();
+          return PlayerSearch(
+            sport: MuSport.values.firstWhere((s) => s.name == r['sport'], orElse: () => MuSport.football),
+            place: r['lieu']! as String,
+            at: DateTime.parse(r['le']! as String),
+            needed: needed,
+            levelMin: (r['niveau_min'] as num?)?.toDouble(),
+            levelMax: (r['niveau_max'] as num?)?.toDouble(),
+            price: (r['prix'] as num?)?.toDouble(),
+            closed: r['statut'] != 'ouverte',
+            players: [for (final id in playing) members[id] ?? _unknown(id)],
+            waiting: [for (final id in waiting) members[id] ?? _unknown(id)],
+            status: playing.contains(me) ? SearchStatus.playing : (waiting.contains(me) ? SearchStatus.waiting : SearchStatus.out),
+            waitingRank: waiting.contains(me) ? waiting.indexOf(me) + 1 : null,
+          );
+        }(),
+    };
   }
 
   /// Each seller's average from the published reviews.
@@ -311,6 +353,10 @@ class SqliteForumRepository implements ForumRepository {
       where.add('id IN (SELECT sujet_id FROM forum_favoris WHERE utilisateur_id = ?)');
       args.add(me);
     }
+    if (query.lookingOnly) {
+      where.add("id IN (SELECT sujet_id FROM forum_recherches WHERE statut = 'ouverte' AND le > ?)");
+      args.add(_nowIso);
+    }
     final rows = await _rows(db, await db.query('forum_sujets', where: where.join(' AND '), whereArgs: args));
     rows.sort((a, b) {
       // Pinned posts lead « Tendance »; « Récents » is the plain timeline, newest first.
@@ -323,6 +369,13 @@ class SqliteForumRepository implements ForumRepository {
       };
       return byMode != 0 ? byMode : (b.row['cree_le']! as String).compareTo(a.row['cree_le']! as String);
     });
+    if (query.lookingOnly) {
+      // The soonest game first.
+      final when = {
+        for (final r in await db.query('forum_recherches', columns: ['sujet_id', 'le'])) r['sujet_id']! as String: r['le']! as String,
+      };
+      rows.sort((a, b) => (when[a.id] ?? '').compareTo(when[b.id] ?? ''));
+    }
     final page = rows.skip(offset).take(math.min(limit, _pageMax)).toList();
     return ForumFeed(total: rows.length, posts: await _posts(db, page));
   }
@@ -505,6 +558,7 @@ class SqliteForumRepository implements ForumRepository {
     if (title.length < 10) throw ForumRuleException(l10n.forumTitreTropCourt);
     if (body.isEmpty) throw ForumRuleException(l10n.forumMessageVide);
     final listing = _listingOf(draft);
+    final search = _searchOf(draft);
     final a = _control('$title\n$body', confirmed);
     final me = meId;
     final id = newForumId();
@@ -516,7 +570,7 @@ class SqliteForumRepository implements ForumRepository {
         'titre': title,
         'contenu': body,
         'categorie': draft.category.code,
-        'sport': draft.sport?.name,
+        'sport': (draft.sport ?? search?.sport)?.name,
         'tags': jsonEncode(ForumAi.cleanTags(draft.tags)),
         'images': jsonEncode(draft.images.take(maxMedia).toList()),
         'mentions': jsonEncode(ForumAi.mentions(body)),
@@ -532,8 +586,39 @@ class SqliteForumRepository implements ForumRepository {
         'cible_id': id,
       }, conflictAlgorithm: ConflictAlgorithm.ignore);
       if (listing != null) await _saveListing(txn, id, listing);
+      if (search != null) await _saveSearch(txn, id, search);
     });
     return _post(db, id);
+  }
+
+  /// The « Cherche joueurs » of a draft, checked; null for another post.
+  PlayerSearch? _searchOf(PostDraft draft) {
+    final r = draft.search;
+    if (r == null || draft.listing != null) return null;
+    if (r.place.trim().isEmpty) throw ForumRuleException(l10n.cjIndiqueLeLieu);
+    if (r.needed < 1 || r.needed > maxPlayers) throw ForumRuleException(l10n.cjEntre1EtNJoueurs(maxPlayers));
+    if (!r.at.isAfter(_now())) throw ForumRuleException(l10n.cjHeurePassee);
+    if (r.levelMin != null && r.levelMax != null && r.levelMin! > r.levelMax!) throw ForumRuleException(l10n.cjNiveauxInverses);
+    return r;
+  }
+
+  /// A « Cherche joueurs » asks for this many players at most.
+  static const maxPlayers = 20;
+
+  Future<void> _saveSearch(DatabaseExecutor db, String postId, PlayerSearch r) async {
+    final values = {
+      'auteur_id': meId,
+      'sport': r.sport.name,
+      'lieu': r.place.trim(),
+      'le': r.at.toIso8601String(),
+      'places': r.needed,
+      'niveau_min': r.levelMin,
+      'niveau_max': r.levelMax,
+      'prix': r.price,
+      'maj_le': _nowIso,
+    };
+    final updated = await db.update('forum_recherches', values, where: 'sujet_id = ? AND auteur_id = ?', whereArgs: [postId, meId]);
+    if (updated == 0) await db.insert('forum_recherches', {'sujet_id': postId, 'statut': 'ouverte', ...values});
   }
 
   /// The listing of an Équipement draft, checked; null for a discussion.
@@ -573,8 +658,14 @@ class SqliteForumRepository implements ForumRepository {
     final body = draft.body.trim();
     if (title.length < 10) throw ForumRuleException(l10n.forumTitreTropCourt);
     final listing = _listingOf(draft);
+    final search = _searchOf(draft);
     final a = _control('$title\n$body', confirmed);
     final hide = a.alert && row['statut'] == ForumStatus.published.code;
+    if (search != null) {
+      await _saveSearch(db, postId, search);
+    } else {
+      await db.delete('forum_recherches', where: 'sujet_id = ? AND auteur_id = ?', whereArgs: [postId, meId]);
+    }
     if (listing != null) {
       await _saveListing(db, postId, listing);
     } else {
@@ -608,6 +699,52 @@ class SqliteForumRepository implements ForumRepository {
     final row = await _row(db, ForumTarget.post, postId);
     if (row['auteur_id'] != meId) throw ForumRuleException(l10n.forumSeulLAuteur);
     await db.update('forum_sujets', {'statut': ForumStatus.deleted.code}, where: 'id = ? AND auteur_id = ?', whereArgs: [postId, meId]);
+  }
+
+  // ── Cherche joueurs ───────────────────────────────────────────────────────────────────────
+
+  Future<Map<String, Object?>> _search(DatabaseExecutor db, String postId) async {
+    await _row(db, ForumTarget.post, postId);
+    final r = (await db.query('forum_recherches', where: 'sujet_id = ?', whereArgs: [postId])).firstOrNull;
+    if (r == null) throw ForumRuleException(l10n.cjRechercheIntrouvable);
+    return r;
+  }
+
+  @override
+  Future<SearchStatus> join(String postId) async {
+    final db = await _db;
+    final r = await _search(db, postId);
+    if (r['auteur_id'] == meId) throw ForumRuleException(l10n.cjTuOrganises);
+    if (r['statut'] != 'ouverte') throw ForumRuleException(l10n.cjRechercheFermee);
+    if (!DateTime.parse(r['le']! as String).isAfter(_now())) throw ForumRuleException(l10n.cjDejaJoue);
+    await db.transaction((txn) async {
+      await _ensureMe(txn);
+      await txn.insert('forum_participations', {
+        'id': newForumId(),
+        'auteur_id': meId,
+        'sujet_id': postId,
+        'cree_le': _nowIso,
+      }, conflictAlgorithm: ConflictAlgorithm.ignore);
+    });
+    return (await _post(db, postId)).search!.status;
+  }
+
+  @override
+  Future<void> leave(String postId) async {
+    final db = await _db;
+    await db.delete('forum_participations', where: 'auteur_id = ? AND sujet_id = ?', whereArgs: [meId, postId]);
+  }
+
+  @override
+  Future<void> closeSearch(String postId, {required bool closed}) async {
+    final db = await _db;
+    final updated = await db.update(
+      'forum_recherches',
+      {'statut': closed ? 'fermee' : 'ouverte', 'maj_le': _nowIso},
+      where: 'sujet_id = ? AND auteur_id = ?',
+      whereArgs: [postId, meId],
+    );
+    if (updated == 0) throw ForumRuleException(l10n.forumSeulLAuteur);
   }
 
   // ── Marketplace ───────────────────────────────────────────────────────────────────────────

@@ -52,9 +52,13 @@ void main() {
     expect(find.text('Pose ta question à la communauté'), findsOneWidget);
     expect(find.text('Catégories'), findsOneWidget);
     expect(find.text('Nouveaux depuis ta dernière visite'), findsOneWidget);
-    // Newest first: Ines's Bandeja post of 2 h ago, with « Ines M. t’a mentionné » above it.
+    // Newest first: Skander's « Cherche joueurs » of 16h30, then Ines's Bandeja post with
+    // « Ines M. t’a mentionné » above it.
+    expect(find.text('Il manque 3 joueurs dimanche 20h à Arena Five'), findsOneWidget);
+    await tester.scrollUntilVisible(find.textContaining('t’a mentionné'), 200, scrollable: find.byType(Scrollable).first);
     expect(find.text('Bandeja : je n’arrive pas à la placer croisée'), findsOneWidget);
-    expect(find.textContaining('t’a mentionné'), findsOneWidget);
+    await tester.drag(find.byType(Scrollable).first, const Offset(0, 4000));
+    await tester.pumpAndSettle();
 
     // « Tendance » puts the pinned Padel Masters on top.
     await tap(tester, find.text('Tendance'));

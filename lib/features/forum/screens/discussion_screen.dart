@@ -22,6 +22,7 @@ import '../widgets/forum_format.dart';
 import '../widgets/forum_image.dart';
 import '../widgets/forum_markdown.dart';
 import '../widgets/listing_widgets.dart';
+import '../widgets/search_widgets.dart';
 import '../widgets/moderation_alert.dart';
 import '../widgets/report_sheet.dart';
 
@@ -451,6 +452,15 @@ class _PostHeader extends ConsumerWidget {
             if (p.images.isNotEmpty) ForumMediaCollage(media: p.images) else ListingNoPhoto(sport: p.sport),
             const SizedBox(height: MuSpace.s3),
             _ListingActions(post: p, onRun: onRun),
+          ],
+          if (p.search != null) ...[
+            const SizedBox(height: MuSpace.s3),
+            SearchPanel(
+              post: p,
+              onRun: onRun,
+              onJoin: () => toggleSearch(context, ref, p),
+              onLeave: () => toggleSearch(context, ref, p),
+            ),
           ],
           const SizedBox(height: MuSpace.s3),
           Row(

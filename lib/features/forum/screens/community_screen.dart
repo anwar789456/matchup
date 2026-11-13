@@ -377,6 +377,15 @@ class _SportChips extends ConsumerWidget {
                 onSelected: (_) => ctrl.sport(null),
               ),
             ),
+            const SizedBox(width: MuSpace.s2),
+            Center(
+              child: MuChip(
+                label: l10n.cjChercheJoueurs,
+                icon: PhosphorIcons.usersThree(),
+                selected: query.lookingOnly,
+                onSelected: ctrl.looking,
+              ),
+            ),
             for (final s in MuSport.values) ...[
               const SizedBox(width: MuSpace.s2),
               Center(

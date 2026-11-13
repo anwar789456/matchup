@@ -33,6 +33,8 @@ import 'seed.dart';
 /// between friends and group chats (`msg_conversations`, `msg_participants`,
 /// `msg_messages`, `msg_reactions`, `msg_votes`, `msg_lectures`), on the phone only until the
 /// sync has a « participants only » scope.
+///
+/// v7: « Cherche joueurs » (`forum_recherches`, `forum_participations`), synced.
 class AppDatabase {
   /// [factory] and [path] default to [defaultFactory] / [defaultPath].
   AppDatabase({DatabaseFactory? factory, String? path})

@@ -59,7 +59,7 @@ void main() {
       expect(feed.posts.first.title, startsWith('Padel Masters'));
       expect(feed.posts.first.mine.saved, isTrue);
       expect(feed.posts.any((p) => p.title.startsWith('Vends')), isFalse);
-      expect(feed.total, 10);
+      expect(feed.total, 13);
       final bandeja = feed.posts.firstWhere((p) => p.title.startsWith('Bandeja :'));
       expect(bandeja.mentionsMe, isTrue);
       expect(bandeja.mine.vote, 1);
@@ -71,7 +71,7 @@ void main() {
       final feed = await me.feed(const ForumQuery());
       final dates = [for (final p in feed.posts) p.createdAt];
       expect(dates, [...dates]..sort((a, b) => b.compareTo(a)));
-      expect(feed.posts.first.title, startsWith('Bandeja :'));
+      expect(feed.posts.first.title, startsWith('Il manque 3 joueurs'));
     });
 
     test('filters, sorts and pages', () async {
@@ -80,10 +80,10 @@ void main() {
       final top = await me.feed(const ForumQuery(sort: ForumSort.top));
       final scores = top.posts.skip(1).map((p) => p.score).toList();
       expect(scores, [...scores]..sort((a, b) => b.compareTo(a)));
-      expect((await me.feed(const ForumQuery(search: 'synth'))).total, 2);
-      expect((await me.feed(const ForumQuery(tag: '#lac2'))).total, 2);
+      expect((await me.feed(const ForumQuery(search: 'synth'))).total, 3);
+      expect((await me.feed(const ForumQuery(tag: '#lac2'))).total, 3);
       expect((await me.feed(const ForumQuery(savedOnly: true))).total, 1);
-      expect((await me.feed(ForumQuery(authorId: ForumSeed.id(4)))).total, 3);
+      expect((await me.feed(ForumQuery(authorId: ForumSeed.id(4)))).total, 4);
       final page = await me.feed(const ForumQuery(), limit: 2, offset: 2);
       expect(page.posts, hasLength(2));
     });

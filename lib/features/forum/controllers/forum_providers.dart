@@ -30,6 +30,9 @@ class ForumQueryController extends Notifier<ForumQuery> {
   void category(ForumCategory? c) => state = state.copyWith(category: () => state.category == c ? null : c);
   void sport(MuSport? s) => state = state.copyWith(sport: () => s);
   void sort(ForumSort s) => state = state.copyWith(sort: s);
+
+  /// Only the « Cherche joueurs » that can still be joined.
+  void looking(bool on) => state = state.copyWith(lookingOnly: on);
 }
 
 final forumQueryProvider = NotifierProvider<ForumQueryController, ForumQuery>(ForumQueryController.new);

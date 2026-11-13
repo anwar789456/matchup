@@ -197,6 +197,7 @@ class ForumPost {
     this.mine = const ForumMine(),
     this.listing,
     this.sellerRating,
+    this.search,
   });
 
   final String id;
@@ -208,6 +209,9 @@ class ForumPost {
 
   /// The seller's rating from buyers' reviews, for a listing.
   final ForumRating? sellerRating;
+
+  /// « Cherche joueurs »: the game that needs players, or null.
+  final PlayerSearch? search;
 
   /// Light Markdown; null in lists, and for others when hidden.
   final String? body;
@@ -241,6 +245,7 @@ class ForumPost {
     ForumMine? mine,
     String? Function()? bestAnswerId,
     ForumListing? listing,
+    PlayerSearch? search,
   }) => ForumPost(
     id: id,
     author: author,
@@ -265,8 +270,77 @@ class ForumPost {
     mine: mine ?? this.mine,
     listing: listing ?? this.listing,
     sellerRating: sellerRating,
+    search: search ?? this.search,
   );
 }
+
+/// Where the reader stands in a « Cherche joueurs ».
+enum SearchStatus {
+  /// Not in it.
+  out,
+
+  /// One of the players.
+  playing,
+
+  /// Joined once it was full: moves up when someone drops out.
+  waiting,
+}
+
+/// A « Cherche joueurs » post: a game short of players. The players are the first [needed]
+/// members who said « Je viens », in order; the next ones wait and move up by themselves when
+/// someone drops out (no one writes anyone else's row).
+@immutable
+class PlayerSearch {
+  const PlayerSearch({
+    required this.sport,
+    required this.place,
+    required this.at,
+    required this.needed,
+    this.levelMin,
+    this.levelMax,
+    this.price,
+    this.closed = false,
+    this.players = const [],
+    this.waiting = const [],
+    this.status = SearchStatus.out,
+    this.waitingRank,
+  });
+
+  final MuSport sport;
+
+  /// « Arena Five · Terrain 2 ».
+  final String place;
+  final DateTime at;
+
+  /// How many players are missing.
+  final int needed;
+  final double? levelMin;
+  final double? levelMax;
+
+  /// Per player, in dinars; null when free or not said.
+  final double? price;
+
+  /// The organiser stopped it.
+  final bool closed;
+  final List<ForumAuthor> players;
+  final List<ForumAuthor> waiting;
+  final SearchStatus status;
+
+  /// The reader's place on the waiting list (1 = next to play), when waiting.
+  final int? waitingRank;
+
+  int get left => needed - players.length < 0 ? 0 : needed - players.length;
+  bool get full => players.length >= needed;
+  bool past(DateTime now) => !at.isAfter(now);
+
+  /// Can still be joined (or left).
+  bool open(DateTime now) => !closed && !past(now);
+
+  /// Whether [level] is inside the asked range (true when no range or no level).
+  bool fits(double? level) =>
+      level == null || ((levelMin == null || level >= levelMin!) && (levelMax == null || level <= levelMax!));
+}
+
 
 /// The condition of an item for sale.
 enum ListingCondition {
@@ -456,6 +530,7 @@ class ForumQuery {
     this.tag,
     this.authorId,
     this.savedOnly = false,
+    this.lookingOnly = false,
   });
 
   final ForumCategory? category;
@@ -466,12 +541,16 @@ class ForumQuery {
   final String? authorId;
   final bool savedOnly;
 
+  /// Only « Cherche joueurs » that can still be joined, the soonest first.
+  final bool lookingOnly;
+
   ForumQuery copyWith({
     ForumCategory? Function()? category,
     MuSport? Function()? sport,
     ForumSort? sort,
     String? Function()? search,
     bool? savedOnly,
+    bool? lookingOnly,
   }) => ForumQuery(
     category: category != null ? category() : this.category,
     sport: sport != null ? sport() : this.sport,
@@ -480,6 +559,7 @@ class ForumQuery {
     tag: tag,
     authorId: authorId,
     savedOnly: savedOnly ?? this.savedOnly,
+    lookingOnly: lookingOnly ?? this.lookingOnly,
   );
 
   @override
@@ -491,10 +571,11 @@ class ForumQuery {
       other.search == search &&
       other.tag == tag &&
       other.authorId == authorId &&
-      other.savedOnly == savedOnly;
+      other.savedOnly == savedOnly &&
+      other.lookingOnly == lookingOnly;
 
   @override
-  int get hashCode => Object.hash(category, sport, sort, search, tag, authorId, savedOnly);
+  int get hashCode => Object.hash(category, sport, sort, search, tag, authorId, savedOnly, lookingOnly);
 }
 
 @immutable
@@ -585,6 +666,7 @@ class PostDraft {
     this.tags = const [],
     this.images = const [],
     this.listing,
+    this.search,
   });
 
   final ForumCategory category;
@@ -599,7 +681,11 @@ class PostDraft {
   /// Équipement: the item for sale, or null for a discussion.
   final ForumListing? listing;
 
-  bool get isEmpty => title.trim().isEmpty && body.trim().isEmpty && tags.isEmpty && images.isEmpty && listing == null;
+  /// « Cherche joueurs »: the game short of players, or null.
+  final PlayerSearch? search;
+
+  bool get isEmpty =>
+      title.trim().isEmpty && body.trim().isEmpty && tags.isEmpty && images.isEmpty && listing == null && search == null;
 
   PostDraft copyWith({
     ForumCategory? category,
@@ -609,6 +695,7 @@ class PostDraft {
     List<String>? tags,
     List<String>? images,
     ForumListing? Function()? listing,
+    PlayerSearch? Function()? search,
   }) => PostDraft(
     category: category ?? this.category,
     sport: sport != null ? sport() : this.sport,
@@ -617,6 +704,7 @@ class PostDraft {
     tags: tags ?? this.tags,
     images: images ?? this.images,
     listing: listing != null ? listing() : this.listing,
+    search: search != null ? search() : this.search,
   );
 
   Map<String, Object?> toJson() => {
@@ -628,6 +716,16 @@ class PostDraft {
     'images': images,
     if (listing case final l?)
       'annonce': {'prix': l.price, 'etat': l.condition.code, 'taille': l.size, 'ville': l.city},
+    if (search case final r?)
+      'recherche': {
+        'sport': r.sport.name,
+        'lieu': r.place,
+        'le': r.at.toIso8601String(),
+        'places': r.needed,
+        'niveau_min': r.levelMin,
+        'niveau_max': r.levelMax,
+        'prix': r.price,
+      },
   };
 
   static PostDraft fromJson(Map<String, Object?> j) => PostDraft(
@@ -643,6 +741,18 @@ class PostDraft {
         condition: ListingCondition.fromCode(a['etat'] as String?),
         size: a['taille'] as String?,
         city: a['ville'] as String?,
+      ),
+      _ => null,
+    },
+    search: switch (j['recherche']) {
+      final Map<String, Object?> r => PlayerSearch(
+        sport: MuSport.values.firstWhere((s) => s.name == r['sport'], orElse: () => MuSport.football),
+        place: r['lieu'] as String? ?? '',
+        at: DateTime.tryParse(r['le'] as String? ?? '') ?? DateTime.now(),
+        needed: r['places'] as int? ?? 1,
+        levelMin: (r['niveau_min'] as num?)?.toDouble(),
+        levelMax: (r['niveau_max'] as num?)?.toDouble(),
+        price: (r['prix'] as num?)?.toDouble(),
       ),
       _ => null,
     },

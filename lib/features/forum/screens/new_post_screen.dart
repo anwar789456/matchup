@@ -22,6 +22,7 @@ import '../widgets/forum_image.dart';
 import '../widgets/forum_markdown.dart';
 import '../widgets/listing_widgets.dart';
 import '../widgets/media_picker.dart';
+import '../widgets/search_widgets.dart';
 import '../widgets/moderation_alert.dart';
 
 /// FRM-02 · Nouveau post (and « Modifier » of an own post with [editId]): category and sport,
@@ -86,6 +87,7 @@ class _NewPostScreenState extends ConsumerState<NewPostScreen> {
         tags: p.tags,
         images: p.images,
         listing: p.listing,
+        search: p.search,
       );
     } else {
       start = await _repo.loadDraft();
@@ -151,12 +153,14 @@ class _NewPostScreenState extends ConsumerState<NewPostScreen> {
   }
 
   bool get _selling => _draft.listing != null;
+  bool get _looking => _draft.search != null;
 
   /// Équipement starts as an item for sale; another category is a discussion.
   void _category(ForumCategory cat) => _change(
     _draft.copyWith(
       category: cat,
       listing: () => cat == ForumCategory.equipment ? (_draft.listing ?? const ForumListing(price: 0, condition: ListingCondition.likeNew)) : null,
+      search: () => cat == ForumCategory.equipment ? null : _draft.search,
     ),
   );
 
@@ -169,6 +173,10 @@ class _NewPostScreenState extends ConsumerState<NewPostScreen> {
           : (_draft.body.characters.length > _maxBody ? l10n.forumRetireNCaracteres(_draft.body.characters.length - _maxBody) : null);
       _priceError = _selling && _draft.listing!.price <= 0 ? l10n.mktIndiqueUnPrix : null;
     });
+    if (_looking && _draft.search!.place.trim().isEmpty) {
+      showForumError(context, ForumRuleException(l10n.cjIndiqueLeLieu));
+      return false;
+    }
     return _titleError == null && _bodyError == null && _priceError == null;
   }
 
@@ -338,12 +346,34 @@ class _NewPostScreenState extends ConsumerState<NewPostScreen> {
                             ),
                           ],
                         ],
+                        if (_draft.category != ForumCategory.equipment) ...[
+                          const SizedBox(height: MuSpace.s2),
+                          MuSwitch(
+                            label: l10n.cjJeChercheDesJoueurs,
+                            description: l10n.cjJeChercheDesJoueursDetail,
+                            icon: PhosphorIcons.usersThree(),
+                            value: _looking,
+                            onChanged: (on) => _change(
+                              _draft.copyWith(
+                                search: () => on ? SearchFields.starting(ref.read(clockProvider)(), _draft.sport) : null,
+                              ),
+                            ),
+                          ),
+                          if (_looking) ...[
+                            const SizedBox(height: MuSpace.s3),
+                            SearchFields(
+                              initial: _draft.search!,
+                              now: ref.read(clockProvider)(),
+                              onChanged: (r) => _change(_draft.copyWith(search: () => r)),
+                            ),
+                          ],
+                        ],
                         const SizedBox(height: MuSpace.s4),
                         MuTextField(
                           label: _selling ? l10n.mktCeQueTuVends : l10n.forumTitre,
                           controller: _title,
                           maxLength: _maxTitle,
-                          placeholder: _selling ? l10n.mktTitrePlaceholder : l10n.forumTitrePlaceholder,
+                          placeholder: _selling ? l10n.mktTitrePlaceholder : (_looking ? l10n.cjTitrePlaceholder : l10n.forumTitrePlaceholder),
                           error: _titleError,
                           textCapitalization: TextCapitalization.sentences,
                           onChanged: (v) {

@@ -4,6 +4,7 @@ import '../../features/common/data/story_data.dart';
 import '../../features/forum/data/forum_seed.dart';
 import '../../features/forum/data/market_seed.dart';
 import '../../features/forum/data/messages_seed.dart';
+import '../../features/forum/data/search_seed.dart';
 import '../../features/matches/data/booking_rows.dart';
 import '../../features/matches/data/bookings_repository.dart';
 import '../../features/payments/data/split_repository.dart';
@@ -16,6 +17,7 @@ Future<void> seedVersion(DatabaseExecutor db, int version) => switch (version) {
       3 => SqliteSplitRepository.seed(db),
       5 => ForumSeed.insert(db),
       6 => _seedV6(db),
+      7 => SearchSeed.insert(db),
       _ => Future<void>.value(),
     };
 

@@ -830,4 +830,35 @@ const schemaVersions = <int, List<String>>{
       PRIMARY KEY (conversation_id, utilisateur_id)
     )''',
   ],
+
+  // ── v7 · Communauté: « Cherche joueurs » — Hani ─────────────────────────────────────────────
+  // A post that looks for players (`forum_recherches`, one per post, written by its organiser)
+  // and who joins (`forum_participations`, one row per member, written by that member). The
+  // players are the first ones in order, the others wait: no one writes anyone else's row.
+  // Both are shared and synced like the forum.
+  7: [
+    '''
+    CREATE TABLE forum_recherches (
+      sujet_id TEXT PRIMARY KEY,
+      auteur_id TEXT NOT NULL,
+      sport TEXT NOT NULL,
+      lieu TEXT NOT NULL,
+      le TEXT NOT NULL,
+      places INTEGER NOT NULL,
+      niveau_min REAL,
+      niveau_max REAL,
+      prix REAL,
+      statut TEXT NOT NULL DEFAULT 'ouverte',
+      maj_le TEXT NOT NULL
+    )''',
+    '''
+    CREATE TABLE forum_participations (
+      id TEXT PRIMARY KEY,
+      auteur_id TEXT NOT NULL,
+      sujet_id TEXT NOT NULL,
+      cree_le TEXT NOT NULL,
+      UNIQUE (auteur_id, sujet_id)
+    )''',
+    'CREATE INDEX forum_participations_sujet ON forum_participations (sujet_id, cree_le)',
+  ],
 };

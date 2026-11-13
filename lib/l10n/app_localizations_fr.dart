@@ -12206,4 +12206,228 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get msgVocalIllisible => 'Impossible de lire ce message vocal';
+
+  @override
+  String get cjChercheJoueurs => 'Cherche joueurs';
+
+  @override
+  String get cjJeChercheDesJoueurs => 'Je cherche des joueurs';
+
+  @override
+  String get cjJeChercheDesJoueursDetail =>
+      'Le lieu, l’heure, le niveau : les membres répondent « Je viens ».';
+
+  @override
+  String get cjTitrePlaceholder =>
+      'Ex. : Il manque 2 joueurs dimanche 20h à Arena Five';
+
+  @override
+  String get cjJoueursRecherches => 'Joueurs recherchés';
+
+  @override
+  String cjJoueursUnit(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'joueurs',
+      one: 'joueur',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get cjUnJoueurDeMoins => 'Un joueur de moins';
+
+  @override
+  String get cjUnJoueurDePlus => 'Un joueur de plus';
+
+  @override
+  String get cjTousNiveaux => 'Tous niveaux';
+
+  @override
+  String get cjPrixParJoueur => 'Prix par joueur';
+
+  @override
+  String get cjPrixParJoueurPlaceholder => 'Ex. : 15';
+
+  @override
+  String get cjIndiqueLeLieu => 'Indique où vous jouez.';
+
+  @override
+  String cjEntre1EtNJoueurs(int n) {
+    return 'Cherche entre 1 et $n joueurs.';
+  }
+
+  @override
+  String get cjHeurePassee =>
+      'Cette heure est déjà passée : choisis plus tard.';
+
+  @override
+  String get cjNiveauxInverses => 'Le niveau minimum dépasse le maximum.';
+
+  @override
+  String get cjRechercheIntrouvable => 'Cette recherche n’existe plus.';
+
+  @override
+  String get cjTuOrganises => 'Tu organises ce match.';
+
+  @override
+  String get cjRechercheFermee => 'L’organisateur a fermé cette recherche.';
+
+  @override
+  String get cjDejaJoue => 'Ce match a déjà eu lieu.';
+
+  @override
+  String cjChercheNJoueurs(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Cherche $n joueurs',
+      one: 'Cherche 1 joueur',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get cjEquipeComplete => 'Équipe au complet';
+
+  @override
+  String cjNiveauX(String range) {
+    return 'Niveau $range';
+  }
+
+  @override
+  String cjPrixX(String price) {
+    return '$price par joueur';
+  }
+
+  @override
+  String get cjJoueursTrouves => 'Joueurs trouvés';
+
+  @override
+  String cjNSurM(int n, int total) {
+    return '$n / $total';
+  }
+
+  @override
+  String cjNEnAttente(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n en liste d’attente',
+      one: '1 en liste d’attente',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String cjHorsNiveau(String level) {
+    return 'Ton niveau $level est hors de la fourchette demandée : tu peux quand même proposer.';
+  }
+
+  @override
+  String cjTonNiveauCorrespond(String level) {
+    return 'Ton niveau $level correspond';
+  }
+
+  @override
+  String get cjJeViens => 'Je viens';
+
+  @override
+  String get cjListeDAttente => 'Liste d’attente';
+
+  @override
+  String get cjTuJoues => 'Tu joues · Je ne viens plus';
+
+  @override
+  String cjEnAttenteN(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'En attente · ${n}e',
+      one: 'En attente · 1er',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get cjOuverte => 'Ouverte';
+
+  @override
+  String get cjComplet => 'Complet';
+
+  @override
+  String get cjFermee => 'Fermée';
+
+  @override
+  String get cjTermine => 'Terminé';
+
+  @override
+  String get cjJoueurs => 'Joueurs';
+
+  @override
+  String get cjOrganisateur => 'Organisateur';
+
+  @override
+  String cjNieme(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '${n}e',
+      one: '1er',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get cjPlaceLibre => 'Place libre';
+
+  @override
+  String get cjCreerLeGroupe => 'Créer le groupe avec les joueurs';
+
+  @override
+  String cjNomDuGroupe(String place, String day) {
+    return '$place · $day';
+  }
+
+  @override
+  String get cjFermerLaRecherche => 'Fermer la recherche';
+
+  @override
+  String get cjRouvrir => 'Rouvrir la recherche';
+
+  @override
+  String get cjRechercheFermeeToast => 'Recherche fermée';
+
+  @override
+  String get cjRechercheRouverte => 'Recherche rouverte';
+
+  @override
+  String get cjTuEsDansLEquipe => 'Tu es dans l’équipe !';
+
+  @override
+  String cjTuEsDansLEquipeDetail(String name, String date) {
+    return '$name compte sur toi le $date.';
+  }
+
+  @override
+  String get cjTuEsSurLaListe =>
+      'Tu es sur la liste d’attente : tu passes dès qu’une place se libère.';
+
+  @override
+  String get cjTuNeViensPlusQ => 'Tu ne viens plus ?';
+
+  @override
+  String cjTaPlaceIraA(String name) {
+    return 'Ta place ira à $name, premier sur la liste d’attente.';
+  }
+
+  @override
+  String get cjTaPlaceSeLibere => 'Ta place se libère pour un autre joueur.';
+
+  @override
+  String get cjJeNeViensPlus => 'Je ne viens plus';
+
+  @override
+  String get cjTuNeViensPlus => 'C’est noté, tu ne viens plus';
 }

@@ -56,6 +56,9 @@ const syncTables = <SyncTable>[
   // Équipement · Marketplace: what is for sale, and buyers' reviews of sellers (one per buyer).
   SyncTable('forum_annonces', scope: SyncScope.shared, ownerColumn: 'auteur_id'),
   SyncTable('forum_avis', scope: SyncScope.shared, ownerColumn: 'auteur_id'),
+  // « Cherche joueurs »: the organiser's search, and one row per member who joins.
+  SyncTable('forum_recherches', scope: SyncScope.shared, ownerColumn: 'auteur_id'),
+  SyncTable('forum_participations', scope: SyncScope.shared, ownerColumn: 'auteur_id'),
   // Private to their member: reports stay anonymous (FRM-05: the Supabase trigger counts them
   // without exposing who reported), saved / followed / muted lists and the last visit.
   SyncTable('forum_signalements'),

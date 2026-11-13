@@ -60,7 +60,7 @@ void main() {
         body: 'Portés trois fois.',
         listing: ForumListing(price: 0, condition: ListingCondition.likeNew),
       );
-      expect(() => me.publish(draft), throwsA(isA<ForumRuleException>()));
+      await expectLater(() => me.publish(draft), throwsA(isA<ForumRuleException>()));
       final sold = await me.publish(
         draft.copyWith(
           listing: () => const ForumListing(price: 45, condition: ListingCondition.likeNew, size: '9', city: 'La Marsa'),
@@ -77,7 +77,7 @@ void main() {
     });
 
     test('only the seller marks it sold, and back for sale', () async {
-      expect(() => me.markSold(raquette, sold: true), throwsA(isA<ForumRuleException>()));
+      await expectLater(() => me.markSold(raquette, sold: true), throwsA(isA<ForumRuleException>()));
       await as(mariem).markSold(raquette, sold: true);
       expect((await me.thread(raquette)).post.listing!.sold, isTrue);
       await as(mariem).markSold(raquette, sold: false);
@@ -85,7 +85,7 @@ void main() {
     });
 
     test('reviews: one per buyer and seller, not on oneself, average and stars', () async {
-      expect(() => as(mariem).review(mariem, 5, 'Top'), throwsA(isA<ForumRuleException>()));
+      await expectLater(() => as(mariem).review(mariem, 5, 'Top'), throwsA(isA<ForumRuleException>()));
       await me.review(mariem, 3, 'Correct, rendez-vous un peu en retard.', postId: raquette);
       var r = await me.sellerReviews(mariem);
       expect(r.count, 4);
@@ -102,7 +102,7 @@ void main() {
     });
 
     test('a hurtful review is stopped, then only its author sees it', () async {
-      expect(() => me.review(mariem, 1, 'T’es nulle, arnaqueuse.'), throwsA(isA<ForumAlertException>()));
+      await expectLater(() => me.review(mariem, 1, 'T’es nulle, arnaqueuse.'), throwsA(isA<ForumAlertException>()));
       await me.review(mariem, 1, 'T’es nulle, arnaqueuse.', confirmed: true);
       expect((await me.sellerReviews(mariem)).mine!.hidden, isTrue);
       final seen = await as(ForumSeed.id(2)).sellerReviews(mariem);

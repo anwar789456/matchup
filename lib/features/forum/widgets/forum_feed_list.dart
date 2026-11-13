@@ -17,6 +17,7 @@ import 'forum_actions.dart';
 import 'forum_format.dart';
 import 'forum_image.dart';
 import 'listing_widgets.dart';
+import 'search_widgets.dart';
 import 'report_sheet.dart';
 
 /// A scrolling feed of [MuForumPostCard]s for [query] (FRM-01, search, saved posts): [header]
@@ -185,7 +186,18 @@ class ForumPostTile extends ConsumerWidget {
 
     final card = MuForumPostCard(
       post: forumCardData(post, now),
-      header: post.listing == null ? null : ListingSummary(listing: post.listing!, rating: post.sellerRating),
+      header: post.listing != null
+          ? ListingSummary(listing: post.listing!, rating: post.sellerRating)
+          : post.search != null
+          ? SearchSummary(
+              search: post.search!,
+              now: now,
+              mine: post.mine.author,
+              myLevel: ref.watch(forumMeProvider).value?.level,
+              onJoin: () => toggleSearch(context, ref, post),
+              onLeave: () => toggleSearch(context, ref, post),
+            )
+          : null,
       media: post.images.isNotEmpty
           ? ForumMediaCollage(media: post.images, radius: BorderRadius.zero)
           : (post.listing != null ? ListingNoPhoto(sport: post.sport) : null),
