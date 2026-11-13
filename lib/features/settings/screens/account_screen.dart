@@ -17,13 +17,34 @@ class AccountScreen extends ConsumerStatefulWidget {
 }
 
 class _AccountScreenState extends ConsumerState<AccountScreen> {
-  late final AccountSettings _initial = ref.read(accountSettingsProvider);
+  late AccountSettings _initial = ref.read(accountSettingsProvider);
   late final _email = TextEditingController(text: _initial.email);
   late final _phone = TextEditingController(text: _initial.phone);
   late final _first = TextEditingController(text: _initial.firstName);
   late final _last = TextEditingController(text: _initial.lastName);
   late final _birth = TextEditingController(text: _initial.birthDate);
   late Gender _gender = _initial.gender;
+
+  /// The account's values arrive from the database (or Supabase) after the screen opens: they
+  /// replace the fields until the player starts editing.
+  void _follow(AccountSettings next) {
+    final untouched = _email.text == _initial.email &&
+        _phone.text == _initial.phone &&
+        _first.text == _initial.firstName &&
+        _last.text == _initial.lastName &&
+        _birth.text == _initial.birthDate &&
+        _gender == _initial.gender;
+    if (!untouched) return;
+    setState(() {
+      _initial = next;
+      _email.text = next.email;
+      _phone.text = next.phone;
+      _first.text = next.firstName;
+      _last.text = next.lastName;
+      _birth.text = next.birthDate;
+      _gender = next.gender;
+    });
+  }
 
   @override
   void dispose() {
@@ -58,6 +79,7 @@ class _AccountScreenState extends ConsumerState<AccountScreen> {
 
   @override
   Widget build(BuildContext context) {
+    ref.listen(accountSettingsProvider, (_, next) => _follow(next));
     final c = context.mu;
     final caption = MuType.caption.copyWith(color: c.textSecondary);
     Widget card(String title, String note, List<Widget> fields) => Container(

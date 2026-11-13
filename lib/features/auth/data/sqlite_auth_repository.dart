@@ -75,16 +75,23 @@ class SqliteAuthRepository implements AuthRepository {
     await onSignedIn(id);
   }
 
-  int? get _currentId => _userId ?? userId?.call();
+  /// The session (when given) is the truth: after a sign-out elsewhere, the account this
+  /// repository last signed in is not « current » anymore.
+  int? get _currentId => userId != null ? userId!() : _userId;
+
+  /// An account is signed in on the phone.
+  bool get signedIn => _currentId != null;
 
   /// The signed-in account's email, read back from the database after a restart.
   Future<String?> currentEmail() async {
-    if (_email != null) return _email;
     final id = _currentId;
     if (id == null) return null;
+    if (id == _userId && _email != null) return _email;
     final rows = await (await _db)
         .query('utilisateurs', columns: ['email'], where: 'id = ?', whereArgs: [id]);
-    return _email = rows.firstOrNull?['email'] as String?;
+    final email = rows.firstOrNull?['email'] as String?;
+    if (id == _userId) _email = email;
+    return email;
   }
 
   Future<Map<String, Object?>?> _user(DatabaseExecutor db, String email) async =>
@@ -166,7 +173,13 @@ class SqliteAuthRepository implements AuthRepository {
     final hashed = {'mot_de_passe': hashPassword(salt, password), 'sel': salt};
     final updated = await db.update('utilisateurs', hashed, where: 'email = ?', whereArgs: [address]);
     if (updated == 0 && create) {
-      await db.insert('utilisateurs', {...hashed, 'email': address, 'cree_le': _iso(_now())});
+      // Another sign-in may have just made the copy (OAuth return): then update it instead.
+      final id = await db.insert(
+        'utilisateurs',
+        {...hashed, 'email': address, 'cree_le': _iso(_now())},
+        conflictAlgorithm: ConflictAlgorithm.ignore,
+      );
+      if (id == 0) await db.update('utilisateurs', hashed, where: 'email = ?', whereArgs: [address]);
     }
     _signInFailures = 0;
     _lockedUntil = null;
@@ -270,6 +283,9 @@ class SqliteAuthRepository implements AuthRepository {
   /// No mail server on the phone: the confirmation email is not sent.
   @override
   Future<void> resendVerificationEmail() async {}
+
+  @override
+  Future<bool> isEmailVerified() async => false;
 
   @override
   Future<void> sendPasswordResetCode(String email) async {

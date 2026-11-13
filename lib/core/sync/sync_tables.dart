@@ -46,6 +46,10 @@ const syncTables = <SyncTable>[
   SyncTable('recus'),
   SyncTable('recu_lignes'),
 
+  // ── Utilisateur (Alaa): the account's profile (PRF-01/04) and settings (SET-02/05), private ──
+  SyncTable('reglages_compte'),
+  SyncTable('profil_joueur'),
+
   // ── Utilisateur (Alaa) · Réservation (Mahmoud) · Tournois (Ayoub) · Entraînement (Aziz) ·
   //    Forum (Hani): add your tables here.
 ];

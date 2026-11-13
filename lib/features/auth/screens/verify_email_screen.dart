@@ -1,15 +1,19 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 
+import '../../../core/api/session.dart';
 import '../../../core/format.dart';
 import '../../../router.dart';
 import '../../../theme/theme.dart';
 import '../../../ui/ui.dart';
 import '../../common/widgets/flow_scaffold.dart';
 import '../controllers/auth_providers.dart';
+import '../../profile/data/account_profile.dart';
 import '../widgets/auth_widgets.dart';
 import '../../../l10n/l10n.dart';
 
@@ -25,8 +29,45 @@ class _VerifyEmailScreenState extends ConsumerState<VerifyEmailScreen> {
   // AUTH-04: « Renvoyer l’email » is available again after 0:45.
   static const _resendDelay = Duration(seconds: 45);
 
+  // Asks the backend whether the link was opened (in the mail app or another tab), then moves on
+  // by itself, as « Continuer » does.
+  static const _checkEvery = Duration(seconds: 3);
+
   late DateTime _resendAt = DateTime.now().add(_resendDelay);
   bool _sending = false;
+  Timer? _check;
+  bool _checking = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _check = Timer.periodic(_checkEvery, (_) => _checkVerified());
+  }
+
+  @override
+  void dispose() {
+    _check?.cancel();
+    super.dispose();
+  }
+
+  Future<void> _checkVerified() async {
+    if (_checking) return;
+    _checking = true;
+    try {
+      final verified = await ref.read(authRepositoryProvider).isEmailVerified();
+      if (!verified || !mounted) return;
+      _check?.cancel();
+      // Confirmed: the device's session is the real account; its profile and the role and setup
+      // chosen meanwhile now meet the Supabase account.
+      await ref.read(accountProfileProvider).loadFromServer();
+      final next = await ref.read(sessionProvider.notifier).nextRoute();
+      if (mounted) context.push(next ?? Routes.roles);
+    } on Exception {
+      // Offline or server down: try again at the next tick.
+    } finally {
+      _checking = false;
+    }
+  }
 
   Future<void> _resend(String email) async {
     setState(() => _sending = true);
@@ -128,7 +169,11 @@ class _VerifyEmailScreenState extends ConsumerState<VerifyEmailScreen> {
           label: l10n.continuer,
           size: MuButtonSize.xl,
           fullWidth: true,
-          onPressed: () => context.push(Routes.roles),
+          onPressed: () async {
+            _check?.cancel();
+            final next = await ref.read(sessionProvider.notifier).nextRoute();
+            if (context.mounted) context.push(next ?? Routes.roles);
+          },
         ),
         Text(
           l10n.tuPourrasVerifierPlusTard,

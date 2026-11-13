@@ -9,6 +9,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'app.dart';
 import 'core/supabase/supabase_config.dart';
 import 'core/sync/sync_service.dart';
+import 'features/auth/controllers/oauth_return.dart';
 import 'features/payments/data/stripe_gateway.dart';
 
 Future<void> main() async {
@@ -23,6 +24,8 @@ Future<void> main() async {
   unawaited(StripeConfig.init());
   final container = ProviderContainer();
   container.read(syncLoopProvider);
+  // Back from « Continuer avec Google »: finishes the sign-in.
+  container.read(oauthReturnProvider);
   runApp(UncontrolledProviderScope(container: container, child: const MatchUpApp()));
 }
 

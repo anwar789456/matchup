@@ -6,7 +6,9 @@ import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 
+import '../../../core/api/session.dart';
 import '../../../router.dart';
+import '../../profile/data/account_profile.dart';
 import '../../../theme/theme.dart';
 import '../../../ui/ui.dart';
 import '../../auth/controllers/auth_providers.dart';
@@ -124,8 +126,13 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
         pseudo: _pseudo.text.trim(),
         fullName: _name.text.trim(),
       );
+      await ref.read(accountProfileProvider).saveIdentity(
+            pseudo: _pseudo.text.trim(),
+            fullName: _name.text.trim(),
+          );
     }
     await ref.onboarding.complete();
+    await ref.read(sessionProvider.notifier).markSetupDone(Routes.home);
     if (mounted) context.go(Routes.home);
   }
 

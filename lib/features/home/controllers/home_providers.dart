@@ -1,5 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../../core/sync/sync_service.dart';
 import '../../../core/connectivity.dart';
 
 import '../../../ui/ui.dart';
@@ -10,7 +11,11 @@ import '../../profile/data/me_repository.dart';
 import '../../venue/data/venues_repository.dart';
 
 /// The signed-in player (greeting, zone, notifications).
-final meProvider = FutureProvider<Me>((ref) => ref.watch(meRepositoryProvider).me());
+final meProvider = FutureProvider<Me>((ref) {
+  // The account's name may arrive from Supabase (sync_tables.dart): re-read it then.
+  ref.watch(syncRevisionProvider);
+  return ref.watch(meRepositoryProvider).me();
+});
 
 /// « Parties pour toi ».
 final recommendedGamesProvider = FutureProvider<List<MuGame>>(

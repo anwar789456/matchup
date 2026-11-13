@@ -3,6 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sqflite/sqflite.dart';
 
 import '../../../core/db/app_database.dart';
+import '../../../core/sync/sync_service.dart';
+import '../../profile/data/account_profile.dart';
 
 /// A signed-in device (SET-03 « Sessions actives »).
 @immutable
@@ -88,8 +90,9 @@ class AccountSettings {
   final String notificationsSummary;
 
   /// « +216 20 ••• 456 ».
-  String get maskedPhone =>
-      '+216 ${phone.substring(0, 2)} ••• ${phone.substring(phone.length - 3)}';
+  String get maskedPhone => phone.length < 5
+      ? phone
+      : '+216 ${phone.substring(0, 2)} ••• ${phone.substring(phone.length - 3)}';
 
   AccountSettings copyWith({
     String? email,
@@ -136,6 +139,8 @@ class AccountSettingsController extends Notifier<AccountSettings> {
 
   @override
   AccountSettings build() {
+    // The account's row may arrive from Supabase (sync_tables.dart): re-read it then.
+    ref.watch(syncRevisionProvider);
     _load();
     return const AccountSettings();
   }
@@ -155,6 +160,7 @@ class AccountSettingsController extends Notifier<AccountSettings> {
     state = next;
     _database.db
         .then((db) => db.transaction((txn) => AccountSettingsRows.write(txn, next)))
+        .then((_) => ref.read(accountProfileProvider).pushNow())
         .catchError((Object _) {});
   }
 

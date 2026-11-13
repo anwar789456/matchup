@@ -46,6 +46,29 @@ The debug menu (bug button) shows the last sync and has « Synchroniser maintena
 Your repositories do not change. The same goes for a new column: add it with a new schema
 version in `lib/core/db/schema.dart`, then steps 2 and 3.
 
+## Accounts and emails (Utilisateur module)
+
+With `supabase.json`, sign-up, sign-in and « Mot de passe oublié » go through Supabase Auth
+(`SupabaseAuthRepository`), and Supabase sends the emails. The phone keeps its copy of the
+account, so the app still opens offline. Once the email is confirmed, the device's session is the
+real account, and the synced rows follow it. Set up once in the dashboard:
+
+1. **Authentication › Sign In / Providers › Email**: enabled, **Confirm email** on.
+2. **Authentication › Emails › SMTP Settings**: turn on custom SMTP (the built-in sender only
+   delivers to the project's team members, a few emails per hour). With Gmail: host
+   `smtp.gmail.com`, port `465`, the Gmail address as user, a Google **app password** as
+   password, sender name `MatchUp`.
+3. **Authentication › Emails › Templates**: paste the files of `supabase/emails/` (the subject is
+   in the comment at the top of each file):
+   - « Confirm signup » ← `confirm-signup.html` (EML-01)
+   - « Reset password » ← `reset-password.html` (EML-02). It must show `{{ .Token }}`: the app
+     asks for the 6-digit code, not a link.
+4. **Authentication › URL Configuration › Redirect URLs**: add `http://localhost:*/**` so the
+   confirmation link opens the web app you are running.
+
+Check: `curl -s <SUPABASE_URL>/auth/v1/settings -H "apikey: <publishable key>"` must show
+`"mailer_autoconfirm": false` once « Confirm email » is on.
+
 ## Shared tables (forum, tournaments: what everyone must see)
 
 `SyncScope.owner` rows are private and come down once per phone. `SyncScope.shared` rows come

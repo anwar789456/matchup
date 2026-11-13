@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 
+import '../../../core/api/session.dart';
 import '../../../router.dart';
 import '../../../theme/theme.dart';
 import '../../../ui/ui.dart';
@@ -66,6 +67,17 @@ class _RoleChoiceScreenState extends ConsumerState<RoleChoiceScreen> {
     setState(() => _loading = true);
     try {
       await ref.read(authRepositoryProvider).saveRoles(_roles);
+      // The role is chosen once: the next sign-ins resume this role's setup, not this screen.
+      await ref.read(sessionProvider.notifier).markRoleChosen(first.route);
+      // Pro accounts land on their dashboard from now on, which shows what is left to set up.
+      // A player is marked at the end of the profile step (PLY-10).
+      final dashboard = switch (first.role) {
+        UserRole.owner => Routes.ownerDashboard,
+        UserRole.coach => Routes.coachDashboard,
+        UserRole.organizer => Routes.organizerDashboard,
+        _ => null,
+      };
+      if (dashboard != null) await ref.read(sessionProvider.notifier).markSetupDone(dashboard);
       if (mounted) context.push(first.route);
     } finally {
       if (mounted) setState(() => _loading = false);

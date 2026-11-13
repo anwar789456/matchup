@@ -3,7 +3,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 
+import '../../../core/api/session.dart';
 import '../../../router.dart';
+import '../../player_onboarding/controllers/onboarding_controller.dart';
+import '../../profile/data/account_profile.dart';
 import '../../../theme/theme.dart';
 import '../../../ui/ui.dart';
 import '../../common/widgets/flow_scaffold.dart';
@@ -66,7 +69,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     try {
       await repo.signIn(email: _email.text, password: _password.text);
       ref.read(authFlowProvider.notifier).setEmail(_email.text);
-      if (mounted) context.go(Routes.roles);
+      await _goAfterSignIn();
     } on InvalidCredentials catch (e) {
       setState(() => _attemptsLeft = e.attemptsLeft);
     } on AccountLocked {
@@ -79,10 +82,21 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     }
   }
 
+  /// The roles screen and the setup run once per account: an account that went through them
+  /// opens its home (or dashboard) directly.
+  Future<void> _goAfterSignIn() async {
+    // Supabase is the truth: the account's profile replaces the phone's cache first.
+    await ref.read(accountProfileProvider).loadFromServer();
+    final session = ref.read(sessionProvider.notifier);
+    final next = await session.nextRoute();
+    if (await session.setupDoneRoute() != null) await ref.read(onboardingProvider.notifier).complete();
+    if (mounted) context.go(next ?? Routes.roles);
+  }
+
   Future<void> _social(SocialProvider provider) async {
     try {
       await ref.read(authRepositoryProvider).signInWithProvider(provider);
-      if (mounted) context.go(Routes.roles);
+      await _goAfterSignIn();
     } on ProviderSignInFailed {
       if (mounted) {
         MuToast.show(context, tone: MuToastTone.error, title: AuthMessages.providerFailed);
