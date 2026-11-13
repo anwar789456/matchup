@@ -3069,7 +3069,10 @@
     "msgVocalTropCourt",
     "msgMicroRefuse",
     "msgMicroRefuseDetail",
-    "msgVocalImpossible"
+    "msgVocalImpossible",
+    "msgRienEntendu",
+    "msgRienEntenduDetail",
+    "msgVocalIllisible"
   ],
 
   "en": [
@@ -6431,6 +6434,9 @@
     "msgVocalTropCourt",
     "msgMicroRefuse",
     "msgMicroRefuseDetail",
-    "msgVocalImpossible"
+    "msgVocalImpossible",
+    "msgRienEntendu",
+    "msgRienEntenduDetail",
+    "msgVocalIllisible"
   ]
 }

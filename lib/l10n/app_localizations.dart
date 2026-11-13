@@ -20326,6 +20326,24 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Impossible d’enregistrer un message vocal ici.'**
   String get msgVocalImpossible;
+
+  /// No description provided for @msgRienEntendu.
+  ///
+  /// In fr, this message translates to:
+  /// **'On n’a rien entendu'**
+  String get msgRienEntendu;
+
+  /// No description provided for @msgRienEntenduDetail.
+  ///
+  /// In fr, this message translates to:
+  /// **'Le micro n’a capté aucun son : vérifie qu’il n’est pas coupé et que le bon micro est choisi.'**
+  String get msgRienEntenduDetail;
+
+  /// No description provided for @msgVocalIllisible.
+  ///
+  /// In fr, this message translates to:
+  /// **'Impossible de lire ce message vocal'**
+  String get msgVocalIllisible;
 }
 
 class _AppLocalizationsDelegate

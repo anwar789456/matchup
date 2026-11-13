@@ -12196,4 +12196,14 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get msgVocalImpossible =>
       'Impossible d’enregistrer un message vocal ici.';
+
+  @override
+  String get msgRienEntendu => 'On n’a rien entendu';
+
+  @override
+  String get msgRienEntenduDetail =>
+      'Le micro n’a capté aucun son : vérifie qu’il n’est pas coupé et que le bon micro est choisi.';
+
+  @override
+  String get msgVocalIllisible => 'Impossible de lire ce message vocal';
 }

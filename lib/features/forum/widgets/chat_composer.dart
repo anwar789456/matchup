@@ -147,7 +147,15 @@ class _ChatComposerState extends ConsumerState<ChatComposer> {
       await _recorder.cancel();
       return;
     }
-    final clip = await _recorder.stop();
+    final VoiceClip? clip;
+    try {
+      clip = await _recorder.stop();
+    } on VoiceRecordingException {
+      if (mounted) {
+        MuToast.show(context, tone: MuToastTone.warning, title: l10n.msgRienEntendu, description: l10n.msgRienEntenduDetail);
+      }
+      return;
+    }
     if (!mounted) return;
     if (clip == null) {
       MuToast.show(context, tone: MuToastTone.warning, title: l10n.msgVocalTropCourt);

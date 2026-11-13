@@ -13,8 +13,8 @@ class VoiceClip {
   final Duration duration;
 }
 
-/// Why recording could not start.
-enum VoiceProblem { permission, unsupported }
+/// Why recording could not start, or gave nothing to send.
+enum VoiceProblem { permission, unsupported, silent }
 
 class VoiceRecordingException implements Exception {
   const VoiceRecordingException(this.problem);
@@ -29,7 +29,8 @@ abstract interface class VoiceRecorder {
   /// The input level 0 → 1 while recording (the bubble's pulse).
   Stream<double> get level;
 
-  /// Stops and returns the clip, or null when it is too short to send.
+  /// Stops and returns the clip, or null when it is too short to send; throws
+  /// [VoiceRecordingException] ([VoiceProblem.silent]) when the microphone heard nothing.
   Future<VoiceClip?> stop();
 
   /// Stops and throws the recording away.
@@ -59,6 +60,9 @@ class DeviceVoiceRecorder implements VoiceRecorder {
 
   // dBFS below this is silence for the level meter.
   static const double _floorDb = -45;
+
+  /// Below this peak (of 32 767) the whole clip is silence: a muted or wrong microphone.
+  static const int silencePeak = 150;
 
   final _recorder = AudioRecorder();
   final _bytes = BytesBuilder(copy: false);
@@ -94,6 +98,7 @@ class DeviceVoiceRecorder implements VoiceRecorder {
     final length = Duration(milliseconds: pcm.length * 1000 ~/ (_rate * _channels * _bits ~/ 8));
     _started = null;
     if (length < minLength) return null;
+    if (peak(pcm) < silencePeak) throw const VoiceRecordingException(VoiceProblem.silent);
     return VoiceClip('data:audio/wav;base64,${base64Encode(wav(pcm))}', length);
   }
 
@@ -111,6 +116,17 @@ class DeviceVoiceRecorder implements VoiceRecorder {
     _limit?.cancel();
     _sub?.cancel();
     _recorder.dispose();
+  }
+
+  /// The loudest sample of 16-bit little-endian PCM.
+  static int peak(Uint8List pcm) {
+    final samples = ByteData.sublistView(pcm);
+    var max = 0;
+    for (var i = 0; i + 1 < pcm.length; i += 2) {
+      final v = samples.getInt16(i, Endian.little).abs();
+      if (v > max) max = v;
+    }
+    return max;
   }
 
   /// A WAV file around 16-bit PCM.

@@ -9454,5 +9454,8 @@
   "msgVocalTropCourt": "Message trop court : parle un peu plus longtemps.",
   "msgMicroRefuse": "Micro non autorisé",
   "msgMicroRefuseDetail": "Autorise le micro pour MatchUp dans les réglages de ton téléphone ou de ton navigateur.",
-  "msgVocalImpossible": "Impossible d’enregistrer un message vocal ici."
+  "msgVocalImpossible": "Impossible d’enregistrer un message vocal ici.",
+  "msgRienEntendu": "On n’a rien entendu",
+  "msgRienEntenduDetail": "Le micro n’a capté aucun son : vérifie qu’il n’est pas coupé et que le bon micro est choisi.",
+  "msgVocalIllisible": "Impossible de lire ce message vocal"
 }

@@ -460,11 +460,50 @@ class ForumVoicePlayer extends StatefulWidget {
 
 class _ForumVoicePlayerState extends State<ForumVoicePlayer> {
   VideoPlayerController? _audio;
-  bool _loading = false;
+  bool _loading = true;
+  bool _failed = false;
 
   // A voice bubble's bar is 140 wide, 4 high.
   static const double _bar = 140;
   static const double _barHeight = 4;
+
+  // The player's element stays in the page (a browser may keep a detached one silent), 1 px
+  // and invisible.
+  static const double _host = 1;
+
+  @override
+  void initState() {
+    super.initState();
+    _load();
+  }
+
+  /// Loaded as soon as the bubble shows: the tap then starts the sound at once, inside the
+  /// gesture (a browser blocks sound started later).
+  Future<void> _load() async {
+    final a = mediaController(widget.src);
+    try {
+      await a.initialize();
+      await a.setVolume(1);
+    } catch (_) {
+      await a.dispose();
+      if (mounted) {
+        setState(() {
+          _loading = false;
+          _failed = true;
+        });
+      }
+      return;
+    }
+    if (!mounted) {
+      await a.dispose();
+      return;
+    }
+    a.addListener(_tick);
+    setState(() {
+      _audio = a;
+      _loading = false;
+    });
+  }
 
   @override
   void dispose() {
@@ -484,26 +523,15 @@ class _ForumVoicePlayerState extends State<ForumVoicePlayer> {
     setState(() {});
   }
 
-  Future<void> _toggle() async {
-    var a = _audio;
-    if (a == null) {
-      setState(() => _loading = true);
-      a = mediaController(widget.src);
-      try {
-        await a.initialize();
-      } catch (_) {
-        await a.dispose();
-        if (mounted) setState(() => _loading = false);
-        return;
-      }
-      a.addListener(_tick);
-      if (!mounted) return a.dispose();
-      setState(() {
-        _audio = a;
-        _loading = false;
-      });
+  void _toggle() {
+    final a = _audio;
+    if (a == null) return;
+    if (a.value.isPlaying) {
+      a.pause();
+    } else {
+      // No await before play(): it must run inside the tap.
+      a.play();
     }
-    a.value.isPlaying ? await a.pause() : await a.play();
   }
 
   @override
@@ -517,13 +545,16 @@ class _ForumVoicePlayerState extends State<ForumVoicePlayer> {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
+        if (_audio case final a?) SizedBox(width: _host, height: _host, child: Opacity(opacity: 0, child: VideoPlayer(a))),
         _loading
             ? const SizedBox(width: MuSize.touchTarget, height: MuSize.touchTarget, child: Center(child: MuSpinner()))
             : MuIconButton(
-                icon: playing ? PhosphorIcons.pause(PhosphorIconsStyle.fill) : PhosphorIcons.play(PhosphorIconsStyle.fill),
-                label: playing ? l10n.mediaPause : l10n.mediaEcouterLeVocal,
+                icon: _failed
+                    ? PhosphorIcons.warningCircle()
+                    : (playing ? PhosphorIcons.pause(PhosphorIconsStyle.fill) : PhosphorIcons.play(PhosphorIconsStyle.fill)),
+                label: _failed ? l10n.msgVocalIllisible : (playing ? l10n.mediaPause : l10n.mediaEcouterLeVocal),
                 color: fg,
-                onPressed: _toggle,
+                onPressed: _failed ? null : _toggle,
               ),
         SizedBox(
           width: _bar,
