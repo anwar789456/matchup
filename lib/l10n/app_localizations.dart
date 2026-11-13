@@ -22558,6 +22558,1212 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Ton message à l’assistant'**
   String get aiYourMessage;
+
+  /// No description provided for @hier.
+  ///
+  /// In fr, this message translates to:
+  /// **'hier'**
+  String get hier;
+
+  /// No description provided for @plusDOptions.
+  ///
+  /// In fr, this message translates to:
+  /// **'Plus d’options'**
+  String get plusDOptions;
+
+  /// No description provided for @forumCatTechnique.
+  ///
+  /// In fr, this message translates to:
+  /// **'Conseils & technique'**
+  String get forumCatTechnique;
+
+  /// No description provided for @forumCatEquipement.
+  ///
+  /// In fr, this message translates to:
+  /// **'Équipement'**
+  String get forumCatEquipement;
+
+  /// No description provided for @forumCatTerrains.
+  ///
+  /// In fr, this message translates to:
+  /// **'Terrains'**
+  String get forumCatTerrains;
+
+  /// No description provided for @forumCatTournois.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tournois'**
+  String get forumCatTournois;
+
+  /// No description provided for @forumCatDiscussions.
+  ///
+  /// In fr, this message translates to:
+  /// **'Discussions libres'**
+  String get forumCatDiscussions;
+
+  /// No description provided for @forumTriTendance.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tendance'**
+  String get forumTriTendance;
+
+  /// No description provided for @forumTriRecents.
+  ///
+  /// In fr, this message translates to:
+  /// **'Récents'**
+  String get forumTriRecents;
+
+  /// No description provided for @forumTriTop.
+  ///
+  /// In fr, this message translates to:
+  /// **'Top'**
+  String get forumTriTop;
+
+  /// No description provided for @forumTriUtiles.
+  ///
+  /// In fr, this message translates to:
+  /// **'Les plus utiles'**
+  String get forumTriUtiles;
+
+  /// No description provided for @forumTriRecentes.
+  ///
+  /// In fr, this message translates to:
+  /// **'Les plus récentes'**
+  String get forumTriRecentes;
+
+  /// No description provided for @forumTriAnciennes.
+  ///
+  /// In fr, this message translates to:
+  /// **'Les plus anciennes'**
+  String get forumTriAnciennes;
+
+  /// No description provided for @forumMotifSpam.
+  ///
+  /// In fr, this message translates to:
+  /// **'Spam ou publicité'**
+  String get forumMotifSpam;
+
+  /// No description provided for @forumMotifInsulte.
+  ///
+  /// In fr, this message translates to:
+  /// **'Insulte ou harcèlement'**
+  String get forumMotifInsulte;
+
+  /// No description provided for @forumMotifChoquant.
+  ///
+  /// In fr, this message translates to:
+  /// **'Contenu choquant ou dangereux'**
+  String get forumMotifChoquant;
+
+  /// No description provided for @forumMotifFausseInfo.
+  ///
+  /// In fr, this message translates to:
+  /// **'Fausse information'**
+  String get forumMotifFausseInfo;
+
+  /// No description provided for @forumMotifAutre.
+  ///
+  /// In fr, this message translates to:
+  /// **'Autre chose'**
+  String get forumMotifAutre;
+
+  /// No description provided for @forumMembre.
+  ///
+  /// In fr, this message translates to:
+  /// **'Membre'**
+  String get forumMembre;
+
+  /// No description provided for @forumIaAucune.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucune toxicité'**
+  String get forumIaAucune;
+
+  /// No description provided for @forumIaAucuneExplication.
+  ///
+  /// In fr, this message translates to:
+  /// **'Rien de blessant ni de publicitaire détecté.'**
+  String get forumIaAucuneExplication;
+
+  /// No description provided for @forumIaInsulte.
+  ///
+  /// In fr, this message translates to:
+  /// **'Toxicité · insulte'**
+  String get forumIaInsulte;
+
+  /// No description provided for @forumIaInsulteExplication.
+  ///
+  /// In fr, this message translates to:
+  /// **'Insulte grossière visant une personne.'**
+  String get forumIaInsulteExplication;
+
+  /// No description provided for @forumIaInsulteLegere.
+  ///
+  /// In fr, this message translates to:
+  /// **'Toxicité · insulte légère'**
+  String get forumIaInsulteLegere;
+
+  /// No description provided for @forumIaInsulteLegereExplication.
+  ///
+  /// In fr, this message translates to:
+  /// **'Moquerie entre joueurs, sans menace ni haine. L’IA peut se tromper sur le ton entre amis.'**
+  String get forumIaInsulteLegereExplication;
+
+  /// No description provided for @forumIaTonAgressif.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ton agressif'**
+  String get forumIaTonAgressif;
+
+  /// No description provided for @forumIaTonAgressifExplication.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ton sec qui vise une personne plutôt que son avis. Pas d’insulte.'**
+  String get forumIaTonAgressifExplication;
+
+  /// No description provided for @forumIaSpamContact.
+  ///
+  /// In fr, this message translates to:
+  /// **'Spam · lien et contact'**
+  String get forumIaSpamContact;
+
+  /// No description provided for @forumIaSpamPub.
+  ///
+  /// In fr, this message translates to:
+  /// **'Spam · publicité'**
+  String get forumIaSpamPub;
+
+  /// No description provided for @forumIaSpamExplication.
+  ///
+  /// In fr, this message translates to:
+  /// **'Vente ou publicité avec un moyen de contact hors de MatchUp.'**
+  String get forumIaSpamExplication;
+
+  /// No description provided for @forumIaCoordonnees.
+  ///
+  /// In fr, this message translates to:
+  /// **'Coordonnées publiées'**
+  String get forumIaCoordonnees;
+
+  /// No description provided for @forumIaCoordonneesExplication.
+  ///
+  /// In fr, this message translates to:
+  /// **'Numéro ou adresse publiés : à faire passer en message privé.'**
+  String get forumIaCoordonneesExplication;
+
+  /// No description provided for @forumTitreTropCourt.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ton titre doit faire au moins 10 caractères.'**
+  String get forumTitreTropCourt;
+
+  /// No description provided for @forumMessageVide.
+  ///
+  /// In fr, this message translates to:
+  /// **'Écris ton message avant de publier.'**
+  String get forumMessageVide;
+
+  /// No description provided for @forumDiscussionSupprimee.
+  ///
+  /// In fr, this message translates to:
+  /// **'Cette discussion a été supprimée.'**
+  String get forumDiscussionSupprimee;
+
+  /// No description provided for @forumReponseSupprimee.
+  ///
+  /// In fr, this message translates to:
+  /// **'Cette réponse a été supprimée.'**
+  String get forumReponseSupprimee;
+
+  /// No description provided for @forumEnVerification.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ce contenu est en cours de vérification.'**
+  String get forumEnVerification;
+
+  /// No description provided for @forumSeulLAuteur.
+  ///
+  /// In fr, this message translates to:
+  /// **'Seul l’auteur peut modifier ou supprimer ce message.'**
+  String get forumSeulLAuteur;
+
+  /// No description provided for @forumSeulLAuteurChoisit.
+  ///
+  /// In fr, this message translates to:
+  /// **'Seul l’auteur du post choisit la meilleure réponse.'**
+  String get forumSeulLAuteurChoisit;
+
+  /// No description provided for @forumReponseDirecte.
+  ///
+  /// In fr, this message translates to:
+  /// **'Choisis une réponse directe au post.'**
+  String get forumReponseDirecte;
+
+  /// No description provided for @forumPasTaPropreReponse.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tu ne peux pas choisir ta propre réponse.'**
+  String get forumPasTaPropreReponse;
+
+  /// No description provided for @forumPasDeVotePourSoi.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tu ne peux pas voter pour ton propre message.'**
+  String get forumPasDeVotePourSoi;
+
+  /// No description provided for @forumPasDeReactionPourSoi.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tu ne peux pas réagir à ton propre message.'**
+  String get forumPasDeReactionPourSoi;
+
+  /// No description provided for @forumPasTeSuivre.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tu ne peux pas te suivre toi-même.'**
+  String get forumPasTeSuivre;
+
+  /// No description provided for @forumPasTeMasquer.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tu ne peux pas te masquer toi-même.'**
+  String get forumPasTeMasquer;
+
+  /// No description provided for @forumPasTonPropreMessage.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tu ne peux pas signaler ton propre message.'**
+  String get forumPasTonPropreMessage;
+
+  /// No description provided for @forumHorsLigne.
+  ///
+  /// In fr, this message translates to:
+  /// **'Hors ligne'**
+  String get forumHorsLigne;
+
+  /// No description provided for @forumHorsLigneDetail.
+  ///
+  /// In fr, this message translates to:
+  /// **'Vérifie ta connexion puis réessaie.'**
+  String get forumHorsLigneDetail;
+
+  /// No description provided for @forumErreur.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ça n’a pas marché. Réessaie dans un instant.'**
+  String get forumErreur;
+
+  /// No description provided for @forumSuspendu.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tu ne peux plus publier pour l’instant'**
+  String get forumSuspendu;
+
+  /// No description provided for @forumSuspenduJusquA.
+  ///
+  /// In fr, this message translates to:
+  /// **'Suspendu de la communauté jusqu’au {date}. Tu peux toujours lire.'**
+  String forumSuspenduJusquA(String date);
+
+  /// No description provided for @forumRechercherDansLaCommunaute.
+  ///
+  /// In fr, this message translates to:
+  /// **'Rechercher dans la communauté'**
+  String get forumRechercherDansLaCommunaute;
+
+  /// No description provided for @forumMesPostsEtFavoris.
+  ///
+  /// In fr, this message translates to:
+  /// **'Mes posts et favoris'**
+  String get forumMesPostsEtFavoris;
+
+  /// No description provided for @forumPoseTaQuestionALaCommunaute.
+  ///
+  /// In fr, this message translates to:
+  /// **'Pose ta question à la communauté'**
+  String get forumPoseTaQuestionALaCommunaute;
+
+  /// No description provided for @forumEcrireUnNouveauPost.
+  ///
+  /// In fr, this message translates to:
+  /// **'Écrire un nouveau post'**
+  String get forumEcrireUnNouveauPost;
+
+  /// No description provided for @forumCategories.
+  ///
+  /// In fr, this message translates to:
+  /// **'Catégories'**
+  String get forumCategories;
+
+  /// No description provided for @forumNouveauxDepuisTaDerniereVisite.
+  ///
+  /// In fr, this message translates to:
+  /// **'Nouveaux depuis ta dernière visite'**
+  String get forumNouveauxDepuisTaDerniereVisite;
+
+  /// No description provided for @forumNNouveaux.
+  ///
+  /// In fr, this message translates to:
+  /// **'{n, plural, =1{1 nouveau} other{{n} nouveaux}}'**
+  String forumNNouveaux(int n);
+
+  /// No description provided for @forumFiltrerParSport.
+  ///
+  /// In fr, this message translates to:
+  /// **'Filtrer par sport'**
+  String get forumFiltrerParSport;
+
+  /// No description provided for @forumTousLesSports.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tous les sports'**
+  String get forumTousLesSports;
+
+  /// No description provided for @forumTrierLesDiscussions.
+  ///
+  /// In fr, this message translates to:
+  /// **'Trier les discussions'**
+  String get forumTrierLesDiscussions;
+
+  /// No description provided for @forumDiscussions.
+  ///
+  /// In fr, this message translates to:
+  /// **'{n, plural, =0{discussion} =1{discussion} other{discussions}}'**
+  String forumDiscussions(int n);
+
+  /// No description provided for @forumTAMentionne.
+  ///
+  /// In fr, this message translates to:
+  /// **'t’a mentionné · {time}'**
+  String forumTAMentionne(String time);
+
+  /// No description provided for @forumVoterPour.
+  ///
+  /// In fr, this message translates to:
+  /// **'Voter pour'**
+  String get forumVoterPour;
+
+  /// No description provided for @forumVoterContre.
+  ///
+  /// In fr, this message translates to:
+  /// **'Voter contre'**
+  String get forumVoterContre;
+
+  /// No description provided for @forumVoterPourNVotes.
+  ///
+  /// In fr, this message translates to:
+  /// **'Voter pour, {score} votes'**
+  String forumVoterPourNVotes(String score);
+
+  /// No description provided for @forumNVotes.
+  ///
+  /// In fr, this message translates to:
+  /// **'{n, plural, =0{0 vote} =1{1 vote} other{{n} votes}}'**
+  String forumNVotes(int n);
+
+  /// No description provided for @forumNReponses.
+  ///
+  /// In fr, this message translates to:
+  /// **'{n, plural, =0{0 réponse} =1{1 réponse} other{{n} réponses}}'**
+  String forumNReponses(int n);
+
+  /// No description provided for @forumEpingle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Épinglé'**
+  String get forumEpingle;
+
+  /// No description provided for @forumMeilleureReponse.
+  ///
+  /// In fr, this message translates to:
+  /// **'Meilleure réponse'**
+  String get forumMeilleureReponse;
+
+  /// No description provided for @forumMasqueParLaModeration.
+  ///
+  /// In fr, this message translates to:
+  /// **'Masqué par la modération · en cours de vérification'**
+  String get forumMasqueParLaModeration;
+
+  /// No description provided for @forumMessageMasque.
+  ///
+  /// In fr, this message translates to:
+  /// **'Message masqué par la modération'**
+  String get forumMessageMasque;
+
+  /// No description provided for @forumTuAsSignale.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tu as signalé ce message. La modération va le vérifier.'**
+  String get forumTuAsSignale;
+
+  /// No description provided for @forumTonPostSeulToi.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ton post « {title} » · seul toi le vois. Réponse de la modération sous 24 h.'**
+  String forumTonPostSeulToi(String title);
+
+  /// No description provided for @forumVoir.
+  ///
+  /// In fr, this message translates to:
+  /// **'Voir'**
+  String get forumVoir;
+
+  /// No description provided for @forumAucuneDiscussion.
+  ///
+  /// In fr, this message translates to:
+  /// **'Pas encore de discussion ici'**
+  String get forumAucuneDiscussion;
+
+  /// No description provided for @forumAucuneDiscussionDetail.
+  ///
+  /// In fr, this message translates to:
+  /// **'Lance la première : une question, une astuce ou un avis sur un terrain.'**
+  String get forumAucuneDiscussionDetail;
+
+  /// No description provided for @forumPoseTaQuestion.
+  ///
+  /// In fr, this message translates to:
+  /// **'Pose ta question'**
+  String get forumPoseTaQuestion;
+
+  /// No description provided for @forumTuAsToutVu.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tu as tout vu. Reviens plus tard pour les nouvelles discussions.'**
+  String get forumTuAsToutVu;
+
+  /// No description provided for @forumEnregistrer.
+  ///
+  /// In fr, this message translates to:
+  /// **'Enregistrer'**
+  String get forumEnregistrer;
+
+  /// No description provided for @forumRetirerDesFavoris.
+  ///
+  /// In fr, this message translates to:
+  /// **'Retirer des favoris'**
+  String get forumRetirerDesFavoris;
+
+  /// No description provided for @forumSignaler.
+  ///
+  /// In fr, this message translates to:
+  /// **'Signaler'**
+  String get forumSignaler;
+
+  /// No description provided for @forumMerciSignalement.
+  ///
+  /// In fr, this message translates to:
+  /// **'Merci, la modération va vérifier sous 24 h.'**
+  String get forumMerciSignalement;
+
+  /// No description provided for @forumRechercheNPlaceholder.
+  ///
+  /// In fr, this message translates to:
+  /// **'Mot, tag, titre…'**
+  String get forumRechercheNPlaceholder;
+
+  /// No description provided for @forumRechercheVide.
+  ///
+  /// In fr, this message translates to:
+  /// **'Cherche dans les discussions'**
+  String get forumRechercheVide;
+
+  /// No description provided for @forumRechercheVideDetail.
+  ///
+  /// In fr, this message translates to:
+  /// **'Un mot du titre, du texte ou un tag : « bandeja », « crampons », « lac2 ».'**
+  String get forumRechercheVideDetail;
+
+  /// No description provided for @forumAucunResultat.
+  ///
+  /// In fr, this message translates to:
+  /// **'Rien pour « {q} »'**
+  String forumAucunResultat(String q);
+
+  /// No description provided for @forumAucunResultatDetail.
+  ///
+  /// In fr, this message translates to:
+  /// **'Essaie un autre mot, ou pose ta question à la communauté.'**
+  String get forumAucunResultatDetail;
+
+  /// No description provided for @forumFavoris.
+  ///
+  /// In fr, this message translates to:
+  /// **'Favoris'**
+  String get forumFavoris;
+
+  /// No description provided for @forumMesPosts.
+  ///
+  /// In fr, this message translates to:
+  /// **'Mes posts'**
+  String get forumMesPosts;
+
+  /// No description provided for @forumAucunFavori.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucun favori'**
+  String get forumAucunFavori;
+
+  /// No description provided for @forumAucunFavoriDetail.
+  ///
+  /// In fr, this message translates to:
+  /// **'Enregistre une discussion avec « Plus d’options » pour la retrouver ici.'**
+  String get forumAucunFavoriDetail;
+
+  /// No description provided for @forumAucunPost.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tu n’as encore rien publié'**
+  String get forumAucunPost;
+
+  /// No description provided for @forumAucunPostDetail.
+  ///
+  /// In fr, this message translates to:
+  /// **'Une question sur ton jeu, ton matériel ou un terrain ? La communauté répond vite.'**
+  String get forumAucunPostDetail;
+
+  /// No description provided for @forumNouveauPost.
+  ///
+  /// In fr, this message translates to:
+  /// **'Nouveau post'**
+  String get forumNouveauPost;
+
+  /// No description provided for @forumModifierLePost.
+  ///
+  /// In fr, this message translates to:
+  /// **'Modifier le post'**
+  String get forumModifierLePost;
+
+  /// No description provided for @forumFermerSansPublier.
+  ///
+  /// In fr, this message translates to:
+  /// **'Fermer sans publier'**
+  String get forumFermerSansPublier;
+
+  /// No description provided for @forumBrouillonEnregistre.
+  ///
+  /// In fr, this message translates to:
+  /// **'Brouillon enregistré'**
+  String get forumBrouillonEnregistre;
+
+  /// No description provided for @forumCategorieEtSport.
+  ///
+  /// In fr, this message translates to:
+  /// **'Catégorie et sport'**
+  String get forumCategorieEtSport;
+
+  /// No description provided for @forumCategorieDuPost.
+  ///
+  /// In fr, this message translates to:
+  /// **'Catégorie du post'**
+  String get forumCategorieDuPost;
+
+  /// No description provided for @forumSportDuPost.
+  ///
+  /// In fr, this message translates to:
+  /// **'Sport du post'**
+  String get forumSportDuPost;
+
+  /// No description provided for @forumTitre.
+  ///
+  /// In fr, this message translates to:
+  /// **'Titre'**
+  String get forumTitre;
+
+  /// No description provided for @forumTitrePlaceholder.
+  ///
+  /// In fr, this message translates to:
+  /// **'Une vraie question : « Crampons pour synthétique ? »'**
+  String get forumTitrePlaceholder;
+
+  /// No description provided for @forumDiscussionsSimilaires.
+  ///
+  /// In fr, this message translates to:
+  /// **'Discussions similaires'**
+  String get forumDiscussionsSimilaires;
+
+  /// No description provided for @forumTaQuestionADejaDesReponses.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ta question a peut-être déjà des réponses.'**
+  String get forumTaQuestionADejaDesReponses;
+
+  /// No description provided for @forumMasquerLesDiscussionsSimilaires.
+  ///
+  /// In fr, this message translates to:
+  /// **'Masquer les discussions similaires'**
+  String get forumMasquerLesDiscussionsSimilaires;
+
+  /// No description provided for @forumMessage.
+  ///
+  /// In fr, this message translates to:
+  /// **'Message'**
+  String get forumMessage;
+
+  /// No description provided for @forumMessageHelper.
+  ///
+  /// In fr, this message translates to:
+  /// **'Reste précis : niveau, côté, ce que tu as déjà essayé.'**
+  String get forumMessageHelper;
+
+  /// No description provided for @forumEditeurPlaceholder.
+  ///
+  /// In fr, this message translates to:
+  /// **'Partage une astuce, une question ou une annonce…'**
+  String get forumEditeurPlaceholder;
+
+  /// No description provided for @forumImagesFacultatif.
+  ///
+  /// In fr, this message translates to:
+  /// **'Images (facultatif)'**
+  String get forumImagesFacultatif;
+
+  /// No description provided for @forumImagesHint.
+  ///
+  /// In fr, this message translates to:
+  /// **'JPG, PNG · 10 Mo max'**
+  String get forumImagesHint;
+
+  /// No description provided for @forumImageN.
+  ///
+  /// In fr, this message translates to:
+  /// **'Image {n}'**
+  String forumImageN(int n);
+
+  /// No description provided for @forumImageDuPost.
+  ///
+  /// In fr, this message translates to:
+  /// **'Image du post'**
+  String get forumImageDuPost;
+
+  /// No description provided for @forumImageTropLourde.
+  ///
+  /// In fr, this message translates to:
+  /// **'{name} dépasse 10 Mo.'**
+  String forumImageTropLourde(String name);
+
+  /// No description provided for @forumImagesMax.
+  ///
+  /// In fr, this message translates to:
+  /// **'{n} images au maximum : les suivantes n’ont pas été ajoutées.'**
+  String forumImagesMax(int n);
+
+  /// No description provided for @forumTags.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tags'**
+  String get forumTags;
+
+  /// No description provided for @forumTagsPlaceholder.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ajoute un tag'**
+  String get forumTagsPlaceholder;
+
+  /// No description provided for @forumTagsHelper.
+  ///
+  /// In fr, this message translates to:
+  /// **'Les tags aident les joueurs à trouver ton post.'**
+  String get forumTagsHelper;
+
+  /// No description provided for @forumSuggeresParLIa.
+  ///
+  /// In fr, this message translates to:
+  /// **'Suggérés par l’IA'**
+  String get forumSuggeresParLIa;
+
+  /// No description provided for @forumDApresTonTitreEtTonTexte.
+  ///
+  /// In fr, this message translates to:
+  /// **'D’après ton titre et ton texte'**
+  String get forumDApresTonTitreEtTonTexte;
+
+  /// No description provided for @forumMasquerLesSuggestions.
+  ///
+  /// In fr, this message translates to:
+  /// **'Masquer les suggestions'**
+  String get forumMasquerLesSuggestions;
+
+  /// No description provided for @forumAjouterLeTag.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ajouter le tag {tag}'**
+  String forumAjouterLeTag(String tag);
+
+  /// No description provided for @forumDApres.
+  ///
+  /// In fr, this message translates to:
+  /// **'D’après « {word} »'**
+  String forumDApres(String word);
+
+  /// No description provided for @forumRespecteLes.
+  ///
+  /// In fr, this message translates to:
+  /// **'Respecte les'**
+  String get forumRespecteLes;
+
+  /// No description provided for @forumReglesDeLaCommunaute.
+  ///
+  /// In fr, this message translates to:
+  /// **'règles de la communauté'**
+  String get forumReglesDeLaCommunaute;
+
+  /// No description provided for @forumReglesSuite.
+  ///
+  /// In fr, this message translates to:
+  /// **' : pas d’insultes, pas de pub. Les messages signalés sont relus par la modération.'**
+  String get forumReglesSuite;
+
+  /// No description provided for @forumReglesTitre.
+  ///
+  /// In fr, this message translates to:
+  /// **'Règles de la communauté'**
+  String get forumReglesTitre;
+
+  /// No description provided for @forumReglesTexte.
+  ///
+  /// In fr, this message translates to:
+  /// **'1. **Respecte les joueurs.** Critique un avis, jamais une personne : pas d’insultes, de moqueries ni de menaces.\n2. **Pas de pub.** Pas de vente, de liens ou de numéros pour attirer des clients : les coachs et les terrains ont leur page.\n3. **Reste utile.** Une vraie question, un vrai avis, avec ton niveau et ce que tu as essayé.\n4. **Protège ta vie privée.** Pas de numéro ni d’adresse en public : passe par les messages.\n\nLes messages signalés sont relus par un modérateur sous 24 h. Après 3 avertissements, le compte est suspendu de la communauté pendant 7 jours.'**
+  String get forumReglesTexte;
+
+  /// No description provided for @forumApercu.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aperçu'**
+  String get forumApercu;
+
+  /// No description provided for @forumPublier.
+  ///
+  /// In fr, this message translates to:
+  /// **'Publier'**
+  String get forumPublier;
+
+  /// No description provided for @forumPostPublie.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ton post est publié'**
+  String get forumPostPublie;
+
+  /// No description provided for @forumPostModifie.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ton post est modifié'**
+  String get forumPostModifie;
+
+  /// No description provided for @forumPostPublieMasque.
+  ///
+  /// In fr, this message translates to:
+  /// **'Publié, mais masqué le temps qu’un modérateur le relise'**
+  String get forumPostPublieMasque;
+
+  /// No description provided for @forumRetireNCaracteres.
+  ///
+  /// In fr, this message translates to:
+  /// **'{n, plural, =1{Retire 1 caractère pour publier.} other{Retire {n} caractères pour publier.}}'**
+  String forumRetireNCaracteres(int n);
+
+  /// No description provided for @forumMiseEnForme.
+  ///
+  /// In fr, this message translates to:
+  /// **'Mise en forme'**
+  String get forumMiseEnForme;
+
+  /// No description provided for @forumOutilGras.
+  ///
+  /// In fr, this message translates to:
+  /// **'Gras'**
+  String get forumOutilGras;
+
+  /// No description provided for @forumOutilItalique.
+  ///
+  /// In fr, this message translates to:
+  /// **'Italique'**
+  String get forumOutilItalique;
+
+  /// No description provided for @forumOutilListe.
+  ///
+  /// In fr, this message translates to:
+  /// **'Liste'**
+  String get forumOutilListe;
+
+  /// No description provided for @forumOutilListeNumerotee.
+  ///
+  /// In fr, this message translates to:
+  /// **'Liste numérotée'**
+  String get forumOutilListeNumerotee;
+
+  /// No description provided for @forumOutilCitation.
+  ///
+  /// In fr, this message translates to:
+  /// **'Citation'**
+  String get forumOutilCitation;
+
+  /// No description provided for @forumOutilLien.
+  ///
+  /// In fr, this message translates to:
+  /// **'Lien'**
+  String get forumOutilLien;
+
+  /// No description provided for @forumOutilImage.
+  ///
+  /// In fr, this message translates to:
+  /// **'Image'**
+  String get forumOutilImage;
+
+  /// No description provided for @forumLien.
+  ///
+  /// In fr, this message translates to:
+  /// **'lien'**
+  String get forumLien;
+
+  /// No description provided for @forumLienPlaceholder.
+  ///
+  /// In fr, this message translates to:
+  /// **'https://…'**
+  String get forumLienPlaceholder;
+
+  /// No description provided for @forumAlerteTitre.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ce message pourrait blesser. Le modifier avant de publier ?'**
+  String get forumAlerteTitre;
+
+  /// No description provided for @forumAlerteConsequence.
+  ///
+  /// In fr, this message translates to:
+  /// **'Publié tel quel, il peut être masqué le temps qu’un modérateur le relise.'**
+  String get forumAlerteConsequence;
+
+  /// No description provided for @forumTaReponseAPasEncorePubliee.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ta réponse à {name} · pas encore publiée'**
+  String forumTaReponseAPasEncorePubliee(String name);
+
+  /// No description provided for @forumTaReponsePasEncorePubliee.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ta réponse · pas encore publiée'**
+  String get forumTaReponsePasEncorePubliee;
+
+  /// No description provided for @forumTonPostPasEncorePublie.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ton post · pas encore publié'**
+  String get forumTonPostPasEncorePublie;
+
+  /// No description provided for @forumReformulation.
+  ///
+  /// In fr, this message translates to:
+  /// **'Reformulation'**
+  String get forumReformulation;
+
+  /// No description provided for @forumUneVersionPlusPosee.
+  ///
+  /// In fr, this message translates to:
+  /// **'Une version plus posée'**
+  String get forumUneVersionPlusPosee;
+
+  /// No description provided for @forumGardeTonConseilSansViser.
+  ///
+  /// In fr, this message translates to:
+  /// **'elle garde ton conseil sans viser {name}.'**
+  String forumGardeTonConseilSansViser(String name);
+
+  /// No description provided for @forumGardeTonConseil.
+  ///
+  /// In fr, this message translates to:
+  /// **'elle garde ton conseil sans viser personne.'**
+  String get forumGardeTonConseil;
+
+  /// No description provided for @forumUtiliserCetteVersion.
+  ///
+  /// In fr, this message translates to:
+  /// **'Utiliser cette version'**
+  String get forumUtiliserCetteVersion;
+
+  /// No description provided for @forumPublierQuandMeme.
+  ///
+  /// In fr, this message translates to:
+  /// **'Publier quand même'**
+  String get forumPublierQuandMeme;
+
+  /// No description provided for @forumModifierMonMessage.
+  ///
+  /// In fr, this message translates to:
+  /// **'Modifier mon message'**
+  String get forumModifierMonMessage;
+
+  /// No description provided for @forumPublieeMasquee.
+  ///
+  /// In fr, this message translates to:
+  /// **'Publiée, et masquée le temps qu’un modérateur la relise'**
+  String get forumPublieeMasquee;
+
+  /// No description provided for @forumDiscussion.
+  ///
+  /// In fr, this message translates to:
+  /// **'Discussion'**
+  String get forumDiscussion;
+
+  /// No description provided for @forumRetourALaCommunaute.
+  ///
+  /// In fr, this message translates to:
+  /// **'Retour à la communauté'**
+  String get forumRetourALaCommunaute;
+
+  /// No description provided for @forumSuivreLaDiscussion.
+  ///
+  /// In fr, this message translates to:
+  /// **'Suivre la discussion'**
+  String get forumSuivreLaDiscussion;
+
+  /// No description provided for @forumNePlusSuivreLaDiscussion.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ne plus suivre la discussion'**
+  String get forumNePlusSuivreLaDiscussion;
+
+  /// No description provided for @forumTuSuisLaDiscussion.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tu seras prévenu des nouvelles réponses'**
+  String get forumTuSuisLaDiscussion;
+
+  /// No description provided for @forumTuNeSuisPlusLaDiscussion.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tu ne suis plus cette discussion'**
+  String get forumTuNeSuisPlusLaDiscussion;
+
+  /// No description provided for @forumPartagerLaDiscussion.
+  ///
+  /// In fr, this message translates to:
+  /// **'Partager la discussion'**
+  String get forumPartagerLaDiscussion;
+
+  /// No description provided for @forumPlusDOptionsSignalerCopier.
+  ///
+  /// In fr, this message translates to:
+  /// **'Plus d’options : signaler, copier le lien'**
+  String get forumPlusDOptionsSignalerCopier;
+
+  /// No description provided for @forumSuivre.
+  ///
+  /// In fr, this message translates to:
+  /// **'Suivre'**
+  String get forumSuivre;
+
+  /// No description provided for @forumSuivi.
+  ///
+  /// In fr, this message translates to:
+  /// **'Suivi'**
+  String get forumSuivi;
+
+  /// No description provided for @forumUtile.
+  ///
+  /// In fr, this message translates to:
+  /// **'Utile'**
+  String get forumUtile;
+
+  /// No description provided for @forumUtileN.
+  ///
+  /// In fr, this message translates to:
+  /// **'Utile · {n}'**
+  String forumUtileN(int n);
+
+  /// No description provided for @forumMerci.
+  ///
+  /// In fr, this message translates to:
+  /// **'Merci'**
+  String get forumMerci;
+
+  /// No description provided for @forumChoisiePar.
+  ///
+  /// In fr, this message translates to:
+  /// **'choisie par {name}'**
+  String forumChoisiePar(String name);
+
+  /// No description provided for @forumToi.
+  ///
+  /// In fr, this message translates to:
+  /// **'toi'**
+  String get forumToi;
+
+  /// No description provided for @forumModifie.
+  ///
+  /// In fr, this message translates to:
+  /// **'modifié'**
+  String get forumModifie;
+
+  /// No description provided for @forumRepondre.
+  ///
+  /// In fr, this message translates to:
+  /// **'Répondre'**
+  String get forumRepondre;
+
+  /// No description provided for @forumAuteur.
+  ///
+  /// In fr, this message translates to:
+  /// **'Auteur'**
+  String get forumAuteur;
+
+  /// No description provided for @forumRepondsA.
+  ///
+  /// In fr, this message translates to:
+  /// **'Réponds à {name}…'**
+  String forumRepondsA(String name);
+
+  /// No description provided for @forumReponseA.
+  ///
+  /// In fr, this message translates to:
+  /// **'Réponse à {name}'**
+  String forumReponseA(String name);
+
+  /// No description provided for @forumModifierTaReponse.
+  ///
+  /// In fr, this message translates to:
+  /// **'Modifier ta réponse'**
+  String get forumModifierTaReponse;
+
+  /// No description provided for @forumTaReponseASeulToi.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ta réponse à {name} · seul toi vois ce message. Réponse de la modération sous 24 h.'**
+  String forumTaReponseASeulToi(String name);
+
+  /// No description provided for @forumTaReponseSeulToi.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ta réponse · seul toi vois ce message. Réponse de la modération sous 24 h.'**
+  String get forumTaReponseSeulToi;
+
+  /// No description provided for @forumTonPostSeulToiDetail.
+  ///
+  /// In fr, this message translates to:
+  /// **'Seul toi vois ce post. Réponse de la modération sous 24 h.'**
+  String get forumTonPostSeulToiDetail;
+
+  /// No description provided for @forumPourquoi.
+  ///
+  /// In fr, this message translates to:
+  /// **'Pourquoi ?'**
+  String get forumPourquoi;
+
+  /// No description provided for @forumPourquoiMasque.
+  ///
+  /// In fr, this message translates to:
+  /// **'Pourquoi ce message est masqué'**
+  String get forumPourquoiMasque;
+
+  /// No description provided for @forumPourquoiMasqueDetail.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tu l’as publié malgré l’alerte (« {reason} »). Un modérateur le relit sous 24 h : il sera republié ou supprimé. Tu peux aussi le modifier.'**
+  String forumPourquoiMasqueDetail(String reason);
+
+  /// No description provided for @forumMessageSupprime.
+  ///
+  /// In fr, this message translates to:
+  /// **'Message supprimé'**
+  String get forumMessageSupprime;
+
+  /// No description provided for @forumMessageDUnMembreMasque.
+  ///
+  /// In fr, this message translates to:
+  /// **'Message d’un membre que tu as masqué'**
+  String get forumMessageDUnMembreMasque;
+
+  /// No description provided for @forumPasEncoreDeReponse.
+  ///
+  /// In fr, this message translates to:
+  /// **'Pas encore de réponse'**
+  String get forumPasEncoreDeReponse;
+
+  /// No description provided for @forumPasEncoreDeReponseDetail.
+  ///
+  /// In fr, this message translates to:
+  /// **'Sois le premier à aider : partage ton expérience.'**
+  String get forumPasEncoreDeReponseDetail;
+
+  /// No description provided for @forumChoisirCommeMeilleureReponse.
+  ///
+  /// In fr, this message translates to:
+  /// **'Choisir comme meilleure réponse'**
+  String get forumChoisirCommeMeilleureReponse;
+
+  /// No description provided for @forumRetirerLaMeilleureReponse.
+  ///
+  /// In fr, this message translates to:
+  /// **'Retirer la meilleure réponse'**
+  String get forumRetirerLaMeilleureReponse;
+
+  /// No description provided for @forumSupprimerCePost.
+  ///
+  /// In fr, this message translates to:
+  /// **'Supprimer ce post ?'**
+  String get forumSupprimerCePost;
+
+  /// No description provided for @forumSupprimerCePostDetail.
+  ///
+  /// In fr, this message translates to:
+  /// **'Il disparaît de la communauté avec ses réponses. C’est définitif.'**
+  String get forumSupprimerCePostDetail;
+
+  /// No description provided for @forumSupprimerCetteReponse.
+  ///
+  /// In fr, this message translates to:
+  /// **'Supprimer ta réponse ?'**
+  String get forumSupprimerCetteReponse;
+
+  /// No description provided for @forumSupprimerCetteReponseDetail.
+  ///
+  /// In fr, this message translates to:
+  /// **'Si on t’a déjà répondu, elle restera affichée comme « Message supprimé ».'**
+  String get forumSupprimerCetteReponseDetail;
+
+  /// No description provided for @forumPostSupprime.
+  ///
+  /// In fr, this message translates to:
+  /// **'Post supprimé'**
+  String get forumPostSupprime;
+
+  /// No description provided for @forumSignalerCeCommentaire.
+  ///
+  /// In fr, this message translates to:
+  /// **'Signaler ce commentaire'**
+  String get forumSignalerCeCommentaire;
+
+  /// No description provided for @forumSignalerCePost.
+  ///
+  /// In fr, this message translates to:
+  /// **'Signaler ce post'**
+  String get forumSignalerCePost;
+
+  /// No description provided for @forumMotifDuSignalement.
+  ///
+  /// In fr, this message translates to:
+  /// **'Motif du signalement'**
+  String get forumMotifDuSignalement;
+
+  /// No description provided for @forumPrecise.
+  ///
+  /// In fr, this message translates to:
+  /// **'Précise (facultatif)'**
+  String get forumPrecise;
+
+  /// No description provided for @forumNePlusVoirLesMessagesDe.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ne plus voir les messages de {name}'**
+  String forumNePlusVoirLesMessagesDe(String name);
+
+  /// No description provided for @forumSignalementAnonyme.
+  ///
+  /// In fr, this message translates to:
+  /// **'Signalement anonyme · vérifié par un modérateur sous 24 h.'**
+  String get forumSignalementAnonyme;
 }
 
 class _AppLocalizationsDelegate

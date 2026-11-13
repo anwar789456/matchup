@@ -4,9 +4,9 @@ import 'package:phosphor_flutter/phosphor_flutter.dart';
 import '../l10n/l10n.dart';
 import '../theme/theme.dart';
 import 'mu_court_art.dart';
-import 'mu_program_card.dart';
 import 'mu_skeleton.dart';
 import 'src/card_surface.dart';
+import 'src/card_variant.dart';
 
 /// The data a lesson card shows: one session of a program.
 @immutable

@@ -12,6 +12,7 @@ import 'mu_progress_ring.dart';
 import 'mu_skeleton.dart';
 import 'mu_status_badge.dart';
 import 'src/card_surface.dart';
+import 'src/card_variant.dart';
 
 /// A coach as the training cards name them: « Coach Karim J. » with the verified seal.
 @immutable
@@ -62,8 +63,6 @@ class MuProgram {
   final bool premium;
 }
 
-/// Regular (catalogue tiles) or compact (one per row) — shared by the training cards.
-enum MuCardVariant { regular, compact }
 
 enum MuProgramStatus { available, enrolled, completed }
 

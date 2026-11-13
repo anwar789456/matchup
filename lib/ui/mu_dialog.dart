@@ -22,6 +22,7 @@ class MuDialog extends StatelessWidget {
     this.consequenceIcon,
     this.tone = MuDialogTone.neutral,
     this.icon,
+    this.showIcon = true,
     this.content,
     this.dismissible = true,
     this.busy = false,
@@ -37,6 +38,9 @@ class MuDialog extends StatelessWidget {
   final IconData? consequenceIcon;
   final MuDialogTone tone;
   final IconData? icon;
+
+  /// false hides the tone circle (FRM-03 has none: the title carries the warning).
+  final bool showIcon;
 
   /// Extra content between the consequence and the actions.
   final Widget? content;
@@ -62,6 +66,7 @@ class MuDialog extends StatelessWidget {
     IconData? consequenceIcon,
     MuDialogTone tone = MuDialogTone.neutral,
     IconData? icon,
+    bool showIcon = true,
     Widget? content,
     bool dismissible = true,
     bool busy = false,
@@ -85,6 +90,7 @@ class MuDialog extends StatelessWidget {
           consequenceIcon: consequenceIcon,
           tone: tone,
           icon: icon,
+          showIcon: showIcon,
           content: content,
           actions: actions,
           dismissible: dismissible,
@@ -93,18 +99,13 @@ class MuDialog extends StatelessWidget {
         ),
       ),
       transitionBuilder: (context, animation, _, child) {
-        final curved = CurvedAnimation(
-          parent: animation,
-          curve: MuMotion.enter,
-          reverseCurve: MuMotion.exit,
-        );
+        final curved = CurvedAnimation(parent: animation, curve: MuMotion.enter, reverseCurve: MuMotion.exit);
         final fade = FadeTransition(opacity: curved, child: child);
         if (placement == MuDialogPlacement.bottom) {
           return AnimatedBuilder(
             animation: curved,
             child: fade,
-            builder: (context, child) =>
-                Transform.translate(offset: Offset(0, _rise * (1 - curved.value)), child: child),
+            builder: (context, child) => Transform.translate(offset: Offset(0, _rise * (1 - curved.value)), child: child),
           );
         }
         return ScaleTransition(
@@ -143,17 +144,19 @@ class MuDialog extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: [
-                Container(
-                  width: _circle,
-                  height: _circle,
-                  decoration: BoxDecoration(
-                    color: ground,
-                    shape: BoxShape.circle,
-                    border: edge == null ? null : Border.all(color: edge),
+                if (showIcon) ...[
+                  Container(
+                    width: _circle,
+                    height: _circle,
+                    decoration: BoxDecoration(
+                      color: ground,
+                      shape: BoxShape.circle,
+                      border: edge == null ? null : Border.all(color: edge),
+                    ),
+                    child: Icon(icon ?? defaultIcon, size: MuSize.iconM, color: ink),
                   ),
-                  child: Icon(icon ?? defaultIcon, size: MuSize.iconM, color: ink),
-                ),
-                const SizedBox(height: MuSpace.s4),
+                  const SizedBox(height: MuSpace.s4),
+                ],
                 Padding(
                   padding: EdgeInsetsDirectional.only(end: dismissible && !busy ? MuSpace.s8 : 0),
                   child: Semantics(
@@ -168,10 +171,7 @@ class MuDialog extends StatelessWidget {
                 if (consequence != null) ...[
                   const SizedBox(height: MuSpace.s4),
                   Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: MuSpace.s4,
-                      vertical: MuSpace.s3,
-                    ),
+                    padding: const EdgeInsets.symmetric(horizontal: MuSpace.s4, vertical: MuSpace.s3),
                     decoration: BoxDecoration(
                       color: c.bg,
                       borderRadius: MuRadius.mdAll,
@@ -180,11 +180,7 @@ class MuDialog extends StatelessWidget {
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Icon(
-                          consequenceIcon ?? PhosphorIcons.info(),
-                          size: MuSize.iconS,
-                          color: c.textSecondary,
-                        ),
+                        Icon(consequenceIcon ?? PhosphorIcons.info(), size: MuSize.iconS, color: c.textSecondary),
                         const SizedBox(width: MuSpace.s3),
                         Expanded(
                           child: Text(consequence!, style: MuType.body.copyWith(color: c.text)),
@@ -198,10 +194,7 @@ class MuDialog extends StatelessWidget {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    for (final (i, a) in actions.indexed) ...[
-                      if (i > 0) const SizedBox(height: MuSpace.s3),
-                      a,
-                    ],
+                    for (final (i, a) in actions.indexed) ...[if (i > 0) const SizedBox(height: MuSpace.s3), a],
                   ],
                 ),
               ],

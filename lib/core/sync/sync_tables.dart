@@ -81,5 +81,20 @@ const syncTables = <SyncTable>[
   SyncTable('coach_actions'),
   SyncTable('coach_retours'),
 
-  // ── Tournois (Ayoub) · Forum (Hani): add your tables here.
+  // ── Forum (Hani) ─────────────────────────────────────────────────────────────────────────
+  // Shared: what every member must see (profiles, posts, replies, votes, reactions).
+  SyncTable('forum_membres', scope: SyncScope.shared, ownerColumn: 'auteur_id'),
+  SyncTable('forum_sujets', scope: SyncScope.shared, ownerColumn: 'auteur_id'),
+  SyncTable('forum_messages', scope: SyncScope.shared, ownerColumn: 'auteur_id'),
+  SyncTable('forum_votes', scope: SyncScope.shared, ownerColumn: 'auteur_id'),
+  SyncTable('forum_reactions', scope: SyncScope.shared, ownerColumn: 'auteur_id'),
+  // Private to their member: reports stay anonymous (FRM-05: the Supabase trigger counts them
+  // without exposing who reported), saved / followed / muted lists and the last visit.
+  SyncTable('forum_signalements'),
+  SyncTable('forum_favoris'),
+  SyncTable('forum_suivis'),
+  SyncTable('forum_blocages'),
+  SyncTable('forum_visites'),
+
+  // ── Tournois (Ayoub): add your tables here.
 ];

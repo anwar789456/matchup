@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 import '../core/format.dart';
@@ -23,6 +24,7 @@ class MuChip extends StatelessWidget {
     this.sport,
     this.level,
     this.icon,
+    this.glyph,
     this.trailingIcon,
     this.count,
     this.onRemove,
@@ -42,6 +44,7 @@ class MuChip extends StatelessWidget {
         label = null,
         level = null,
         icon = null,
+        glyph = null,
         trailingIcon = null,
         count = null,
         onRemove = null,
@@ -59,6 +62,7 @@ class MuChip extends StatelessWidget {
         onSelected = null,
         sport = null,
         icon = null,
+        glyph = null,
         trailingIcon = null,
         count = null,
         onRemove = null,
@@ -72,6 +76,10 @@ class MuChip extends StatelessWidget {
   final MuSport? sport;
   final double? level;
   final IconData? icon;
+
+  /// A custom SVG glyph instead of [icon] (`MuGlyph.court`, `MuSport.padel.asset`), repainted
+  /// in the chip's text colour.
+  final String? glyph;
   final IconData? trailingIcon;
   final int? count;
   final VoidCallback? onRemove;
@@ -142,8 +150,17 @@ class MuChip extends StatelessWidget {
         Text(levelBand(level!), style: textStyle.copyWith(color: fg)),
       ]);
     } else {
-      if (selected && icon == null) {
+      if (selected && icon == null && glyph == null) {
         children.add(Icon(PhosphorIcons.check(PhosphorIconsStyle.bold), size: iconSize, color: fg));
+        children.add(const SizedBox(width: MuSpace.s1));
+      } else if (glyph != null) {
+        children.add(SvgPicture.asset(
+          glyph!,
+          width: iconSize,
+          height: iconSize,
+          colorFilter: ColorFilter.mode(fg, BlendMode.srcIn),
+          excludeFromSemantics: true,
+        ));
         children.add(const SizedBox(width: MuSpace.s1));
       } else if (icon != null) {
         children.add(Icon(icon, size: iconSize, color: fg));

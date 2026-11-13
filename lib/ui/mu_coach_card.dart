@@ -12,6 +12,7 @@ import 'mu_skeleton.dart';
 import 'mu_sport_icon.dart';
 import 'mu_status_badge.dart';
 import 'src/card_surface.dart';
+import 'src/card_variant.dart';
 
 /// The data a coach card shows.
 @immutable

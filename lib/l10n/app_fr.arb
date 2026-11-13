@@ -11944,5 +11944,374 @@
       }
     }
   },
-  "aiYourMessage": "Ton message à l’assistant"
+  "aiYourMessage": "Ton message à l’assistant",
+  "hier": "hier",
+  "plusDOptions": "Plus d’options",
+  "forumCatTechnique": "Conseils & technique",
+  "forumCatEquipement": "Équipement",
+  "forumCatTerrains": "Terrains",
+  "forumCatTournois": "Tournois",
+  "forumCatDiscussions": "Discussions libres",
+  "forumTriTendance": "Tendance",
+  "forumTriRecents": "Récents",
+  "forumTriTop": "Top",
+  "forumTriUtiles": "Les plus utiles",
+  "forumTriRecentes": "Les plus récentes",
+  "forumTriAnciennes": "Les plus anciennes",
+  "forumMotifSpam": "Spam ou publicité",
+  "forumMotifInsulte": "Insulte ou harcèlement",
+  "forumMotifChoquant": "Contenu choquant ou dangereux",
+  "forumMotifFausseInfo": "Fausse information",
+  "forumMotifAutre": "Autre chose",
+  "forumMembre": "Membre",
+  "forumIaAucune": "Aucune toxicité",
+  "forumIaAucuneExplication": "Rien de blessant ni de publicitaire détecté.",
+  "forumIaInsulte": "Toxicité · insulte",
+  "forumIaInsulteExplication": "Insulte grossière visant une personne.",
+  "forumIaInsulteLegere": "Toxicité · insulte légère",
+  "forumIaInsulteLegereExplication": "Moquerie entre joueurs, sans menace ni haine. L’IA peut se tromper sur le ton entre amis.",
+  "forumIaTonAgressif": "Ton agressif",
+  "forumIaTonAgressifExplication": "Ton sec qui vise une personne plutôt que son avis. Pas d’insulte.",
+  "forumIaSpamContact": "Spam · lien et contact",
+  "forumIaSpamPub": "Spam · publicité",
+  "forumIaSpamExplication": "Vente ou publicité avec un moyen de contact hors de MatchUp.",
+  "forumIaCoordonnees": "Coordonnées publiées",
+  "forumIaCoordonneesExplication": "Numéro ou adresse publiés : à faire passer en message privé.",
+  "forumTitreTropCourt": "Ton titre doit faire au moins 10 caractères.",
+  "forumMessageVide": "Écris ton message avant de publier.",
+  "forumDiscussionSupprimee": "Cette discussion a été supprimée.",
+  "forumReponseSupprimee": "Cette réponse a été supprimée.",
+  "forumEnVerification": "Ce contenu est en cours de vérification.",
+  "forumSeulLAuteur": "Seul l’auteur peut modifier ou supprimer ce message.",
+  "forumSeulLAuteurChoisit": "Seul l’auteur du post choisit la meilleure réponse.",
+  "forumReponseDirecte": "Choisis une réponse directe au post.",
+  "forumPasTaPropreReponse": "Tu ne peux pas choisir ta propre réponse.",
+  "forumPasDeVotePourSoi": "Tu ne peux pas voter pour ton propre message.",
+  "forumPasDeReactionPourSoi": "Tu ne peux pas réagir à ton propre message.",
+  "forumPasTeSuivre": "Tu ne peux pas te suivre toi-même.",
+  "forumPasTeMasquer": "Tu ne peux pas te masquer toi-même.",
+  "forumPasTonPropreMessage": "Tu ne peux pas signaler ton propre message.",
+  "forumHorsLigne": "Hors ligne",
+  "forumHorsLigneDetail": "Vérifie ta connexion puis réessaie.",
+  "forumErreur": "Ça n’a pas marché. Réessaie dans un instant.",
+  "forumSuspendu": "Tu ne peux plus publier pour l’instant",
+  "forumSuspenduJusquA": "Suspendu de la communauté jusqu’au {date}. Tu peux toujours lire.",
+  "@forumSuspenduJusquA": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "forumRechercherDansLaCommunaute": "Rechercher dans la communauté",
+  "forumMesPostsEtFavoris": "Mes posts et favoris",
+  "forumPoseTaQuestionALaCommunaute": "Pose ta question à la communauté",
+  "forumEcrireUnNouveauPost": "Écrire un nouveau post",
+  "forumCategories": "Catégories",
+  "forumNouveauxDepuisTaDerniereVisite": "Nouveaux depuis ta dernière visite",
+  "forumNNouveaux": "{n, plural, =1{1 nouveau} other{{n} nouveaux}}",
+  "@forumNNouveaux": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "forumFiltrerParSport": "Filtrer par sport",
+  "forumTousLesSports": "Tous les sports",
+  "forumTrierLesDiscussions": "Trier les discussions",
+  "forumDiscussions": "{n, plural, =0{discussion} =1{discussion} other{discussions}}",
+  "@forumDiscussions": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "forumTAMentionne": "t’a mentionné · {time}",
+  "@forumTAMentionne": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "forumVoterPour": "Voter pour",
+  "forumVoterContre": "Voter contre",
+  "forumVoterPourNVotes": "Voter pour, {score} votes",
+  "@forumVoterPourNVotes": {
+    "placeholders": {
+      "score": {
+        "type": "String"
+      }
+    }
+  },
+  "forumNVotes": "{n, plural, =0{0 vote} =1{1 vote} other{{n} votes}}",
+  "@forumNVotes": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "forumNReponses": "{n, plural, =0{0 réponse} =1{1 réponse} other{{n} réponses}}",
+  "@forumNReponses": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "forumEpingle": "Épinglé",
+  "forumMeilleureReponse": "Meilleure réponse",
+  "forumMasqueParLaModeration": "Masqué par la modération · en cours de vérification",
+  "forumMessageMasque": "Message masqué par la modération",
+  "forumTuAsSignale": "Tu as signalé ce message. La modération va le vérifier.",
+  "forumTonPostSeulToi": "Ton post « {title} » · seul toi le vois. Réponse de la modération sous 24 h.",
+  "@forumTonPostSeulToi": {
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+  "forumVoir": "Voir",
+  "forumAucuneDiscussion": "Pas encore de discussion ici",
+  "forumAucuneDiscussionDetail": "Lance la première : une question, une astuce ou un avis sur un terrain.",
+  "forumPoseTaQuestion": "Pose ta question",
+  "forumTuAsToutVu": "Tu as tout vu. Reviens plus tard pour les nouvelles discussions.",
+  "forumEnregistrer": "Enregistrer",
+  "forumRetirerDesFavoris": "Retirer des favoris",
+  "forumSignaler": "Signaler",
+  "forumMerciSignalement": "Merci, la modération va vérifier sous 24 h.",
+  "forumRechercheNPlaceholder": "Mot, tag, titre…",
+  "forumRechercheVide": "Cherche dans les discussions",
+  "forumRechercheVideDetail": "Un mot du titre, du texte ou un tag : « bandeja », « crampons », « lac2 ».",
+  "forumAucunResultat": "Rien pour « {q} »",
+  "@forumAucunResultat": {
+    "placeholders": {
+      "q": {
+        "type": "String"
+      }
+    }
+  },
+  "forumAucunResultatDetail": "Essaie un autre mot, ou pose ta question à la communauté.",
+  "forumFavoris": "Favoris",
+  "forumMesPosts": "Mes posts",
+  "forumAucunFavori": "Aucun favori",
+  "forumAucunFavoriDetail": "Enregistre une discussion avec « Plus d’options » pour la retrouver ici.",
+  "forumAucunPost": "Tu n’as encore rien publié",
+  "forumAucunPostDetail": "Une question sur ton jeu, ton matériel ou un terrain ? La communauté répond vite.",
+  "forumNouveauPost": "Nouveau post",
+  "forumModifierLePost": "Modifier le post",
+  "forumFermerSansPublier": "Fermer sans publier",
+  "forumBrouillonEnregistre": "Brouillon enregistré",
+  "forumCategorieEtSport": "Catégorie et sport",
+  "forumCategorieDuPost": "Catégorie du post",
+  "forumSportDuPost": "Sport du post",
+  "forumTitre": "Titre",
+  "forumTitrePlaceholder": "Une vraie question : « Crampons pour synthétique ? »",
+  "forumDiscussionsSimilaires": "Discussions similaires",
+  "forumTaQuestionADejaDesReponses": "Ta question a peut-être déjà des réponses.",
+  "forumMasquerLesDiscussionsSimilaires": "Masquer les discussions similaires",
+  "forumMessage": "Message",
+  "forumMessageHelper": "Reste précis : niveau, côté, ce que tu as déjà essayé.",
+  "forumEditeurPlaceholder": "Partage une astuce, une question ou une annonce…",
+  "forumImagesFacultatif": "Images (facultatif)",
+  "forumImagesHint": "JPG, PNG · 10 Mo max",
+  "forumImageN": "Image {n}",
+  "@forumImageN": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "forumImageDuPost": "Image du post",
+  "forumImageTropLourde": "{name} dépasse 10 Mo.",
+  "@forumImageTropLourde": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "forumImagesMax": "{n} images au maximum : les suivantes n’ont pas été ajoutées.",
+  "@forumImagesMax": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "forumTags": "Tags",
+  "forumTagsPlaceholder": "Ajoute un tag",
+  "forumTagsHelper": "Les tags aident les joueurs à trouver ton post.",
+  "forumSuggeresParLIa": "Suggérés par l’IA",
+  "forumDApresTonTitreEtTonTexte": "D’après ton titre et ton texte",
+  "forumMasquerLesSuggestions": "Masquer les suggestions",
+  "forumAjouterLeTag": "Ajouter le tag {tag}",
+  "@forumAjouterLeTag": {
+    "placeholders": {
+      "tag": {
+        "type": "String"
+      }
+    }
+  },
+  "forumDApres": "D’après « {word} »",
+  "@forumDApres": {
+    "placeholders": {
+      "word": {
+        "type": "String"
+      }
+    }
+  },
+  "forumRespecteLes": "Respecte les",
+  "forumReglesDeLaCommunaute": "règles de la communauté",
+  "forumReglesSuite": " : pas d’insultes, pas de pub. Les messages signalés sont relus par la modération.",
+  "forumReglesTitre": "Règles de la communauté",
+  "forumReglesTexte": "1. **Respecte les joueurs.** Critique un avis, jamais une personne : pas d’insultes, de moqueries ni de menaces.\n2. **Pas de pub.** Pas de vente, de liens ou de numéros pour attirer des clients : les coachs et les terrains ont leur page.\n3. **Reste utile.** Une vraie question, un vrai avis, avec ton niveau et ce que tu as essayé.\n4. **Protège ta vie privée.** Pas de numéro ni d’adresse en public : passe par les messages.\n\nLes messages signalés sont relus par un modérateur sous 24 h. Après 3 avertissements, le compte est suspendu de la communauté pendant 7 jours.",
+  "forumApercu": "Aperçu",
+  "forumPublier": "Publier",
+  "forumPostPublie": "Ton post est publié",
+  "forumPostModifie": "Ton post est modifié",
+  "forumPostPublieMasque": "Publié, mais masqué le temps qu’un modérateur le relise",
+  "forumRetireNCaracteres": "{n, plural, =1{Retire 1 caractère pour publier.} other{Retire {n} caractères pour publier.}}",
+  "@forumRetireNCaracteres": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "forumMiseEnForme": "Mise en forme",
+  "forumOutilGras": "Gras",
+  "forumOutilItalique": "Italique",
+  "forumOutilListe": "Liste",
+  "forumOutilListeNumerotee": "Liste numérotée",
+  "forumOutilCitation": "Citation",
+  "forumOutilLien": "Lien",
+  "forumOutilImage": "Image",
+  "forumLien": "lien",
+  "forumLienPlaceholder": "https://…",
+  "forumAlerteTitre": "Ce message pourrait blesser. Le modifier avant de publier ?",
+  "forumAlerteConsequence": "Publié tel quel, il peut être masqué le temps qu’un modérateur le relise.",
+  "forumTaReponseAPasEncorePubliee": "Ta réponse à {name} · pas encore publiée",
+  "@forumTaReponseAPasEncorePubliee": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "forumTaReponsePasEncorePubliee": "Ta réponse · pas encore publiée",
+  "forumTonPostPasEncorePublie": "Ton post · pas encore publié",
+  "forumReformulation": "Reformulation",
+  "forumUneVersionPlusPosee": "Une version plus posée",
+  "forumGardeTonConseilSansViser": "elle garde ton conseil sans viser {name}.",
+  "@forumGardeTonConseilSansViser": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "forumGardeTonConseil": "elle garde ton conseil sans viser personne.",
+  "forumUtiliserCetteVersion": "Utiliser cette version",
+  "forumPublierQuandMeme": "Publier quand même",
+  "forumModifierMonMessage": "Modifier mon message",
+  "forumPublieeMasquee": "Publiée, et masquée le temps qu’un modérateur la relise",
+  "forumDiscussion": "Discussion",
+  "forumRetourALaCommunaute": "Retour à la communauté",
+  "forumSuivreLaDiscussion": "Suivre la discussion",
+  "forumNePlusSuivreLaDiscussion": "Ne plus suivre la discussion",
+  "forumTuSuisLaDiscussion": "Tu seras prévenu des nouvelles réponses",
+  "forumTuNeSuisPlusLaDiscussion": "Tu ne suis plus cette discussion",
+  "forumPartagerLaDiscussion": "Partager la discussion",
+  "forumPlusDOptionsSignalerCopier": "Plus d’options : signaler, copier le lien",
+  "forumSuivre": "Suivre",
+  "forumSuivi": "Suivi",
+  "forumUtile": "Utile",
+  "forumUtileN": "Utile · {n}",
+  "@forumUtileN": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "forumMerci": "Merci",
+  "forumChoisiePar": "choisie par {name}",
+  "@forumChoisiePar": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "forumToi": "toi",
+  "forumModifie": "modifié",
+  "forumRepondre": "Répondre",
+  "forumAuteur": "Auteur",
+  "forumRepondsA": "Réponds à {name}…",
+  "@forumRepondsA": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "forumReponseA": "Réponse à {name}",
+  "@forumReponseA": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "forumModifierTaReponse": "Modifier ta réponse",
+  "forumTaReponseASeulToi": "Ta réponse à {name} · seul toi vois ce message. Réponse de la modération sous 24 h.",
+  "@forumTaReponseASeulToi": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "forumTaReponseSeulToi": "Ta réponse · seul toi vois ce message. Réponse de la modération sous 24 h.",
+  "forumTonPostSeulToiDetail": "Seul toi vois ce post. Réponse de la modération sous 24 h.",
+  "forumPourquoi": "Pourquoi ?",
+  "forumPourquoiMasque": "Pourquoi ce message est masqué",
+  "forumPourquoiMasqueDetail": "Tu l’as publié malgré l’alerte (« {reason} »). Un modérateur le relit sous 24 h : il sera republié ou supprimé. Tu peux aussi le modifier.",
+  "@forumPourquoiMasqueDetail": {
+    "placeholders": {
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "forumMessageSupprime": "Message supprimé",
+  "forumMessageDUnMembreMasque": "Message d’un membre que tu as masqué",
+  "forumPasEncoreDeReponse": "Pas encore de réponse",
+  "forumPasEncoreDeReponseDetail": "Sois le premier à aider : partage ton expérience.",
+  "forumChoisirCommeMeilleureReponse": "Choisir comme meilleure réponse",
+  "forumRetirerLaMeilleureReponse": "Retirer la meilleure réponse",
+  "forumSupprimerCePost": "Supprimer ce post ?",
+  "forumSupprimerCePostDetail": "Il disparaît de la communauté avec ses réponses. C’est définitif.",
+  "forumSupprimerCetteReponse": "Supprimer ta réponse ?",
+  "forumSupprimerCetteReponseDetail": "Si on t’a déjà répondu, elle restera affichée comme « Message supprimé ».",
+  "forumPostSupprime": "Post supprimé",
+  "forumSignalerCeCommentaire": "Signaler ce commentaire",
+  "forumSignalerCePost": "Signaler ce post",
+  "forumMotifDuSignalement": "Motif du signalement",
+  "forumPrecise": "Précise (facultatif)",
+  "forumNePlusVoirLesMessagesDe": "Ne plus voir les messages de {name}",
+  "@forumNePlusVoirLesMessagesDe": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "forumSignalementAnonyme": "Signalement anonyme · vérifié par un modérateur sous 24 h."
 }
