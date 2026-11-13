@@ -17879,6 +17879,2658 @@ abstract class AppLocalizations {
   /// **'Catégorie'**
   String get categorie;
 
+  /// No description provided for @hier.
+  ///
+  /// In fr, this message translates to:
+  /// **'hier'**
+  String get hier;
+
+  /// No description provided for @plusDOptions.
+  ///
+  /// In fr, this message translates to:
+  /// **'Plus d’options'**
+  String get plusDOptions;
+
+  /// No description provided for @forumCatTechnique.
+  ///
+  /// In fr, this message translates to:
+  /// **'Conseils & technique'**
+  String get forumCatTechnique;
+
+  /// No description provided for @forumCatEquipement.
+  ///
+  /// In fr, this message translates to:
+  /// **'Équipement'**
+  String get forumCatEquipement;
+
+  /// No description provided for @forumCatTerrains.
+  ///
+  /// In fr, this message translates to:
+  /// **'Terrains'**
+  String get forumCatTerrains;
+
+  /// No description provided for @forumCatTournois.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tournois'**
+  String get forumCatTournois;
+
+  /// No description provided for @forumCatDiscussions.
+  ///
+  /// In fr, this message translates to:
+  /// **'Discussions libres'**
+  String get forumCatDiscussions;
+
+  /// No description provided for @forumTriTendance.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tendance'**
+  String get forumTriTendance;
+
+  /// No description provided for @forumTriRecents.
+  ///
+  /// In fr, this message translates to:
+  /// **'Récents'**
+  String get forumTriRecents;
+
+  /// No description provided for @forumTriTop.
+  ///
+  /// In fr, this message translates to:
+  /// **'Top'**
+  String get forumTriTop;
+
+  /// No description provided for @forumTriUtiles.
+  ///
+  /// In fr, this message translates to:
+  /// **'Les plus utiles'**
+  String get forumTriUtiles;
+
+  /// No description provided for @forumTriRecentes.
+  ///
+  /// In fr, this message translates to:
+  /// **'Les plus récentes'**
+  String get forumTriRecentes;
+
+  /// No description provided for @forumTriAnciennes.
+  ///
+  /// In fr, this message translates to:
+  /// **'Les plus anciennes'**
+  String get forumTriAnciennes;
+
+  /// No description provided for @forumMotifSpam.
+  ///
+  /// In fr, this message translates to:
+  /// **'Spam ou publicité'**
+  String get forumMotifSpam;
+
+  /// No description provided for @forumMotifInsulte.
+  ///
+  /// In fr, this message translates to:
+  /// **'Insulte ou harcèlement'**
+  String get forumMotifInsulte;
+
+  /// No description provided for @forumMotifChoquant.
+  ///
+  /// In fr, this message translates to:
+  /// **'Contenu choquant ou dangereux'**
+  String get forumMotifChoquant;
+
+  /// No description provided for @forumMotifFausseInfo.
+  ///
+  /// In fr, this message translates to:
+  /// **'Fausse information'**
+  String get forumMotifFausseInfo;
+
+  /// No description provided for @forumMotifAutre.
+  ///
+  /// In fr, this message translates to:
+  /// **'Autre chose'**
+  String get forumMotifAutre;
+
+  /// No description provided for @forumMembre.
+  ///
+  /// In fr, this message translates to:
+  /// **'Membre'**
+  String get forumMembre;
+
+  /// No description provided for @forumIaAucune.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucune toxicité'**
+  String get forumIaAucune;
+
+  /// No description provided for @forumIaAucuneExplication.
+  ///
+  /// In fr, this message translates to:
+  /// **'Rien de blessant ni de publicitaire détecté.'**
+  String get forumIaAucuneExplication;
+
+  /// No description provided for @forumIaInsulte.
+  ///
+  /// In fr, this message translates to:
+  /// **'Toxicité · insulte'**
+  String get forumIaInsulte;
+
+  /// No description provided for @forumIaInsulteExplication.
+  ///
+  /// In fr, this message translates to:
+  /// **'Insulte grossière visant une personne.'**
+  String get forumIaInsulteExplication;
+
+  /// No description provided for @forumIaInsulteLegere.
+  ///
+  /// In fr, this message translates to:
+  /// **'Toxicité · insulte légère'**
+  String get forumIaInsulteLegere;
+
+  /// No description provided for @forumIaInsulteLegereExplication.
+  ///
+  /// In fr, this message translates to:
+  /// **'Moquerie entre joueurs, sans menace ni haine. L’IA peut se tromper sur le ton entre amis.'**
+  String get forumIaInsulteLegereExplication;
+
+  /// No description provided for @forumIaTonAgressif.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ton agressif'**
+  String get forumIaTonAgressif;
+
+  /// No description provided for @forumIaTonAgressifExplication.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ton sec qui vise une personne plutôt que son avis. Pas d’insulte.'**
+  String get forumIaTonAgressifExplication;
+
+  /// No description provided for @forumIaSpamContact.
+  ///
+  /// In fr, this message translates to:
+  /// **'Spam · lien et contact'**
+  String get forumIaSpamContact;
+
+  /// No description provided for @forumIaSpamPub.
+  ///
+  /// In fr, this message translates to:
+  /// **'Spam · publicité'**
+  String get forumIaSpamPub;
+
+  /// No description provided for @forumIaSpamExplication.
+  ///
+  /// In fr, this message translates to:
+  /// **'Vente ou publicité avec un moyen de contact hors de MatchUp.'**
+  String get forumIaSpamExplication;
+
+  /// No description provided for @forumIaCoordonnees.
+  ///
+  /// In fr, this message translates to:
+  /// **'Coordonnées publiées'**
+  String get forumIaCoordonnees;
+
+  /// No description provided for @forumIaCoordonneesExplication.
+  ///
+  /// In fr, this message translates to:
+  /// **'Numéro ou adresse publiés : à faire passer en message privé.'**
+  String get forumIaCoordonneesExplication;
+
+  /// No description provided for @forumTitreTropCourt.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ton titre doit faire au moins 10 caractères.'**
+  String get forumTitreTropCourt;
+
+  /// No description provided for @forumMessageVide.
+  ///
+  /// In fr, this message translates to:
+  /// **'Écris ton message avant de publier.'**
+  String get forumMessageVide;
+
+  /// No description provided for @forumDiscussionSupprimee.
+  ///
+  /// In fr, this message translates to:
+  /// **'Cette discussion a été supprimée.'**
+  String get forumDiscussionSupprimee;
+
+  /// No description provided for @forumReponseSupprimee.
+  ///
+  /// In fr, this message translates to:
+  /// **'Cette réponse a été supprimée.'**
+  String get forumReponseSupprimee;
+
+  /// No description provided for @forumEnVerification.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ce contenu est en cours de vérification.'**
+  String get forumEnVerification;
+
+  /// No description provided for @forumSeulLAuteur.
+  ///
+  /// In fr, this message translates to:
+  /// **'Seul l’auteur peut modifier ou supprimer ce message.'**
+  String get forumSeulLAuteur;
+
+  /// No description provided for @forumSeulLAuteurChoisit.
+  ///
+  /// In fr, this message translates to:
+  /// **'Seul l’auteur du post choisit la meilleure réponse.'**
+  String get forumSeulLAuteurChoisit;
+
+  /// No description provided for @forumReponseDirecte.
+  ///
+  /// In fr, this message translates to:
+  /// **'Choisis une réponse directe au post.'**
+  String get forumReponseDirecte;
+
+  /// No description provided for @forumPasTaPropreReponse.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tu ne peux pas choisir ta propre réponse.'**
+  String get forumPasTaPropreReponse;
+
+  /// No description provided for @forumPasDeVotePourSoi.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tu ne peux pas voter pour ton propre message.'**
+  String get forumPasDeVotePourSoi;
+
+  /// No description provided for @forumPasDeReactionPourSoi.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tu ne peux pas réagir à ton propre message.'**
+  String get forumPasDeReactionPourSoi;
+
+  /// No description provided for @forumPasTeSuivre.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tu ne peux pas te suivre toi-même.'**
+  String get forumPasTeSuivre;
+
+  /// No description provided for @forumPasTeMasquer.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tu ne peux pas te masquer toi-même.'**
+  String get forumPasTeMasquer;
+
+  /// No description provided for @forumPasTonPropreMessage.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tu ne peux pas signaler ton propre message.'**
+  String get forumPasTonPropreMessage;
+
+  /// No description provided for @forumHorsLigne.
+  ///
+  /// In fr, this message translates to:
+  /// **'Hors ligne'**
+  String get forumHorsLigne;
+
+  /// No description provided for @forumHorsLigneDetail.
+  ///
+  /// In fr, this message translates to:
+  /// **'Vérifie ta connexion puis réessaie.'**
+  String get forumHorsLigneDetail;
+
+  /// No description provided for @forumErreur.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ça n’a pas marché. Réessaie dans un instant.'**
+  String get forumErreur;
+
+  /// No description provided for @forumSuspendu.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tu ne peux plus publier pour l’instant'**
+  String get forumSuspendu;
+
+  /// No description provided for @forumSuspenduJusquA.
+  ///
+  /// In fr, this message translates to:
+  /// **'Suspendu de la communauté jusqu’au {date}. Tu peux toujours lire.'**
+  String forumSuspenduJusquA(String date);
+
+  /// No description provided for @forumRechercherDansLaCommunaute.
+  ///
+  /// In fr, this message translates to:
+  /// **'Rechercher dans la communauté'**
+  String get forumRechercherDansLaCommunaute;
+
+  /// No description provided for @forumMesPostsEtFavoris.
+  ///
+  /// In fr, this message translates to:
+  /// **'Mes posts et favoris'**
+  String get forumMesPostsEtFavoris;
+
+  /// No description provided for @forumPoseTaQuestionALaCommunaute.
+  ///
+  /// In fr, this message translates to:
+  /// **'Pose ta question à la communauté'**
+  String get forumPoseTaQuestionALaCommunaute;
+
+  /// No description provided for @forumEcrireUnNouveauPost.
+  ///
+  /// In fr, this message translates to:
+  /// **'Écrire un nouveau post'**
+  String get forumEcrireUnNouveauPost;
+
+  /// No description provided for @forumCategories.
+  ///
+  /// In fr, this message translates to:
+  /// **'Catégories'**
+  String get forumCategories;
+
+  /// No description provided for @forumNouveauxDepuisTaDerniereVisite.
+  ///
+  /// In fr, this message translates to:
+  /// **'Nouveaux depuis ta dernière visite'**
+  String get forumNouveauxDepuisTaDerniereVisite;
+
+  /// No description provided for @forumNNouveaux.
+  ///
+  /// In fr, this message translates to:
+  /// **'{n, plural, =1{1 nouveau} other{{n} nouveaux}}'**
+  String forumNNouveaux(int n);
+
+  /// No description provided for @forumFiltrerParSport.
+  ///
+  /// In fr, this message translates to:
+  /// **'Filtrer par sport'**
+  String get forumFiltrerParSport;
+
+  /// No description provided for @forumTousLesSports.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tous les sports'**
+  String get forumTousLesSports;
+
+  /// No description provided for @forumTrierLesDiscussions.
+  ///
+  /// In fr, this message translates to:
+  /// **'Trier les discussions'**
+  String get forumTrierLesDiscussions;
+
+  /// No description provided for @forumDiscussions.
+  ///
+  /// In fr, this message translates to:
+  /// **'{n, plural, =0{discussion} =1{discussion} other{discussions}}'**
+  String forumDiscussions(int n);
+
+  /// No description provided for @forumTAMentionne.
+  ///
+  /// In fr, this message translates to:
+  /// **'t’a mentionné · {time}'**
+  String forumTAMentionne(String time);
+
+  /// No description provided for @forumVoterPour.
+  ///
+  /// In fr, this message translates to:
+  /// **'Voter pour'**
+  String get forumVoterPour;
+
+  /// No description provided for @forumVoterContre.
+  ///
+  /// In fr, this message translates to:
+  /// **'Voter contre'**
+  String get forumVoterContre;
+
+  /// No description provided for @forumVoterPourNVotes.
+  ///
+  /// In fr, this message translates to:
+  /// **'Voter pour, {score} votes'**
+  String forumVoterPourNVotes(String score);
+
+  /// No description provided for @forumNVotes.
+  ///
+  /// In fr, this message translates to:
+  /// **'{n, plural, =0{0 vote} =1{1 vote} other{{n} votes}}'**
+  String forumNVotes(int n);
+
+  /// No description provided for @forumNReponses.
+  ///
+  /// In fr, this message translates to:
+  /// **'{n, plural, =0{0 réponse} =1{1 réponse} other{{n} réponses}}'**
+  String forumNReponses(int n);
+
+  /// No description provided for @forumEpingle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Épinglé'**
+  String get forumEpingle;
+
+  /// No description provided for @forumMeilleureReponse.
+  ///
+  /// In fr, this message translates to:
+  /// **'Meilleure réponse'**
+  String get forumMeilleureReponse;
+
+  /// No description provided for @forumMasqueParLaModeration.
+  ///
+  /// In fr, this message translates to:
+  /// **'Masqué par la modération · en cours de vérification'**
+  String get forumMasqueParLaModeration;
+
+  /// No description provided for @forumMessageMasque.
+  ///
+  /// In fr, this message translates to:
+  /// **'Message masqué par la modération'**
+  String get forumMessageMasque;
+
+  /// No description provided for @forumTuAsSignale.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tu as signalé ce message. La modération va le vérifier.'**
+  String get forumTuAsSignale;
+
+  /// No description provided for @forumTonPostSeulToi.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ton post « {title} » · seul toi le vois. Réponse de la modération sous 24 h.'**
+  String forumTonPostSeulToi(String title);
+
+  /// No description provided for @forumVoir.
+  ///
+  /// In fr, this message translates to:
+  /// **'Voir'**
+  String get forumVoir;
+
+  /// No description provided for @forumAucuneDiscussion.
+  ///
+  /// In fr, this message translates to:
+  /// **'Pas encore de discussion ici'**
+  String get forumAucuneDiscussion;
+
+  /// No description provided for @forumAucuneDiscussionDetail.
+  ///
+  /// In fr, this message translates to:
+  /// **'Lance la première : une question, une astuce ou un avis sur un terrain.'**
+  String get forumAucuneDiscussionDetail;
+
+  /// No description provided for @forumPoseTaQuestion.
+  ///
+  /// In fr, this message translates to:
+  /// **'Pose ta question'**
+  String get forumPoseTaQuestion;
+
+  /// No description provided for @forumTuAsToutVu.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tu as tout vu. Reviens plus tard pour les nouvelles discussions.'**
+  String get forumTuAsToutVu;
+
+  /// No description provided for @forumEnregistrer.
+  ///
+  /// In fr, this message translates to:
+  /// **'Enregistrer'**
+  String get forumEnregistrer;
+
+  /// No description provided for @forumRetirerDesFavoris.
+  ///
+  /// In fr, this message translates to:
+  /// **'Retirer des favoris'**
+  String get forumRetirerDesFavoris;
+
+  /// No description provided for @forumSignaler.
+  ///
+  /// In fr, this message translates to:
+  /// **'Signaler'**
+  String get forumSignaler;
+
+  /// No description provided for @forumMerciSignalement.
+  ///
+  /// In fr, this message translates to:
+  /// **'Merci, la modération va vérifier sous 24 h.'**
+  String get forumMerciSignalement;
+
+  /// No description provided for @forumRechercheNPlaceholder.
+  ///
+  /// In fr, this message translates to:
+  /// **'Mot, tag, titre…'**
+  String get forumRechercheNPlaceholder;
+
+  /// No description provided for @forumRechercheVide.
+  ///
+  /// In fr, this message translates to:
+  /// **'Cherche dans les discussions'**
+  String get forumRechercheVide;
+
+  /// No description provided for @forumRechercheVideDetail.
+  ///
+  /// In fr, this message translates to:
+  /// **'Un mot du titre, du texte ou un tag : « bandeja », « crampons », « lac2 ».'**
+  String get forumRechercheVideDetail;
+
+  /// No description provided for @forumAucunResultat.
+  ///
+  /// In fr, this message translates to:
+  /// **'Rien pour « {q} »'**
+  String forumAucunResultat(String q);
+
+  /// No description provided for @forumAucunResultatDetail.
+  ///
+  /// In fr, this message translates to:
+  /// **'Essaie un autre mot, ou pose ta question à la communauté.'**
+  String get forumAucunResultatDetail;
+
+  /// No description provided for @forumFavoris.
+  ///
+  /// In fr, this message translates to:
+  /// **'Favoris'**
+  String get forumFavoris;
+
+  /// No description provided for @forumMesPosts.
+  ///
+  /// In fr, this message translates to:
+  /// **'Mes posts'**
+  String get forumMesPosts;
+
+  /// No description provided for @forumAucunFavori.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucun favori'**
+  String get forumAucunFavori;
+
+  /// No description provided for @forumAucunFavoriDetail.
+  ///
+  /// In fr, this message translates to:
+  /// **'Enregistre une discussion avec « Plus d’options » pour la retrouver ici.'**
+  String get forumAucunFavoriDetail;
+
+  /// No description provided for @forumAucunPost.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tu n’as encore rien publié'**
+  String get forumAucunPost;
+
+  /// No description provided for @forumAucunPostDetail.
+  ///
+  /// In fr, this message translates to:
+  /// **'Une question sur ton jeu, ton matériel ou un terrain ? La communauté répond vite.'**
+  String get forumAucunPostDetail;
+
+  /// No description provided for @forumNouveauPost.
+  ///
+  /// In fr, this message translates to:
+  /// **'Nouveau post'**
+  String get forumNouveauPost;
+
+  /// No description provided for @forumModifierLePost.
+  ///
+  /// In fr, this message translates to:
+  /// **'Modifier le post'**
+  String get forumModifierLePost;
+
+  /// No description provided for @forumFermerSansPublier.
+  ///
+  /// In fr, this message translates to:
+  /// **'Fermer sans publier'**
+  String get forumFermerSansPublier;
+
+  /// No description provided for @forumBrouillonEnregistre.
+  ///
+  /// In fr, this message translates to:
+  /// **'Brouillon enregistré'**
+  String get forumBrouillonEnregistre;
+
+  /// No description provided for @forumCategorieEtSport.
+  ///
+  /// In fr, this message translates to:
+  /// **'Catégorie et sport'**
+  String get forumCategorieEtSport;
+
+  /// No description provided for @forumCategorieDuPost.
+  ///
+  /// In fr, this message translates to:
+  /// **'Catégorie du post'**
+  String get forumCategorieDuPost;
+
+  /// No description provided for @forumSportDuPost.
+  ///
+  /// In fr, this message translates to:
+  /// **'Sport du post'**
+  String get forumSportDuPost;
+
+  /// No description provided for @forumTitre.
+  ///
+  /// In fr, this message translates to:
+  /// **'Titre'**
+  String get forumTitre;
+
+  /// No description provided for @forumTitrePlaceholder.
+  ///
+  /// In fr, this message translates to:
+  /// **'Une vraie question : « Crampons pour synthétique ? »'**
+  String get forumTitrePlaceholder;
+
+  /// No description provided for @forumDiscussionsSimilaires.
+  ///
+  /// In fr, this message translates to:
+  /// **'Discussions similaires'**
+  String get forumDiscussionsSimilaires;
+
+  /// No description provided for @forumTaQuestionADejaDesReponses.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ta question a peut-être déjà des réponses.'**
+  String get forumTaQuestionADejaDesReponses;
+
+  /// No description provided for @forumMasquerLesDiscussionsSimilaires.
+  ///
+  /// In fr, this message translates to:
+  /// **'Masquer les discussions similaires'**
+  String get forumMasquerLesDiscussionsSimilaires;
+
+  /// No description provided for @forumMessage.
+  ///
+  /// In fr, this message translates to:
+  /// **'Message'**
+  String get forumMessage;
+
+  /// No description provided for @forumMessageHelper.
+  ///
+  /// In fr, this message translates to:
+  /// **'Reste précis : niveau, côté, ce que tu as déjà essayé.'**
+  String get forumMessageHelper;
+
+  /// No description provided for @forumEditeurPlaceholder.
+  ///
+  /// In fr, this message translates to:
+  /// **'Partage une astuce, une question ou une annonce…'**
+  String get forumEditeurPlaceholder;
+
+  /// No description provided for @forumImagesFacultatif.
+  ///
+  /// In fr, this message translates to:
+  /// **'Images (facultatif)'**
+  String get forumImagesFacultatif;
+
+  /// No description provided for @forumImagesHint.
+  ///
+  /// In fr, this message translates to:
+  /// **'JPG, PNG · 10 Mo max'**
+  String get forumImagesHint;
+
+  /// No description provided for @forumImageN.
+  ///
+  /// In fr, this message translates to:
+  /// **'Image {n}'**
+  String forumImageN(int n);
+
+  /// No description provided for @forumImageDuPost.
+  ///
+  /// In fr, this message translates to:
+  /// **'Image du post'**
+  String get forumImageDuPost;
+
+  /// No description provided for @forumImageTropLourde.
+  ///
+  /// In fr, this message translates to:
+  /// **'{name} dépasse 10 Mo.'**
+  String forumImageTropLourde(String name);
+
+  /// No description provided for @forumImagesMax.
+  ///
+  /// In fr, this message translates to:
+  /// **'{n} images au maximum : les suivantes n’ont pas été ajoutées.'**
+  String forumImagesMax(int n);
+
+  /// No description provided for @forumTags.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tags'**
+  String get forumTags;
+
+  /// No description provided for @forumTagsPlaceholder.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ajoute un tag'**
+  String get forumTagsPlaceholder;
+
+  /// No description provided for @forumTagsHelper.
+  ///
+  /// In fr, this message translates to:
+  /// **'Les tags aident les joueurs à trouver ton post.'**
+  String get forumTagsHelper;
+
+  /// No description provided for @forumSuggeresParLIa.
+  ///
+  /// In fr, this message translates to:
+  /// **'Suggérés par l’IA'**
+  String get forumSuggeresParLIa;
+
+  /// No description provided for @forumDApresTonTitreEtTonTexte.
+  ///
+  /// In fr, this message translates to:
+  /// **'D’après ton titre et ton texte'**
+  String get forumDApresTonTitreEtTonTexte;
+
+  /// No description provided for @forumMasquerLesSuggestions.
+  ///
+  /// In fr, this message translates to:
+  /// **'Masquer les suggestions'**
+  String get forumMasquerLesSuggestions;
+
+  /// No description provided for @forumAjouterLeTag.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ajouter le tag {tag}'**
+  String forumAjouterLeTag(String tag);
+
+  /// No description provided for @forumDApres.
+  ///
+  /// In fr, this message translates to:
+  /// **'D’après « {word} »'**
+  String forumDApres(String word);
+
+  /// No description provided for @forumRespecteLes.
+  ///
+  /// In fr, this message translates to:
+  /// **'Respecte les'**
+  String get forumRespecteLes;
+
+  /// No description provided for @forumReglesDeLaCommunaute.
+  ///
+  /// In fr, this message translates to:
+  /// **'règles de la communauté'**
+  String get forumReglesDeLaCommunaute;
+
+  /// No description provided for @forumReglesSuite.
+  ///
+  /// In fr, this message translates to:
+  /// **' : pas d’insultes, pas de pub. Les messages signalés sont relus par la modération.'**
+  String get forumReglesSuite;
+
+  /// No description provided for @forumReglesTitre.
+  ///
+  /// In fr, this message translates to:
+  /// **'Règles de la communauté'**
+  String get forumReglesTitre;
+
+  /// No description provided for @forumReglesTexte.
+  ///
+  /// In fr, this message translates to:
+  /// **'1. **Respecte les joueurs.** Critique un avis, jamais une personne : pas d’insultes, de moqueries ni de menaces.\n2. **Pas de pub.** Pas de vente, de liens ou de numéros pour attirer des clients : les coachs et les terrains ont leur page.\n3. **Reste utile.** Une vraie question, un vrai avis, avec ton niveau et ce que tu as essayé.\n4. **Protège ta vie privée.** Pas de numéro ni d’adresse en public : passe par les messages.\n\nLes messages signalés sont relus par un modérateur sous 24 h. Après 3 avertissements, le compte est suspendu de la communauté pendant 7 jours.'**
+  String get forumReglesTexte;
+
+  /// No description provided for @forumApercu.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aperçu'**
+  String get forumApercu;
+
+  /// No description provided for @forumPublier.
+  ///
+  /// In fr, this message translates to:
+  /// **'Publier'**
+  String get forumPublier;
+
+  /// No description provided for @forumPostPublie.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ton post est publié'**
+  String get forumPostPublie;
+
+  /// No description provided for @forumPostModifie.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ton post est modifié'**
+  String get forumPostModifie;
+
+  /// No description provided for @forumPostPublieMasque.
+  ///
+  /// In fr, this message translates to:
+  /// **'Publié, mais masqué le temps qu’un modérateur le relise'**
+  String get forumPostPublieMasque;
+
+  /// No description provided for @forumRetireNCaracteres.
+  ///
+  /// In fr, this message translates to:
+  /// **'{n, plural, =1{Retire 1 caractère pour publier.} other{Retire {n} caractères pour publier.}}'**
+  String forumRetireNCaracteres(int n);
+
+  /// No description provided for @forumMiseEnForme.
+  ///
+  /// In fr, this message translates to:
+  /// **'Mise en forme'**
+  String get forumMiseEnForme;
+
+  /// No description provided for @forumOutilGras.
+  ///
+  /// In fr, this message translates to:
+  /// **'Gras'**
+  String get forumOutilGras;
+
+  /// No description provided for @forumOutilItalique.
+  ///
+  /// In fr, this message translates to:
+  /// **'Italique'**
+  String get forumOutilItalique;
+
+  /// No description provided for @forumOutilListe.
+  ///
+  /// In fr, this message translates to:
+  /// **'Liste'**
+  String get forumOutilListe;
+
+  /// No description provided for @forumOutilListeNumerotee.
+  ///
+  /// In fr, this message translates to:
+  /// **'Liste numérotée'**
+  String get forumOutilListeNumerotee;
+
+  /// No description provided for @forumOutilCitation.
+  ///
+  /// In fr, this message translates to:
+  /// **'Citation'**
+  String get forumOutilCitation;
+
+  /// No description provided for @forumOutilLien.
+  ///
+  /// In fr, this message translates to:
+  /// **'Lien'**
+  String get forumOutilLien;
+
+  /// No description provided for @forumOutilImage.
+  ///
+  /// In fr, this message translates to:
+  /// **'Image'**
+  String get forumOutilImage;
+
+  /// No description provided for @forumLien.
+  ///
+  /// In fr, this message translates to:
+  /// **'lien'**
+  String get forumLien;
+
+  /// No description provided for @forumLienPlaceholder.
+  ///
+  /// In fr, this message translates to:
+  /// **'https://…'**
+  String get forumLienPlaceholder;
+
+  /// No description provided for @forumAlerteTitre.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ce message pourrait blesser. Le modifier avant de publier ?'**
+  String get forumAlerteTitre;
+
+  /// No description provided for @forumAlerteConsequence.
+  ///
+  /// In fr, this message translates to:
+  /// **'Publié tel quel, il peut être masqué le temps qu’un modérateur le relise.'**
+  String get forumAlerteConsequence;
+
+  /// No description provided for @forumTaReponseAPasEncorePubliee.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ta réponse à {name} · pas encore publiée'**
+  String forumTaReponseAPasEncorePubliee(String name);
+
+  /// No description provided for @forumTaReponsePasEncorePubliee.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ta réponse · pas encore publiée'**
+  String get forumTaReponsePasEncorePubliee;
+
+  /// No description provided for @forumTonPostPasEncorePublie.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ton post · pas encore publié'**
+  String get forumTonPostPasEncorePublie;
+
+  /// No description provided for @forumReformulation.
+  ///
+  /// In fr, this message translates to:
+  /// **'Reformulation'**
+  String get forumReformulation;
+
+  /// No description provided for @forumUneVersionPlusPosee.
+  ///
+  /// In fr, this message translates to:
+  /// **'Une version plus posée'**
+  String get forumUneVersionPlusPosee;
+
+  /// No description provided for @forumGardeTonConseilSansViser.
+  ///
+  /// In fr, this message translates to:
+  /// **'elle garde ton conseil sans viser {name}.'**
+  String forumGardeTonConseilSansViser(String name);
+
+  /// No description provided for @forumGardeTonConseil.
+  ///
+  /// In fr, this message translates to:
+  /// **'elle garde ton conseil sans viser personne.'**
+  String get forumGardeTonConseil;
+
+  /// No description provided for @forumUtiliserCetteVersion.
+  ///
+  /// In fr, this message translates to:
+  /// **'Utiliser cette version'**
+  String get forumUtiliserCetteVersion;
+
+  /// No description provided for @forumPublierQuandMeme.
+  ///
+  /// In fr, this message translates to:
+  /// **'Publier quand même'**
+  String get forumPublierQuandMeme;
+
+  /// No description provided for @forumModifierMonMessage.
+  ///
+  /// In fr, this message translates to:
+  /// **'Modifier mon message'**
+  String get forumModifierMonMessage;
+
+  /// No description provided for @forumPublieeMasquee.
+  ///
+  /// In fr, this message translates to:
+  /// **'Publiée, et masquée le temps qu’un modérateur la relise'**
+  String get forumPublieeMasquee;
+
+  /// No description provided for @forumDiscussion.
+  ///
+  /// In fr, this message translates to:
+  /// **'Discussion'**
+  String get forumDiscussion;
+
+  /// No description provided for @forumRetourALaCommunaute.
+  ///
+  /// In fr, this message translates to:
+  /// **'Retour à la communauté'**
+  String get forumRetourALaCommunaute;
+
+  /// No description provided for @forumSuivreLaDiscussion.
+  ///
+  /// In fr, this message translates to:
+  /// **'Suivre la discussion'**
+  String get forumSuivreLaDiscussion;
+
+  /// No description provided for @forumNePlusSuivreLaDiscussion.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ne plus suivre la discussion'**
+  String get forumNePlusSuivreLaDiscussion;
+
+  /// No description provided for @forumTuSuisLaDiscussion.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tu seras prévenu des nouvelles réponses'**
+  String get forumTuSuisLaDiscussion;
+
+  /// No description provided for @forumTuNeSuisPlusLaDiscussion.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tu ne suis plus cette discussion'**
+  String get forumTuNeSuisPlusLaDiscussion;
+
+  /// No description provided for @forumPartagerLaDiscussion.
+  ///
+  /// In fr, this message translates to:
+  /// **'Partager la discussion'**
+  String get forumPartagerLaDiscussion;
+
+  /// No description provided for @forumPlusDOptionsSignalerCopier.
+  ///
+  /// In fr, this message translates to:
+  /// **'Plus d’options : signaler, copier le lien'**
+  String get forumPlusDOptionsSignalerCopier;
+
+  /// No description provided for @forumSuivre.
+  ///
+  /// In fr, this message translates to:
+  /// **'Suivre'**
+  String get forumSuivre;
+
+  /// No description provided for @forumSuivi.
+  ///
+  /// In fr, this message translates to:
+  /// **'Suivi'**
+  String get forumSuivi;
+
+  /// No description provided for @forumUtile.
+  ///
+  /// In fr, this message translates to:
+  /// **'Utile'**
+  String get forumUtile;
+
+  /// No description provided for @forumUtileN.
+  ///
+  /// In fr, this message translates to:
+  /// **'Utile · {n}'**
+  String forumUtileN(int n);
+
+  /// No description provided for @forumMerci.
+  ///
+  /// In fr, this message translates to:
+  /// **'Merci'**
+  String get forumMerci;
+
+  /// No description provided for @forumChoisiePar.
+  ///
+  /// In fr, this message translates to:
+  /// **'choisie par {name}'**
+  String forumChoisiePar(String name);
+
+  /// No description provided for @forumToi.
+  ///
+  /// In fr, this message translates to:
+  /// **'toi'**
+  String get forumToi;
+
+  /// No description provided for @forumModifie.
+  ///
+  /// In fr, this message translates to:
+  /// **'modifié'**
+  String get forumModifie;
+
+  /// No description provided for @forumRepondre.
+  ///
+  /// In fr, this message translates to:
+  /// **'Répondre'**
+  String get forumRepondre;
+
+  /// No description provided for @forumAuteur.
+  ///
+  /// In fr, this message translates to:
+  /// **'Auteur'**
+  String get forumAuteur;
+
+  /// No description provided for @forumRepondsA.
+  ///
+  /// In fr, this message translates to:
+  /// **'Réponds à {name}…'**
+  String forumRepondsA(String name);
+
+  /// No description provided for @forumReponseA.
+  ///
+  /// In fr, this message translates to:
+  /// **'Réponse à {name}'**
+  String forumReponseA(String name);
+
+  /// No description provided for @forumModifierTaReponse.
+  ///
+  /// In fr, this message translates to:
+  /// **'Modifier ta réponse'**
+  String get forumModifierTaReponse;
+
+  /// No description provided for @forumTaReponseASeulToi.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ta réponse à {name} · seul toi vois ce message. Réponse de la modération sous 24 h.'**
+  String forumTaReponseASeulToi(String name);
+
+  /// No description provided for @forumTaReponseSeulToi.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ta réponse · seul toi vois ce message. Réponse de la modération sous 24 h.'**
+  String get forumTaReponseSeulToi;
+
+  /// No description provided for @forumTonPostSeulToiDetail.
+  ///
+  /// In fr, this message translates to:
+  /// **'Seul toi vois ce post. Réponse de la modération sous 24 h.'**
+  String get forumTonPostSeulToiDetail;
+
+  /// No description provided for @forumPourquoi.
+  ///
+  /// In fr, this message translates to:
+  /// **'Pourquoi ?'**
+  String get forumPourquoi;
+
+  /// No description provided for @forumPourquoiMasque.
+  ///
+  /// In fr, this message translates to:
+  /// **'Pourquoi ce message est masqué'**
+  String get forumPourquoiMasque;
+
+  /// No description provided for @forumPourquoiMasqueDetail.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tu l’as publié malgré l’alerte (« {reason} »). Un modérateur le relit sous 24 h : il sera republié ou supprimé. Tu peux aussi le modifier.'**
+  String forumPourquoiMasqueDetail(String reason);
+
+  /// No description provided for @forumMessageSupprime.
+  ///
+  /// In fr, this message translates to:
+  /// **'Message supprimé'**
+  String get forumMessageSupprime;
+
+  /// No description provided for @forumMessageDUnMembreMasque.
+  ///
+  /// In fr, this message translates to:
+  /// **'Message d’un membre que tu as masqué'**
+  String get forumMessageDUnMembreMasque;
+
+  /// No description provided for @forumPasEncoreDeReponse.
+  ///
+  /// In fr, this message translates to:
+  /// **'Pas encore de réponse'**
+  String get forumPasEncoreDeReponse;
+
+  /// No description provided for @forumPasEncoreDeReponseDetail.
+  ///
+  /// In fr, this message translates to:
+  /// **'Sois le premier à aider : partage ton expérience.'**
+  String get forumPasEncoreDeReponseDetail;
+
+  /// No description provided for @forumChoisirCommeMeilleureReponse.
+  ///
+  /// In fr, this message translates to:
+  /// **'Choisir comme meilleure réponse'**
+  String get forumChoisirCommeMeilleureReponse;
+
+  /// No description provided for @forumRetirerLaMeilleureReponse.
+  ///
+  /// In fr, this message translates to:
+  /// **'Retirer la meilleure réponse'**
+  String get forumRetirerLaMeilleureReponse;
+
+  /// No description provided for @forumSupprimerCePost.
+  ///
+  /// In fr, this message translates to:
+  /// **'Supprimer ce post ?'**
+  String get forumSupprimerCePost;
+
+  /// No description provided for @forumSupprimerCePostDetail.
+  ///
+  /// In fr, this message translates to:
+  /// **'Il disparaît de la communauté avec ses réponses. C’est définitif.'**
+  String get forumSupprimerCePostDetail;
+
+  /// No description provided for @forumSupprimerCetteReponse.
+  ///
+  /// In fr, this message translates to:
+  /// **'Supprimer ta réponse ?'**
+  String get forumSupprimerCetteReponse;
+
+  /// No description provided for @forumSupprimerCetteReponseDetail.
+  ///
+  /// In fr, this message translates to:
+  /// **'Si on t’a déjà répondu, elle restera affichée comme « Message supprimé ».'**
+  String get forumSupprimerCetteReponseDetail;
+
+  /// No description provided for @forumPostSupprime.
+  ///
+  /// In fr, this message translates to:
+  /// **'Post supprimé'**
+  String get forumPostSupprime;
+
+  /// No description provided for @forumSignalerCeCommentaire.
+  ///
+  /// In fr, this message translates to:
+  /// **'Signaler ce commentaire'**
+  String get forumSignalerCeCommentaire;
+
+  /// No description provided for @forumSignalerCePost.
+  ///
+  /// In fr, this message translates to:
+  /// **'Signaler ce post'**
+  String get forumSignalerCePost;
+
+  /// No description provided for @forumMotifDuSignalement.
+  ///
+  /// In fr, this message translates to:
+  /// **'Motif du signalement'**
+  String get forumMotifDuSignalement;
+
+  /// No description provided for @forumPrecise.
+  ///
+  /// In fr, this message translates to:
+  /// **'Précise (facultatif)'**
+  String get forumPrecise;
+
+  /// No description provided for @forumNePlusVoirLesMessagesDe.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ne plus voir les messages de {name}'**
+  String forumNePlusVoirLesMessagesDe(String name);
+
+  /// No description provided for @forumSignalementAnonyme.
+  ///
+  /// In fr, this message translates to:
+  /// **'Signalement anonyme · vérifié par un modérateur sous 24 h.'**
+  String get forumSignalementAnonyme;
+
+  /// No description provided for @trnA.
+  ///
+  /// In fr, this message translates to:
+  /// **'À'**
+  String get trnA;
+
+  /// No description provided for @trnADeterminer.
+  ///
+  /// In fr, this message translates to:
+  /// **'À déterminer'**
+  String get trnADeterminer;
+
+  /// No description provided for @trnAValider.
+  ///
+  /// In fr, this message translates to:
+  /// **'À valider'**
+  String get trnAValider;
+
+  /// No description provided for @trnAdresse.
+  ///
+  /// In fr, this message translates to:
+  /// **'Adresse'**
+  String get trnAdresse;
+
+  /// No description provided for @trnAnnonce.
+  ///
+  /// In fr, this message translates to:
+  /// **'Annonce'**
+  String get trnAnnonce;
+
+  /// No description provided for @trnAnnonceEnvoyee.
+  ///
+  /// In fr, this message translates to:
+  /// **'Annonce envoyée aux équipes'**
+  String get trnAnnonceEnvoyee;
+
+  /// No description provided for @trnAnnulee.
+  ///
+  /// In fr, this message translates to:
+  /// **'Annulée'**
+  String get trnAnnulee;
+
+  /// No description provided for @trnApercuJoueur.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aperçu joueur'**
+  String get trnApercuJoueur;
+
+  /// No description provided for @trnApercuLead.
+  ///
+  /// In fr, this message translates to:
+  /// **'Voici ce que les joueurs verront dans Explorer.'**
+  String get trnApercuLead;
+
+  /// No description provided for @trnApercuNote.
+  ///
+  /// In fr, this message translates to:
+  /// **'Le format et les frais ne peuvent plus changer. Les dates et les horaires restent modifiables : les équipes sont alors prévenues.'**
+  String get trnApercuNote;
+
+  /// No description provided for @trnApercuTitre.
+  ///
+  /// In fr, this message translates to:
+  /// **'Vérifie avant de publier'**
+  String get trnApercuTitre;
+
+  /// No description provided for @trnAucunMatchPret.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucun match prêt à jouer pour l’instant.'**
+  String get trnAucunMatchPret;
+
+  /// No description provided for @trnAucuneEquipe.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucune équipe ici pour l’instant.'**
+  String get trnAucuneEquipe;
+
+  /// No description provided for @trnCapitaine.
+  ///
+  /// In fr, this message translates to:
+  /// **'Capitaine'**
+  String get trnCapitaine;
+
+  /// No description provided for @trnChoisirDates.
+  ///
+  /// In fr, this message translates to:
+  /// **'Choisir les dates'**
+  String get trnChoisirDates;
+
+  /// No description provided for @trnChoisisVainqueur.
+  ///
+  /// In fr, this message translates to:
+  /// **'Match nul en phase finale : choisis le vainqueur.'**
+  String get trnChoisisVainqueur;
+
+  /// No description provided for @trnCloturer.
+  ///
+  /// In fr, this message translates to:
+  /// **'Clôturer les inscriptions'**
+  String get trnCloturer;
+
+  /// No description provided for @trnClub.
+  ///
+  /// In fr, this message translates to:
+  /// **'Club'**
+  String get trnClub;
+
+  /// No description provided for @trnClubRequis.
+  ///
+  /// In fr, this message translates to:
+  /// **'Indique le club où se joue le tournoi.'**
+  String get trnClubRequis;
+
+  /// No description provided for @trnConfirmerNote.
+  ///
+  /// In fr, this message translates to:
+  /// **'Le classement et le tableau se mettent à jour. Les joueurs reçoivent le résultat.'**
+  String get trnConfirmerNote;
+
+  /// No description provided for @trnConfirmerScoreFinal.
+  ///
+  /// In fr, this message translates to:
+  /// **'Confirmer le score final'**
+  String get trnConfirmerScoreFinal;
+
+  /// No description provided for @trnCourtsDisponibles.
+  ///
+  /// In fr, this message translates to:
+  /// **'Courts disponibles'**
+  String get trnCourtsDisponibles;
+
+  /// No description provided for @trnCreerDescription.
+  ///
+  /// In fr, this message translates to:
+  /// **'Poules ou élimination directe : 5 étapes.'**
+  String get trnCreerDescription;
+
+  /// No description provided for @trnDates.
+  ///
+  /// In fr, this message translates to:
+  /// **'Dates'**
+  String get trnDates;
+
+  /// No description provided for @trnDatesRequises.
+  ///
+  /// In fr, this message translates to:
+  /// **'Choisis les dates du tournoi.'**
+  String get trnDatesRequises;
+
+  /// No description provided for @trnDe.
+  ///
+  /// In fr, this message translates to:
+  /// **'De'**
+  String get trnDe;
+
+  /// No description provided for @trnDotation.
+  ///
+  /// In fr, this message translates to:
+  /// **'Dotation'**
+  String get trnDotation;
+
+  /// No description provided for @trnDureeMatch.
+  ///
+  /// In fr, this message translates to:
+  /// **'Durée d’un créneau'**
+  String get trnDureeMatch;
+
+  /// No description provided for @trnEliminationDescription.
+  ///
+  /// In fr, this message translates to:
+  /// **'Un match perdu et c’est fini. Plus court, 1 seul match garanti.'**
+  String get trnEliminationDescription;
+
+  /// No description provided for @trnEliminationDirecte.
+  ///
+  /// In fr, this message translates to:
+  /// **'Élimination directe'**
+  String get trnEliminationDirecte;
+
+  /// No description provided for @trnEnDirect.
+  ///
+  /// In fr, this message translates to:
+  /// **'En direct'**
+  String get trnEnDirect;
+
+  /// No description provided for @trnEncaisse.
+  ///
+  /// In fr, this message translates to:
+  /// **'Encaissé'**
+  String get trnEncaisse;
+
+  /// No description provided for @trnEnvoyer.
+  ///
+  /// In fr, this message translates to:
+  /// **'Envoyer'**
+  String get trnEnvoyer;
+
+  /// No description provided for @trnEquipes.
+  ///
+  /// In fr, this message translates to:
+  /// **'Équipes'**
+  String get trnEquipes;
+
+  /// No description provided for @trnEtapes.
+  ///
+  /// In fr, this message translates to:
+  /// **'5 étapes'**
+  String get trnEtapes;
+
+  /// No description provided for @trnFiltrerEquipes.
+  ///
+  /// In fr, this message translates to:
+  /// **'Filtrer les équipes'**
+  String get trnFiltrerEquipes;
+
+  /// No description provided for @trnFinale.
+  ///
+  /// In fr, this message translates to:
+  /// **'Finale'**
+  String get trnFinale;
+
+  /// No description provided for @trnFinalistes.
+  ///
+  /// In fr, this message translates to:
+  /// **'Finalistes'**
+  String get trnFinalistes;
+
+  /// No description provided for @trnFormat.
+  ///
+  /// In fr, this message translates to:
+  /// **'Format'**
+  String get trnFormat;
+
+  /// No description provided for @trnFormatLead.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tu peux tout modifier tant qu’aucune équipe n’est inscrite.'**
+  String get trnFormatLead;
+
+  /// No description provided for @trnFormatTitre.
+  ///
+  /// In fr, this message translates to:
+  /// **'Format et règles'**
+  String get trnFormatTitre;
+
+  /// No description provided for @trnFraisLead.
+  ///
+  /// In fr, this message translates to:
+  /// **'Les équipes paient en ligne pour réserver leur place.'**
+  String get trnFraisLead;
+
+  /// No description provided for @trnFraisParEquipe.
+  ///
+  /// In fr, this message translates to:
+  /// **'Frais d’inscription par équipe'**
+  String get trnFraisParEquipe;
+
+  /// No description provided for @trnFraisTitre.
+  ///
+  /// In fr, this message translates to:
+  /// **'Frais et prix'**
+  String get trnFraisTitre;
+
+  /// No description provided for @trnGenerer.
+  ///
+  /// In fr, this message translates to:
+  /// **'Générer'**
+  String get trnGenerer;
+
+  /// No description provided for @trnInfosLead.
+  ///
+  /// In fr, this message translates to:
+  /// **'C’est ce que les joueurs voient en premier dans Explorer.'**
+  String get trnInfosLead;
+
+  /// No description provided for @trnInfosTitre.
+  ///
+  /// In fr, this message translates to:
+  /// **'Les infos de base'**
+  String get trnInfosTitre;
+
+  /// No description provided for @trnInscriptions.
+  ///
+  /// In fr, this message translates to:
+  /// **'Inscriptions'**
+  String get trnInscriptions;
+
+  /// No description provided for @trnIntrouvable.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ce tournoi n’existe plus'**
+  String get trnIntrouvable;
+
+  /// No description provided for @trnMesTournois.
+  ///
+  /// In fr, this message translates to:
+  /// **'Mes tournois'**
+  String get trnMesTournois;
+
+  /// No description provided for @trnMessage.
+  ///
+  /// In fr, this message translates to:
+  /// **'Message'**
+  String get trnMessage;
+
+  /// No description provided for @trnMotifAutre.
+  ///
+  /// In fr, this message translates to:
+  /// **'Autre raison'**
+  String get trnMotifAutre;
+
+  /// No description provided for @trnMotifComplet.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tournoi complet'**
+  String get trnMotifComplet;
+
+  /// No description provided for @trnMotifDuRefus.
+  ///
+  /// In fr, this message translates to:
+  /// **'Motif du refus'**
+  String get trnMotifDuRefus;
+
+  /// No description provided for @trnMotifNiveau.
+  ///
+  /// In fr, this message translates to:
+  /// **'Niveau hors fourchette'**
+  String get trnMotifNiveau;
+
+  /// No description provided for @trnNiveauMoyen.
+  ///
+  /// In fr, this message translates to:
+  /// **'Niveau moyen des équipes'**
+  String get trnNiveauMoyen;
+
+  /// No description provided for @trnNomDuTournoi.
+  ///
+  /// In fr, this message translates to:
+  /// **'Nom du tournoi'**
+  String get trnNomDuTournoi;
+
+  /// No description provided for @trnNomHelper.
+  ///
+  /// In fr, this message translates to:
+  /// **'Court et facile à retenir : il apparaît sur l’affiche.'**
+  String get trnNomHelper;
+
+  /// No description provided for @trnNomTropCourt.
+  ///
+  /// In fr, this message translates to:
+  /// **'Donne un nom d’au moins 3 caractères.'**
+  String get trnNomTropCourt;
+
+  /// No description provided for @trnNombreEquipes.
+  ///
+  /// In fr, this message translates to:
+  /// **'Nombre d’équipes'**
+  String get trnNombreEquipes;
+
+  /// No description provided for @trnNonPaye.
+  ///
+  /// In fr, this message translates to:
+  /// **'Non payé'**
+  String get trnNonPaye;
+
+  /// No description provided for @trnPaye.
+  ///
+  /// In fr, this message translates to:
+  /// **'Payé'**
+  String get trnPaye;
+
+  /// No description provided for @trnPlanning.
+  ///
+  /// In fr, this message translates to:
+  /// **'Planning'**
+  String get trnPlanning;
+
+  /// No description provided for @trnPlanningAGenerer.
+  ///
+  /// In fr, this message translates to:
+  /// **'À générer quand les équipes sont validées'**
+  String get trnPlanningAGenerer;
+
+  /// No description provided for @trnPlanningBrouillon.
+  ///
+  /// In fr, this message translates to:
+  /// **'Proposé, pas encore publié'**
+  String get trnPlanningBrouillon;
+
+  /// No description provided for @trnPlanningGenere.
+  ///
+  /// In fr, this message translates to:
+  /// **'Planning généré'**
+  String get trnPlanningGenere;
+
+  /// No description provided for @trnPlanningPropose.
+  ///
+  /// In fr, this message translates to:
+  /// **'Planning proposé'**
+  String get trnPlanningPropose;
+
+  /// No description provided for @trnPlanningPublie.
+  ///
+  /// In fr, this message translates to:
+  /// **'Publié : les joueurs voient le tableau'**
+  String get trnPlanningPublie;
+
+  /// No description provided for @trnPlanningVide.
+  ///
+  /// In fr, this message translates to:
+  /// **'Valide au moins 2 équipes, puis touche « Générer ».'**
+  String get trnPlanningVide;
+
+  /// No description provided for @trnPoulesDescription.
+  ///
+  /// In fr, this message translates to:
+  /// **'Les 2 premiers de chaque poule passent en phase finale.'**
+  String get trnPoulesDescription;
+
+  /// No description provided for @trnPoulesPhaseFinale.
+  ///
+  /// In fr, this message translates to:
+  /// **'Poules + phase finale'**
+  String get trnPoulesPhaseFinale;
+
+  /// No description provided for @trnPresentation.
+  ///
+  /// In fr, this message translates to:
+  /// **'Présentation'**
+  String get trnPresentation;
+
+  /// No description provided for @trnPublie.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tournoi publié'**
+  String get trnPublie;
+
+  /// No description provided for @trnPublie2.
+  ///
+  /// In fr, this message translates to:
+  /// **'Publié'**
+  String get trnPublie2;
+
+  /// No description provided for @trnPublier.
+  ///
+  /// In fr, this message translates to:
+  /// **'Publier le tournoi'**
+  String get trnPublier;
+
+  /// No description provided for @trnPublierTableau.
+  ///
+  /// In fr, this message translates to:
+  /// **'Publier'**
+  String get trnPublierTableau;
+
+  /// No description provided for @trnRecapitulatif.
+  ///
+  /// In fr, this message translates to:
+  /// **'Récapitulatif'**
+  String get trnRecapitulatif;
+
+  /// No description provided for @trnRefusDescription.
+  ///
+  /// In fr, this message translates to:
+  /// **'Choisis un motif : il accompagne la notification envoyée au capitaine.'**
+  String get trnRefusDescription;
+
+  /// No description provided for @trnRefusee.
+  ///
+  /// In fr, this message translates to:
+  /// **'Refusée'**
+  String get trnRefusee;
+
+  /// No description provided for @trnRefusees.
+  ///
+  /// In fr, this message translates to:
+  /// **'Refusées'**
+  String get trnRefusees;
+
+  /// No description provided for @trnRegenerer.
+  ///
+  /// In fr, this message translates to:
+  /// **'Régénérer'**
+  String get trnRegenerer;
+
+  /// No description provided for @trnReposEntreMatchs.
+  ///
+  /// In fr, this message translates to:
+  /// **'Repos entre 2 matchs'**
+  String get trnReposEntreMatchs;
+
+  /// No description provided for @trnResteImpourToi.
+  ///
+  /// In fr, this message translates to:
+  /// **'Reste pour toi'**
+  String get trnResteImpourToi;
+
+  /// No description provided for @trnRienAValider.
+  ///
+  /// In fr, this message translates to:
+  /// **'Rien à valider'**
+  String get trnRienAValider;
+
+  /// No description provided for @trnRienPublie.
+  ///
+  /// In fr, this message translates to:
+  /// **'Rien n’est envoyé aux équipes avant ta publication.'**
+  String get trnRienPublie;
+
+  /// No description provided for @trnRouvrir.
+  ///
+  /// In fr, this message translates to:
+  /// **'Rouvrir les inscriptions'**
+  String get trnRouvrir;
+
+  /// No description provided for @trnScoreConfirme.
+  ///
+  /// In fr, this message translates to:
+  /// **'Score confirmé'**
+  String get trnScoreConfirme;
+
+  /// No description provided for @trnScores.
+  ///
+  /// In fr, this message translates to:
+  /// **'Scores'**
+  String get trnScores;
+
+  /// No description provided for @trnScoresApresPlanning.
+  ///
+  /// In fr, this message translates to:
+  /// **'Disponible une fois le planning généré'**
+  String get trnScoresApresPlanning;
+
+  /// No description provided for @trnScoresDescription.
+  ///
+  /// In fr, this message translates to:
+  /// **'Saisie au bord du court'**
+  String get trnScoresDescription;
+
+  /// No description provided for @trnScoresEnDirect.
+  ///
+  /// In fr, this message translates to:
+  /// **'Scores en direct'**
+  String get trnScoresEnDirect;
+
+  /// No description provided for @trnStatutAnnule.
+  ///
+  /// In fr, this message translates to:
+  /// **'Annulé'**
+  String get trnStatutAnnule;
+
+  /// No description provided for @trnStatutBrouillon.
+  ///
+  /// In fr, this message translates to:
+  /// **'Brouillon'**
+  String get trnStatutBrouillon;
+
+  /// No description provided for @trnStatutEnCours.
+  ///
+  /// In fr, this message translates to:
+  /// **'En cours'**
+  String get trnStatutEnCours;
+
+  /// No description provided for @trnStatutFerme.
+  ///
+  /// In fr, this message translates to:
+  /// **'Inscriptions closes'**
+  String get trnStatutFerme;
+
+  /// No description provided for @trnStatutOuvert.
+  ///
+  /// In fr, this message translates to:
+  /// **'Inscriptions ouvertes'**
+  String get trnStatutOuvert;
+
+  /// No description provided for @trnStatutTermine.
+  ///
+  /// In fr, this message translates to:
+  /// **'Terminé'**
+  String get trnStatutTermine;
+
+  /// No description provided for @trnStepApercu.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aperçu'**
+  String get trnStepApercu;
+
+  /// No description provided for @trnStepFormat.
+  ///
+  /// In fr, this message translates to:
+  /// **'Format & règles'**
+  String get trnStepFormat;
+
+  /// No description provided for @trnStepFrais.
+  ///
+  /// In fr, this message translates to:
+  /// **'Frais & prix'**
+  String get trnStepFrais;
+
+  /// No description provided for @trnStepInfos.
+  ///
+  /// In fr, this message translates to:
+  /// **'Infos'**
+  String get trnStepInfos;
+
+  /// No description provided for @trnStepTerrains.
+  ///
+  /// In fr, this message translates to:
+  /// **'Terrains & dates'**
+  String get trnStepTerrains;
+
+  /// No description provided for @trnTableauPublie.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tableau publié'**
+  String get trnTableauPublie;
+
+  /// No description provided for @trnTerrainsLead.
+  ///
+  /// In fr, this message translates to:
+  /// **'On calcule le planning des matchs à partir de ces créneaux.'**
+  String get trnTerrainsLead;
+
+  /// No description provided for @trnTerrainsPlanningNote.
+  ///
+  /// In fr, this message translates to:
+  /// **'Les courts et les horaires se règlent dans le planning, une fois les équipes validées.'**
+  String get trnTerrainsPlanningNote;
+
+  /// No description provided for @trnTerrainsTitre.
+  ///
+  /// In fr, this message translates to:
+  /// **'Terrains et dates'**
+  String get trnTerrainsTitre;
+
+  /// No description provided for @trnTesContraintes.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tes contraintes'**
+  String get trnTesContraintes;
+
+  /// No description provided for @trnToucheUnMatch.
+  ///
+  /// In fr, this message translates to:
+  /// **'Touche un match pour saisir le score.'**
+  String get trnToucheUnMatch;
+
+  /// No description provided for @trnTroisieme.
+  ///
+  /// In fr, this message translates to:
+  /// **'3e place'**
+  String get trnTroisieme;
+
+  /// No description provided for @trnVainqueur.
+  ///
+  /// In fr, this message translates to:
+  /// **'Vainqueur'**
+  String get trnVainqueur;
+
+  /// No description provided for @trnVainqueurs.
+  ///
+  /// In fr, this message translates to:
+  /// **'Vainqueurs'**
+  String get trnVainqueurs;
+
+  /// No description provided for @trnValidee.
+  ///
+  /// In fr, this message translates to:
+  /// **'Validée'**
+  String get trnValidee;
+
+  /// No description provided for @trnValidees.
+  ///
+  /// In fr, this message translates to:
+  /// **'Validées'**
+  String get trnValidees;
+
+  /// No description provided for @trnVisibleExplorer.
+  ///
+  /// In fr, this message translates to:
+  /// **'Le tournoi est visible par tous les joueurs dans Explorer.'**
+  String get trnVisibleExplorer;
+
+  /// No description provided for @trnVoirApercu.
+  ///
+  /// In fr, this message translates to:
+  /// **'Voir l’aperçu'**
+  String get trnVoirApercu;
+
+  /// No description provided for @trnAValiderN.
+  ///
+  /// In fr, this message translates to:
+  /// **'{n} à valider'**
+  String trnAValiderN(int n);
+
+  /// No description provided for @trnAVenirN.
+  ///
+  /// In fr, this message translates to:
+  /// **'À venir · {n}'**
+  String trnAVenirN(int n);
+
+  /// No description provided for @trnAjouterPoint.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ajouter un point à {name}'**
+  String trnAjouterPoint(String name);
+
+  /// No description provided for @trnAnnonceDescription.
+  ///
+  /// In fr, this message translates to:
+  /// **'{n, plural, =0{À toutes les équipes inscrites} =1{À 1 équipe inscrite} other{Aux {n} équipes inscrites}}'**
+  String trnAnnonceDescription(int n);
+
+  /// No description provided for @trnCourtN.
+  ///
+  /// In fr, this message translates to:
+  /// **'Court {n}'**
+  String trnCourtN(int n);
+
+  /// No description provided for @trnDemie.
+  ///
+  /// In fr, this message translates to:
+  /// **'Demie {n}'**
+  String trnDemie(int n);
+
+  /// No description provided for @trnEliminationResume.
+  ///
+  /// In fr, this message translates to:
+  /// **'Élimination directe · {n} équipes'**
+  String trnEliminationResume(int n);
+
+  /// No description provided for @trnEnCoursN.
+  ///
+  /// In fr, this message translates to:
+  /// **'En cours · {n}'**
+  String trnEnCoursN(int n);
+
+  /// No description provided for @trnEnDirectN.
+  ///
+  /// In fr, this message translates to:
+  /// **'En direct · {n}'**
+  String trnEnDirectN(int n);
+
+  /// No description provided for @trnEquipesSur.
+  ///
+  /// In fr, this message translates to:
+  /// **'{a}/{b} équipes'**
+  String trnEquipesSur(int a, int b);
+
+  /// No description provided for @trnFraisHelper.
+  ///
+  /// In fr, this message translates to:
+  /// **'Soit {amount} par joueur. Paiement en ligne obligatoire pour s’inscrire.'**
+  String trnFraisHelper(String amount);
+
+  /// No description provided for @trnJoueursManquants.
+  ///
+  /// In fr, this message translates to:
+  /// **'{n, plural, =1{Il manque 1 joueur} other{Il manque {n} joueurs}}'**
+  String trnJoueursManquants(int n);
+
+  /// No description provided for @trnJoueursParEquipe.
+  ///
+  /// In fr, this message translates to:
+  /// **'{n} joueurs par équipe, capitaine compris.'**
+  String trnJoueursParEquipe(int n);
+
+  /// No description provided for @trnPasAssezCreneaux.
+  ///
+  /// In fr, this message translates to:
+  /// **'Pas assez de créneaux : {n, plural, =1{1 match sans horaire} other{{n} matchs sans horaire}}. Ajoute un court ou une plage horaire.'**
+  String trnPasAssezCreneaux(int n);
+
+  /// No description provided for @trnPouleJ.
+  ///
+  /// In fr, this message translates to:
+  /// **'Poule {p} · J{j}'**
+  String trnPouleJ(String p, int j);
+
+  /// No description provided for @trnPoulesResume.
+  ///
+  /// In fr, this message translates to:
+  /// **'{n, plural, =1{1 poule} other{{n} poules}} puis phase finale'**
+  String trnPoulesResume(int n);
+
+  /// No description provided for @trnQuart.
+  ///
+  /// In fr, this message translates to:
+  /// **'QF {n}'**
+  String trnQuart(int n);
+
+  /// No description provided for @trnRecapFrais.
+  ///
+  /// In fr, this message translates to:
+  /// **'{fee} par équipe · dotation {prize}'**
+  String trnRecapFrais(String fee, String prize);
+
+  /// No description provided for @trnRecapInfos.
+  ///
+  /// In fr, this message translates to:
+  /// **'{sport} · niveau moyen {min} – {max}'**
+  String trnRecapInfos(String sport, String min, String max);
+
+  /// No description provided for @trnRefusRembourse.
+  ///
+  /// In fr, this message translates to:
+  /// **'Une équipe refusée est remboursée en entier ({amount}) et prévenue avec ton message.'**
+  String trnRefusRembourse(String amount);
+
+  /// No description provided for @trnRefuserEquipe.
+  ///
+  /// In fr, this message translates to:
+  /// **'Refuser {name} ?'**
+  String trnRefuserEquipe(String name);
+
+  /// No description provided for @trnRetirerPoint.
+  ///
+  /// In fr, this message translates to:
+  /// **'Retirer un point à {name}'**
+  String trnRetirerPoint(String name);
+
+  /// No description provided for @trnSiToutesInscrites.
+  ///
+  /// In fr, this message translates to:
+  /// **'Si les {n} équipes s’inscrivent'**
+  String trnSiToutesInscrites(int n);
+
+  /// No description provided for @trnTerminesN.
+  ///
+  /// In fr, this message translates to:
+  /// **'Terminés · {n}'**
+  String trnTerminesN(int n);
+
+  /// No description provided for @trnTourDe.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tour de {size} · {n}'**
+  String trnTourDe(int size, int n);
+
+  /// No description provided for @trnAnnulerInscription.
+  ///
+  /// In fr, this message translates to:
+  /// **'Annuler l’inscription'**
+  String get trnAnnulerInscription;
+
+  /// No description provided for @trnAuTotal.
+  ///
+  /// In fr, this message translates to:
+  /// **'au total'**
+  String get trnAuTotal;
+
+  /// No description provided for @trnAucuneEquipeValidee.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucune équipe validée pour l’instant.'**
+  String get trnAucuneEquipeValidee;
+
+  /// No description provided for @trnCodeCopie.
+  ///
+  /// In fr, this message translates to:
+  /// **'Code copié'**
+  String get trnCodeCopie;
+
+  /// No description provided for @trnCodeInvitation.
+  ///
+  /// In fr, this message translates to:
+  /// **'Code d’invitation'**
+  String get trnCodeInvitation;
+
+  /// No description provided for @trnCoequipiersNote.
+  ///
+  /// In fr, this message translates to:
+  /// **'Les autres te rejoignent avec le code d’invitation, sans payer : tu règles l’inscription de l’équipe.'**
+  String get trnCoequipiersNote;
+
+  /// No description provided for @trnComplet.
+  ///
+  /// In fr, this message translates to:
+  /// **'Complet'**
+  String get trnComplet;
+
+  /// No description provided for @trnCopierCode.
+  ///
+  /// In fr, this message translates to:
+  /// **'Copier le code'**
+  String get trnCopierCode;
+
+  /// No description provided for @trnCreeTonEquipe.
+  ///
+  /// In fr, this message translates to:
+  /// **'Crée ton équipe'**
+  String get trnCreeTonEquipe;
+
+  /// No description provided for @trnCreeTonEquipeLead.
+  ///
+  /// In fr, this message translates to:
+  /// **'Un nom, un capitaine. Tes coéquipiers peuvent aussi te rejoindre avec un code.'**
+  String get trnCreeTonEquipeLead;
+
+  /// No description provided for @trnCreerEquipe.
+  ///
+  /// In fr, this message translates to:
+  /// **'Créer l’équipe'**
+  String get trnCreerEquipe;
+
+  /// No description provided for @trnDemiFinales.
+  ///
+  /// In fr, this message translates to:
+  /// **'Demi-finales'**
+  String get trnDemiFinales;
+
+  /// No description provided for @trnDetailDuTournoi.
+  ///
+  /// In fr, this message translates to:
+  /// **'Détail du tournoi'**
+  String get trnDetailDuTournoi;
+
+  /// No description provided for @trnDiff.
+  ///
+  /// In fr, this message translates to:
+  /// **'Diff.'**
+  String get trnDiff;
+
+  /// No description provided for @trnEnCoursValidation.
+  ///
+  /// In fr, this message translates to:
+  /// **'L’organisateur vérifie le niveau et les places.'**
+  String get trnEnCoursValidation;
+
+  /// No description provided for @trnEquipe.
+  ///
+  /// In fr, this message translates to:
+  /// **'Équipe'**
+  String get trnEquipe;
+
+  /// No description provided for @trnEquipeCreee.
+  ///
+  /// In fr, this message translates to:
+  /// **'Équipe créée'**
+  String get trnEquipeCreee;
+
+  /// No description provided for @trnGererTournoi.
+  ///
+  /// In fr, this message translates to:
+  /// **'Gérer le tournoi'**
+  String get trnGererTournoi;
+
+  /// No description provided for @trnHuitiemes.
+  ///
+  /// In fr, this message translates to:
+  /// **'Huitièmes de finale'**
+  String get trnHuitiemes;
+
+  /// No description provided for @trnInscription.
+  ///
+  /// In fr, this message translates to:
+  /// **'Inscription'**
+  String get trnInscription;
+
+  /// No description provided for @trnInscriptionConfirmee.
+  ///
+  /// In fr, this message translates to:
+  /// **'Inscription confirmée'**
+  String get trnInscriptionConfirmee;
+
+  /// No description provided for @trnInscriptionEnvoyee.
+  ///
+  /// In fr, this message translates to:
+  /// **'Inscription envoyée'**
+  String get trnInscriptionEnvoyee;
+
+  /// No description provided for @trnInscriptionsBientot.
+  ///
+  /// In fr, this message translates to:
+  /// **'Inscriptions bientôt'**
+  String get trnInscriptionsBientot;
+
+  /// No description provided for @trnInscrireEquipe.
+  ///
+  /// In fr, this message translates to:
+  /// **'Inscrire mon équipe'**
+  String get trnInscrireEquipe;
+
+  /// No description provided for @trnJ.
+  ///
+  /// In fr, this message translates to:
+  /// **'J'**
+  String get trnJ;
+
+  /// No description provided for @trnJaiUnCode.
+  ///
+  /// In fr, this message translates to:
+  /// **'J’ai un code d’invitation'**
+  String get trnJaiUnCode;
+
+  /// No description provided for @trnLeTableau.
+  ///
+  /// In fr, this message translates to:
+  /// **'Le tableau'**
+  String get trnLeTableau;
+
+  /// No description provided for @trnLesPoules.
+  ///
+  /// In fr, this message translates to:
+  /// **'Les poules'**
+  String get trnLesPoules;
+
+  /// No description provided for @trnLieu.
+  ///
+  /// In fr, this message translates to:
+  /// **'Lieu'**
+  String get trnLieu;
+
+  /// No description provided for @trnNomEquipe.
+  ///
+  /// In fr, this message translates to:
+  /// **'Nom de l’équipe'**
+  String get trnNomEquipe;
+
+  /// No description provided for @trnNomEquipeRequis.
+  ///
+  /// In fr, this message translates to:
+  /// **'Donne un nom à ton équipe.'**
+  String get trnNomEquipeRequis;
+
+  /// No description provided for @trnPaiementAttendu.
+  ///
+  /// In fr, this message translates to:
+  /// **'Paie pour réserver ta place.'**
+  String get trnPaiementAttendu;
+
+  /// No description provided for @trnPartageCode.
+  ///
+  /// In fr, this message translates to:
+  /// **'Partage ce code à tes coéquipiers'**
+  String get trnPartageCode;
+
+  /// No description provided for @trnPasDEquipe.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tu n’as pas d’équipe dans ce tournoi.'**
+  String get trnPasDEquipe;
+
+  /// No description provided for @trnPayerInscription.
+  ///
+  /// In fr, this message translates to:
+  /// **'Payer l’inscription'**
+  String get trnPayerInscription;
+
+  /// No description provided for @trnPhaseFinale.
+  ///
+  /// In fr, this message translates to:
+  /// **'Phase finale'**
+  String get trnPhaseFinale;
+
+  /// No description provided for @trnPlaces.
+  ///
+  /// In fr, this message translates to:
+  /// **'Places'**
+  String get trnPlaces;
+
+  /// No description provided for @trnPointsNote.
+  ///
+  /// In fr, this message translates to:
+  /// **'Victoire = 3 pts, nul = 1 pt. À égalité : différence, puis points marqués.'**
+  String get trnPointsNote;
+
+  /// No description provided for @trnPts.
+  ///
+  /// In fr, this message translates to:
+  /// **'Pts'**
+  String get trnPts;
+
+  /// No description provided for @trnQualifie.
+  ///
+  /// In fr, this message translates to:
+  /// **'Qualifié'**
+  String get trnQualifie;
+
+  /// No description provided for @trnQuartsDeFinale.
+  ///
+  /// In fr, this message translates to:
+  /// **'Quarts de finale'**
+  String get trnQuartsDeFinale;
+
+  /// No description provided for @trnRefuseeParOrga.
+  ///
+  /// In fr, this message translates to:
+  /// **'Refusée par l’organisateur'**
+  String get trnRefuseeParOrga;
+
+  /// No description provided for @trnRejoindre.
+  ///
+  /// In fr, this message translates to:
+  /// **'Rejoindre'**
+  String get trnRejoindre;
+
+  /// No description provided for @trnRejoindreDescription.
+  ///
+  /// In fr, this message translates to:
+  /// **'Le capitaine de l’équipe t’a envoyé un code de 6 lettres.'**
+  String get trnRejoindreDescription;
+
+  /// No description provided for @trnRejoindreEquipe.
+  ///
+  /// In fr, this message translates to:
+  /// **'Rejoindre une équipe'**
+  String get trnRejoindreEquipe;
+
+  /// No description provided for @trnRembourseSiRefus.
+  ///
+  /// In fr, this message translates to:
+  /// **'Refusée ? Tu es remboursé en entier.'**
+  String get trnRembourseSiRefus;
+
+  /// No description provided for @trnTableauDuTournoi.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tableau du tournoi'**
+  String get trnTableauDuTournoi;
+
+  /// No description provided for @trnTableauPasPublie.
+  ///
+  /// In fr, this message translates to:
+  /// **'Le tableau n’est pas encore publié.'**
+  String get trnTableauPasPublie;
+
+  /// No description provided for @trnTesMatchs.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tes matchs'**
+  String get trnTesMatchs;
+
+  /// No description provided for @trnTirage.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tirage et calendrier'**
+  String get trnTirage;
+
+  /// No description provided for @trnTirageNote.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ton calendrier arrive dès que l’organisateur publie le tableau.'**
+  String get trnTirageNote;
+
+  /// No description provided for @trnV.
+  ///
+  /// In fr, this message translates to:
+  /// **'V'**
+  String get trnV;
+
+  /// No description provided for @trnValidationOrga.
+  ///
+  /// In fr, this message translates to:
+  /// **'Validation par l’organisateur'**
+  String get trnValidationOrga;
+
+  /// No description provided for @trnCapitaineNom.
+  ///
+  /// In fr, this message translates to:
+  /// **'Capitaine : {name}'**
+  String trnCapitaineNom(String name);
+
+  /// No description provided for @trnCoequipiers.
+  ///
+  /// In fr, this message translates to:
+  /// **'{n, plural, =1{Ton partenaire} other{Tes {n} coéquipiers}}'**
+  String trnCoequipiers(int n);
+
+  /// No description provided for @trnEquipesInscrites.
+  ///
+  /// In fr, this message translates to:
+  /// **'Équipes inscrites · {n}'**
+  String trnEquipesInscrites(int n);
+
+  /// No description provided for @trnInscriptionEyebrow.
+  ///
+  /// In fr, this message translates to:
+  /// **'INSCRIPTION · {team}'**
+  String trnInscriptionEyebrow(String team);
+
+  /// No description provided for @trnInscriptionPayee.
+  ///
+  /// In fr, this message translates to:
+  /// **'Inscription payée · {amount}'**
+  String trnInscriptionPayee(String amount);
+
+  /// No description provided for @trnInscritesSur.
+  ///
+  /// In fr, this message translates to:
+  /// **'{a}/{b} inscrites'**
+  String trnInscritesSur(int a, int b);
+
+  /// No description provided for @trnJoueurN.
+  ///
+  /// In fr, this message translates to:
+  /// **'Joueur {n}'**
+  String trnJoueurN(int n);
+
+  /// No description provided for @trnMembresN.
+  ///
+  /// In fr, this message translates to:
+  /// **'Membres · {a}/{b}'**
+  String trnMembresN(int a, int b);
+
+  /// No description provided for @trnMonEquipe.
+  ///
+  /// In fr, this message translates to:
+  /// **'Mon équipe {name}'**
+  String trnMonEquipe(String name);
+
+  /// No description provided for @trnNiveauFourchette.
+  ///
+  /// In fr, this message translates to:
+  /// **'Niveau {min} – {max}'**
+  String trnNiveauFourchette(String min, String max);
+
+  /// No description provided for @trnParEquipeDe.
+  ///
+  /// In fr, this message translates to:
+  /// **'par équipe de {n}'**
+  String trnParEquipeDe(int n);
+
+  /// No description provided for @trnPouleX.
+  ///
+  /// In fr, this message translates to:
+  /// **'Poule {p}'**
+  String trnPouleX(String p);
+
+  /// No description provided for @trnToi.
+  ///
+  /// In fr, this message translates to:
+  /// **'{name} · toi'**
+  String trnToi(String name);
+
+  /// No description provided for @trnAJouer.
+  ///
+  /// In fr, this message translates to:
+  /// **'À jouer'**
+  String get trnAJouer;
+
+  /// No description provided for @trnAnnonceVisible.
+  ///
+  /// In fr, this message translates to:
+  /// **'Les équipes la voient sur la page du tournoi et de leur équipe.'**
+  String get trnAnnonceVisible;
+
+  /// No description provided for @trnAnnoncesOrga.
+  ///
+  /// In fr, this message translates to:
+  /// **'Annonces de l’organisateur'**
+  String get trnAnnoncesOrga;
+
+  /// No description provided for @trnAucunPlanning.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucun planning pour l’instant'**
+  String get trnAucunPlanning;
+
+  /// No description provided for @trnAucuneAnnonce.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucune annonce envoyée'**
+  String get trnAucuneAnnonce;
+
+  /// No description provided for @trnContre.
+  ///
+  /// In fr, this message translates to:
+  /// **'contre'**
+  String get trnContre;
+
+  /// No description provided for @trnDejaEnvoyees.
+  ///
+  /// In fr, this message translates to:
+  /// **'Déjà envoyées'**
+  String get trnDejaEnvoyees;
+
+  /// No description provided for @trnMatch.
+  ///
+  /// In fr, this message translates to:
+  /// **'Match'**
+  String get trnMatch;
+
+  /// No description provided for @trnMatchEnDirect.
+  ///
+  /// In fr, this message translates to:
+  /// **'Match en direct'**
+  String get trnMatchEnDirect;
+
+  /// No description provided for @trnMonInscription.
+  ///
+  /// In fr, this message translates to:
+  /// **'Mon inscription'**
+  String get trnMonInscription;
+
+  /// No description provided for @trnNombrePlaces.
+  ///
+  /// In fr, this message translates to:
+  /// **'Nombre de places'**
+  String get trnNombrePlaces;
+
+  /// No description provided for @trnOu.
+  ///
+  /// In fr, this message translates to:
+  /// **'Où'**
+  String get trnOu;
+
+  /// No description provided for @trnParPersonne.
+  ///
+  /// In fr, this message translates to:
+  /// **'par personne'**
+  String get trnParPersonne;
+
+  /// No description provided for @trnPartagerResume.
+  ///
+  /// In fr, this message translates to:
+  /// **'Partager le résumé'**
+  String get trnPartagerResume;
+
+  /// No description provided for @trnProchainsMatchs.
+  ///
+  /// In fr, this message translates to:
+  /// **'Prochains matchs'**
+  String get trnProchainsMatchs;
+
+  /// No description provided for @trnQuand.
+  ///
+  /// In fr, this message translates to:
+  /// **'Quand'**
+  String get trnQuand;
+
+  /// No description provided for @trnResume.
+  ///
+  /// In fr, this message translates to:
+  /// **'Résumé du match'**
+  String get trnResume;
+
+  /// No description provided for @trnSInscrire.
+  ///
+  /// In fr, this message translates to:
+  /// **'S’inscrire'**
+  String get trnSInscrire;
+
+  /// No description provided for @trnScoreMisAJour.
+  ///
+  /// In fr, this message translates to:
+  /// **'Le score se met à jour pendant que l’organisateur le saisit.'**
+  String get trnScoreMisAJour;
+
+  /// No description provided for @trnTabAnnonces.
+  ///
+  /// In fr, this message translates to:
+  /// **'Annonces'**
+  String get trnTabAnnonces;
+
+  /// No description provided for @trnTabTableau.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tableau'**
+  String get trnTabTableau;
+
+  /// No description provided for @trnTabTournois.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tournois'**
+  String get trnTabTournois;
+
+  /// No description provided for @trnTableauDeBord.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tableau de bord'**
+  String get trnTableauDeBord;
+
+  /// No description provided for @trnTermine.
+  ///
+  /// In fr, this message translates to:
+  /// **'Terminé'**
+  String get trnTermine;
+
+  /// No description provided for @trnType.
+  ///
+  /// In fr, this message translates to:
+  /// **'Type'**
+  String get trnType;
+
+  /// No description provided for @trnTypeEvenement.
+  ///
+  /// In fr, this message translates to:
+  /// **'Événement'**
+  String get trnTypeEvenement;
+
+  /// No description provided for @trnTypeEvenementDescription.
+  ///
+  /// In fr, this message translates to:
+  /// **'Journée initiation ou soirée : inscription individuelle, sans tableau.'**
+  String get trnTypeEvenementDescription;
+
+  /// No description provided for @trnTypeTournoi.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tournoi'**
+  String get trnTypeTournoi;
+
+  /// No description provided for @trnTypeTournoiDescription.
+  ///
+  /// In fr, this message translates to:
+  /// **'Des équipes, des poules ou un tableau, un vainqueur.'**
+  String get trnTypeTournoiDescription;
+
+  /// No description provided for @trnVoir.
+  ///
+  /// In fr, this message translates to:
+  /// **'Voir'**
+  String get trnVoir;
+
+  /// No description provided for @trnEquipesAValider.
+  ///
+  /// In fr, this message translates to:
+  /// **'{n, plural, =1{1 équipe à valider} other{{n} équipes à valider}}'**
+  String trnEquipesAValider(int n);
+
+  /// No description provided for @trnEvenementResume.
+  ///
+  /// In fr, this message translates to:
+  /// **'Inscription individuelle · {n} places'**
+  String trnEvenementResume(int n);
+
+  /// No description provided for @trnParticipantsN.
+  ///
+  /// In fr, this message translates to:
+  /// **'Participants · {n}'**
+  String trnParticipantsN(int n);
+
+  /// No description provided for @trnRecapTexte.
+  ///
+  /// In fr, this message translates to:
+  /// **'{winner} gagne {score} contre {loser} ({stage}, {tournament}). Résultat publié sur MatchUp.'**
+  String trnRecapTexte(
+    String winner,
+    String loser,
+    String score,
+    String stage,
+    String tournament,
+  );
+
   /// No description provided for @entAllPrograms.
   ///
   /// In fr, this message translates to:
@@ -22559,2657 +25211,11 @@ abstract class AppLocalizations {
   /// **'Ton message à l’assistant'**
   String get aiYourMessage;
 
-  /// No description provided for @hier.
+  /// No description provided for @aiGreetingAnonymous.
   ///
   /// In fr, this message translates to:
-  /// **'hier'**
-  String get hier;
-
-  /// No description provided for @plusDOptions.
-  ///
-  /// In fr, this message translates to:
-  /// **'Plus d’options'**
-  String get plusDOptions;
-
-  /// No description provided for @forumCatTechnique.
-  ///
-  /// In fr, this message translates to:
-  /// **'Conseils & technique'**
-  String get forumCatTechnique;
-
-  /// No description provided for @forumCatEquipement.
-  ///
-  /// In fr, this message translates to:
-  /// **'Équipement'**
-  String get forumCatEquipement;
-
-  /// No description provided for @forumCatTerrains.
-  ///
-  /// In fr, this message translates to:
-  /// **'Terrains'**
-  String get forumCatTerrains;
-
-  /// No description provided for @forumCatTournois.
-  ///
-  /// In fr, this message translates to:
-  /// **'Tournois'**
-  String get forumCatTournois;
-
-  /// No description provided for @forumCatDiscussions.
-  ///
-  /// In fr, this message translates to:
-  /// **'Discussions libres'**
-  String get forumCatDiscussions;
-
-  /// No description provided for @forumTriTendance.
-  ///
-  /// In fr, this message translates to:
-  /// **'Tendance'**
-  String get forumTriTendance;
-
-  /// No description provided for @forumTriRecents.
-  ///
-  /// In fr, this message translates to:
-  /// **'Récents'**
-  String get forumTriRecents;
-
-  /// No description provided for @forumTriTop.
-  ///
-  /// In fr, this message translates to:
-  /// **'Top'**
-  String get forumTriTop;
-
-  /// No description provided for @forumTriUtiles.
-  ///
-  /// In fr, this message translates to:
-  /// **'Les plus utiles'**
-  String get forumTriUtiles;
-
-  /// No description provided for @forumTriRecentes.
-  ///
-  /// In fr, this message translates to:
-  /// **'Les plus récentes'**
-  String get forumTriRecentes;
-
-  /// No description provided for @forumTriAnciennes.
-  ///
-  /// In fr, this message translates to:
-  /// **'Les plus anciennes'**
-  String get forumTriAnciennes;
-
-  /// No description provided for @forumMotifSpam.
-  ///
-  /// In fr, this message translates to:
-  /// **'Spam ou publicité'**
-  String get forumMotifSpam;
-
-  /// No description provided for @forumMotifInsulte.
-  ///
-  /// In fr, this message translates to:
-  /// **'Insulte ou harcèlement'**
-  String get forumMotifInsulte;
-
-  /// No description provided for @forumMotifChoquant.
-  ///
-  /// In fr, this message translates to:
-  /// **'Contenu choquant ou dangereux'**
-  String get forumMotifChoquant;
-
-  /// No description provided for @forumMotifFausseInfo.
-  ///
-  /// In fr, this message translates to:
-  /// **'Fausse information'**
-  String get forumMotifFausseInfo;
-
-  /// No description provided for @forumMotifAutre.
-  ///
-  /// In fr, this message translates to:
-  /// **'Autre chose'**
-  String get forumMotifAutre;
-
-  /// No description provided for @forumMembre.
-  ///
-  /// In fr, this message translates to:
-  /// **'Membre'**
-  String get forumMembre;
-
-  /// No description provided for @forumIaAucune.
-  ///
-  /// In fr, this message translates to:
-  /// **'Aucune toxicité'**
-  String get forumIaAucune;
-
-  /// No description provided for @forumIaAucuneExplication.
-  ///
-  /// In fr, this message translates to:
-  /// **'Rien de blessant ni de publicitaire détecté.'**
-  String get forumIaAucuneExplication;
-
-  /// No description provided for @forumIaInsulte.
-  ///
-  /// In fr, this message translates to:
-  /// **'Toxicité · insulte'**
-  String get forumIaInsulte;
-
-  /// No description provided for @forumIaInsulteExplication.
-  ///
-  /// In fr, this message translates to:
-  /// **'Insulte grossière visant une personne.'**
-  String get forumIaInsulteExplication;
-
-  /// No description provided for @forumIaInsulteLegere.
-  ///
-  /// In fr, this message translates to:
-  /// **'Toxicité · insulte légère'**
-  String get forumIaInsulteLegere;
-
-  /// No description provided for @forumIaInsulteLegereExplication.
-  ///
-  /// In fr, this message translates to:
-  /// **'Moquerie entre joueurs, sans menace ni haine. L’IA peut se tromper sur le ton entre amis.'**
-  String get forumIaInsulteLegereExplication;
-
-  /// No description provided for @forumIaTonAgressif.
-  ///
-  /// In fr, this message translates to:
-  /// **'Ton agressif'**
-  String get forumIaTonAgressif;
-
-  /// No description provided for @forumIaTonAgressifExplication.
-  ///
-  /// In fr, this message translates to:
-  /// **'Ton sec qui vise une personne plutôt que son avis. Pas d’insulte.'**
-  String get forumIaTonAgressifExplication;
-
-  /// No description provided for @forumIaSpamContact.
-  ///
-  /// In fr, this message translates to:
-  /// **'Spam · lien et contact'**
-  String get forumIaSpamContact;
-
-  /// No description provided for @forumIaSpamPub.
-  ///
-  /// In fr, this message translates to:
-  /// **'Spam · publicité'**
-  String get forumIaSpamPub;
-
-  /// No description provided for @forumIaSpamExplication.
-  ///
-  /// In fr, this message translates to:
-  /// **'Vente ou publicité avec un moyen de contact hors de MatchUp.'**
-  String get forumIaSpamExplication;
-
-  /// No description provided for @forumIaCoordonnees.
-  ///
-  /// In fr, this message translates to:
-  /// **'Coordonnées publiées'**
-  String get forumIaCoordonnees;
-
-  /// No description provided for @forumIaCoordonneesExplication.
-  ///
-  /// In fr, this message translates to:
-  /// **'Numéro ou adresse publiés : à faire passer en message privé.'**
-  String get forumIaCoordonneesExplication;
-
-  /// No description provided for @forumTitreTropCourt.
-  ///
-  /// In fr, this message translates to:
-  /// **'Ton titre doit faire au moins 10 caractères.'**
-  String get forumTitreTropCourt;
-
-  /// No description provided for @forumMessageVide.
-  ///
-  /// In fr, this message translates to:
-  /// **'Écris ton message avant de publier.'**
-  String get forumMessageVide;
-
-  /// No description provided for @forumDiscussionSupprimee.
-  ///
-  /// In fr, this message translates to:
-  /// **'Cette discussion a été supprimée.'**
-  String get forumDiscussionSupprimee;
-
-  /// No description provided for @forumReponseSupprimee.
-  ///
-  /// In fr, this message translates to:
-  /// **'Cette réponse a été supprimée.'**
-  String get forumReponseSupprimee;
-
-  /// No description provided for @forumEnVerification.
-  ///
-  /// In fr, this message translates to:
-  /// **'Ce contenu est en cours de vérification.'**
-  String get forumEnVerification;
-
-  /// No description provided for @forumSeulLAuteur.
-  ///
-  /// In fr, this message translates to:
-  /// **'Seul l’auteur peut modifier ou supprimer ce message.'**
-  String get forumSeulLAuteur;
-
-  /// No description provided for @forumSeulLAuteurChoisit.
-  ///
-  /// In fr, this message translates to:
-  /// **'Seul l’auteur du post choisit la meilleure réponse.'**
-  String get forumSeulLAuteurChoisit;
-
-  /// No description provided for @forumReponseDirecte.
-  ///
-  /// In fr, this message translates to:
-  /// **'Choisis une réponse directe au post.'**
-  String get forumReponseDirecte;
-
-  /// No description provided for @forumPasTaPropreReponse.
-  ///
-  /// In fr, this message translates to:
-  /// **'Tu ne peux pas choisir ta propre réponse.'**
-  String get forumPasTaPropreReponse;
-
-  /// No description provided for @forumPasDeVotePourSoi.
-  ///
-  /// In fr, this message translates to:
-  /// **'Tu ne peux pas voter pour ton propre message.'**
-  String get forumPasDeVotePourSoi;
-
-  /// No description provided for @forumPasDeReactionPourSoi.
-  ///
-  /// In fr, this message translates to:
-  /// **'Tu ne peux pas réagir à ton propre message.'**
-  String get forumPasDeReactionPourSoi;
-
-  /// No description provided for @forumPasTeSuivre.
-  ///
-  /// In fr, this message translates to:
-  /// **'Tu ne peux pas te suivre toi-même.'**
-  String get forumPasTeSuivre;
-
-  /// No description provided for @forumPasTeMasquer.
-  ///
-  /// In fr, this message translates to:
-  /// **'Tu ne peux pas te masquer toi-même.'**
-  String get forumPasTeMasquer;
-
-  /// No description provided for @forumPasTonPropreMessage.
-  ///
-  /// In fr, this message translates to:
-  /// **'Tu ne peux pas signaler ton propre message.'**
-  String get forumPasTonPropreMessage;
-
-  /// No description provided for @forumHorsLigne.
-  ///
-  /// In fr, this message translates to:
-  /// **'Hors ligne'**
-  String get forumHorsLigne;
-
-  /// No description provided for @forumHorsLigneDetail.
-  ///
-  /// In fr, this message translates to:
-  /// **'Vérifie ta connexion puis réessaie.'**
-  String get forumHorsLigneDetail;
-
-  /// No description provided for @forumErreur.
-  ///
-  /// In fr, this message translates to:
-  /// **'Ça n’a pas marché. Réessaie dans un instant.'**
-  String get forumErreur;
-
-  /// No description provided for @forumSuspendu.
-  ///
-  /// In fr, this message translates to:
-  /// **'Tu ne peux plus publier pour l’instant'**
-  String get forumSuspendu;
-
-  /// No description provided for @forumSuspenduJusquA.
-  ///
-  /// In fr, this message translates to:
-  /// **'Suspendu de la communauté jusqu’au {date}. Tu peux toujours lire.'**
-  String forumSuspenduJusquA(String date);
-
-  /// No description provided for @forumRechercherDansLaCommunaute.
-  ///
-  /// In fr, this message translates to:
-  /// **'Rechercher dans la communauté'**
-  String get forumRechercherDansLaCommunaute;
-
-  /// No description provided for @forumMesPostsEtFavoris.
-  ///
-  /// In fr, this message translates to:
-  /// **'Mes posts et favoris'**
-  String get forumMesPostsEtFavoris;
-
-  /// No description provided for @forumPoseTaQuestionALaCommunaute.
-  ///
-  /// In fr, this message translates to:
-  /// **'Pose ta question à la communauté'**
-  String get forumPoseTaQuestionALaCommunaute;
-
-  /// No description provided for @forumEcrireUnNouveauPost.
-  ///
-  /// In fr, this message translates to:
-  /// **'Écrire un nouveau post'**
-  String get forumEcrireUnNouveauPost;
-
-  /// No description provided for @forumCategories.
-  ///
-  /// In fr, this message translates to:
-  /// **'Catégories'**
-  String get forumCategories;
-
-  /// No description provided for @forumNouveauxDepuisTaDerniereVisite.
-  ///
-  /// In fr, this message translates to:
-  /// **'Nouveaux depuis ta dernière visite'**
-  String get forumNouveauxDepuisTaDerniereVisite;
-
-  /// No description provided for @forumNNouveaux.
-  ///
-  /// In fr, this message translates to:
-  /// **'{n, plural, =1{1 nouveau} other{{n} nouveaux}}'**
-  String forumNNouveaux(int n);
-
-  /// No description provided for @forumFiltrerParSport.
-  ///
-  /// In fr, this message translates to:
-  /// **'Filtrer par sport'**
-  String get forumFiltrerParSport;
-
-  /// No description provided for @forumTousLesSports.
-  ///
-  /// In fr, this message translates to:
-  /// **'Tous les sports'**
-  String get forumTousLesSports;
-
-  /// No description provided for @forumTrierLesDiscussions.
-  ///
-  /// In fr, this message translates to:
-  /// **'Trier les discussions'**
-  String get forumTrierLesDiscussions;
-
-  /// No description provided for @forumDiscussions.
-  ///
-  /// In fr, this message translates to:
-  /// **'{n, plural, =0{discussion} =1{discussion} other{discussions}}'**
-  String forumDiscussions(int n);
-
-  /// No description provided for @forumTAMentionne.
-  ///
-  /// In fr, this message translates to:
-  /// **'t’a mentionné · {time}'**
-  String forumTAMentionne(String time);
-
-  /// No description provided for @forumVoterPour.
-  ///
-  /// In fr, this message translates to:
-  /// **'Voter pour'**
-  String get forumVoterPour;
-
-  /// No description provided for @forumVoterContre.
-  ///
-  /// In fr, this message translates to:
-  /// **'Voter contre'**
-  String get forumVoterContre;
-
-  /// No description provided for @forumVoterPourNVotes.
-  ///
-  /// In fr, this message translates to:
-  /// **'Voter pour, {score} votes'**
-  String forumVoterPourNVotes(String score);
-
-  /// No description provided for @forumNVotes.
-  ///
-  /// In fr, this message translates to:
-  /// **'{n, plural, =0{0 vote} =1{1 vote} other{{n} votes}}'**
-  String forumNVotes(int n);
-
-  /// No description provided for @forumNReponses.
-  ///
-  /// In fr, this message translates to:
-  /// **'{n, plural, =0{0 réponse} =1{1 réponse} other{{n} réponses}}'**
-  String forumNReponses(int n);
-
-  /// No description provided for @forumEpingle.
-  ///
-  /// In fr, this message translates to:
-  /// **'Épinglé'**
-  String get forumEpingle;
-
-  /// No description provided for @forumMeilleureReponse.
-  ///
-  /// In fr, this message translates to:
-  /// **'Meilleure réponse'**
-  String get forumMeilleureReponse;
-
-  /// No description provided for @forumMasqueParLaModeration.
-  ///
-  /// In fr, this message translates to:
-  /// **'Masqué par la modération · en cours de vérification'**
-  String get forumMasqueParLaModeration;
-
-  /// No description provided for @forumMessageMasque.
-  ///
-  /// In fr, this message translates to:
-  /// **'Message masqué par la modération'**
-  String get forumMessageMasque;
-
-  /// No description provided for @forumTuAsSignale.
-  ///
-  /// In fr, this message translates to:
-  /// **'Tu as signalé ce message. La modération va le vérifier.'**
-  String get forumTuAsSignale;
-
-  /// No description provided for @forumTonPostSeulToi.
-  ///
-  /// In fr, this message translates to:
-  /// **'Ton post « {title} » · seul toi le vois. Réponse de la modération sous 24 h.'**
-  String forumTonPostSeulToi(String title);
-
-  /// No description provided for @forumVoir.
-  ///
-  /// In fr, this message translates to:
-  /// **'Voir'**
-  String get forumVoir;
-
-  /// No description provided for @forumAucuneDiscussion.
-  ///
-  /// In fr, this message translates to:
-  /// **'Pas encore de discussion ici'**
-  String get forumAucuneDiscussion;
-
-  /// No description provided for @forumAucuneDiscussionDetail.
-  ///
-  /// In fr, this message translates to:
-  /// **'Lance la première : une question, une astuce ou un avis sur un terrain.'**
-  String get forumAucuneDiscussionDetail;
-
-  /// No description provided for @forumPoseTaQuestion.
-  ///
-  /// In fr, this message translates to:
-  /// **'Pose ta question'**
-  String get forumPoseTaQuestion;
-
-  /// No description provided for @forumTuAsToutVu.
-  ///
-  /// In fr, this message translates to:
-  /// **'Tu as tout vu. Reviens plus tard pour les nouvelles discussions.'**
-  String get forumTuAsToutVu;
-
-  /// No description provided for @forumEnregistrer.
-  ///
-  /// In fr, this message translates to:
-  /// **'Enregistrer'**
-  String get forumEnregistrer;
-
-  /// No description provided for @forumRetirerDesFavoris.
-  ///
-  /// In fr, this message translates to:
-  /// **'Retirer des favoris'**
-  String get forumRetirerDesFavoris;
-
-  /// No description provided for @forumSignaler.
-  ///
-  /// In fr, this message translates to:
-  /// **'Signaler'**
-  String get forumSignaler;
-
-  /// No description provided for @forumMerciSignalement.
-  ///
-  /// In fr, this message translates to:
-  /// **'Merci, la modération va vérifier sous 24 h.'**
-  String get forumMerciSignalement;
-
-  /// No description provided for @forumRechercheNPlaceholder.
-  ///
-  /// In fr, this message translates to:
-  /// **'Mot, tag, titre…'**
-  String get forumRechercheNPlaceholder;
-
-  /// No description provided for @forumRechercheVide.
-  ///
-  /// In fr, this message translates to:
-  /// **'Cherche dans les discussions'**
-  String get forumRechercheVide;
-
-  /// No description provided for @forumRechercheVideDetail.
-  ///
-  /// In fr, this message translates to:
-  /// **'Un mot du titre, du texte ou un tag : « bandeja », « crampons », « lac2 ».'**
-  String get forumRechercheVideDetail;
-
-  /// No description provided for @forumAucunResultat.
-  ///
-  /// In fr, this message translates to:
-  /// **'Rien pour « {q} »'**
-  String forumAucunResultat(String q);
-
-  /// No description provided for @forumAucunResultatDetail.
-  ///
-  /// In fr, this message translates to:
-  /// **'Essaie un autre mot, ou pose ta question à la communauté.'**
-  String get forumAucunResultatDetail;
-
-  /// No description provided for @forumFavoris.
-  ///
-  /// In fr, this message translates to:
-  /// **'Favoris'**
-  String get forumFavoris;
-
-  /// No description provided for @forumMesPosts.
-  ///
-  /// In fr, this message translates to:
-  /// **'Mes posts'**
-  String get forumMesPosts;
-
-  /// No description provided for @forumAucunFavori.
-  ///
-  /// In fr, this message translates to:
-  /// **'Aucun favori'**
-  String get forumAucunFavori;
-
-  /// No description provided for @forumAucunFavoriDetail.
-  ///
-  /// In fr, this message translates to:
-  /// **'Enregistre une discussion avec « Plus d’options » pour la retrouver ici.'**
-  String get forumAucunFavoriDetail;
-
-  /// No description provided for @forumAucunPost.
-  ///
-  /// In fr, this message translates to:
-  /// **'Tu n’as encore rien publié'**
-  String get forumAucunPost;
-
-  /// No description provided for @forumAucunPostDetail.
-  ///
-  /// In fr, this message translates to:
-  /// **'Une question sur ton jeu, ton matériel ou un terrain ? La communauté répond vite.'**
-  String get forumAucunPostDetail;
-
-  /// No description provided for @forumNouveauPost.
-  ///
-  /// In fr, this message translates to:
-  /// **'Nouveau post'**
-  String get forumNouveauPost;
-
-  /// No description provided for @forumModifierLePost.
-  ///
-  /// In fr, this message translates to:
-  /// **'Modifier le post'**
-  String get forumModifierLePost;
-
-  /// No description provided for @forumFermerSansPublier.
-  ///
-  /// In fr, this message translates to:
-  /// **'Fermer sans publier'**
-  String get forumFermerSansPublier;
-
-  /// No description provided for @forumBrouillonEnregistre.
-  ///
-  /// In fr, this message translates to:
-  /// **'Brouillon enregistré'**
-  String get forumBrouillonEnregistre;
-
-  /// No description provided for @forumCategorieEtSport.
-  ///
-  /// In fr, this message translates to:
-  /// **'Catégorie et sport'**
-  String get forumCategorieEtSport;
-
-  /// No description provided for @forumCategorieDuPost.
-  ///
-  /// In fr, this message translates to:
-  /// **'Catégorie du post'**
-  String get forumCategorieDuPost;
-
-  /// No description provided for @forumSportDuPost.
-  ///
-  /// In fr, this message translates to:
-  /// **'Sport du post'**
-  String get forumSportDuPost;
-
-  /// No description provided for @forumTitre.
-  ///
-  /// In fr, this message translates to:
-  /// **'Titre'**
-  String get forumTitre;
-
-  /// No description provided for @forumTitrePlaceholder.
-  ///
-  /// In fr, this message translates to:
-  /// **'Une vraie question : « Crampons pour synthétique ? »'**
-  String get forumTitrePlaceholder;
-
-  /// No description provided for @forumDiscussionsSimilaires.
-  ///
-  /// In fr, this message translates to:
-  /// **'Discussions similaires'**
-  String get forumDiscussionsSimilaires;
-
-  /// No description provided for @forumTaQuestionADejaDesReponses.
-  ///
-  /// In fr, this message translates to:
-  /// **'Ta question a peut-être déjà des réponses.'**
-  String get forumTaQuestionADejaDesReponses;
-
-  /// No description provided for @forumMasquerLesDiscussionsSimilaires.
-  ///
-  /// In fr, this message translates to:
-  /// **'Masquer les discussions similaires'**
-  String get forumMasquerLesDiscussionsSimilaires;
-
-  /// No description provided for @forumMessage.
-  ///
-  /// In fr, this message translates to:
-  /// **'Message'**
-  String get forumMessage;
-
-  /// No description provided for @forumMessageHelper.
-  ///
-  /// In fr, this message translates to:
-  /// **'Reste précis : niveau, côté, ce que tu as déjà essayé.'**
-  String get forumMessageHelper;
-
-  /// No description provided for @forumEditeurPlaceholder.
-  ///
-  /// In fr, this message translates to:
-  /// **'Partage une astuce, une question ou une annonce…'**
-  String get forumEditeurPlaceholder;
-
-  /// No description provided for @forumImagesFacultatif.
-  ///
-  /// In fr, this message translates to:
-  /// **'Images (facultatif)'**
-  String get forumImagesFacultatif;
-
-  /// No description provided for @forumImagesHint.
-  ///
-  /// In fr, this message translates to:
-  /// **'JPG, PNG · 10 Mo max'**
-  String get forumImagesHint;
-
-  /// No description provided for @forumImageN.
-  ///
-  /// In fr, this message translates to:
-  /// **'Image {n}'**
-  String forumImageN(int n);
-
-  /// No description provided for @forumImageDuPost.
-  ///
-  /// In fr, this message translates to:
-  /// **'Image du post'**
-  String get forumImageDuPost;
-
-  /// No description provided for @forumImageTropLourde.
-  ///
-  /// In fr, this message translates to:
-  /// **'{name} dépasse 10 Mo.'**
-  String forumImageTropLourde(String name);
-
-  /// No description provided for @forumImagesMax.
-  ///
-  /// In fr, this message translates to:
-  /// **'{n} images au maximum : les suivantes n’ont pas été ajoutées.'**
-  String forumImagesMax(int n);
-
-  /// No description provided for @forumTags.
-  ///
-  /// In fr, this message translates to:
-  /// **'Tags'**
-  String get forumTags;
-
-  /// No description provided for @forumTagsPlaceholder.
-  ///
-  /// In fr, this message translates to:
-  /// **'Ajoute un tag'**
-  String get forumTagsPlaceholder;
-
-  /// No description provided for @forumTagsHelper.
-  ///
-  /// In fr, this message translates to:
-  /// **'Les tags aident les joueurs à trouver ton post.'**
-  String get forumTagsHelper;
-
-  /// No description provided for @forumSuggeresParLIa.
-  ///
-  /// In fr, this message translates to:
-  /// **'Suggérés par l’IA'**
-  String get forumSuggeresParLIa;
-
-  /// No description provided for @forumDApresTonTitreEtTonTexte.
-  ///
-  /// In fr, this message translates to:
-  /// **'D’après ton titre et ton texte'**
-  String get forumDApresTonTitreEtTonTexte;
-
-  /// No description provided for @forumMasquerLesSuggestions.
-  ///
-  /// In fr, this message translates to:
-  /// **'Masquer les suggestions'**
-  String get forumMasquerLesSuggestions;
-
-  /// No description provided for @forumAjouterLeTag.
-  ///
-  /// In fr, this message translates to:
-  /// **'Ajouter le tag {tag}'**
-  String forumAjouterLeTag(String tag);
-
-  /// No description provided for @forumDApres.
-  ///
-  /// In fr, this message translates to:
-  /// **'D’après « {word} »'**
-  String forumDApres(String word);
-
-  /// No description provided for @forumRespecteLes.
-  ///
-  /// In fr, this message translates to:
-  /// **'Respecte les'**
-  String get forumRespecteLes;
-
-  /// No description provided for @forumReglesDeLaCommunaute.
-  ///
-  /// In fr, this message translates to:
-  /// **'règles de la communauté'**
-  String get forumReglesDeLaCommunaute;
-
-  /// No description provided for @forumReglesSuite.
-  ///
-  /// In fr, this message translates to:
-  /// **' : pas d’insultes, pas de pub. Les messages signalés sont relus par la modération.'**
-  String get forumReglesSuite;
-
-  /// No description provided for @forumReglesTitre.
-  ///
-  /// In fr, this message translates to:
-  /// **'Règles de la communauté'**
-  String get forumReglesTitre;
-
-  /// No description provided for @forumReglesTexte.
-  ///
-  /// In fr, this message translates to:
-  /// **'1. **Respecte les joueurs.** Critique un avis, jamais une personne : pas d’insultes, de moqueries ni de menaces.\n2. **Pas de pub.** Pas de vente, de liens ou de numéros pour attirer des clients : les coachs et les terrains ont leur page.\n3. **Reste utile.** Une vraie question, un vrai avis, avec ton niveau et ce que tu as essayé.\n4. **Protège ta vie privée.** Pas de numéro ni d’adresse en public : passe par les messages.\n\nLes messages signalés sont relus par un modérateur sous 24 h. Après 3 avertissements, le compte est suspendu de la communauté pendant 7 jours.'**
-  String get forumReglesTexte;
-
-  /// No description provided for @forumApercu.
-  ///
-  /// In fr, this message translates to:
-  /// **'Aperçu'**
-  String get forumApercu;
-
-  /// No description provided for @forumPublier.
-  ///
-  /// In fr, this message translates to:
-  /// **'Publier'**
-  String get forumPublier;
-
-  /// No description provided for @forumPostPublie.
-  ///
-  /// In fr, this message translates to:
-  /// **'Ton post est publié'**
-  String get forumPostPublie;
-
-  /// No description provided for @forumPostModifie.
-  ///
-  /// In fr, this message translates to:
-  /// **'Ton post est modifié'**
-  String get forumPostModifie;
-
-  /// No description provided for @forumPostPublieMasque.
-  ///
-  /// In fr, this message translates to:
-  /// **'Publié, mais masqué le temps qu’un modérateur le relise'**
-  String get forumPostPublieMasque;
-
-  /// No description provided for @forumRetireNCaracteres.
-  ///
-  /// In fr, this message translates to:
-  /// **'{n, plural, =1{Retire 1 caractère pour publier.} other{Retire {n} caractères pour publier.}}'**
-  String forumRetireNCaracteres(int n);
-
-  /// No description provided for @forumMiseEnForme.
-  ///
-  /// In fr, this message translates to:
-  /// **'Mise en forme'**
-  String get forumMiseEnForme;
-
-  /// No description provided for @forumOutilGras.
-  ///
-  /// In fr, this message translates to:
-  /// **'Gras'**
-  String get forumOutilGras;
-
-  /// No description provided for @forumOutilItalique.
-  ///
-  /// In fr, this message translates to:
-  /// **'Italique'**
-  String get forumOutilItalique;
-
-  /// No description provided for @forumOutilListe.
-  ///
-  /// In fr, this message translates to:
-  /// **'Liste'**
-  String get forumOutilListe;
-
-  /// No description provided for @forumOutilListeNumerotee.
-  ///
-  /// In fr, this message translates to:
-  /// **'Liste numérotée'**
-  String get forumOutilListeNumerotee;
-
-  /// No description provided for @forumOutilCitation.
-  ///
-  /// In fr, this message translates to:
-  /// **'Citation'**
-  String get forumOutilCitation;
-
-  /// No description provided for @forumOutilLien.
-  ///
-  /// In fr, this message translates to:
-  /// **'Lien'**
-  String get forumOutilLien;
-
-  /// No description provided for @forumOutilImage.
-  ///
-  /// In fr, this message translates to:
-  /// **'Image'**
-  String get forumOutilImage;
-
-  /// No description provided for @forumLien.
-  ///
-  /// In fr, this message translates to:
-  /// **'lien'**
-  String get forumLien;
-
-  /// No description provided for @forumLienPlaceholder.
-  ///
-  /// In fr, this message translates to:
-  /// **'https://…'**
-  String get forumLienPlaceholder;
-
-  /// No description provided for @forumAlerteTitre.
-  ///
-  /// In fr, this message translates to:
-  /// **'Ce message pourrait blesser. Le modifier avant de publier ?'**
-  String get forumAlerteTitre;
-
-  /// No description provided for @forumAlerteConsequence.
-  ///
-  /// In fr, this message translates to:
-  /// **'Publié tel quel, il peut être masqué le temps qu’un modérateur le relise.'**
-  String get forumAlerteConsequence;
-
-  /// No description provided for @forumTaReponseAPasEncorePubliee.
-  ///
-  /// In fr, this message translates to:
-  /// **'Ta réponse à {name} · pas encore publiée'**
-  String forumTaReponseAPasEncorePubliee(String name);
-
-  /// No description provided for @forumTaReponsePasEncorePubliee.
-  ///
-  /// In fr, this message translates to:
-  /// **'Ta réponse · pas encore publiée'**
-  String get forumTaReponsePasEncorePubliee;
-
-  /// No description provided for @forumTonPostPasEncorePublie.
-  ///
-  /// In fr, this message translates to:
-  /// **'Ton post · pas encore publié'**
-  String get forumTonPostPasEncorePublie;
-
-  /// No description provided for @forumReformulation.
-  ///
-  /// In fr, this message translates to:
-  /// **'Reformulation'**
-  String get forumReformulation;
-
-  /// No description provided for @forumUneVersionPlusPosee.
-  ///
-  /// In fr, this message translates to:
-  /// **'Une version plus posée'**
-  String get forumUneVersionPlusPosee;
-
-  /// No description provided for @forumGardeTonConseilSansViser.
-  ///
-  /// In fr, this message translates to:
-  /// **'elle garde ton conseil sans viser {name}.'**
-  String forumGardeTonConseilSansViser(String name);
-
-  /// No description provided for @forumGardeTonConseil.
-  ///
-  /// In fr, this message translates to:
-  /// **'elle garde ton conseil sans viser personne.'**
-  String get forumGardeTonConseil;
-
-  /// No description provided for @forumUtiliserCetteVersion.
-  ///
-  /// In fr, this message translates to:
-  /// **'Utiliser cette version'**
-  String get forumUtiliserCetteVersion;
-
-  /// No description provided for @forumPublierQuandMeme.
-  ///
-  /// In fr, this message translates to:
-  /// **'Publier quand même'**
-  String get forumPublierQuandMeme;
-
-  /// No description provided for @forumModifierMonMessage.
-  ///
-  /// In fr, this message translates to:
-  /// **'Modifier mon message'**
-  String get forumModifierMonMessage;
-
-  /// No description provided for @forumPublieeMasquee.
-  ///
-  /// In fr, this message translates to:
-  /// **'Publiée, et masquée le temps qu’un modérateur la relise'**
-  String get forumPublieeMasquee;
-
-  /// No description provided for @forumDiscussion.
-  ///
-  /// In fr, this message translates to:
-  /// **'Discussion'**
-  String get forumDiscussion;
-
-  /// No description provided for @forumRetourALaCommunaute.
-  ///
-  /// In fr, this message translates to:
-  /// **'Retour à la communauté'**
-  String get forumRetourALaCommunaute;
-
-  /// No description provided for @forumSuivreLaDiscussion.
-  ///
-  /// In fr, this message translates to:
-  /// **'Suivre la discussion'**
-  String get forumSuivreLaDiscussion;
-
-  /// No description provided for @forumNePlusSuivreLaDiscussion.
-  ///
-  /// In fr, this message translates to:
-  /// **'Ne plus suivre la discussion'**
-  String get forumNePlusSuivreLaDiscussion;
-
-  /// No description provided for @forumTuSuisLaDiscussion.
-  ///
-  /// In fr, this message translates to:
-  /// **'Tu seras prévenu des nouvelles réponses'**
-  String get forumTuSuisLaDiscussion;
-
-  /// No description provided for @forumTuNeSuisPlusLaDiscussion.
-  ///
-  /// In fr, this message translates to:
-  /// **'Tu ne suis plus cette discussion'**
-  String get forumTuNeSuisPlusLaDiscussion;
-
-  /// No description provided for @forumPartagerLaDiscussion.
-  ///
-  /// In fr, this message translates to:
-  /// **'Partager la discussion'**
-  String get forumPartagerLaDiscussion;
-
-  /// No description provided for @forumPlusDOptionsSignalerCopier.
-  ///
-  /// In fr, this message translates to:
-  /// **'Plus d’options : signaler, copier le lien'**
-  String get forumPlusDOptionsSignalerCopier;
-
-  /// No description provided for @forumSuivre.
-  ///
-  /// In fr, this message translates to:
-  /// **'Suivre'**
-  String get forumSuivre;
-
-  /// No description provided for @forumSuivi.
-  ///
-  /// In fr, this message translates to:
-  /// **'Suivi'**
-  String get forumSuivi;
-
-  /// No description provided for @forumUtile.
-  ///
-  /// In fr, this message translates to:
-  /// **'Utile'**
-  String get forumUtile;
-
-  /// No description provided for @forumUtileN.
-  ///
-  /// In fr, this message translates to:
-  /// **'Utile · {n}'**
-  String forumUtileN(int n);
-
-  /// No description provided for @forumMerci.
-  ///
-  /// In fr, this message translates to:
-  /// **'Merci'**
-  String get forumMerci;
-
-  /// No description provided for @forumChoisiePar.
-  ///
-  /// In fr, this message translates to:
-  /// **'choisie par {name}'**
-  String forumChoisiePar(String name);
-
-  /// No description provided for @forumToi.
-  ///
-  /// In fr, this message translates to:
-  /// **'toi'**
-  String get forumToi;
-
-  /// No description provided for @forumModifie.
-  ///
-  /// In fr, this message translates to:
-  /// **'modifié'**
-  String get forumModifie;
-
-  /// No description provided for @forumRepondre.
-  ///
-  /// In fr, this message translates to:
-  /// **'Répondre'**
-  String get forumRepondre;
-
-  /// No description provided for @forumAuteur.
-  ///
-  /// In fr, this message translates to:
-  /// **'Auteur'**
-  String get forumAuteur;
-
-  /// No description provided for @forumRepondsA.
-  ///
-  /// In fr, this message translates to:
-  /// **'Réponds à {name}…'**
-  String forumRepondsA(String name);
-
-  /// No description provided for @forumReponseA.
-  ///
-  /// In fr, this message translates to:
-  /// **'Réponse à {name}'**
-  String forumReponseA(String name);
-
-  /// No description provided for @forumModifierTaReponse.
-  ///
-  /// In fr, this message translates to:
-  /// **'Modifier ta réponse'**
-  String get forumModifierTaReponse;
-
-  /// No description provided for @forumTaReponseASeulToi.
-  ///
-  /// In fr, this message translates to:
-  /// **'Ta réponse à {name} · seul toi vois ce message. Réponse de la modération sous 24 h.'**
-  String forumTaReponseASeulToi(String name);
-
-  /// No description provided for @forumTaReponseSeulToi.
-  ///
-  /// In fr, this message translates to:
-  /// **'Ta réponse · seul toi vois ce message. Réponse de la modération sous 24 h.'**
-  String get forumTaReponseSeulToi;
-
-  /// No description provided for @forumTonPostSeulToiDetail.
-  ///
-  /// In fr, this message translates to:
-  /// **'Seul toi vois ce post. Réponse de la modération sous 24 h.'**
-  String get forumTonPostSeulToiDetail;
-
-  /// No description provided for @forumPourquoi.
-  ///
-  /// In fr, this message translates to:
-  /// **'Pourquoi ?'**
-  String get forumPourquoi;
-
-  /// No description provided for @forumPourquoiMasque.
-  ///
-  /// In fr, this message translates to:
-  /// **'Pourquoi ce message est masqué'**
-  String get forumPourquoiMasque;
-
-  /// No description provided for @forumPourquoiMasqueDetail.
-  ///
-  /// In fr, this message translates to:
-  /// **'Tu l’as publié malgré l’alerte (« {reason} »). Un modérateur le relit sous 24 h : il sera republié ou supprimé. Tu peux aussi le modifier.'**
-  String forumPourquoiMasqueDetail(String reason);
-
-  /// No description provided for @forumMessageSupprime.
-  ///
-  /// In fr, this message translates to:
-  /// **'Message supprimé'**
-  String get forumMessageSupprime;
-
-  /// No description provided for @forumMessageDUnMembreMasque.
-  ///
-  /// In fr, this message translates to:
-  /// **'Message d’un membre que tu as masqué'**
-  String get forumMessageDUnMembreMasque;
-
-  /// No description provided for @forumPasEncoreDeReponse.
-  ///
-  /// In fr, this message translates to:
-  /// **'Pas encore de réponse'**
-  String get forumPasEncoreDeReponse;
-
-  /// No description provided for @forumPasEncoreDeReponseDetail.
-  ///
-  /// In fr, this message translates to:
-  /// **'Sois le premier à aider : partage ton expérience.'**
-  String get forumPasEncoreDeReponseDetail;
-
-  /// No description provided for @forumChoisirCommeMeilleureReponse.
-  ///
-  /// In fr, this message translates to:
-  /// **'Choisir comme meilleure réponse'**
-  String get forumChoisirCommeMeilleureReponse;
-
-  /// No description provided for @forumRetirerLaMeilleureReponse.
-  ///
-  /// In fr, this message translates to:
-  /// **'Retirer la meilleure réponse'**
-  String get forumRetirerLaMeilleureReponse;
-
-  /// No description provided for @forumSupprimerCePost.
-  ///
-  /// In fr, this message translates to:
-  /// **'Supprimer ce post ?'**
-  String get forumSupprimerCePost;
-
-  /// No description provided for @forumSupprimerCePostDetail.
-  ///
-  /// In fr, this message translates to:
-  /// **'Il disparaît de la communauté avec ses réponses. C’est définitif.'**
-  String get forumSupprimerCePostDetail;
-
-  /// No description provided for @forumSupprimerCetteReponse.
-  ///
-  /// In fr, this message translates to:
-  /// **'Supprimer ta réponse ?'**
-  String get forumSupprimerCetteReponse;
-
-  /// No description provided for @forumSupprimerCetteReponseDetail.
-  ///
-  /// In fr, this message translates to:
-  /// **'Si on t’a déjà répondu, elle restera affichée comme « Message supprimé ».'**
-  String get forumSupprimerCetteReponseDetail;
-
-  /// No description provided for @forumPostSupprime.
-  ///
-  /// In fr, this message translates to:
-  /// **'Post supprimé'**
-  String get forumPostSupprime;
-
-  /// No description provided for @forumSignalerCeCommentaire.
-  ///
-  /// In fr, this message translates to:
-  /// **'Signaler ce commentaire'**
-  String get forumSignalerCeCommentaire;
-
-  /// No description provided for @forumSignalerCePost.
-  ///
-  /// In fr, this message translates to:
-  /// **'Signaler ce post'**
-  String get forumSignalerCePost;
-
-  /// No description provided for @forumMotifDuSignalement.
-  ///
-  /// In fr, this message translates to:
-  /// **'Motif du signalement'**
-  String get forumMotifDuSignalement;
-
-  /// No description provided for @forumPrecise.
-  ///
-  /// In fr, this message translates to:
-  /// **'Précise (facultatif)'**
-  String get forumPrecise;
-
-  /// No description provided for @forumNePlusVoirLesMessagesDe.
-  ///
-  /// In fr, this message translates to:
-  /// **'Ne plus voir les messages de {name}'**
-  String forumNePlusVoirLesMessagesDe(String name);
-
-  /// No description provided for @forumSignalementAnonyme.
-  ///
-  /// In fr, this message translates to:
-  /// **'Signalement anonyme · vérifié par un modérateur sous 24 h.'**
-  String get forumSignalementAnonyme;
-
-  /// No description provided for @trnA.
-  ///
-  /// In fr, this message translates to:
-  /// **'À'**
-  String get trnA;
-
-  /// No description provided for @trnADeterminer.
-  ///
-  /// In fr, this message translates to:
-  /// **'À déterminer'**
-  String get trnADeterminer;
-
-  /// No description provided for @trnAValider.
-  ///
-  /// In fr, this message translates to:
-  /// **'À valider'**
-  String get trnAValider;
-
-  /// No description provided for @trnAdresse.
-  ///
-  /// In fr, this message translates to:
-  /// **'Adresse'**
-  String get trnAdresse;
-
-  /// No description provided for @trnAnnonce.
-  ///
-  /// In fr, this message translates to:
-  /// **'Annonce'**
-  String get trnAnnonce;
-
-  /// No description provided for @trnAnnonceEnvoyee.
-  ///
-  /// In fr, this message translates to:
-  /// **'Annonce envoyée aux équipes'**
-  String get trnAnnonceEnvoyee;
-
-  /// No description provided for @trnAnnulee.
-  ///
-  /// In fr, this message translates to:
-  /// **'Annulée'**
-  String get trnAnnulee;
-
-  /// No description provided for @trnApercuJoueur.
-  ///
-  /// In fr, this message translates to:
-  /// **'Aperçu joueur'**
-  String get trnApercuJoueur;
-
-  /// No description provided for @trnApercuLead.
-  ///
-  /// In fr, this message translates to:
-  /// **'Voici ce que les joueurs verront dans Explorer.'**
-  String get trnApercuLead;
-
-  /// No description provided for @trnApercuNote.
-  ///
-  /// In fr, this message translates to:
-  /// **'Le format et les frais ne peuvent plus changer. Les dates et les horaires restent modifiables : les équipes sont alors prévenues.'**
-  String get trnApercuNote;
-
-  /// No description provided for @trnApercuTitre.
-  ///
-  /// In fr, this message translates to:
-  /// **'Vérifie avant de publier'**
-  String get trnApercuTitre;
-
-  /// No description provided for @trnAucunMatchPret.
-  ///
-  /// In fr, this message translates to:
-  /// **'Aucun match prêt à jouer pour l’instant.'**
-  String get trnAucunMatchPret;
-
-  /// No description provided for @trnAucuneEquipe.
-  ///
-  /// In fr, this message translates to:
-  /// **'Aucune équipe ici pour l’instant.'**
-  String get trnAucuneEquipe;
-
-  /// No description provided for @trnCapitaine.
-  ///
-  /// In fr, this message translates to:
-  /// **'Capitaine'**
-  String get trnCapitaine;
-
-  /// No description provided for @trnChoisirDates.
-  ///
-  /// In fr, this message translates to:
-  /// **'Choisir les dates'**
-  String get trnChoisirDates;
-
-  /// No description provided for @trnChoisisVainqueur.
-  ///
-  /// In fr, this message translates to:
-  /// **'Match nul en phase finale : choisis le vainqueur.'**
-  String get trnChoisisVainqueur;
-
-  /// No description provided for @trnCloturer.
-  ///
-  /// In fr, this message translates to:
-  /// **'Clôturer les inscriptions'**
-  String get trnCloturer;
-
-  /// No description provided for @trnClub.
-  ///
-  /// In fr, this message translates to:
-  /// **'Club'**
-  String get trnClub;
-
-  /// No description provided for @trnClubRequis.
-  ///
-  /// In fr, this message translates to:
-  /// **'Indique le club où se joue le tournoi.'**
-  String get trnClubRequis;
-
-  /// No description provided for @trnConfirmerNote.
-  ///
-  /// In fr, this message translates to:
-  /// **'Le classement et le tableau se mettent à jour. Les joueurs reçoivent le résultat.'**
-  String get trnConfirmerNote;
-
-  /// No description provided for @trnConfirmerScoreFinal.
-  ///
-  /// In fr, this message translates to:
-  /// **'Confirmer le score final'**
-  String get trnConfirmerScoreFinal;
-
-  /// No description provided for @trnCourtsDisponibles.
-  ///
-  /// In fr, this message translates to:
-  /// **'Courts disponibles'**
-  String get trnCourtsDisponibles;
-
-  /// No description provided for @trnCreerDescription.
-  ///
-  /// In fr, this message translates to:
-  /// **'Poules ou élimination directe : 5 étapes.'**
-  String get trnCreerDescription;
-
-  /// No description provided for @trnDates.
-  ///
-  /// In fr, this message translates to:
-  /// **'Dates'**
-  String get trnDates;
-
-  /// No description provided for @trnDatesRequises.
-  ///
-  /// In fr, this message translates to:
-  /// **'Choisis les dates du tournoi.'**
-  String get trnDatesRequises;
-
-  /// No description provided for @trnDe.
-  ///
-  /// In fr, this message translates to:
-  /// **'De'**
-  String get trnDe;
-
-  /// No description provided for @trnDotation.
-  ///
-  /// In fr, this message translates to:
-  /// **'Dotation'**
-  String get trnDotation;
-
-  /// No description provided for @trnDureeMatch.
-  ///
-  /// In fr, this message translates to:
-  /// **'Durée d’un créneau'**
-  String get trnDureeMatch;
-
-  /// No description provided for @trnEliminationDescription.
-  ///
-  /// In fr, this message translates to:
-  /// **'Un match perdu et c’est fini. Plus court, 1 seul match garanti.'**
-  String get trnEliminationDescription;
-
-  /// No description provided for @trnEliminationDirecte.
-  ///
-  /// In fr, this message translates to:
-  /// **'Élimination directe'**
-  String get trnEliminationDirecte;
-
-  /// No description provided for @trnEnDirect.
-  ///
-  /// In fr, this message translates to:
-  /// **'En direct'**
-  String get trnEnDirect;
-
-  /// No description provided for @trnEncaisse.
-  ///
-  /// In fr, this message translates to:
-  /// **'Encaissé'**
-  String get trnEncaisse;
-
-  /// No description provided for @trnEnvoyer.
-  ///
-  /// In fr, this message translates to:
-  /// **'Envoyer'**
-  String get trnEnvoyer;
-
-  /// No description provided for @trnEquipes.
-  ///
-  /// In fr, this message translates to:
-  /// **'Équipes'**
-  String get trnEquipes;
-
-  /// No description provided for @trnEtapes.
-  ///
-  /// In fr, this message translates to:
-  /// **'5 étapes'**
-  String get trnEtapes;
-
-  /// No description provided for @trnFiltrerEquipes.
-  ///
-  /// In fr, this message translates to:
-  /// **'Filtrer les équipes'**
-  String get trnFiltrerEquipes;
-
-  /// No description provided for @trnFinale.
-  ///
-  /// In fr, this message translates to:
-  /// **'Finale'**
-  String get trnFinale;
-
-  /// No description provided for @trnFinalistes.
-  ///
-  /// In fr, this message translates to:
-  /// **'Finalistes'**
-  String get trnFinalistes;
-
-  /// No description provided for @trnFormat.
-  ///
-  /// In fr, this message translates to:
-  /// **'Format'**
-  String get trnFormat;
-
-  /// No description provided for @trnFormatLead.
-  ///
-  /// In fr, this message translates to:
-  /// **'Tu peux tout modifier tant qu’aucune équipe n’est inscrite.'**
-  String get trnFormatLead;
-
-  /// No description provided for @trnFormatTitre.
-  ///
-  /// In fr, this message translates to:
-  /// **'Format et règles'**
-  String get trnFormatTitre;
-
-  /// No description provided for @trnFraisLead.
-  ///
-  /// In fr, this message translates to:
-  /// **'Les équipes paient en ligne pour réserver leur place.'**
-  String get trnFraisLead;
-
-  /// No description provided for @trnFraisParEquipe.
-  ///
-  /// In fr, this message translates to:
-  /// **'Frais d’inscription par équipe'**
-  String get trnFraisParEquipe;
-
-  /// No description provided for @trnFraisTitre.
-  ///
-  /// In fr, this message translates to:
-  /// **'Frais et prix'**
-  String get trnFraisTitre;
-
-  /// No description provided for @trnGenerer.
-  ///
-  /// In fr, this message translates to:
-  /// **'Générer'**
-  String get trnGenerer;
-
-  /// No description provided for @trnInfosLead.
-  ///
-  /// In fr, this message translates to:
-  /// **'C’est ce que les joueurs voient en premier dans Explorer.'**
-  String get trnInfosLead;
-
-  /// No description provided for @trnInfosTitre.
-  ///
-  /// In fr, this message translates to:
-  /// **'Les infos de base'**
-  String get trnInfosTitre;
-
-  /// No description provided for @trnInscriptions.
-  ///
-  /// In fr, this message translates to:
-  /// **'Inscriptions'**
-  String get trnInscriptions;
-
-  /// No description provided for @trnIntrouvable.
-  ///
-  /// In fr, this message translates to:
-  /// **'Ce tournoi n’existe plus'**
-  String get trnIntrouvable;
-
-  /// No description provided for @trnMesTournois.
-  ///
-  /// In fr, this message translates to:
-  /// **'Mes tournois'**
-  String get trnMesTournois;
-
-  /// No description provided for @trnMessage.
-  ///
-  /// In fr, this message translates to:
-  /// **'Message'**
-  String get trnMessage;
-
-  /// No description provided for @trnMotifAutre.
-  ///
-  /// In fr, this message translates to:
-  /// **'Autre raison'**
-  String get trnMotifAutre;
-
-  /// No description provided for @trnMotifComplet.
-  ///
-  /// In fr, this message translates to:
-  /// **'Tournoi complet'**
-  String get trnMotifComplet;
-
-  /// No description provided for @trnMotifDuRefus.
-  ///
-  /// In fr, this message translates to:
-  /// **'Motif du refus'**
-  String get trnMotifDuRefus;
-
-  /// No description provided for @trnMotifNiveau.
-  ///
-  /// In fr, this message translates to:
-  /// **'Niveau hors fourchette'**
-  String get trnMotifNiveau;
-
-  /// No description provided for @trnNiveauMoyen.
-  ///
-  /// In fr, this message translates to:
-  /// **'Niveau moyen des équipes'**
-  String get trnNiveauMoyen;
-
-  /// No description provided for @trnNomDuTournoi.
-  ///
-  /// In fr, this message translates to:
-  /// **'Nom du tournoi'**
-  String get trnNomDuTournoi;
-
-  /// No description provided for @trnNomHelper.
-  ///
-  /// In fr, this message translates to:
-  /// **'Court et facile à retenir : il apparaît sur l’affiche.'**
-  String get trnNomHelper;
-
-  /// No description provided for @trnNomTropCourt.
-  ///
-  /// In fr, this message translates to:
-  /// **'Donne un nom d’au moins 3 caractères.'**
-  String get trnNomTropCourt;
-
-  /// No description provided for @trnNombreEquipes.
-  ///
-  /// In fr, this message translates to:
-  /// **'Nombre d’équipes'**
-  String get trnNombreEquipes;
-
-  /// No description provided for @trnNonPaye.
-  ///
-  /// In fr, this message translates to:
-  /// **'Non payé'**
-  String get trnNonPaye;
-
-  /// No description provided for @trnPaye.
-  ///
-  /// In fr, this message translates to:
-  /// **'Payé'**
-  String get trnPaye;
-
-  /// No description provided for @trnPlanning.
-  ///
-  /// In fr, this message translates to:
-  /// **'Planning'**
-  String get trnPlanning;
-
-  /// No description provided for @trnPlanningAGenerer.
-  ///
-  /// In fr, this message translates to:
-  /// **'À générer quand les équipes sont validées'**
-  String get trnPlanningAGenerer;
-
-  /// No description provided for @trnPlanningBrouillon.
-  ///
-  /// In fr, this message translates to:
-  /// **'Proposé, pas encore publié'**
-  String get trnPlanningBrouillon;
-
-  /// No description provided for @trnPlanningGenere.
-  ///
-  /// In fr, this message translates to:
-  /// **'Planning généré'**
-  String get trnPlanningGenere;
-
-  /// No description provided for @trnPlanningPropose.
-  ///
-  /// In fr, this message translates to:
-  /// **'Planning proposé'**
-  String get trnPlanningPropose;
-
-  /// No description provided for @trnPlanningPublie.
-  ///
-  /// In fr, this message translates to:
-  /// **'Publié : les joueurs voient le tableau'**
-  String get trnPlanningPublie;
-
-  /// No description provided for @trnPlanningVide.
-  ///
-  /// In fr, this message translates to:
-  /// **'Valide au moins 2 équipes, puis touche « Générer ».'**
-  String get trnPlanningVide;
-
-  /// No description provided for @trnPoulesDescription.
-  ///
-  /// In fr, this message translates to:
-  /// **'Les 2 premiers de chaque poule passent en phase finale.'**
-  String get trnPoulesDescription;
-
-  /// No description provided for @trnPoulesPhaseFinale.
-  ///
-  /// In fr, this message translates to:
-  /// **'Poules + phase finale'**
-  String get trnPoulesPhaseFinale;
-
-  /// No description provided for @trnPresentation.
-  ///
-  /// In fr, this message translates to:
-  /// **'Présentation'**
-  String get trnPresentation;
-
-  /// No description provided for @trnPublie.
-  ///
-  /// In fr, this message translates to:
-  /// **'Tournoi publié'**
-  String get trnPublie;
-
-  /// No description provided for @trnPublie2.
-  ///
-  /// In fr, this message translates to:
-  /// **'Publié'**
-  String get trnPublie2;
-
-  /// No description provided for @trnPublier.
-  ///
-  /// In fr, this message translates to:
-  /// **'Publier le tournoi'**
-  String get trnPublier;
-
-  /// No description provided for @trnPublierTableau.
-  ///
-  /// In fr, this message translates to:
-  /// **'Publier'**
-  String get trnPublierTableau;
-
-  /// No description provided for @trnRecapitulatif.
-  ///
-  /// In fr, this message translates to:
-  /// **'Récapitulatif'**
-  String get trnRecapitulatif;
-
-  /// No description provided for @trnRefusDescription.
-  ///
-  /// In fr, this message translates to:
-  /// **'Choisis un motif : il accompagne la notification envoyée au capitaine.'**
-  String get trnRefusDescription;
-
-  /// No description provided for @trnRefusee.
-  ///
-  /// In fr, this message translates to:
-  /// **'Refusée'**
-  String get trnRefusee;
-
-  /// No description provided for @trnRefusees.
-  ///
-  /// In fr, this message translates to:
-  /// **'Refusées'**
-  String get trnRefusees;
-
-  /// No description provided for @trnRegenerer.
-  ///
-  /// In fr, this message translates to:
-  /// **'Régénérer'**
-  String get trnRegenerer;
-
-  /// No description provided for @trnReposEntreMatchs.
-  ///
-  /// In fr, this message translates to:
-  /// **'Repos entre 2 matchs'**
-  String get trnReposEntreMatchs;
-
-  /// No description provided for @trnResteImpourToi.
-  ///
-  /// In fr, this message translates to:
-  /// **'Reste pour toi'**
-  String get trnResteImpourToi;
-
-  /// No description provided for @trnRienAValider.
-  ///
-  /// In fr, this message translates to:
-  /// **'Rien à valider'**
-  String get trnRienAValider;
-
-  /// No description provided for @trnRienPublie.
-  ///
-  /// In fr, this message translates to:
-  /// **'Rien n’est envoyé aux équipes avant ta publication.'**
-  String get trnRienPublie;
-
-  /// No description provided for @trnRouvrir.
-  ///
-  /// In fr, this message translates to:
-  /// **'Rouvrir les inscriptions'**
-  String get trnRouvrir;
-
-  /// No description provided for @trnScoreConfirme.
-  ///
-  /// In fr, this message translates to:
-  /// **'Score confirmé'**
-  String get trnScoreConfirme;
-
-  /// No description provided for @trnScores.
-  ///
-  /// In fr, this message translates to:
-  /// **'Scores'**
-  String get trnScores;
-
-  /// No description provided for @trnScoresApresPlanning.
-  ///
-  /// In fr, this message translates to:
-  /// **'Disponible une fois le planning généré'**
-  String get trnScoresApresPlanning;
-
-  /// No description provided for @trnScoresDescription.
-  ///
-  /// In fr, this message translates to:
-  /// **'Saisie au bord du court'**
-  String get trnScoresDescription;
-
-  /// No description provided for @trnScoresEnDirect.
-  ///
-  /// In fr, this message translates to:
-  /// **'Scores en direct'**
-  String get trnScoresEnDirect;
-
-  /// No description provided for @trnStatutAnnule.
-  ///
-  /// In fr, this message translates to:
-  /// **'Annulé'**
-  String get trnStatutAnnule;
-
-  /// No description provided for @trnStatutBrouillon.
-  ///
-  /// In fr, this message translates to:
-  /// **'Brouillon'**
-  String get trnStatutBrouillon;
-
-  /// No description provided for @trnStatutEnCours.
-  ///
-  /// In fr, this message translates to:
-  /// **'En cours'**
-  String get trnStatutEnCours;
-
-  /// No description provided for @trnStatutFerme.
-  ///
-  /// In fr, this message translates to:
-  /// **'Inscriptions closes'**
-  String get trnStatutFerme;
-
-  /// No description provided for @trnStatutOuvert.
-  ///
-  /// In fr, this message translates to:
-  /// **'Inscriptions ouvertes'**
-  String get trnStatutOuvert;
-
-  /// No description provided for @trnStatutTermine.
-  ///
-  /// In fr, this message translates to:
-  /// **'Terminé'**
-  String get trnStatutTermine;
-
-  /// No description provided for @trnStepApercu.
-  ///
-  /// In fr, this message translates to:
-  /// **'Aperçu'**
-  String get trnStepApercu;
-
-  /// No description provided for @trnStepFormat.
-  ///
-  /// In fr, this message translates to:
-  /// **'Format & règles'**
-  String get trnStepFormat;
-
-  /// No description provided for @trnStepFrais.
-  ///
-  /// In fr, this message translates to:
-  /// **'Frais & prix'**
-  String get trnStepFrais;
-
-  /// No description provided for @trnStepInfos.
-  ///
-  /// In fr, this message translates to:
-  /// **'Infos'**
-  String get trnStepInfos;
-
-  /// No description provided for @trnStepTerrains.
-  ///
-  /// In fr, this message translates to:
-  /// **'Terrains & dates'**
-  String get trnStepTerrains;
-
-  /// No description provided for @trnTableauPublie.
-  ///
-  /// In fr, this message translates to:
-  /// **'Tableau publié'**
-  String get trnTableauPublie;
-
-  /// No description provided for @trnTerrainsLead.
-  ///
-  /// In fr, this message translates to:
-  /// **'On calcule le planning des matchs à partir de ces créneaux.'**
-  String get trnTerrainsLead;
-
-  /// No description provided for @trnTerrainsPlanningNote.
-  ///
-  /// In fr, this message translates to:
-  /// **'Les courts et les horaires se règlent dans le planning, une fois les équipes validées.'**
-  String get trnTerrainsPlanningNote;
-
-  /// No description provided for @trnTerrainsTitre.
-  ///
-  /// In fr, this message translates to:
-  /// **'Terrains et dates'**
-  String get trnTerrainsTitre;
-
-  /// No description provided for @trnTesContraintes.
-  ///
-  /// In fr, this message translates to:
-  /// **'Tes contraintes'**
-  String get trnTesContraintes;
-
-  /// No description provided for @trnToucheUnMatch.
-  ///
-  /// In fr, this message translates to:
-  /// **'Touche un match pour saisir le score.'**
-  String get trnToucheUnMatch;
-
-  /// No description provided for @trnTroisieme.
-  ///
-  /// In fr, this message translates to:
-  /// **'3e place'**
-  String get trnTroisieme;
-
-  /// No description provided for @trnVainqueur.
-  ///
-  /// In fr, this message translates to:
-  /// **'Vainqueur'**
-  String get trnVainqueur;
-
-  /// No description provided for @trnVainqueurs.
-  ///
-  /// In fr, this message translates to:
-  /// **'Vainqueurs'**
-  String get trnVainqueurs;
-
-  /// No description provided for @trnValidee.
-  ///
-  /// In fr, this message translates to:
-  /// **'Validée'**
-  String get trnValidee;
-
-  /// No description provided for @trnValidees.
-  ///
-  /// In fr, this message translates to:
-  /// **'Validées'**
-  String get trnValidees;
-
-  /// No description provided for @trnVisibleExplorer.
-  ///
-  /// In fr, this message translates to:
-  /// **'Le tournoi est visible par tous les joueurs dans Explorer.'**
-  String get trnVisibleExplorer;
-
-  /// No description provided for @trnVoirApercu.
-  ///
-  /// In fr, this message translates to:
-  /// **'Voir l’aperçu'**
-  String get trnVoirApercu;
-
-  /// No description provided for @trnAValiderN.
-  ///
-  /// In fr, this message translates to:
-  /// **'{n} à valider'**
-  String trnAValiderN(int n);
-
-  /// No description provided for @trnAVenirN.
-  ///
-  /// In fr, this message translates to:
-  /// **'À venir · {n}'**
-  String trnAVenirN(int n);
-
-  /// No description provided for @trnAjouterPoint.
-  ///
-  /// In fr, this message translates to:
-  /// **'Ajouter un point à {name}'**
-  String trnAjouterPoint(String name);
-
-  /// No description provided for @trnAnnonceDescription.
-  ///
-  /// In fr, this message translates to:
-  /// **'{n, plural, =0{À toutes les équipes inscrites} =1{À 1 équipe inscrite} other{Aux {n} équipes inscrites}}'**
-  String trnAnnonceDescription(int n);
-
-  /// No description provided for @trnCourtN.
-  ///
-  /// In fr, this message translates to:
-  /// **'Court {n}'**
-  String trnCourtN(int n);
-
-  /// No description provided for @trnDemie.
-  ///
-  /// In fr, this message translates to:
-  /// **'Demie {n}'**
-  String trnDemie(int n);
-
-  /// No description provided for @trnEliminationResume.
-  ///
-  /// In fr, this message translates to:
-  /// **'Élimination directe · {n} équipes'**
-  String trnEliminationResume(int n);
-
-  /// No description provided for @trnEnCoursN.
-  ///
-  /// In fr, this message translates to:
-  /// **'En cours · {n}'**
-  String trnEnCoursN(int n);
-
-  /// No description provided for @trnEnDirectN.
-  ///
-  /// In fr, this message translates to:
-  /// **'En direct · {n}'**
-  String trnEnDirectN(int n);
-
-  /// No description provided for @trnEquipesSur.
-  ///
-  /// In fr, this message translates to:
-  /// **'{a}/{b} équipes'**
-  String trnEquipesSur(int a, int b);
-
-  /// No description provided for @trnFraisHelper.
-  ///
-  /// In fr, this message translates to:
-  /// **'Soit {amount} par joueur. Paiement en ligne obligatoire pour s’inscrire.'**
-  String trnFraisHelper(String amount);
-
-  /// No description provided for @trnJoueursManquants.
-  ///
-  /// In fr, this message translates to:
-  /// **'{n, plural, =1{Il manque 1 joueur} other{Il manque {n} joueurs}}'**
-  String trnJoueursManquants(int n);
-
-  /// No description provided for @trnJoueursParEquipe.
-  ///
-  /// In fr, this message translates to:
-  /// **'{n} joueurs par équipe, capitaine compris.'**
-  String trnJoueursParEquipe(int n);
-
-  /// No description provided for @trnPasAssezCreneaux.
-  ///
-  /// In fr, this message translates to:
-  /// **'Pas assez de créneaux : {n, plural, =1{1 match sans horaire} other{{n} matchs sans horaire}}. Ajoute un court ou une plage horaire.'**
-  String trnPasAssezCreneaux(int n);
-
-  /// No description provided for @trnPouleJ.
-  ///
-  /// In fr, this message translates to:
-  /// **'Poule {p} · J{j}'**
-  String trnPouleJ(String p, int j);
-
-  /// No description provided for @trnPoulesResume.
-  ///
-  /// In fr, this message translates to:
-  /// **'{n, plural, =1{1 poule} other{{n} poules}} puis phase finale'**
-  String trnPoulesResume(int n);
-
-  /// No description provided for @trnQuart.
-  ///
-  /// In fr, this message translates to:
-  /// **'QF {n}'**
-  String trnQuart(int n);
-
-  /// No description provided for @trnRecapFrais.
-  ///
-  /// In fr, this message translates to:
-  /// **'{fee} par équipe · dotation {prize}'**
-  String trnRecapFrais(String fee, String prize);
-
-  /// No description provided for @trnRecapInfos.
-  ///
-  /// In fr, this message translates to:
-  /// **'{sport} · niveau moyen {min} – {max}'**
-  String trnRecapInfos(String sport, String min, String max);
-
-  /// No description provided for @trnRefusRembourse.
-  ///
-  /// In fr, this message translates to:
-  /// **'Une équipe refusée est remboursée en entier ({amount}) et prévenue avec ton message.'**
-  String trnRefusRembourse(String amount);
-
-  /// No description provided for @trnRefuserEquipe.
-  ///
-  /// In fr, this message translates to:
-  /// **'Refuser {name} ?'**
-  String trnRefuserEquipe(String name);
-
-  /// No description provided for @trnRetirerPoint.
-  ///
-  /// In fr, this message translates to:
-  /// **'Retirer un point à {name}'**
-  String trnRetirerPoint(String name);
-
-  /// No description provided for @trnSiToutesInscrites.
-  ///
-  /// In fr, this message translates to:
-  /// **'Si les {n} équipes s’inscrivent'**
-  String trnSiToutesInscrites(int n);
-
-  /// No description provided for @trnTerminesN.
-  ///
-  /// In fr, this message translates to:
-  /// **'Terminés · {n}'**
-  String trnTerminesN(int n);
-
-  /// No description provided for @trnTourDe.
-  ///
-  /// In fr, this message translates to:
-  /// **'Tour de {size} · {n}'**
-  String trnTourDe(int size, int n);
-
-  /// No description provided for @trnAnnulerInscription.
-  ///
-  /// In fr, this message translates to:
-  /// **'Annuler l’inscription'**
-  String get trnAnnulerInscription;
-
-  /// No description provided for @trnAuTotal.
-  ///
-  /// In fr, this message translates to:
-  /// **'au total'**
-  String get trnAuTotal;
-
-  /// No description provided for @trnAucuneEquipeValidee.
-  ///
-  /// In fr, this message translates to:
-  /// **'Aucune équipe validée pour l’instant.'**
-  String get trnAucuneEquipeValidee;
-
-  /// No description provided for @trnCodeCopie.
-  ///
-  /// In fr, this message translates to:
-  /// **'Code copié'**
-  String get trnCodeCopie;
-
-  /// No description provided for @trnCodeInvitation.
-  ///
-  /// In fr, this message translates to:
-  /// **'Code d’invitation'**
-  String get trnCodeInvitation;
-
-  /// No description provided for @trnCoequipiersNote.
-  ///
-  /// In fr, this message translates to:
-  /// **'Les autres te rejoignent avec le code d’invitation, sans payer : tu règles l’inscription de l’équipe.'**
-  String get trnCoequipiersNote;
-
-  /// No description provided for @trnComplet.
-  ///
-  /// In fr, this message translates to:
-  /// **'Complet'**
-  String get trnComplet;
-
-  /// No description provided for @trnCopierCode.
-  ///
-  /// In fr, this message translates to:
-  /// **'Copier le code'**
-  String get trnCopierCode;
-
-  /// No description provided for @trnCreeTonEquipe.
-  ///
-  /// In fr, this message translates to:
-  /// **'Crée ton équipe'**
-  String get trnCreeTonEquipe;
-
-  /// No description provided for @trnCreeTonEquipeLead.
-  ///
-  /// In fr, this message translates to:
-  /// **'Un nom, un capitaine. Tes coéquipiers peuvent aussi te rejoindre avec un code.'**
-  String get trnCreeTonEquipeLead;
-
-  /// No description provided for @trnCreerEquipe.
-  ///
-  /// In fr, this message translates to:
-  /// **'Créer l’équipe'**
-  String get trnCreerEquipe;
-
-  /// No description provided for @trnDemiFinales.
-  ///
-  /// In fr, this message translates to:
-  /// **'Demi-finales'**
-  String get trnDemiFinales;
-
-  /// No description provided for @trnDetailDuTournoi.
-  ///
-  /// In fr, this message translates to:
-  /// **'Détail du tournoi'**
-  String get trnDetailDuTournoi;
-
-  /// No description provided for @trnDiff.
-  ///
-  /// In fr, this message translates to:
-  /// **'Diff.'**
-  String get trnDiff;
-
-  /// No description provided for @trnEnCoursValidation.
-  ///
-  /// In fr, this message translates to:
-  /// **'L’organisateur vérifie le niveau et les places.'**
-  String get trnEnCoursValidation;
-
-  /// No description provided for @trnEquipe.
-  ///
-  /// In fr, this message translates to:
-  /// **'Équipe'**
-  String get trnEquipe;
-
-  /// No description provided for @trnEquipeCreee.
-  ///
-  /// In fr, this message translates to:
-  /// **'Équipe créée'**
-  String get trnEquipeCreee;
-
-  /// No description provided for @trnGererTournoi.
-  ///
-  /// In fr, this message translates to:
-  /// **'Gérer le tournoi'**
-  String get trnGererTournoi;
-
-  /// No description provided for @trnHuitiemes.
-  ///
-  /// In fr, this message translates to:
-  /// **'Huitièmes de finale'**
-  String get trnHuitiemes;
-
-  /// No description provided for @trnInscription.
-  ///
-  /// In fr, this message translates to:
-  /// **'Inscription'**
-  String get trnInscription;
-
-  /// No description provided for @trnInscriptionConfirmee.
-  ///
-  /// In fr, this message translates to:
-  /// **'Inscription confirmée'**
-  String get trnInscriptionConfirmee;
-
-  /// No description provided for @trnInscriptionEnvoyee.
-  ///
-  /// In fr, this message translates to:
-  /// **'Inscription envoyée'**
-  String get trnInscriptionEnvoyee;
-
-  /// No description provided for @trnInscriptionsBientot.
-  ///
-  /// In fr, this message translates to:
-  /// **'Inscriptions bientôt'**
-  String get trnInscriptionsBientot;
-
-  /// No description provided for @trnInscrireEquipe.
-  ///
-  /// In fr, this message translates to:
-  /// **'Inscrire mon équipe'**
-  String get trnInscrireEquipe;
-
-  /// No description provided for @trnJ.
-  ///
-  /// In fr, this message translates to:
-  /// **'J'**
-  String get trnJ;
-
-  /// No description provided for @trnJaiUnCode.
-  ///
-  /// In fr, this message translates to:
-  /// **'J’ai un code d’invitation'**
-  String get trnJaiUnCode;
-
-  /// No description provided for @trnLeTableau.
-  ///
-  /// In fr, this message translates to:
-  /// **'Le tableau'**
-  String get trnLeTableau;
-
-  /// No description provided for @trnLesPoules.
-  ///
-  /// In fr, this message translates to:
-  /// **'Les poules'**
-  String get trnLesPoules;
-
-  /// No description provided for @trnLieu.
-  ///
-  /// In fr, this message translates to:
-  /// **'Lieu'**
-  String get trnLieu;
-
-  /// No description provided for @trnNomEquipe.
-  ///
-  /// In fr, this message translates to:
-  /// **'Nom de l’équipe'**
-  String get trnNomEquipe;
-
-  /// No description provided for @trnNomEquipeRequis.
-  ///
-  /// In fr, this message translates to:
-  /// **'Donne un nom à ton équipe.'**
-  String get trnNomEquipeRequis;
-
-  /// No description provided for @trnPaiementAttendu.
-  ///
-  /// In fr, this message translates to:
-  /// **'Paie pour réserver ta place.'**
-  String get trnPaiementAttendu;
-
-  /// No description provided for @trnPartageCode.
-  ///
-  /// In fr, this message translates to:
-  /// **'Partage ce code à tes coéquipiers'**
-  String get trnPartageCode;
-
-  /// No description provided for @trnPasDEquipe.
-  ///
-  /// In fr, this message translates to:
-  /// **'Tu n’as pas d’équipe dans ce tournoi.'**
-  String get trnPasDEquipe;
-
-  /// No description provided for @trnPayerInscription.
-  ///
-  /// In fr, this message translates to:
-  /// **'Payer l’inscription'**
-  String get trnPayerInscription;
-
-  /// No description provided for @trnPhaseFinale.
-  ///
-  /// In fr, this message translates to:
-  /// **'Phase finale'**
-  String get trnPhaseFinale;
-
-  /// No description provided for @trnPlaces.
-  ///
-  /// In fr, this message translates to:
-  /// **'Places'**
-  String get trnPlaces;
-
-  /// No description provided for @trnPointsNote.
-  ///
-  /// In fr, this message translates to:
-  /// **'Victoire = 3 pts, nul = 1 pt. À égalité : différence, puis points marqués.'**
-  String get trnPointsNote;
-
-  /// No description provided for @trnPts.
-  ///
-  /// In fr, this message translates to:
-  /// **'Pts'**
-  String get trnPts;
-
-  /// No description provided for @trnQualifie.
-  ///
-  /// In fr, this message translates to:
-  /// **'Qualifié'**
-  String get trnQualifie;
-
-  /// No description provided for @trnQuartsDeFinale.
-  ///
-  /// In fr, this message translates to:
-  /// **'Quarts de finale'**
-  String get trnQuartsDeFinale;
-
-  /// No description provided for @trnRefuseeParOrga.
-  ///
-  /// In fr, this message translates to:
-  /// **'Refusée par l’organisateur'**
-  String get trnRefuseeParOrga;
-
-  /// No description provided for @trnRejoindre.
-  ///
-  /// In fr, this message translates to:
-  /// **'Rejoindre'**
-  String get trnRejoindre;
-
-  /// No description provided for @trnRejoindreDescription.
-  ///
-  /// In fr, this message translates to:
-  /// **'Le capitaine de l’équipe t’a envoyé un code de 6 lettres.'**
-  String get trnRejoindreDescription;
-
-  /// No description provided for @trnRejoindreEquipe.
-  ///
-  /// In fr, this message translates to:
-  /// **'Rejoindre une équipe'**
-  String get trnRejoindreEquipe;
-
-  /// No description provided for @trnRembourseSiRefus.
-  ///
-  /// In fr, this message translates to:
-  /// **'Refusée ? Tu es remboursé en entier.'**
-  String get trnRembourseSiRefus;
-
-  /// No description provided for @trnTableauDuTournoi.
-  ///
-  /// In fr, this message translates to:
-  /// **'Tableau du tournoi'**
-  String get trnTableauDuTournoi;
-
-  /// No description provided for @trnTableauPasPublie.
-  ///
-  /// In fr, this message translates to:
-  /// **'Le tableau n’est pas encore publié.'**
-  String get trnTableauPasPublie;
-
-  /// No description provided for @trnTesMatchs.
-  ///
-  /// In fr, this message translates to:
-  /// **'Tes matchs'**
-  String get trnTesMatchs;
-
-  /// No description provided for @trnTirage.
-  ///
-  /// In fr, this message translates to:
-  /// **'Tirage et calendrier'**
-  String get trnTirage;
-
-  /// No description provided for @trnTirageNote.
-  ///
-  /// In fr, this message translates to:
-  /// **'Ton calendrier arrive dès que l’organisateur publie le tableau.'**
-  String get trnTirageNote;
-
-  /// No description provided for @trnV.
-  ///
-  /// In fr, this message translates to:
-  /// **'V'**
-  String get trnV;
-
-  /// No description provided for @trnValidationOrga.
-  ///
-  /// In fr, this message translates to:
-  /// **'Validation par l’organisateur'**
-  String get trnValidationOrga;
-
-  /// No description provided for @trnCapitaineNom.
-  ///
-  /// In fr, this message translates to:
-  /// **'Capitaine : {name}'**
-  String trnCapitaineNom(String name);
-
-  /// No description provided for @trnCoequipiers.
-  ///
-  /// In fr, this message translates to:
-  /// **'{n, plural, =1{Ton partenaire} other{Tes {n} coéquipiers}}'**
-  String trnCoequipiers(int n);
-
-  /// No description provided for @trnEquipesInscrites.
-  ///
-  /// In fr, this message translates to:
-  /// **'Équipes inscrites · {n}'**
-  String trnEquipesInscrites(int n);
-
-  /// No description provided for @trnInscriptionEyebrow.
-  ///
-  /// In fr, this message translates to:
-  /// **'INSCRIPTION · {team}'**
-  String trnInscriptionEyebrow(String team);
-
-  /// No description provided for @trnInscriptionPayee.
-  ///
-  /// In fr, this message translates to:
-  /// **'Inscription payée · {amount}'**
-  String trnInscriptionPayee(String amount);
-
-  /// No description provided for @trnInscritesSur.
-  ///
-  /// In fr, this message translates to:
-  /// **'{a}/{b} inscrites'**
-  String trnInscritesSur(int a, int b);
-
-  /// No description provided for @trnJoueurN.
-  ///
-  /// In fr, this message translates to:
-  /// **'Joueur {n}'**
-  String trnJoueurN(int n);
-
-  /// No description provided for @trnMembresN.
-  ///
-  /// In fr, this message translates to:
-  /// **'Membres · {a}/{b}'**
-  String trnMembresN(int a, int b);
-
-  /// No description provided for @trnMonEquipe.
-  ///
-  /// In fr, this message translates to:
-  /// **'Mon équipe {name}'**
-  String trnMonEquipe(String name);
-
-  /// No description provided for @trnNiveauFourchette.
-  ///
-  /// In fr, this message translates to:
-  /// **'Niveau {min} – {max}'**
-  String trnNiveauFourchette(String min, String max);
-
-  /// No description provided for @trnParEquipeDe.
-  ///
-  /// In fr, this message translates to:
-  /// **'par équipe de {n}'**
-  String trnParEquipeDe(int n);
-
-  /// No description provided for @trnPouleX.
-  ///
-  /// In fr, this message translates to:
-  /// **'Poule {p}'**
-  String trnPouleX(String p);
-
-  /// No description provided for @trnToi.
-  ///
-  /// In fr, this message translates to:
-  /// **'{name} · toi'**
-  String trnToi(String name);
-
-  /// No description provided for @trnAJouer.
-  ///
-  /// In fr, this message translates to:
-  /// **'À jouer'**
-  String get trnAJouer;
-
-  /// No description provided for @trnAnnonceVisible.
-  ///
-  /// In fr, this message translates to:
-  /// **'Les équipes la voient sur la page du tournoi et de leur équipe.'**
-  String get trnAnnonceVisible;
-
-  /// No description provided for @trnAnnoncesOrga.
-  ///
-  /// In fr, this message translates to:
-  /// **'Annonces de l’organisateur'**
-  String get trnAnnoncesOrga;
-
-  /// No description provided for @trnAucunPlanning.
-  ///
-  /// In fr, this message translates to:
-  /// **'Aucun planning pour l’instant'**
-  String get trnAucunPlanning;
-
-  /// No description provided for @trnAucuneAnnonce.
-  ///
-  /// In fr, this message translates to:
-  /// **'Aucune annonce envoyée'**
-  String get trnAucuneAnnonce;
-
-  /// No description provided for @trnContre.
-  ///
-  /// In fr, this message translates to:
-  /// **'contre'**
-  String get trnContre;
-
-  /// No description provided for @trnDejaEnvoyees.
-  ///
-  /// In fr, this message translates to:
-  /// **'Déjà envoyées'**
-  String get trnDejaEnvoyees;
-
-  /// No description provided for @trnMatch.
-  ///
-  /// In fr, this message translates to:
-  /// **'Match'**
-  String get trnMatch;
-
-  /// No description provided for @trnMatchEnDirect.
-  ///
-  /// In fr, this message translates to:
-  /// **'Match en direct'**
-  String get trnMatchEnDirect;
-
-  /// No description provided for @trnMonInscription.
-  ///
-  /// In fr, this message translates to:
-  /// **'Mon inscription'**
-  String get trnMonInscription;
-
-  /// No description provided for @trnNombrePlaces.
-  ///
-  /// In fr, this message translates to:
-  /// **'Nombre de places'**
-  String get trnNombrePlaces;
-
-  /// No description provided for @trnOu.
-  ///
-  /// In fr, this message translates to:
-  /// **'Où'**
-  String get trnOu;
-
-  /// No description provided for @trnParPersonne.
-  ///
-  /// In fr, this message translates to:
-  /// **'par personne'**
-  String get trnParPersonne;
-
-  /// No description provided for @trnPartagerResume.
-  ///
-  /// In fr, this message translates to:
-  /// **'Partager le résumé'**
-  String get trnPartagerResume;
-
-  /// No description provided for @trnProchainsMatchs.
-  ///
-  /// In fr, this message translates to:
-  /// **'Prochains matchs'**
-  String get trnProchainsMatchs;
-
-  /// No description provided for @trnQuand.
-  ///
-  /// In fr, this message translates to:
-  /// **'Quand'**
-  String get trnQuand;
-
-  /// No description provided for @trnResume.
-  ///
-  /// In fr, this message translates to:
-  /// **'Résumé du match'**
-  String get trnResume;
-
-  /// No description provided for @trnSInscrire.
-  ///
-  /// In fr, this message translates to:
-  /// **'S’inscrire'**
-  String get trnSInscrire;
-
-  /// No description provided for @trnScoreMisAJour.
-  ///
-  /// In fr, this message translates to:
-  /// **'Le score se met à jour pendant que l’organisateur le saisit.'**
-  String get trnScoreMisAJour;
-
-  /// No description provided for @trnTabAnnonces.
-  ///
-  /// In fr, this message translates to:
-  /// **'Annonces'**
-  String get trnTabAnnonces;
-
-  /// No description provided for @trnTabTableau.
-  ///
-  /// In fr, this message translates to:
-  /// **'Tableau'**
-  String get trnTabTableau;
-
-  /// No description provided for @trnTabTournois.
-  ///
-  /// In fr, this message translates to:
-  /// **'Tournois'**
-  String get trnTabTournois;
-
-  /// No description provided for @trnTableauDeBord.
-  ///
-  /// In fr, this message translates to:
-  /// **'Tableau de bord'**
-  String get trnTableauDeBord;
-
-  /// No description provided for @trnTermine.
-  ///
-  /// In fr, this message translates to:
-  /// **'Terminé'**
-  String get trnTermine;
-
-  /// No description provided for @trnType.
-  ///
-  /// In fr, this message translates to:
-  /// **'Type'**
-  String get trnType;
-
-  /// No description provided for @trnTypeEvenement.
-  ///
-  /// In fr, this message translates to:
-  /// **'Événement'**
-  String get trnTypeEvenement;
-
-  /// No description provided for @trnTypeEvenementDescription.
-  ///
-  /// In fr, this message translates to:
-  /// **'Journée initiation ou soirée : inscription individuelle, sans tableau.'**
-  String get trnTypeEvenementDescription;
-
-  /// No description provided for @trnTypeTournoi.
-  ///
-  /// In fr, this message translates to:
-  /// **'Tournoi'**
-  String get trnTypeTournoi;
-
-  /// No description provided for @trnTypeTournoiDescription.
-  ///
-  /// In fr, this message translates to:
-  /// **'Des équipes, des poules ou un tableau, un vainqueur.'**
-  String get trnTypeTournoiDescription;
-
-  /// No description provided for @trnVoir.
-  ///
-  /// In fr, this message translates to:
-  /// **'Voir'**
-  String get trnVoir;
-
-  /// No description provided for @trnEquipesAValider.
-  ///
-  /// In fr, this message translates to:
-  /// **'{n, plural, =1{1 équipe à valider} other{{n} équipes à valider}}'**
-  String trnEquipesAValider(int n);
-
-  /// No description provided for @trnEvenementResume.
-  ///
-  /// In fr, this message translates to:
-  /// **'Inscription individuelle · {n} places'**
-  String trnEvenementResume(int n);
-
-  /// No description provided for @trnParticipantsN.
-  ///
-  /// In fr, this message translates to:
-  /// **'Participants · {n}'**
-  String trnParticipantsN(int n);
-
-  /// No description provided for @trnRecapTexte.
-  ///
-  /// In fr, this message translates to:
-  /// **'{winner} gagne {score} contre {loser} ({stage}, {tournament}). Résultat publié sur MatchUp.'**
-  String trnRecapTexte(
-    String winner,
-    String loser,
-    String score,
-    String stage,
-    String tournament,
-  );
+  /// **'Salut ! Je trouve des parties à ton niveau, je réserve des terrains et je te conseille des programmes. Je te dis toujours pourquoi, et rien n’est réservé ni payé sans ta confirmation.'**
+  String get aiGreetingAnonymous;
 }
 
 class _AppLocalizationsDelegate

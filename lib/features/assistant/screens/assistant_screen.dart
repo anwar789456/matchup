@@ -3,7 +3,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 
+import '../../../core/api/session.dart';
 import '../../../core/format.dart';
+import '../../../core/supabase/supabase_config.dart';
 import '../../../l10n/l10n.dart';
 import '../../../router.dart';
 import '../../../theme/theme.dart';
@@ -125,6 +127,10 @@ class _Welcome extends ConsumerWidget {
     final c = context.mu;
     final owner = space == AssistantSpace.owner;
     final me = ref.watch(meProvider).value;
+    // As on Home: with real accounts and nobody signed in, nobody is named (the phone's saved
+    // answers may be someone else's).
+    final anonymous = SupabaseConfig.configured && ref.watch(sessionProvider) == null;
+    final name = anonymous ? null : me?.firstName;
     final welcome = ref.watch(_welcomeProvider(space)).value;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -133,7 +139,11 @@ class _Welcome extends ConsumerWidget {
         const MuAiSender(),
         const SizedBox(height: MuSpace.s2),
         MuChatBubble.ai(
-          owner ? l10n.aiOwnerGreeting : l10n.aiGreeting(me?.firstName ?? ''),
+          owner
+              ? l10n.aiOwnerGreeting
+              : name == null || name.isEmpty
+              ? l10n.aiGreetingAnonymous
+              : l10n.aiGreeting(name),
           large: true,
         ),
         const SizedBox(height: MuSpace.s4),

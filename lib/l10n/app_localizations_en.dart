@@ -10656,6 +10656,1611 @@ class AppLocalizationsEn extends AppLocalizations {
   String get categorie => 'Catégorie';
 
   @override
+  String get hier => 'hier';
+
+  @override
+  String get plusDOptions => 'Plus d’options';
+
+  @override
+  String get forumCatTechnique => 'Conseils & technique';
+
+  @override
+  String get forumCatEquipement => 'Équipement';
+
+  @override
+  String get forumCatTerrains => 'Terrains';
+
+  @override
+  String get forumCatTournois => 'Tournois';
+
+  @override
+  String get forumCatDiscussions => 'Discussions libres';
+
+  @override
+  String get forumTriTendance => 'Tendance';
+
+  @override
+  String get forumTriRecents => 'Récents';
+
+  @override
+  String get forumTriTop => 'Top';
+
+  @override
+  String get forumTriUtiles => 'Les plus utiles';
+
+  @override
+  String get forumTriRecentes => 'Les plus récentes';
+
+  @override
+  String get forumTriAnciennes => 'Les plus anciennes';
+
+  @override
+  String get forumMotifSpam => 'Spam ou publicité';
+
+  @override
+  String get forumMotifInsulte => 'Insulte ou harcèlement';
+
+  @override
+  String get forumMotifChoquant => 'Contenu choquant ou dangereux';
+
+  @override
+  String get forumMotifFausseInfo => 'Fausse information';
+
+  @override
+  String get forumMotifAutre => 'Autre chose';
+
+  @override
+  String get forumMembre => 'Membre';
+
+  @override
+  String get forumIaAucune => 'Aucune toxicité';
+
+  @override
+  String get forumIaAucuneExplication =>
+      'Rien de blessant ni de publicitaire détecté.';
+
+  @override
+  String get forumIaInsulte => 'Toxicité · insulte';
+
+  @override
+  String get forumIaInsulteExplication =>
+      'Insulte grossière visant une personne.';
+
+  @override
+  String get forumIaInsulteLegere => 'Toxicité · insulte légère';
+
+  @override
+  String get forumIaInsulteLegereExplication =>
+      'Moquerie entre joueurs, sans menace ni haine. L’IA peut se tromper sur le ton entre amis.';
+
+  @override
+  String get forumIaTonAgressif => 'Ton agressif';
+
+  @override
+  String get forumIaTonAgressifExplication =>
+      'Ton sec qui vise une personne plutôt que son avis. Pas d’insulte.';
+
+  @override
+  String get forumIaSpamContact => 'Spam · lien et contact';
+
+  @override
+  String get forumIaSpamPub => 'Spam · publicité';
+
+  @override
+  String get forumIaSpamExplication =>
+      'Vente ou publicité avec un moyen de contact hors de MatchUp.';
+
+  @override
+  String get forumIaCoordonnees => 'Coordonnées publiées';
+
+  @override
+  String get forumIaCoordonneesExplication =>
+      'Numéro ou adresse publiés : à faire passer en message privé.';
+
+  @override
+  String get forumTitreTropCourt =>
+      'Ton titre doit faire au moins 10 caractères.';
+
+  @override
+  String get forumMessageVide => 'Écris ton message avant de publier.';
+
+  @override
+  String get forumDiscussionSupprimee => 'Cette discussion a été supprimée.';
+
+  @override
+  String get forumReponseSupprimee => 'Cette réponse a été supprimée.';
+
+  @override
+  String get forumEnVerification => 'Ce contenu est en cours de vérification.';
+
+  @override
+  String get forumSeulLAuteur =>
+      'Seul l’auteur peut modifier ou supprimer ce message.';
+
+  @override
+  String get forumSeulLAuteurChoisit =>
+      'Seul l’auteur du post choisit la meilleure réponse.';
+
+  @override
+  String get forumReponseDirecte => 'Choisis une réponse directe au post.';
+
+  @override
+  String get forumPasTaPropreReponse =>
+      'Tu ne peux pas choisir ta propre réponse.';
+
+  @override
+  String get forumPasDeVotePourSoi =>
+      'Tu ne peux pas voter pour ton propre message.';
+
+  @override
+  String get forumPasDeReactionPourSoi =>
+      'Tu ne peux pas réagir à ton propre message.';
+
+  @override
+  String get forumPasTeSuivre => 'Tu ne peux pas te suivre toi-même.';
+
+  @override
+  String get forumPasTeMasquer => 'Tu ne peux pas te masquer toi-même.';
+
+  @override
+  String get forumPasTonPropreMessage =>
+      'Tu ne peux pas signaler ton propre message.';
+
+  @override
+  String get forumHorsLigne => 'Hors ligne';
+
+  @override
+  String get forumHorsLigneDetail => 'Vérifie ta connexion puis réessaie.';
+
+  @override
+  String get forumErreur => 'Ça n’a pas marché. Réessaie dans un instant.';
+
+  @override
+  String get forumSuspendu => 'Tu ne peux plus publier pour l’instant';
+
+  @override
+  String forumSuspenduJusquA(String date) {
+    return 'Suspendu de la communauté jusqu’au $date. Tu peux toujours lire.';
+  }
+
+  @override
+  String get forumRechercherDansLaCommunaute => 'Rechercher dans la communauté';
+
+  @override
+  String get forumMesPostsEtFavoris => 'Mes posts et favoris';
+
+  @override
+  String get forumPoseTaQuestionALaCommunaute =>
+      'Pose ta question à la communauté';
+
+  @override
+  String get forumEcrireUnNouveauPost => 'Écrire un nouveau post';
+
+  @override
+  String get forumCategories => 'Catégories';
+
+  @override
+  String get forumNouveauxDepuisTaDerniereVisite =>
+      'Nouveaux depuis ta dernière visite';
+
+  @override
+  String forumNNouveaux(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n nouveaux',
+      one: '1 nouveau',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get forumFiltrerParSport => 'Filtrer par sport';
+
+  @override
+  String get forumTousLesSports => 'Tous les sports';
+
+  @override
+  String get forumTrierLesDiscussions => 'Trier les discussions';
+
+  @override
+  String forumDiscussions(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'discussions',
+      one: 'discussion',
+      zero: 'discussion',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String forumTAMentionne(String time) {
+    return 't’a mentionné · $time';
+  }
+
+  @override
+  String get forumVoterPour => 'Voter pour';
+
+  @override
+  String get forumVoterContre => 'Voter contre';
+
+  @override
+  String forumVoterPourNVotes(String score) {
+    return 'Voter pour, $score votes';
+  }
+
+  @override
+  String forumNVotes(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n votes',
+      one: '1 vote',
+      zero: '0 vote',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String forumNReponses(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n réponses',
+      one: '1 réponse',
+      zero: '0 réponse',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get forumEpingle => 'Épinglé';
+
+  @override
+  String get forumMeilleureReponse => 'Meilleure réponse';
+
+  @override
+  String get forumMasqueParLaModeration =>
+      'Masqué par la modération · en cours de vérification';
+
+  @override
+  String get forumMessageMasque => 'Message masqué par la modération';
+
+  @override
+  String get forumTuAsSignale =>
+      'Tu as signalé ce message. La modération va le vérifier.';
+
+  @override
+  String forumTonPostSeulToi(String title) {
+    return 'Ton post « $title » · seul toi le vois. Réponse de la modération sous 24 h.';
+  }
+
+  @override
+  String get forumVoir => 'Voir';
+
+  @override
+  String get forumAucuneDiscussion => 'Pas encore de discussion ici';
+
+  @override
+  String get forumAucuneDiscussionDetail =>
+      'Lance la première : une question, une astuce ou un avis sur un terrain.';
+
+  @override
+  String get forumPoseTaQuestion => 'Pose ta question';
+
+  @override
+  String get forumTuAsToutVu =>
+      'Tu as tout vu. Reviens plus tard pour les nouvelles discussions.';
+
+  @override
+  String get forumEnregistrer => 'Enregistrer';
+
+  @override
+  String get forumRetirerDesFavoris => 'Retirer des favoris';
+
+  @override
+  String get forumSignaler => 'Signaler';
+
+  @override
+  String get forumMerciSignalement =>
+      'Merci, la modération va vérifier sous 24 h.';
+
+  @override
+  String get forumRechercheNPlaceholder => 'Mot, tag, titre…';
+
+  @override
+  String get forumRechercheVide => 'Cherche dans les discussions';
+
+  @override
+  String get forumRechercheVideDetail =>
+      'Un mot du titre, du texte ou un tag : « bandeja », « crampons », « lac2 ».';
+
+  @override
+  String forumAucunResultat(String q) {
+    return 'Rien pour « $q »';
+  }
+
+  @override
+  String get forumAucunResultatDetail =>
+      'Essaie un autre mot, ou pose ta question à la communauté.';
+
+  @override
+  String get forumFavoris => 'Favoris';
+
+  @override
+  String get forumMesPosts => 'Mes posts';
+
+  @override
+  String get forumAucunFavori => 'Aucun favori';
+
+  @override
+  String get forumAucunFavoriDetail =>
+      'Enregistre une discussion avec « Plus d’options » pour la retrouver ici.';
+
+  @override
+  String get forumAucunPost => 'Tu n’as encore rien publié';
+
+  @override
+  String get forumAucunPostDetail =>
+      'Une question sur ton jeu, ton matériel ou un terrain ? La communauté répond vite.';
+
+  @override
+  String get forumNouveauPost => 'Nouveau post';
+
+  @override
+  String get forumModifierLePost => 'Modifier le post';
+
+  @override
+  String get forumFermerSansPublier => 'Fermer sans publier';
+
+  @override
+  String get forumBrouillonEnregistre => 'Brouillon enregistré';
+
+  @override
+  String get forumCategorieEtSport => 'Catégorie et sport';
+
+  @override
+  String get forumCategorieDuPost => 'Catégorie du post';
+
+  @override
+  String get forumSportDuPost => 'Sport du post';
+
+  @override
+  String get forumTitre => 'Titre';
+
+  @override
+  String get forumTitrePlaceholder =>
+      'Une vraie question : « Crampons pour synthétique ? »';
+
+  @override
+  String get forumDiscussionsSimilaires => 'Discussions similaires';
+
+  @override
+  String get forumTaQuestionADejaDesReponses =>
+      'Ta question a peut-être déjà des réponses.';
+
+  @override
+  String get forumMasquerLesDiscussionsSimilaires =>
+      'Masquer les discussions similaires';
+
+  @override
+  String get forumMessage => 'Message';
+
+  @override
+  String get forumMessageHelper =>
+      'Reste précis : niveau, côté, ce que tu as déjà essayé.';
+
+  @override
+  String get forumEditeurPlaceholder =>
+      'Partage une astuce, une question ou une annonce…';
+
+  @override
+  String get forumImagesFacultatif => 'Images (facultatif)';
+
+  @override
+  String get forumImagesHint => 'JPG, PNG · 10 Mo max';
+
+  @override
+  String forumImageN(int n) {
+    return 'Image $n';
+  }
+
+  @override
+  String get forumImageDuPost => 'Image du post';
+
+  @override
+  String forumImageTropLourde(String name) {
+    return '$name dépasse 10 Mo.';
+  }
+
+  @override
+  String forumImagesMax(int n) {
+    return '$n images au maximum : les suivantes n’ont pas été ajoutées.';
+  }
+
+  @override
+  String get forumTags => 'Tags';
+
+  @override
+  String get forumTagsPlaceholder => 'Ajoute un tag';
+
+  @override
+  String get forumTagsHelper =>
+      'Les tags aident les joueurs à trouver ton post.';
+
+  @override
+  String get forumSuggeresParLIa => 'Suggérés par l’IA';
+
+  @override
+  String get forumDApresTonTitreEtTonTexte => 'D’après ton titre et ton texte';
+
+  @override
+  String get forumMasquerLesSuggestions => 'Masquer les suggestions';
+
+  @override
+  String forumAjouterLeTag(String tag) {
+    return 'Ajouter le tag $tag';
+  }
+
+  @override
+  String forumDApres(String word) {
+    return 'D’après « $word »';
+  }
+
+  @override
+  String get forumRespecteLes => 'Respecte les';
+
+  @override
+  String get forumReglesDeLaCommunaute => 'règles de la communauté';
+
+  @override
+  String get forumReglesSuite =>
+      ' : pas d’insultes, pas de pub. Les messages signalés sont relus par la modération.';
+
+  @override
+  String get forumReglesTitre => 'Règles de la communauté';
+
+  @override
+  String get forumReglesTexte =>
+      '1. **Respecte les joueurs.** Critique un avis, jamais une personne : pas d’insultes, de moqueries ni de menaces.\n2. **Pas de pub.** Pas de vente, de liens ou de numéros pour attirer des clients : les coachs et les terrains ont leur page.\n3. **Reste utile.** Une vraie question, un vrai avis, avec ton niveau et ce que tu as essayé.\n4. **Protège ta vie privée.** Pas de numéro ni d’adresse en public : passe par les messages.\n\nLes messages signalés sont relus par un modérateur sous 24 h. Après 3 avertissements, le compte est suspendu de la communauté pendant 7 jours.';
+
+  @override
+  String get forumApercu => 'Aperçu';
+
+  @override
+  String get forumPublier => 'Publier';
+
+  @override
+  String get forumPostPublie => 'Ton post est publié';
+
+  @override
+  String get forumPostModifie => 'Ton post est modifié';
+
+  @override
+  String get forumPostPublieMasque =>
+      'Publié, mais masqué le temps qu’un modérateur le relise';
+
+  @override
+  String forumRetireNCaracteres(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Retire $n caractères pour publier.',
+      one: 'Retire 1 caractère pour publier.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get forumMiseEnForme => 'Mise en forme';
+
+  @override
+  String get forumOutilGras => 'Gras';
+
+  @override
+  String get forumOutilItalique => 'Italique';
+
+  @override
+  String get forumOutilListe => 'Liste';
+
+  @override
+  String get forumOutilListeNumerotee => 'Liste numérotée';
+
+  @override
+  String get forumOutilCitation => 'Citation';
+
+  @override
+  String get forumOutilLien => 'Lien';
+
+  @override
+  String get forumOutilImage => 'Image';
+
+  @override
+  String get forumLien => 'lien';
+
+  @override
+  String get forumLienPlaceholder => 'https://…';
+
+  @override
+  String get forumAlerteTitre =>
+      'Ce message pourrait blesser. Le modifier avant de publier ?';
+
+  @override
+  String get forumAlerteConsequence =>
+      'Publié tel quel, il peut être masqué le temps qu’un modérateur le relise.';
+
+  @override
+  String forumTaReponseAPasEncorePubliee(String name) {
+    return 'Ta réponse à $name · pas encore publiée';
+  }
+
+  @override
+  String get forumTaReponsePasEncorePubliee =>
+      'Ta réponse · pas encore publiée';
+
+  @override
+  String get forumTonPostPasEncorePublie => 'Ton post · pas encore publié';
+
+  @override
+  String get forumReformulation => 'Reformulation';
+
+  @override
+  String get forumUneVersionPlusPosee => 'Une version plus posée';
+
+  @override
+  String forumGardeTonConseilSansViser(String name) {
+    return 'elle garde ton conseil sans viser $name.';
+  }
+
+  @override
+  String get forumGardeTonConseil =>
+      'elle garde ton conseil sans viser personne.';
+
+  @override
+  String get forumUtiliserCetteVersion => 'Utiliser cette version';
+
+  @override
+  String get forumPublierQuandMeme => 'Publier quand même';
+
+  @override
+  String get forumModifierMonMessage => 'Modifier mon message';
+
+  @override
+  String get forumPublieeMasquee =>
+      'Publiée, et masquée le temps qu’un modérateur la relise';
+
+  @override
+  String get forumDiscussion => 'Discussion';
+
+  @override
+  String get forumRetourALaCommunaute => 'Retour à la communauté';
+
+  @override
+  String get forumSuivreLaDiscussion => 'Suivre la discussion';
+
+  @override
+  String get forumNePlusSuivreLaDiscussion => 'Ne plus suivre la discussion';
+
+  @override
+  String get forumTuSuisLaDiscussion =>
+      'Tu seras prévenu des nouvelles réponses';
+
+  @override
+  String get forumTuNeSuisPlusLaDiscussion =>
+      'Tu ne suis plus cette discussion';
+
+  @override
+  String get forumPartagerLaDiscussion => 'Partager la discussion';
+
+  @override
+  String get forumPlusDOptionsSignalerCopier =>
+      'Plus d’options : signaler, copier le lien';
+
+  @override
+  String get forumSuivre => 'Suivre';
+
+  @override
+  String get forumSuivi => 'Suivi';
+
+  @override
+  String get forumUtile => 'Utile';
+
+  @override
+  String forumUtileN(int n) {
+    return 'Utile · $n';
+  }
+
+  @override
+  String get forumMerci => 'Merci';
+
+  @override
+  String forumChoisiePar(String name) {
+    return 'choisie par $name';
+  }
+
+  @override
+  String get forumToi => 'toi';
+
+  @override
+  String get forumModifie => 'modifié';
+
+  @override
+  String get forumRepondre => 'Répondre';
+
+  @override
+  String get forumAuteur => 'Auteur';
+
+  @override
+  String forumRepondsA(String name) {
+    return 'Réponds à $name…';
+  }
+
+  @override
+  String forumReponseA(String name) {
+    return 'Réponse à $name';
+  }
+
+  @override
+  String get forumModifierTaReponse => 'Modifier ta réponse';
+
+  @override
+  String forumTaReponseASeulToi(String name) {
+    return 'Ta réponse à $name · seul toi vois ce message. Réponse de la modération sous 24 h.';
+  }
+
+  @override
+  String get forumTaReponseSeulToi =>
+      'Ta réponse · seul toi vois ce message. Réponse de la modération sous 24 h.';
+
+  @override
+  String get forumTonPostSeulToiDetail =>
+      'Seul toi vois ce post. Réponse de la modération sous 24 h.';
+
+  @override
+  String get forumPourquoi => 'Pourquoi ?';
+
+  @override
+  String get forumPourquoiMasque => 'Pourquoi ce message est masqué';
+
+  @override
+  String forumPourquoiMasqueDetail(String reason) {
+    return 'Tu l’as publié malgré l’alerte (« $reason »). Un modérateur le relit sous 24 h : il sera republié ou supprimé. Tu peux aussi le modifier.';
+  }
+
+  @override
+  String get forumMessageSupprime => 'Message supprimé';
+
+  @override
+  String get forumMessageDUnMembreMasque =>
+      'Message d’un membre que tu as masqué';
+
+  @override
+  String get forumPasEncoreDeReponse => 'Pas encore de réponse';
+
+  @override
+  String get forumPasEncoreDeReponseDetail =>
+      'Sois le premier à aider : partage ton expérience.';
+
+  @override
+  String get forumChoisirCommeMeilleureReponse =>
+      'Choisir comme meilleure réponse';
+
+  @override
+  String get forumRetirerLaMeilleureReponse => 'Retirer la meilleure réponse';
+
+  @override
+  String get forumSupprimerCePost => 'Supprimer ce post ?';
+
+  @override
+  String get forumSupprimerCePostDetail =>
+      'Il disparaît de la communauté avec ses réponses. C’est définitif.';
+
+  @override
+  String get forumSupprimerCetteReponse => 'Supprimer ta réponse ?';
+
+  @override
+  String get forumSupprimerCetteReponseDetail =>
+      'Si on t’a déjà répondu, elle restera affichée comme « Message supprimé ».';
+
+  @override
+  String get forumPostSupprime => 'Post supprimé';
+
+  @override
+  String get forumSignalerCeCommentaire => 'Signaler ce commentaire';
+
+  @override
+  String get forumSignalerCePost => 'Signaler ce post';
+
+  @override
+  String get forumMotifDuSignalement => 'Motif du signalement';
+
+  @override
+  String get forumPrecise => 'Précise (facultatif)';
+
+  @override
+  String forumNePlusVoirLesMessagesDe(String name) {
+    return 'Ne plus voir les messages de $name';
+  }
+
+  @override
+  String get forumSignalementAnonyme =>
+      'Signalement anonyme · vérifié par un modérateur sous 24 h.';
+
+  @override
+  String get trnA => 'À';
+
+  @override
+  String get trnADeterminer => 'À déterminer';
+
+  @override
+  String get trnAValider => 'À valider';
+
+  @override
+  String get trnAdresse => 'Adresse';
+
+  @override
+  String get trnAnnonce => 'Annonce';
+
+  @override
+  String get trnAnnonceEnvoyee => 'Annonce envoyée aux équipes';
+
+  @override
+  String get trnAnnulee => 'Annulée';
+
+  @override
+  String get trnApercuJoueur => 'Aperçu joueur';
+
+  @override
+  String get trnApercuLead => 'Voici ce que les joueurs verront dans Explorer.';
+
+  @override
+  String get trnApercuNote =>
+      'Le format et les frais ne peuvent plus changer. Les dates et les horaires restent modifiables : les équipes sont alors prévenues.';
+
+  @override
+  String get trnApercuTitre => 'Vérifie avant de publier';
+
+  @override
+  String get trnAucunMatchPret => 'Aucun match prêt à jouer pour l’instant.';
+
+  @override
+  String get trnAucuneEquipe => 'Aucune équipe ici pour l’instant.';
+
+  @override
+  String get trnCapitaine => 'Capitaine';
+
+  @override
+  String get trnChoisirDates => 'Choisir les dates';
+
+  @override
+  String get trnChoisisVainqueur =>
+      'Match nul en phase finale : choisis le vainqueur.';
+
+  @override
+  String get trnCloturer => 'Clôturer les inscriptions';
+
+  @override
+  String get trnClub => 'Club';
+
+  @override
+  String get trnClubRequis => 'Indique le club où se joue le tournoi.';
+
+  @override
+  String get trnConfirmerNote =>
+      'Le classement et le tableau se mettent à jour. Les joueurs reçoivent le résultat.';
+
+  @override
+  String get trnConfirmerScoreFinal => 'Confirmer le score final';
+
+  @override
+  String get trnCourtsDisponibles => 'Courts disponibles';
+
+  @override
+  String get trnCreerDescription => 'Poules ou élimination directe : 5 étapes.';
+
+  @override
+  String get trnDates => 'Dates';
+
+  @override
+  String get trnDatesRequises => 'Choisis les dates du tournoi.';
+
+  @override
+  String get trnDe => 'De';
+
+  @override
+  String get trnDotation => 'Dotation';
+
+  @override
+  String get trnDureeMatch => 'Durée d’un créneau';
+
+  @override
+  String get trnEliminationDescription =>
+      'Un match perdu et c’est fini. Plus court, 1 seul match garanti.';
+
+  @override
+  String get trnEliminationDirecte => 'Élimination directe';
+
+  @override
+  String get trnEnDirect => 'En direct';
+
+  @override
+  String get trnEncaisse => 'Encaissé';
+
+  @override
+  String get trnEnvoyer => 'Envoyer';
+
+  @override
+  String get trnEquipes => 'Équipes';
+
+  @override
+  String get trnEtapes => '5 étapes';
+
+  @override
+  String get trnFiltrerEquipes => 'Filtrer les équipes';
+
+  @override
+  String get trnFinale => 'Finale';
+
+  @override
+  String get trnFinalistes => 'Finalistes';
+
+  @override
+  String get trnFormat => 'Format';
+
+  @override
+  String get trnFormatLead =>
+      'Tu peux tout modifier tant qu’aucune équipe n’est inscrite.';
+
+  @override
+  String get trnFormatTitre => 'Format et règles';
+
+  @override
+  String get trnFraisLead =>
+      'Les équipes paient en ligne pour réserver leur place.';
+
+  @override
+  String get trnFraisParEquipe => 'Frais d’inscription par équipe';
+
+  @override
+  String get trnFraisTitre => 'Frais et prix';
+
+  @override
+  String get trnGenerer => 'Générer';
+
+  @override
+  String get trnInfosLead =>
+      'C’est ce que les joueurs voient en premier dans Explorer.';
+
+  @override
+  String get trnInfosTitre => 'Les infos de base';
+
+  @override
+  String get trnInscriptions => 'Inscriptions';
+
+  @override
+  String get trnIntrouvable => 'Ce tournoi n’existe plus';
+
+  @override
+  String get trnMesTournois => 'Mes tournois';
+
+  @override
+  String get trnMessage => 'Message';
+
+  @override
+  String get trnMotifAutre => 'Autre raison';
+
+  @override
+  String get trnMotifComplet => 'Tournoi complet';
+
+  @override
+  String get trnMotifDuRefus => 'Motif du refus';
+
+  @override
+  String get trnMotifNiveau => 'Niveau hors fourchette';
+
+  @override
+  String get trnNiveauMoyen => 'Niveau moyen des équipes';
+
+  @override
+  String get trnNomDuTournoi => 'Nom du tournoi';
+
+  @override
+  String get trnNomHelper =>
+      'Court et facile à retenir : il apparaît sur l’affiche.';
+
+  @override
+  String get trnNomTropCourt => 'Donne un nom d’au moins 3 caractères.';
+
+  @override
+  String get trnNombreEquipes => 'Nombre d’équipes';
+
+  @override
+  String get trnNonPaye => 'Non payé';
+
+  @override
+  String get trnPaye => 'Payé';
+
+  @override
+  String get trnPlanning => 'Planning';
+
+  @override
+  String get trnPlanningAGenerer => 'À générer quand les équipes sont validées';
+
+  @override
+  String get trnPlanningBrouillon => 'Proposé, pas encore publié';
+
+  @override
+  String get trnPlanningGenere => 'Planning généré';
+
+  @override
+  String get trnPlanningPropose => 'Planning proposé';
+
+  @override
+  String get trnPlanningPublie => 'Publié : les joueurs voient le tableau';
+
+  @override
+  String get trnPlanningVide =>
+      'Valide au moins 2 équipes, puis touche « Générer ».';
+
+  @override
+  String get trnPoulesDescription =>
+      'Les 2 premiers de chaque poule passent en phase finale.';
+
+  @override
+  String get trnPoulesPhaseFinale => 'Poules + phase finale';
+
+  @override
+  String get trnPresentation => 'Présentation';
+
+  @override
+  String get trnPublie => 'Tournoi publié';
+
+  @override
+  String get trnPublie2 => 'Publié';
+
+  @override
+  String get trnPublier => 'Publier le tournoi';
+
+  @override
+  String get trnPublierTableau => 'Publier';
+
+  @override
+  String get trnRecapitulatif => 'Récapitulatif';
+
+  @override
+  String get trnRefusDescription =>
+      'Choisis un motif : il accompagne la notification envoyée au capitaine.';
+
+  @override
+  String get trnRefusee => 'Refusée';
+
+  @override
+  String get trnRefusees => 'Refusées';
+
+  @override
+  String get trnRegenerer => 'Régénérer';
+
+  @override
+  String get trnReposEntreMatchs => 'Repos entre 2 matchs';
+
+  @override
+  String get trnResteImpourToi => 'Reste pour toi';
+
+  @override
+  String get trnRienAValider => 'Rien à valider';
+
+  @override
+  String get trnRienPublie =>
+      'Rien n’est envoyé aux équipes avant ta publication.';
+
+  @override
+  String get trnRouvrir => 'Rouvrir les inscriptions';
+
+  @override
+  String get trnScoreConfirme => 'Score confirmé';
+
+  @override
+  String get trnScores => 'Scores';
+
+  @override
+  String get trnScoresApresPlanning => 'Disponible une fois le planning généré';
+
+  @override
+  String get trnScoresDescription => 'Saisie au bord du court';
+
+  @override
+  String get trnScoresEnDirect => 'Scores en direct';
+
+  @override
+  String get trnStatutAnnule => 'Annulé';
+
+  @override
+  String get trnStatutBrouillon => 'Brouillon';
+
+  @override
+  String get trnStatutEnCours => 'En cours';
+
+  @override
+  String get trnStatutFerme => 'Inscriptions closes';
+
+  @override
+  String get trnStatutOuvert => 'Inscriptions ouvertes';
+
+  @override
+  String get trnStatutTermine => 'Terminé';
+
+  @override
+  String get trnStepApercu => 'Aperçu';
+
+  @override
+  String get trnStepFormat => 'Format & règles';
+
+  @override
+  String get trnStepFrais => 'Frais & prix';
+
+  @override
+  String get trnStepInfos => 'Infos';
+
+  @override
+  String get trnStepTerrains => 'Terrains & dates';
+
+  @override
+  String get trnTableauPublie => 'Tableau publié';
+
+  @override
+  String get trnTerrainsLead =>
+      'On calcule le planning des matchs à partir de ces créneaux.';
+
+  @override
+  String get trnTerrainsPlanningNote =>
+      'Les courts et les horaires se règlent dans le planning, une fois les équipes validées.';
+
+  @override
+  String get trnTerrainsTitre => 'Terrains et dates';
+
+  @override
+  String get trnTesContraintes => 'Tes contraintes';
+
+  @override
+  String get trnToucheUnMatch => 'Touche un match pour saisir le score.';
+
+  @override
+  String get trnTroisieme => '3e place';
+
+  @override
+  String get trnVainqueur => 'Vainqueur';
+
+  @override
+  String get trnVainqueurs => 'Vainqueurs';
+
+  @override
+  String get trnValidee => 'Validée';
+
+  @override
+  String get trnValidees => 'Validées';
+
+  @override
+  String get trnVisibleExplorer =>
+      'Le tournoi est visible par tous les joueurs dans Explorer.';
+
+  @override
+  String get trnVoirApercu => 'Voir l’aperçu';
+
+  @override
+  String trnAValiderN(int n) {
+    return '$n à valider';
+  }
+
+  @override
+  String trnAVenirN(int n) {
+    return 'À venir · $n';
+  }
+
+  @override
+  String trnAjouterPoint(String name) {
+    return 'Ajouter un point à $name';
+  }
+
+  @override
+  String trnAnnonceDescription(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Aux $n équipes inscrites',
+      one: 'À 1 équipe inscrite',
+      zero: 'À toutes les équipes inscrites',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String trnCourtN(int n) {
+    return 'Court $n';
+  }
+
+  @override
+  String trnDemie(int n) {
+    return 'Demie $n';
+  }
+
+  @override
+  String trnEliminationResume(int n) {
+    return 'Élimination directe · $n équipes';
+  }
+
+  @override
+  String trnEnCoursN(int n) {
+    return 'En cours · $n';
+  }
+
+  @override
+  String trnEnDirectN(int n) {
+    return 'En direct · $n';
+  }
+
+  @override
+  String trnEquipesSur(int a, int b) {
+    return '$a/$b équipes';
+  }
+
+  @override
+  String trnFraisHelper(String amount) {
+    return 'Soit $amount par joueur. Paiement en ligne obligatoire pour s’inscrire.';
+  }
+
+  @override
+  String trnJoueursManquants(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Il manque $n joueurs',
+      one: 'Il manque 1 joueur',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String trnJoueursParEquipe(int n) {
+    return '$n joueurs par équipe, capitaine compris.';
+  }
+
+  @override
+  String trnPasAssezCreneaux(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n matchs sans horaire',
+      one: '1 match sans horaire',
+    );
+    return 'Pas assez de créneaux : $_temp0. Ajoute un court ou une plage horaire.';
+  }
+
+  @override
+  String trnPouleJ(String p, int j) {
+    return 'Poule $p · J$j';
+  }
+
+  @override
+  String trnPoulesResume(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n poules',
+      one: '1 poule',
+    );
+    return '$_temp0 puis phase finale';
+  }
+
+  @override
+  String trnQuart(int n) {
+    return 'QF $n';
+  }
+
+  @override
+  String trnRecapFrais(String fee, String prize) {
+    return '$fee par équipe · dotation $prize';
+  }
+
+  @override
+  String trnRecapInfos(String sport, String min, String max) {
+    return '$sport · niveau moyen $min – $max';
+  }
+
+  @override
+  String trnRefusRembourse(String amount) {
+    return 'Une équipe refusée est remboursée en entier ($amount) et prévenue avec ton message.';
+  }
+
+  @override
+  String trnRefuserEquipe(String name) {
+    return 'Refuser $name ?';
+  }
+
+  @override
+  String trnRetirerPoint(String name) {
+    return 'Retirer un point à $name';
+  }
+
+  @override
+  String trnSiToutesInscrites(int n) {
+    return 'Si les $n équipes s’inscrivent';
+  }
+
+  @override
+  String trnTerminesN(int n) {
+    return 'Terminés · $n';
+  }
+
+  @override
+  String trnTourDe(int size, int n) {
+    return 'Tour de $size · $n';
+  }
+
+  @override
+  String get trnAnnulerInscription => 'Annuler l’inscription';
+
+  @override
+  String get trnAuTotal => 'au total';
+
+  @override
+  String get trnAucuneEquipeValidee => 'Aucune équipe validée pour l’instant.';
+
+  @override
+  String get trnCodeCopie => 'Code copié';
+
+  @override
+  String get trnCodeInvitation => 'Code d’invitation';
+
+  @override
+  String get trnCoequipiersNote =>
+      'Les autres te rejoignent avec le code d’invitation, sans payer : tu règles l’inscription de l’équipe.';
+
+  @override
+  String get trnComplet => 'Complet';
+
+  @override
+  String get trnCopierCode => 'Copier le code';
+
+  @override
+  String get trnCreeTonEquipe => 'Crée ton équipe';
+
+  @override
+  String get trnCreeTonEquipeLead =>
+      'Un nom, un capitaine. Tes coéquipiers peuvent aussi te rejoindre avec un code.';
+
+  @override
+  String get trnCreerEquipe => 'Créer l’équipe';
+
+  @override
+  String get trnDemiFinales => 'Demi-finales';
+
+  @override
+  String get trnDetailDuTournoi => 'Détail du tournoi';
+
+  @override
+  String get trnDiff => 'Diff.';
+
+  @override
+  String get trnEnCoursValidation =>
+      'L’organisateur vérifie le niveau et les places.';
+
+  @override
+  String get trnEquipe => 'Équipe';
+
+  @override
+  String get trnEquipeCreee => 'Équipe créée';
+
+  @override
+  String get trnGererTournoi => 'Gérer le tournoi';
+
+  @override
+  String get trnHuitiemes => 'Huitièmes de finale';
+
+  @override
+  String get trnInscription => 'Inscription';
+
+  @override
+  String get trnInscriptionConfirmee => 'Inscription confirmée';
+
+  @override
+  String get trnInscriptionEnvoyee => 'Inscription envoyée';
+
+  @override
+  String get trnInscriptionsBientot => 'Inscriptions bientôt';
+
+  @override
+  String get trnInscrireEquipe => 'Inscrire mon équipe';
+
+  @override
+  String get trnJ => 'J';
+
+  @override
+  String get trnJaiUnCode => 'J’ai un code d’invitation';
+
+  @override
+  String get trnLeTableau => 'Le tableau';
+
+  @override
+  String get trnLesPoules => 'Les poules';
+
+  @override
+  String get trnLieu => 'Lieu';
+
+  @override
+  String get trnNomEquipe => 'Nom de l’équipe';
+
+  @override
+  String get trnNomEquipeRequis => 'Donne un nom à ton équipe.';
+
+  @override
+  String get trnPaiementAttendu => 'Paie pour réserver ta place.';
+
+  @override
+  String get trnPartageCode => 'Partage ce code à tes coéquipiers';
+
+  @override
+  String get trnPasDEquipe => 'Tu n’as pas d’équipe dans ce tournoi.';
+
+  @override
+  String get trnPayerInscription => 'Payer l’inscription';
+
+  @override
+  String get trnPhaseFinale => 'Phase finale';
+
+  @override
+  String get trnPlaces => 'Places';
+
+  @override
+  String get trnPointsNote =>
+      'Victoire = 3 pts, nul = 1 pt. À égalité : différence, puis points marqués.';
+
+  @override
+  String get trnPts => 'Pts';
+
+  @override
+  String get trnQualifie => 'Qualifié';
+
+  @override
+  String get trnQuartsDeFinale => 'Quarts de finale';
+
+  @override
+  String get trnRefuseeParOrga => 'Refusée par l’organisateur';
+
+  @override
+  String get trnRejoindre => 'Rejoindre';
+
+  @override
+  String get trnRejoindreDescription =>
+      'Le capitaine de l’équipe t’a envoyé un code de 6 lettres.';
+
+  @override
+  String get trnRejoindreEquipe => 'Rejoindre une équipe';
+
+  @override
+  String get trnRembourseSiRefus => 'Refusée ? Tu es remboursé en entier.';
+
+  @override
+  String get trnTableauDuTournoi => 'Tableau du tournoi';
+
+  @override
+  String get trnTableauPasPublie => 'Le tableau n’est pas encore publié.';
+
+  @override
+  String get trnTesMatchs => 'Tes matchs';
+
+  @override
+  String get trnTirage => 'Tirage et calendrier';
+
+  @override
+  String get trnTirageNote =>
+      'Ton calendrier arrive dès que l’organisateur publie le tableau.';
+
+  @override
+  String get trnV => 'V';
+
+  @override
+  String get trnValidationOrga => 'Validation par l’organisateur';
+
+  @override
+  String trnCapitaineNom(String name) {
+    return 'Capitaine : $name';
+  }
+
+  @override
+  String trnCoequipiers(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Tes $n coéquipiers',
+      one: 'Ton partenaire',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String trnEquipesInscrites(int n) {
+    return 'Équipes inscrites · $n';
+  }
+
+  @override
+  String trnInscriptionEyebrow(String team) {
+    return 'INSCRIPTION · $team';
+  }
+
+  @override
+  String trnInscriptionPayee(String amount) {
+    return 'Inscription payée · $amount';
+  }
+
+  @override
+  String trnInscritesSur(int a, int b) {
+    return '$a/$b inscrites';
+  }
+
+  @override
+  String trnJoueurN(int n) {
+    return 'Joueur $n';
+  }
+
+  @override
+  String trnMembresN(int a, int b) {
+    return 'Membres · $a/$b';
+  }
+
+  @override
+  String trnMonEquipe(String name) {
+    return 'Mon équipe $name';
+  }
+
+  @override
+  String trnNiveauFourchette(String min, String max) {
+    return 'Niveau $min – $max';
+  }
+
+  @override
+  String trnParEquipeDe(int n) {
+    return 'par équipe de $n';
+  }
+
+  @override
+  String trnPouleX(String p) {
+    return 'Poule $p';
+  }
+
+  @override
+  String trnToi(String name) {
+    return '$name · toi';
+  }
+
+  @override
+  String get trnAJouer => 'À jouer';
+
+  @override
+  String get trnAnnonceVisible =>
+      'Les équipes la voient sur la page du tournoi et de leur équipe.';
+
+  @override
+  String get trnAnnoncesOrga => 'Annonces de l’organisateur';
+
+  @override
+  String get trnAucunPlanning => 'Aucun planning pour l’instant';
+
+  @override
+  String get trnAucuneAnnonce => 'Aucune annonce envoyée';
+
+  @override
+  String get trnContre => 'contre';
+
+  @override
+  String get trnDejaEnvoyees => 'Déjà envoyées';
+
+  @override
+  String get trnMatch => 'Match';
+
+  @override
+  String get trnMatchEnDirect => 'Match en direct';
+
+  @override
+  String get trnMonInscription => 'Mon inscription';
+
+  @override
+  String get trnNombrePlaces => 'Nombre de places';
+
+  @override
+  String get trnOu => 'Où';
+
+  @override
+  String get trnParPersonne => 'par personne';
+
+  @override
+  String get trnPartagerResume => 'Partager le résumé';
+
+  @override
+  String get trnProchainsMatchs => 'Prochains matchs';
+
+  @override
+  String get trnQuand => 'Quand';
+
+  @override
+  String get trnResume => 'Résumé du match';
+
+  @override
+  String get trnSInscrire => 'S’inscrire';
+
+  @override
+  String get trnScoreMisAJour =>
+      'Le score se met à jour pendant que l’organisateur le saisit.';
+
+  @override
+  String get trnTabAnnonces => 'Annonces';
+
+  @override
+  String get trnTabTableau => 'Tableau';
+
+  @override
+  String get trnTabTournois => 'Tournois';
+
+  @override
+  String get trnTableauDeBord => 'Tableau de bord';
+
+  @override
+  String get trnTermine => 'Terminé';
+
+  @override
+  String get trnType => 'Type';
+
+  @override
+  String get trnTypeEvenement => 'Événement';
+
+  @override
+  String get trnTypeEvenementDescription =>
+      'Journée initiation ou soirée : inscription individuelle, sans tableau.';
+
+  @override
+  String get trnTypeTournoi => 'Tournoi';
+
+  @override
+  String get trnTypeTournoiDescription =>
+      'Des équipes, des poules ou un tableau, un vainqueur.';
+
+  @override
+  String get trnVoir => 'Voir';
+
+  @override
+  String trnEquipesAValider(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n équipes à valider',
+      one: '1 équipe à valider',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String trnEvenementResume(int n) {
+    return 'Inscription individuelle · $n places';
+  }
+
+  @override
+  String trnParticipantsN(int n) {
+    return 'Participants · $n';
+  }
+
+  @override
+  String trnRecapTexte(
+    String winner,
+    String loser,
+    String score,
+    String stage,
+    String tournament,
+  ) {
+    return '$winner gagne $score contre $loser ($stage, $tournament). Résultat publié sur MatchUp.';
+  }
+
+  @override
   String get entAllPrograms => 'Tous les programmes';
 
   @override
@@ -13877,1607 +15482,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get aiYourMessage => 'Ton message à l’assistant';
 
   @override
-  String get hier => 'hier';
-
-  @override
-  String get plusDOptions => 'Plus d’options';
-
-  @override
-  String get forumCatTechnique => 'Conseils & technique';
-
-  @override
-  String get forumCatEquipement => 'Équipement';
-
-  @override
-  String get forumCatTerrains => 'Terrains';
-
-  @override
-  String get forumCatTournois => 'Tournois';
-
-  @override
-  String get forumCatDiscussions => 'Discussions libres';
-
-  @override
-  String get forumTriTendance => 'Tendance';
-
-  @override
-  String get forumTriRecents => 'Récents';
-
-  @override
-  String get forumTriTop => 'Top';
-
-  @override
-  String get forumTriUtiles => 'Les plus utiles';
-
-  @override
-  String get forumTriRecentes => 'Les plus récentes';
-
-  @override
-  String get forumTriAnciennes => 'Les plus anciennes';
-
-  @override
-  String get forumMotifSpam => 'Spam ou publicité';
-
-  @override
-  String get forumMotifInsulte => 'Insulte ou harcèlement';
-
-  @override
-  String get forumMotifChoquant => 'Contenu choquant ou dangereux';
-
-  @override
-  String get forumMotifFausseInfo => 'Fausse information';
-
-  @override
-  String get forumMotifAutre => 'Autre chose';
-
-  @override
-  String get forumMembre => 'Membre';
-
-  @override
-  String get forumIaAucune => 'Aucune toxicité';
-
-  @override
-  String get forumIaAucuneExplication =>
-      'Rien de blessant ni de publicitaire détecté.';
-
-  @override
-  String get forumIaInsulte => 'Toxicité · insulte';
-
-  @override
-  String get forumIaInsulteExplication =>
-      'Insulte grossière visant une personne.';
-
-  @override
-  String get forumIaInsulteLegere => 'Toxicité · insulte légère';
-
-  @override
-  String get forumIaInsulteLegereExplication =>
-      'Moquerie entre joueurs, sans menace ni haine. L’IA peut se tromper sur le ton entre amis.';
-
-  @override
-  String get forumIaTonAgressif => 'Ton agressif';
-
-  @override
-  String get forumIaTonAgressifExplication =>
-      'Ton sec qui vise une personne plutôt que son avis. Pas d’insulte.';
-
-  @override
-  String get forumIaSpamContact => 'Spam · lien et contact';
-
-  @override
-  String get forumIaSpamPub => 'Spam · publicité';
-
-  @override
-  String get forumIaSpamExplication =>
-      'Vente ou publicité avec un moyen de contact hors de MatchUp.';
-
-  @override
-  String get forumIaCoordonnees => 'Coordonnées publiées';
-
-  @override
-  String get forumIaCoordonneesExplication =>
-      'Numéro ou adresse publiés : à faire passer en message privé.';
-
-  @override
-  String get forumTitreTropCourt =>
-      'Ton titre doit faire au moins 10 caractères.';
-
-  @override
-  String get forumMessageVide => 'Écris ton message avant de publier.';
-
-  @override
-  String get forumDiscussionSupprimee => 'Cette discussion a été supprimée.';
-
-  @override
-  String get forumReponseSupprimee => 'Cette réponse a été supprimée.';
-
-  @override
-  String get forumEnVerification => 'Ce contenu est en cours de vérification.';
-
-  @override
-  String get forumSeulLAuteur =>
-      'Seul l’auteur peut modifier ou supprimer ce message.';
-
-  @override
-  String get forumSeulLAuteurChoisit =>
-      'Seul l’auteur du post choisit la meilleure réponse.';
-
-  @override
-  String get forumReponseDirecte => 'Choisis une réponse directe au post.';
-
-  @override
-  String get forumPasTaPropreReponse =>
-      'Tu ne peux pas choisir ta propre réponse.';
-
-  @override
-  String get forumPasDeVotePourSoi =>
-      'Tu ne peux pas voter pour ton propre message.';
-
-  @override
-  String get forumPasDeReactionPourSoi =>
-      'Tu ne peux pas réagir à ton propre message.';
-
-  @override
-  String get forumPasTeSuivre => 'Tu ne peux pas te suivre toi-même.';
-
-  @override
-  String get forumPasTeMasquer => 'Tu ne peux pas te masquer toi-même.';
-
-  @override
-  String get forumPasTonPropreMessage =>
-      'Tu ne peux pas signaler ton propre message.';
-
-  @override
-  String get forumHorsLigne => 'Hors ligne';
-
-  @override
-  String get forumHorsLigneDetail => 'Vérifie ta connexion puis réessaie.';
-
-  @override
-  String get forumErreur => 'Ça n’a pas marché. Réessaie dans un instant.';
-
-  @override
-  String get forumSuspendu => 'Tu ne peux plus publier pour l’instant';
-
-  @override
-  String forumSuspenduJusquA(String date) {
-    return 'Suspendu de la communauté jusqu’au $date. Tu peux toujours lire.';
-  }
-
-  @override
-  String get forumRechercherDansLaCommunaute => 'Rechercher dans la communauté';
-
-  @override
-  String get forumMesPostsEtFavoris => 'Mes posts et favoris';
-
-  @override
-  String get forumPoseTaQuestionALaCommunaute =>
-      'Pose ta question à la communauté';
-
-  @override
-  String get forumEcrireUnNouveauPost => 'Écrire un nouveau post';
-
-  @override
-  String get forumCategories => 'Catégories';
-
-  @override
-  String get forumNouveauxDepuisTaDerniereVisite =>
-      'Nouveaux depuis ta dernière visite';
-
-  @override
-  String forumNNouveaux(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: '$n nouveaux',
-      one: '1 nouveau',
-    );
-    return '$_temp0';
-  }
-
-  @override
-  String get forumFiltrerParSport => 'Filtrer par sport';
-
-  @override
-  String get forumTousLesSports => 'Tous les sports';
-
-  @override
-  String get forumTrierLesDiscussions => 'Trier les discussions';
-
-  @override
-  String forumDiscussions(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: 'discussions',
-      one: 'discussion',
-      zero: 'discussion',
-    );
-    return '$_temp0';
-  }
-
-  @override
-  String forumTAMentionne(String time) {
-    return 't’a mentionné · $time';
-  }
-
-  @override
-  String get forumVoterPour => 'Voter pour';
-
-  @override
-  String get forumVoterContre => 'Voter contre';
-
-  @override
-  String forumVoterPourNVotes(String score) {
-    return 'Voter pour, $score votes';
-  }
-
-  @override
-  String forumNVotes(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: '$n votes',
-      one: '1 vote',
-      zero: '0 vote',
-    );
-    return '$_temp0';
-  }
-
-  @override
-  String forumNReponses(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: '$n réponses',
-      one: '1 réponse',
-      zero: '0 réponse',
-    );
-    return '$_temp0';
-  }
-
-  @override
-  String get forumEpingle => 'Épinglé';
-
-  @override
-  String get forumMeilleureReponse => 'Meilleure réponse';
-
-  @override
-  String get forumMasqueParLaModeration =>
-      'Masqué par la modération · en cours de vérification';
-
-  @override
-  String get forumMessageMasque => 'Message masqué par la modération';
-
-  @override
-  String get forumTuAsSignale =>
-      'Tu as signalé ce message. La modération va le vérifier.';
-
-  @override
-  String forumTonPostSeulToi(String title) {
-    return 'Ton post « $title » · seul toi le vois. Réponse de la modération sous 24 h.';
-  }
-
-  @override
-  String get forumVoir => 'Voir';
-
-  @override
-  String get forumAucuneDiscussion => 'Pas encore de discussion ici';
-
-  @override
-  String get forumAucuneDiscussionDetail =>
-      'Lance la première : une question, une astuce ou un avis sur un terrain.';
-
-  @override
-  String get forumPoseTaQuestion => 'Pose ta question';
-
-  @override
-  String get forumTuAsToutVu =>
-      'Tu as tout vu. Reviens plus tard pour les nouvelles discussions.';
-
-  @override
-  String get forumEnregistrer => 'Enregistrer';
-
-  @override
-  String get forumRetirerDesFavoris => 'Retirer des favoris';
-
-  @override
-  String get forumSignaler => 'Signaler';
-
-  @override
-  String get forumMerciSignalement =>
-      'Merci, la modération va vérifier sous 24 h.';
-
-  @override
-  String get forumRechercheNPlaceholder => 'Mot, tag, titre…';
-
-  @override
-  String get forumRechercheVide => 'Cherche dans les discussions';
-
-  @override
-  String get forumRechercheVideDetail =>
-      'Un mot du titre, du texte ou un tag : « bandeja », « crampons », « lac2 ».';
-
-  @override
-  String forumAucunResultat(String q) {
-    return 'Rien pour « $q »';
-  }
-
-  @override
-  String get forumAucunResultatDetail =>
-      'Essaie un autre mot, ou pose ta question à la communauté.';
-
-  @override
-  String get forumFavoris => 'Favoris';
-
-  @override
-  String get forumMesPosts => 'Mes posts';
-
-  @override
-  String get forumAucunFavori => 'Aucun favori';
-
-  @override
-  String get forumAucunFavoriDetail =>
-      'Enregistre une discussion avec « Plus d’options » pour la retrouver ici.';
-
-  @override
-  String get forumAucunPost => 'Tu n’as encore rien publié';
-
-  @override
-  String get forumAucunPostDetail =>
-      'Une question sur ton jeu, ton matériel ou un terrain ? La communauté répond vite.';
-
-  @override
-  String get forumNouveauPost => 'Nouveau post';
-
-  @override
-  String get forumModifierLePost => 'Modifier le post';
-
-  @override
-  String get forumFermerSansPublier => 'Fermer sans publier';
-
-  @override
-  String get forumBrouillonEnregistre => 'Brouillon enregistré';
-
-  @override
-  String get forumCategorieEtSport => 'Catégorie et sport';
-
-  @override
-  String get forumCategorieDuPost => 'Catégorie du post';
-
-  @override
-  String get forumSportDuPost => 'Sport du post';
-
-  @override
-  String get forumTitre => 'Titre';
-
-  @override
-  String get forumTitrePlaceholder =>
-      'Une vraie question : « Crampons pour synthétique ? »';
-
-  @override
-  String get forumDiscussionsSimilaires => 'Discussions similaires';
-
-  @override
-  String get forumTaQuestionADejaDesReponses =>
-      'Ta question a peut-être déjà des réponses.';
-
-  @override
-  String get forumMasquerLesDiscussionsSimilaires =>
-      'Masquer les discussions similaires';
-
-  @override
-  String get forumMessage => 'Message';
-
-  @override
-  String get forumMessageHelper =>
-      'Reste précis : niveau, côté, ce que tu as déjà essayé.';
-
-  @override
-  String get forumEditeurPlaceholder =>
-      'Partage une astuce, une question ou une annonce…';
-
-  @override
-  String get forumImagesFacultatif => 'Images (facultatif)';
-
-  @override
-  String get forumImagesHint => 'JPG, PNG · 10 Mo max';
-
-  @override
-  String forumImageN(int n) {
-    return 'Image $n';
-  }
-
-  @override
-  String get forumImageDuPost => 'Image du post';
-
-  @override
-  String forumImageTropLourde(String name) {
-    return '$name dépasse 10 Mo.';
-  }
-
-  @override
-  String forumImagesMax(int n) {
-    return '$n images au maximum : les suivantes n’ont pas été ajoutées.';
-  }
-
-  @override
-  String get forumTags => 'Tags';
-
-  @override
-  String get forumTagsPlaceholder => 'Ajoute un tag';
-
-  @override
-  String get forumTagsHelper =>
-      'Les tags aident les joueurs à trouver ton post.';
-
-  @override
-  String get forumSuggeresParLIa => 'Suggérés par l’IA';
-
-  @override
-  String get forumDApresTonTitreEtTonTexte => 'D’après ton titre et ton texte';
-
-  @override
-  String get forumMasquerLesSuggestions => 'Masquer les suggestions';
-
-  @override
-  String forumAjouterLeTag(String tag) {
-    return 'Ajouter le tag $tag';
-  }
-
-  @override
-  String forumDApres(String word) {
-    return 'D’après « $word »';
-  }
-
-  @override
-  String get forumRespecteLes => 'Respecte les';
-
-  @override
-  String get forumReglesDeLaCommunaute => 'règles de la communauté';
-
-  @override
-  String get forumReglesSuite =>
-      ' : pas d’insultes, pas de pub. Les messages signalés sont relus par la modération.';
-
-  @override
-  String get forumReglesTitre => 'Règles de la communauté';
-
-  @override
-  String get forumReglesTexte =>
-      '1. **Respecte les joueurs.** Critique un avis, jamais une personne : pas d’insultes, de moqueries ni de menaces.\n2. **Pas de pub.** Pas de vente, de liens ou de numéros pour attirer des clients : les coachs et les terrains ont leur page.\n3. **Reste utile.** Une vraie question, un vrai avis, avec ton niveau et ce que tu as essayé.\n4. **Protège ta vie privée.** Pas de numéro ni d’adresse en public : passe par les messages.\n\nLes messages signalés sont relus par un modérateur sous 24 h. Après 3 avertissements, le compte est suspendu de la communauté pendant 7 jours.';
-
-  @override
-  String get forumApercu => 'Aperçu';
-
-  @override
-  String get forumPublier => 'Publier';
-
-  @override
-  String get forumPostPublie => 'Ton post est publié';
-
-  @override
-  String get forumPostModifie => 'Ton post est modifié';
-
-  @override
-  String get forumPostPublieMasque =>
-      'Publié, mais masqué le temps qu’un modérateur le relise';
-
-  @override
-  String forumRetireNCaracteres(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: 'Retire $n caractères pour publier.',
-      one: 'Retire 1 caractère pour publier.',
-    );
-    return '$_temp0';
-  }
-
-  @override
-  String get forumMiseEnForme => 'Mise en forme';
-
-  @override
-  String get forumOutilGras => 'Gras';
-
-  @override
-  String get forumOutilItalique => 'Italique';
-
-  @override
-  String get forumOutilListe => 'Liste';
-
-  @override
-  String get forumOutilListeNumerotee => 'Liste numérotée';
-
-  @override
-  String get forumOutilCitation => 'Citation';
-
-  @override
-  String get forumOutilLien => 'Lien';
-
-  @override
-  String get forumOutilImage => 'Image';
-
-  @override
-  String get forumLien => 'lien';
-
-  @override
-  String get forumLienPlaceholder => 'https://…';
-
-  @override
-  String get forumAlerteTitre =>
-      'Ce message pourrait blesser. Le modifier avant de publier ?';
-
-  @override
-  String get forumAlerteConsequence =>
-      'Publié tel quel, il peut être masqué le temps qu’un modérateur le relise.';
-
-  @override
-  String forumTaReponseAPasEncorePubliee(String name) {
-    return 'Ta réponse à $name · pas encore publiée';
-  }
-
-  @override
-  String get forumTaReponsePasEncorePubliee =>
-      'Ta réponse · pas encore publiée';
-
-  @override
-  String get forumTonPostPasEncorePublie => 'Ton post · pas encore publié';
-
-  @override
-  String get forumReformulation => 'Reformulation';
-
-  @override
-  String get forumUneVersionPlusPosee => 'Une version plus posée';
-
-  @override
-  String forumGardeTonConseilSansViser(String name) {
-    return 'elle garde ton conseil sans viser $name.';
-  }
-
-  @override
-  String get forumGardeTonConseil =>
-      'elle garde ton conseil sans viser personne.';
-
-  @override
-  String get forumUtiliserCetteVersion => 'Utiliser cette version';
-
-  @override
-  String get forumPublierQuandMeme => 'Publier quand même';
-
-  @override
-  String get forumModifierMonMessage => 'Modifier mon message';
-
-  @override
-  String get forumPublieeMasquee =>
-      'Publiée, et masquée le temps qu’un modérateur la relise';
-
-  @override
-  String get forumDiscussion => 'Discussion';
-
-  @override
-  String get forumRetourALaCommunaute => 'Retour à la communauté';
-
-  @override
-  String get forumSuivreLaDiscussion => 'Suivre la discussion';
-
-  @override
-  String get forumNePlusSuivreLaDiscussion => 'Ne plus suivre la discussion';
-
-  @override
-  String get forumTuSuisLaDiscussion =>
-      'Tu seras prévenu des nouvelles réponses';
-
-  @override
-  String get forumTuNeSuisPlusLaDiscussion =>
-      'Tu ne suis plus cette discussion';
-
-  @override
-  String get forumPartagerLaDiscussion => 'Partager la discussion';
-
-  @override
-  String get forumPlusDOptionsSignalerCopier =>
-      'Plus d’options : signaler, copier le lien';
-
-  @override
-  String get forumSuivre => 'Suivre';
-
-  @override
-  String get forumSuivi => 'Suivi';
-
-  @override
-  String get forumUtile => 'Utile';
-
-  @override
-  String forumUtileN(int n) {
-    return 'Utile · $n';
-  }
-
-  @override
-  String get forumMerci => 'Merci';
-
-  @override
-  String forumChoisiePar(String name) {
-    return 'choisie par $name';
-  }
-
-  @override
-  String get forumToi => 'toi';
-
-  @override
-  String get forumModifie => 'modifié';
-
-  @override
-  String get forumRepondre => 'Répondre';
-
-  @override
-  String get forumAuteur => 'Auteur';
-
-  @override
-  String forumRepondsA(String name) {
-    return 'Réponds à $name…';
-  }
-
-  @override
-  String forumReponseA(String name) {
-    return 'Réponse à $name';
-  }
-
-  @override
-  String get forumModifierTaReponse => 'Modifier ta réponse';
-
-  @override
-  String forumTaReponseASeulToi(String name) {
-    return 'Ta réponse à $name · seul toi vois ce message. Réponse de la modération sous 24 h.';
-  }
-
-  @override
-  String get forumTaReponseSeulToi =>
-      'Ta réponse · seul toi vois ce message. Réponse de la modération sous 24 h.';
-
-  @override
-  String get forumTonPostSeulToiDetail =>
-      'Seul toi vois ce post. Réponse de la modération sous 24 h.';
-
-  @override
-  String get forumPourquoi => 'Pourquoi ?';
-
-  @override
-  String get forumPourquoiMasque => 'Pourquoi ce message est masqué';
-
-  @override
-  String forumPourquoiMasqueDetail(String reason) {
-    return 'Tu l’as publié malgré l’alerte (« $reason »). Un modérateur le relit sous 24 h : il sera republié ou supprimé. Tu peux aussi le modifier.';
-  }
-
-  @override
-  String get forumMessageSupprime => 'Message supprimé';
-
-  @override
-  String get forumMessageDUnMembreMasque =>
-      'Message d’un membre que tu as masqué';
-
-  @override
-  String get forumPasEncoreDeReponse => 'Pas encore de réponse';
-
-  @override
-  String get forumPasEncoreDeReponseDetail =>
-      'Sois le premier à aider : partage ton expérience.';
-
-  @override
-  String get forumChoisirCommeMeilleureReponse =>
-      'Choisir comme meilleure réponse';
-
-  @override
-  String get forumRetirerLaMeilleureReponse => 'Retirer la meilleure réponse';
-
-  @override
-  String get forumSupprimerCePost => 'Supprimer ce post ?';
-
-  @override
-  String get forumSupprimerCePostDetail =>
-      'Il disparaît de la communauté avec ses réponses. C’est définitif.';
-
-  @override
-  String get forumSupprimerCetteReponse => 'Supprimer ta réponse ?';
-
-  @override
-  String get forumSupprimerCetteReponseDetail =>
-      'Si on t’a déjà répondu, elle restera affichée comme « Message supprimé ».';
-
-  @override
-  String get forumPostSupprime => 'Post supprimé';
-
-  @override
-  String get forumSignalerCeCommentaire => 'Signaler ce commentaire';
-
-  @override
-  String get forumSignalerCePost => 'Signaler ce post';
-
-  @override
-  String get forumMotifDuSignalement => 'Motif du signalement';
-
-  @override
-  String get forumPrecise => 'Précise (facultatif)';
-
-  @override
-  String forumNePlusVoirLesMessagesDe(String name) {
-    return 'Ne plus voir les messages de $name';
-  }
-
-  @override
-  String get forumSignalementAnonyme =>
-      'Signalement anonyme · vérifié par un modérateur sous 24 h.';
-
-  @override
-  String get trnA => 'À';
-
-  @override
-  String get trnADeterminer => 'À déterminer';
-
-  @override
-  String get trnAValider => 'À valider';
-
-  @override
-  String get trnAdresse => 'Adresse';
-
-  @override
-  String get trnAnnonce => 'Annonce';
-
-  @override
-  String get trnAnnonceEnvoyee => 'Annonce envoyée aux équipes';
-
-  @override
-  String get trnAnnulee => 'Annulée';
-
-  @override
-  String get trnApercuJoueur => 'Aperçu joueur';
-
-  @override
-  String get trnApercuLead => 'Voici ce que les joueurs verront dans Explorer.';
-
-  @override
-  String get trnApercuNote =>
-      'Le format et les frais ne peuvent plus changer. Les dates et les horaires restent modifiables : les équipes sont alors prévenues.';
-
-  @override
-  String get trnApercuTitre => 'Vérifie avant de publier';
-
-  @override
-  String get trnAucunMatchPret => 'Aucun match prêt à jouer pour l’instant.';
-
-  @override
-  String get trnAucuneEquipe => 'Aucune équipe ici pour l’instant.';
-
-  @override
-  String get trnCapitaine => 'Capitaine';
-
-  @override
-  String get trnChoisirDates => 'Choisir les dates';
-
-  @override
-  String get trnChoisisVainqueur =>
-      'Match nul en phase finale : choisis le vainqueur.';
-
-  @override
-  String get trnCloturer => 'Clôturer les inscriptions';
-
-  @override
-  String get trnClub => 'Club';
-
-  @override
-  String get trnClubRequis => 'Indique le club où se joue le tournoi.';
-
-  @override
-  String get trnConfirmerNote =>
-      'Le classement et le tableau se mettent à jour. Les joueurs reçoivent le résultat.';
-
-  @override
-  String get trnConfirmerScoreFinal => 'Confirmer le score final';
-
-  @override
-  String get trnCourtsDisponibles => 'Courts disponibles';
-
-  @override
-  String get trnCreerDescription => 'Poules ou élimination directe : 5 étapes.';
-
-  @override
-  String get trnDates => 'Dates';
-
-  @override
-  String get trnDatesRequises => 'Choisis les dates du tournoi.';
-
-  @override
-  String get trnDe => 'De';
-
-  @override
-  String get trnDotation => 'Dotation';
-
-  @override
-  String get trnDureeMatch => 'Durée d’un créneau';
-
-  @override
-  String get trnEliminationDescription =>
-      'Un match perdu et c’est fini. Plus court, 1 seul match garanti.';
-
-  @override
-  String get trnEliminationDirecte => 'Élimination directe';
-
-  @override
-  String get trnEnDirect => 'En direct';
-
-  @override
-  String get trnEncaisse => 'Encaissé';
-
-  @override
-  String get trnEnvoyer => 'Envoyer';
-
-  @override
-  String get trnEquipes => 'Équipes';
-
-  @override
-  String get trnEtapes => '5 étapes';
-
-  @override
-  String get trnFiltrerEquipes => 'Filtrer les équipes';
-
-  @override
-  String get trnFinale => 'Finale';
-
-  @override
-  String get trnFinalistes => 'Finalistes';
-
-  @override
-  String get trnFormat => 'Format';
-
-  @override
-  String get trnFormatLead =>
-      'Tu peux tout modifier tant qu’aucune équipe n’est inscrite.';
-
-  @override
-  String get trnFormatTitre => 'Format et règles';
-
-  @override
-  String get trnFraisLead =>
-      'Les équipes paient en ligne pour réserver leur place.';
-
-  @override
-  String get trnFraisParEquipe => 'Frais d’inscription par équipe';
-
-  @override
-  String get trnFraisTitre => 'Frais et prix';
-
-  @override
-  String get trnGenerer => 'Générer';
-
-  @override
-  String get trnInfosLead =>
-      'C’est ce que les joueurs voient en premier dans Explorer.';
-
-  @override
-  String get trnInfosTitre => 'Les infos de base';
-
-  @override
-  String get trnInscriptions => 'Inscriptions';
-
-  @override
-  String get trnIntrouvable => 'Ce tournoi n’existe plus';
-
-  @override
-  String get trnMesTournois => 'Mes tournois';
-
-  @override
-  String get trnMessage => 'Message';
-
-  @override
-  String get trnMotifAutre => 'Autre raison';
-
-  @override
-  String get trnMotifComplet => 'Tournoi complet';
-
-  @override
-  String get trnMotifDuRefus => 'Motif du refus';
-
-  @override
-  String get trnMotifNiveau => 'Niveau hors fourchette';
-
-  @override
-  String get trnNiveauMoyen => 'Niveau moyen des équipes';
-
-  @override
-  String get trnNomDuTournoi => 'Nom du tournoi';
-
-  @override
-  String get trnNomHelper =>
-      'Court et facile à retenir : il apparaît sur l’affiche.';
-
-  @override
-  String get trnNomTropCourt => 'Donne un nom d’au moins 3 caractères.';
-
-  @override
-  String get trnNombreEquipes => 'Nombre d’équipes';
-
-  @override
-  String get trnNonPaye => 'Non payé';
-
-  @override
-  String get trnPaye => 'Payé';
-
-  @override
-  String get trnPlanning => 'Planning';
-
-  @override
-  String get trnPlanningAGenerer => 'À générer quand les équipes sont validées';
-
-  @override
-  String get trnPlanningBrouillon => 'Proposé, pas encore publié';
-
-  @override
-  String get trnPlanningGenere => 'Planning généré';
-
-  @override
-  String get trnPlanningPropose => 'Planning proposé';
-
-  @override
-  String get trnPlanningPublie => 'Publié : les joueurs voient le tableau';
-
-  @override
-  String get trnPlanningVide =>
-      'Valide au moins 2 équipes, puis touche « Générer ».';
-
-  @override
-  String get trnPoulesDescription =>
-      'Les 2 premiers de chaque poule passent en phase finale.';
-
-  @override
-  String get trnPoulesPhaseFinale => 'Poules + phase finale';
-
-  @override
-  String get trnPresentation => 'Présentation';
-
-  @override
-  String get trnPublie => 'Tournoi publié';
-
-  @override
-  String get trnPublie2 => 'Publié';
-
-  @override
-  String get trnPublier => 'Publier le tournoi';
-
-  @override
-  String get trnPublierTableau => 'Publier';
-
-  @override
-  String get trnRecapitulatif => 'Récapitulatif';
-
-  @override
-  String get trnRefusDescription =>
-      'Choisis un motif : il accompagne la notification envoyée au capitaine.';
-
-  @override
-  String get trnRefusee => 'Refusée';
-
-  @override
-  String get trnRefusees => 'Refusées';
-
-  @override
-  String get trnRegenerer => 'Régénérer';
-
-  @override
-  String get trnReposEntreMatchs => 'Repos entre 2 matchs';
-
-  @override
-  String get trnResteImpourToi => 'Reste pour toi';
-
-  @override
-  String get trnRienAValider => 'Rien à valider';
-
-  @override
-  String get trnRienPublie =>
-      'Rien n’est envoyé aux équipes avant ta publication.';
-
-  @override
-  String get trnRouvrir => 'Rouvrir les inscriptions';
-
-  @override
-  String get trnScoreConfirme => 'Score confirmé';
-
-  @override
-  String get trnScores => 'Scores';
-
-  @override
-  String get trnScoresApresPlanning => 'Disponible une fois le planning généré';
-
-  @override
-  String get trnScoresDescription => 'Saisie au bord du court';
-
-  @override
-  String get trnScoresEnDirect => 'Scores en direct';
-
-  @override
-  String get trnStatutAnnule => 'Annulé';
-
-  @override
-  String get trnStatutBrouillon => 'Brouillon';
-
-  @override
-  String get trnStatutEnCours => 'En cours';
-
-  @override
-  String get trnStatutFerme => 'Inscriptions closes';
-
-  @override
-  String get trnStatutOuvert => 'Inscriptions ouvertes';
-
-  @override
-  String get trnStatutTermine => 'Terminé';
-
-  @override
-  String get trnStepApercu => 'Aperçu';
-
-  @override
-  String get trnStepFormat => 'Format & règles';
-
-  @override
-  String get trnStepFrais => 'Frais & prix';
-
-  @override
-  String get trnStepInfos => 'Infos';
-
-  @override
-  String get trnStepTerrains => 'Terrains & dates';
-
-  @override
-  String get trnTableauPublie => 'Tableau publié';
-
-  @override
-  String get trnTerrainsLead =>
-      'On calcule le planning des matchs à partir de ces créneaux.';
-
-  @override
-  String get trnTerrainsPlanningNote =>
-      'Les courts et les horaires se règlent dans le planning, une fois les équipes validées.';
-
-  @override
-  String get trnTerrainsTitre => 'Terrains et dates';
-
-  @override
-  String get trnTesContraintes => 'Tes contraintes';
-
-  @override
-  String get trnToucheUnMatch => 'Touche un match pour saisir le score.';
-
-  @override
-  String get trnTroisieme => '3e place';
-
-  @override
-  String get trnVainqueur => 'Vainqueur';
-
-  @override
-  String get trnVainqueurs => 'Vainqueurs';
-
-  @override
-  String get trnValidee => 'Validée';
-
-  @override
-  String get trnValidees => 'Validées';
-
-  @override
-  String get trnVisibleExplorer =>
-      'Le tournoi est visible par tous les joueurs dans Explorer.';
-
-  @override
-  String get trnVoirApercu => 'Voir l’aperçu';
-
-  @override
-  String trnAValiderN(int n) {
-    return '$n à valider';
-  }
-
-  @override
-  String trnAVenirN(int n) {
-    return 'À venir · $n';
-  }
-
-  @override
-  String trnAjouterPoint(String name) {
-    return 'Ajouter un point à $name';
-  }
-
-  @override
-  String trnAnnonceDescription(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: 'Aux $n équipes inscrites',
-      one: 'À 1 équipe inscrite',
-      zero: 'À toutes les équipes inscrites',
-    );
-    return '$_temp0';
-  }
-
-  @override
-  String trnCourtN(int n) {
-    return 'Court $n';
-  }
-
-  @override
-  String trnDemie(int n) {
-    return 'Demie $n';
-  }
-
-  @override
-  String trnEliminationResume(int n) {
-    return 'Élimination directe · $n équipes';
-  }
-
-  @override
-  String trnEnCoursN(int n) {
-    return 'En cours · $n';
-  }
-
-  @override
-  String trnEnDirectN(int n) {
-    return 'En direct · $n';
-  }
-
-  @override
-  String trnEquipesSur(int a, int b) {
-    return '$a/$b équipes';
-  }
-
-  @override
-  String trnFraisHelper(String amount) {
-    return 'Soit $amount par joueur. Paiement en ligne obligatoire pour s’inscrire.';
-  }
-
-  @override
-  String trnJoueursManquants(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: 'Il manque $n joueurs',
-      one: 'Il manque 1 joueur',
-    );
-    return '$_temp0';
-  }
-
-  @override
-  String trnJoueursParEquipe(int n) {
-    return '$n joueurs par équipe, capitaine compris.';
-  }
-
-  @override
-  String trnPasAssezCreneaux(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: '$n matchs sans horaire',
-      one: '1 match sans horaire',
-    );
-    return 'Pas assez de créneaux : $_temp0. Ajoute un court ou une plage horaire.';
-  }
-
-  @override
-  String trnPouleJ(String p, int j) {
-    return 'Poule $p · J$j';
-  }
-
-  @override
-  String trnPoulesResume(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: '$n poules',
-      one: '1 poule',
-    );
-    return '$_temp0 puis phase finale';
-  }
-
-  @override
-  String trnQuart(int n) {
-    return 'QF $n';
-  }
-
-  @override
-  String trnRecapFrais(String fee, String prize) {
-    return '$fee par équipe · dotation $prize';
-  }
-
-  @override
-  String trnRecapInfos(String sport, String min, String max) {
-    return '$sport · niveau moyen $min – $max';
-  }
-
-  @override
-  String trnRefusRembourse(String amount) {
-    return 'Une équipe refusée est remboursée en entier ($amount) et prévenue avec ton message.';
-  }
-
-  @override
-  String trnRefuserEquipe(String name) {
-    return 'Refuser $name ?';
-  }
-
-  @override
-  String trnRetirerPoint(String name) {
-    return 'Retirer un point à $name';
-  }
-
-  @override
-  String trnSiToutesInscrites(int n) {
-    return 'Si les $n équipes s’inscrivent';
-  }
-
-  @override
-  String trnTerminesN(int n) {
-    return 'Terminés · $n';
-  }
-
-  @override
-  String trnTourDe(int size, int n) {
-    return 'Tour de $size · $n';
-  }
-
-  @override
-  String get trnAnnulerInscription => 'Annuler l’inscription';
-
-  @override
-  String get trnAuTotal => 'au total';
-
-  @override
-  String get trnAucuneEquipeValidee => 'Aucune équipe validée pour l’instant.';
-
-  @override
-  String get trnCodeCopie => 'Code copié';
-
-  @override
-  String get trnCodeInvitation => 'Code d’invitation';
-
-  @override
-  String get trnCoequipiersNote =>
-      'Les autres te rejoignent avec le code d’invitation, sans payer : tu règles l’inscription de l’équipe.';
-
-  @override
-  String get trnComplet => 'Complet';
-
-  @override
-  String get trnCopierCode => 'Copier le code';
-
-  @override
-  String get trnCreeTonEquipe => 'Crée ton équipe';
-
-  @override
-  String get trnCreeTonEquipeLead =>
-      'Un nom, un capitaine. Tes coéquipiers peuvent aussi te rejoindre avec un code.';
-
-  @override
-  String get trnCreerEquipe => 'Créer l’équipe';
-
-  @override
-  String get trnDemiFinales => 'Demi-finales';
-
-  @override
-  String get trnDetailDuTournoi => 'Détail du tournoi';
-
-  @override
-  String get trnDiff => 'Diff.';
-
-  @override
-  String get trnEnCoursValidation =>
-      'L’organisateur vérifie le niveau et les places.';
-
-  @override
-  String get trnEquipe => 'Équipe';
-
-  @override
-  String get trnEquipeCreee => 'Équipe créée';
-
-  @override
-  String get trnGererTournoi => 'Gérer le tournoi';
-
-  @override
-  String get trnHuitiemes => 'Huitièmes de finale';
-
-  @override
-  String get trnInscription => 'Inscription';
-
-  @override
-  String get trnInscriptionConfirmee => 'Inscription confirmée';
-
-  @override
-  String get trnInscriptionEnvoyee => 'Inscription envoyée';
-
-  @override
-  String get trnInscriptionsBientot => 'Inscriptions bientôt';
-
-  @override
-  String get trnInscrireEquipe => 'Inscrire mon équipe';
-
-  @override
-  String get trnJ => 'J';
-
-  @override
-  String get trnJaiUnCode => 'J’ai un code d’invitation';
-
-  @override
-  String get trnLeTableau => 'Le tableau';
-
-  @override
-  String get trnLesPoules => 'Les poules';
-
-  @override
-  String get trnLieu => 'Lieu';
-
-  @override
-  String get trnNomEquipe => 'Nom de l’équipe';
-
-  @override
-  String get trnNomEquipeRequis => 'Donne un nom à ton équipe.';
-
-  @override
-  String get trnPaiementAttendu => 'Paie pour réserver ta place.';
-
-  @override
-  String get trnPartageCode => 'Partage ce code à tes coéquipiers';
-
-  @override
-  String get trnPasDEquipe => 'Tu n’as pas d’équipe dans ce tournoi.';
-
-  @override
-  String get trnPayerInscription => 'Payer l’inscription';
-
-  @override
-  String get trnPhaseFinale => 'Phase finale';
-
-  @override
-  String get trnPlaces => 'Places';
-
-  @override
-  String get trnPointsNote =>
-      'Victoire = 3 pts, nul = 1 pt. À égalité : différence, puis points marqués.';
-
-  @override
-  String get trnPts => 'Pts';
-
-  @override
-  String get trnQualifie => 'Qualifié';
-
-  @override
-  String get trnQuartsDeFinale => 'Quarts de finale';
-
-  @override
-  String get trnRefuseeParOrga => 'Refusée par l’organisateur';
-
-  @override
-  String get trnRejoindre => 'Rejoindre';
-
-  @override
-  String get trnRejoindreDescription =>
-      'Le capitaine de l’équipe t’a envoyé un code de 6 lettres.';
-
-  @override
-  String get trnRejoindreEquipe => 'Rejoindre une équipe';
-
-  @override
-  String get trnRembourseSiRefus => 'Refusée ? Tu es remboursé en entier.';
-
-  @override
-  String get trnTableauDuTournoi => 'Tableau du tournoi';
-
-  @override
-  String get trnTableauPasPublie => 'Le tableau n’est pas encore publié.';
-
-  @override
-  String get trnTesMatchs => 'Tes matchs';
-
-  @override
-  String get trnTirage => 'Tirage et calendrier';
-
-  @override
-  String get trnTirageNote =>
-      'Ton calendrier arrive dès que l’organisateur publie le tableau.';
-
-  @override
-  String get trnV => 'V';
-
-  @override
-  String get trnValidationOrga => 'Validation par l’organisateur';
-
-  @override
-  String trnCapitaineNom(String name) {
-    return 'Capitaine : $name';
-  }
-
-  @override
-  String trnCoequipiers(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: 'Tes $n coéquipiers',
-      one: 'Ton partenaire',
-    );
-    return '$_temp0';
-  }
-
-  @override
-  String trnEquipesInscrites(int n) {
-    return 'Équipes inscrites · $n';
-  }
-
-  @override
-  String trnInscriptionEyebrow(String team) {
-    return 'INSCRIPTION · $team';
-  }
-
-  @override
-  String trnInscriptionPayee(String amount) {
-    return 'Inscription payée · $amount';
-  }
-
-  @override
-  String trnInscritesSur(int a, int b) {
-    return '$a/$b inscrites';
-  }
-
-  @override
-  String trnJoueurN(int n) {
-    return 'Joueur $n';
-  }
-
-  @override
-  String trnMembresN(int a, int b) {
-    return 'Membres · $a/$b';
-  }
-
-  @override
-  String trnMonEquipe(String name) {
-    return 'Mon équipe $name';
-  }
-
-  @override
-  String trnNiveauFourchette(String min, String max) {
-    return 'Niveau $min – $max';
-  }
-
-  @override
-  String trnParEquipeDe(int n) {
-    return 'par équipe de $n';
-  }
-
-  @override
-  String trnPouleX(String p) {
-    return 'Poule $p';
-  }
-
-  @override
-  String trnToi(String name) {
-    return '$name · toi';
-  }
-
-  @override
-  String get trnAJouer => 'À jouer';
-
-  @override
-  String get trnAnnonceVisible =>
-      'Les équipes la voient sur la page du tournoi et de leur équipe.';
-
-  @override
-  String get trnAnnoncesOrga => 'Annonces de l’organisateur';
-
-  @override
-  String get trnAucunPlanning => 'Aucun planning pour l’instant';
-
-  @override
-  String get trnAucuneAnnonce => 'Aucune annonce envoyée';
-
-  @override
-  String get trnContre => 'contre';
-
-  @override
-  String get trnDejaEnvoyees => 'Déjà envoyées';
-
-  @override
-  String get trnMatch => 'Match';
-
-  @override
-  String get trnMatchEnDirect => 'Match en direct';
-
-  @override
-  String get trnMonInscription => 'Mon inscription';
-
-  @override
-  String get trnNombrePlaces => 'Nombre de places';
-
-  @override
-  String get trnOu => 'Où';
-
-  @override
-  String get trnParPersonne => 'par personne';
-
-  @override
-  String get trnPartagerResume => 'Partager le résumé';
-
-  @override
-  String get trnProchainsMatchs => 'Prochains matchs';
-
-  @override
-  String get trnQuand => 'Quand';
-
-  @override
-  String get trnResume => 'Résumé du match';
-
-  @override
-  String get trnSInscrire => 'S’inscrire';
-
-  @override
-  String get trnScoreMisAJour =>
-      'Le score se met à jour pendant que l’organisateur le saisit.';
-
-  @override
-  String get trnTabAnnonces => 'Annonces';
-
-  @override
-  String get trnTabTableau => 'Tableau';
-
-  @override
-  String get trnTabTournois => 'Tournois';
-
-  @override
-  String get trnTableauDeBord => 'Tableau de bord';
-
-  @override
-  String get trnTermine => 'Terminé';
-
-  @override
-  String get trnType => 'Type';
-
-  @override
-  String get trnTypeEvenement => 'Événement';
-
-  @override
-  String get trnTypeEvenementDescription =>
-      'Journée initiation ou soirée : inscription individuelle, sans tableau.';
-
-  @override
-  String get trnTypeTournoi => 'Tournoi';
-
-  @override
-  String get trnTypeTournoiDescription =>
-      'Des équipes, des poules ou un tableau, un vainqueur.';
-
-  @override
-  String get trnVoir => 'Voir';
-
-  @override
-  String trnEquipesAValider(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: '$n équipes à valider',
-      one: '1 équipe à valider',
-    );
-    return '$_temp0';
-  }
-
-  @override
-  String trnEvenementResume(int n) {
-    return 'Inscription individuelle · $n places';
-  }
-
-  @override
-  String trnParticipantsN(int n) {
-    return 'Participants · $n';
-  }
-
-  @override
-  String trnRecapTexte(
-    String winner,
-    String loser,
-    String score,
-    String stage,
-    String tournament,
-  ) {
-    return '$winner gagne $score contre $loser ($stage, $tournament). Résultat publié sur MatchUp.';
-  }
+  String get aiGreetingAnonymous =>
+      'Salut ! Je trouve des parties à ton niveau, je réserve des terrains et je te conseille des programmes. Je te dis toujours pourquoi, et rien n’est réservé ni payé sans ta confirmation.';
 }
