@@ -268,3 +268,264 @@ drop policy if exists "recu_lignes_ecriture" on public.recu_lignes;
 create policy "recu_lignes_lecture" on public.recu_lignes for select to authenticated using (owner_id = auth.uid());
 create policy "recu_lignes_ecriture" on public.recu_lignes for all to authenticated using (owner_id = auth.uid()) with check (owner_id = auth.uid());
 
+-- invitations (owner)
+create table if not exists public.invitations (
+  owner_id uuid not null default auth.uid() references auth.users (id) on delete cascade,
+  "id" text,
+  "de" text not null,
+  "sport" text not null,
+  "etablissement" text not null,
+  "lieu" text not null,
+  "debut" text not null,
+  "part" double precision not null,
+  "places_total" bigint not null,
+  "places_restantes" bigint not null,
+  "statut" text not null,
+  primary key (owner_id, "id")
+);
+alter table public.invitations add column if not exists "id" text;
+alter table public.invitations add column if not exists "de" text;
+alter table public.invitations add column if not exists "sport" text;
+alter table public.invitations add column if not exists "etablissement" text;
+alter table public.invitations add column if not exists "lieu" text;
+alter table public.invitations add column if not exists "debut" text;
+alter table public.invitations add column if not exists "part" double precision;
+alter table public.invitations add column if not exists "places_total" bigint;
+alter table public.invitations add column if not exists "places_restantes" bigint;
+alter table public.invitations add column if not exists "statut" text;
+alter table public.invitations enable row level security;
+drop policy if exists "invitations_lecture" on public.invitations;
+drop policy if exists "invitations_ecriture" on public.invitations;
+create policy "invitations_lecture" on public.invitations for select to authenticated using (owner_id = auth.uid());
+create policy "invitations_ecriture" on public.invitations for all to authenticated using (owner_id = auth.uid()) with check (owner_id = auth.uid());
+
+-- matchs_notes (owner)
+create table if not exists public.matchs_notes (
+  owner_id uuid not null default auth.uid() references auth.users (id) on delete cascade,
+  "match_id" text,
+  "note_le" text not null,
+  primary key (owner_id, "match_id")
+);
+alter table public.matchs_notes add column if not exists "match_id" text;
+alter table public.matchs_notes add column if not exists "note_le" text;
+alter table public.matchs_notes enable row level security;
+drop policy if exists "matchs_notes_lecture" on public.matchs_notes;
+drop policy if exists "matchs_notes_ecriture" on public.matchs_notes;
+create policy "matchs_notes_lecture" on public.matchs_notes for select to authenticated using (owner_id = auth.uid());
+create policy "matchs_notes_ecriture" on public.matchs_notes for all to authenticated using (owner_id = auth.uid()) with check (owner_id = auth.uid());
+
+-- matchs_scores (owner)
+create table if not exists public.matchs_scores (
+  owner_id uuid not null default auth.uid() references auth.users (id) on delete cascade,
+  "match_id" text not null,
+  "set_index" bigint not null,
+  "nous" bigint not null,
+  "eux" bigint not null,
+  primary key (owner_id, "match_id", "set_index")
+);
+alter table public.matchs_scores add column if not exists "match_id" text;
+alter table public.matchs_scores add column if not exists "set_index" bigint;
+alter table public.matchs_scores add column if not exists "nous" bigint;
+alter table public.matchs_scores add column if not exists "eux" bigint;
+alter table public.matchs_scores enable row level security;
+drop policy if exists "matchs_scores_lecture" on public.matchs_scores;
+drop policy if exists "matchs_scores_ecriture" on public.matchs_scores;
+create policy "matchs_scores_lecture" on public.matchs_scores for select to authenticated using (owner_id = auth.uid());
+create policy "matchs_scores_ecriture" on public.matchs_scores for all to authenticated using (owner_id = auth.uid()) with check (owner_id = auth.uid());
+
+-- proprio_terrains (owner)
+create table if not exists public.proprio_terrains (
+  owner_id uuid not null default auth.uid() references auth.users (id) on delete cascade,
+  "id" text,
+  "numero" bigint not null,
+  "interieur" bigint not null,
+  "visible" bigint not null,
+  "maintenance" bigint not null,
+  primary key (owner_id, "id")
+);
+alter table public.proprio_terrains add column if not exists "id" text;
+alter table public.proprio_terrains add column if not exists "numero" bigint;
+alter table public.proprio_terrains add column if not exists "interieur" bigint;
+alter table public.proprio_terrains add column if not exists "visible" bigint;
+alter table public.proprio_terrains add column if not exists "maintenance" bigint;
+alter table public.proprio_terrains enable row level security;
+drop policy if exists "proprio_terrains_lecture" on public.proprio_terrains;
+drop policy if exists "proprio_terrains_ecriture" on public.proprio_terrains;
+create policy "proprio_terrains_lecture" on public.proprio_terrains for select to authenticated using (owner_id = auth.uid());
+create policy "proprio_terrains_ecriture" on public.proprio_terrains for all to authenticated using (owner_id = auth.uid()) with check (owner_id = auth.uid());
+
+-- proprio_reservations (owner)
+create table if not exists public.proprio_reservations (
+  owner_id uuid not null default auth.uid() references auth.users (id) on delete cascade,
+  "ref" text,
+  "terrain" bigint not null,
+  "debut" text not null,
+  "heures" bigint not null,
+  "organisateur" text not null,
+  "type" text not null,
+  "joueurs" bigint not null,
+  "capacite" bigint not null,
+  "prix" double precision not null,
+  "paye" double precision not null,
+  "statut" text not null,
+  "moi" bigint not null,
+  "type_partie" text not null,
+  "niveau_min" double precision,
+  "niveau_max" double precision,
+  "fiabilite" bigint not null,
+  "honores" bigint not null,
+  "matchs" bigint not null,
+  "note" text,
+  primary key (owner_id, "ref")
+);
+alter table public.proprio_reservations add column if not exists "ref" text;
+alter table public.proprio_reservations add column if not exists "terrain" bigint;
+alter table public.proprio_reservations add column if not exists "debut" text;
+alter table public.proprio_reservations add column if not exists "heures" bigint;
+alter table public.proprio_reservations add column if not exists "organisateur" text;
+alter table public.proprio_reservations add column if not exists "type" text;
+alter table public.proprio_reservations add column if not exists "joueurs" bigint;
+alter table public.proprio_reservations add column if not exists "capacite" bigint;
+alter table public.proprio_reservations add column if not exists "prix" double precision;
+alter table public.proprio_reservations add column if not exists "paye" double precision;
+alter table public.proprio_reservations add column if not exists "statut" text;
+alter table public.proprio_reservations add column if not exists "moi" bigint;
+alter table public.proprio_reservations add column if not exists "type_partie" text;
+alter table public.proprio_reservations add column if not exists "niveau_min" double precision;
+alter table public.proprio_reservations add column if not exists "niveau_max" double precision;
+alter table public.proprio_reservations add column if not exists "fiabilite" bigint;
+alter table public.proprio_reservations add column if not exists "honores" bigint;
+alter table public.proprio_reservations add column if not exists "matchs" bigint;
+alter table public.proprio_reservations add column if not exists "note" text;
+alter table public.proprio_reservations enable row level security;
+drop policy if exists "proprio_reservations_lecture" on public.proprio_reservations;
+drop policy if exists "proprio_reservations_ecriture" on public.proprio_reservations;
+create policy "proprio_reservations_lecture" on public.proprio_reservations for select to authenticated using (owner_id = auth.uid());
+create policy "proprio_reservations_ecriture" on public.proprio_reservations for all to authenticated using (owner_id = auth.uid()) with check (owner_id = auth.uid());
+
+-- proprio_presences (owner)
+create table if not exists public.proprio_presences (
+  owner_id uuid not null default auth.uid() references auth.users (id) on delete cascade,
+  "ref" text not null,
+  "etat" text not null,
+  "position" bigint not null,
+  "nom" text not null,
+  primary key (owner_id, "ref", "etat", "position")
+);
+alter table public.proprio_presences add column if not exists "ref" text;
+alter table public.proprio_presences add column if not exists "etat" text;
+alter table public.proprio_presences add column if not exists "position" bigint;
+alter table public.proprio_presences add column if not exists "nom" text;
+alter table public.proprio_presences enable row level security;
+drop policy if exists "proprio_presences_lecture" on public.proprio_presences;
+drop policy if exists "proprio_presences_ecriture" on public.proprio_presences;
+create policy "proprio_presences_lecture" on public.proprio_presences for select to authenticated using (owner_id = auth.uid());
+create policy "proprio_presences_ecriture" on public.proprio_presences for all to authenticated using (owner_id = auth.uid()) with check (owner_id = auth.uid());
+
+-- tarifs (owner)
+create table if not exists public.tarifs (
+  owner_id uuid not null default auth.uid() references auth.users (id) on delete cascade,
+  "id" bigint,
+  "pointe_de" bigint not null,
+  "pointe_a" bigint not null,
+  "weekend_pointe" bigint not null,
+  primary key (owner_id, "id")
+);
+alter table public.tarifs add column if not exists "id" bigint;
+alter table public.tarifs add column if not exists "pointe_de" bigint;
+alter table public.tarifs add column if not exists "pointe_a" bigint;
+alter table public.tarifs add column if not exists "weekend_pointe" bigint;
+alter table public.tarifs enable row level security;
+drop policy if exists "tarifs_lecture" on public.tarifs;
+drop policy if exists "tarifs_ecriture" on public.tarifs;
+create policy "tarifs_lecture" on public.tarifs for select to authenticated using (owner_id = auth.uid());
+create policy "tarifs_ecriture" on public.tarifs for all to authenticated using (owner_id = auth.uid()) with check (owner_id = auth.uid());
+
+-- tarif_groupes (owner)
+create table if not exists public.tarif_groupes (
+  owner_id uuid not null default auth.uid() references auth.users (id) on delete cascade,
+  "id" text,
+  "interieur" bigint not null,
+  "prix_creuse" double precision not null,
+  "prix_pointe" double precision not null,
+  "position" bigint not null,
+  primary key (owner_id, "id")
+);
+alter table public.tarif_groupes add column if not exists "id" text;
+alter table public.tarif_groupes add column if not exists "interieur" bigint;
+alter table public.tarif_groupes add column if not exists "prix_creuse" double precision;
+alter table public.tarif_groupes add column if not exists "prix_pointe" double precision;
+alter table public.tarif_groupes add column if not exists "position" bigint;
+alter table public.tarif_groupes enable row level security;
+drop policy if exists "tarif_groupes_lecture" on public.tarif_groupes;
+drop policy if exists "tarif_groupes_ecriture" on public.tarif_groupes;
+create policy "tarif_groupes_lecture" on public.tarif_groupes for select to authenticated using (owner_id = auth.uid());
+create policy "tarif_groupes_ecriture" on public.tarif_groupes for all to authenticated using (owner_id = auth.uid()) with check (owner_id = auth.uid());
+
+-- tarif_groupe_terrains (owner)
+create table if not exists public.tarif_groupe_terrains (
+  owner_id uuid not null default auth.uid() references auth.users (id) on delete cascade,
+  "groupe_id" text not null,
+  "terrain" bigint not null,
+  primary key (owner_id, "groupe_id", "terrain")
+);
+alter table public.tarif_groupe_terrains add column if not exists "groupe_id" text;
+alter table public.tarif_groupe_terrains add column if not exists "terrain" bigint;
+alter table public.tarif_groupe_terrains enable row level security;
+drop policy if exists "tarif_groupe_terrains_lecture" on public.tarif_groupe_terrains;
+drop policy if exists "tarif_groupe_terrains_ecriture" on public.tarif_groupe_terrains;
+create policy "tarif_groupe_terrains_lecture" on public.tarif_groupe_terrains for select to authenticated using (owner_id = auth.uid());
+create policy "tarif_groupe_terrains_ecriture" on public.tarif_groupe_terrains for all to authenticated using (owner_id = auth.uid()) with check (owner_id = auth.uid());
+
+-- dates_speciales (owner)
+create table if not exists public.dates_speciales (
+  owner_id uuid not null default auth.uid() references auth.users (id) on delete cascade,
+  "id" text,
+  "jour" text not null,
+  "nom" text not null,
+  "pointe_journee" bigint not null,
+  "de" bigint,
+  "a" bigint,
+  "a_confirmer" bigint not null,
+  primary key (owner_id, "id")
+);
+alter table public.dates_speciales add column if not exists "id" text;
+alter table public.dates_speciales add column if not exists "jour" text;
+alter table public.dates_speciales add column if not exists "nom" text;
+alter table public.dates_speciales add column if not exists "pointe_journee" bigint;
+alter table public.dates_speciales add column if not exists "de" bigint;
+alter table public.dates_speciales add column if not exists "a" bigint;
+alter table public.dates_speciales add column if not exists "a_confirmer" bigint;
+alter table public.dates_speciales enable row level security;
+drop policy if exists "dates_speciales_lecture" on public.dates_speciales;
+drop policy if exists "dates_speciales_ecriture" on public.dates_speciales;
+create policy "dates_speciales_lecture" on public.dates_speciales for select to authenticated using (owner_id = auth.uid());
+create policy "dates_speciales_ecriture" on public.dates_speciales for all to authenticated using (owner_id = auth.uid()) with check (owner_id = auth.uid());
+
+-- promos (owner)
+create table if not exists public.promos (
+  owner_id uuid not null default auth.uid() references auth.users (id) on delete cascade,
+  "id" bigint,
+  "jour_semaine" bigint not null,
+  "de" bigint not null,
+  "a" bigint not null,
+  "pourcentage" bigint not null,
+  "prix_avant" double precision not null,
+  "premier_jour" text not null,
+  "hebdo" bigint not null,
+  primary key (owner_id, "id")
+);
+alter table public.promos add column if not exists "id" bigint;
+alter table public.promos add column if not exists "jour_semaine" bigint;
+alter table public.promos add column if not exists "de" bigint;
+alter table public.promos add column if not exists "a" bigint;
+alter table public.promos add column if not exists "pourcentage" bigint;
+alter table public.promos add column if not exists "prix_avant" double precision;
+alter table public.promos add column if not exists "premier_jour" text;
+alter table public.promos add column if not exists "hebdo" bigint;
+alter table public.promos enable row level security;
+drop policy if exists "promos_lecture" on public.promos;
+drop policy if exists "promos_ecriture" on public.promos;
+create policy "promos_lecture" on public.promos for select to authenticated using (owner_id = auth.uid());
+create policy "promos_ecriture" on public.promos for all to authenticated using (owner_id = auth.uid()) with check (owner_id = auth.uid());
+

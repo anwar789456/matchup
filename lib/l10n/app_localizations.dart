@@ -2488,6 +2488,24 @@ abstract class AppLocalizations {
   /// **'Pas de connexion'**
   String get pasDeConnexion;
 
+  /// No description provided for @creneauDejaPris.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ce créneau vient d’être pris'**
+  String get creneauDejaPris;
+
+  /// No description provided for @creneauDejaPrisDetail.
+  ///
+  /// In fr, this message translates to:
+  /// **'Quelqu’un l’a réservé juste avant toi. Choisis un autre créneau.'**
+  String get creneauDejaPrisDetail;
+
+  /// No description provided for @reserverDemandeUneConnexion.
+  ///
+  /// In fr, this message translates to:
+  /// **'Réserver ou annuler un terrain demande une connexion.'**
+  String get reserverDemandeUneConnexion;
+
   /// No description provided for @impossibleDeCharger.
   ///
   /// In fr, this message translates to:

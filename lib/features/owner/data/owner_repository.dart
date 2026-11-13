@@ -5,6 +5,7 @@ import '../../../core/db/app_database.dart';
 import '../../../theme/theme.dart';
 import '../../common/data/story_data.dart';
 import 'sqlite_owner_repositories.dart';
+import 'supabase_owner_repositories.dart';
 
 /// A court of the owner's venue (OWN-11 columns, OWN-17).
 @immutable
@@ -535,9 +536,13 @@ class FakeOwnerRepository implements OwnerRepository {
 
 /// The venue's courts, bookings and blocks live in the phone's database. Tests override it with
 /// the fake.
-final ownerRepositoryProvider = Provider<OwnerRepository>(
-  (ref) => SqliteOwnerRepository(ref.watch(appDatabaseProvider)),
-);
+/// The venue's courts, bookings and closed slots: the phone's tables, with closed slots and
+/// the players' bookings on Supabase when it is configured. Tests override it with the fake.
+final ownerRepositoryProvider = Provider<OwnerRepository>((ref) {
+  final local = SqliteOwnerRepository(ref.watch(appDatabaseProvider));
+  final link = ref.watch(ownerVenueLinkProvider);
+  return link == null ? local : SupabaseOwnerRepository(local, link);
+});
 
 final ownerCourtsProvider = FutureProvider<List<OwnerCourt>>(
   (ref) => ref.watch(ownerRepositoryProvider).courts(),

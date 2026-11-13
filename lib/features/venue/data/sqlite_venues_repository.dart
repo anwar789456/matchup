@@ -48,6 +48,35 @@ class SqliteVenuesRepository implements VenuesRepository {
     }
   }
 
+  /// Stores [v] as Supabase has it (the cache of [SupabaseVenuesRepository]): updates a known
+  /// venue's details, keeping its amenities and slots; adds a new one.
+  Future<void> keep(MuVenue v) async {
+    final db = await _database.db;
+    await db.transaction((txn) async {
+      final updated = await txn.update(
+        'etablissements',
+        {
+          'nom': v.name,
+          'lieu': v.place,
+          'distance_km': v.distanceKm,
+          'note': v.rating,
+          'nb_avis': v.reviews,
+          'verifie': v.verified ? 1 : 0,
+          'prix_joueur': v.pricePerPerson,
+          'prix_terrain': v.courtPrice,
+          'latitude': v.position?.lat,
+          'longitude': v.position?.lng,
+        },
+        where: 'id = ?',
+        whereArgs: [v.id],
+      );
+      if (updated == 0) {
+        final last = Sqflite.firstIntValue(await txn.rawQuery('SELECT MAX(position) FROM etablissements'));
+        await insert(txn, v, (last ?? -1) + 1);
+      }
+    });
+  }
+
   static Future<void> seed(DatabaseExecutor db) async {
     for (final (i, v) in Story.venues.indexed) {
       await insert(db, v, i);

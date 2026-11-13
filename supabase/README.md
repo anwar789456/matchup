@@ -97,3 +97,26 @@ receipt keeps the DT amount. Payments show in the Stripe dashboard (Test mode �
   same user. Prefer text ids for data a user creates on two phones.
 - Synced today: Paiement (balance, history, refunds, cards, payments, attempts, split shares,
   Premium, receipts). The other modules add theirs.
+
+## Réservation: Supabase decides, SQFlite keeps a copy
+
+Booked courts are shared data with a rule (two players can never get the same slot), so they
+do not use the copy above. `supabase/reservation.sql` (written by hand, run it once in the SQL
+editor, safe to run again) creates `reservations` and `reservation_joueurs` with:
+
+- an exclusion constraint: no two live bookings overlap on a court;
+- `prochaine_reference()`: « MU-50001 », one sequence for every phone;
+- `bloquer_creneau()` before the checkout (a 15-minute hold), `confirmer_reservation()` after
+  payment, `creneaux_pris()` for the slot grid (taken slots, not who took them);
+- Row Level Security: a player reads and changes only their own bookings.
+
+It also holds the venue catalogue (`etablissements`, `etablissement_terrains`, readable by
+everyone), the slots an owner closed (`blocages`: every player's grid shows them and booking
+them is refused) and lets an owner read the bookings made at their venue. The first account that
+opens the owner space of a venue without an owner claims it (`revendiquer_etablissement`).
+
+In the app, `SupabaseBookingsRepository`, `SupabaseVenuesRepository`, `SupabaseOwnerRepository`
+and `SupabaseTariffsRepository` use Supabase and keep the phone's tables as their cache (shown
+first, refreshed, used offline). Invitations, ratings and scores are personal to the player, and
+the owner's courts, own bookings, arrivals and full price list stay on the phone: they still use
+the copy above.
