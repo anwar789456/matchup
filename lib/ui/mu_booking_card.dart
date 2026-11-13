@@ -33,6 +33,7 @@ class MuBooking {
     this.payBefore,
     this.refund,
     this.players = const [],
+    this.isPublic = false,
   });
 
   /// The booking reference, « MU-48213 ».
@@ -54,6 +55,9 @@ class MuBooking {
   /// Refunded to the balance when cancelled.
   final num? refund;
   final List<MuPerson> players;
+
+  /// A public game (BKG-02: players at the right level can join), not invitation only.
+  final bool isPublic;
 
   String get title => court == null ? venue : '$venue · $court';
 

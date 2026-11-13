@@ -50,6 +50,24 @@ const syncTables = <SyncTable>[
   SyncTable('reglages_compte'),
   SyncTable('profil_joueur'),
 
-  // ── Utilisateur (Alaa) · Réservation (Mahmoud) · Tournois (Ayoub) · Entraînement (Aziz) ·
-  //    Forum (Hani): add your tables here.
+  // ── Réservation (Mahmoud) ────────────────────────────────────────────────────────────────
+  // Booked courts (reservations, reservation_joueurs, annulations) are not copied: Supabase is
+  // their source of truth (supabase/reservation.sql, SupabaseBookingsRepository). Copied here:
+  // what only concerns the player (invitations, ratings, scores)…
+  SyncTable('invitations'),
+  SyncTable('matchs_notes'),
+  SyncTable('matchs_scores'),
+  // The venue owner's side: courts, bookings and arrivals, the price list and promos. (Closed
+  // slots live in Supabase's `blocages`: SupabaseOwnerRepository.)
+  // (`terrains` from the owner onboarding waits for `utilisateurs`: it points at an account id.)
+  SyncTable('proprio_terrains'),
+  SyncTable('proprio_reservations'),
+  SyncTable('proprio_presences'),
+  SyncTable('tarifs'),
+  SyncTable('tarif_groupes'),
+  SyncTable('tarif_groupe_terrains'),
+  SyncTable('dates_speciales'),
+  SyncTable('promos'),
+
+  // ── Tournois (Ayoub) · Entraînement (Aziz) · Forum (Hani): add your tables here.
 ];

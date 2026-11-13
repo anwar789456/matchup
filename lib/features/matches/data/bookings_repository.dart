@@ -4,9 +4,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../theme/theme.dart';
 import '../../../ui/ui.dart';
 import '../../../core/db/app_database.dart';
+import '../../../core/supabase/supabase_config.dart';
 import '../../common/data/story_data.dart';
 import 'matches_models.dart';
+import 'reservation_remote.dart';
 import 'sqlite_bookings_repository.dart';
+import 'supabase_bookings_repository.dart';
 
 export 'matches_models.dart';
 
@@ -82,6 +85,10 @@ abstract interface class BookingsRepository {
 
   /// The reference the next booking will get (its share link exists before the payment).
   Future<String> nextReference();
+
+  /// Holds [booking]'s slot while the player pays (where bookings are shared: Supabase). Throws
+  /// `SlotTaken` when someone else has it, `OfflineException` without network. Locally: nothing.
+  Future<void> hold(MuBooking booking);
 
   Future<BookingDetails> details(String id);
 
@@ -261,6 +268,9 @@ class FakeBookingsRepository implements BookingsRepository {
     ];
     return 'MU-${used.fold(firstReference - 1, (a, b) => a > b ? a : b) + 1}';
   }
+
+  @override
+  Future<void> hold(MuBooking booking) async {}
 
   @override
   Future<MuBooking> add(MuBooking booking) async {
@@ -474,7 +484,17 @@ class FakeBookingsRepository implements BookingsRepository {
   }
 }
 
-/// The player's bookings, kept in the phone's database. Tests override it with the fake.
-final bookingsRepositoryProvider = Provider<BookingsRepository>(
-  (ref) => SqliteBookingsRepository(ref.watch(appDatabaseProvider)),
+/// Where booked courts are shared: Supabase when supabase.json was given, none otherwise.
+final reservationRemoteProvider = Provider<ReservationRemote?>(
+  (ref) => SupabaseConfig.configured ? SupabaseReservationRemote() : null,
 );
+
+/// The player's bookings: Supabase as the source of truth with the phone's database as its
+/// cache, or the phone's database alone without Supabase. Tests override it with the fake.
+final bookingsRepositoryProvider = Provider<BookingsRepository>((ref) {
+  final local = SqliteBookingsRepository(ref.watch(appDatabaseProvider));
+  final remote = ref.watch(reservationRemoteProvider);
+  return remote == null
+      ? local
+      : SupabaseBookingsRepository(local, remote, connect: SupabaseConfig.ensureSession);
+});

@@ -247,6 +247,11 @@ class SqliteOwnerRepository implements OwnerRepository {
     await (await _db).delete('proprio_blocages', where: 'id = ?', whereArgs: [id]);
   }
 
+  /// Stores a closed slot as Supabase has it (the cache of SupabaseOwnerRepository).
+  Future<void> keepBlock(OwnerBlock b) async {
+    await (await _db).insert('proprio_blocages', _blockRow(b), conflictAlgorithm: ConflictAlgorithm.replace);
+  }
+
   @override
   Future<OwnerBooking> markNoShow(String ref, List<String> players) async {
     final db = await _db;

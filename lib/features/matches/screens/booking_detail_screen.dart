@@ -6,6 +6,7 @@ import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:share_plus/share_plus.dart';
 
 import '../../../core/clock.dart';
+import '../../../core/connectivity.dart';
 import '../../../core/directions.dart';
 import '../../../core/format.dart';
 import '../../../router.dart';
@@ -22,6 +23,10 @@ import '../../../l10n/l10n.dart';
 /// MAT-05 · Détail de la réservation: the court under the lights, the facts and the QR code, the
 /// place, the players and their payments, the chat, the cancellation policy; the sticky « Inviter
 /// des joueurs ». « Annuler la réservation » opens MAT-06.
+/// Back to where the page was opened from, or to Mes matchs when nothing is under it (after the
+/// payment the booking replaces the checkout, and a link or reload opens it alone).
+void _back(BuildContext context) => context.canPop() ? context.pop() : context.go(Routes.matches);
+
 class BookingDetailScreen extends ConsumerStatefulWidget {
   const BookingDetailScreen({super.key, required this.bookingId});
 
@@ -149,7 +154,20 @@ class _BookingDetailScreenState extends ConsumerState<BookingDetailScreen> {
     setState(() => _cancelling = true);
     // The page closes on « Mes matchs »: the toast lives in the app's overlay.
     final overlay = Overlay.of(context, rootOverlay: true);
-    final c = await ref.read(matchesActionsProvider).cancel(widget.bookingId);
+    final CancelledBooking c;
+    try {
+      c = await ref.read(matchesActionsProvider).cancel(widget.bookingId);
+    } on OfflineException {
+      if (!mounted) return;
+      setState(() => _cancelling = false);
+      MuToast.show(
+        context,
+        tone: MuToastTone.error,
+        title: l10n.pasDeConnexion,
+        description: l10n.reserverDemandeUneConnexion,
+      );
+      return;
+    }
     if (!mounted) return;
     context.go(Routes.matches);
     if (!overlay.mounted) return;
@@ -196,7 +214,7 @@ class _BookingDetailScreenState extends ConsumerState<BookingDetailScreen> {
                   const MuSkeleton(height: _photo, radius: BorderRadius.zero),
                   Align(
                     alignment: Alignment.topCenter,
-                    child: MuTopAppBar.media(onBack: () => context.pop()),
+                    child: MuTopAppBar.media(onBack: () => _back(context)),
                   ),
                 ],
               ),
@@ -263,7 +281,7 @@ class _BookingDetailScreenState extends ConsumerState<BookingDetailScreen> {
           Align(
             alignment: Alignment.topCenter,
             child: MuTopAppBar.media(
-              onBack: () => context.pop(),
+              onBack: () => _back(context),
               backLabel: l10n.retourAMesMatchs,
               actions: [
                 MuBarAction(
