@@ -607,3 +607,207 @@ drop policy if exists "promos_ecriture" on public.promos;
 create policy "promos_lecture" on public.promos for select to authenticated using (owner_id = auth.uid());
 create policy "promos_ecriture" on public.promos for all to authenticated using (owner_id = auth.uid()) with check (owner_id = auth.uid());
 
+-- entrainement_profil (owner)
+create table if not exists public.entrainement_profil (
+  owner_id uuid not null default auth.uid() references auth.users (id) on delete cascade,
+  "id" bigint,
+  "serie_semaines" bigint not null,
+  "objectif_semaine" bigint not null,
+  "plan_masque" bigint not null,
+  "rappel_actif" bigint not null,
+  "rappel_jours" text not null,
+  "rappel_heure" bigint not null,
+  primary key (owner_id, "id")
+);
+alter table public.entrainement_profil add column if not exists "id" bigint;
+alter table public.entrainement_profil add column if not exists "serie_semaines" bigint;
+alter table public.entrainement_profil add column if not exists "objectif_semaine" bigint;
+alter table public.entrainement_profil add column if not exists "plan_masque" bigint;
+alter table public.entrainement_profil add column if not exists "rappel_actif" bigint;
+alter table public.entrainement_profil add column if not exists "rappel_jours" text;
+alter table public.entrainement_profil add column if not exists "rappel_heure" bigint;
+alter table public.entrainement_profil enable row level security;
+drop policy if exists "entrainement_profil_lecture" on public.entrainement_profil;
+drop policy if exists "entrainement_profil_ecriture" on public.entrainement_profil;
+create policy "entrainement_profil_lecture" on public.entrainement_profil for select to authenticated using (owner_id = auth.uid());
+create policy "entrainement_profil_ecriture" on public.entrainement_profil for all to authenticated using (owner_id = auth.uid()) with check (owner_id = auth.uid());
+
+-- entrainement_inscriptions (owner)
+create table if not exists public.entrainement_inscriptions (
+  owner_id uuid not null default auth.uid() references auth.users (id) on delete cascade,
+  "programme" text,
+  "inscrit_le" text not null,
+  primary key (owner_id, "programme")
+);
+alter table public.entrainement_inscriptions add column if not exists "programme" text;
+alter table public.entrainement_inscriptions add column if not exists "inscrit_le" text;
+alter table public.entrainement_inscriptions enable row level security;
+drop policy if exists "entrainement_inscriptions_lecture" on public.entrainement_inscriptions;
+drop policy if exists "entrainement_inscriptions_ecriture" on public.entrainement_inscriptions;
+create policy "entrainement_inscriptions_lecture" on public.entrainement_inscriptions for select to authenticated using (owner_id = auth.uid());
+create policy "entrainement_inscriptions_ecriture" on public.entrainement_inscriptions for all to authenticated using (owner_id = auth.uid()) with check (owner_id = auth.uid());
+
+-- entrainement_seances (owner)
+create table if not exists public.entrainement_seances (
+  owner_id uuid not null default auth.uid() references auth.users (id) on delete cascade,
+  "programme" text not null,
+  "seance" bigint not null,
+  "faite_le" text not null,
+  "minutes" bigint not null,
+  "exercices_faits" bigint not null,
+  "exercices_total" bigint not null,
+  "reussis" bigint,
+  "objectif" bigint,
+  "ressenti" text,
+  "notes" text,
+  primary key (owner_id, "programme", "seance")
+);
+alter table public.entrainement_seances add column if not exists "programme" text;
+alter table public.entrainement_seances add column if not exists "seance" bigint;
+alter table public.entrainement_seances add column if not exists "faite_le" text;
+alter table public.entrainement_seances add column if not exists "minutes" bigint;
+alter table public.entrainement_seances add column if not exists "exercices_faits" bigint;
+alter table public.entrainement_seances add column if not exists "exercices_total" bigint;
+alter table public.entrainement_seances add column if not exists "reussis" bigint;
+alter table public.entrainement_seances add column if not exists "objectif" bigint;
+alter table public.entrainement_seances add column if not exists "ressenti" text;
+alter table public.entrainement_seances add column if not exists "notes" text;
+alter table public.entrainement_seances enable row level security;
+drop policy if exists "entrainement_seances_lecture" on public.entrainement_seances;
+drop policy if exists "entrainement_seances_ecriture" on public.entrainement_seances;
+create policy "entrainement_seances_lecture" on public.entrainement_seances for select to authenticated using (owner_id = auth.uid());
+create policy "entrainement_seances_ecriture" on public.entrainement_seances for all to authenticated using (owner_id = auth.uid()) with check (owner_id = auth.uid());
+
+-- entrainement_plans (owner)
+create table if not exists public.entrainement_plans (
+  owner_id uuid not null default auth.uid() references auth.users (id) on delete cascade,
+  "id" text,
+  "semaine" text not null,
+  "objectifs" text not null,
+  "contenu" text not null,
+  "accepte_le" text not null,
+  primary key (owner_id, "id")
+);
+alter table public.entrainement_plans add column if not exists "id" text;
+alter table public.entrainement_plans add column if not exists "semaine" text;
+alter table public.entrainement_plans add column if not exists "objectifs" text;
+alter table public.entrainement_plans add column if not exists "contenu" text;
+alter table public.entrainement_plans add column if not exists "accepte_le" text;
+alter table public.entrainement_plans enable row level security;
+drop policy if exists "entrainement_plans_lecture" on public.entrainement_plans;
+drop policy if exists "entrainement_plans_ecriture" on public.entrainement_plans;
+create policy "entrainement_plans_lecture" on public.entrainement_plans for select to authenticated using (owner_id = auth.uid());
+create policy "entrainement_plans_ecriture" on public.entrainement_plans for all to authenticated using (owner_id = auth.uid()) with check (owner_id = auth.uid());
+
+-- entrainement_analyses (owner)
+create table if not exists public.entrainement_analyses (
+  owner_id uuid not null default auth.uid() references auth.users (id) on delete cascade,
+  "id" text,
+  "geste" text not null,
+  "fichier" text not null,
+  "taille" bigint not null,
+  "partage" bigint not null,
+  "cree_le" text not null,
+  primary key (owner_id, "id")
+);
+alter table public.entrainement_analyses add column if not exists "id" text;
+alter table public.entrainement_analyses add column if not exists "geste" text;
+alter table public.entrainement_analyses add column if not exists "fichier" text;
+alter table public.entrainement_analyses add column if not exists "taille" bigint;
+alter table public.entrainement_analyses add column if not exists "partage" bigint;
+alter table public.entrainement_analyses add column if not exists "cree_le" text;
+alter table public.entrainement_analyses enable row level security;
+drop policy if exists "entrainement_analyses_lecture" on public.entrainement_analyses;
+drop policy if exists "entrainement_analyses_ecriture" on public.entrainement_analyses;
+create policy "entrainement_analyses_lecture" on public.entrainement_analyses for select to authenticated using (owner_id = auth.uid());
+create policy "entrainement_analyses_ecriture" on public.entrainement_analyses for all to authenticated using (owner_id = auth.uid()) with check (owner_id = auth.uid());
+
+-- entrainement_favoris (owner)
+create table if not exists public.entrainement_favoris (
+  owner_id uuid not null default auth.uid() references auth.users (id) on delete cascade,
+  "programme" text,
+  "ajoute_le" text not null,
+  primary key (owner_id, "programme")
+);
+alter table public.entrainement_favoris add column if not exists "programme" text;
+alter table public.entrainement_favoris add column if not exists "ajoute_le" text;
+alter table public.entrainement_favoris enable row level security;
+drop policy if exists "entrainement_favoris_lecture" on public.entrainement_favoris;
+drop policy if exists "entrainement_favoris_ecriture" on public.entrainement_favoris;
+create policy "entrainement_favoris_lecture" on public.entrainement_favoris for select to authenticated using (owner_id = auth.uid());
+create policy "entrainement_favoris_ecriture" on public.entrainement_favoris for all to authenticated using (owner_id = auth.uid()) with check (owner_id = auth.uid());
+
+-- entrainement_avis (owner)
+create table if not exists public.entrainement_avis (
+  owner_id uuid not null default auth.uid() references auth.users (id) on delete cascade,
+  "programme" text,
+  "note" bigint not null,
+  "texte" text,
+  "le" text not null,
+  primary key (owner_id, "programme")
+);
+alter table public.entrainement_avis add column if not exists "programme" text;
+alter table public.entrainement_avis add column if not exists "note" bigint;
+alter table public.entrainement_avis add column if not exists "texte" text;
+alter table public.entrainement_avis add column if not exists "le" text;
+alter table public.entrainement_avis enable row level security;
+drop policy if exists "entrainement_avis_lecture" on public.entrainement_avis;
+drop policy if exists "entrainement_avis_ecriture" on public.entrainement_avis;
+create policy "entrainement_avis_lecture" on public.entrainement_avis for select to authenticated using (owner_id = auth.uid());
+create policy "entrainement_avis_ecriture" on public.entrainement_avis for all to authenticated using (owner_id = auth.uid()) with check (owner_id = auth.uid());
+
+-- coach_brouillons (owner)
+create table if not exists public.coach_brouillons (
+  owner_id uuid not null default auth.uid() references auth.users (id) on delete cascade,
+  "id" text,
+  "contenu" text not null,
+  "modifie_le" text not null,
+  "supprime" bigint not null,
+  primary key (owner_id, "id")
+);
+alter table public.coach_brouillons add column if not exists "id" text;
+alter table public.coach_brouillons add column if not exists "contenu" text;
+alter table public.coach_brouillons add column if not exists "modifie_le" text;
+alter table public.coach_brouillons add column if not exists "supprime" bigint;
+alter table public.coach_brouillons enable row level security;
+drop policy if exists "coach_brouillons_lecture" on public.coach_brouillons;
+drop policy if exists "coach_brouillons_ecriture" on public.coach_brouillons;
+create policy "coach_brouillons_lecture" on public.coach_brouillons for select to authenticated using (owner_id = auth.uid());
+create policy "coach_brouillons_ecriture" on public.coach_brouillons for all to authenticated using (owner_id = auth.uid()) with check (owner_id = auth.uid());
+
+-- coach_actions (owner)
+create table if not exists public.coach_actions (
+  owner_id uuid not null default auth.uid() references auth.users (id) on delete cascade,
+  "cle" text,
+  "faite_le" text not null,
+  primary key (owner_id, "cle")
+);
+alter table public.coach_actions add column if not exists "cle" text;
+alter table public.coach_actions add column if not exists "faite_le" text;
+alter table public.coach_actions enable row level security;
+drop policy if exists "coach_actions_lecture" on public.coach_actions;
+drop policy if exists "coach_actions_ecriture" on public.coach_actions;
+create policy "coach_actions_lecture" on public.coach_actions for select to authenticated using (owner_id = auth.uid());
+create policy "coach_actions_ecriture" on public.coach_actions for all to authenticated using (owner_id = auth.uid()) with check (owner_id = auth.uid());
+
+-- coach_retours (owner)
+create table if not exists public.coach_retours (
+  owner_id uuid not null default auth.uid() references auth.users (id) on delete cascade,
+  "eleve" text,
+  "commentaires" text not null,
+  "message" text not null,
+  "nouvelle_video" bigint not null,
+  "envoye_le" text not null,
+  primary key (owner_id, "eleve")
+);
+alter table public.coach_retours add column if not exists "eleve" text;
+alter table public.coach_retours add column if not exists "commentaires" text;
+alter table public.coach_retours add column if not exists "message" text;
+alter table public.coach_retours add column if not exists "nouvelle_video" bigint;
+alter table public.coach_retours add column if not exists "envoye_le" text;
+alter table public.coach_retours enable row level security;
+drop policy if exists "coach_retours_lecture" on public.coach_retours;
+drop policy if exists "coach_retours_ecriture" on public.coach_retours;
+create policy "coach_retours_lecture" on public.coach_retours for select to authenticated using (owner_id = auth.uid());
+create policy "coach_retours_ecriture" on public.coach_retours for all to authenticated using (owner_id = auth.uid()) with check (owner_id = auth.uid());
+

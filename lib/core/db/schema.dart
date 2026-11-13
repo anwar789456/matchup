@@ -611,4 +611,90 @@ const schemaVersions = <int, List<String>>{
     )''',
     'INSERT INTO sync_etat (id) VALUES (1)',
   ],
+
+  // ── v5 · Entraînement (ENT-01…09): programs joined, sessions done, streak, AI plans, videos ──
+  5: [
+    '''
+    CREATE TABLE entrainement_inscriptions (
+      programme TEXT PRIMARY KEY,
+      inscrit_le TEXT NOT NULL
+    )''',
+    '''
+    CREATE TABLE entrainement_seances (
+      programme TEXT NOT NULL,
+      seance INTEGER NOT NULL,
+      faite_le TEXT NOT NULL,
+      minutes INTEGER NOT NULL,
+      exercices_faits INTEGER NOT NULL,
+      exercices_total INTEGER NOT NULL,
+      reussis INTEGER,
+      objectif INTEGER,
+      ressenti TEXT CHECK (ressenti IN ('easy', 'right', 'hard')),
+      notes TEXT,
+      PRIMARY KEY (programme, seance)
+    )''',
+    '''
+    CREATE TABLE entrainement_profil (
+      id INTEGER PRIMARY KEY CHECK (id = 1),
+      serie_semaines INTEGER NOT NULL,
+      objectif_semaine INTEGER NOT NULL,
+      plan_masque INTEGER NOT NULL DEFAULT 0,
+      rappel_actif INTEGER NOT NULL DEFAULT 0,
+      rappel_jours TEXT NOT NULL DEFAULT '1,3,5',
+      rappel_heure INTEGER NOT NULL DEFAULT 1140
+    )''',
+    '''
+    CREATE TABLE entrainement_plans (
+      id TEXT PRIMARY KEY,
+      semaine TEXT NOT NULL,
+      objectifs TEXT NOT NULL,
+      contenu TEXT NOT NULL,
+      accepte_le TEXT NOT NULL
+    )''',
+    '''
+    CREATE TABLE entrainement_analyses (
+      id TEXT PRIMARY KEY,
+      geste TEXT NOT NULL,
+      fichier TEXT NOT NULL,
+      taille INTEGER NOT NULL,
+      partage INTEGER NOT NULL DEFAULT 0,
+      cree_le TEXT NOT NULL
+    )''',
+
+    // Programs saved (🔖, ENT-03) and the player's rating of a finished program.
+    '''
+    CREATE TABLE entrainement_favoris (
+      programme TEXT PRIMARY KEY,
+      ajoute_le TEXT NOT NULL
+    )''',
+    '''
+    CREATE TABLE entrainement_avis (
+      programme TEXT PRIMARY KEY,
+      note INTEGER NOT NULL CHECK (note BETWEEN 1 AND 5),
+      texte TEXT,
+      le TEXT NOT NULL
+    )''',
+
+    // Coach space (COA-04…12): the program being written, todos handled, feedback sent.
+    '''
+    CREATE TABLE coach_brouillons (
+      id TEXT PRIMARY KEY,
+      contenu TEXT NOT NULL,
+      modifie_le TEXT NOT NULL,
+      supprime INTEGER NOT NULL DEFAULT 0
+    )''',
+    '''
+    CREATE TABLE coach_actions (
+      cle TEXT PRIMARY KEY,
+      faite_le TEXT NOT NULL
+    )''',
+    '''
+    CREATE TABLE coach_retours (
+      eleve TEXT PRIMARY KEY,
+      commentaires TEXT NOT NULL,
+      message TEXT NOT NULL,
+      nouvelle_video INTEGER NOT NULL DEFAULT 0,
+      envoye_le TEXT NOT NULL
+    )''',
+  ],
 };

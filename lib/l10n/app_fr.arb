@@ -8828,5 +8828,3121 @@
   "duTotal": "du total",
   "partText2": "Part",
   "valeur": "Valeur",
-  "categorie": "Catégorie"
+  "categorie": "Catégorie",
+  "entAllPrograms": "Tous les programmes",
+  "entAnalyseVideo": "Analyser une vidéo",
+  "entAnalyseVideoTitle": "Analyse vidéo",
+  "entAnalyseYourBandeja": "Analyse ta bandeja",
+  "entAnalyseYourBandejaText": "Filme 30 s de jeu : l’IA repère ce qui coince et te donne 3 conseils, avec le moment exact.",
+  "entCatalogue": "Catalogue",
+  "entClearFilters": "Effacer les filtres",
+  "entCoach": "Coach",
+  "entCoachPace": "{coach} · {count, plural, =1{1 séance par semaine} other{{count} séances par semaine}}",
+  "@entCoachPace": {
+    "placeholders": {
+      "coach": {
+        "type": "Object"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "entCoaches": "Les coachs",
+  "entCoachesCaption": "Diplômes vérifiés par MatchUp.",
+  "entCreateMyPlan": "Créer mon plan",
+  "entCreateWeekPlan": "Crée ton plan de la semaine",
+  "entDayDone": "séance faite",
+  "entDayRest": "repos",
+  "entDaySemantics": "{day} : {state}",
+  "@entDaySemantics": {
+    "placeholders": {
+      "day": {
+        "type": "Object"
+      },
+      "state": {
+        "type": "Object"
+      }
+    }
+  },
+  "entDayToDo": "séance {index} à faire",
+  "@entDayToDo": {
+    "placeholders": {
+      "index": {
+        "type": "int"
+      }
+    }
+  },
+  "entDoTodayToValidate": "Fais la séance {index} aujourd’hui pour valider ta {week}e semaine.",
+  "@entDoTodayToValidate": {
+    "placeholders": {
+      "index": {
+        "type": "int"
+      },
+      "week": {
+        "type": "int"
+      }
+    }
+  },
+  "entDuration": "Durée",
+  "entFilters": "Filtres",
+  "entForYou": "Pour toi",
+  "entInPremiumTrialUntil": "Inclus dans ton essai Premium · jusqu’au {date}",
+  "@entInPremiumTrialUntil": {
+    "placeholders": {
+      "date": {
+        "type": "Object"
+      }
+    }
+  },
+  "entLater": "Plus tard",
+  "entLevelRange": "niveau {range}",
+  "@entLevelRange": {
+    "placeholders": {
+      "range": {
+        "type": "Object"
+      }
+    }
+  },
+  "entLoadingPrograms": "Chargement des programmes",
+  "entLoadingTraining": "Chargement de ton entraînement",
+  "entMyLevel": "Mon niveau",
+  "entMyPrograms": "Mes programmes",
+  "entNextSession": "Prochaine séance",
+  "entNoMatchText": "Aucun programme ne correspond à ces filtres. Élargis ta recherche.",
+  "entNoMatchTitle": "Aucun programme",
+  "entNoProgramText": "Choisis un programme dans le catalogue : une séance courte par jour, à ton niveau.",
+  "entNoProgramTitle": "Pas encore de programme",
+  "entPlanPitch": "3 séances courtes autour de ton programme {program}, calées sur tes matchs et ton tournoi. Rien n’est ajouté à ton agenda sans ta validation.",
+  "@entPlanPitch": {
+    "placeholders": {
+      "program": {
+        "type": "Object"
+      }
+    }
+  },
+  "entPlanReason": "tu es dispo lun., mer. et sam. soir et tes 3 derniers avis de coéquipiers parlent de ton placement au filet.",
+  "entPrice": "Prix",
+  "entProgram": "Programme",
+  "entProgramByCoach": "{program} · {coach}",
+  "@entProgramByCoach": {
+    "placeholders": {
+      "program": {
+        "type": "Object"
+      },
+      "coach": {
+        "type": "Object"
+      }
+    }
+  },
+  "entProgramCount": "{count, plural, =0{Aucun programme} =1{1 programme} other{{count} programmes}}",
+  "@entProgramCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "entProgramLabel": "Programme {title}",
+  "@entProgramLabel": {
+    "placeholders": {
+      "title": {
+        "type": "Object"
+      }
+    }
+  },
+  "entPrograms": "Programmes",
+  "entQuickFilters": "Filtres rapides",
+  "entRecommendedBecause": "Recommandé car {reason}",
+  "@entRecommendedBecause": {
+    "placeholders": {
+      "reason": {
+        "type": "Object"
+      }
+    }
+  },
+  "entRelevance": "Pertinence",
+  "entSearchPlaceholder": "Geste, sport, coach…",
+  "entSearchProgram": "Chercher un programme",
+  "entSession": "Séance",
+  "entSessionsLeft": "{count, plural, =1{Encore 1 séance pour valider ta semaine.} other{Encore {count} séances pour valider ta semaine.}}",
+  "@entSessionsLeft": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "entSortBy": "Trier par : {sort}",
+  "@entSortBy": {
+    "placeholders": {
+      "sort": {
+        "type": "Object"
+      }
+    }
+  },
+  "entToProgress": "Pour progresser",
+  "entToProgressCaption": "Padel et foot, à ton niveau.",
+  "entTodayAbbr": "auj.",
+  "entTodayDay": "Aujourd’hui, {date}",
+  "@entTodayDay": {
+    "placeholders": {
+      "date": {
+        "type": "Object"
+      }
+    }
+  },
+  "entTrainingPlan": "Plan d’entraînement",
+  "entWeekDays": "Séances de la semaine",
+  "entWeekDone": "Semaine validée : ta série passe à {weeks} semaines de suite.",
+  "@entWeekDone": {
+    "placeholders": {
+      "weeks": {
+        "type": "int"
+      }
+    }
+  },
+  "entWeekOf": "Semaine {week} sur {weeks} · {percent}",
+  "@entWeekOf": {
+    "placeholders": {
+      "week": {
+        "type": "int"
+      },
+      "weeks": {
+        "type": "int"
+      },
+      "percent": {
+        "type": "Object"
+      }
+    }
+  },
+  "entWeekSemantics": "{streak} semaines de suite, {done} séances sur {goal} cette semaine",
+  "@entWeekSemantics": {
+    "placeholders": {
+      "streak": {
+        "type": "int"
+      },
+      "done": {
+        "type": "int"
+      },
+      "goal": {
+        "type": "int"
+      }
+    }
+  },
+  "entWeeksInARow": "{count, plural, =1{semaine de suite} other{semaines de suite}}",
+  "@entWeeksInARow": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "entYourTraining": "ton entraînement",
+  "entYourWeek": "Ta semaine · {range}",
+  "@entYourWeek": {
+    "placeholders": {
+      "range": {
+        "type": "Object"
+      }
+    }
+  },
+  "entAbout": "À propos",
+  "entAddRep": "Ajouter {noun}",
+  "@entAddRep": {
+    "placeholders": {
+      "noun": {
+        "type": "Object"
+      }
+    }
+  },
+  "entRemoveRep": "Retirer {noun}",
+  "@entRemoveRep": {
+    "placeholders": {
+      "noun": {
+        "type": "Object"
+      }
+    }
+  },
+  "entOneRep": "une répétition",
+  "entAllSetsDone": "Toutes les séries sont faites",
+  "entAnalyseMyMove": "Analyser ma {move} en vidéo",
+  "@entAnalyseMyMove": {
+    "placeholders": {
+      "move": {
+        "type": "Object"
+      }
+    }
+  },
+  "entAnalyseMyMoveGeneric": "Analyser mon geste en vidéo",
+  "entBackToCatalogue": "Retour au catalogue",
+  "entBackToTraining": "Retour à mon entraînement",
+  "entCertifiedLine": "{certification} · diplôme vérifié par MatchUp",
+  "@entCertifiedLine": {
+    "placeholders": {
+      "certification": {
+        "type": "Object"
+      }
+    }
+  },
+  "entCheckoutEyebrow": "Programme d’entraînement",
+  "entCheckoutLine": "Programme complet · accès à vie",
+  "entCheckoutSubtitle": "{coach} · {weeks} semaines · {sessions} séances",
+  "@entCheckoutSubtitle": {
+    "placeholders": {
+      "coach": {
+        "type": "Object"
+      },
+      "weeks": {
+        "type": "int"
+      },
+      "sessions": {
+        "type": "int"
+      }
+    }
+  },
+  "entCoachTip": "Le conseil de {name}",
+  "@entCoachTip": {
+    "placeholders": {
+      "name": {
+        "type": "Object"
+      }
+    }
+  },
+  "entContinueSession": "Continuer · Séance {index}",
+  "@entContinueSession": {
+    "placeholders": {
+      "index": {
+        "type": "int"
+      }
+    }
+  },
+  "entDaysAgo": "{days, plural, =1{il y a 1 jour} other{il y a {days} jours}}",
+  "@entDaysAgo": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "entFinishedAgo": "{days, plural, =1{Programme terminé · il y a 1 jour} other{Programme terminé · il y a {days} jours}}",
+  "@entFinishedAgo": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "entDifficulty": "Difficulté de la séance",
+  "entDoneWord": "{count, plural, =0{fait} =1{fait} other{faits}}",
+  "@entDoneWord": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "entDrillsDone": "{done, plural, =0{0 exercice fait} =1{1 exercice fait} other{{done} exercices faits}} sur {total}",
+  "@entDrillsDone": {
+    "placeholders": {
+      "done": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "entEnroll": "S’inscrire au programme",
+  "entEnrolled": "Tu es inscrit",
+  "entEnrolledText": "« {program} » est dans Mes programmes.",
+  "@entEnrolledText": {
+    "placeholders": {
+      "program": {
+        "type": "Object"
+      }
+    }
+  },
+  "entExercises": "Exercices",
+  "entExercisesOf": "Exercices de la séance {index}",
+  "@entExercisesOf": {
+    "placeholders": {
+      "index": {
+        "type": "int"
+      }
+    }
+  },
+  "entFeelingAdapts": "La séance {index} s’adapte à ta réponse. {coach} la voit aussi.",
+  "@entFeelingAdapts": {
+    "placeholders": {
+      "index": {
+        "type": "int"
+      },
+      "coach": {
+        "type": "Object"
+      }
+    }
+  },
+  "entFeelingCoachSees": "{coach} voit ta réponse.",
+  "@entFeelingCoachSees": {
+    "placeholders": {
+      "coach": {
+        "type": "Object"
+      }
+    }
+  },
+  "entFreeLine": "Gratuit · sans engagement",
+  "entHeroLabel": "Court de {sport} éclairé, aperçu du programme",
+  "@entHeroLabel": {
+    "placeholders": {
+      "sport": {
+        "type": "Object"
+      }
+    }
+  },
+  "entHoursMinutes": "{hours} h {minutes}",
+  "@entHoursMinutes": {
+    "placeholders": {
+      "hours": {
+        "type": "int"
+      },
+      "minutes": {
+        "type": "Object"
+      }
+    }
+  },
+  "entHowWasIt": "Comment c’était ?",
+  "entInBrief": "Le programme en bref",
+  "entInsteadOf": "au lieu de {price}",
+  "@entInsteadOf": {
+    "placeholders": {
+      "price": {
+        "type": "Object"
+      }
+    }
+  },
+  "entJoinedLine": "{done} séances sur {total} · prochaine : Séance {index} · {title}",
+  "@entJoinedLine": {
+    "placeholders": {
+      "done": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      },
+      "index": {
+        "type": "int"
+      },
+      "title": {
+        "type": "Object"
+      }
+    }
+  },
+  "entJustRight": "Juste bien",
+  "entTooEasy": "Trop facile",
+  "entTooHard": "Trop dur",
+  "entLessonDoneTitle": "Séance {index} terminée",
+  "@entLessonDoneTitle": {
+    "placeholders": {
+      "index": {
+        "type": "int"
+      }
+    }
+  },
+  "entLevelSpan": "Niveau {range}",
+  "@entLevelSpan": {
+    "placeholders": {
+      "range": {
+        "type": "Object"
+      }
+    }
+  },
+  "entMarkDone": "Marquer comme fait",
+  "entMinutesRange": "{range} min",
+  "@entMinutesRange": {
+    "placeholders": {
+      "range": {
+        "type": "Object"
+      }
+    }
+  },
+  "entMyNotes": "Mes notes",
+  "entNext": "Ensuite",
+  "entNextExercise": "Exercice suivant",
+  "entPreviousExercise": "Exercice précédent",
+  "entNextLine": "{sets} · {video} de vidéo",
+  "@entNextLine": {
+    "placeholders": {
+      "sets": {
+        "type": "Object"
+      },
+      "video": {
+        "type": "Object"
+      }
+    }
+  },
+  "entNextOn": "Prochaine : Séance {index} · {title} · {day}",
+  "@entNextOn": {
+    "placeholders": {
+      "index": {
+        "type": "int"
+      },
+      "title": {
+        "type": "Object"
+      },
+      "day": {
+        "type": "Object"
+      }
+    }
+  },
+  "entNoCommitment": "sans engagement",
+  "entNotesHelper": "Visibles par toi seul. Tu peux les envoyer à {coach} à la fin.",
+  "@entNotesHelper": {
+    "placeholders": {
+      "coach": {
+        "type": "Object"
+      }
+    }
+  },
+  "entOneOff": "en une fois",
+  "entOutOf": "sur {minutes}",
+  "@entOutOf": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "entPaidLine": "{price} en une fois · accès à vie",
+  "@entPaidLine": {
+    "placeholders": {
+      "price": {
+        "type": "Object"
+      }
+    }
+  },
+  "entPayAndEnroll": "Payer {price} et m’inscrire",
+  "@entPayAndEnroll": {
+    "placeholders": {
+      "price": {
+        "type": "Object"
+      }
+    }
+  },
+  "entPerWeek": "{count} par semaine",
+  "@entPerWeek": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "entPlanned": "prévu {minutes} min",
+  "@entPlanned": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "entPlayVideo": "Lire la vidéo, {duration}",
+  "@entPlayVideo": {
+    "placeholders": {
+      "duration": {
+        "type": "Object"
+      }
+    }
+  },
+  "entPremiumActive": "Ton essai Premium est actif : tu suis les {sessions} séances sans payer le programme.",
+  "@entPremiumActive": {
+    "placeholders": {
+      "sessions": {
+        "type": "int"
+      }
+    }
+  },
+  "entPremiumLine": "{price} · inclus dans {which} · sans engagement",
+  "@entPremiumLine": {
+    "placeholders": {
+      "price": {
+        "type": "Object"
+      },
+      "which": {
+        "type": "Object"
+      }
+    }
+  },
+  "entYourTrial": "ton essai Premium",
+  "entYourPremium": "ton abonnement Premium",
+  "entPremiumOffer": "Avec Premium, tu suis les {sessions} séances sans payer le programme.",
+  "@entPremiumOffer": {
+    "placeholders": {
+      "sessions": {
+        "type": "int"
+      }
+    }
+  },
+  "entPremiumTerms": "Essai gratuit {days} jours, puis {monthly}/mois, résiliable à tout moment. Sans Premium, le programme coûte {price} en une fois.",
+  "@entPremiumTerms": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      },
+      "monthly": {
+        "type": "Object"
+      },
+      "price": {
+        "type": "Object"
+      }
+    }
+  },
+  "entPremiumTrialTerms": "Essai gratuit jusqu’au {date}, puis {monthly}/mois, résiliable à tout moment. Sans Premium, le programme coûte {price} en une fois.",
+  "@entPremiumTrialTerms": {
+    "placeholders": {
+      "date": {
+        "type": "Object"
+      },
+      "monthly": {
+        "type": "Object"
+      },
+      "price": {
+        "type": "Object"
+      }
+    }
+  },
+  "entProgramFinished": "Programme terminé : {total} séances sur {total}.",
+  "@entProgramFinished": {
+    "placeholders": {
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "entProgramGone": "Programme introuvable",
+  "entProgramGoneText": "Ce programme n’est plus proposé. Choisis-en un autre dans le catalogue.",
+  "entQuitSession": "Quitter la séance",
+  "entRatingSplit": "Répartition des notes",
+  "entRepsDone": "Répétitions réussies",
+  "entRestBetween": "{seconds} s de repos entre les séries",
+  "@entRestBetween": {
+    "placeholders": {
+      "seconds": {
+        "type": "int"
+      }
+    }
+  },
+  "entRestBetweenSets": "Repos entre les séries",
+  "entRestLeft": "Repos : encore {seconds} s",
+  "@entRestLeft": {
+    "placeholders": {
+      "seconds": {
+        "type": "int"
+      }
+    }
+  },
+  "entSaveProgram": "Enregistrer le programme",
+  "entSeeAllReviews": "Voir les {count} avis",
+  "@entSeeAllReviews": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "entSeeCatalogue": "Voir le catalogue",
+  "entSeePreview": "Voir l’aperçu, {duration}",
+  "@entSeePreview": {
+    "placeholders": {
+      "duration": {
+        "type": "Object"
+      }
+    }
+  },
+  "entSeePreviewShort": "Voir l’aperçu",
+  "entSessionInNumbers": "Ta séance en chiffres",
+  "entSessionVideos": "Vidéos de la séance {index} · {title}",
+  "@entSessionVideos": {
+    "placeholders": {
+      "index": {
+        "type": "int"
+      },
+      "title": {
+        "type": "Object"
+      }
+    }
+  },
+  "entSessions": "Séances",
+  "entSetOf": "Série {set} sur {sets}",
+  "@entSetOf": {
+    "placeholders": {
+      "set": {
+        "type": "int"
+      },
+      "sets": {
+        "type": "int"
+      }
+    }
+  },
+  "entSetsOf": "{sets, plural, =1{1 série de {reps}} other{{sets} séries de {reps}}}",
+  "@entSetsOf": {
+    "placeholders": {
+      "sets": {
+        "type": "int"
+      },
+      "reps": {
+        "type": "int"
+      }
+    }
+  },
+  "entShareExercise": "{exercise} · un exercice du programme {program} sur MatchUp",
+  "@entShareExercise": {
+    "placeholders": {
+      "exercise": {
+        "type": "Object"
+      },
+      "program": {
+        "type": "Object"
+      }
+    }
+  },
+  "entShareExerciseLabel": "Partager l’exercice",
+  "entShareProgram": "Partager le programme",
+  "entShareText": "{program} avec {coach}, sur MatchUp",
+  "@entShareText": {
+    "placeholders": {
+      "program": {
+        "type": "Object"
+      },
+      "coach": {
+        "type": "Object"
+      }
+    }
+  },
+  "entSkipExercise": "Passer l’exercice",
+  "entSkipRest": "Passer",
+  "entStartRest": "Lancer",
+  "entStartSession": "Lancer la séance",
+  "entStarsCount": "{stars, plural, =1{1 étoile} other{{stars} étoiles}} : {count} avis",
+  "@entStarsCount": {
+    "placeholders": {
+      "stars": {
+        "type": "int"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "entStreakNow": "Ta série passe à {weeks} semaines de suite.",
+  "@entStreakNow": {
+    "placeholders": {
+      "weeks": {
+        "type": "int"
+      }
+    }
+  },
+  "entStudentReviews": "Avis des élèves",
+  "entTarget": "Objectif : {reps}",
+  "@entTarget": {
+    "placeholders": {
+      "reps": {
+        "type": "int"
+      }
+    }
+  },
+  "entTheProgram": "Le programme",
+  "entTryPremium": "Essayer Premium",
+  "entVideoOf": "Vidéo de démonstration : {exercise}",
+  "@entVideoOf": {
+    "placeholders": {
+      "exercise": {
+        "type": "Object"
+      }
+    }
+  },
+  "entWeekSoFar": "Ta semaine : {done}/{goal}",
+  "@entWeekSoFar": {
+    "placeholders": {
+      "done": {
+        "type": "int"
+      },
+      "goal": {
+        "type": "int"
+      }
+    }
+  },
+  "entWeekTotal": "{count, plural, =1{1 séance} other{{count} séances}} · {total} au total",
+  "@entWeekTotal": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "total": {
+        "type": "Object"
+      }
+    }
+  },
+  "entWeekValidated": "Semaine validée : {done}/{goal}",
+  "@entWeekValidated": {
+    "placeholders": {
+      "done": {
+        "type": "int"
+      },
+      "goal": {
+        "type": "int"
+      }
+    }
+  },
+  "entWeeksShort": "{weeks} sem.",
+  "@entWeeksShort": {
+    "placeholders": {
+      "weeks": {
+        "type": "int"
+      }
+    }
+  },
+  "entWeeksWord": "{count, plural, =1{semaine} other{semaines}}",
+  "@entWeeksWord": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "entYouNeed": "Il te faut : {what}",
+  "@entYouNeed": {
+    "placeholders": {
+      "what": {
+        "type": "Object"
+      }
+    }
+  },
+  "entYourCoach": "Ton coach",
+  "entLessonNotDone": "Séance {index} pas encore faite",
+  "@entLessonNotDone": {
+    "placeholders": {
+      "index": {
+        "type": "int"
+      }
+    }
+  },
+  "entLessonNotDoneText": "Lance-la depuis ton programme : son bilan s’affiche ici à la fin.",
+  "entAcceptDetail": "{count, plural, =1{Ajoute 1 séance à ton agenda, avec un rappel 1 h avant.} other{Ajoute {count} séances à ton agenda, avec un rappel 1 h avant.}}",
+  "@entAcceptDetail": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "entAcceptPlan": "Accepter le plan",
+  "entAiCanBeWrong": "L’IA peut se tromper. Ajuste ce qui ne te va pas.",
+  "entAiPreparing": "L’IA prépare ta semaine…",
+  "entAiSourceMatches": "Tes {count} matchs de padel et ton niveau {level}",
+  "@entAiSourceMatches": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "level": {
+        "type": "Object"
+      }
+    }
+  },
+  "entAiSourceReviews": "Les {count} avis de tes coéquipiers",
+  "@entAiSourceReviews": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "entBackToGoals": "Retour aux objectifs",
+  "entCalendarTournament": "Tournoi",
+  "entDaysCount": "{count, plural, =0{0 jour} =1{1 jour} other{{count} jours}}",
+  "@entDaysCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "entEdit": "Modifier",
+  "entEvening": "Soir",
+  "entMorning": "Matin",
+  "entNoon": "Midi",
+  "entGeneratePlan": "Générer mon plan",
+  "entGeneratedAt": "Généré à {time}",
+  "@entGeneratedAt": {
+    "placeholders": {
+      "time": {
+        "type": "Object"
+      }
+    }
+  },
+  "entGoalPlacement": "Placement",
+  "entGoalEndurance": "Endurance",
+  "entGoalService": "Service",
+  "entGoalReturn": "Retour",
+  "entGoalVolley": "Volée",
+  "entGoalBandeja": "Bandeja",
+  "entGoalSpeed": "Vitesse",
+  "entIncludeProgram": "Inclure mon programme {program}",
+  "@entIncludeProgram": {
+    "placeholders": {
+      "program": {
+        "type": "Object"
+      }
+    }
+  },
+  "entIncludeProgramDetail": "{places, plural, =1{La séance {index} prend ta seule place.} other{La séance {index} prend une de tes {places} places.}}",
+  "@entIncludeProgramDetail": {
+    "placeholders": {
+      "places": {
+        "type": "int"
+      },
+      "index": {
+        "type": "int"
+      }
+    }
+  },
+  "entIntensity": "Intensité",
+  "entIntensitySoft": "Douce",
+  "entIntensityModerate": "Modérée",
+  "entIntensityHigh": "Intense",
+  "entIntensitySoftCaption": "Douce : des séances légères, pour récupérer entre tes matchs.",
+  "entIntensityModerateCaption": "Modérée : tu restes frais pour tes matchs du week-end.",
+  "entIntensityHighCaption": "Intense : plus de volume, à éviter juste avant un tournoi.",
+  "entLegendProgram": "Programme",
+  "entLegendAi": "Proposé par l’IA",
+  "entLegendMatch": "Match prévu",
+  "entLegendTournament": "Tournoi",
+  "entMaxGoals": "{max} max",
+  "@entMaxGoals": {
+    "placeholders": {
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "entMomentOfDay": "Moment de la journée",
+  "entPlanAdded": "Plan ajouté à ton agenda",
+  "entPlanAddedText": "{count, plural, =1{1 séance, avec un rappel 1 h avant.} other{{count} séances, avec un rappel 1 h avant.}}",
+  "@entPlanAddedText": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "entPlanDoesNotSuit": "Ce plan ne me convient pas",
+  "entPlanSuitsMe": "Ce plan me convient",
+  "entPlanFailed": "Impossible de préparer ton plan",
+  "entPlanIntro": "Dis-nous ce que tu veux travailler et quand tu es libre. L’IA prépare 3 séances autour de ton programme.",
+  "entPlanSummary": "{goals} · intensité {intensity} · {count} séances le {moment}, allégées avant ton tournoi",
+  "@entPlanSummary": {
+    "placeholders": {
+      "goals": {
+        "type": "Object"
+      },
+      "intensity": {
+        "type": "Object"
+      },
+      "count": {
+        "type": "int"
+      },
+      "moment": {
+        "type": "Object"
+      }
+    }
+  },
+  "entPrefilled": "Pré-rempli avec tes disponibilités du profil. Tes matchs déjà prévus sont évités.",
+  "entRegenerate": "Régénérer",
+  "entSeePlanFirst": "Tu verras le plan avant qu’il entre dans ton agenda.",
+  "entSessionLength": "Durée d’une séance",
+  "entThanksFeedback": "Merci, c’est noté",
+  "entWeekCalendar": "Calendrier de la semaine",
+  "entWeekOfRange": "Ta semaine du {start} au {end} {month}",
+  "@entWeekOfRange": {
+    "placeholders": {
+      "start": {
+        "type": "Object"
+      },
+      "end": {
+        "type": "Object"
+      },
+      "month": {
+        "type": "Object"
+      }
+    }
+  },
+  "entWhatAiUses": "Ce que l’IA utilise",
+  "entWhyThisPlan": "Pourquoi ce plan",
+  "entYourFreeDays": "Tes jours libres",
+  "entYourGoal": "Ton objectif",
+  "entYourProgram": "Ton programme",
+  "entYourSessions": "{count, plural, =1{Ta séance} other{Tes {count} séances}}",
+  "@entYourSessions": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "entYourWeekPlan": "Ton plan de la semaine",
+  "entMaxGoalsReached": "{max} objectifs maximum : retire-en un pour en choisir un autre.",
+  "@entMaxGoalsReached": {
+    "placeholders": {
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "entAboutAMinute": "Encore 1 min environ. Tu peux quitter cet écran, on te prévient.",
+  "entAddExercisesToPlan": "Ajouter les exercices à mon plan",
+  "entAiAnalysing": "L’IA analyse {move}",
+  "@entAiAnalysing": {
+    "placeholders": {
+      "move": {
+        "type": "Object"
+      }
+    }
+  },
+  "entAiFootnote": "L’IA peut se tromper. Vérifie les infos importantes.",
+  "entAiMoments": "{count, plural, =1{IA · 1 moment} other{IA · {count} moments}}",
+  "@entAiMoments": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "entAiReady": "C’est prêt",
+  "entAiRereading": "L’IA relit ta vidéo…",
+  "entAiRewriting": "L’IA réécrit le texte…",
+  "entAnalysedAt": "Analysé à {time} · {confidence}",
+  "@entAnalysedAt": {
+    "placeholders": {
+      "time": {
+        "type": "Object"
+      },
+      "confidence": {
+        "type": "Object"
+      }
+    }
+  },
+  "entConfidenceMedium": "confiance moyenne",
+  "entAnalysisReady": "{count, plural, =1{Ton analyse est prête : 1 conseil t’attend.} other{Ton analyse est prête : {count} conseils t’attendent.}}",
+  "@entAnalysisReady": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "entAnalysisRunning": "L’IA analyse ta vidéo · étape {step} sur {total}",
+  "@entAnalysisRunning": {
+    "placeholders": {
+      "step": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "entAnalysisUploading": "Envoi de ta vidéo en cours…",
+  "entAskCoach": "Demander l’avis de {coach}",
+  "@entAskCoach": {
+    "placeholders": {
+      "coach": {
+        "type": "Object"
+      }
+    }
+  },
+  "entSentToCoach": "Envoyé à {coach}",
+  "@entSentToCoach": {
+    "placeholders": {
+      "coach": {
+        "type": "Object"
+      }
+    }
+  },
+  "entSentToCoachText": "Ton coach voit ta vidéo et tes conseils, il te répond ici.",
+  "entBeta": "Bêta",
+  "entClipAt": "Ta vidéo, image à {time}",
+  "@entClipAt": {
+    "placeholders": {
+      "time": {
+        "type": "Object"
+      }
+    }
+  },
+  "entCopied": "Copié",
+  "entCopy": "Copier",
+  "entTextCopied": "Texte copié",
+  "entEditedByYou": "modifié par toi",
+  "entFilmOrChoose": "Filme ou choisis une vidéo",
+  "entFilmTip": "Filme de côté à 3 m, corps entier dans le cadre.",
+  "entFilmedAt": "Filmée {day} · {venue}",
+  "@entFilmedAt": {
+    "placeholders": {
+      "day": {
+        "type": "Object"
+      },
+      "venue": {
+        "type": "Object"
+      }
+    }
+  },
+  "entMomentsLine": "{count, plural, =1{1 moment à revoir · vidéo du {day} · {duration}} other{{count} moments à revoir · vidéo du {day} · {duration}}}",
+  "@entMomentsLine": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "day": {
+        "type": "Object"
+      },
+      "duration": {
+        "type": "Object"
+      }
+    }
+  },
+  "entMoveBandeja": "Bandeja",
+  "entMoveVibora": "Víbora",
+  "entMoveService": "Service",
+  "entMoveVolley": "Volée",
+  "entMoveSmash": "Smash",
+  "entYourBandeja": "ta bandeja",
+  "entYourVibora": "ta víbora",
+  "entYourService": "ton service",
+  "entYourVolley": "ta volée",
+  "entYourSmash": "ton smash",
+  "entNoAnalysisTitle": "Pas encore d’analyse",
+  "entNoAnalysisText": "Envoie une vidéo de ton geste : l’IA te donne 3 conseils, avec le moment exact.",
+  "entNotUseful": "Pas utile",
+  "entUseful": "Utile",
+  "entThanksForFeedback": "Merci pour ton retour",
+  "entNotifyMe": "Me prévenir",
+  "entPlayFrom": "Lire la vidéo depuis {time}",
+  "@entPlayFrom": {
+    "placeholders": {
+      "time": {
+        "type": "Object"
+      }
+    }
+  },
+  "entPlayback": "Position de lecture",
+  "entPlaybackValue": "{at} sur {total}",
+  "@entPlaybackValue": {
+    "placeholders": {
+      "at": {
+        "type": "Object"
+      },
+      "total": {
+        "type": "Object"
+      }
+    }
+  },
+  "entPlayingNow": "En lecture",
+  "entReplayAt": "Revoir à {time}",
+  "@entReplayAt": {
+    "placeholders": {
+      "time": {
+        "type": "Object"
+      }
+    }
+  },
+  "entSeeResult": "Voir le résultat",
+  "entSeeTips": "{count, plural, =1{Voir mon conseil} other{Voir mes {count} conseils}}",
+  "@entSeeTips": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "entShareAnalysis": "Partager l’analyse",
+  "entShareAnalysisText": "L’IA de MatchUp a analysé {move} : « {tip} ».",
+  "@entShareAnalysisText": {
+    "placeholders": {
+      "move": {
+        "type": "Object"
+      },
+      "tip": {
+        "type": "Object"
+      }
+    }
+  },
+  "entShareWith": "Partager le résultat avec {coach}",
+  "@entShareWith": {
+    "placeholders": {
+      "coach": {
+        "type": "Object"
+      }
+    }
+  },
+  "entShareWithDetail": "Ton coach pourra commenter. Désactivé par défaut.",
+  "entStep": "Étape",
+  "entStepOutOf": "sur",
+  "entStepDone": "terminé",
+  "entStepRunning": "en cours",
+  "entStepTodo": "à venir",
+  "entStepSent": "Vidéo envoyée",
+  "entStepDetect": "Détection de {move}",
+  "@entStepDetect": {
+    "placeholders": {
+      "move": {
+        "type": "Object"
+      }
+    }
+  },
+  "entStepCompare": "Comparaison à la référence",
+  "entStepWriting": "{count, plural, =1{Rédaction de ton conseil} other{Rédaction de tes {count} conseils}}",
+  "@entStepWriting": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "entSuggestedExercise": "Exercice conseillé",
+  "entYourNextSession": "Ta prochaine séance du programme",
+  "entTapMoment": "Touche un moment pour revoir le geste au ralenti.",
+  "entTipAt": "Conseil {index} · {time}",
+  "@entTipAt": {
+    "placeholders": {
+      "index": {
+        "type": "int"
+      },
+      "time": {
+        "type": "Object"
+      }
+    }
+  },
+  "entTipsByPriority": "{count, plural, =1{1 conseil} other{{count} conseils, par priorité}}",
+  "@entTipsByPriority": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "entVideoHint": "MP4, MOV · 60 s · 100 Mo max",
+  "entVideoIntro": "Envoie 30 s de ton geste : l’IA le compare à un geste de référence et te donne 3 conseils, avec le moment exact.",
+  "entVideoPrivate": "Ta vidéo reste privée et est supprimée après 30 jours.",
+  "entVideoTooBig": "Cette vidéo dépasse 100 Mo. Coupe-la à 60 s.",
+  "entVideoWrongFormat": "Choisis une vidéo MP4 ou MOV.",
+  "entWeLetYouKnow": "On te prévient",
+  "entWeLetYouKnowText": "Ton analyse continue. Retrouve-la dans Entraînement dès qu’elle est prête.",
+  "entWhatAiSaw": "Ce que l’IA a vu",
+  "entWhichMove": "Quel geste ?",
+  "entYourVideo": "Ta vidéo",
+  "entAnyCoach": "Tous les coachs",
+  "entAnyLength": "Toutes les durées",
+  "entAnyPrice": "Tous les prix",
+  "entBestRated": "Mieux notés",
+  "entCheapest": "Prix croissant",
+  "entEditRating": "Modifier ma note",
+  "entFilterReviews": "Filtrer les avis",
+  "entLongLength": "5 sem. et plus",
+  "entProgramSaved": "Programme enregistré",
+  "entProgramUnsaved": "Retiré de tes programmes enregistrés",
+  "entPublishRating": "Publier ma note",
+  "entReviewPublic": "Ton avis s’affiche sur la page du programme, avec ton prénom.",
+  "entReviewsShown": "{shown} avis affichés sur {total}",
+  "@entReviewsShown": {
+    "placeholders": {
+      "shown": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "entSaved": "Enregistrés",
+  "entSeeCount": "{count, plural, =0{Aucun programme} =1{Voir 1 programme} other{Voir {count} programmes}}",
+  "@entSeeCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "entShortLength": "3 sem. et moins",
+  "entShortest": "Plus courts",
+  "entSortTitle": "Trier les programmes",
+  "entThanksForRating": "Merci pour ta note",
+  "entUnsaveProgram": "Retirer des programmes enregistrés",
+  "entUpTo": "{price} et moins",
+  "@entUpTo": {
+    "placeholders": {
+      "price": {
+        "type": "Object"
+      }
+    }
+  },
+  "entYouRated": "Tu as noté ce programme {stars} ★",
+  "@entYouRated": {
+    "placeholders": {
+      "stars": {
+        "type": "int"
+      }
+    }
+  },
+  "entYourRating": "Ta note",
+  "entYourReview": "Ton avis",
+  "entHistory": "Historique",
+  "entSeeHistory": "Voir l’historique",
+  "entHistoryWeek": "Semaine du {date}",
+  "@entHistoryWeek": {
+    "placeholders": {
+      "date": {
+        "type": "Object"
+      }
+    }
+  },
+  "entHistoryReps": "{reps}/{target} réussis",
+  "@entHistoryReps": {
+    "placeholders": {
+      "reps": {
+        "type": "Object"
+      },
+      "target": {
+        "type": "Object"
+      }
+    }
+  },
+  "entMinutesTotal": "{minutes} min",
+  "@entMinutesTotal": {
+    "placeholders": {
+      "minutes": {
+        "type": "Object"
+      }
+    }
+  },
+  "entHoursTotal": "{hours} h {minutes}",
+  "@entHoursTotal": {
+    "placeholders": {
+      "hours": {
+        "type": "Object"
+      },
+      "minutes": {
+        "type": "Object"
+      }
+    }
+  },
+  "entHistoryTotals": "{sessions, plural, =1{1 séance} other{{sessions} séances}}, {time} d’entraînement, {weeks} semaines de suite",
+  "@entHistoryTotals": {
+    "placeholders": {
+      "sessions": {
+        "type": "int"
+      },
+      "time": {
+        "type": "Object"
+      },
+      "weeks": {
+        "type": "int"
+      }
+    }
+  },
+  "entSessionsDone": "{count, plural, =1{séance faite} other{séances faites}}",
+  "@entSessionsDone": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "entTrainedTime": "d’entraînement",
+  "entNoHistory": "Aucune séance pour l’instant",
+  "entNoHistoryHelp": "Tes séances terminées s’afficheront ici, semaine par semaine.",
+  "entReminders": "Rappels de séance",
+  "entRemindersOff": "Désactivés",
+  "entNextReminder": "Prochain rappel : {when}",
+  "@entNextReminder": {
+    "placeholders": {
+      "when": {
+        "type": "Object"
+      }
+    }
+  },
+  "entTodayAt": "aujourd’hui à {time}",
+  "@entTodayAt": {
+    "placeholders": {
+      "time": {
+        "type": "Object"
+      }
+    }
+  },
+  "entTomorrowAt": "demain à {time}",
+  "@entTomorrowAt": {
+    "placeholders": {
+      "time": {
+        "type": "Object"
+      }
+    }
+  },
+  "entDayAt": "{day} à {time}",
+  "@entDayAt": {
+    "placeholders": {
+      "day": {
+        "type": "Object"
+      },
+      "time": {
+        "type": "Object"
+      }
+    }
+  },
+  "entTurnOn": "Activer",
+  "entTestReminder": "Tester",
+  "entReminderSent": "Rappel envoyé",
+  "entSave": "Enregistrer",
+  "entRemindMe": "Me rappeler mes séances",
+  "entRemindMeHelp": "Pas de rappel un jour où ta séance est déjà faite.",
+  "entReminderDays": "Les jours",
+  "entPickADay": "Choisis au moins un jour.",
+  "entReminderTime": "Heure du rappel",
+  "entRemindersSaved": "Rappels enregistrés",
+  "entRemindersOffSaved": "Rappels désactivés",
+  "entReminderTitle": "C’est l’heure de ta séance",
+  "entReminderBody": "Séance {index} · {title} · {minutes} min",
+  "@entReminderBody": {
+    "placeholders": {
+      "index": {
+        "type": "int"
+      },
+      "title": {
+        "type": "Object"
+      },
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "entReminderNoSession": "Choisis un programme et garde ta série.",
+  "entReminderStart": "Commencer",
+  "entReminderLater": "Plus tard",
+  "entVideoError": "Impossible de lire la vidéo. Vérifie ta connexion et réessaie.",
+  "entVideoLoading": "Chargement de la vidéo",
+  "entVideoPlay": "Lire la vidéo",
+  "entProgramPreview": "Aperçu · {title}",
+  "@entProgramPreview": {
+    "placeholders": {
+      "title": {
+        "type": "Object"
+      }
+    }
+  },
+  "entCoachName": "Coach {name}",
+  "@entCoachName": {
+    "placeholders": {
+      "name": {
+        "type": "Object"
+      }
+    }
+  },
+  "entProgramMeta": "{weeks} sem. · {sessions} séances · {minutes} min/jour",
+  "@entProgramMeta": {
+    "placeholders": {
+      "weeks": {
+        "type": "int"
+      },
+      "sessions": {
+        "type": "int"
+      },
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "entProgramMetaShort": "{weeks} sem. · {sessions} séances · {minutes} min/j",
+  "@entProgramMetaShort": {
+    "placeholders": {
+      "weeks": {
+        "type": "int"
+      },
+      "sessions": {
+        "type": "int"
+      },
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "entSessionsOf": "{done} séances sur {total}",
+  "@entSessionsOf": {
+    "placeholders": {
+      "done": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "entSessionsUnit": "séances",
+  "entRatingSemantics": "Note {rating} sur 5, {count} avis",
+  "@entRatingSemantics": {
+    "placeholders": {
+      "rating": {
+        "type": "Object"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "entIncludedInPremium": "Inclus dans Premium",
+  "entPremium": "Premium",
+  "entVerifiedCoach": "Coach vérifié",
+  "entVerificationPending": "Vérification en cours",
+  "entNextLesson": "Prochaine : {lesson}",
+  "@entNextLesson": {
+    "placeholders": {
+      "lesson": {
+        "type": "Object"
+      }
+    }
+  },
+  "entRateProgram": "Noter le programme",
+  "entToday": "À faire aujourd’hui",
+  "entTodayShort": "Aujourd’hui",
+  "entTodayLower": "à faire aujourd’hui",
+  "entLessonLabel": "Séance {index} · {title}",
+  "@entLessonLabel": {
+    "placeholders": {
+      "index": {
+        "type": "int"
+      },
+      "title": {
+        "type": "Object"
+      }
+    }
+  },
+  "entLessonEyebrow": "Séance {index}",
+  "@entLessonEyebrow": {
+    "placeholders": {
+      "index": {
+        "type": "int"
+      }
+    }
+  },
+  "entDrills": "{count, plural, =1{1 exercice} other{{count} exercices}}",
+  "@entDrills": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "entMinutes": "{minutes} min",
+  "@entMinutes": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "entLessonMetaCompact": "{minutes} min · {drills}",
+  "@entLessonMetaCompact": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      },
+      "drills": {
+        "type": "Object"
+      }
+    }
+  },
+  "entStudents": "{count, plural, =0{0 élève} =1{1 élève} other{{count} élèves}}",
+  "@entStudents": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "entStudentsUnit": "{count, plural, =0{élève} =1{élève} other{élèves}}",
+  "@entStudentsUnit": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "entReviews": "{count} avis",
+  "@entReviews": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "entNoReviews": "Aucun avis",
+  "entLanguages": "Langues : {languages}",
+  "@entLanguages": {
+    "placeholders": {
+      "languages": {
+        "type": "Object"
+      }
+    }
+  },
+  "entFrom": "dès {price}",
+  "@entFrom": {
+    "placeholders": {
+      "price": {
+        "type": "Object"
+      }
+    }
+  },
+  "entPerSession": "par séance",
+  "entPendingInfo": "On vérifie ton diplôme sous 48 h. Tes programmes seront visibles dès que c’est fait.",
+  "entCompleteProfile": "Compléter mon profil",
+  "entSeePrograms": "Voir les programmes",
+  "coaActiveEnrollments": "Inscriptions actives",
+  "coaActiveStudents": "Élèves actifs",
+  "coaActiveThisWeek": "Actifs cette semaine",
+  "coaAiContent": "Découpe la vidéo de « Bandeja croisée » en 2 parties : rien ne change sans ta validation.",
+  "coaAiReason": "14 élèves sur 34 y sont bloqués depuis plus d’une semaine, et sa vidéo dure 9 min contre 4 min en moyenne.",
+  "coaAiSee": "Voir la séance",
+  "coaAiTitle": "La séance 5 freine tes élèves",
+  "coaAll": "Tous",
+  "coaAnd": " et ",
+  "coaAverage": "{percent} % en moy.",
+  "@coaAverage": {
+    "placeholders": {
+      "percent": {
+        "type": "int"
+      }
+    }
+  },
+  "coaAverageProgress": "Progression moyenne {percent} %",
+  "@coaAverageProgress": {
+    "placeholders": {
+      "percent": {
+        "type": "int"
+      }
+    }
+  },
+  "coaAverageRating": "Note moyenne",
+  "coaBankDetails": "Coordonnées bancaires",
+  "coaBankDetailsLine": "{bank} · versements chaque lundi",
+  "@coaBankDetailsLine": {
+    "placeholders": {
+      "bank": {
+        "type": "Object"
+      }
+    }
+  },
+  "coaBuilder": "Constructeur",
+  "coaBySource": "Par source · {month}",
+  "@coaBySource": {
+    "placeholders": {
+      "month": {
+        "type": "Object"
+      }
+    }
+  },
+  "coaBySourceDetail": "Revenus nets du 1er au {day}",
+  "@coaBySourceDetail": {
+    "placeholders": {
+      "day": {
+        "type": "Object"
+      }
+    }
+  },
+  "coaCoachPlan": "Abonnement Coach",
+  "coaCoachPlanLine": "{price}/mois · renouvelé le {day}",
+  "@coaCoachPlanLine": {
+    "placeholders": {
+      "price": {
+        "type": "Object"
+      },
+      "day": {
+        "type": "Object"
+      }
+    }
+  },
+  "coaComment": "Commenter",
+  "coaCommission": "Commission MatchUp · {percent} %",
+  "@coaCommission": {
+    "placeholders": {
+      "percent": {
+        "type": "int"
+      }
+    }
+  },
+  "coaCommissionInfo": "Revenus après la commission MatchUp de 10 %. Versés chaque lundi.",
+  "coaCreate": "Créer",
+  "coaCreateProgram": "Créer un programme",
+  "coaCreateProgramDetail": "Semaines, séances, exercices et vidéos",
+  "coaDelete": "Supprimer",
+  "coaDeleteDraftText": "« {title} » et ses séances seront supprimés. Les vidéos envoyées aussi.",
+  "@coaDeleteDraftText": {
+    "placeholders": {
+      "title": {
+        "type": "Object"
+      }
+    }
+  },
+  "coaDeleteDraftTitle": "Supprimer le brouillon ?",
+  "coaDraftLine": "{sport} · niveau {levels} · {when}",
+  "@coaDraftLine": {
+    "placeholders": {
+      "sport": {
+        "type": "Object"
+      },
+      "levels": {
+        "type": "Object"
+      },
+      "when": {
+        "type": "Object"
+      }
+    }
+  },
+  "coaDrafts": "Brouillons",
+  "coaEditedOn": "modifié le {day}",
+  "@coaEditedOn": {
+    "placeholders": {
+      "day": {
+        "type": "Object"
+      }
+    }
+  },
+  "coaEditedToday": "modifié aujourd’hui à {time}",
+  "@coaEditedToday": {
+    "placeholders": {
+      "time": {
+        "type": "Object"
+      }
+    }
+  },
+  "coaEditedYesterday": "modifié hier à {time}",
+  "@coaEditedYesterday": {
+    "placeholders": {
+      "time": {
+        "type": "Object"
+      }
+    }
+  },
+  "coaFeedback": "Retour vidéo",
+  "coaFeedbackSent": "Retour envoyé",
+  "coaFilterPrograms": "Filtrer mes programmes",
+  "coaFilterStudents": "Filtrer les élèves",
+  "coaFinished": "Terminé",
+  "coaFinishedOn": "Terminé le {day}",
+  "@coaFinishedOn": {
+    "placeholders": {
+      "day": {
+        "type": "Object"
+      }
+    }
+  },
+  "coaHello": "Salut {name}",
+  "@coaHello": {
+    "placeholders": {
+      "name": {
+        "type": "Object"
+      }
+    }
+  },
+  "coaHelloLine": "{day} · Coach {sport} · {zone}",
+  "@coaHelloLine": {
+    "placeholders": {
+      "day": {
+        "type": "Object"
+      },
+      "sport": {
+        "type": "Object"
+      },
+      "zone": {
+        "type": "Object"
+      }
+    }
+  },
+  "coaIgnore": "Ignorer",
+  "coaLastPayout": "Dernier : {amount} le {day} · {reference}",
+  "@coaLastPayout": {
+    "placeholders": {
+      "amount": {
+        "type": "Object"
+      },
+      "day": {
+        "type": "Object"
+      },
+      "reference": {
+        "type": "Object"
+      }
+    }
+  },
+  "coaLastSixMonths": "6 derniers mois",
+  "coaLate": "En retard",
+  "coaLateSince": "{days, plural, =1{En retard · rien depuis 1 jour} other{En retard · rien depuis {days} jours}}",
+  "@coaLateSince": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "coaLatestOperations": "Dernières opérations",
+  "coaLatestReviews": "Derniers avis",
+  "coaMissingPrice": "le prix",
+  "coaMissingSessions": "{count, plural, =1{1 séance de la semaine {week}} other{{count} séances de la semaine {week}}}",
+  "@coaMissingSessions": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "week": {
+        "type": "int"
+      }
+    }
+  },
+  "coaMonth": "Mois",
+  "coaMonthNet": "{month} · net",
+  "@coaMonthNet": {
+    "placeholders": {
+      "month": {
+        "type": "Object"
+      }
+    }
+  },
+  "coaMonths": "janvier|février|mars|avril|mai|juin|juillet|août|septembre|octobre|novembre|décembre",
+  "coaMyPrograms": "Mes programmes",
+  "coaNet": "Revenus nets",
+  "coaNetSixMonths": "Revenus nets · 6 mois",
+  "coaNetSixMonthsDetail": "Après commission · {month} en cours",
+  "@coaNetSixMonthsDetail": {
+    "placeholders": {
+      "month": {
+        "type": "Object"
+      }
+    }
+  },
+  "coaNewProgram": "Nouveau programme",
+  "coaNewWeek": "Nouvelle semaine",
+  "coaNextPayout": "Prochain versement",
+  "coaNoDraft": "Aucun brouillon",
+  "coaNoDraftText": "Crée un programme : semaines, séances, exercices et vidéos.",
+  "coaNoStudent": "Aucun élève",
+  "coaNoStudentText": "Aucun élève ne correspond à cette recherche.",
+  "coaNotifications": "{count, plural, =0{Notifications} =1{Notifications, 1 non lue} other{Notifications, {count} non lues}}",
+  "@coaNotifications": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "coaOr": "ou",
+  "coaPeriod": "Période",
+  "coaPriceTitle": "Prix et publication",
+  "coaProgramFinishedLine": "{program} · {done}/{total} séances",
+  "@coaProgramFinishedLine": {
+    "placeholders": {
+      "program": {
+        "type": "Object"
+      },
+      "done": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "coaProgramLine": "{students} élèves actifs · ★ {rating} ({reviews})",
+  "@coaProgramLine": {
+    "placeholders": {
+      "students": {
+        "type": "int"
+      },
+      "rating": {
+        "type": "Object"
+      },
+      "reviews": {
+        "type": "int"
+      }
+    }
+  },
+  "coaProgramSessionLine": "{program} · séance {current}/{total}",
+  "@coaProgramSessionLine": {
+    "placeholders": {
+      "program": {
+        "type": "Object"
+      },
+      "current": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "coaProgramShape": "{weeks} sem. · {sessions} séances · niveau {levels}",
+  "@coaProgramShape": {
+    "placeholders": {
+      "weeks": {
+        "type": "int"
+      },
+      "sessions": {
+        "type": "int"
+      },
+      "levels": {
+        "type": "Object"
+      }
+    }
+  },
+  "coaProgramsLine": "{programs} programmes · {enrollments} inscriptions",
+  "@coaProgramsLine": {
+    "placeholders": {
+      "programs": {
+        "type": "int"
+      },
+      "enrollments": {
+        "type": "int"
+      }
+    }
+  },
+  "coaProgressOf": "Progression de {name}",
+  "@coaProgressOf": {
+    "placeholders": {
+      "name": {
+        "type": "Object"
+      }
+    }
+  },
+  "coaPublish": "Publier",
+  "coaPublished": "Publiés",
+  "coaPublishedLine": "Publiés · {count} inscriptions actives",
+  "@coaPublishedLine": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "coaPublishedOne": "Publié",
+  "coaRating": "Note",
+  "coaRemind": "Relancer",
+  "coaReminderSent": "Message de relance envoyé à {name}",
+  "@coaReminderSent": {
+    "placeholders": {
+      "name": {
+        "type": "Object"
+      }
+    }
+  },
+  "coaReply": "Répondre",
+  "coaReplyPublic": "Ta réponse s’affiche sous l’avis, sur la page du programme.",
+  "coaReplyPublished": "Réponse publiée",
+  "coaReplyTo": "Répondre à {name}",
+  "@coaReplyTo": {
+    "placeholders": {
+      "name": {
+        "type": "Object"
+      }
+    }
+  },
+  "coaRevenueMonth": "Revenus {month} · nets",
+  "@coaRevenueMonth": {
+    "placeholders": {
+      "month": {
+        "type": "Object"
+      }
+    }
+  },
+  "coaRevenueSemantics": "Revenus du mois : {amount}, voir le détail",
+  "@coaRevenueSemantics": {
+    "placeholders": {
+      "amount": {
+        "type": "Object"
+      }
+    }
+  },
+  "coaRevenueTrend": "Revenus nets des 6 derniers mois",
+  "coaRoleDetail": "Coach padel · {zone}",
+  "@coaRoleDetail": {
+    "placeholders": {
+      "zone": {
+        "type": "Object"
+      }
+    }
+  },
+  "coaSalesAndPremium": "Ventes et part Premium",
+  "coaScheduled": "Publication programmée",
+  "coaSearchStudent": "Rechercher un élève",
+  "coaSeeAll": "Tout voir",
+  "coaSeePage": "Voir la page",
+  "coaSessionOn": "Séance faite {day}",
+  "@coaSessionOn": {
+    "placeholders": {
+      "day": {
+        "type": "Object"
+      }
+    }
+  },
+  "coaSessionToday": "Séance faite aujourd’hui",
+  "coaSessionYesterday": "Séance faite hier",
+  "coaSessionsReady": "{done}/{total} séances",
+  "@coaSessionsReady": {
+    "placeholders": {
+      "done": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "coaSessionsReadyLabel": "Séances prêtes",
+  "coaSettings": "Réglages",
+  "coaSixMonths": "6 mois",
+  "coaSortName": "Nom",
+  "coaSortRecent": "Activité récente",
+  "coaSource": "Source",
+  "coaSpace": "Espace coach",
+  "coaStatements": "Relevés mensuels",
+  "coaStatementsLine": "PDF · dernier : {month}",
+  "@coaStatementsLine": {
+    "placeholders": {
+      "month": {
+        "type": "Object"
+      }
+    }
+  },
+  "coaStudent": "Élève",
+  "coaStudents": "Élèves",
+  "coaSwitchRole": "{name} · changer de rôle",
+  "@coaSwitchRole": {
+    "placeholders": {
+      "name": {
+        "type": "Object"
+      }
+    }
+  },
+  "coaTabDashboard": "Tableau",
+  "coaTabEarnings": "Revenus",
+  "coaTabPrograms": "Programmes",
+  "coaTabStudents": "Élèves",
+  "coaThisMonth": "Ce mois",
+  "coaToFinish": "À terminer",
+  "coaToHandle": "À traiter",
+  "coaToPublish": "Pour publier : {what}",
+  "@coaToPublish": {
+    "placeholders": {
+      "what": {
+        "type": "Object"
+      }
+    }
+  },
+  "coaTodoDropped": "{name} a décroché",
+  "@coaTodoDropped": {
+    "placeholders": {
+      "name": {
+        "type": "Object"
+      }
+    }
+  },
+  "coaTodoReview": "Avis {stars}★ {name}",
+  "@coaTodoReview": {
+    "placeholders": {
+      "stars": {
+        "type": "int"
+      },
+      "name": {
+        "type": "Object"
+      }
+    }
+  },
+  "coaTodoVideo": "Vidéo {name}",
+  "@coaTodoVideo": {
+    "placeholders": {
+      "name": {
+        "type": "Object"
+      }
+    }
+  },
+  "coaUpTo": "au {day}",
+  "@coaUpTo": {
+    "placeholders": {
+      "day": {
+        "type": "Object"
+      }
+    }
+  },
+  "coaVideoSent": "Vidéo envoyée · {since}",
+  "@coaVideoSent": {
+    "placeholders": {
+      "since": {
+        "type": "Object"
+      }
+    }
+  },
+  "coaVsLastMonth": "vs {month}",
+  "@coaVsLastMonth": {
+    "placeholders": {
+      "month": {
+        "type": "Object"
+      }
+    }
+  },
+  "coaVsLastMonthNet": "vs {month} à la même date · net",
+  "@coaVsLastMonthNet": {
+    "placeholders": {
+      "month": {
+        "type": "Object"
+      }
+    }
+  },
+  "coaVsLastMonthSameDay": "vs {month} à la même date",
+  "@coaVsLastMonthSameDay": {
+    "placeholders": {
+      "month": {
+        "type": "Object"
+      }
+    }
+  },
+  "coaYourNet": "Tes revenus nets",
+  "coaYourReply": "Ta réponse",
+  "coaOfName": "de {name}",
+  "@coaOfName": {
+    "placeholders": {
+      "name": {
+        "type": "Object"
+      }
+    }
+  },
+  "coaAboutAMinute": "≈ 1 min",
+  "coaAddExercise": "Ajouter un exercice",
+  "coaAddExercises": "{count, plural, =1{Ajouter 1 exercice} other{Ajouter {count} exercices}}",
+  "@coaAddExercises": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "coaAddSeconds": "Ajouter {seconds} secondes",
+  "@coaAddSeconds": {
+    "placeholders": {
+      "seconds": {
+        "type": "int"
+      }
+    }
+  },
+  "coaAddSession": "Ajouter une séance",
+  "coaAddSet": "Ajouter une série",
+  "coaAddThis": "Ajouter {name}",
+  "@coaAddThis": {
+    "placeholders": {
+      "name": {
+        "type": "Object"
+      }
+    }
+  },
+  "coaAddVideo": "Ajouter une vidéo",
+  "coaAddWeek": "Ajouter une semaine",
+  "coaAdvisedPrice": "Prix conseillé : {range}",
+  "@coaAdvisedPrice": {
+    "placeholders": {
+      "range": {
+        "type": "Object"
+      }
+    }
+  },
+  "coaAdvisedPriceWhy": "Recommandé car les programmes padel de 4 semaines se vendent entre 30 et 45 DT autour de {zone}, et le tien vise un niveau {levels}.",
+  "@coaAdvisedPriceWhy": {
+    "placeholders": {
+      "zone": {
+        "type": "Object"
+      },
+      "levels": {
+        "type": "Object"
+      }
+    }
+  },
+  "coaAllCount": "Tous · {count}",
+  "@coaAllCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "coaBackToPrograms": "Retour à mes programmes",
+  "coaBeforeOnline": "Avant la mise en ligne",
+  "coaCheckBasics": "Titre, description et couverture",
+  "coaCheckBasicsOk": "Prêts",
+  "coaCheckCoachOk": "{certification} validé",
+  "@coaCheckCoachOk": {
+    "placeholders": {
+      "certification": {
+        "type": "Object"
+      }
+    }
+  },
+  "coaCheckSessions": "{count, plural, =1{1 séance à ajouter} other{{count} séances à ajouter}}",
+  "@coaCheckSessions": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "coaCheckSessionsDetail": "Semaine {week} · {done} séances sur {total}",
+  "@coaCheckSessionsDetail": {
+    "placeholders": {
+      "week": {
+        "type": "int"
+      },
+      "done": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "coaCheckVideos": "{count, plural, =1{1 vidéo en traitement} other{{count} vidéos en traitement}}",
+  "@coaCheckVideos": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "coaCheckVideosDetail": "Séance {index} · prête dans 1 min environ",
+  "@coaCheckVideosDetail": {
+    "placeholders": {
+      "index": {
+        "type": "int"
+      }
+    }
+  },
+  "coaCommissionLine": "Commission de {percent} % par vente · versements chaque lundi",
+  "@coaCommissionLine": {
+    "placeholders": {
+      "percent": {
+        "type": "int"
+      }
+    }
+  },
+  "coaComplete": "Compléter",
+  "coaContent": "Contenu",
+  "coaContinueToPrice": "Continuer vers le prix",
+  "coaCreateExercise": "Créer un nouvel exercice",
+  "coaDeleteExercise": "Supprimer l’exercice",
+  "coaDraftOf": "{title} · brouillon",
+  "@coaDraftOf": {
+    "placeholders": {
+      "title": {
+        "type": "Object"
+      }
+    }
+  },
+  "coaDraftSaved": "Brouillon enregistré · {since}",
+  "@coaDraftSaved": {
+    "placeholders": {
+      "since": {
+        "type": "Object"
+      }
+    }
+  },
+  "coaDraftSavedToast": "Brouillon enregistré",
+  "coaDraftShape": "{weeks} sem. · {sessions} séances · {exercises} exercices",
+  "@coaDraftShape": {
+    "placeholders": {
+      "weeks": {
+        "type": "int"
+      },
+      "sessions": {
+        "type": "int"
+      },
+      "exercises": {
+        "type": "int"
+      }
+    }
+  },
+  "coaDragHint": "Maintiens la poignée pour réordonner semaines, séances et exercices.",
+  "coaDuration": "Durée",
+  "coaDurationSeconds": "Durée (s)",
+  "coaEdit": "Modifier",
+  "coaEditExercise": "Modifier {name}",
+  "@coaEditExercise": {
+    "placeholders": {
+      "name": {
+        "type": "Object"
+      }
+    }
+  },
+  "coaExerciseCategory": "Catégorie d’exercice",
+  "coaExerciseName": "Nom de l’exercice",
+  "coaExerciseOptions": "Options de {name}",
+  "@coaExerciseOptions": {
+    "placeholders": {
+      "name": {
+        "type": "Object"
+      }
+    }
+  },
+  "coaExerciseType": "Type d’exercice",
+  "coaExerciseVideo": "Vidéo de l’exercice",
+  "coaExercisesAdded": "{count, plural, =1{1 exercice ajouté} other{{count} exercices ajoutés}}",
+  "@coaExercisesAdded": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "coaFoldExercise": "Replier {name}",
+  "@coaFoldExercise": {
+    "placeholders": {
+      "name": {
+        "type": "Object"
+      }
+    }
+  },
+  "coaFoldSession": "Replier les exercices de la séance {index}",
+  "@coaFoldSession": {
+    "placeholders": {
+      "index": {
+        "type": "int"
+      }
+    }
+  },
+  "coaFoldWeek": "Replier la semaine {index}",
+  "@coaFoldWeek": {
+    "placeholders": {
+      "index": {
+        "type": "int"
+      }
+    }
+  },
+  "coaHowPlayersGetIt": "Comment les joueurs y accèdent",
+  "coaIn": "Dans",
+  "coaInPremium": "Inclure dans Premium",
+  "coaInPremiumDetail": "Les abonnés Premium le suivent sans payer. Tu touches une part de l’abonnement selon leurs séances faites.",
+  "coaInfo": "Infos",
+  "coaInstruction": "Consigne pour tes élèves",
+  "coaInstructionHelper": "Affichée sous la vidéo dans le lecteur de séance.",
+  "coaKeepEditing": "Continue à modifier la séance : la vidéo sera visible par tes élèves dès qu’elle est prête.",
+  "coaLevel": "Niveau",
+  "coaMinTimes": "{minutes} min × {sets}",
+  "@coaMinTimes": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      },
+      "sets": {
+        "type": "int"
+      }
+    }
+  },
+  "coaMoveExercise": "Déplacer {name}",
+  "@coaMoveExercise": {
+    "placeholders": {
+      "name": {
+        "type": "Object"
+      }
+    }
+  },
+  "coaMoveSession": "Déplacer la séance {index}",
+  "@coaMoveSession": {
+    "placeholders": {
+      "index": {
+        "type": "int"
+      }
+    }
+  },
+  "coaMoveWeek": "Déplacer la semaine {index}",
+  "@coaMoveWeek": {
+    "placeholders": {
+      "index": {
+        "type": "int"
+      }
+    }
+  },
+  "coaNewExercise": "Nouvel exercice",
+  "coaNewSession": "Nouvelle séance",
+  "coaNoAccess": "Choisis au moins une façon d’y accéder : vendu, ou inclus dans Premium.",
+  "coaNoVideo": "sans vidéo",
+  "coaPickExercise": "Choisis un exercice",
+  "coaPlayer": "Joueur",
+  "coaPreview": "Aperçu",
+  "coaPreviewNoRating": "Sans avis pour l’instant : la note apparaît après les 3 premiers retours d’élèves.",
+  "coaPreviewPremium": "Les abonnés Premium voient « Inclus dans Premium » à la place du prix.",
+  "coaPriceForStudent": "Prix pour un élève",
+  "coaPricePaid": "Prix payé par l’élève",
+  "coaProcessing": "En traitement",
+  "coaProcessingDetail": "Optimisation pour mobile et sous-titres · environ 1 min",
+  "coaProcessingLabel": "Traitement",
+  "coaProcessingVideo": "Traitement de la vidéo…",
+  "coaProgramInfo": "Infos du programme",
+  "coaProgramTitle": "Titre du programme",
+  "coaPublishDate": "Date de publication",
+  "coaPublishScheduled": "Publication programmée",
+  "coaPublishScheduledText": "On te prévient dès que le programme est en ligne.",
+  "coaReady": "Prête",
+  "coaRemoveSeconds": "Retirer {seconds} secondes",
+  "@coaRemoveSeconds": {
+    "placeholders": {
+      "seconds": {
+        "type": "int"
+      }
+    }
+  },
+  "coaRemoveSet": "Retirer une série",
+  "coaRepetitions": "Répétitions",
+  "coaReplace": "Remplacer",
+  "coaRepsSets": "{reps} rép. × {sets} séries",
+  "@coaRepsSets": {
+    "placeholders": {
+      "reps": {
+        "type": "int"
+      },
+      "sets": {
+        "type": "int"
+      }
+    }
+  },
+  "coaRepsTimes": "{reps} rép. × {sets}",
+  "@coaRepsTimes": {
+    "placeholders": {
+      "reps": {
+        "type": "int"
+      },
+      "sets": {
+        "type": "int"
+      }
+    }
+  },
+  "coaSaveDraft": "Enregistrer le brouillon",
+  "coaSaveSession": "Enregistrer la séance",
+  "coaSaved": "Enregistrée",
+  "coaSchedulePublish": "Programmer la publication",
+  "coaSearchExercise": "Rechercher un exercice",
+  "coaSecSets": "{seconds} s × {sets} séries",
+  "@coaSecSets": {
+    "placeholders": {
+      "seconds": {
+        "type": "int"
+      },
+      "sets": {
+        "type": "int"
+      }
+    }
+  },
+  "coaSecTimes": "{seconds} s × {sets}",
+  "@coaSecTimes": {
+    "placeholders": {
+      "seconds": {
+        "type": "int"
+      },
+      "sets": {
+        "type": "int"
+      }
+    }
+  },
+  "coaSeconds": "{seconds} s",
+  "@coaSeconds": {
+    "placeholders": {
+      "seconds": {
+        "type": "int"
+      }
+    }
+  },
+  "coaSeenBy": "Vu par",
+  "coaSell": "Vendre le programme",
+  "coaSellDetail": "Paiement unique, accès sans limite de durée.",
+  "coaSent": "envoyée",
+  "coaSessionGone": "Séance introuvable",
+  "coaSessionGoneText": "Cette séance n’est plus dans le brouillon.",
+  "coaSessionSaved": "Séance enregistrée",
+  "coaSessionTitle": "Titre de la séance",
+  "coaSessionVideo": "Vidéo de la séance",
+  "coaSets": "Séries",
+  "coaStudentPreview": "Aperçu élève",
+  "coaUnfoldSession": "Déplier les exercices de la séance {index}",
+  "@coaUnfoldSession": {
+    "placeholders": {
+      "index": {
+        "type": "int"
+      }
+    }
+  },
+  "coaUnfoldWeek": "Déplier la semaine {index}",
+  "@coaUnfoldWeek": {
+    "placeholders": {
+      "index": {
+        "type": "int"
+      }
+    }
+  },
+  "coaVideo": "Vidéo",
+  "coaVideoHintExercise": "MP4, MOV · 500 Mo max · 3 min max",
+  "coaVideoHintSession": "MP4, MOV · 2 Go max · 10 min max",
+  "coaVideoLength": "vidéo {length}",
+  "@coaVideoLength": {
+    "placeholders": {
+      "length": {
+        "type": "Object"
+      }
+    }
+  },
+  "coaVideoProcessing": "vidéo en traitement",
+  "coaVideoReady": "vidéo prête",
+  "coaVideoTooBig": "Cette vidéo dépasse 500 Mo.",
+  "coaVideoUploading": "vidéo : envoi {percent} %",
+  "@coaVideoUploading": {
+    "placeholders": {
+      "percent": {
+        "type": "int"
+      }
+    }
+  },
+  "coaWeekLacking": "{count, plural, =0{Aucune séance} =1{1 séance} other{{count} séances}} · ajoute-en {lacking} pour publier",
+  "@coaWeekLacking": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "lacking": {
+        "type": "int"
+      }
+    }
+  },
+  "coaWeekN": "Semaine {index}",
+  "@coaWeekN": {
+    "placeholders": {
+      "index": {
+        "type": "int"
+      }
+    }
+  },
+  "coaWeekOfProgram": "Semaine {week} · {program}",
+  "@coaWeekOfProgram": {
+    "placeholders": {
+      "week": {
+        "type": "int"
+      },
+      "program": {
+        "type": "Object"
+      }
+    }
+  },
+  "coaWeekShape": "{sessions} séances · {exercises} exercices · {minutes} min",
+  "@coaWeekShape": {
+    "placeholders": {
+      "sessions": {
+        "type": "int"
+      },
+      "exercises": {
+        "type": "int"
+      },
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "coaWhatYouGet": "Ce que tu reçois par vente",
+  "coaWhenDateDetail": "On te prévient la veille s’il manque encore quelque chose.",
+  "coaWhenPublish": "Quand publier ?",
+  "coaWhenReady": "Dès que tout est prêt",
+  "coaWhenReadyDetail": "On le met en ligne quand les {count} séances et leurs vidéos sont prêtes. Tu reçois une notification.",
+  "@coaWhenReadyDetail": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "coaYouGetPerSale": "Tu reçois par vente",
+  "coaAfterSession": "Après la séance {index} · {title}",
+  "@coaAfterSession": {
+    "placeholders": {
+      "index": {
+        "type": "int"
+      },
+      "title": {
+        "type": "Object"
+      }
+    }
+  },
+  "coaAiMomentFrom": "Repéré par l’analyse vidéo de {name}. À toi de valider.",
+  "@coaAiMomentFrom": {
+    "placeholders": {
+      "name": {
+        "type": "Object"
+      }
+    }
+  },
+  "coaAiVideoOf": "Analyse vidéo de {name} · {count} conseils",
+  "@coaAiVideoOf": {
+    "placeholders": {
+      "name": {
+        "type": "Object"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "coaAskNewVideo": "Demander une nouvelle vidéo",
+  "coaAwaitsFeedback": "Attend ton retour",
+  "coaBackToFile": "Retour à la fiche de {name}",
+  "@coaBackToFile": {
+    "placeholders": {
+      "name": {
+        "type": "Object"
+      }
+    }
+  },
+  "coaBackToStudents": "Retour aux élèves",
+  "coaBold": "Gras",
+  "coaBullets": "Liste à puces",
+  "coaCommentAt": "Commenter à {time}",
+  "@coaCommentAt": {
+    "placeholders": {
+      "time": {
+        "type": "Object"
+      }
+    }
+  },
+  "coaCommentHere": "Commentaire à la position actuelle",
+  "coaCommentOptions": "Options du commentaire à {time}",
+  "@coaCommentOptions": {
+    "placeholders": {
+      "time": {
+        "type": "Object"
+      }
+    }
+  },
+  "coaCommentVideo": "Commenter la vidéo",
+  "coaFeedbackLine": "Bandeja · {length} · séance {session} · {program}",
+  "@coaFeedbackLine": {
+    "placeholders": {
+      "length": {
+        "type": "Object"
+      },
+      "session": {
+        "type": "int"
+      },
+      "program": {
+        "type": "Object"
+      }
+    }
+  },
+  "coaFeedbackSentTo": "Retour envoyé à {name}",
+  "@coaFeedbackSentTo": {
+    "placeholders": {
+      "name": {
+        "type": "Object"
+      }
+    }
+  },
+  "coaFeedbackTo": "Retour à {name}",
+  "@coaFeedbackTo": {
+    "placeholders": {
+      "name": {
+        "type": "Object"
+      }
+    }
+  },
+  "coaGeneralMessage": "Message général",
+  "coaGeneralMessageHelper": "Affiché au-dessus de tes commentaires, dans la séance de {name}.",
+  "@coaGeneralMessageHelper": {
+    "placeholders": {
+      "name": {
+        "type": "Object"
+      }
+    }
+  },
+  "coaGiveFeedback": "Faire un retour",
+  "coaItalic": "Italique",
+  "coaMessage": "Message",
+  "coaMinutes": "Minutes",
+  "coaMoreActions": "Plus d’actions",
+  "coaNextFrame": "+1 image",
+  "coaNoVideoToComment": "Pas de vidéo à commenter",
+  "coaNoVideoToCommentText": "Cet élève ne t’a pas encore envoyé de vidéo.",
+  "coaNoteOf": "Note de {name} · séance {session} · {day}",
+  "@coaNoteOf": {
+    "placeholders": {
+      "name": {
+        "type": "Object"
+      },
+      "session": {
+        "type": "int"
+      },
+      "day": {
+        "type": "Object"
+      }
+    }
+  },
+  "coaNotesAndFeedback": "Notes et retours",
+  "coaOnVideo": "{count, plural, =0{Aucun sur la vidéo} =1{1 sur la vidéo} other{{count} sur la vidéo}}",
+  "@coaOnVideo": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "coaPlayClip": "Lire la vidéo Bandeja, {seconds} secondes",
+  "@coaPlayClip": {
+    "placeholders": {
+      "seconds": {
+        "type": "int"
+      }
+    }
+  },
+  "coaPlayVideo": "Lire la vidéo",
+  "coaPosition": "Position dans la vidéo",
+  "coaPositionValue": "{at} sur {length}, {count, plural, =0{aucun commentaire} =1{1 commentaire} other{{count} commentaires}}",
+  "@coaPositionValue": {
+    "placeholders": {
+      "at": {
+        "type": "Object"
+      },
+      "length": {
+        "type": "Object"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "coaPrevFrame": "−1 image",
+  "coaProgramOf": "{program} · {name}",
+  "@coaProgramOf": {
+    "placeholders": {
+      "program": {
+        "type": "Object"
+      },
+      "name": {
+        "type": "Object"
+      }
+    }
+  },
+  "coaProgress": "Avancement",
+  "coaSeeMyFeedback": "Voir mon retour",
+  "coaSendFeedback": "Envoyer le retour",
+  "coaSessionsDone": "{done, plural, =0{Aucune terminée} =1{1 terminée} other{{done} terminées}} sur {total}",
+  "@coaSessionsDone": {
+    "placeholders": {
+      "done": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "coaSessionsTitle": "Séances",
+  "coaSince": "depuis le {day}",
+  "@coaSince": {
+    "placeholders": {
+      "day": {
+        "type": "Object"
+      }
+    }
+  },
+  "coaSpeed": "Vitesse de lecture",
+  "coaStreak": "Série",
+  "coaStreakWeeks": "{count, plural, =1{1 semaine} other{{count} semaines}}",
+  "@coaStreakWeeks": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "coaStudentGone": "Élève introuvable",
+  "coaStudentGoneText": "Cet élève n’est plus inscrit à tes programmes.",
+  "coaStudentNotified": "{name} reçoit la notification « Retour du coach ».",
+  "@coaStudentNotified": {
+    "placeholders": {
+      "name": {
+        "type": "Object"
+      }
+    }
+  },
+  "coaThisWeek": "Cette semaine",
+  "coaThisWeekValue": "{done}/{goal} séances",
+  "@coaThisWeekValue": {
+    "placeholders": {
+      "done": {
+        "type": "int"
+      },
+      "goal": {
+        "type": "int"
+      }
+    }
+  },
+  "coaTimedComments": "Commentaires horodatés",
+  "coaTrainingMinutes": "Minutes d’entraînement",
+  "coaTrainingMinutesDetail": "6 dernières semaines · séances faites dans l’app",
+  "coaVideoOf": "Vidéo de {name} : bandeja sur le court 3 de Smash Padel Club",
+  "@coaVideoOf": {
+    "placeholders": {
+      "name": {
+        "type": "Object"
+      }
+    }
+  },
+  "coaVideoSentOn": "Envoyée {when} · séance {session}",
+  "@coaVideoSentOn": {
+    "placeholders": {
+      "when": {
+        "type": "Object"
+      },
+      "session": {
+        "type": "int"
+      }
+    }
+  },
+  "coaVideoToComment": "Vidéo à commenter",
+  "coaWeekLabel": "Semaine",
+  "coaWeekOf": "Semaine du {day}",
+  "@coaWeekOf": {
+    "placeholders": {
+      "day": {
+        "type": "Object"
+      }
+    }
+  },
+  "coaWeekOutOf": "{week} sur {weeks}",
+  "@coaWeekOutOf": {
+    "placeholders": {
+      "week": {
+        "type": "int"
+      },
+      "weeks": {
+        "type": "int"
+      }
+    }
+  },
+  "coaYourCommentAt": "Ton commentaire à {time}",
+  "@coaYourCommentAt": {
+    "placeholders": {
+      "time": {
+        "type": "Object"
+      }
+    }
+  },
+  "coaYourFeedbackOn": "Ton retour · séance {session} · {day}",
+  "@coaYourFeedbackOn": {
+    "placeholders": {
+      "session": {
+        "type": "int"
+      },
+      "day": {
+        "type": "Object"
+      }
+    }
+  },
+  "aiAssistantTitle": "Assistant MatchUp",
+  "aiCloseAssistant": "Fermer l’assistant",
+  "aiOwnerSpace": "Espace propriétaire · {venue}",
+  "@aiOwnerSpace": {
+    "placeholders": {
+      "venue": {
+        "type": "Object"
+      }
+    }
+  },
+  "aiSender": "MatchUp",
+  "aiSenderLabel": "MatchUp, réponse générée par l’IA",
+  "aiLabelShort": "IA",
+  "aiGreeting": "Salut {name} ! Je trouve des parties à ton niveau, je réserve des terrains et je te conseille des programmes. Je te dis toujours pourquoi, et rien n’est réservé ni payé sans ta confirmation.",
+  "@aiGreeting": {
+    "placeholders": {
+      "name": {
+        "type": "Object"
+      }
+    }
+  },
+  "aiOwnerGreeting": "Bonjour ! Je lis ton planning, tes réservations et tes tarifs pour t’aider à remplir tes terrains. Rien ne change sans ta confirmation.",
+  "aiWhatIUse": "Ce que j’utilise pour te répondre",
+  "aiPrivate": "Tes conversations restent privées, visibles par toi seul.",
+  "aiDisclaimerLong": "L’IA peut se tromper. Elle ne réserve et ne paie rien sans ta confirmation.",
+  "aiDisclaimer": "MatchUp ne réserve et ne paie rien sans ta confirmation.",
+  "aiAnswering": "Réponse en cours…",
+  "aiSend": "Envoyer",
+  "aiStop": "Arrêter la réponse",
+  "aiStopped": "Réponse arrêtée.",
+  "aiWriting": "L’assistant écrit",
+  "aiTodayAt": "Aujourd’hui · {time}",
+  "@aiTodayAt": {
+    "placeholders": {
+      "time": {
+        "type": "Object"
+      }
+    }
+  },
+  "aiUnderstood": "J’ai compris",
+  "aiUnderstoodGroup": "Ce que l’assistant a compris",
+  "aiFeedbackGroup": "Ton avis sur cette réponse",
+  "aiUseful": "Réponse utile",
+  "aiNotUseful": "Réponse pas utile",
+  "aiThanksFeedback": "Merci pour ton retour · L’IA peut se tromper.",
+  "aiCheckBefore": "L’IA peut se tromper. Vérifie avant de confirmer.",
+  "aiCheckSummary": "L’IA peut se tromper. Vérifie le récapitulatif.",
+  "aiCheckPlanning": "L’IA peut se tromper. Vérifie dans ton planning.",
+  "aiUnstable": "Connexion instable",
+  "aiBackSoon": "L’assistant revient dès que le réseau est rétabli.",
+  "aiCouldNotAnswer": "Je n’ai pas pu répondre",
+  "aiCutOff": "La connexion a été coupée pendant ma recherche. Ton message est gardé et aucune action n’a été faite.",
+  "aiSeePrograms": "Voir les programmes",
+  "aiAlreadyFound": "Déjà trouvé · 1 court libre",
+  "aiVerified": "Vérifié",
+  "aiRatingDistance": "{rating} ({reviews} avis) · {km}",
+  "@aiRatingDistance": {
+    "placeholders": {
+      "rating": {
+        "type": "Object"
+      },
+      "reviews": {
+        "type": "int"
+      },
+      "km": {
+        "type": "Object"
+      }
+    }
+  },
+  "aiFreeSlots": "Créneaux libres · {day}",
+  "@aiFreeSlots": {
+    "placeholders": {
+      "day": {
+        "type": "Object"
+      }
+    }
+  },
+  "aiFreeSlotsOn": "Créneaux libres {day}",
+  "@aiFreeSlotsOn": {
+    "placeholders": {
+      "day": {
+        "type": "Object"
+      }
+    }
+  },
+  "aiSlotTitle": "{court} · {day} · {time}",
+  "@aiSlotTitle": {
+    "placeholders": {
+      "court": {
+        "type": "Object"
+      },
+      "day": {
+        "type": "Object"
+      },
+      "time": {
+        "type": "Object"
+      }
+    }
+  },
+  "aiBookAt": "Réserver {time}",
+  "@aiBookAt": {
+    "placeholders": {
+      "time": {
+        "type": "Object"
+      }
+    }
+  },
+  "aiSeeVenue": "Voir le terrain",
+  "aiIndoorCourt": "{court} · indoor",
+  "@aiIndoorCourt": {
+    "placeholders": {
+      "court": {
+        "type": "Object"
+      }
+    }
+  },
+  "aiHourCourtPrice": "1 h · {price} le terrain",
+  "@aiHourCourtPrice": {
+    "placeholders": {
+      "price": {
+        "type": "Object"
+      }
+    }
+  },
+  "aiPerPlayerAt": "par joueur à {players}",
+  "@aiPerPlayerAt": {
+    "placeholders": {
+      "players": {
+        "type": "int"
+      }
+    }
+  },
+  "aiPerPlayerShort": "/joueur à {players}",
+  "@aiPerPlayerShort": {
+    "placeholders": {
+      "players": {
+        "type": "int"
+      }
+    }
+  },
+  "aiConfirmText": "Je réserve le {court} à {venue}, {day} à {time}, {price} ({share} par joueur). Confirmer ?",
+  "@aiConfirmText": {
+    "placeholders": {
+      "court": {
+        "type": "Object"
+      },
+      "venue": {
+        "type": "Object"
+      },
+      "day": {
+        "type": "Object"
+      },
+      "time": {
+        "type": "Object"
+      },
+      "price": {
+        "type": "Object"
+      },
+      "share": {
+        "type": "Object"
+      }
+    }
+  },
+  "aiYourShare": "Ta part",
+  "aiShareOf": "sur {price} · {players} joueurs",
+  "@aiShareOf": {
+    "placeholders": {
+      "price": {
+        "type": "Object"
+      },
+      "players": {
+        "type": "int"
+      }
+    }
+  },
+  "aiCancellation": "Annulation",
+  "aiFreeUntil": "Gratuite jusqu’à {when}",
+  "@aiFreeUntil": {
+    "placeholders": {
+      "when": {
+        "type": "Object"
+      }
+    }
+  },
+  "aiHalfUntil": "puis 50 % jusqu’à {when}",
+  "@aiHalfUntil": {
+    "placeholders": {
+      "when": {
+        "type": "Object"
+      }
+    }
+  },
+  "aiTonightAt": "ce soir {time}",
+  "@aiTonightAt": {
+    "placeholders": {
+      "time": {
+        "type": "Object"
+      }
+    }
+  },
+  "aiNothingWithout": "Rien n’est réservé ni payé sans ta confirmation. Tu vérifies le paiement juste après.",
+  "aiConfirm": "Confirmer",
+  "aiFreeCourt": "Court libre · {day} · {time}",
+  "@aiFreeCourt": {
+    "placeholders": {
+      "day": {
+        "type": "Object"
+      },
+      "time": {
+        "type": "Object"
+      }
+    }
+  },
+  "aiCreateTomorrow": "Crée ta partie demain à {time}",
+  "@aiCreateTomorrow": {
+    "placeholders": {
+      "time": {
+        "type": "Object"
+      }
+    }
+  },
+  "aiCreateOn": "Crée ta partie {day} à {time}",
+  "@aiCreateOn": {
+    "placeholders": {
+      "day": {
+        "type": "Object"
+      },
+      "time": {
+        "type": "Object"
+      }
+    }
+  },
+  "aiCreateGame": "Créer la partie",
+  "aiHours": "{count} h",
+  "@aiHours": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "aiDurationCourtPrice": "{duration} · {price} le court",
+  "@aiDurationCourtPrice": {
+    "placeholders": {
+      "duration": {
+        "type": "Object"
+      },
+      "price": {
+        "type": "Object"
+      }
+    }
+  },
+  "aiNotifyMe": "Préviens-moi si ça s’ouvre",
+  "aiAlertOn": "Activée",
+  "aiAlertSaved": "Alerte activée : je te préviens si une partie s’ouvre.",
+  "aiFillRate": "Taux de remplissage",
+  "aiPercent": "{value} %",
+  "@aiPercent": {
+    "placeholders": {
+      "value": {
+        "type": "int"
+      }
+    }
+  },
+  "aiSlot": "Créneau",
+  "aiTariffsOf": "Tarifs · {venue}",
+  "@aiTariffsOf": {
+    "placeholders": {
+      "venue": {
+        "type": "Object"
+      }
+    }
+  },
+  "aiPrepareOffer": "Préparer l’offre",
+  "aiIgnore": "Ignorer",
+  "aiPromoMeta": "par terrain · {slots} créneaux · {day}",
+  "@aiPromoMeta": {
+    "placeholders": {
+      "slots": {
+        "type": "int"
+      },
+      "day": {
+        "type": "Object"
+      }
+    }
+  },
+  "aiPromoDetail": "Soit {price} par joueur à {players}. Les joueurs voient le prix barré. Rien ne change sans ta confirmation.",
+  "@aiPromoDetail": {
+    "placeholders": {
+      "price": {
+        "type": "Object"
+      },
+      "players": {
+        "type": "int"
+      }
+    }
+  },
+  "aiYourMessage": "Ton message à l’assistant"
 }

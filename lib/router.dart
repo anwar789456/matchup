@@ -79,6 +79,10 @@ import 'features/wallet/screens/topup_screen.dart';
 import 'features/wallet/screens/wallet_screen.dart';
 import 'features/organizer_onboarding/screens/organisation_screen.dart';
 import 'features/organizer_onboarding/screens/organizer_dashboard_screen.dart';
+import 'features/assistant/assistant_routes.dart';
+import 'features/coach/coach_routes.dart';
+import 'features/training/screens/training_screen.dart';
+import 'features/training/training_routes.dart';
 import 'features/onboarding/screens/welcome_screen.dart';
 import 'features/owner/data/owner_drafts.dart';
 import 'features/owner/data/owner_repository.dart';
@@ -159,7 +163,7 @@ abstract final class Routes {
   static const exploreVenues = '/explore?tab=terrains'; // EXP-03
   static const exploreSearch = '/explore/search'; // EXP-05
   static const matches = '/matches'; // MAT-01 (phase 7)
-  static const training = '/training'; // Milestone 6
+  static const training = '/training'; // ENT-01 (pages: features/training/training_routes.dart)
   static const community = '/community'; // Milestone 6
   static String game(String id) => '/game/$id'; // GAM-01 / GAM-02
   static String gameWaitlist(String id) => '/game/$id/waitlist'; // GAM-03
@@ -373,13 +377,21 @@ final routerProvider = Provider<GoRouter>((ref) {
             routes: [_route(Routes.matches, (_) => const MatchesScreen())],
           ),
           StatefulShellBranch(
-            routes: [_route(Routes.training, (_) => ComingSoonTab(title: l10n.entrainement))],
+            routes: [
+              GoRoute(
+                path: Routes.training,
+                builder: (context, state) => const TrainingScreen(),
+                routes: trainingRoutes(_rootKey),
+              ),
+            ],
           ),
           StatefulShellBranch(
             routes: [_route(Routes.community, (_) => ComingSoonTab(title: l10n.communaute))],
           ),
         ],
       ),
+      coachShellRoute(_rootKey),
+      ...assistantRoutes(_rootKey),
       StatefulShellRoute.indexedStack(
         builder: (context, state, shell) => OwnerShell(shell: shell),
         branches: [

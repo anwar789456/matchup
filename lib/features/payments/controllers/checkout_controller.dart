@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../theme/theme.dart';
 import '../data/payment_repository.dart';
 
-enum CheckoutKind { share, topUp, advance, subscription }
+enum CheckoutKind { share, topUp, advance, subscription, program }
 
 /// What a checkout is for: the summary card, the lines of the total, the policy and what to do
 /// once paid. Set with [checkoutRequestProvider] before opening PAY-01.

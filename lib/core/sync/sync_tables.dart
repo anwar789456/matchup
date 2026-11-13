@@ -69,5 +69,17 @@ const syncTables = <SyncTable>[
   SyncTable('dates_speciales'),
   SyncTable('promos'),
 
-  // ── Tournois (Ayoub) · Entraînement (Aziz) · Forum (Hani): add your tables here.
+  // ── Entraînement (Aziz) ──────────────────────────────────────────────────────────────────
+  SyncTable('entrainement_profil'),
+  SyncTable('entrainement_inscriptions'),
+  SyncTable('entrainement_seances'),
+  SyncTable('entrainement_plans'),
+  SyncTable('entrainement_analyses'),
+  SyncTable('entrainement_favoris'),
+  SyncTable('entrainement_avis'),
+  SyncTable('coach_brouillons'),
+  SyncTable('coach_actions'),
+  SyncTable('coach_retours'),
+
+  // ── Tournois (Ayoub) · Forum (Hani): add your tables here.
 ];

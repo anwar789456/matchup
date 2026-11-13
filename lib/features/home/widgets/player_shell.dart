@@ -4,7 +4,8 @@ import 'package:go_router/go_router.dart';
 
 import '../../../theme/theme.dart';
 import '../../../ui/ui.dart';
-import '../../common/widgets/coming_soon.dart';
+import '../../assistant/assistant_routes.dart';
+import '../../training/controllers/training_reminders.dart';
 import '../controllers/home_providers.dart';
 
 /// The player app's frame: the five tabs (TabBar.md) around the current branch, each tab keeping
@@ -14,13 +15,15 @@ class PlayerShell extends ConsumerWidget {
 
   final StatefulNavigationShell shell;
 
-  // The FAB sits on Accueil and Explorer (HOM-01, EXP-01); the other tabs are placeholders.
-  static const _fabTabs = {0, 1};
+  // The FAB sits on Accueil, Explorer and Entraînement (HOM-01, EXP-01, ENT-01/02).
+  static const _fabTabs = {0, 1, 3};
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final c = context.mu;
     final invitations = ref.watch(upcomingMatchesProvider).value?.invitations.length ?? 0;
+    // Keeps the « Rappels de séance » timer running while the player app is open.
+    ref.watch(trainingReminderSchedulerProvider);
     return Scaffold(
       backgroundColor: c.bg,
       body: shell,
@@ -32,7 +35,7 @@ class PlayerShell extends ConsumerWidget {
         onChanged: (i) => shell.goBranch(i, initialLocation: i == shell.currentIndex),
       ),
       floatingActionButton: _fabTabs.contains(shell.currentIndex)
-          ? MuFab(onPressed: () => showComingSoon(context))
+          ? MuFab(onPressed: () => context.push(AssistantRoutes.player))
           : null,
     );
   }

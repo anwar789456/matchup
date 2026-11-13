@@ -10646,4 +10646,3225 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get categorie => 'Catégorie';
+
+  @override
+  String get entAllPrograms => 'Tous les programmes';
+
+  @override
+  String get entAnalyseVideo => 'Analyser une vidéo';
+
+  @override
+  String get entAnalyseVideoTitle => 'Analyse vidéo';
+
+  @override
+  String get entAnalyseYourBandeja => 'Analyse ta bandeja';
+
+  @override
+  String get entAnalyseYourBandejaText =>
+      'Filme 30 s de jeu : l’IA repère ce qui coince et te donne 3 conseils, avec le moment exact.';
+
+  @override
+  String get entCatalogue => 'Catalogue';
+
+  @override
+  String get entClearFilters => 'Effacer les filtres';
+
+  @override
+  String get entCoach => 'Coach';
+
+  @override
+  String entCoachPace(Object coach, int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count séances par semaine',
+      one: '1 séance par semaine',
+    );
+    return '$coach · $_temp0';
+  }
+
+  @override
+  String get entCoaches => 'Les coachs';
+
+  @override
+  String get entCoachesCaption => 'Diplômes vérifiés par MatchUp.';
+
+  @override
+  String get entCreateMyPlan => 'Créer mon plan';
+
+  @override
+  String get entCreateWeekPlan => 'Crée ton plan de la semaine';
+
+  @override
+  String get entDayDone => 'séance faite';
+
+  @override
+  String get entDayRest => 'repos';
+
+  @override
+  String entDaySemantics(Object day, Object state) {
+    return '$day : $state';
+  }
+
+  @override
+  String entDayToDo(int index) {
+    return 'séance $index à faire';
+  }
+
+  @override
+  String entDoTodayToValidate(int index, int week) {
+    return 'Fais la séance $index aujourd’hui pour valider ta ${week}e semaine.';
+  }
+
+  @override
+  String get entDuration => 'Durée';
+
+  @override
+  String get entFilters => 'Filtres';
+
+  @override
+  String get entForYou => 'Pour toi';
+
+  @override
+  String entInPremiumTrialUntil(Object date) {
+    return 'Inclus dans ton essai Premium · jusqu’au $date';
+  }
+
+  @override
+  String get entLater => 'Plus tard';
+
+  @override
+  String entLevelRange(Object range) {
+    return 'niveau $range';
+  }
+
+  @override
+  String get entLoadingPrograms => 'Chargement des programmes';
+
+  @override
+  String get entLoadingTraining => 'Chargement de ton entraînement';
+
+  @override
+  String get entMyLevel => 'Mon niveau';
+
+  @override
+  String get entMyPrograms => 'Mes programmes';
+
+  @override
+  String get entNextSession => 'Prochaine séance';
+
+  @override
+  String get entNoMatchText =>
+      'Aucun programme ne correspond à ces filtres. Élargis ta recherche.';
+
+  @override
+  String get entNoMatchTitle => 'Aucun programme';
+
+  @override
+  String get entNoProgramText =>
+      'Choisis un programme dans le catalogue : une séance courte par jour, à ton niveau.';
+
+  @override
+  String get entNoProgramTitle => 'Pas encore de programme';
+
+  @override
+  String entPlanPitch(Object program) {
+    return '3 séances courtes autour de ton programme $program, calées sur tes matchs et ton tournoi. Rien n’est ajouté à ton agenda sans ta validation.';
+  }
+
+  @override
+  String get entPlanReason =>
+      'tu es dispo lun., mer. et sam. soir et tes 3 derniers avis de coéquipiers parlent de ton placement au filet.';
+
+  @override
+  String get entPrice => 'Prix';
+
+  @override
+  String get entProgram => 'Programme';
+
+  @override
+  String entProgramByCoach(Object program, Object coach) {
+    return '$program · $coach';
+  }
+
+  @override
+  String entProgramCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count programmes',
+      one: '1 programme',
+      zero: 'Aucun programme',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String entProgramLabel(Object title) {
+    return 'Programme $title';
+  }
+
+  @override
+  String get entPrograms => 'Programmes';
+
+  @override
+  String get entQuickFilters => 'Filtres rapides';
+
+  @override
+  String entRecommendedBecause(Object reason) {
+    return 'Recommandé car $reason';
+  }
+
+  @override
+  String get entRelevance => 'Pertinence';
+
+  @override
+  String get entSearchPlaceholder => 'Geste, sport, coach…';
+
+  @override
+  String get entSearchProgram => 'Chercher un programme';
+
+  @override
+  String get entSession => 'Séance';
+
+  @override
+  String entSessionsLeft(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Encore $count séances pour valider ta semaine.',
+      one: 'Encore 1 séance pour valider ta semaine.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String entSortBy(Object sort) {
+    return 'Trier par : $sort';
+  }
+
+  @override
+  String get entToProgress => 'Pour progresser';
+
+  @override
+  String get entToProgressCaption => 'Padel et foot, à ton niveau.';
+
+  @override
+  String get entTodayAbbr => 'auj.';
+
+  @override
+  String entTodayDay(Object date) {
+    return 'Aujourd’hui, $date';
+  }
+
+  @override
+  String get entTrainingPlan => 'Plan d’entraînement';
+
+  @override
+  String get entWeekDays => 'Séances de la semaine';
+
+  @override
+  String entWeekDone(int weeks) {
+    return 'Semaine validée : ta série passe à $weeks semaines de suite.';
+  }
+
+  @override
+  String entWeekOf(int week, int weeks, Object percent) {
+    return 'Semaine $week sur $weeks · $percent';
+  }
+
+  @override
+  String entWeekSemantics(int streak, int done, int goal) {
+    return '$streak semaines de suite, $done séances sur $goal cette semaine';
+  }
+
+  @override
+  String entWeeksInARow(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'semaines de suite',
+      one: 'semaine de suite',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get entYourTraining => 'ton entraînement';
+
+  @override
+  String entYourWeek(Object range) {
+    return 'Ta semaine · $range';
+  }
+
+  @override
+  String get entAbout => 'À propos';
+
+  @override
+  String entAddRep(Object noun) {
+    return 'Ajouter $noun';
+  }
+
+  @override
+  String entRemoveRep(Object noun) {
+    return 'Retirer $noun';
+  }
+
+  @override
+  String get entOneRep => 'une répétition';
+
+  @override
+  String get entAllSetsDone => 'Toutes les séries sont faites';
+
+  @override
+  String entAnalyseMyMove(Object move) {
+    return 'Analyser ma $move en vidéo';
+  }
+
+  @override
+  String get entAnalyseMyMoveGeneric => 'Analyser mon geste en vidéo';
+
+  @override
+  String get entBackToCatalogue => 'Retour au catalogue';
+
+  @override
+  String get entBackToTraining => 'Retour à mon entraînement';
+
+  @override
+  String entCertifiedLine(Object certification) {
+    return '$certification · diplôme vérifié par MatchUp';
+  }
+
+  @override
+  String get entCheckoutEyebrow => 'Programme d’entraînement';
+
+  @override
+  String get entCheckoutLine => 'Programme complet · accès à vie';
+
+  @override
+  String entCheckoutSubtitle(Object coach, int weeks, int sessions) {
+    return '$coach · $weeks semaines · $sessions séances';
+  }
+
+  @override
+  String entCoachTip(Object name) {
+    return 'Le conseil de $name';
+  }
+
+  @override
+  String entContinueSession(int index) {
+    return 'Continuer · Séance $index';
+  }
+
+  @override
+  String entDaysAgo(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: 'il y a $days jours',
+      one: 'il y a 1 jour',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String entFinishedAgo(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: 'Programme terminé · il y a $days jours',
+      one: 'Programme terminé · il y a 1 jour',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get entDifficulty => 'Difficulté de la séance';
+
+  @override
+  String entDoneWord(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'faits',
+      one: 'fait',
+      zero: 'fait',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String entDrillsDone(int done, int total) {
+    String _temp0 = intl.Intl.pluralLogic(
+      done,
+      locale: localeName,
+      other: '$done exercices faits',
+      one: '1 exercice fait',
+      zero: '0 exercice fait',
+    );
+    return '$_temp0 sur $total';
+  }
+
+  @override
+  String get entEnroll => 'S’inscrire au programme';
+
+  @override
+  String get entEnrolled => 'Tu es inscrit';
+
+  @override
+  String entEnrolledText(Object program) {
+    return '« $program » est dans Mes programmes.';
+  }
+
+  @override
+  String get entExercises => 'Exercices';
+
+  @override
+  String entExercisesOf(int index) {
+    return 'Exercices de la séance $index';
+  }
+
+  @override
+  String entFeelingAdapts(int index, Object coach) {
+    return 'La séance $index s’adapte à ta réponse. $coach la voit aussi.';
+  }
+
+  @override
+  String entFeelingCoachSees(Object coach) {
+    return '$coach voit ta réponse.';
+  }
+
+  @override
+  String get entFreeLine => 'Gratuit · sans engagement';
+
+  @override
+  String entHeroLabel(Object sport) {
+    return 'Court de $sport éclairé, aperçu du programme';
+  }
+
+  @override
+  String entHoursMinutes(int hours, Object minutes) {
+    return '$hours h $minutes';
+  }
+
+  @override
+  String get entHowWasIt => 'Comment c’était ?';
+
+  @override
+  String get entInBrief => 'Le programme en bref';
+
+  @override
+  String entInsteadOf(Object price) {
+    return 'au lieu de $price';
+  }
+
+  @override
+  String entJoinedLine(int done, int total, int index, Object title) {
+    return '$done séances sur $total · prochaine : Séance $index · $title';
+  }
+
+  @override
+  String get entJustRight => 'Juste bien';
+
+  @override
+  String get entTooEasy => 'Trop facile';
+
+  @override
+  String get entTooHard => 'Trop dur';
+
+  @override
+  String entLessonDoneTitle(int index) {
+    return 'Séance $index terminée';
+  }
+
+  @override
+  String entLevelSpan(Object range) {
+    return 'Niveau $range';
+  }
+
+  @override
+  String get entMarkDone => 'Marquer comme fait';
+
+  @override
+  String entMinutesRange(Object range) {
+    return '$range min';
+  }
+
+  @override
+  String get entMyNotes => 'Mes notes';
+
+  @override
+  String get entNext => 'Ensuite';
+
+  @override
+  String get entNextExercise => 'Exercice suivant';
+
+  @override
+  String get entPreviousExercise => 'Exercice précédent';
+
+  @override
+  String entNextLine(Object sets, Object video) {
+    return '$sets · $video de vidéo';
+  }
+
+  @override
+  String entNextOn(int index, Object title, Object day) {
+    return 'Prochaine : Séance $index · $title · $day';
+  }
+
+  @override
+  String get entNoCommitment => 'sans engagement';
+
+  @override
+  String entNotesHelper(Object coach) {
+    return 'Visibles par toi seul. Tu peux les envoyer à $coach à la fin.';
+  }
+
+  @override
+  String get entOneOff => 'en une fois';
+
+  @override
+  String entOutOf(int minutes) {
+    return 'sur $minutes';
+  }
+
+  @override
+  String entPaidLine(Object price) {
+    return '$price en une fois · accès à vie';
+  }
+
+  @override
+  String entPayAndEnroll(Object price) {
+    return 'Payer $price et m’inscrire';
+  }
+
+  @override
+  String entPerWeek(int count) {
+    return '$count par semaine';
+  }
+
+  @override
+  String entPlanned(int minutes) {
+    return 'prévu $minutes min';
+  }
+
+  @override
+  String entPlayVideo(Object duration) {
+    return 'Lire la vidéo, $duration';
+  }
+
+  @override
+  String entPremiumActive(int sessions) {
+    return 'Ton essai Premium est actif : tu suis les $sessions séances sans payer le programme.';
+  }
+
+  @override
+  String entPremiumLine(Object price, Object which) {
+    return '$price · inclus dans $which · sans engagement';
+  }
+
+  @override
+  String get entYourTrial => 'ton essai Premium';
+
+  @override
+  String get entYourPremium => 'ton abonnement Premium';
+
+  @override
+  String entPremiumOffer(int sessions) {
+    return 'Avec Premium, tu suis les $sessions séances sans payer le programme.';
+  }
+
+  @override
+  String entPremiumTerms(int days, Object monthly, Object price) {
+    return 'Essai gratuit $days jours, puis $monthly/mois, résiliable à tout moment. Sans Premium, le programme coûte $price en une fois.';
+  }
+
+  @override
+  String entPremiumTrialTerms(Object date, Object monthly, Object price) {
+    return 'Essai gratuit jusqu’au $date, puis $monthly/mois, résiliable à tout moment. Sans Premium, le programme coûte $price en une fois.';
+  }
+
+  @override
+  String entProgramFinished(int total) {
+    return 'Programme terminé : $total séances sur $total.';
+  }
+
+  @override
+  String get entProgramGone => 'Programme introuvable';
+
+  @override
+  String get entProgramGoneText =>
+      'Ce programme n’est plus proposé. Choisis-en un autre dans le catalogue.';
+
+  @override
+  String get entQuitSession => 'Quitter la séance';
+
+  @override
+  String get entRatingSplit => 'Répartition des notes';
+
+  @override
+  String get entRepsDone => 'Répétitions réussies';
+
+  @override
+  String entRestBetween(int seconds) {
+    return '$seconds s de repos entre les séries';
+  }
+
+  @override
+  String get entRestBetweenSets => 'Repos entre les séries';
+
+  @override
+  String entRestLeft(int seconds) {
+    return 'Repos : encore $seconds s';
+  }
+
+  @override
+  String get entSaveProgram => 'Enregistrer le programme';
+
+  @override
+  String entSeeAllReviews(int count) {
+    return 'Voir les $count avis';
+  }
+
+  @override
+  String get entSeeCatalogue => 'Voir le catalogue';
+
+  @override
+  String entSeePreview(Object duration) {
+    return 'Voir l’aperçu, $duration';
+  }
+
+  @override
+  String get entSeePreviewShort => 'Voir l’aperçu';
+
+  @override
+  String get entSessionInNumbers => 'Ta séance en chiffres';
+
+  @override
+  String entSessionVideos(int index, Object title) {
+    return 'Vidéos de la séance $index · $title';
+  }
+
+  @override
+  String get entSessions => 'Séances';
+
+  @override
+  String entSetOf(int set, int sets) {
+    return 'Série $set sur $sets';
+  }
+
+  @override
+  String entSetsOf(int sets, int reps) {
+    String _temp0 = intl.Intl.pluralLogic(
+      sets,
+      locale: localeName,
+      other: '$sets séries de $reps',
+      one: '1 série de $reps',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String entShareExercise(Object exercise, Object program) {
+    return '$exercise · un exercice du programme $program sur MatchUp';
+  }
+
+  @override
+  String get entShareExerciseLabel => 'Partager l’exercice';
+
+  @override
+  String get entShareProgram => 'Partager le programme';
+
+  @override
+  String entShareText(Object program, Object coach) {
+    return '$program avec $coach, sur MatchUp';
+  }
+
+  @override
+  String get entSkipExercise => 'Passer l’exercice';
+
+  @override
+  String get entSkipRest => 'Passer';
+
+  @override
+  String get entStartRest => 'Lancer';
+
+  @override
+  String get entStartSession => 'Lancer la séance';
+
+  @override
+  String entStarsCount(int stars, int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      stars,
+      locale: localeName,
+      other: '$stars étoiles',
+      one: '1 étoile',
+    );
+    return '$_temp0 : $count avis';
+  }
+
+  @override
+  String entStreakNow(int weeks) {
+    return 'Ta série passe à $weeks semaines de suite.';
+  }
+
+  @override
+  String get entStudentReviews => 'Avis des élèves';
+
+  @override
+  String entTarget(int reps) {
+    return 'Objectif : $reps';
+  }
+
+  @override
+  String get entTheProgram => 'Le programme';
+
+  @override
+  String get entTryPremium => 'Essayer Premium';
+
+  @override
+  String entVideoOf(Object exercise) {
+    return 'Vidéo de démonstration : $exercise';
+  }
+
+  @override
+  String entWeekSoFar(int done, int goal) {
+    return 'Ta semaine : $done/$goal';
+  }
+
+  @override
+  String entWeekTotal(int count, Object total) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count séances',
+      one: '1 séance',
+    );
+    return '$_temp0 · $total au total';
+  }
+
+  @override
+  String entWeekValidated(int done, int goal) {
+    return 'Semaine validée : $done/$goal';
+  }
+
+  @override
+  String entWeeksShort(int weeks) {
+    return '$weeks sem.';
+  }
+
+  @override
+  String entWeeksWord(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'semaines',
+      one: 'semaine',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String entYouNeed(Object what) {
+    return 'Il te faut : $what';
+  }
+
+  @override
+  String get entYourCoach => 'Ton coach';
+
+  @override
+  String entLessonNotDone(int index) {
+    return 'Séance $index pas encore faite';
+  }
+
+  @override
+  String get entLessonNotDoneText =>
+      'Lance-la depuis ton programme : son bilan s’affiche ici à la fin.';
+
+  @override
+  String entAcceptDetail(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Ajoute $count séances à ton agenda, avec un rappel 1 h avant.',
+      one: 'Ajoute 1 séance à ton agenda, avec un rappel 1 h avant.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get entAcceptPlan => 'Accepter le plan';
+
+  @override
+  String get entAiCanBeWrong =>
+      'L’IA peut se tromper. Ajuste ce qui ne te va pas.';
+
+  @override
+  String get entAiPreparing => 'L’IA prépare ta semaine…';
+
+  @override
+  String entAiSourceMatches(int count, Object level) {
+    return 'Tes $count matchs de padel et ton niveau $level';
+  }
+
+  @override
+  String entAiSourceReviews(int count) {
+    return 'Les $count avis de tes coéquipiers';
+  }
+
+  @override
+  String get entBackToGoals => 'Retour aux objectifs';
+
+  @override
+  String get entCalendarTournament => 'Tournoi';
+
+  @override
+  String entDaysCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count jours',
+      one: '1 jour',
+      zero: '0 jour',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get entEdit => 'Modifier';
+
+  @override
+  String get entEvening => 'Soir';
+
+  @override
+  String get entMorning => 'Matin';
+
+  @override
+  String get entNoon => 'Midi';
+
+  @override
+  String get entGeneratePlan => 'Générer mon plan';
+
+  @override
+  String entGeneratedAt(Object time) {
+    return 'Généré à $time';
+  }
+
+  @override
+  String get entGoalPlacement => 'Placement';
+
+  @override
+  String get entGoalEndurance => 'Endurance';
+
+  @override
+  String get entGoalService => 'Service';
+
+  @override
+  String get entGoalReturn => 'Retour';
+
+  @override
+  String get entGoalVolley => 'Volée';
+
+  @override
+  String get entGoalBandeja => 'Bandeja';
+
+  @override
+  String get entGoalSpeed => 'Vitesse';
+
+  @override
+  String entIncludeProgram(Object program) {
+    return 'Inclure mon programme $program';
+  }
+
+  @override
+  String entIncludeProgramDetail(int places, int index) {
+    String _temp0 = intl.Intl.pluralLogic(
+      places,
+      locale: localeName,
+      other: 'La séance $index prend une de tes $places places.',
+      one: 'La séance $index prend ta seule place.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get entIntensity => 'Intensité';
+
+  @override
+  String get entIntensitySoft => 'Douce';
+
+  @override
+  String get entIntensityModerate => 'Modérée';
+
+  @override
+  String get entIntensityHigh => 'Intense';
+
+  @override
+  String get entIntensitySoftCaption =>
+      'Douce : des séances légères, pour récupérer entre tes matchs.';
+
+  @override
+  String get entIntensityModerateCaption =>
+      'Modérée : tu restes frais pour tes matchs du week-end.';
+
+  @override
+  String get entIntensityHighCaption =>
+      'Intense : plus de volume, à éviter juste avant un tournoi.';
+
+  @override
+  String get entLegendProgram => 'Programme';
+
+  @override
+  String get entLegendAi => 'Proposé par l’IA';
+
+  @override
+  String get entLegendMatch => 'Match prévu';
+
+  @override
+  String get entLegendTournament => 'Tournoi';
+
+  @override
+  String entMaxGoals(int max) {
+    return '$max max';
+  }
+
+  @override
+  String get entMomentOfDay => 'Moment de la journée';
+
+  @override
+  String get entPlanAdded => 'Plan ajouté à ton agenda';
+
+  @override
+  String entPlanAddedText(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count séances, avec un rappel 1 h avant.',
+      one: '1 séance, avec un rappel 1 h avant.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get entPlanDoesNotSuit => 'Ce plan ne me convient pas';
+
+  @override
+  String get entPlanSuitsMe => 'Ce plan me convient';
+
+  @override
+  String get entPlanFailed => 'Impossible de préparer ton plan';
+
+  @override
+  String get entPlanIntro =>
+      'Dis-nous ce que tu veux travailler et quand tu es libre. L’IA prépare 3 séances autour de ton programme.';
+
+  @override
+  String entPlanSummary(
+    Object goals,
+    Object intensity,
+    int count,
+    Object moment,
+  ) {
+    return '$goals · intensité $intensity · $count séances le $moment, allégées avant ton tournoi';
+  }
+
+  @override
+  String get entPrefilled =>
+      'Pré-rempli avec tes disponibilités du profil. Tes matchs déjà prévus sont évités.';
+
+  @override
+  String get entRegenerate => 'Régénérer';
+
+  @override
+  String get entSeePlanFirst =>
+      'Tu verras le plan avant qu’il entre dans ton agenda.';
+
+  @override
+  String get entSessionLength => 'Durée d’une séance';
+
+  @override
+  String get entThanksFeedback => 'Merci, c’est noté';
+
+  @override
+  String get entWeekCalendar => 'Calendrier de la semaine';
+
+  @override
+  String entWeekOfRange(Object start, Object end, Object month) {
+    return 'Ta semaine du $start au $end $month';
+  }
+
+  @override
+  String get entWhatAiUses => 'Ce que l’IA utilise';
+
+  @override
+  String get entWhyThisPlan => 'Pourquoi ce plan';
+
+  @override
+  String get entYourFreeDays => 'Tes jours libres';
+
+  @override
+  String get entYourGoal => 'Ton objectif';
+
+  @override
+  String get entYourProgram => 'Ton programme';
+
+  @override
+  String entYourSessions(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Tes $count séances',
+      one: 'Ta séance',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get entYourWeekPlan => 'Ton plan de la semaine';
+
+  @override
+  String entMaxGoalsReached(int max) {
+    return '$max objectifs maximum : retire-en un pour en choisir un autre.';
+  }
+
+  @override
+  String get entAboutAMinute =>
+      'Encore 1 min environ. Tu peux quitter cet écran, on te prévient.';
+
+  @override
+  String get entAddExercisesToPlan => 'Ajouter les exercices à mon plan';
+
+  @override
+  String entAiAnalysing(Object move) {
+    return 'L’IA analyse $move';
+  }
+
+  @override
+  String get entAiFootnote =>
+      'L’IA peut se tromper. Vérifie les infos importantes.';
+
+  @override
+  String entAiMoments(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'IA · $count moments',
+      one: 'IA · 1 moment',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get entAiReady => 'C’est prêt';
+
+  @override
+  String get entAiRereading => 'L’IA relit ta vidéo…';
+
+  @override
+  String get entAiRewriting => 'L’IA réécrit le texte…';
+
+  @override
+  String entAnalysedAt(Object time, Object confidence) {
+    return 'Analysé à $time · $confidence';
+  }
+
+  @override
+  String get entConfidenceMedium => 'confiance moyenne';
+
+  @override
+  String entAnalysisReady(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Ton analyse est prête : $count conseils t’attendent.',
+      one: 'Ton analyse est prête : 1 conseil t’attend.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String entAnalysisRunning(int step, int total) {
+    return 'L’IA analyse ta vidéo · étape $step sur $total';
+  }
+
+  @override
+  String get entAnalysisUploading => 'Envoi de ta vidéo en cours…';
+
+  @override
+  String entAskCoach(Object coach) {
+    return 'Demander l’avis de $coach';
+  }
+
+  @override
+  String entSentToCoach(Object coach) {
+    return 'Envoyé à $coach';
+  }
+
+  @override
+  String get entSentToCoachText =>
+      'Ton coach voit ta vidéo et tes conseils, il te répond ici.';
+
+  @override
+  String get entBeta => 'Bêta';
+
+  @override
+  String entClipAt(Object time) {
+    return 'Ta vidéo, image à $time';
+  }
+
+  @override
+  String get entCopied => 'Copié';
+
+  @override
+  String get entCopy => 'Copier';
+
+  @override
+  String get entTextCopied => 'Texte copié';
+
+  @override
+  String get entEditedByYou => 'modifié par toi';
+
+  @override
+  String get entFilmOrChoose => 'Filme ou choisis une vidéo';
+
+  @override
+  String get entFilmTip => 'Filme de côté à 3 m, corps entier dans le cadre.';
+
+  @override
+  String entFilmedAt(Object day, Object venue) {
+    return 'Filmée $day · $venue';
+  }
+
+  @override
+  String entMomentsLine(int count, Object day, Object duration) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count moments à revoir · vidéo du $day · $duration',
+      one: '1 moment à revoir · vidéo du $day · $duration',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get entMoveBandeja => 'Bandeja';
+
+  @override
+  String get entMoveVibora => 'Víbora';
+
+  @override
+  String get entMoveService => 'Service';
+
+  @override
+  String get entMoveVolley => 'Volée';
+
+  @override
+  String get entMoveSmash => 'Smash';
+
+  @override
+  String get entYourBandeja => 'ta bandeja';
+
+  @override
+  String get entYourVibora => 'ta víbora';
+
+  @override
+  String get entYourService => 'ton service';
+
+  @override
+  String get entYourVolley => 'ta volée';
+
+  @override
+  String get entYourSmash => 'ton smash';
+
+  @override
+  String get entNoAnalysisTitle => 'Pas encore d’analyse';
+
+  @override
+  String get entNoAnalysisText =>
+      'Envoie une vidéo de ton geste : l’IA te donne 3 conseils, avec le moment exact.';
+
+  @override
+  String get entNotUseful => 'Pas utile';
+
+  @override
+  String get entUseful => 'Utile';
+
+  @override
+  String get entThanksForFeedback => 'Merci pour ton retour';
+
+  @override
+  String get entNotifyMe => 'Me prévenir';
+
+  @override
+  String entPlayFrom(Object time) {
+    return 'Lire la vidéo depuis $time';
+  }
+
+  @override
+  String get entPlayback => 'Position de lecture';
+
+  @override
+  String entPlaybackValue(Object at, Object total) {
+    return '$at sur $total';
+  }
+
+  @override
+  String get entPlayingNow => 'En lecture';
+
+  @override
+  String entReplayAt(Object time) {
+    return 'Revoir à $time';
+  }
+
+  @override
+  String get entSeeResult => 'Voir le résultat';
+
+  @override
+  String entSeeTips(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Voir mes $count conseils',
+      one: 'Voir mon conseil',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get entShareAnalysis => 'Partager l’analyse';
+
+  @override
+  String entShareAnalysisText(Object move, Object tip) {
+    return 'L’IA de MatchUp a analysé $move : « $tip ».';
+  }
+
+  @override
+  String entShareWith(Object coach) {
+    return 'Partager le résultat avec $coach';
+  }
+
+  @override
+  String get entShareWithDetail =>
+      'Ton coach pourra commenter. Désactivé par défaut.';
+
+  @override
+  String get entStep => 'Étape';
+
+  @override
+  String get entStepOutOf => 'sur';
+
+  @override
+  String get entStepDone => 'terminé';
+
+  @override
+  String get entStepRunning => 'en cours';
+
+  @override
+  String get entStepTodo => 'à venir';
+
+  @override
+  String get entStepSent => 'Vidéo envoyée';
+
+  @override
+  String entStepDetect(Object move) {
+    return 'Détection de $move';
+  }
+
+  @override
+  String get entStepCompare => 'Comparaison à la référence';
+
+  @override
+  String entStepWriting(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Rédaction de tes $count conseils',
+      one: 'Rédaction de ton conseil',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get entSuggestedExercise => 'Exercice conseillé';
+
+  @override
+  String get entYourNextSession => 'Ta prochaine séance du programme';
+
+  @override
+  String get entTapMoment =>
+      'Touche un moment pour revoir le geste au ralenti.';
+
+  @override
+  String entTipAt(int index, Object time) {
+    return 'Conseil $index · $time';
+  }
+
+  @override
+  String entTipsByPriority(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count conseils, par priorité',
+      one: '1 conseil',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get entVideoHint => 'MP4, MOV · 60 s · 100 Mo max';
+
+  @override
+  String get entVideoIntro =>
+      'Envoie 30 s de ton geste : l’IA le compare à un geste de référence et te donne 3 conseils, avec le moment exact.';
+
+  @override
+  String get entVideoPrivate =>
+      'Ta vidéo reste privée et est supprimée après 30 jours.';
+
+  @override
+  String get entVideoTooBig => 'Cette vidéo dépasse 100 Mo. Coupe-la à 60 s.';
+
+  @override
+  String get entVideoWrongFormat => 'Choisis une vidéo MP4 ou MOV.';
+
+  @override
+  String get entWeLetYouKnow => 'On te prévient';
+
+  @override
+  String get entWeLetYouKnowText =>
+      'Ton analyse continue. Retrouve-la dans Entraînement dès qu’elle est prête.';
+
+  @override
+  String get entWhatAiSaw => 'Ce que l’IA a vu';
+
+  @override
+  String get entWhichMove => 'Quel geste ?';
+
+  @override
+  String get entYourVideo => 'Ta vidéo';
+
+  @override
+  String get entAnyCoach => 'Tous les coachs';
+
+  @override
+  String get entAnyLength => 'Toutes les durées';
+
+  @override
+  String get entAnyPrice => 'Tous les prix';
+
+  @override
+  String get entBestRated => 'Mieux notés';
+
+  @override
+  String get entCheapest => 'Prix croissant';
+
+  @override
+  String get entEditRating => 'Modifier ma note';
+
+  @override
+  String get entFilterReviews => 'Filtrer les avis';
+
+  @override
+  String get entLongLength => '5 sem. et plus';
+
+  @override
+  String get entProgramSaved => 'Programme enregistré';
+
+  @override
+  String get entProgramUnsaved => 'Retiré de tes programmes enregistrés';
+
+  @override
+  String get entPublishRating => 'Publier ma note';
+
+  @override
+  String get entReviewPublic =>
+      'Ton avis s’affiche sur la page du programme, avec ton prénom.';
+
+  @override
+  String entReviewsShown(int shown, int total) {
+    return '$shown avis affichés sur $total';
+  }
+
+  @override
+  String get entSaved => 'Enregistrés';
+
+  @override
+  String entSeeCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Voir $count programmes',
+      one: 'Voir 1 programme',
+      zero: 'Aucun programme',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get entShortLength => '3 sem. et moins';
+
+  @override
+  String get entShortest => 'Plus courts';
+
+  @override
+  String get entSortTitle => 'Trier les programmes';
+
+  @override
+  String get entThanksForRating => 'Merci pour ta note';
+
+  @override
+  String get entUnsaveProgram => 'Retirer des programmes enregistrés';
+
+  @override
+  String entUpTo(Object price) {
+    return '$price et moins';
+  }
+
+  @override
+  String entYouRated(int stars) {
+    return 'Tu as noté ce programme $stars ★';
+  }
+
+  @override
+  String get entYourRating => 'Ta note';
+
+  @override
+  String get entYourReview => 'Ton avis';
+
+  @override
+  String get entHistory => 'Historique';
+
+  @override
+  String get entSeeHistory => 'Voir l’historique';
+
+  @override
+  String entHistoryWeek(Object date) {
+    return 'Semaine du $date';
+  }
+
+  @override
+  String entHistoryReps(Object reps, Object target) {
+    return '$reps/$target réussis';
+  }
+
+  @override
+  String entMinutesTotal(Object minutes) {
+    return '$minutes min';
+  }
+
+  @override
+  String entHoursTotal(Object hours, Object minutes) {
+    return '$hours h $minutes';
+  }
+
+  @override
+  String entHistoryTotals(int sessions, Object time, int weeks) {
+    String _temp0 = intl.Intl.pluralLogic(
+      sessions,
+      locale: localeName,
+      other: '$sessions séances',
+      one: '1 séance',
+    );
+    return '$_temp0, $time d’entraînement, $weeks semaines de suite';
+  }
+
+  @override
+  String entSessionsDone(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'séances faites',
+      one: 'séance faite',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get entTrainedTime => 'd’entraînement';
+
+  @override
+  String get entNoHistory => 'Aucune séance pour l’instant';
+
+  @override
+  String get entNoHistoryHelp =>
+      'Tes séances terminées s’afficheront ici, semaine par semaine.';
+
+  @override
+  String get entReminders => 'Rappels de séance';
+
+  @override
+  String get entRemindersOff => 'Désactivés';
+
+  @override
+  String entNextReminder(Object when) {
+    return 'Prochain rappel : $when';
+  }
+
+  @override
+  String entTodayAt(Object time) {
+    return 'aujourd’hui à $time';
+  }
+
+  @override
+  String entTomorrowAt(Object time) {
+    return 'demain à $time';
+  }
+
+  @override
+  String entDayAt(Object day, Object time) {
+    return '$day à $time';
+  }
+
+  @override
+  String get entTurnOn => 'Activer';
+
+  @override
+  String get entTestReminder => 'Tester';
+
+  @override
+  String get entReminderSent => 'Rappel envoyé';
+
+  @override
+  String get entSave => 'Enregistrer';
+
+  @override
+  String get entRemindMe => 'Me rappeler mes séances';
+
+  @override
+  String get entRemindMeHelp =>
+      'Pas de rappel un jour où ta séance est déjà faite.';
+
+  @override
+  String get entReminderDays => 'Les jours';
+
+  @override
+  String get entPickADay => 'Choisis au moins un jour.';
+
+  @override
+  String get entReminderTime => 'Heure du rappel';
+
+  @override
+  String get entRemindersSaved => 'Rappels enregistrés';
+
+  @override
+  String get entRemindersOffSaved => 'Rappels désactivés';
+
+  @override
+  String get entReminderTitle => 'C’est l’heure de ta séance';
+
+  @override
+  String entReminderBody(int index, Object title, int minutes) {
+    return 'Séance $index · $title · $minutes min';
+  }
+
+  @override
+  String get entReminderNoSession => 'Choisis un programme et garde ta série.';
+
+  @override
+  String get entReminderStart => 'Commencer';
+
+  @override
+  String get entReminderLater => 'Plus tard';
+
+  @override
+  String get entVideoError =>
+      'Impossible de lire la vidéo. Vérifie ta connexion et réessaie.';
+
+  @override
+  String get entVideoLoading => 'Chargement de la vidéo';
+
+  @override
+  String get entVideoPlay => 'Lire la vidéo';
+
+  @override
+  String entProgramPreview(Object title) {
+    return 'Aperçu · $title';
+  }
+
+  @override
+  String entCoachName(Object name) {
+    return 'Coach $name';
+  }
+
+  @override
+  String entProgramMeta(int weeks, int sessions, int minutes) {
+    return '$weeks sem. · $sessions séances · $minutes min/jour';
+  }
+
+  @override
+  String entProgramMetaShort(int weeks, int sessions, int minutes) {
+    return '$weeks sem. · $sessions séances · $minutes min/j';
+  }
+
+  @override
+  String entSessionsOf(int done, int total) {
+    return '$done séances sur $total';
+  }
+
+  @override
+  String get entSessionsUnit => 'séances';
+
+  @override
+  String entRatingSemantics(Object rating, int count) {
+    return 'Note $rating sur 5, $count avis';
+  }
+
+  @override
+  String get entIncludedInPremium => 'Inclus dans Premium';
+
+  @override
+  String get entPremium => 'Premium';
+
+  @override
+  String get entVerifiedCoach => 'Coach vérifié';
+
+  @override
+  String get entVerificationPending => 'Vérification en cours';
+
+  @override
+  String entNextLesson(Object lesson) {
+    return 'Prochaine : $lesson';
+  }
+
+  @override
+  String get entRateProgram => 'Noter le programme';
+
+  @override
+  String get entToday => 'À faire aujourd’hui';
+
+  @override
+  String get entTodayShort => 'Aujourd’hui';
+
+  @override
+  String get entTodayLower => 'à faire aujourd’hui';
+
+  @override
+  String entLessonLabel(int index, Object title) {
+    return 'Séance $index · $title';
+  }
+
+  @override
+  String entLessonEyebrow(int index) {
+    return 'Séance $index';
+  }
+
+  @override
+  String entDrills(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count exercices',
+      one: '1 exercice',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String entMinutes(int minutes) {
+    return '$minutes min';
+  }
+
+  @override
+  String entLessonMetaCompact(int minutes, Object drills) {
+    return '$minutes min · $drills';
+  }
+
+  @override
+  String entStudents(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count élèves',
+      one: '1 élève',
+      zero: '0 élève',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String entStudentsUnit(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'élèves',
+      one: 'élève',
+      zero: 'élève',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String entReviews(int count) {
+    return '$count avis';
+  }
+
+  @override
+  String get entNoReviews => 'Aucun avis';
+
+  @override
+  String entLanguages(Object languages) {
+    return 'Langues : $languages';
+  }
+
+  @override
+  String entFrom(Object price) {
+    return 'dès $price';
+  }
+
+  @override
+  String get entPerSession => 'par séance';
+
+  @override
+  String get entPendingInfo =>
+      'On vérifie ton diplôme sous 48 h. Tes programmes seront visibles dès que c’est fait.';
+
+  @override
+  String get entCompleteProfile => 'Compléter mon profil';
+
+  @override
+  String get entSeePrograms => 'Voir les programmes';
+
+  @override
+  String get coaActiveEnrollments => 'Inscriptions actives';
+
+  @override
+  String get coaActiveStudents => 'Élèves actifs';
+
+  @override
+  String get coaActiveThisWeek => 'Actifs cette semaine';
+
+  @override
+  String get coaAiContent =>
+      'Découpe la vidéo de « Bandeja croisée » en 2 parties : rien ne change sans ta validation.';
+
+  @override
+  String get coaAiReason =>
+      '14 élèves sur 34 y sont bloqués depuis plus d’une semaine, et sa vidéo dure 9 min contre 4 min en moyenne.';
+
+  @override
+  String get coaAiSee => 'Voir la séance';
+
+  @override
+  String get coaAiTitle => 'La séance 5 freine tes élèves';
+
+  @override
+  String get coaAll => 'Tous';
+
+  @override
+  String get coaAnd => ' et ';
+
+  @override
+  String coaAverage(int percent) {
+    return '$percent % en moy.';
+  }
+
+  @override
+  String coaAverageProgress(int percent) {
+    return 'Progression moyenne $percent %';
+  }
+
+  @override
+  String get coaAverageRating => 'Note moyenne';
+
+  @override
+  String get coaBankDetails => 'Coordonnées bancaires';
+
+  @override
+  String coaBankDetailsLine(Object bank) {
+    return '$bank · versements chaque lundi';
+  }
+
+  @override
+  String get coaBuilder => 'Constructeur';
+
+  @override
+  String coaBySource(Object month) {
+    return 'Par source · $month';
+  }
+
+  @override
+  String coaBySourceDetail(Object day) {
+    return 'Revenus nets du 1er au $day';
+  }
+
+  @override
+  String get coaCoachPlan => 'Abonnement Coach';
+
+  @override
+  String coaCoachPlanLine(Object price, Object day) {
+    return '$price/mois · renouvelé le $day';
+  }
+
+  @override
+  String get coaComment => 'Commenter';
+
+  @override
+  String coaCommission(int percent) {
+    return 'Commission MatchUp · $percent %';
+  }
+
+  @override
+  String get coaCommissionInfo =>
+      'Revenus après la commission MatchUp de 10 %. Versés chaque lundi.';
+
+  @override
+  String get coaCreate => 'Créer';
+
+  @override
+  String get coaCreateProgram => 'Créer un programme';
+
+  @override
+  String get coaCreateProgramDetail => 'Semaines, séances, exercices et vidéos';
+
+  @override
+  String get coaDelete => 'Supprimer';
+
+  @override
+  String coaDeleteDraftText(Object title) {
+    return '« $title » et ses séances seront supprimés. Les vidéos envoyées aussi.';
+  }
+
+  @override
+  String get coaDeleteDraftTitle => 'Supprimer le brouillon ?';
+
+  @override
+  String coaDraftLine(Object sport, Object levels, Object when) {
+    return '$sport · niveau $levels · $when';
+  }
+
+  @override
+  String get coaDrafts => 'Brouillons';
+
+  @override
+  String coaEditedOn(Object day) {
+    return 'modifié le $day';
+  }
+
+  @override
+  String coaEditedToday(Object time) {
+    return 'modifié aujourd’hui à $time';
+  }
+
+  @override
+  String coaEditedYesterday(Object time) {
+    return 'modifié hier à $time';
+  }
+
+  @override
+  String get coaFeedback => 'Retour vidéo';
+
+  @override
+  String get coaFeedbackSent => 'Retour envoyé';
+
+  @override
+  String get coaFilterPrograms => 'Filtrer mes programmes';
+
+  @override
+  String get coaFilterStudents => 'Filtrer les élèves';
+
+  @override
+  String get coaFinished => 'Terminé';
+
+  @override
+  String coaFinishedOn(Object day) {
+    return 'Terminé le $day';
+  }
+
+  @override
+  String coaHello(Object name) {
+    return 'Salut $name';
+  }
+
+  @override
+  String coaHelloLine(Object day, Object sport, Object zone) {
+    return '$day · Coach $sport · $zone';
+  }
+
+  @override
+  String get coaIgnore => 'Ignorer';
+
+  @override
+  String coaLastPayout(Object amount, Object day, Object reference) {
+    return 'Dernier : $amount le $day · $reference';
+  }
+
+  @override
+  String get coaLastSixMonths => '6 derniers mois';
+
+  @override
+  String get coaLate => 'En retard';
+
+  @override
+  String coaLateSince(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: 'En retard · rien depuis $days jours',
+      one: 'En retard · rien depuis 1 jour',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get coaLatestOperations => 'Dernières opérations';
+
+  @override
+  String get coaLatestReviews => 'Derniers avis';
+
+  @override
+  String get coaMissingPrice => 'le prix';
+
+  @override
+  String coaMissingSessions(int count, int week) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count séances de la semaine $week',
+      one: '1 séance de la semaine $week',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get coaMonth => 'Mois';
+
+  @override
+  String coaMonthNet(Object month) {
+    return '$month · net';
+  }
+
+  @override
+  String get coaMonths =>
+      'janvier|février|mars|avril|mai|juin|juillet|août|septembre|octobre|novembre|décembre';
+
+  @override
+  String get coaMyPrograms => 'Mes programmes';
+
+  @override
+  String get coaNet => 'Revenus nets';
+
+  @override
+  String get coaNetSixMonths => 'Revenus nets · 6 mois';
+
+  @override
+  String coaNetSixMonthsDetail(Object month) {
+    return 'Après commission · $month en cours';
+  }
+
+  @override
+  String get coaNewProgram => 'Nouveau programme';
+
+  @override
+  String get coaNewWeek => 'Nouvelle semaine';
+
+  @override
+  String get coaNextPayout => 'Prochain versement';
+
+  @override
+  String get coaNoDraft => 'Aucun brouillon';
+
+  @override
+  String get coaNoDraftText =>
+      'Crée un programme : semaines, séances, exercices et vidéos.';
+
+  @override
+  String get coaNoStudent => 'Aucun élève';
+
+  @override
+  String get coaNoStudentText => 'Aucun élève ne correspond à cette recherche.';
+
+  @override
+  String coaNotifications(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Notifications, $count non lues',
+      one: 'Notifications, 1 non lue',
+      zero: 'Notifications',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get coaOr => 'ou';
+
+  @override
+  String get coaPeriod => 'Période';
+
+  @override
+  String get coaPriceTitle => 'Prix et publication';
+
+  @override
+  String coaProgramFinishedLine(Object program, int done, int total) {
+    return '$program · $done/$total séances';
+  }
+
+  @override
+  String coaProgramLine(int students, Object rating, int reviews) {
+    return '$students élèves actifs · ★ $rating ($reviews)';
+  }
+
+  @override
+  String coaProgramSessionLine(Object program, int current, int total) {
+    return '$program · séance $current/$total';
+  }
+
+  @override
+  String coaProgramShape(int weeks, int sessions, Object levels) {
+    return '$weeks sem. · $sessions séances · niveau $levels';
+  }
+
+  @override
+  String coaProgramsLine(int programs, int enrollments) {
+    return '$programs programmes · $enrollments inscriptions';
+  }
+
+  @override
+  String coaProgressOf(Object name) {
+    return 'Progression de $name';
+  }
+
+  @override
+  String get coaPublish => 'Publier';
+
+  @override
+  String get coaPublished => 'Publiés';
+
+  @override
+  String coaPublishedLine(int count) {
+    return 'Publiés · $count inscriptions actives';
+  }
+
+  @override
+  String get coaPublishedOne => 'Publié';
+
+  @override
+  String get coaRating => 'Note';
+
+  @override
+  String get coaRemind => 'Relancer';
+
+  @override
+  String coaReminderSent(Object name) {
+    return 'Message de relance envoyé à $name';
+  }
+
+  @override
+  String get coaReply => 'Répondre';
+
+  @override
+  String get coaReplyPublic =>
+      'Ta réponse s’affiche sous l’avis, sur la page du programme.';
+
+  @override
+  String get coaReplyPublished => 'Réponse publiée';
+
+  @override
+  String coaReplyTo(Object name) {
+    return 'Répondre à $name';
+  }
+
+  @override
+  String coaRevenueMonth(Object month) {
+    return 'Revenus $month · nets';
+  }
+
+  @override
+  String coaRevenueSemantics(Object amount) {
+    return 'Revenus du mois : $amount, voir le détail';
+  }
+
+  @override
+  String get coaRevenueTrend => 'Revenus nets des 6 derniers mois';
+
+  @override
+  String coaRoleDetail(Object zone) {
+    return 'Coach padel · $zone';
+  }
+
+  @override
+  String get coaSalesAndPremium => 'Ventes et part Premium';
+
+  @override
+  String get coaScheduled => 'Publication programmée';
+
+  @override
+  String get coaSearchStudent => 'Rechercher un élève';
+
+  @override
+  String get coaSeeAll => 'Tout voir';
+
+  @override
+  String get coaSeePage => 'Voir la page';
+
+  @override
+  String coaSessionOn(Object day) {
+    return 'Séance faite $day';
+  }
+
+  @override
+  String get coaSessionToday => 'Séance faite aujourd’hui';
+
+  @override
+  String get coaSessionYesterday => 'Séance faite hier';
+
+  @override
+  String coaSessionsReady(int done, int total) {
+    return '$done/$total séances';
+  }
+
+  @override
+  String get coaSessionsReadyLabel => 'Séances prêtes';
+
+  @override
+  String get coaSettings => 'Réglages';
+
+  @override
+  String get coaSixMonths => '6 mois';
+
+  @override
+  String get coaSortName => 'Nom';
+
+  @override
+  String get coaSortRecent => 'Activité récente';
+
+  @override
+  String get coaSource => 'Source';
+
+  @override
+  String get coaSpace => 'Espace coach';
+
+  @override
+  String get coaStatements => 'Relevés mensuels';
+
+  @override
+  String coaStatementsLine(Object month) {
+    return 'PDF · dernier : $month';
+  }
+
+  @override
+  String get coaStudent => 'Élève';
+
+  @override
+  String get coaStudents => 'Élèves';
+
+  @override
+  String coaSwitchRole(Object name) {
+    return '$name · changer de rôle';
+  }
+
+  @override
+  String get coaTabDashboard => 'Tableau';
+
+  @override
+  String get coaTabEarnings => 'Revenus';
+
+  @override
+  String get coaTabPrograms => 'Programmes';
+
+  @override
+  String get coaTabStudents => 'Élèves';
+
+  @override
+  String get coaThisMonth => 'Ce mois';
+
+  @override
+  String get coaToFinish => 'À terminer';
+
+  @override
+  String get coaToHandle => 'À traiter';
+
+  @override
+  String coaToPublish(Object what) {
+    return 'Pour publier : $what';
+  }
+
+  @override
+  String coaTodoDropped(Object name) {
+    return '$name a décroché';
+  }
+
+  @override
+  String coaTodoReview(int stars, Object name) {
+    return 'Avis $stars★ $name';
+  }
+
+  @override
+  String coaTodoVideo(Object name) {
+    return 'Vidéo $name';
+  }
+
+  @override
+  String coaUpTo(Object day) {
+    return 'au $day';
+  }
+
+  @override
+  String coaVideoSent(Object since) {
+    return 'Vidéo envoyée · $since';
+  }
+
+  @override
+  String coaVsLastMonth(Object month) {
+    return 'vs $month';
+  }
+
+  @override
+  String coaVsLastMonthNet(Object month) {
+    return 'vs $month à la même date · net';
+  }
+
+  @override
+  String coaVsLastMonthSameDay(Object month) {
+    return 'vs $month à la même date';
+  }
+
+  @override
+  String get coaYourNet => 'Tes revenus nets';
+
+  @override
+  String get coaYourReply => 'Ta réponse';
+
+  @override
+  String coaOfName(Object name) {
+    return 'de $name';
+  }
+
+  @override
+  String get coaAboutAMinute => '≈ 1 min';
+
+  @override
+  String get coaAddExercise => 'Ajouter un exercice';
+
+  @override
+  String coaAddExercises(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Ajouter $count exercices',
+      one: 'Ajouter 1 exercice',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String coaAddSeconds(int seconds) {
+    return 'Ajouter $seconds secondes';
+  }
+
+  @override
+  String get coaAddSession => 'Ajouter une séance';
+
+  @override
+  String get coaAddSet => 'Ajouter une série';
+
+  @override
+  String coaAddThis(Object name) {
+    return 'Ajouter $name';
+  }
+
+  @override
+  String get coaAddVideo => 'Ajouter une vidéo';
+
+  @override
+  String get coaAddWeek => 'Ajouter une semaine';
+
+  @override
+  String coaAdvisedPrice(Object range) {
+    return 'Prix conseillé : $range';
+  }
+
+  @override
+  String coaAdvisedPriceWhy(Object zone, Object levels) {
+    return 'Recommandé car les programmes padel de 4 semaines se vendent entre 30 et 45 DT autour de $zone, et le tien vise un niveau $levels.';
+  }
+
+  @override
+  String coaAllCount(int count) {
+    return 'Tous · $count';
+  }
+
+  @override
+  String get coaBackToPrograms => 'Retour à mes programmes';
+
+  @override
+  String get coaBeforeOnline => 'Avant la mise en ligne';
+
+  @override
+  String get coaCheckBasics => 'Titre, description et couverture';
+
+  @override
+  String get coaCheckBasicsOk => 'Prêts';
+
+  @override
+  String coaCheckCoachOk(Object certification) {
+    return '$certification validé';
+  }
+
+  @override
+  String coaCheckSessions(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count séances à ajouter',
+      one: '1 séance à ajouter',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String coaCheckSessionsDetail(int week, int done, int total) {
+    return 'Semaine $week · $done séances sur $total';
+  }
+
+  @override
+  String coaCheckVideos(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count vidéos en traitement',
+      one: '1 vidéo en traitement',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String coaCheckVideosDetail(int index) {
+    return 'Séance $index · prête dans 1 min environ';
+  }
+
+  @override
+  String coaCommissionLine(int percent) {
+    return 'Commission de $percent % par vente · versements chaque lundi';
+  }
+
+  @override
+  String get coaComplete => 'Compléter';
+
+  @override
+  String get coaContent => 'Contenu';
+
+  @override
+  String get coaContinueToPrice => 'Continuer vers le prix';
+
+  @override
+  String get coaCreateExercise => 'Créer un nouvel exercice';
+
+  @override
+  String get coaDeleteExercise => 'Supprimer l’exercice';
+
+  @override
+  String coaDraftOf(Object title) {
+    return '$title · brouillon';
+  }
+
+  @override
+  String coaDraftSaved(Object since) {
+    return 'Brouillon enregistré · $since';
+  }
+
+  @override
+  String get coaDraftSavedToast => 'Brouillon enregistré';
+
+  @override
+  String coaDraftShape(int weeks, int sessions, int exercises) {
+    return '$weeks sem. · $sessions séances · $exercises exercices';
+  }
+
+  @override
+  String get coaDragHint =>
+      'Maintiens la poignée pour réordonner semaines, séances et exercices.';
+
+  @override
+  String get coaDuration => 'Durée';
+
+  @override
+  String get coaDurationSeconds => 'Durée (s)';
+
+  @override
+  String get coaEdit => 'Modifier';
+
+  @override
+  String coaEditExercise(Object name) {
+    return 'Modifier $name';
+  }
+
+  @override
+  String get coaExerciseCategory => 'Catégorie d’exercice';
+
+  @override
+  String get coaExerciseName => 'Nom de l’exercice';
+
+  @override
+  String coaExerciseOptions(Object name) {
+    return 'Options de $name';
+  }
+
+  @override
+  String get coaExerciseType => 'Type d’exercice';
+
+  @override
+  String get coaExerciseVideo => 'Vidéo de l’exercice';
+
+  @override
+  String coaExercisesAdded(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count exercices ajoutés',
+      one: '1 exercice ajouté',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String coaFoldExercise(Object name) {
+    return 'Replier $name';
+  }
+
+  @override
+  String coaFoldSession(int index) {
+    return 'Replier les exercices de la séance $index';
+  }
+
+  @override
+  String coaFoldWeek(int index) {
+    return 'Replier la semaine $index';
+  }
+
+  @override
+  String get coaHowPlayersGetIt => 'Comment les joueurs y accèdent';
+
+  @override
+  String get coaIn => 'Dans';
+
+  @override
+  String get coaInPremium => 'Inclure dans Premium';
+
+  @override
+  String get coaInPremiumDetail =>
+      'Les abonnés Premium le suivent sans payer. Tu touches une part de l’abonnement selon leurs séances faites.';
+
+  @override
+  String get coaInfo => 'Infos';
+
+  @override
+  String get coaInstruction => 'Consigne pour tes élèves';
+
+  @override
+  String get coaInstructionHelper =>
+      'Affichée sous la vidéo dans le lecteur de séance.';
+
+  @override
+  String get coaKeepEditing =>
+      'Continue à modifier la séance : la vidéo sera visible par tes élèves dès qu’elle est prête.';
+
+  @override
+  String get coaLevel => 'Niveau';
+
+  @override
+  String coaMinTimes(int minutes, int sets) {
+    return '$minutes min × $sets';
+  }
+
+  @override
+  String coaMoveExercise(Object name) {
+    return 'Déplacer $name';
+  }
+
+  @override
+  String coaMoveSession(int index) {
+    return 'Déplacer la séance $index';
+  }
+
+  @override
+  String coaMoveWeek(int index) {
+    return 'Déplacer la semaine $index';
+  }
+
+  @override
+  String get coaNewExercise => 'Nouvel exercice';
+
+  @override
+  String get coaNewSession => 'Nouvelle séance';
+
+  @override
+  String get coaNoAccess =>
+      'Choisis au moins une façon d’y accéder : vendu, ou inclus dans Premium.';
+
+  @override
+  String get coaNoVideo => 'sans vidéo';
+
+  @override
+  String get coaPickExercise => 'Choisis un exercice';
+
+  @override
+  String get coaPlayer => 'Joueur';
+
+  @override
+  String get coaPreview => 'Aperçu';
+
+  @override
+  String get coaPreviewNoRating =>
+      'Sans avis pour l’instant : la note apparaît après les 3 premiers retours d’élèves.';
+
+  @override
+  String get coaPreviewPremium =>
+      'Les abonnés Premium voient « Inclus dans Premium » à la place du prix.';
+
+  @override
+  String get coaPriceForStudent => 'Prix pour un élève';
+
+  @override
+  String get coaPricePaid => 'Prix payé par l’élève';
+
+  @override
+  String get coaProcessing => 'En traitement';
+
+  @override
+  String get coaProcessingDetail =>
+      'Optimisation pour mobile et sous-titres · environ 1 min';
+
+  @override
+  String get coaProcessingLabel => 'Traitement';
+
+  @override
+  String get coaProcessingVideo => 'Traitement de la vidéo…';
+
+  @override
+  String get coaProgramInfo => 'Infos du programme';
+
+  @override
+  String get coaProgramTitle => 'Titre du programme';
+
+  @override
+  String get coaPublishDate => 'Date de publication';
+
+  @override
+  String get coaPublishScheduled => 'Publication programmée';
+
+  @override
+  String get coaPublishScheduledText =>
+      'On te prévient dès que le programme est en ligne.';
+
+  @override
+  String get coaReady => 'Prête';
+
+  @override
+  String coaRemoveSeconds(int seconds) {
+    return 'Retirer $seconds secondes';
+  }
+
+  @override
+  String get coaRemoveSet => 'Retirer une série';
+
+  @override
+  String get coaRepetitions => 'Répétitions';
+
+  @override
+  String get coaReplace => 'Remplacer';
+
+  @override
+  String coaRepsSets(int reps, int sets) {
+    return '$reps rép. × $sets séries';
+  }
+
+  @override
+  String coaRepsTimes(int reps, int sets) {
+    return '$reps rép. × $sets';
+  }
+
+  @override
+  String get coaSaveDraft => 'Enregistrer le brouillon';
+
+  @override
+  String get coaSaveSession => 'Enregistrer la séance';
+
+  @override
+  String get coaSaved => 'Enregistrée';
+
+  @override
+  String get coaSchedulePublish => 'Programmer la publication';
+
+  @override
+  String get coaSearchExercise => 'Rechercher un exercice';
+
+  @override
+  String coaSecSets(int seconds, int sets) {
+    return '$seconds s × $sets séries';
+  }
+
+  @override
+  String coaSecTimes(int seconds, int sets) {
+    return '$seconds s × $sets';
+  }
+
+  @override
+  String coaSeconds(int seconds) {
+    return '$seconds s';
+  }
+
+  @override
+  String get coaSeenBy => 'Vu par';
+
+  @override
+  String get coaSell => 'Vendre le programme';
+
+  @override
+  String get coaSellDetail => 'Paiement unique, accès sans limite de durée.';
+
+  @override
+  String get coaSent => 'envoyée';
+
+  @override
+  String get coaSessionGone => 'Séance introuvable';
+
+  @override
+  String get coaSessionGoneText => 'Cette séance n’est plus dans le brouillon.';
+
+  @override
+  String get coaSessionSaved => 'Séance enregistrée';
+
+  @override
+  String get coaSessionTitle => 'Titre de la séance';
+
+  @override
+  String get coaSessionVideo => 'Vidéo de la séance';
+
+  @override
+  String get coaSets => 'Séries';
+
+  @override
+  String get coaStudentPreview => 'Aperçu élève';
+
+  @override
+  String coaUnfoldSession(int index) {
+    return 'Déplier les exercices de la séance $index';
+  }
+
+  @override
+  String coaUnfoldWeek(int index) {
+    return 'Déplier la semaine $index';
+  }
+
+  @override
+  String get coaVideo => 'Vidéo';
+
+  @override
+  String get coaVideoHintExercise => 'MP4, MOV · 500 Mo max · 3 min max';
+
+  @override
+  String get coaVideoHintSession => 'MP4, MOV · 2 Go max · 10 min max';
+
+  @override
+  String coaVideoLength(Object length) {
+    return 'vidéo $length';
+  }
+
+  @override
+  String get coaVideoProcessing => 'vidéo en traitement';
+
+  @override
+  String get coaVideoReady => 'vidéo prête';
+
+  @override
+  String get coaVideoTooBig => 'Cette vidéo dépasse 500 Mo.';
+
+  @override
+  String coaVideoUploading(int percent) {
+    return 'vidéo : envoi $percent %';
+  }
+
+  @override
+  String coaWeekLacking(int count, int lacking) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count séances',
+      one: '1 séance',
+      zero: 'Aucune séance',
+    );
+    return '$_temp0 · ajoute-en $lacking pour publier';
+  }
+
+  @override
+  String coaWeekN(int index) {
+    return 'Semaine $index';
+  }
+
+  @override
+  String coaWeekOfProgram(int week, Object program) {
+    return 'Semaine $week · $program';
+  }
+
+  @override
+  String coaWeekShape(int sessions, int exercises, int minutes) {
+    return '$sessions séances · $exercises exercices · $minutes min';
+  }
+
+  @override
+  String get coaWhatYouGet => 'Ce que tu reçois par vente';
+
+  @override
+  String get coaWhenDateDetail =>
+      'On te prévient la veille s’il manque encore quelque chose.';
+
+  @override
+  String get coaWhenPublish => 'Quand publier ?';
+
+  @override
+  String get coaWhenReady => 'Dès que tout est prêt';
+
+  @override
+  String coaWhenReadyDetail(int count) {
+    return 'On le met en ligne quand les $count séances et leurs vidéos sont prêtes. Tu reçois une notification.';
+  }
+
+  @override
+  String get coaYouGetPerSale => 'Tu reçois par vente';
+
+  @override
+  String coaAfterSession(int index, Object title) {
+    return 'Après la séance $index · $title';
+  }
+
+  @override
+  String coaAiMomentFrom(Object name) {
+    return 'Repéré par l’analyse vidéo de $name. À toi de valider.';
+  }
+
+  @override
+  String coaAiVideoOf(Object name, int count) {
+    return 'Analyse vidéo de $name · $count conseils';
+  }
+
+  @override
+  String get coaAskNewVideo => 'Demander une nouvelle vidéo';
+
+  @override
+  String get coaAwaitsFeedback => 'Attend ton retour';
+
+  @override
+  String coaBackToFile(Object name) {
+    return 'Retour à la fiche de $name';
+  }
+
+  @override
+  String get coaBackToStudents => 'Retour aux élèves';
+
+  @override
+  String get coaBold => 'Gras';
+
+  @override
+  String get coaBullets => 'Liste à puces';
+
+  @override
+  String coaCommentAt(Object time) {
+    return 'Commenter à $time';
+  }
+
+  @override
+  String get coaCommentHere => 'Commentaire à la position actuelle';
+
+  @override
+  String coaCommentOptions(Object time) {
+    return 'Options du commentaire à $time';
+  }
+
+  @override
+  String get coaCommentVideo => 'Commenter la vidéo';
+
+  @override
+  String coaFeedbackLine(Object length, int session, Object program) {
+    return 'Bandeja · $length · séance $session · $program';
+  }
+
+  @override
+  String coaFeedbackSentTo(Object name) {
+    return 'Retour envoyé à $name';
+  }
+
+  @override
+  String coaFeedbackTo(Object name) {
+    return 'Retour à $name';
+  }
+
+  @override
+  String get coaGeneralMessage => 'Message général';
+
+  @override
+  String coaGeneralMessageHelper(Object name) {
+    return 'Affiché au-dessus de tes commentaires, dans la séance de $name.';
+  }
+
+  @override
+  String get coaGiveFeedback => 'Faire un retour';
+
+  @override
+  String get coaItalic => 'Italique';
+
+  @override
+  String get coaMessage => 'Message';
+
+  @override
+  String get coaMinutes => 'Minutes';
+
+  @override
+  String get coaMoreActions => 'Plus d’actions';
+
+  @override
+  String get coaNextFrame => '+1 image';
+
+  @override
+  String get coaNoVideoToComment => 'Pas de vidéo à commenter';
+
+  @override
+  String get coaNoVideoToCommentText =>
+      'Cet élève ne t’a pas encore envoyé de vidéo.';
+
+  @override
+  String coaNoteOf(Object name, int session, Object day) {
+    return 'Note de $name · séance $session · $day';
+  }
+
+  @override
+  String get coaNotesAndFeedback => 'Notes et retours';
+
+  @override
+  String coaOnVideo(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count sur la vidéo',
+      one: '1 sur la vidéo',
+      zero: 'Aucun sur la vidéo',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String coaPlayClip(int seconds) {
+    return 'Lire la vidéo Bandeja, $seconds secondes';
+  }
+
+  @override
+  String get coaPlayVideo => 'Lire la vidéo';
+
+  @override
+  String get coaPosition => 'Position dans la vidéo';
+
+  @override
+  String coaPositionValue(Object at, Object length, int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count commentaires',
+      one: '1 commentaire',
+      zero: 'aucun commentaire',
+    );
+    return '$at sur $length, $_temp0';
+  }
+
+  @override
+  String get coaPrevFrame => '−1 image';
+
+  @override
+  String coaProgramOf(Object program, Object name) {
+    return '$program · $name';
+  }
+
+  @override
+  String get coaProgress => 'Avancement';
+
+  @override
+  String get coaSeeMyFeedback => 'Voir mon retour';
+
+  @override
+  String get coaSendFeedback => 'Envoyer le retour';
+
+  @override
+  String coaSessionsDone(int done, int total) {
+    String _temp0 = intl.Intl.pluralLogic(
+      done,
+      locale: localeName,
+      other: '$done terminées',
+      one: '1 terminée',
+      zero: 'Aucune terminée',
+    );
+    return '$_temp0 sur $total';
+  }
+
+  @override
+  String get coaSessionsTitle => 'Séances';
+
+  @override
+  String coaSince(Object day) {
+    return 'depuis le $day';
+  }
+
+  @override
+  String get coaSpeed => 'Vitesse de lecture';
+
+  @override
+  String get coaStreak => 'Série';
+
+  @override
+  String coaStreakWeeks(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count semaines',
+      one: '1 semaine',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get coaStudentGone => 'Élève introuvable';
+
+  @override
+  String get coaStudentGoneText =>
+      'Cet élève n’est plus inscrit à tes programmes.';
+
+  @override
+  String coaStudentNotified(Object name) {
+    return '$name reçoit la notification « Retour du coach ».';
+  }
+
+  @override
+  String get coaThisWeek => 'Cette semaine';
+
+  @override
+  String coaThisWeekValue(int done, int goal) {
+    return '$done/$goal séances';
+  }
+
+  @override
+  String get coaTimedComments => 'Commentaires horodatés';
+
+  @override
+  String get coaTrainingMinutes => 'Minutes d’entraînement';
+
+  @override
+  String get coaTrainingMinutesDetail =>
+      '6 dernières semaines · séances faites dans l’app';
+
+  @override
+  String coaVideoOf(Object name) {
+    return 'Vidéo de $name : bandeja sur le court 3 de Smash Padel Club';
+  }
+
+  @override
+  String coaVideoSentOn(Object when, int session) {
+    return 'Envoyée $when · séance $session';
+  }
+
+  @override
+  String get coaVideoToComment => 'Vidéo à commenter';
+
+  @override
+  String get coaWeekLabel => 'Semaine';
+
+  @override
+  String coaWeekOf(Object day) {
+    return 'Semaine du $day';
+  }
+
+  @override
+  String coaWeekOutOf(int week, int weeks) {
+    return '$week sur $weeks';
+  }
+
+  @override
+  String coaYourCommentAt(Object time) {
+    return 'Ton commentaire à $time';
+  }
+
+  @override
+  String coaYourFeedbackOn(int session, Object day) {
+    return 'Ton retour · séance $session · $day';
+  }
+
+  @override
+  String get aiAssistantTitle => 'Assistant MatchUp';
+
+  @override
+  String get aiCloseAssistant => 'Fermer l’assistant';
+
+  @override
+  String aiOwnerSpace(Object venue) {
+    return 'Espace propriétaire · $venue';
+  }
+
+  @override
+  String get aiSender => 'MatchUp';
+
+  @override
+  String get aiSenderLabel => 'MatchUp, réponse générée par l’IA';
+
+  @override
+  String get aiLabelShort => 'IA';
+
+  @override
+  String aiGreeting(Object name) {
+    return 'Salut $name ! Je trouve des parties à ton niveau, je réserve des terrains et je te conseille des programmes. Je te dis toujours pourquoi, et rien n’est réservé ni payé sans ta confirmation.';
+  }
+
+  @override
+  String get aiOwnerGreeting =>
+      'Bonjour ! Je lis ton planning, tes réservations et tes tarifs pour t’aider à remplir tes terrains. Rien ne change sans ta confirmation.';
+
+  @override
+  String get aiWhatIUse => 'Ce que j’utilise pour te répondre';
+
+  @override
+  String get aiPrivate =>
+      'Tes conversations restent privées, visibles par toi seul.';
+
+  @override
+  String get aiDisclaimerLong =>
+      'L’IA peut se tromper. Elle ne réserve et ne paie rien sans ta confirmation.';
+
+  @override
+  String get aiDisclaimer =>
+      'MatchUp ne réserve et ne paie rien sans ta confirmation.';
+
+  @override
+  String get aiAnswering => 'Réponse en cours…';
+
+  @override
+  String get aiSend => 'Envoyer';
+
+  @override
+  String get aiStop => 'Arrêter la réponse';
+
+  @override
+  String get aiStopped => 'Réponse arrêtée.';
+
+  @override
+  String get aiWriting => 'L’assistant écrit';
+
+  @override
+  String aiTodayAt(Object time) {
+    return 'Aujourd’hui · $time';
+  }
+
+  @override
+  String get aiUnderstood => 'J’ai compris';
+
+  @override
+  String get aiUnderstoodGroup => 'Ce que l’assistant a compris';
+
+  @override
+  String get aiFeedbackGroup => 'Ton avis sur cette réponse';
+
+  @override
+  String get aiUseful => 'Réponse utile';
+
+  @override
+  String get aiNotUseful => 'Réponse pas utile';
+
+  @override
+  String get aiThanksFeedback =>
+      'Merci pour ton retour · L’IA peut se tromper.';
+
+  @override
+  String get aiCheckBefore =>
+      'L’IA peut se tromper. Vérifie avant de confirmer.';
+
+  @override
+  String get aiCheckSummary =>
+      'L’IA peut se tromper. Vérifie le récapitulatif.';
+
+  @override
+  String get aiCheckPlanning =>
+      'L’IA peut se tromper. Vérifie dans ton planning.';
+
+  @override
+  String get aiUnstable => 'Connexion instable';
+
+  @override
+  String get aiBackSoon => 'L’assistant revient dès que le réseau est rétabli.';
+
+  @override
+  String get aiCouldNotAnswer => 'Je n’ai pas pu répondre';
+
+  @override
+  String get aiCutOff =>
+      'La connexion a été coupée pendant ma recherche. Ton message est gardé et aucune action n’a été faite.';
+
+  @override
+  String get aiSeePrograms => 'Voir les programmes';
+
+  @override
+  String get aiAlreadyFound => 'Déjà trouvé · 1 court libre';
+
+  @override
+  String get aiVerified => 'Vérifié';
+
+  @override
+  String aiRatingDistance(Object rating, int reviews, Object km) {
+    return '$rating ($reviews avis) · $km';
+  }
+
+  @override
+  String aiFreeSlots(Object day) {
+    return 'Créneaux libres · $day';
+  }
+
+  @override
+  String aiFreeSlotsOn(Object day) {
+    return 'Créneaux libres $day';
+  }
+
+  @override
+  String aiSlotTitle(Object court, Object day, Object time) {
+    return '$court · $day · $time';
+  }
+
+  @override
+  String aiBookAt(Object time) {
+    return 'Réserver $time';
+  }
+
+  @override
+  String get aiSeeVenue => 'Voir le terrain';
+
+  @override
+  String aiIndoorCourt(Object court) {
+    return '$court · indoor';
+  }
+
+  @override
+  String aiHourCourtPrice(Object price) {
+    return '1 h · $price le terrain';
+  }
+
+  @override
+  String aiPerPlayerAt(int players) {
+    return 'par joueur à $players';
+  }
+
+  @override
+  String aiPerPlayerShort(int players) {
+    return '/joueur à $players';
+  }
+
+  @override
+  String aiConfirmText(
+    Object court,
+    Object venue,
+    Object day,
+    Object time,
+    Object price,
+    Object share,
+  ) {
+    return 'Je réserve le $court à $venue, $day à $time, $price ($share par joueur). Confirmer ?';
+  }
+
+  @override
+  String get aiYourShare => 'Ta part';
+
+  @override
+  String aiShareOf(Object price, int players) {
+    return 'sur $price · $players joueurs';
+  }
+
+  @override
+  String get aiCancellation => 'Annulation';
+
+  @override
+  String aiFreeUntil(Object when) {
+    return 'Gratuite jusqu’à $when';
+  }
+
+  @override
+  String aiHalfUntil(Object when) {
+    return 'puis 50 % jusqu’à $when';
+  }
+
+  @override
+  String aiTonightAt(Object time) {
+    return 'ce soir $time';
+  }
+
+  @override
+  String get aiNothingWithout =>
+      'Rien n’est réservé ni payé sans ta confirmation. Tu vérifies le paiement juste après.';
+
+  @override
+  String get aiConfirm => 'Confirmer';
+
+  @override
+  String aiFreeCourt(Object day, Object time) {
+    return 'Court libre · $day · $time';
+  }
+
+  @override
+  String aiCreateTomorrow(Object time) {
+    return 'Crée ta partie demain à $time';
+  }
+
+  @override
+  String aiCreateOn(Object day, Object time) {
+    return 'Crée ta partie $day à $time';
+  }
+
+  @override
+  String get aiCreateGame => 'Créer la partie';
+
+  @override
+  String aiHours(int count) {
+    return '$count h';
+  }
+
+  @override
+  String aiDurationCourtPrice(Object duration, Object price) {
+    return '$duration · $price le court';
+  }
+
+  @override
+  String get aiNotifyMe => 'Préviens-moi si ça s’ouvre';
+
+  @override
+  String get aiAlertOn => 'Activée';
+
+  @override
+  String get aiAlertSaved =>
+      'Alerte activée : je te préviens si une partie s’ouvre.';
+
+  @override
+  String get aiFillRate => 'Taux de remplissage';
+
+  @override
+  String aiPercent(int value) {
+    return '$value %';
+  }
+
+  @override
+  String get aiSlot => 'Créneau';
+
+  @override
+  String aiTariffsOf(Object venue) {
+    return 'Tarifs · $venue';
+  }
+
+  @override
+  String get aiPrepareOffer => 'Préparer l’offre';
+
+  @override
+  String get aiIgnore => 'Ignorer';
+
+  @override
+  String aiPromoMeta(int slots, Object day) {
+    return 'par terrain · $slots créneaux · $day';
+  }
+
+  @override
+  String aiPromoDetail(Object price, int players) {
+    return 'Soit $price par joueur à $players. Les joueurs voient le prix barré. Rien ne change sans ta confirmation.';
+  }
+
+  @override
+  String get aiYourMessage => 'Ton message à l’assistant';
 }

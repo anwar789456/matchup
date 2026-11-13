@@ -1,0 +1,60 @@
+import 'package:flutter/widgets.dart';
+import 'package:go_router/go_router.dart';
+
+import 'screens/lesson_done_screen.dart';
+import 'screens/history_screen.dart';
+import 'screens/lesson_screen.dart';
+import 'screens/plan_goals_screen.dart';
+import 'screens/plan_screen.dart';
+import 'screens/program_screen.dart';
+import 'screens/programs_screen.dart';
+import 'screens/reviews_screen.dart';
+import 'screens/video_result_screen.dart';
+import 'screens/video_screen.dart';
+
+/// The Entraînement tab's routes, named by screen code (ENT-01…09). [trainingRoutes] are the
+/// children of `/training` (the tab root, ENT-01) in the player shell.
+abstract final class TrainingRoutes {
+  static const root = '/training'; // ENT-01
+  static const programs = '/training/programs'; // ENT-02
+  static String program(String id) => '/training/program/$id'; // ENT-03
+  static String lesson(String id, int index) => '/training/program/$id/lesson/$index'; // ENT-04
+  static String reviews(String id) => '/training/program/$id/reviews'; // ENT-03 « Voir les avis »
+  static String lessonDone(String id, int index) =>
+      '/training/program/$id/lesson/$index/done'; // ENT-05
+  static const planGoals = '/training/plan'; // ENT-06
+  static const plan = '/training/plan/week'; // ENT-07
+  static const history = '/training/history'; // « Historique » and « Rappels de séance »
+  static const video = '/training/video'; // ENT-08
+  static const videoResult = '/training/video/result'; // ENT-09
+}
+
+int _index(GoRouterState s) => int.tryParse(s.pathParameters['index'] ?? '') ?? 1;
+
+/// ENT-02 keeps the tab bar (it is drawn on its PNG); the other pages cover it ([rootKey]).
+List<RouteBase> trainingRoutes(GlobalKey<NavigatorState> rootKey) {
+  GoRoute page(String path, Widget Function(GoRouterState state) build) => GoRoute(
+    path: path,
+    parentNavigatorKey: rootKey,
+    builder: (context, state) => build(state),
+  );
+
+  return [
+    GoRoute(path: 'programs', builder: (context, state) => const ProgramsScreen()),
+    page('program/:id', (s) => ProgramScreen(programId: s.pathParameters['id']!)),
+    page('program/:id/reviews', (s) => ReviewsScreen(programId: s.pathParameters['id']!)),
+    page(
+      'program/:id/lesson/:index',
+      (s) => LessonScreen(programId: s.pathParameters['id']!, index: _index(s)),
+    ),
+    page(
+      'program/:id/lesson/:index/done',
+      (s) => LessonDoneScreen(programId: s.pathParameters['id']!, index: _index(s)),
+    ),
+    page('plan', (s) => const PlanGoalsScreen()),
+    page('plan/week', (s) => const PlanScreen()),
+    page('history', (s) => const HistoryScreen()),
+    page('video', (s) => const VideoScreen()),
+    page('video/result', (s) => const VideoResultScreen()),
+  ];
+}
