@@ -195,11 +195,19 @@ class ForumPost {
     this.mentionsMe = false,
     this.editedAt,
     this.mine = const ForumMine(),
+    this.listing,
+    this.sellerRating,
   });
 
   final String id;
   final ForumAuthor author;
   final String title;
+
+  /// Équipement · Marketplace: what is for sale (price, condition…), or null for a discussion.
+  final ForumListing? listing;
+
+  /// The seller's rating from buyers' reviews, for a listing.
+  final ForumRating? sellerRating;
 
   /// Light Markdown; null in lists, and for others when hidden.
   final String? body;
@@ -226,7 +234,14 @@ class ForumPost {
   bool get hidden => status == ForumStatus.hidden;
   bool get hasBestAnswer => bestAnswerId != null;
 
-  ForumPost copyWith({int? score, int? useful, int? thanks, ForumMine? mine, String? Function()? bestAnswerId}) => ForumPost(
+  ForumPost copyWith({
+    int? score,
+    int? useful,
+    int? thanks,
+    ForumMine? mine,
+    String? Function()? bestAnswerId,
+    ForumListing? listing,
+  }) => ForumPost(
     id: id,
     author: author,
     title: title,
@@ -248,7 +263,104 @@ class ForumPost {
     editedAt: editedAt,
     lastActivity: lastActivity,
     mine: mine ?? this.mine,
+    listing: listing ?? this.listing,
+    sellerRating: sellerRating,
   );
+}
+
+/// The condition of an item for sale.
+enum ListingCondition {
+  brandNew('neuf'),
+  likeNew('tres_bon'),
+  good('bon'),
+  used('use');
+
+  const ListingCondition(this.code);
+  final String code;
+
+  static ListingCondition fromCode(String? code) => values.firstWhere((c) => c.code == code, orElse: () => ListingCondition.good);
+
+  String get label => switch (this) {
+    brandNew => l10n.mktNeuf,
+    likeNew => l10n.mktTresBonEtat,
+    good => l10n.mktBonEtat,
+    used => l10n.mktUse,
+  };
+}
+
+/// An Équipement post that sells something.
+@immutable
+class ForumListing {
+  const ForumListing({required this.price, required this.condition, this.size, this.city, this.sold = false});
+
+  /// In dinars.
+  final double price;
+  final ListingCondition condition;
+
+  /// « 42 », « M »…
+  final String? size;
+  final String? city;
+  final bool sold;
+
+  ForumListing copyWith({bool? sold}) => ForumListing(price: price, condition: condition, size: size, city: city, sold: sold ?? this.sold);
+}
+
+/// A seller's average and number of reviews.
+@immutable
+class ForumRating {
+  const ForumRating(this.average, this.count);
+
+  final double average;
+  final int count;
+}
+
+/// A buyer's review of a seller (« Avis »): stars and a few words, one per buyer and seller.
+/// Not a comment: no votes, no replies, kept apart from the discussion.
+@immutable
+class ForumReview {
+  const ForumReview({
+    required this.id,
+    required this.author,
+    required this.rating,
+    required this.createdAt,
+    this.text = '',
+    this.item,
+    this.mine = false,
+    this.hidden = false,
+  });
+
+  final String id;
+  final ForumAuthor author;
+
+  /// 1 → 5.
+  final int rating;
+  final String text;
+
+  /// The listing it was written from (« A acheté : Raquette Bullpadel »).
+  final String? item;
+  final DateTime createdAt;
+  final bool mine;
+
+  /// Published despite the FRM-03 alert: only its author sees it.
+  final bool hidden;
+}
+
+/// A seller's reviews: the average, how many of each star, the reviews, the reader's own.
+@immutable
+class ForumReviews {
+  const ForumReviews({required this.seller, required this.reviews, required this.stars, this.mine});
+
+  final ForumAuthor seller;
+
+  /// Newest first; the reader's own included.
+  final List<ForumReview> reviews;
+
+  /// How many 5, 4, 3, 2, 1 stars (index 0 = 5 stars).
+  final List<int> stars;
+  final ForumReview? mine;
+
+  int get count => stars.fold(0, (a, b) => a + b);
+  double get average => count == 0 ? 0 : [for (var i = 0; i < 5; i++) (5 - i) * stars[i]].fold(0, (a, b) => a + b) / count;
 }
 
 /// A reply in FRM-04. Level-1 replies carry their answers in [children].
@@ -339,7 +451,7 @@ class ForumQuery {
   const ForumQuery({
     this.category,
     this.sport,
-    this.sort = ForumSort.trending,
+    this.sort = ForumSort.recent,
     this.search,
     this.tag,
     this.authorId,
@@ -472,6 +584,7 @@ class PostDraft {
     this.body = '',
     this.tags = const [],
     this.images = const [],
+    this.listing,
   });
 
   final ForumCategory category;
@@ -480,10 +593,13 @@ class PostDraft {
   final String body;
   final List<String> tags;
 
-  /// Local paths or URLs of the post's images.
+  /// The post's photos and videos (`data:` URIs or URLs).
   final List<String> images;
 
-  bool get isEmpty => title.trim().isEmpty && body.trim().isEmpty && tags.isEmpty && images.isEmpty;
+  /// Équipement: the item for sale, or null for a discussion.
+  final ForumListing? listing;
+
+  bool get isEmpty => title.trim().isEmpty && body.trim().isEmpty && tags.isEmpty && images.isEmpty && listing == null;
 
   PostDraft copyWith({
     ForumCategory? category,
@@ -492,6 +608,7 @@ class PostDraft {
     String? body,
     List<String>? tags,
     List<String>? images,
+    ForumListing? Function()? listing,
   }) => PostDraft(
     category: category ?? this.category,
     sport: sport != null ? sport() : this.sport,
@@ -499,6 +616,7 @@ class PostDraft {
     body: body ?? this.body,
     tags: tags ?? this.tags,
     images: images ?? this.images,
+    listing: listing != null ? listing() : this.listing,
   );
 
   Map<String, Object?> toJson() => {
@@ -508,6 +626,8 @@ class PostDraft {
     'contenu': body,
     'tags': tags,
     'images': images,
+    if (listing case final l?)
+      'annonce': {'prix': l.price, 'etat': l.condition.code, 'taille': l.size, 'ville': l.city},
   };
 
   static PostDraft fromJson(Map<String, Object?> j) => PostDraft(
@@ -517,6 +637,15 @@ class PostDraft {
     body: j['contenu'] as String? ?? '',
     tags: [for (final t in (j['tags'] as List? ?? const [])) t as String],
     images: [for (final t in (j['images'] as List? ?? const [])) t as String],
+    listing: switch (j['annonce']) {
+      final Map<String, Object?> a => ForumListing(
+        price: (a['prix'] as num? ?? 0).toDouble(),
+        condition: ListingCondition.fromCode(a['etat'] as String?),
+        size: a['taille'] as String?,
+        city: a['ville'] as String?,
+      ),
+      _ => null,
+    },
   );
 }
 

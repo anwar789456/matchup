@@ -76,6 +76,8 @@
 	<string>MatchUp utilise ta position pour te proposer des parties et des terrains près de toi.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>MatchUp utilise tes photos pour ta photo de profil.</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>MatchUp utilise le micro pour tes messages vocaux.</string>
 	<key>NSCameraUsageDescription</key>
 	<string>MatchUp utilise l’appareil photo pour ta photo de profil.</string>
 </dict>

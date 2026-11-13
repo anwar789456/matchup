@@ -6,6 +6,8 @@
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <!-- Optional local backend (http://10.0.2.2:3001 from the emulator, no HTTPS). -->
     <uses-permission android:name="android.permission.INTERNET" />
+    <!-- Communauté · Messages: voice messages. -->
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <application
         android:usesCleartextTraffic="true"
         android:label="MatchUp"

@@ -65,7 +65,8 @@ class MuForumPostData {
 /// ForumPostCard (components/ForumPostCard.md): a thread in the Communauté feed — category
 /// eyebrow, sport chip, title, two-line excerpt, tags, author with level, vote capsule and
 /// replies. `compact` for « Discussions similaires » and search; `hidden` collapses a moderated
-/// post; `reported` adds the « Tu as signalé ce message » strip.
+/// post; `reported` adds the « Tu as signalé ce message » strip. [header] goes under the title
+/// (a listing's price), [media] edge to edge between the text and the author (photos, videos).
 class MuForumPostCard extends StatelessWidget {
   const MuForumPostCard({
     super.key,
@@ -77,6 +78,8 @@ class MuForumPostCard extends StatelessWidget {
     this.onTap,
     this.onMore,
     this.onUndoReport,
+    this.header,
+    this.media,
   }) : _skeleton = false;
 
   /// The loading shape (top row, title, two excerpt lines, footer).
@@ -88,6 +91,8 @@ class MuForumPostCard extends StatelessWidget {
       onTap = null,
       onMore = null,
       onUndoReport = null,
+      header = null,
+      media = null,
       _skeleton = true;
 
   final MuForumPostData post;
@@ -102,6 +107,12 @@ class MuForumPostCard extends StatelessWidget {
   final VoidCallback? onTap;
   final VoidCallback? onMore;
   final VoidCallback? onUndoReport;
+
+  /// Under the title: what the post adds (a listing's price and condition).
+  final Widget? header;
+
+  /// Full width, between the text and the author: the post's photos and videos.
+  final Widget? media;
   final bool _skeleton;
 
   // ForumPostCard.md: category icon 16, compact category circle 40.
@@ -149,6 +160,7 @@ class MuForumPostCard extends StatelessWidget {
         ),
         const SizedBox(height: MuSpace.s2),
         Text(post.title, style: MuType.labelL, maxLines: 2, overflow: TextOverflow.ellipsis),
+        if (header != null) ...[const SizedBox(height: MuSpace.s2), header!],
         if (post.excerpt != null && post.excerpt!.isNotEmpty) ...[
           const SizedBox(height: MuSpace.s1),
           Text(
@@ -173,9 +185,15 @@ class MuForumPostCard extends StatelessWidget {
             ],
           ),
         ],
-        const SizedBox(height: MuSpace.s3),
-        Divider(height: 1, thickness: 1, color: c.border),
-        const SizedBox(height: MuSpace.s3),
+      ],
+    );
+    final footer = Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        if (media == null) ...[
+          Divider(height: 1, thickness: 1, color: c.border),
+          const SizedBox(height: MuSpace.s3),
+        ],
         Row(
           children: [
             MuAvatar(name: post.authorName, imageUrl: post.authorImage, level: post.authorLevel),
@@ -207,8 +225,13 @@ class MuForumPostCard extends StatelessWidget {
           Padding(
             // The « Plus d’options » target is 44 high: less room above and at the end, so the
             // top row sits where the design has it.
-            padding: EdgeInsets.fromLTRB(MuSpace.s4, onMore != null ? MuSpace.s1 : MuSpace.s4, MuSpace.s4, MuSpace.s4),
+            padding: EdgeInsets.fromLTRB(MuSpace.s4, onMore != null ? MuSpace.s1 : MuSpace.s4, MuSpace.s4, MuSpace.s3),
             child: body,
+          ),
+          ?media,
+          Padding(
+            padding: EdgeInsets.fromLTRB(MuSpace.s4, media == null ? 0 : MuSpace.s3, MuSpace.s4, MuSpace.s4),
+            child: footer,
           ),
           if (moderation == MuModeration.reported) _ReportedStrip(onUndo: onUndoReport),
         ],

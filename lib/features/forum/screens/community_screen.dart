@@ -10,8 +10,11 @@ import '../../../router.dart';
 import '../../../theme/theme.dart';
 import '../../../ui/ui.dart';
 import '../controllers/forum_providers.dart';
+import '../controllers/messages_providers.dart';
 import '../data/forum_repository.dart';
+import '../data/messages_repository.dart';
 import '../widgets/forum_feed_list.dart';
+import 'messages_screen.dart' show UnreadBadge;
 
 /// FRM-01 · Communauté: « Pose ta question à la communauté », the 5 categories with their
 /// « nouveaux depuis ta dernière visite » badges, sport chips, Tendance / Récents / Top with the
@@ -58,7 +61,8 @@ class CommunityScreen extends ConsumerWidget {
               child: ForumFeedList(
                 query: query,
                 header: [
-                  const Padding(padding: EdgeInsets.fromLTRB(MuSpace.s4, MuSpace.s2, MuSpace.s4, MuSpace.s6), child: _Compose()),
+                  const Padding(padding: EdgeInsets.fromLTRB(MuSpace.s4, MuSpace.s2, MuSpace.s4, MuSpace.s3), child: _Compose()),
+                  const Padding(padding: EdgeInsets.fromLTRB(MuSpace.s4, 0, MuSpace.s4, MuSpace.s6), child: _MessagesEntry()),
                   const _Categories(),
                   const SizedBox(height: MuSpace.s6),
                   _SportChips(query: query),
@@ -136,6 +140,66 @@ class _Compose extends ConsumerWidget {
                   ],
                 ),
               ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+/// « Messages »: the way to the conversations with friends and groups, with the unread count
+/// and who wrote.
+class _MessagesEntry extends ConsumerWidget {
+  const _MessagesEntry();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final c = context.mu;
+    final unread = ref.watch(unreadMessagesProvider).value ?? 0;
+    final conversations = ref.watch(conversationsProvider).value ?? const [];
+    final me = ref.read(messagesRepositoryProvider).meId;
+    final waiting = [for (final cv in conversations) if (cv.unread > 0 && !cv.muted) cv.title(me)];
+    final detail = unread > 0 ? l10n.msgNNonLusDe(unread, waiting.take(2).join(', ')) : l10n.msgTesAmisEtTesGroupes;
+    return Semantics(
+      button: true,
+      label: [l10n.msgMessages, detail].join(', '),
+      excludeSemantics: true,
+      child: Material(
+        color: c.surface,
+        shape: RoundedRectangleBorder(borderRadius: MuRadius.lgAll, side: BorderSide(color: c.border)),
+        child: InkWell(
+          borderRadius: MuRadius.lgAll,
+          onTap: () => context.push(Routes.messages),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: MuSpace.s4, vertical: MuSpace.s3),
+            child: Row(
+              children: [
+                Container(
+                  width: MuSize.controlM,
+                  height: MuSize.controlM,
+                  decoration: BoxDecoration(color: c.surfaceMuted, shape: BoxShape.circle),
+                  child: Icon(PhosphorIcons.chatsCircle(), size: MuSize.iconS, color: c.text),
+                ),
+                const SizedBox(width: MuSpace.s3),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(l10n.msgMessages, style: MuType.label),
+                      Text(
+                        detail,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: MuType.caption.copyWith(color: c.textSecondary),
+                      ),
+                    ],
+                  ),
+                ),
+                if (unread > 0) ...[const SizedBox(width: MuSpace.s2), UnreadBadge(count: unread)],
+                const SizedBox(width: MuSpace.s2),
+                MuDirectionalIcon(PhosphorIcons.caretRight(), size: MuSize.iconS, color: c.textSecondary),
+              ],
             ),
           ),
         ),

@@ -12,12 +12,16 @@ import '../../../router.dart';
 import '../../../theme/theme.dart';
 import '../../../ui/ui.dart';
 import '../controllers/forum_providers.dart';
+import '../controllers/messages_providers.dart';
 import '../data/forum_ai.dart';
 import '../data/forum_repository.dart';
+import '../data/messages_repository.dart';
+import '../widgets/chat_sheets.dart';
 import '../widgets/forum_actions.dart';
 import '../widgets/forum_format.dart';
 import '../widgets/forum_image.dart';
 import '../widgets/forum_markdown.dart';
+import '../widgets/listing_widgets.dart';
 import '../widgets/moderation_alert.dart';
 import '../widgets/report_sheet.dart';
 
@@ -183,6 +187,7 @@ class _DiscussionScreenState extends ConsumerState<DiscussionScreen> {
           if (mounted) showSavedToast(context, saved: on);
         }),
       ),
+      if (!p.hidden) ForumMenuItem(PhosphorIcons.paperPlaneRight(), l10n.msgEnvoyerAUnAmi, () => showShareToFriend(context, postId: p.id)),
       ForumMenuItem(
         PhosphorIcons.shareNetwork(),
         l10n.partager,
@@ -317,7 +322,14 @@ class _DiscussionScreenState extends ConsumerState<DiscussionScreen> {
                 onReply: () => _startReply(thread.bestAnswer),
                 onMore: () => _replyMenu(thread, thread.bestAnswer!),
               ),
-            _RepliesHeader(count: thread.post.replies, sort: thread.sort, onSort: (s) => _run(() => _ctrl.sortBy(s))),
+            if (thread.post.listing != null)
+              SellerReviewsSection(seller: thread.post.author, postId: thread.post.id, canReview: !thread.post.mine.author),
+            _RepliesHeader(
+              count: thread.post.replies,
+              listing: thread.post.listing != null,
+              sort: thread.sort,
+              onSort: (s) => _run(() => _ctrl.sortBy(s)),
+            ),
             if (thread.replies.isEmpty && thread.bestAnswer == null)
               Padding(
                 padding: const EdgeInsets.all(MuSpace.s6),
@@ -376,7 +388,9 @@ class _DiscussionScreenState extends ConsumerState<DiscussionScreen> {
               _ReplyBar(
                 controller: _text,
                 focus: _focus,
-                hint: l10n.forumRepondsA(thread.post.author.name),
+                hint: thread.post.listing != null && !thread.post.mine.author
+                    ? l10n.mktPoseUneQuestionA(thread.post.author.name)
+                    : l10n.forumRepondsA(thread.post.author.name),
                 target: _editing != null
                     ? l10n.forumModifierTaReponse
                     : _replyingTo != null
@@ -430,6 +444,14 @@ class _PostHeader extends ConsumerWidget {
           ),
           const SizedBox(height: MuSpace.s2),
           Semantics(header: true, child: Text(p.title, style: MuType.h2)),
+          if (p.listing != null) ...[
+            const SizedBox(height: MuSpace.s2),
+            ListingSummary(listing: p.listing!, rating: p.sellerRating, large: true),
+            const SizedBox(height: MuSpace.s3),
+            if (p.images.isNotEmpty) ForumMediaCollage(media: p.images) else ListingNoPhoto(sport: p.sport),
+            const SizedBox(height: MuSpace.s3),
+            _ListingActions(post: p, onRun: onRun),
+          ],
           const SizedBox(height: MuSpace.s3),
           Row(
             children: [
@@ -447,7 +469,19 @@ class _PostHeader extends ConsumerWidget {
                   ],
                 ),
               ),
-              if (!p.mine.author)
+              if (!p.mine.author) ...[
+                MuIconButton(
+                  icon: PhosphorIcons.chatCircle(),
+                  label: l10n.msgEcrireA(p.author.name),
+                  variant: MuIconButtonVariant.secondary,
+                  size: MuIconButtonSize.s,
+                  onPressed: () => onRun(() async {
+                    final id = await ref.read(messagesRepositoryProvider).openDirect(p.author.id);
+                    ref.read(messagesChangesProvider.notifier).bump();
+                    if (context.mounted) context.push(Routes.chat(id));
+                  }),
+                ),
+                const SizedBox(width: MuSpace.s2),
                 MuToggleButton(
                   size: MuToggleSize.s,
                   pressed: following,
@@ -459,6 +493,7 @@ class _PostHeader extends ConsumerWidget {
                     ref.read(forumChangesProvider.notifier).bump();
                   }),
                 ),
+              ],
             ],
           ),
           if (p.hidden) ...[
@@ -466,7 +501,7 @@ class _PostHeader extends ConsumerWidget {
             MuHiddenNotice(title: l10n.forumMasqueParLaModeration, description: p.mine.author ? l10n.forumTonPostSeulToiDetail : null),
           ],
           if (p.body != null) ...[const SizedBox(height: MuSpace.s4), ForumMarkdown(p.body!)],
-          if (p.images.isNotEmpty) ...[const SizedBox(height: MuSpace.s4), ForumImageGrid(images: p.images)],
+          if (p.images.isNotEmpty && p.listing == null) ...[const SizedBox(height: MuSpace.s4), ForumMediaCollage(media: p.images)],
           if (p.tags.isNotEmpty) ...[
             const SizedBox(height: MuSpace.s3),
             Wrap(
@@ -521,6 +556,44 @@ class _PostHeader extends ConsumerWidget {
           ),
         ],
       ),
+    );
+  }
+}
+
+/// A listing's actions: « Écrire au vendeur » for buyers; « Marquer comme vendu » / « Remettre
+/// en vente » for the seller.
+class _ListingActions extends ConsumerWidget {
+  const _ListingActions({required this.post, required this.onRun});
+
+  final ForumPost post;
+  final Future<void> Function(Future<void> Function()) onRun;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final l = post.listing!;
+    if (post.mine.author) {
+      return MuButton.secondary(
+        label: l.sold ? l10n.mktRemettreEnVente : l10n.mktMarquerCommeVendu,
+        leading: l.sold ? PhosphorIcons.arrowCounterClockwise() : PhosphorIcons.checkCircle(),
+        fullWidth: true,
+        onPressed: () => onRun(() async {
+          await ref.read(forumRepositoryProvider).markSold(post.id, sold: !l.sold);
+          ref.read(forumChangesProvider.notifier).bump();
+          if (context.mounted) {
+            MuToast.show(context, tone: MuToastTone.success, title: l.sold ? l10n.mktDeNouveauEnVente : l10n.mktMarqueVendu);
+          }
+        }),
+      );
+    }
+    if (l.sold) {
+      return Text(l10n.mktCetArticleEstVendu, style: MuType.body.copyWith(color: context.mu.textSecondary));
+    }
+    return MuButton.primary(
+      label: l10n.mktEcrireAuVendeur,
+      leading: PhosphorIcons.chatCircle(),
+      fullWidth: true,
+      size: MuButtonSize.l,
+      onPressed: () => contactSeller(context, ref, post),
     );
   }
 }
@@ -611,9 +684,12 @@ class _BestAnswer extends StatelessWidget {
 }
 
 class _RepliesHeader extends StatelessWidget {
-  const _RepliesHeader({required this.count, required this.sort, required this.onSort});
+  const _RepliesHeader({required this.count, required this.sort, required this.onSort, this.listing = false});
 
   final int count;
+
+  /// A listing's replies are « Questions et commentaires ».
+  final bool listing;
   final ReplySort sort;
   final ValueChanged<ReplySort> onSort;
 
@@ -624,7 +700,7 @@ class _RepliesHeader extends StatelessWidget {
       child: Row(
         children: [
           Expanded(
-            child: Semantics(header: true, child: Text(l10n.forumNReponses(count), style: MuType.h3)),
+            child: Semantics(header: true, child: Text(listing ? l10n.mktQuestionsEtCommentairesN(count) : l10n.forumNReponses(count), style: MuType.h3)),
           ),
           MuButton.tertiary(
             label: sort.label,

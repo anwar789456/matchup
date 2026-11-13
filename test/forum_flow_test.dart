@@ -52,8 +52,15 @@ void main() {
     expect(find.text('Pose ta question à la communauté'), findsOneWidget);
     expect(find.text('Catégories'), findsOneWidget);
     expect(find.text('Nouveaux depuis ta dernière visite'), findsOneWidget);
-    expect(find.text('Padel Masters Lac 2 : toutes les infos et vos questions'), findsOneWidget);
+    // Newest first: Ines's Bandeja post of 2 h ago, with « Ines M. t’a mentionné » above it.
+    expect(find.text('Bandeja : je n’arrive pas à la placer croisée'), findsOneWidget);
     expect(find.textContaining('t’a mentionné'), findsOneWidget);
+
+    // « Tendance » puts the pinned Padel Masters on top.
+    await tap(tester, find.text('Tendance'));
+    expect(find.text('Padel Masters Lac 2 : toutes les infos et vos questions'), findsOneWidget);
+    await tester.drag(find.byType(Scrollable).first, const Offset(0, 2000));
+    await tester.pumpAndSettle();
 
     await tap(tester, find.text('Terrains'));
     expect(find.text('Avis Smash Padel Club après rénovation'), findsOneWidget);
@@ -127,8 +134,9 @@ void main() {
 
     // A vote on another post inside FRM-04 is on its card when coming back.
     const other = 'Padel Masters Lac 2 : toutes les infos et vos questions';
-    await tester.drag(find.byType(Scrollable).first, const Offset(0, 2000));
+    await tester.drag(find.byType(Scrollable).first, const Offset(0, 4000));
     await tester.pumpAndSettle();
+    await tap(tester, find.text('Tendance'));
     Finder score(String t, String n) =>
         find.descendant(of: find.ancestor(of: find.text(t), matching: find.byType(MuForumPostCard)), matching: find.text(n));
     expect(score(other, '41'), findsOneWidget);

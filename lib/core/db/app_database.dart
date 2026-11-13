@@ -28,6 +28,11 @@ import 'seed.dart';
 /// v5: the Communauté (`forum_membres`, `forum_sujets`, `forum_messages`, `forum_votes`,
 /// `forum_reactions`, `forum_favoris`, `forum_suivis`, `forum_blocages`, `forum_visites`,
 /// `forum_signalements`, `forum_sanctions`), text ids and an `auteur_id` per row, ready for Supabase sync.
+///
+/// v6: Équipement as a marketplace (`forum_annonces`, `forum_avis`, synced) and messages
+/// between friends and group chats (`msg_conversations`, `msg_participants`,
+/// `msg_messages`, `msg_reactions`, `msg_votes`, `msg_lectures`), on the phone only until the
+/// sync has a « participants only » scope.
 class AppDatabase {
   /// [factory] and [path] default to [defaultFactory] / [defaultPath].
   AppDatabase({DatabaseFactory? factory, String? path})

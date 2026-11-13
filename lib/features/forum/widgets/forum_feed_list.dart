@@ -12,8 +12,11 @@ import '../../../theme/theme.dart';
 import '../../../ui/ui.dart';
 import '../controllers/forum_providers.dart';
 import '../data/forum_repository.dart';
+import 'chat_sheets.dart';
 import 'forum_actions.dart';
 import 'forum_format.dart';
+import 'forum_image.dart';
+import 'listing_widgets.dart';
 import 'report_sheet.dart';
 
 /// A scrolling feed of [MuForumPostCard]s for [query] (FRM-01, search, saved posts): [header]
@@ -159,6 +162,8 @@ class ForumPostTile extends ConsumerWidget {
     }
 
     void more() => showForumMenu(context, [
+      if (post.listing != null && !post.mine.author && !post.listing!.sold)
+        ForumMenuItem(PhosphorIcons.chatCircle(), l10n.mktEcrireAuVendeur, () => contactSeller(context, ref, post)),
       ForumMenuItem(
         post.mine.saved ? PhosphorIcons.bookmarkSimple(PhosphorIconsStyle.fill) : PhosphorIcons.bookmarkSimple(),
         post.mine.saved ? l10n.forumRetirerDesFavoris : l10n.forumEnregistrer,
@@ -168,6 +173,7 @@ class ForumPostTile extends ConsumerWidget {
           if (context.mounted) showSavedToast(context, saved: on);
         }),
       ),
+      ForumMenuItem(PhosphorIcons.paperPlaneRight(), l10n.msgEnvoyerAUnAmi, () => showShareToFriend(context, postId: post.id)),
       ForumMenuItem(
         PhosphorIcons.shareNetwork(),
         l10n.partager,
@@ -179,6 +185,10 @@ class ForumPostTile extends ConsumerWidget {
 
     final card = MuForumPostCard(
       post: forumCardData(post, now),
+      header: post.listing == null ? null : ListingSummary(listing: post.listing!, rating: post.sellerRating),
+      media: post.images.isNotEmpty
+          ? ForumMediaCollage(media: post.images, radius: BorderRadius.zero)
+          : (post.listing != null ? ListingNoPhoto(sport: post.sport) : null),
       vote: post.mine.vote,
       onVote: post.mine.author ? null : (v) => run(() => ctrl.vote(post.id, v)),
       moderation: post.mine.reported ? MuModeration.reported : MuModeration.none,

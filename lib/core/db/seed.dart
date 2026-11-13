@@ -2,6 +2,8 @@ import 'package:sqflite/sqflite.dart';
 
 import '../../features/common/data/story_data.dart';
 import '../../features/forum/data/forum_seed.dart';
+import '../../features/forum/data/market_seed.dart';
+import '../../features/forum/data/messages_seed.dart';
 import '../../features/matches/data/booking_rows.dart';
 import '../../features/matches/data/bookings_repository.dart';
 import '../../features/payments/data/split_repository.dart';
@@ -13,8 +15,15 @@ Future<void> seedVersion(DatabaseExecutor db, int version) => switch (version) {
       2 => seedV2(db),
       3 => SqliteSplitRepository.seed(db),
       5 => ForumSeed.insert(db),
+      6 => _seedV6(db),
       _ => Future<void>.value(),
     };
+
+/// The Équipement listings and sellers' reviews, then the conversations.
+Future<void> _seedV6(DatabaseExecutor db) async {
+  await MarketSeed.insert(db);
+  await MessagesSeed.insert(db);
+}
 
 /// Booking MU-48213, Skander's cancelled game of sam. 10 oct. and Mariem's padel invitation.
 Future<void> _seedV1(DatabaseExecutor db) async {

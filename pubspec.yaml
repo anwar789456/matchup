@@ -29,11 +29,13 @@ dependencies:
   phosphor_flutter: ^2.1.0
   printing: ^5.15.1
   qr_flutter: ^4.1.0
+  record: ^7.2.0
   share_plus: ^13.3.1
   sqflite: ^2.4.6
   sqflite_common_ffi_web: ^1.2.2
   supabase_flutter: ^2.18.3
   url_launcher: ^6.3.3
+  video_player: ^2.14.1
 
 dev_dependencies:
   flutter_test:

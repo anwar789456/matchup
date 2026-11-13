@@ -54,17 +54,24 @@ void main() {
   });
 
   group('FRM-01 feed', () {
-    test('pinned first, moderated spam left out, mention and saved state', () async {
-      final feed = await me.feed(const ForumQuery());
+    test('« Tendance »: pinned first, moderated spam left out, mention and saved state', () async {
+      final feed = await me.feed(const ForumQuery(sort: ForumSort.trending));
       expect(feed.posts.first.title, startsWith('Padel Masters'));
       expect(feed.posts.first.mine.saved, isTrue);
       expect(feed.posts.any((p) => p.title.startsWith('Vends')), isFalse);
-      expect(feed.total, 7);
+      expect(feed.total, 10);
       final bandeja = feed.posts.firstWhere((p) => p.title.startsWith('Bandeja :'));
       expect(bandeja.mentionsMe, isTrue);
       expect(bandeja.mine.vote, 1);
       expect(bandeja.score, 16);
       expect(bandeja.excerpt, isNot(contains('**')));
+    });
+
+    test('by default the newest post comes first, pinned or not', () async {
+      final feed = await me.feed(const ForumQuery());
+      final dates = [for (final p in feed.posts) p.createdAt];
+      expect(dates, [...dates]..sort((a, b) => b.compareTo(a)));
+      expect(feed.posts.first.title, startsWith('Bandeja :'));
     });
 
     test('filters, sorts and pages', () async {
@@ -73,10 +80,10 @@ void main() {
       final top = await me.feed(const ForumQuery(sort: ForumSort.top));
       final scores = top.posts.skip(1).map((p) => p.score).toList();
       expect(scores, [...scores]..sort((a, b) => b.compareTo(a)));
-      expect((await me.feed(const ForumQuery(search: 'synth'))).total, 1);
+      expect((await me.feed(const ForumQuery(search: 'synth'))).total, 2);
       expect((await me.feed(const ForumQuery(tag: '#lac2'))).total, 2);
       expect((await me.feed(const ForumQuery(savedOnly: true))).total, 1);
-      expect((await me.feed(ForumQuery(authorId: ForumSeed.id(4)))).total, 2);
+      expect((await me.feed(ForumQuery(authorId: ForumSeed.id(4)))).total, 3);
       final page = await me.feed(const ForumQuery(), limit: 2, offset: 2);
       expect(page.posts, hasLength(2));
     });

@@ -19078,6 +19078,1254 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Signalement anonyme · vérifié par un modérateur sous 24 h.'**
   String get forumSignalementAnonyme;
+
+  /// No description provided for @msgPlusDansLaConversation.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tu ne fais plus partie de cette conversation.'**
+  String get msgPlusDansLaConversation;
+
+  /// No description provided for @msgPasAToiMeme.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tu ne peux pas t’écrire à toi-même.'**
+  String get msgPasAToiMeme;
+
+  /// No description provided for @msgDonneUnNom.
+  ///
+  /// In fr, this message translates to:
+  /// **'Donne un nom au groupe.'**
+  String get msgDonneUnNom;
+
+  /// No description provided for @msgAuMoinsDeuxAmis.
+  ///
+  /// In fr, this message translates to:
+  /// **'Choisis au moins 2 amis pour créer un groupe.'**
+  String get msgAuMoinsDeuxAmis;
+
+  /// No description provided for @msgSeulLeCreateur.
+  ///
+  /// In fr, this message translates to:
+  /// **'Seul le créateur du groupe peut faire ça.'**
+  String get msgSeulLeCreateur;
+
+  /// No description provided for @msgEcrisUnMessage.
+  ///
+  /// In fr, this message translates to:
+  /// **'Écris un message avant d’envoyer.'**
+  String get msgEcrisUnMessage;
+
+  /// No description provided for @msgSondageIncomplet.
+  ///
+  /// In fr, this message translates to:
+  /// **'Un sondage a besoin d’une question et de 2 à 4 réponses.'**
+  String get msgSondageIncomplet;
+
+  /// No description provided for @msgIndiqueLeLieu.
+  ///
+  /// In fr, this message translates to:
+  /// **'Indique où vous jouez.'**
+  String get msgIndiqueLeLieu;
+
+  /// No description provided for @msgDiscussionSupprimee.
+  ///
+  /// In fr, this message translates to:
+  /// **'Discussion supprimée'**
+  String get msgDiscussionSupprimee;
+
+  /// No description provided for @msgMessageIntrouvable.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ce message n’existe plus.'**
+  String get msgMessageIntrouvable;
+
+  /// No description provided for @msgSeulementTesMessages.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tu ne peux supprimer que tes messages.'**
+  String get msgSeulementTesMessages;
+
+  /// No description provided for @msgMessages.
+  ///
+  /// In fr, this message translates to:
+  /// **'Messages'**
+  String get msgMessages;
+
+  /// No description provided for @msgNouveauMessage.
+  ///
+  /// In fr, this message translates to:
+  /// **'Nouveau message'**
+  String get msgNouveauMessage;
+
+  /// No description provided for @msgRechercherUneConversation.
+  ///
+  /// In fr, this message translates to:
+  /// **'Rechercher une conversation'**
+  String get msgRechercherUneConversation;
+
+  /// No description provided for @msgTesAmis.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tes amis'**
+  String get msgTesAmis;
+
+  /// No description provided for @msgTesAmisDetail.
+  ///
+  /// In fr, this message translates to:
+  /// **'Les membres que tu suis d’abord, puis ceux avec qui tu as joué.'**
+  String get msgTesAmisDetail;
+
+  /// No description provided for @msgTesAmisEtTesGroupes.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tes amis et tes groupes'**
+  String get msgTesAmisEtTesGroupes;
+
+  /// No description provided for @msgAucuneConversation.
+  ///
+  /// In fr, this message translates to:
+  /// **'Pas encore de conversation'**
+  String get msgAucuneConversation;
+
+  /// No description provided for @msgAucuneConversationDetail.
+  ///
+  /// In fr, this message translates to:
+  /// **'Écris à un ami ou crée un groupe pour organiser vos prochains matchs.'**
+  String get msgAucuneConversationDetail;
+
+  /// No description provided for @msgAucunResultatDetail.
+  ///
+  /// In fr, this message translates to:
+  /// **'Essaie avec le nom d’un ami ou d’un groupe.'**
+  String get msgAucunResultatDetail;
+
+  /// No description provided for @msgEcrireA.
+  ///
+  /// In fr, this message translates to:
+  /// **'Écrire à {name}'**
+  String msgEcrireA(String name);
+
+  /// No description provided for @msgNNonLus.
+  ///
+  /// In fr, this message translates to:
+  /// **'{n, plural, =1{1 non lu} other{{n} non lus}}'**
+  String msgNNonLus(int n);
+
+  /// No description provided for @msgNNonLusDe.
+  ///
+  /// In fr, this message translates to:
+  /// **'{n, plural, =1{1 non lu · {names}} other{{n} non lus · {names}}}'**
+  String msgNNonLusDe(int n, String names);
+
+  /// No description provided for @msgEnSourdine.
+  ///
+  /// In fr, this message translates to:
+  /// **'En sourdine'**
+  String get msgEnSourdine;
+
+  /// No description provided for @msgDisBonjour.
+  ///
+  /// In fr, this message translates to:
+  /// **'Dis bonjour 👋'**
+  String get msgDisBonjour;
+
+  /// No description provided for @msgDisBonjourDetail.
+  ///
+  /// In fr, this message translates to:
+  /// **'Propose un match, lance un sondage ou partage une discussion avec « + ».'**
+  String get msgDisBonjourDetail;
+
+  /// No description provided for @msgToiPrefixe.
+  ///
+  /// In fr, this message translates to:
+  /// **'Toi : {text}'**
+  String msgToiPrefixe(String text);
+
+  /// No description provided for @msgAuteurPrefixe.
+  ///
+  /// In fr, this message translates to:
+  /// **'{name} : {text}'**
+  String msgAuteurPrefixe(String name, String text);
+
+  /// No description provided for @msgApercuSondage.
+  ///
+  /// In fr, this message translates to:
+  /// **'📊 Sondage : {question}'**
+  String msgApercuSondage(String question);
+
+  /// No description provided for @msgApercuMatch.
+  ///
+  /// In fr, this message translates to:
+  /// **'⚽ Match proposé · {place}'**
+  String msgApercuMatch(String place);
+
+  /// No description provided for @msgApercuPartage.
+  ///
+  /// In fr, this message translates to:
+  /// **'💬 Discussion partagée · {title}'**
+  String msgApercuPartage(String title);
+
+  /// No description provided for @msgMessageMasque.
+  ///
+  /// In fr, this message translates to:
+  /// **'Message masqué par la modération'**
+  String get msgMessageMasque;
+
+  /// No description provided for @msgAujourdhui.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aujourd’hui'**
+  String get msgAujourdhui;
+
+  /// No description provided for @msgHier.
+  ///
+  /// In fr, this message translates to:
+  /// **'Hier'**
+  String get msgHier;
+
+  /// No description provided for @msgDemain.
+  ///
+  /// In fr, this message translates to:
+  /// **'Demain'**
+  String get msgDemain;
+
+  /// No description provided for @msgACreeLeGroupe.
+  ///
+  /// In fr, this message translates to:
+  /// **'{name} a créé le groupe'**
+  String msgACreeLeGroupe(String name);
+
+  /// No description provided for @msgAAjoute.
+  ///
+  /// In fr, this message translates to:
+  /// **'{name} a ajouté {names}'**
+  String msgAAjoute(String name, String names);
+
+  /// No description provided for @msgAQuitteLeGroupe.
+  ///
+  /// In fr, this message translates to:
+  /// **'{name} a quitté le groupe'**
+  String msgAQuitteLeGroupe(String name);
+
+  /// No description provided for @msgARenommeLeGroupe.
+  ///
+  /// In fr, this message translates to:
+  /// **'{name} a renommé le groupe « {group} »'**
+  String msgARenommeLeGroupe(String name, String group);
+
+  /// No description provided for @msgRetourAuxMessages.
+  ///
+  /// In fr, this message translates to:
+  /// **'Retour aux messages'**
+  String get msgRetourAuxMessages;
+
+  /// No description provided for @msgInfosDuGroupe.
+  ///
+  /// In fr, this message translates to:
+  /// **'Infos du groupe'**
+  String get msgInfosDuGroupe;
+
+  /// No description provided for @msgInfosDeLaConversation.
+  ///
+  /// In fr, this message translates to:
+  /// **'Infos de la conversation'**
+  String get msgInfosDeLaConversation;
+
+  /// No description provided for @msgInfos.
+  ///
+  /// In fr, this message translates to:
+  /// **'Infos'**
+  String get msgInfos;
+
+  /// No description provided for @msgNMembres.
+  ///
+  /// In fr, this message translates to:
+  /// **'{n, plural, =1{1 membre} other{{n} membres}}'**
+  String msgNMembres(int n);
+
+  /// No description provided for @msgEcrireAuGroupe.
+  ///
+  /// In fr, this message translates to:
+  /// **'Écrire au groupe'**
+  String get msgEcrireAuGroupe;
+
+  /// No description provided for @msgActionsDuMessage.
+  ///
+  /// In fr, this message translates to:
+  /// **'Actions du message'**
+  String get msgActionsDuMessage;
+
+  /// No description provided for @msgMasqueSeulToi.
+  ///
+  /// In fr, this message translates to:
+  /// **'masqué · seul toi le vois'**
+  String get msgMasqueSeulToi;
+
+  /// No description provided for @msgEnTrainDEcrire.
+  ///
+  /// In fr, this message translates to:
+  /// **'en train d’écrire…'**
+  String get msgEnTrainDEcrire;
+
+  /// No description provided for @msgReactionN.
+  ///
+  /// In fr, this message translates to:
+  /// **'{emoji} {n}'**
+  String msgReactionN(String emoji, int n);
+
+  /// No description provided for @msgReagirAvec.
+  ///
+  /// In fr, this message translates to:
+  /// **'Réagir avec {emoji}'**
+  String msgReagirAvec(String emoji);
+
+  /// No description provided for @msgCopier.
+  ///
+  /// In fr, this message translates to:
+  /// **'Copier'**
+  String get msgCopier;
+
+  /// No description provided for @msgMessageCopie.
+  ///
+  /// In fr, this message translates to:
+  /// **'Message copié'**
+  String get msgMessageCopie;
+
+  /// No description provided for @msgSupprimerCeMessage.
+  ///
+  /// In fr, this message translates to:
+  /// **'Supprimer ce message ?'**
+  String get msgSupprimerCeMessage;
+
+  /// No description provided for @msgSupprimerCeMessageDetail.
+  ///
+  /// In fr, this message translates to:
+  /// **'Il restera « Message supprimé » dans la conversation.'**
+  String get msgSupprimerCeMessageDetail;
+
+  /// No description provided for @msgAjouterAuMessage.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ajouter'**
+  String get msgAjouterAuMessage;
+
+  /// No description provided for @msgSondage.
+  ///
+  /// In fr, this message translates to:
+  /// **'Sondage'**
+  String get msgSondage;
+
+  /// No description provided for @msgSondageDetail.
+  ///
+  /// In fr, this message translates to:
+  /// **'Une question, jusqu’à 4 réponses, un vote par ami.'**
+  String get msgSondageDetail;
+
+  /// No description provided for @msgNVotes.
+  ///
+  /// In fr, this message translates to:
+  /// **'{n, plural, =0{Aucun vote} =1{1 vote} other{{n} votes}}'**
+  String msgNVotes(int n);
+
+  /// No description provided for @msgTapePourVoter.
+  ///
+  /// In fr, this message translates to:
+  /// **'Touche une réponse pour voter'**
+  String get msgTapePourVoter;
+
+  /// No description provided for @msgOptionNVotes.
+  ///
+  /// In fr, this message translates to:
+  /// **'{label}, {n, plural, =0{aucun vote} =1{1 vote} other{{n} votes}}'**
+  String msgOptionNVotes(String label, int n);
+
+  /// No description provided for @msgMatchPropose.
+  ///
+  /// In fr, this message translates to:
+  /// **'Match proposé · {sport}'**
+  String msgMatchPropose(String sport);
+
+  /// No description provided for @msgNViennent.
+  ///
+  /// In fr, this message translates to:
+  /// **'{n, plural, =0{Personne pour l’instant} =1{1 vient} other{{n} viennent}}'**
+  String msgNViennent(int n);
+
+  /// No description provided for @msgNPasDispo.
+  ///
+  /// In fr, this message translates to:
+  /// **'{n} pas dispo'**
+  String msgNPasDispo(int n);
+
+  /// No description provided for @msgJeViens.
+  ///
+  /// In fr, this message translates to:
+  /// **'Je viens'**
+  String get msgJeViens;
+
+  /// No description provided for @msgPasDispo.
+  ///
+  /// In fr, this message translates to:
+  /// **'Pas dispo'**
+  String get msgPasDispo;
+
+  /// No description provided for @msgDiscussion.
+  ///
+  /// In fr, this message translates to:
+  /// **'Discussion'**
+  String get msgDiscussion;
+
+  /// No description provided for @msgVoirLaDiscussion.
+  ///
+  /// In fr, this message translates to:
+  /// **'Voir la discussion'**
+  String get msgVoirLaDiscussion;
+
+  /// No description provided for @msgOuvrirLaDiscussion.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ouvrir la discussion {title}'**
+  String msgOuvrirLaDiscussion(String title);
+
+  /// No description provided for @msgProposerUnMatch.
+  ///
+  /// In fr, this message translates to:
+  /// **'Proposer un match'**
+  String get msgProposerUnMatch;
+
+  /// No description provided for @msgProposerUnMatchDetail.
+  ///
+  /// In fr, this message translates to:
+  /// **'Le sport, le lieu, l’heure : chacun répond « Je viens » ou « Pas dispo ».'**
+  String get msgProposerUnMatchDetail;
+
+  /// No description provided for @msgPartagerUneDiscussion.
+  ///
+  /// In fr, this message translates to:
+  /// **'Partager une discussion'**
+  String get msgPartagerUneDiscussion;
+
+  /// No description provided for @msgPartagerUneDiscussionDetail.
+  ///
+  /// In fr, this message translates to:
+  /// **'Une discussion de la Communauté, à lire ensemble.'**
+  String get msgPartagerUneDiscussionDetail;
+
+  /// No description provided for @msgNouveauSondage.
+  ///
+  /// In fr, this message translates to:
+  /// **'Nouveau sondage'**
+  String get msgNouveauSondage;
+
+  /// No description provided for @msgQuestion.
+  ///
+  /// In fr, this message translates to:
+  /// **'Question'**
+  String get msgQuestion;
+
+  /// No description provided for @msgQuestionPlaceholder.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ex. : Quel créneau pour jeudi ?'**
+  String get msgQuestionPlaceholder;
+
+  /// No description provided for @msgReponseN.
+  ///
+  /// In fr, this message translates to:
+  /// **'Réponse {n}'**
+  String msgReponseN(int n);
+
+  /// No description provided for @msgRetirerLaReponse.
+  ///
+  /// In fr, this message translates to:
+  /// **'Retirer la réponse'**
+  String get msgRetirerLaReponse;
+
+  /// No description provided for @msgAjouterUneReponse.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ajouter une réponse'**
+  String get msgAjouterUneReponse;
+
+  /// No description provided for @msgEnvoyerLeSondage.
+  ///
+  /// In fr, this message translates to:
+  /// **'Envoyer le sondage'**
+  String get msgEnvoyerLeSondage;
+
+  /// No description provided for @msgSport.
+  ///
+  /// In fr, this message translates to:
+  /// **'Sport'**
+  String get msgSport;
+
+  /// No description provided for @msgLieu.
+  ///
+  /// In fr, this message translates to:
+  /// **'Lieu'**
+  String get msgLieu;
+
+  /// No description provided for @msgLieuPlaceholder.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ex. : Arena Five · Terrain 2'**
+  String get msgLieuPlaceholder;
+
+  /// No description provided for @msgQuand.
+  ///
+  /// In fr, this message translates to:
+  /// **'Quand'**
+  String get msgQuand;
+
+  /// No description provided for @msgHeurePassee.
+  ///
+  /// In fr, this message translates to:
+  /// **'Cette heure est déjà passée : choisis plus tard.'**
+  String get msgHeurePassee;
+
+  /// No description provided for @msgProposer.
+  ///
+  /// In fr, this message translates to:
+  /// **'Proposer'**
+  String get msgProposer;
+
+  /// No description provided for @msgEnvoyerAUnAmi.
+  ///
+  /// In fr, this message translates to:
+  /// **'Envoyer à un ami'**
+  String get msgEnvoyerAUnAmi;
+
+  /// No description provided for @msgConversationsRecentes.
+  ///
+  /// In fr, this message translates to:
+  /// **'Conversations récentes'**
+  String get msgConversationsRecentes;
+
+  /// No description provided for @msgEnvoyeeA.
+  ///
+  /// In fr, this message translates to:
+  /// **'Envoyée à {name}'**
+  String msgEnvoyeeA(String name);
+
+  /// No description provided for @msgOuvrir.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ouvrir'**
+  String get msgOuvrir;
+
+  /// No description provided for @msgGroupeCreeLe.
+  ///
+  /// In fr, this message translates to:
+  /// **'Groupe créé le {date}'**
+  String msgGroupeCreeLe(String date);
+
+  /// No description provided for @msgMettreEnSourdine.
+  ///
+  /// In fr, this message translates to:
+  /// **'Mettre en sourdine'**
+  String get msgMettreEnSourdine;
+
+  /// No description provided for @msgMettreEnSourdineDetail.
+  ///
+  /// In fr, this message translates to:
+  /// **'Plus de notifications ni de compteur pour cette conversation.'**
+  String get msgMettreEnSourdineDetail;
+
+  /// No description provided for @msgToiNom.
+  ///
+  /// In fr, this message translates to:
+  /// **'{name} (toi)'**
+  String msgToiNom(String name);
+
+  /// No description provided for @msgAjouterDesAmis.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ajouter des amis'**
+  String get msgAjouterDesAmis;
+
+  /// No description provided for @msgRenommerLeGroupe.
+  ///
+  /// In fr, this message translates to:
+  /// **'Renommer le groupe'**
+  String get msgRenommerLeGroupe;
+
+  /// No description provided for @msgRenommer.
+  ///
+  /// In fr, this message translates to:
+  /// **'Renommer'**
+  String get msgRenommer;
+
+  /// No description provided for @msgNomDuGroupe.
+  ///
+  /// In fr, this message translates to:
+  /// **'Nom du groupe'**
+  String get msgNomDuGroupe;
+
+  /// No description provided for @msgNomDuGroupeAide.
+  ///
+  /// In fr, this message translates to:
+  /// **'Visible par tous les membres du groupe.'**
+  String get msgNomDuGroupeAide;
+
+  /// No description provided for @msgQuitterLeGroupe.
+  ///
+  /// In fr, this message translates to:
+  /// **'Quitter le groupe'**
+  String get msgQuitterLeGroupe;
+
+  /// No description provided for @msgQuitterLeGroupeQ.
+  ///
+  /// In fr, this message translates to:
+  /// **'Quitter « {name} » ?'**
+  String msgQuitterLeGroupeQ(String name);
+
+  /// No description provided for @msgQuitterLeGroupeDetail.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tu ne recevras plus ses messages. Un membre pourra te rajouter.'**
+  String get msgQuitterLeGroupeDetail;
+
+  /// No description provided for @msgQuitter.
+  ///
+  /// In fr, this message translates to:
+  /// **'Quitter'**
+  String get msgQuitter;
+
+  /// No description provided for @msgTuNeVerrasPlus.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tu ne verras plus les messages de {name}.'**
+  String msgTuNeVerrasPlus(String name);
+
+  /// No description provided for @msgConfidentialite.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tes conversations restent sur ton téléphone pour l’instant. Elles seront envoyées à tes amis dès que la synchronisation des messages privés sera prête.'**
+  String get msgConfidentialite;
+
+  /// No description provided for @msgRechercherUnAmi.
+  ///
+  /// In fr, this message translates to:
+  /// **'Rechercher un ami'**
+  String get msgRechercherUnAmi;
+
+  /// No description provided for @msgChoisisDesAmis.
+  ///
+  /// In fr, this message translates to:
+  /// **'Choisis un ou plusieurs amis'**
+  String get msgChoisisDesAmis;
+
+  /// No description provided for @msgCreerLeGroupeN.
+  ///
+  /// In fr, this message translates to:
+  /// **'Créer le groupe ({n})'**
+  String msgCreerLeGroupeN(int n);
+
+  /// No description provided for @msgAjouterNAmis.
+  ///
+  /// In fr, this message translates to:
+  /// **'{n, plural, =1{Ajouter 1 ami} other{Ajouter {n} amis}}'**
+  String msgAjouterNAmis(int n);
+
+  /// No description provided for @msgRetirerX.
+  ///
+  /// In fr, this message translates to:
+  /// **'Retirer {name}'**
+  String msgRetirerX(String name);
+
+  /// No description provided for @msgAucunAmi.
+  ///
+  /// In fr, this message translates to:
+  /// **'Personne à ajouter'**
+  String get msgAucunAmi;
+
+  /// No description provided for @msgAucunAmiDetail.
+  ///
+  /// In fr, this message translates to:
+  /// **'Suis des joueurs dans la Communauté pour les retrouver ici.'**
+  String get msgAucunAmiDetail;
+
+  /// No description provided for @mediaVideo.
+  ///
+  /// In fr, this message translates to:
+  /// **'Vidéo'**
+  String get mediaVideo;
+
+  /// No description provided for @mediaPhotos.
+  ///
+  /// In fr, this message translates to:
+  /// **'Photos'**
+  String get mediaPhotos;
+
+  /// No description provided for @mediaPhotosEtVideo.
+  ///
+  /// In fr, this message translates to:
+  /// **'Photos et vidéo'**
+  String get mediaPhotosEtVideo;
+
+  /// No description provided for @mediaPhotosEtVideoAide.
+  ///
+  /// In fr, this message translates to:
+  /// **'Jusqu’à 8 photos et 1 vidéo · photos 10 Mo, vidéo 25 Mo max.'**
+  String get mediaPhotosEtVideoAide;
+
+  /// No description provided for @mediaNSurM.
+  ///
+  /// In fr, this message translates to:
+  /// **'{n} / {max}'**
+  String mediaNSurM(int n, int max);
+
+  /// No description provided for @mediaNMax.
+  ///
+  /// In fr, this message translates to:
+  /// **'{n, plural, =1{Encore 1 photo possible.} other{Encore {n} photos possibles.}}'**
+  String mediaNMax(int n);
+
+  /// No description provided for @mediaRetirerN.
+  ///
+  /// In fr, this message translates to:
+  /// **'Retirer le média {n}'**
+  String mediaRetirerN(int n);
+
+  /// No description provided for @mediaOuvrirNSurM.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ouvrir le média {n} sur {total}'**
+  String mediaOuvrirNSurM(int n, int total);
+
+  /// No description provided for @mediaVideoTropLourde.
+  ///
+  /// In fr, this message translates to:
+  /// **'{name} dépasse 25 Mo : choisis une vidéo plus courte.'**
+  String mediaVideoTropLourde(String name);
+
+  /// No description provided for @mediaVideoIllisible.
+  ///
+  /// In fr, this message translates to:
+  /// **'Impossible de lire cette vidéo.'**
+  String get mediaVideoIllisible;
+
+  /// No description provided for @mediaLire.
+  ///
+  /// In fr, this message translates to:
+  /// **'Lire'**
+  String get mediaLire;
+
+  /// No description provided for @mediaPause.
+  ///
+  /// In fr, this message translates to:
+  /// **'Pause'**
+  String get mediaPause;
+
+  /// No description provided for @mediaActiverLeSon.
+  ///
+  /// In fr, this message translates to:
+  /// **'Activer le son'**
+  String get mediaActiverLeSon;
+
+  /// No description provided for @mediaCouperLeSon.
+  ///
+  /// In fr, this message translates to:
+  /// **'Couper le son'**
+  String get mediaCouperLeSon;
+
+  /// No description provided for @mediaEcouterLeVocal.
+  ///
+  /// In fr, this message translates to:
+  /// **'Écouter le message vocal'**
+  String get mediaEcouterLeVocal;
+
+  /// No description provided for @mktNeuf.
+  ///
+  /// In fr, this message translates to:
+  /// **'Neuf'**
+  String get mktNeuf;
+
+  /// No description provided for @mktTresBonEtat.
+  ///
+  /// In fr, this message translates to:
+  /// **'Très bon état'**
+  String get mktTresBonEtat;
+
+  /// No description provided for @mktBonEtat.
+  ///
+  /// In fr, this message translates to:
+  /// **'Bon état'**
+  String get mktBonEtat;
+
+  /// No description provided for @mktUse.
+  ///
+  /// In fr, this message translates to:
+  /// **'Usé'**
+  String get mktUse;
+
+  /// No description provided for @mktIndiqueUnPrix.
+  ///
+  /// In fr, this message translates to:
+  /// **'Indique un prix.'**
+  String get mktIndiqueUnPrix;
+
+  /// No description provided for @mktPrixTropEleve.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ce prix semble trop élevé.'**
+  String get mktPrixTropEleve;
+
+  /// No description provided for @mktPasTonPropreAvis.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tu ne peux pas donner un avis sur toi-même.'**
+  String get mktPasTonPropreAvis;
+
+  /// No description provided for @mktChoisisUneNote.
+  ///
+  /// In fr, this message translates to:
+  /// **'Choisis une note de 1 à 5 étoiles.'**
+  String get mktChoisisUneNote;
+
+  /// No description provided for @mktJeVendsUnArticle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Je vends un article'**
+  String get mktJeVendsUnArticle;
+
+  /// No description provided for @mktJeVendsUnArticleDetail.
+  ///
+  /// In fr, this message translates to:
+  /// **'Prix, état et photos : ton post devient une annonce.'**
+  String get mktJeVendsUnArticleDetail;
+
+  /// No description provided for @mktCeQueTuVends.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ce que tu vends'**
+  String get mktCeQueTuVends;
+
+  /// No description provided for @mktTitrePlaceholder.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ex. : Raquette Bullpadel Vertex 03'**
+  String get mktTitrePlaceholder;
+
+  /// No description provided for @mktDescription.
+  ///
+  /// In fr, this message translates to:
+  /// **'Description'**
+  String get mktDescription;
+
+  /// No description provided for @mktPhotosAide.
+  ///
+  /// In fr, this message translates to:
+  /// **'Montre l’article sous plusieurs angles : jusqu’à 8 photos et 1 vidéo.'**
+  String get mktPhotosAide;
+
+  /// No description provided for @mktPrix.
+  ///
+  /// In fr, this message translates to:
+  /// **'Prix'**
+  String get mktPrix;
+
+  /// No description provided for @mktPrixPlaceholder.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ex. : 120'**
+  String get mktPrixPlaceholder;
+
+  /// No description provided for @mktEtat.
+  ///
+  /// In fr, this message translates to:
+  /// **'État'**
+  String get mktEtat;
+
+  /// No description provided for @mktTaille.
+  ///
+  /// In fr, this message translates to:
+  /// **'Taille ou pointure'**
+  String get mktTaille;
+
+  /// No description provided for @mktTaillePlaceholder.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ex. : 42, M'**
+  String get mktTaillePlaceholder;
+
+  /// No description provided for @mktTailleX.
+  ///
+  /// In fr, this message translates to:
+  /// **'Taille {size}'**
+  String mktTailleX(String size);
+
+  /// No description provided for @mktVille.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ville'**
+  String get mktVille;
+
+  /// No description provided for @mktVillePlaceholder.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ex. : La Marsa'**
+  String get mktVillePlaceholder;
+
+  /// No description provided for @mktVendu.
+  ///
+  /// In fr, this message translates to:
+  /// **'Vendu'**
+  String get mktVendu;
+
+  /// No description provided for @mktDisponible.
+  ///
+  /// In fr, this message translates to:
+  /// **'Disponible'**
+  String get mktDisponible;
+
+  /// No description provided for @mktPasDePhoto.
+  ///
+  /// In fr, this message translates to:
+  /// **'Pas encore de photo'**
+  String get mktPasDePhoto;
+
+  /// No description provided for @mktAnnonce.
+  ///
+  /// In fr, this message translates to:
+  /// **'Annonce'**
+  String get mktAnnonce;
+
+  /// No description provided for @mktVoirLAnnonce.
+  ///
+  /// In fr, this message translates to:
+  /// **'Voir l’annonce'**
+  String get mktVoirLAnnonce;
+
+  /// No description provided for @mktEcrireAuVendeur.
+  ///
+  /// In fr, this message translates to:
+  /// **'Écrire au vendeur'**
+  String get mktEcrireAuVendeur;
+
+  /// No description provided for @mktToujoursDisponible.
+  ///
+  /// In fr, this message translates to:
+  /// **'Bonjour ! Est-ce toujours disponible ?'**
+  String get mktToujoursDisponible;
+
+  /// No description provided for @mktMarquerCommeVendu.
+  ///
+  /// In fr, this message translates to:
+  /// **'Marquer comme vendu'**
+  String get mktMarquerCommeVendu;
+
+  /// No description provided for @mktRemettreEnVente.
+  ///
+  /// In fr, this message translates to:
+  /// **'Remettre en vente'**
+  String get mktRemettreEnVente;
+
+  /// No description provided for @mktMarqueVendu.
+  ///
+  /// In fr, this message translates to:
+  /// **'Annonce marquée comme vendue'**
+  String get mktMarqueVendu;
+
+  /// No description provided for @mktDeNouveauEnVente.
+  ///
+  /// In fr, this message translates to:
+  /// **'Annonce de nouveau en vente'**
+  String get mktDeNouveauEnVente;
+
+  /// No description provided for @mktCetArticleEstVendu.
+  ///
+  /// In fr, this message translates to:
+  /// **'Cet article est vendu.'**
+  String get mktCetArticleEstVendu;
+
+  /// No description provided for @mktQuestionsEtCommentairesN.
+  ///
+  /// In fr, this message translates to:
+  /// **'{n, plural, =0{Questions et commentaires} =1{1 question ou commentaire} other{{n} questions et commentaires}}'**
+  String mktQuestionsEtCommentairesN(int n);
+
+  /// No description provided for @mktPoseUneQuestionA.
+  ///
+  /// In fr, this message translates to:
+  /// **'Pose une question à {name}…'**
+  String mktPoseUneQuestionA(String name);
+
+  /// No description provided for @mktAvisSurX.
+  ///
+  /// In fr, this message translates to:
+  /// **'Avis sur {name}'**
+  String mktAvisSurX(String name);
+
+  /// No description provided for @mktAvisDetail.
+  ///
+  /// In fr, this message translates to:
+  /// **'Notes laissées par les acheteurs. Les questions vont dans les commentaires.'**
+  String get mktAvisDetail;
+
+  /// No description provided for @mktPasEncoreDAvis.
+  ///
+  /// In fr, this message translates to:
+  /// **'Pas encore d’avis sur ce vendeur.'**
+  String get mktPasEncoreDAvis;
+
+  /// No description provided for @mktNAvis.
+  ///
+  /// In fr, this message translates to:
+  /// **'{n, plural, =1{1 avis} other{{n} avis}}'**
+  String mktNAvis(int n);
+
+  /// No description provided for @mktNEtoilesNAvis.
+  ///
+  /// In fr, this message translates to:
+  /// **'{stars} étoiles : {n} avis'**
+  String mktNEtoilesNAvis(int stars, int n);
+
+  /// No description provided for @mktVoirLesNAvis.
+  ///
+  /// In fr, this message translates to:
+  /// **'Voir les {n} avis'**
+  String mktVoirLesNAvis(int n);
+
+  /// No description provided for @mktDonnerMonAvis.
+  ///
+  /// In fr, this message translates to:
+  /// **'Donner mon avis'**
+  String get mktDonnerMonAvis;
+
+  /// No description provided for @mktModifierMonAvis.
+  ///
+  /// In fr, this message translates to:
+  /// **'Modifier mon avis'**
+  String get mktModifierMonAvis;
+
+  /// No description provided for @mktToiAvis.
+  ///
+  /// In fr, this message translates to:
+  /// **'{name} (toi)'**
+  String mktToiAvis(String name);
+
+  /// No description provided for @mktAAchete.
+  ///
+  /// In fr, this message translates to:
+  /// **'A acheté : {item}'**
+  String mktAAchete(String item);
+
+  /// No description provided for @mktTonAvisSurX.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ton avis sur {name}'**
+  String mktTonAvisSurX(String name);
+
+  /// No description provided for @mktTaNote.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ta note'**
+  String get mktTaNote;
+
+  /// No description provided for @mktNote1.
+  ///
+  /// In fr, this message translates to:
+  /// **'Mauvais'**
+  String get mktNote1;
+
+  /// No description provided for @mktNote2.
+  ///
+  /// In fr, this message translates to:
+  /// **'Moyen'**
+  String get mktNote2;
+
+  /// No description provided for @mktNote3.
+  ///
+  /// In fr, this message translates to:
+  /// **'Correct'**
+  String get mktNote3;
+
+  /// No description provided for @mktNote4.
+  ///
+  /// In fr, this message translates to:
+  /// **'Bien'**
+  String get mktNote4;
+
+  /// No description provided for @mktNote5.
+  ///
+  /// In fr, this message translates to:
+  /// **'Excellent'**
+  String get mktNote5;
+
+  /// No description provided for @mktTonCommentaire.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ton expérience'**
+  String get mktTonCommentaire;
+
+  /// No description provided for @mktTonCommentairePlaceholder.
+  ///
+  /// In fr, this message translates to:
+  /// **'Article conforme ? Rendez-vous ponctuel ?'**
+  String get mktTonCommentairePlaceholder;
+
+  /// No description provided for @mktPublierMonAvis.
+  ///
+  /// In fr, this message translates to:
+  /// **'Publier mon avis'**
+  String get mktPublierMonAvis;
+
+  /// No description provided for @mktEnregistrer.
+  ///
+  /// In fr, this message translates to:
+  /// **'Enregistrer'**
+  String get mktEnregistrer;
+
+  /// No description provided for @mktSupprimerMonAvis.
+  ///
+  /// In fr, this message translates to:
+  /// **'Supprimer mon avis'**
+  String get mktSupprimerMonAvis;
+
+  /// No description provided for @mktMerciPourTonAvis.
+  ///
+  /// In fr, this message translates to:
+  /// **'Merci pour ton avis !'**
+  String get mktMerciPourTonAvis;
+
+  /// No description provided for @mktAvisSupprime.
+  ///
+  /// In fr, this message translates to:
+  /// **'Avis supprimé'**
+  String get mktAvisSupprime;
+
+  /// No description provided for @msgPhoto.
+  ///
+  /// In fr, this message translates to:
+  /// **'Photo'**
+  String get msgPhoto;
+
+  /// No description provided for @msgPhotoDetail.
+  ///
+  /// In fr, this message translates to:
+  /// **'Depuis ta galerie, jusqu’à 6 d’un coup.'**
+  String get msgPhotoDetail;
+
+  /// No description provided for @msgVideo.
+  ///
+  /// In fr, this message translates to:
+  /// **'Vidéo'**
+  String get msgVideo;
+
+  /// No description provided for @msgVideoDetail.
+  ///
+  /// In fr, this message translates to:
+  /// **'Une vidéo courte, 25 Mo max.'**
+  String get msgVideoDetail;
+
+  /// No description provided for @msgMessageVocal.
+  ///
+  /// In fr, this message translates to:
+  /// **'Message vocal'**
+  String get msgMessageVocal;
+
+  /// No description provided for @msgApercuPhoto.
+  ///
+  /// In fr, this message translates to:
+  /// **'📷 Photo'**
+  String get msgApercuPhoto;
+
+  /// No description provided for @msgApercuPhotoTexte.
+  ///
+  /// In fr, this message translates to:
+  /// **'📷 {text}'**
+  String msgApercuPhotoTexte(String text);
+
+  /// No description provided for @msgApercuVideo.
+  ///
+  /// In fr, this message translates to:
+  /// **'🎬 Vidéo'**
+  String get msgApercuVideo;
+
+  /// No description provided for @msgApercuVideoTexte.
+  ///
+  /// In fr, this message translates to:
+  /// **'🎬 {text}'**
+  String msgApercuVideoTexte(String text);
+
+  /// No description provided for @msgApercuVocal.
+  ///
+  /// In fr, this message translates to:
+  /// **'🎤 Message vocal · {length}'**
+  String msgApercuVocal(String length);
+
+  /// No description provided for @msgEmojis.
+  ///
+  /// In fr, this message translates to:
+  /// **'Emojis'**
+  String get msgEmojis;
+
+  /// No description provided for @msgClavier.
+  ///
+  /// In fr, this message translates to:
+  /// **'Clavier'**
+  String get msgClavier;
+
+  /// No description provided for @msgAjouterEmoji.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ajouter {emoji}'**
+  String msgAjouterEmoji(String emoji);
+
+  /// No description provided for @msgEnregistrerUnVocal.
+  ///
+  /// In fr, this message translates to:
+  /// **'Enregistrer un message vocal'**
+  String get msgEnregistrerUnVocal;
+
+  /// No description provided for @msgEnregistrement.
+  ///
+  /// In fr, this message translates to:
+  /// **'Enregistrement…'**
+  String get msgEnregistrement;
+
+  /// No description provided for @msgEnregistrementEnCours.
+  ///
+  /// In fr, this message translates to:
+  /// **'Enregistrement en cours, {time}'**
+  String msgEnregistrementEnCours(String time);
+
+  /// No description provided for @msgAnnulerLeVocal.
+  ///
+  /// In fr, this message translates to:
+  /// **'Annuler le message vocal'**
+  String get msgAnnulerLeVocal;
+
+  /// No description provided for @msgEnvoyerLeVocal.
+  ///
+  /// In fr, this message translates to:
+  /// **'Envoyer le message vocal'**
+  String get msgEnvoyerLeVocal;
+
+  /// No description provided for @msgVocalTropCourt.
+  ///
+  /// In fr, this message translates to:
+  /// **'Message trop court : parle un peu plus longtemps.'**
+  String get msgVocalTropCourt;
+
+  /// No description provided for @msgMicroRefuse.
+  ///
+  /// In fr, this message translates to:
+  /// **'Micro non autorisé'**
+  String get msgMicroRefuse;
+
+  /// No description provided for @msgMicroRefuseDetail.
+  ///
+  /// In fr, this message translates to:
+  /// **'Autorise le micro pour MatchUp dans les réglages de ton téléphone ou de ton navigateur.'**
+  String get msgMicroRefuseDetail;
+
+  /// No description provided for @msgVocalImpossible.
+  ///
+  /// In fr, this message translates to:
+  /// **'Impossible d’enregistrer un message vocal ici.'**
+  String get msgVocalImpossible;
 }
 
 class _AppLocalizationsDelegate

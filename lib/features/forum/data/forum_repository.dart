@@ -90,6 +90,18 @@ abstract interface class ForumRepository {
   /// « Annuler » on the « Tu as signalé ce message » strip.
   Future<void> undoReport(ForumTarget target, String id);
 
+  /// Équipement · Marketplace: the seller marks the item sold, or for sale again.
+  Future<void> markSold(String postId, {required bool sold});
+
+  /// A seller's reviews by buyers (« Avis »), with the average and the stars.
+  Future<ForumReviews> sellerReviews(String sellerId);
+
+  /// The reader's review of [sellerId] (1 to 5 stars and a few words), written once and then
+  /// updated; the text goes through the FRM-03 check like a reply.
+  Future<void> review(String sellerId, int rating, String text, {String? postId, bool confirmed = false});
+
+  Future<void> deleteReview(String sellerId);
+
   /// When the member is suspended from posting, else null.
   Future<DateTime?> suspendedUntil();
 

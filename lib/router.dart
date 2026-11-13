@@ -57,9 +57,12 @@ import 'features/common/widgets/pro_gate.dart';
 import 'features/explore/controllers/explore_controller.dart';
 import 'features/explore/screens/explore_screen.dart';
 import 'features/explore/screens/search_screen.dart';
+import 'features/forum/screens/chat_screen.dart';
 import 'features/forum/screens/community_screen.dart';
 import 'features/forum/screens/discussion_screen.dart';
 import 'features/forum/screens/forum_search_screen.dart';
+import 'features/forum/screens/messages_screen.dart';
+import 'features/forum/screens/new_conversation_screen.dart';
 import 'features/forum/screens/new_post_screen.dart';
 import 'features/home/screens/home_screen.dart';
 import 'features/home/widgets/player_shell.dart';
@@ -170,6 +173,11 @@ abstract final class Routes {
   static const forumMine = '/frm/mes-posts'; // FRM-01 « Mes posts et favoris »
   static String forumPost(String id) => '/frm/discussion/$id'; // FRM-04
   static String forumEdit(String id) => '/frm/discussion/$id/modifier'; // FRM-02 in edit mode
+  static const messages = '/frm/messages'; // Communauté · Messages (friends and groups)
+  static const messagesNew = '/frm/messages/nouveau'; // « Nouveau message »
+  static String messagesAdd(String id) => '/frm/messages/nouveau?ajouter=$id'; // « Ajouter des amis »
+  static String chat(String id, {String? text}) =>
+      Uri(path: '/frm/messages/c/$id', queryParameters: text == null ? null : {'texte': text}).toString(); // a conversation
   static String game(String id) => '/game/$id'; // GAM-01 / GAM-02
   static String gameWaitlist(String id) => '/game/$id/waitlist'; // GAM-03
   static String gameJoined(String id) => '/game/$id/joined'; // GAM-05
@@ -364,6 +372,12 @@ final routerProvider = Provider<GoRouter>((ref) {
       _root(Routes.forumMine, (_) => const ForumMineScreen()),
       _root('/frm/discussion/:id', (s) => DiscussionScreen(postId: s.pathParameters['id']!)),
       _root('/frm/discussion/:id/modifier', (s) => NewPostScreen(editId: s.pathParameters['id']!)),
+      _root(Routes.messages, (_) => const MessagesScreen()),
+      _root(Routes.messagesNew, (s) => NewConversationScreen(addTo: s.uri.queryParameters['ajouter'])),
+      _root(
+        '/frm/messages/c/:id',
+        (s) => ChatScreen(conversationId: s.pathParameters['id']!, initialText: s.uri.queryParameters['texte']),
+      ),
       StatefulShellRoute.indexedStack(
         builder: (context, state, shell) => PlayerShell(shell: shell),
         branches: [

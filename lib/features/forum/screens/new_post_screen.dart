@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:convert';
 
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -21,6 +20,8 @@ import '../widgets/forum_actions.dart';
 import '../widgets/forum_format.dart';
 import '../widgets/forum_image.dart';
 import '../widgets/forum_markdown.dart';
+import '../widgets/listing_widgets.dart';
+import '../widgets/media_picker.dart';
 import '../widgets/moderation_alert.dart';
 
 /// FRM-02 · Nouveau post (and « Modifier » of an own post with [editId]): category and sport,
@@ -47,6 +48,7 @@ class _NewPostScreenState extends ConsumerState<NewPostScreen> {
   bool _showAiTags = true;
   String? _titleError;
   String? _bodyError;
+  String? _priceError;
   List<SimilarPost> _similar = const [];
   List<TagSuggestion> _aiTags = const [];
   Timer? _debounce;
@@ -54,12 +56,10 @@ class _NewPostScreenState extends ConsumerState<NewPostScreen> {
   static const _maxTitle = 120;
   static const _maxBody = 2000;
   static const _minTitle = 10;
-  static const _maxImages = 4;
+  /// Photos and one video, shown in the feed like a social post.
+  static const _maxMedia = 8;
   static const _maxTags = 5;
   static const _editorMaxLines = 10;
-
-  // Images above this size are refused (FRM-02 « JPG, PNG · 10 Mo max »).
-  static const _maxImageBytes = 10 * 1024 * 1024;
 
   /// Tags offered under the field: the forum's popular ones.
   static const _popular = ['Padel', 'Football', 'Basket', 'Bandeja', 'Technique', 'Crampons', 'Lac2', 'LaMarsa', 'Débutants bienvenus'];
@@ -78,7 +78,15 @@ class _NewPostScreenState extends ConsumerState<NewPostScreen> {
     if (_editing) {
       final t = await _repo.thread(widget.editId!);
       final p = t.post;
-      start = PostDraft(category: p.category, sport: p.sport, title: p.title, body: p.body ?? '', tags: p.tags, images: p.images);
+      start = PostDraft(
+        category: p.category,
+        sport: p.sport,
+        title: p.title,
+        body: p.body ?? '',
+        tags: p.tags,
+        images: p.images,
+        listing: p.listing,
+      );
     } else {
       start = await _repo.loadDraft();
     }
@@ -132,23 +140,25 @@ class _NewPostScreenState extends ConsumerState<NewPostScreen> {
   }
 
   Future<void> _addImages() async {
-    final room = _maxImages - _draft.images.length;
-    if (room <= 0) return;
-    final picked = await ref.read(fileSourceProvider).pickImages();
-    if (!mounted || picked.isEmpty) return;
-    final added = <String>[];
-    for (final f in picked.take(room)) {
-      if (f.bytes == null) continue;
-      if (f.sizeBytes > _maxImageBytes) {
-        MuToast.show(context, tone: MuToastTone.error, title: l10n.forumImageTropLourde(f.name));
-        continue;
-      }
-      final type = f.name.toLowerCase().endsWith('.png') ? 'png' : 'jpeg';
-      added.add('data:image/$type;base64,${base64Encode(f.bytes!)}');
-    }
-    if (picked.length > room) MuToast.show(context, tone: MuToastTone.warning, title: l10n.forumImagesMax(_maxImages));
-    _change(_draft.copyWith(images: [..._draft.images, ...added]));
+    final added = await pickPhotos(context, ref.read(fileSourceProvider), room: _maxMedia - _draft.images.length);
+    if (mounted && added.isNotEmpty) _change(_draft.copyWith(images: [..._draft.images, ...added]));
   }
+
+  Future<void> _addVideo() async {
+    if (_draft.images.length >= _maxMedia) return;
+    final video = await pickVideo(context, ref.read(fileSourceProvider));
+    if (mounted && video != null) _change(_draft.copyWith(images: [..._draft.images, video]));
+  }
+
+  bool get _selling => _draft.listing != null;
+
+  /// Équipement starts as an item for sale; another category is a discussion.
+  void _category(ForumCategory cat) => _change(
+    _draft.copyWith(
+      category: cat,
+      listing: () => cat == ForumCategory.equipment ? (_draft.listing ?? const ForumListing(price: 0, condition: ListingCondition.likeNew)) : null,
+    ),
+  );
 
   bool _validate() {
     final title = _draft.title.trim();
@@ -157,8 +167,9 @@ class _NewPostScreenState extends ConsumerState<NewPostScreen> {
       _bodyError = _draft.body.trim().isEmpty
           ? l10n.forumMessageVide
           : (_draft.body.characters.length > _maxBody ? l10n.forumRetireNCaracteres(_draft.body.characters.length - _maxBody) : null);
+      _priceError = _selling && _draft.listing!.price <= 0 ? l10n.mktIndiqueUnPrix : null;
     });
-    return _titleError == null && _bodyError == null;
+    return _titleError == null && _bodyError == null && _priceError == null;
   }
 
   Future<void> _publish({bool confirmed = false}) async {
@@ -231,15 +242,17 @@ class _NewPostScreenState extends ConsumerState<NewPostScreen> {
                   tags: _draft.tags,
                   createdAt: now,
                   lastActivity: now,
+                  listing: _draft.listing,
                 ),
                 now,
               ),
+              header: _draft.listing == null ? null : ListingSummary(listing: _draft.listing!),
+              media: _draft.images.isEmpty ? null : ForumMediaCollage(media: _draft.images, radius: BorderRadius.zero),
             ),
             const SizedBox(height: MuSpace.s5),
             Text(_draft.title, style: MuType.h2),
             const SizedBox(height: MuSpace.s3),
             ForumMarkdown(_draft.body),
-            if (_draft.images.isNotEmpty) ...[const SizedBox(height: MuSpace.s4), ForumImageGrid(images: _draft.images)],
           ],
         ),
       ),
@@ -279,7 +292,7 @@ class _NewPostScreenState extends ConsumerState<NewPostScreen> {
                                 icon: cat.icon,
                                 glyph: cat.glyph,
                                 selected: _draft.category == cat,
-                                onSelected: (_) => _change(_draft.copyWith(category: cat)),
+                                onSelected: (_) => _category(cat),
                               ),
                           ],
                         ),
@@ -302,12 +315,35 @@ class _NewPostScreenState extends ConsumerState<NewPostScreen> {
                             ),
                           ],
                         ),
+                        if (_draft.category == ForumCategory.equipment) ...[
+                          const SizedBox(height: MuSpace.s2),
+                          MuSwitch(
+                            label: l10n.mktJeVendsUnArticle,
+                            description: l10n.mktJeVendsUnArticleDetail,
+                            icon: PhosphorIcons.storefront(),
+                            value: _selling,
+                            onChanged: (on) => _change(
+                              _draft.copyWith(listing: () => on ? const ForumListing(price: 0, condition: ListingCondition.likeNew) : null),
+                            ),
+                          ),
+                          if (_selling) ...[
+                            const SizedBox(height: MuSpace.s3),
+                            ListingFields(
+                              initial: _draft.listing!.price > 0 ? _draft.listing : null,
+                              priceError: _priceError,
+                              onChanged: (l) {
+                                if (_priceError != null && l.price > 0) setState(() => _priceError = null);
+                                _change(_draft.copyWith(listing: () => l));
+                              },
+                            ),
+                          ],
+                        ],
                         const SizedBox(height: MuSpace.s4),
                         MuTextField(
-                          label: l10n.forumTitre,
+                          label: _selling ? l10n.mktCeQueTuVends : l10n.forumTitre,
                           controller: _title,
                           maxLength: _maxTitle,
-                          placeholder: l10n.forumTitrePlaceholder,
+                          placeholder: _selling ? l10n.mktTitrePlaceholder : l10n.forumTitrePlaceholder,
                           error: _titleError,
                           textCapitalization: TextCapitalization.sentences,
                           onChanged: (v) {
@@ -321,7 +357,7 @@ class _NewPostScreenState extends ConsumerState<NewPostScreen> {
                         ],
                         const SizedBox(height: MuSpace.s5),
                         MuRichTextEditor(
-                          label: l10n.forumMessage,
+                          label: _selling ? l10n.mktDescription : l10n.forumMessage,
                           controller: _body,
                           maxLength: _maxBody,
                           maxLines: _editorMaxLines,
@@ -343,21 +379,14 @@ class _NewPostScreenState extends ConsumerState<NewPostScreen> {
                           },
                         ),
                         const SizedBox(height: MuSpace.s5),
-                        MuFileUpload.grid(
-                          label: l10n.forumImagesFacultatif,
-                          maxFiles: _maxImages,
-                          helper: l10n.forumImagesHint,
-                          files: [
-                            for (final (i, src) in _draft.images.indexed)
-                              MuUploadFile(
-                                id: '$i',
-                                name: l10n.forumImageN(i + 1),
-                                sizeBytes: forumImageBytes(src)?.length ?? 0,
-                                bytes: forumImageBytes(src),
-                              ),
-                          ],
-                          onAdd: _draft.images.length >= _maxImages ? null : _addImages,
-                          onRemove: (f) => _change(_draft.copyWith(images: [..._draft.images]..removeAt(int.parse(f.id)))),
+                        MediaPickerField(
+                          label: l10n.mediaPhotosEtVideo,
+                          helper: _selling ? l10n.mktPhotosAide : l10n.mediaPhotosEtVideoAide,
+                          media: _draft.images,
+                          max: _maxMedia,
+                          onAddPhotos: _addImages,
+                          onAddVideo: _addVideo,
+                          onRemove: (i) => _change(_draft.copyWith(images: [..._draft.images]..removeAt(i))),
                         ),
                         const SizedBox(height: MuSpace.s5),
                         MuTagInput(

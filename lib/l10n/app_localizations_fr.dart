@@ -11382,4 +11382,818 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get forumSignalementAnonyme =>
       'Signalement anonyme · vérifié par un modérateur sous 24 h.';
+
+  @override
+  String get msgPlusDansLaConversation =>
+      'Tu ne fais plus partie de cette conversation.';
+
+  @override
+  String get msgPasAToiMeme => 'Tu ne peux pas t’écrire à toi-même.';
+
+  @override
+  String get msgDonneUnNom => 'Donne un nom au groupe.';
+
+  @override
+  String get msgAuMoinsDeuxAmis =>
+      'Choisis au moins 2 amis pour créer un groupe.';
+
+  @override
+  String get msgSeulLeCreateur => 'Seul le créateur du groupe peut faire ça.';
+
+  @override
+  String get msgEcrisUnMessage => 'Écris un message avant d’envoyer.';
+
+  @override
+  String get msgSondageIncomplet =>
+      'Un sondage a besoin d’une question et de 2 à 4 réponses.';
+
+  @override
+  String get msgIndiqueLeLieu => 'Indique où vous jouez.';
+
+  @override
+  String get msgDiscussionSupprimee => 'Discussion supprimée';
+
+  @override
+  String get msgMessageIntrouvable => 'Ce message n’existe plus.';
+
+  @override
+  String get msgSeulementTesMessages =>
+      'Tu ne peux supprimer que tes messages.';
+
+  @override
+  String get msgMessages => 'Messages';
+
+  @override
+  String get msgNouveauMessage => 'Nouveau message';
+
+  @override
+  String get msgRechercherUneConversation => 'Rechercher une conversation';
+
+  @override
+  String get msgTesAmis => 'Tes amis';
+
+  @override
+  String get msgTesAmisDetail =>
+      'Les membres que tu suis d’abord, puis ceux avec qui tu as joué.';
+
+  @override
+  String get msgTesAmisEtTesGroupes => 'Tes amis et tes groupes';
+
+  @override
+  String get msgAucuneConversation => 'Pas encore de conversation';
+
+  @override
+  String get msgAucuneConversationDetail =>
+      'Écris à un ami ou crée un groupe pour organiser vos prochains matchs.';
+
+  @override
+  String get msgAucunResultatDetail =>
+      'Essaie avec le nom d’un ami ou d’un groupe.';
+
+  @override
+  String msgEcrireA(String name) {
+    return 'Écrire à $name';
+  }
+
+  @override
+  String msgNNonLus(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n non lus',
+      one: '1 non lu',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String msgNNonLusDe(int n, String names) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n non lus · $names',
+      one: '1 non lu · $names',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get msgEnSourdine => 'En sourdine';
+
+  @override
+  String get msgDisBonjour => 'Dis bonjour 👋';
+
+  @override
+  String get msgDisBonjourDetail =>
+      'Propose un match, lance un sondage ou partage une discussion avec « + ».';
+
+  @override
+  String msgToiPrefixe(String text) {
+    return 'Toi : $text';
+  }
+
+  @override
+  String msgAuteurPrefixe(String name, String text) {
+    return '$name : $text';
+  }
+
+  @override
+  String msgApercuSondage(String question) {
+    return '📊 Sondage : $question';
+  }
+
+  @override
+  String msgApercuMatch(String place) {
+    return '⚽ Match proposé · $place';
+  }
+
+  @override
+  String msgApercuPartage(String title) {
+    return '💬 Discussion partagée · $title';
+  }
+
+  @override
+  String get msgMessageMasque => 'Message masqué par la modération';
+
+  @override
+  String get msgAujourdhui => 'Aujourd’hui';
+
+  @override
+  String get msgHier => 'Hier';
+
+  @override
+  String get msgDemain => 'Demain';
+
+  @override
+  String msgACreeLeGroupe(String name) {
+    return '$name a créé le groupe';
+  }
+
+  @override
+  String msgAAjoute(String name, String names) {
+    return '$name a ajouté $names';
+  }
+
+  @override
+  String msgAQuitteLeGroupe(String name) {
+    return '$name a quitté le groupe';
+  }
+
+  @override
+  String msgARenommeLeGroupe(String name, String group) {
+    return '$name a renommé le groupe « $group »';
+  }
+
+  @override
+  String get msgRetourAuxMessages => 'Retour aux messages';
+
+  @override
+  String get msgInfosDuGroupe => 'Infos du groupe';
+
+  @override
+  String get msgInfosDeLaConversation => 'Infos de la conversation';
+
+  @override
+  String get msgInfos => 'Infos';
+
+  @override
+  String msgNMembres(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n membres',
+      one: '1 membre',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get msgEcrireAuGroupe => 'Écrire au groupe';
+
+  @override
+  String get msgActionsDuMessage => 'Actions du message';
+
+  @override
+  String get msgMasqueSeulToi => 'masqué · seul toi le vois';
+
+  @override
+  String get msgEnTrainDEcrire => 'en train d’écrire…';
+
+  @override
+  String msgReactionN(String emoji, int n) {
+    return '$emoji $n';
+  }
+
+  @override
+  String msgReagirAvec(String emoji) {
+    return 'Réagir avec $emoji';
+  }
+
+  @override
+  String get msgCopier => 'Copier';
+
+  @override
+  String get msgMessageCopie => 'Message copié';
+
+  @override
+  String get msgSupprimerCeMessage => 'Supprimer ce message ?';
+
+  @override
+  String get msgSupprimerCeMessageDetail =>
+      'Il restera « Message supprimé » dans la conversation.';
+
+  @override
+  String get msgAjouterAuMessage => 'Ajouter';
+
+  @override
+  String get msgSondage => 'Sondage';
+
+  @override
+  String get msgSondageDetail =>
+      'Une question, jusqu’à 4 réponses, un vote par ami.';
+
+  @override
+  String msgNVotes(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n votes',
+      one: '1 vote',
+      zero: 'Aucun vote',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get msgTapePourVoter => 'Touche une réponse pour voter';
+
+  @override
+  String msgOptionNVotes(String label, int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n votes',
+      one: '1 vote',
+      zero: 'aucun vote',
+    );
+    return '$label, $_temp0';
+  }
+
+  @override
+  String msgMatchPropose(String sport) {
+    return 'Match proposé · $sport';
+  }
+
+  @override
+  String msgNViennent(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n viennent',
+      one: '1 vient',
+      zero: 'Personne pour l’instant',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String msgNPasDispo(int n) {
+    return '$n pas dispo';
+  }
+
+  @override
+  String get msgJeViens => 'Je viens';
+
+  @override
+  String get msgPasDispo => 'Pas dispo';
+
+  @override
+  String get msgDiscussion => 'Discussion';
+
+  @override
+  String get msgVoirLaDiscussion => 'Voir la discussion';
+
+  @override
+  String msgOuvrirLaDiscussion(String title) {
+    return 'Ouvrir la discussion $title';
+  }
+
+  @override
+  String get msgProposerUnMatch => 'Proposer un match';
+
+  @override
+  String get msgProposerUnMatchDetail =>
+      'Le sport, le lieu, l’heure : chacun répond « Je viens » ou « Pas dispo ».';
+
+  @override
+  String get msgPartagerUneDiscussion => 'Partager une discussion';
+
+  @override
+  String get msgPartagerUneDiscussionDetail =>
+      'Une discussion de la Communauté, à lire ensemble.';
+
+  @override
+  String get msgNouveauSondage => 'Nouveau sondage';
+
+  @override
+  String get msgQuestion => 'Question';
+
+  @override
+  String get msgQuestionPlaceholder => 'Ex. : Quel créneau pour jeudi ?';
+
+  @override
+  String msgReponseN(int n) {
+    return 'Réponse $n';
+  }
+
+  @override
+  String get msgRetirerLaReponse => 'Retirer la réponse';
+
+  @override
+  String get msgAjouterUneReponse => 'Ajouter une réponse';
+
+  @override
+  String get msgEnvoyerLeSondage => 'Envoyer le sondage';
+
+  @override
+  String get msgSport => 'Sport';
+
+  @override
+  String get msgLieu => 'Lieu';
+
+  @override
+  String get msgLieuPlaceholder => 'Ex. : Arena Five · Terrain 2';
+
+  @override
+  String get msgQuand => 'Quand';
+
+  @override
+  String get msgHeurePassee =>
+      'Cette heure est déjà passée : choisis plus tard.';
+
+  @override
+  String get msgProposer => 'Proposer';
+
+  @override
+  String get msgEnvoyerAUnAmi => 'Envoyer à un ami';
+
+  @override
+  String get msgConversationsRecentes => 'Conversations récentes';
+
+  @override
+  String msgEnvoyeeA(String name) {
+    return 'Envoyée à $name';
+  }
+
+  @override
+  String get msgOuvrir => 'Ouvrir';
+
+  @override
+  String msgGroupeCreeLe(String date) {
+    return 'Groupe créé le $date';
+  }
+
+  @override
+  String get msgMettreEnSourdine => 'Mettre en sourdine';
+
+  @override
+  String get msgMettreEnSourdineDetail =>
+      'Plus de notifications ni de compteur pour cette conversation.';
+
+  @override
+  String msgToiNom(String name) {
+    return '$name (toi)';
+  }
+
+  @override
+  String get msgAjouterDesAmis => 'Ajouter des amis';
+
+  @override
+  String get msgRenommerLeGroupe => 'Renommer le groupe';
+
+  @override
+  String get msgRenommer => 'Renommer';
+
+  @override
+  String get msgNomDuGroupe => 'Nom du groupe';
+
+  @override
+  String get msgNomDuGroupeAide => 'Visible par tous les membres du groupe.';
+
+  @override
+  String get msgQuitterLeGroupe => 'Quitter le groupe';
+
+  @override
+  String msgQuitterLeGroupeQ(String name) {
+    return 'Quitter « $name » ?';
+  }
+
+  @override
+  String get msgQuitterLeGroupeDetail =>
+      'Tu ne recevras plus ses messages. Un membre pourra te rajouter.';
+
+  @override
+  String get msgQuitter => 'Quitter';
+
+  @override
+  String msgTuNeVerrasPlus(String name) {
+    return 'Tu ne verras plus les messages de $name.';
+  }
+
+  @override
+  String get msgConfidentialite =>
+      'Tes conversations restent sur ton téléphone pour l’instant. Elles seront envoyées à tes amis dès que la synchronisation des messages privés sera prête.';
+
+  @override
+  String get msgRechercherUnAmi => 'Rechercher un ami';
+
+  @override
+  String get msgChoisisDesAmis => 'Choisis un ou plusieurs amis';
+
+  @override
+  String msgCreerLeGroupeN(int n) {
+    return 'Créer le groupe ($n)';
+  }
+
+  @override
+  String msgAjouterNAmis(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Ajouter $n amis',
+      one: 'Ajouter 1 ami',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String msgRetirerX(String name) {
+    return 'Retirer $name';
+  }
+
+  @override
+  String get msgAucunAmi => 'Personne à ajouter';
+
+  @override
+  String get msgAucunAmiDetail =>
+      'Suis des joueurs dans la Communauté pour les retrouver ici.';
+
+  @override
+  String get mediaVideo => 'Vidéo';
+
+  @override
+  String get mediaPhotos => 'Photos';
+
+  @override
+  String get mediaPhotosEtVideo => 'Photos et vidéo';
+
+  @override
+  String get mediaPhotosEtVideoAide =>
+      'Jusqu’à 8 photos et 1 vidéo · photos 10 Mo, vidéo 25 Mo max.';
+
+  @override
+  String mediaNSurM(int n, int max) {
+    return '$n / $max';
+  }
+
+  @override
+  String mediaNMax(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Encore $n photos possibles.',
+      one: 'Encore 1 photo possible.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String mediaRetirerN(int n) {
+    return 'Retirer le média $n';
+  }
+
+  @override
+  String mediaOuvrirNSurM(int n, int total) {
+    return 'Ouvrir le média $n sur $total';
+  }
+
+  @override
+  String mediaVideoTropLourde(String name) {
+    return '$name dépasse 25 Mo : choisis une vidéo plus courte.';
+  }
+
+  @override
+  String get mediaVideoIllisible => 'Impossible de lire cette vidéo.';
+
+  @override
+  String get mediaLire => 'Lire';
+
+  @override
+  String get mediaPause => 'Pause';
+
+  @override
+  String get mediaActiverLeSon => 'Activer le son';
+
+  @override
+  String get mediaCouperLeSon => 'Couper le son';
+
+  @override
+  String get mediaEcouterLeVocal => 'Écouter le message vocal';
+
+  @override
+  String get mktNeuf => 'Neuf';
+
+  @override
+  String get mktTresBonEtat => 'Très bon état';
+
+  @override
+  String get mktBonEtat => 'Bon état';
+
+  @override
+  String get mktUse => 'Usé';
+
+  @override
+  String get mktIndiqueUnPrix => 'Indique un prix.';
+
+  @override
+  String get mktPrixTropEleve => 'Ce prix semble trop élevé.';
+
+  @override
+  String get mktPasTonPropreAvis =>
+      'Tu ne peux pas donner un avis sur toi-même.';
+
+  @override
+  String get mktChoisisUneNote => 'Choisis une note de 1 à 5 étoiles.';
+
+  @override
+  String get mktJeVendsUnArticle => 'Je vends un article';
+
+  @override
+  String get mktJeVendsUnArticleDetail =>
+      'Prix, état et photos : ton post devient une annonce.';
+
+  @override
+  String get mktCeQueTuVends => 'Ce que tu vends';
+
+  @override
+  String get mktTitrePlaceholder => 'Ex. : Raquette Bullpadel Vertex 03';
+
+  @override
+  String get mktDescription => 'Description';
+
+  @override
+  String get mktPhotosAide =>
+      'Montre l’article sous plusieurs angles : jusqu’à 8 photos et 1 vidéo.';
+
+  @override
+  String get mktPrix => 'Prix';
+
+  @override
+  String get mktPrixPlaceholder => 'Ex. : 120';
+
+  @override
+  String get mktEtat => 'État';
+
+  @override
+  String get mktTaille => 'Taille ou pointure';
+
+  @override
+  String get mktTaillePlaceholder => 'Ex. : 42, M';
+
+  @override
+  String mktTailleX(String size) {
+    return 'Taille $size';
+  }
+
+  @override
+  String get mktVille => 'Ville';
+
+  @override
+  String get mktVillePlaceholder => 'Ex. : La Marsa';
+
+  @override
+  String get mktVendu => 'Vendu';
+
+  @override
+  String get mktDisponible => 'Disponible';
+
+  @override
+  String get mktPasDePhoto => 'Pas encore de photo';
+
+  @override
+  String get mktAnnonce => 'Annonce';
+
+  @override
+  String get mktVoirLAnnonce => 'Voir l’annonce';
+
+  @override
+  String get mktEcrireAuVendeur => 'Écrire au vendeur';
+
+  @override
+  String get mktToujoursDisponible => 'Bonjour ! Est-ce toujours disponible ?';
+
+  @override
+  String get mktMarquerCommeVendu => 'Marquer comme vendu';
+
+  @override
+  String get mktRemettreEnVente => 'Remettre en vente';
+
+  @override
+  String get mktMarqueVendu => 'Annonce marquée comme vendue';
+
+  @override
+  String get mktDeNouveauEnVente => 'Annonce de nouveau en vente';
+
+  @override
+  String get mktCetArticleEstVendu => 'Cet article est vendu.';
+
+  @override
+  String mktQuestionsEtCommentairesN(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n questions et commentaires',
+      one: '1 question ou commentaire',
+      zero: 'Questions et commentaires',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String mktPoseUneQuestionA(String name) {
+    return 'Pose une question à $name…';
+  }
+
+  @override
+  String mktAvisSurX(String name) {
+    return 'Avis sur $name';
+  }
+
+  @override
+  String get mktAvisDetail =>
+      'Notes laissées par les acheteurs. Les questions vont dans les commentaires.';
+
+  @override
+  String get mktPasEncoreDAvis => 'Pas encore d’avis sur ce vendeur.';
+
+  @override
+  String mktNAvis(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n avis',
+      one: '1 avis',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String mktNEtoilesNAvis(int stars, int n) {
+    return '$stars étoiles : $n avis';
+  }
+
+  @override
+  String mktVoirLesNAvis(int n) {
+    return 'Voir les $n avis';
+  }
+
+  @override
+  String get mktDonnerMonAvis => 'Donner mon avis';
+
+  @override
+  String get mktModifierMonAvis => 'Modifier mon avis';
+
+  @override
+  String mktToiAvis(String name) {
+    return '$name (toi)';
+  }
+
+  @override
+  String mktAAchete(String item) {
+    return 'A acheté : $item';
+  }
+
+  @override
+  String mktTonAvisSurX(String name) {
+    return 'Ton avis sur $name';
+  }
+
+  @override
+  String get mktTaNote => 'Ta note';
+
+  @override
+  String get mktNote1 => 'Mauvais';
+
+  @override
+  String get mktNote2 => 'Moyen';
+
+  @override
+  String get mktNote3 => 'Correct';
+
+  @override
+  String get mktNote4 => 'Bien';
+
+  @override
+  String get mktNote5 => 'Excellent';
+
+  @override
+  String get mktTonCommentaire => 'Ton expérience';
+
+  @override
+  String get mktTonCommentairePlaceholder =>
+      'Article conforme ? Rendez-vous ponctuel ?';
+
+  @override
+  String get mktPublierMonAvis => 'Publier mon avis';
+
+  @override
+  String get mktEnregistrer => 'Enregistrer';
+
+  @override
+  String get mktSupprimerMonAvis => 'Supprimer mon avis';
+
+  @override
+  String get mktMerciPourTonAvis => 'Merci pour ton avis !';
+
+  @override
+  String get mktAvisSupprime => 'Avis supprimé';
+
+  @override
+  String get msgPhoto => 'Photo';
+
+  @override
+  String get msgPhotoDetail => 'Depuis ta galerie, jusqu’à 6 d’un coup.';
+
+  @override
+  String get msgVideo => 'Vidéo';
+
+  @override
+  String get msgVideoDetail => 'Une vidéo courte, 25 Mo max.';
+
+  @override
+  String get msgMessageVocal => 'Message vocal';
+
+  @override
+  String get msgApercuPhoto => '📷 Photo';
+
+  @override
+  String msgApercuPhotoTexte(String text) {
+    return '📷 $text';
+  }
+
+  @override
+  String get msgApercuVideo => '🎬 Vidéo';
+
+  @override
+  String msgApercuVideoTexte(String text) {
+    return '🎬 $text';
+  }
+
+  @override
+  String msgApercuVocal(String length) {
+    return '🎤 Message vocal · $length';
+  }
+
+  @override
+  String get msgEmojis => 'Emojis';
+
+  @override
+  String get msgClavier => 'Clavier';
+
+  @override
+  String msgAjouterEmoji(String emoji) {
+    return 'Ajouter $emoji';
+  }
+
+  @override
+  String get msgEnregistrerUnVocal => 'Enregistrer un message vocal';
+
+  @override
+  String get msgEnregistrement => 'Enregistrement…';
+
+  @override
+  String msgEnregistrementEnCours(String time) {
+    return 'Enregistrement en cours, $time';
+  }
+
+  @override
+  String get msgAnnulerLeVocal => 'Annuler le message vocal';
+
+  @override
+  String get msgEnvoyerLeVocal => 'Envoyer le message vocal';
+
+  @override
+  String get msgVocalTropCourt =>
+      'Message trop court : parle un peu plus longtemps.';
+
+  @override
+  String get msgMicroRefuse => 'Micro non autorisé';
+
+  @override
+  String get msgMicroRefuseDetail =>
+      'Autorise le micro pour MatchUp dans les réglages de ton téléphone ou de ton navigateur.';
+
+  @override
+  String get msgVocalImpossible =>
+      'Impossible d’enregistrer un message vocal ici.';
 }

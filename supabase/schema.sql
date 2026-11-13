@@ -421,6 +421,62 @@ drop policy if exists "forum_reactions_ecriture" on public.forum_reactions;
 create policy "forum_reactions_lecture" on public.forum_reactions for select to authenticated using (true);
 create policy "forum_reactions_ecriture" on public.forum_reactions for all to authenticated using (owner_id = auth.uid()) with check (owner_id = auth.uid() and "auteur_id" = auth.uid()::text);
 
+-- forum_annonces (shared)
+create table if not exists public.forum_annonces (
+  owner_id uuid not null default auth.uid() references auth.users (id) on delete cascade,
+  "sujet_id" text,
+  "auteur_id" text not null,
+  "prix" double precision not null,
+  "etat" text not null,
+  "taille" text,
+  "ville" text,
+  "statut" text not null,
+  "maj_le" text not null,
+  primary key (owner_id, "sujet_id")
+);
+alter table public.forum_annonces add column if not exists "sujet_id" text;
+alter table public.forum_annonces add column if not exists "auteur_id" text;
+alter table public.forum_annonces add column if not exists "prix" double precision;
+alter table public.forum_annonces add column if not exists "etat" text;
+alter table public.forum_annonces add column if not exists "taille" text;
+alter table public.forum_annonces add column if not exists "ville" text;
+alter table public.forum_annonces add column if not exists "statut" text;
+alter table public.forum_annonces add column if not exists "maj_le" text;
+alter table public.forum_annonces enable row level security;
+drop policy if exists "forum_annonces_lecture" on public.forum_annonces;
+drop policy if exists "forum_annonces_ecriture" on public.forum_annonces;
+create policy "forum_annonces_lecture" on public.forum_annonces for select to authenticated using (true);
+create policy "forum_annonces_ecriture" on public.forum_annonces for all to authenticated using (owner_id = auth.uid()) with check (owner_id = auth.uid() and "auteur_id" = auth.uid()::text);
+
+-- forum_avis (shared)
+create table if not exists public.forum_avis (
+  owner_id uuid not null default auth.uid() references auth.users (id) on delete cascade,
+  "id" text,
+  "auteur_id" text not null,
+  "vendeur_id" text not null,
+  "sujet_id" text,
+  "note" bigint not null,
+  "texte" text not null,
+  "statut" text not null,
+  "cree_le" text not null,
+  "modifie_le" text,
+  primary key (owner_id, "id")
+);
+alter table public.forum_avis add column if not exists "id" text;
+alter table public.forum_avis add column if not exists "auteur_id" text;
+alter table public.forum_avis add column if not exists "vendeur_id" text;
+alter table public.forum_avis add column if not exists "sujet_id" text;
+alter table public.forum_avis add column if not exists "note" bigint;
+alter table public.forum_avis add column if not exists "texte" text;
+alter table public.forum_avis add column if not exists "statut" text;
+alter table public.forum_avis add column if not exists "cree_le" text;
+alter table public.forum_avis add column if not exists "modifie_le" text;
+alter table public.forum_avis enable row level security;
+drop policy if exists "forum_avis_lecture" on public.forum_avis;
+drop policy if exists "forum_avis_ecriture" on public.forum_avis;
+create policy "forum_avis_lecture" on public.forum_avis for select to authenticated using (true);
+create policy "forum_avis_ecriture" on public.forum_avis for all to authenticated using (owner_id = auth.uid()) with check (owner_id = auth.uid() and "auteur_id" = auth.uid()::text);
+
 -- forum_signalements (owner)
 create table if not exists public.forum_signalements (
   owner_id uuid not null default auth.uid() references auth.users (id) on delete cascade,

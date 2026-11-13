@@ -733,4 +733,101 @@ const schemaVersions = <int, List<String>>{
       cree_le TEXT NOT NULL
     )''',
   ],
+
+  // ── v6 · Communauté: Équipement as a marketplace, messages and group chats — Hani ──────────
+  // Listings (`forum_annonces`, one per Équipement post that sells something) and buyers'
+  // reviews of sellers (`forum_avis`, one per buyer and seller) are shared and synced like the
+  // forum. The chats follow the same rules (UUID ids, the writer in `auteur_id`, one row per vote
+  // and reaction) but are not synced yet: private conversations need a « participants only »
+  // scope (lib/core/sync, Anwar), so these rows stay on the phone until then.
+  6: [
+    '''
+    CREATE TABLE forum_annonces (
+      sujet_id TEXT PRIMARY KEY,
+      auteur_id TEXT NOT NULL,
+      prix REAL NOT NULL,
+      etat TEXT NOT NULL,
+      taille TEXT,
+      ville TEXT,
+      statut TEXT NOT NULL DEFAULT 'disponible',
+      maj_le TEXT NOT NULL
+    )''',
+    '''
+    CREATE TABLE forum_avis (
+      id TEXT PRIMARY KEY,
+      auteur_id TEXT NOT NULL,
+      vendeur_id TEXT NOT NULL,
+      sujet_id TEXT,
+      note INTEGER NOT NULL,
+      texte TEXT NOT NULL DEFAULT '',
+      statut TEXT NOT NULL DEFAULT 'publie',
+      cree_le TEXT NOT NULL,
+      modifie_le TEXT,
+      UNIQUE (auteur_id, vendeur_id)
+    )''',
+    'CREATE INDEX forum_avis_vendeur ON forum_avis (vendeur_id)',
+    '''
+    CREATE TABLE msg_conversations (
+      id TEXT PRIMARY KEY,
+      auteur_id TEXT NOT NULL,
+      type TEXT NOT NULL,
+      nom TEXT,
+      cree_le TEXT NOT NULL
+    )''',
+    '''
+    CREATE TABLE msg_participants (
+      conversation_id TEXT NOT NULL,
+      membre_id TEXT NOT NULL,
+      auteur_id TEXT NOT NULL,
+      role TEXT NOT NULL DEFAULT 'membre',
+      rejoint_le TEXT NOT NULL,
+      quitte_le TEXT,
+      PRIMARY KEY (conversation_id, membre_id)
+    )''',
+    'CREATE INDEX msg_participants_membre ON msg_participants (membre_id)',
+    '''
+    CREATE TABLE msg_messages (
+      id TEXT PRIMARY KEY,
+      conversation_id TEXT NOT NULL,
+      auteur_id TEXT NOT NULL,
+      type TEXT NOT NULL DEFAULT 'texte',
+      contenu TEXT NOT NULL DEFAULT '',
+      donnees TEXT,
+      reponse_a_id TEXT,
+      statut TEXT NOT NULL DEFAULT 'publie',
+      score_ia REAL NOT NULL DEFAULT 0,
+      cree_le TEXT NOT NULL,
+      modifie_le TEXT
+    )''',
+    'CREATE INDEX msg_messages_conversation ON msg_messages (conversation_id, cree_le)',
+    '''
+    CREATE TABLE msg_reactions (
+      id TEXT PRIMARY KEY,
+      message_id TEXT NOT NULL,
+      auteur_id TEXT NOT NULL,
+      emoji TEXT NOT NULL,
+      cree_le TEXT NOT NULL,
+      UNIQUE (message_id, auteur_id, emoji)
+    )''',
+    'CREATE INDEX msg_reactions_message ON msg_reactions (message_id)',
+    '''
+    CREATE TABLE msg_votes (
+      id TEXT PRIMARY KEY,
+      message_id TEXT NOT NULL,
+      auteur_id TEXT NOT NULL,
+      choix TEXT NOT NULL,
+      cree_le TEXT NOT NULL,
+      UNIQUE (message_id, auteur_id)
+    )''',
+    'CREATE INDEX msg_votes_message ON msg_votes (message_id)',
+    // Private to the member: how far they read and whether the conversation is muted.
+    '''
+    CREATE TABLE msg_lectures (
+      conversation_id TEXT NOT NULL,
+      utilisateur_id TEXT NOT NULL,
+      lu_jusqua TEXT,
+      sourdine INTEGER NOT NULL DEFAULT 0,
+      PRIMARY KEY (conversation_id, utilisateur_id)
+    )''',
+  ],
 };

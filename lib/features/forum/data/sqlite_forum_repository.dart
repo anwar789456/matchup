@@ -35,6 +35,9 @@ class SqliteForumRepository implements ForumRepository {
   static const _draftKey = 'forum_nouveau_post';
   static const _pageMax = 50;
 
+  /// Photos and videos of a post (Facebook-like: a listing shows several angles).
+  static const maxMedia = 8;
+
   /// The member using the app (Supabase user id, or the demo player).
   String get meId => _meId();
 
@@ -196,6 +199,17 @@ class SqliteForumRepository implements ForumRepository {
         r['cible_id']! as String,
     };
     final handle = members[me]?.handle;
+    final listings = {
+      for (final a in await db.rawQuery('SELECT * FROM forum_annonces WHERE sujet_id IN (${_marks(ids.length)})', ids))
+        a['sujet_id']! as String: ForumListing(
+          price: (a['prix']! as num).toDouble(),
+          condition: ListingCondition.fromCode(a['etat'] as String?),
+          size: a['taille'] as String?,
+          city: a['ville'] as String?,
+          sold: a['statut'] == 'vendu',
+        ),
+    };
+    final ratings = await _sellerRatings(db, {for (final p in rows) if (listings.containsKey(p.id)) p.author});
     return [
       for (final p in rows)
         () {
@@ -225,9 +239,24 @@ class SqliteForumRepository implements ForumRepository {
             editedAt: r['modifie_le'] == null ? null : DateTime.parse(r['modifie_le']! as String),
             lastActivity: p.lastActivity,
             mine: mine[p.id]!.copyWith(saved: saved.contains(p.id), following: followed.contains(p.id)),
+            listing: listings[p.id],
+            sellerRating: listings.containsKey(p.id) ? ratings[p.author] : null,
           );
         }(),
     ];
+  }
+
+  /// Each seller's average from the published reviews.
+  Future<Map<String, ForumRating>> _sellerRatings(DatabaseExecutor db, Set<String> sellers) async {
+    if (sellers.isEmpty) return const {};
+    return {
+      for (final r in await db.rawQuery(
+        "SELECT vendeur_id, AVG(note) AS moyenne, COUNT(*) AS n FROM forum_avis WHERE statut = 'publie' "
+        'AND vendeur_id IN (${_marks(sellers.length)}) GROUP BY vendeur_id',
+        sellers.toList(),
+      ))
+        r['vendeur_id']! as String: ForumRating((r['moyenne']! as num).toDouble(), r['n']! as int),
+    };
   }
 
   /// « Tendance »: (score + 2 × replies + reactions + 1) / (hours since last activity + 2)^1.3.
@@ -284,7 +313,8 @@ class SqliteForumRepository implements ForumRepository {
     }
     final rows = await _rows(db, await db.query('forum_sujets', where: where.join(' AND '), whereArgs: args));
     rows.sort((a, b) {
-      final pin = (b.row['epingle']! as int).compareTo(a.row['epingle']! as int);
+      // Pinned posts lead « Tendance »; « Récents » is the plain timeline, newest first.
+      final pin = query.sort == ForumSort.trending ? (b.row['epingle']! as int).compareTo(a.row['epingle']! as int) : 0;
       if (pin != 0) return pin;
       final byMode = switch (query.sort) {
         ForumSort.trending => _trend(b).compareTo(_trend(a)),
@@ -474,6 +504,7 @@ class SqliteForumRepository implements ForumRepository {
     final body = draft.body.trim();
     if (title.length < 10) throw ForumRuleException(l10n.forumTitreTropCourt);
     if (body.isEmpty) throw ForumRuleException(l10n.forumMessageVide);
+    final listing = _listingOf(draft);
     final a = _control('$title\n$body', confirmed);
     final me = meId;
     final id = newForumId();
@@ -487,7 +518,7 @@ class SqliteForumRepository implements ForumRepository {
         'categorie': draft.category.code,
         'sport': draft.sport?.name,
         'tags': jsonEncode(ForumAi.cleanTags(draft.tags)),
-        'images': jsonEncode(draft.images.take(4).toList()),
+        'images': jsonEncode(draft.images.take(maxMedia).toList()),
         'mentions': jsonEncode(ForumAi.mentions(body)),
         'statut': a.alert ? ForumStatus.hidden.code : ForumStatus.published.code,
         'publie_malgre_alerte': a.alert ? 1 : 0,
@@ -500,9 +531,37 @@ class SqliteForumRepository implements ForumRepository {
         'type': 'sujet',
         'cible_id': id,
       }, conflictAlgorithm: ConflictAlgorithm.ignore);
+      if (listing != null) await _saveListing(txn, id, listing);
     });
     return _post(db, id);
   }
+
+  /// The listing of an Équipement draft, checked; null for a discussion.
+  ForumListing? _listingOf(PostDraft draft) {
+    final l = draft.listing;
+    if (l == null || draft.category != ForumCategory.equipment) return null;
+    if (l.price <= 0) throw ForumRuleException(l10n.mktIndiqueUnPrix);
+    if (l.price > maxPrice) throw ForumRuleException(l10n.mktPrixTropEleve);
+    return l;
+  }
+
+  /// No equipment costs more on the Communauté.
+  static const double maxPrice = 20000;
+
+  Future<void> _saveListing(DatabaseExecutor db, String postId, ForumListing l) async {
+    final values = {
+      'auteur_id': meId,
+      'prix': l.price,
+      'etat': l.condition.code,
+      'taille': _blankToNull(l.size),
+      'ville': _blankToNull(l.city),
+      'maj_le': _nowIso,
+    };
+    final updated = await db.update('forum_annonces', values, where: 'sujet_id = ? AND auteur_id = ?', whereArgs: [postId, meId]);
+    if (updated == 0) await db.insert('forum_annonces', {'sujet_id': postId, 'statut': 'disponible', ...values});
+  }
+
+  static String? _blankToNull(String? s) => s == null || s.trim().isEmpty ? null : s.trim();
 
   @override
   Future<ForumPost> editPost(String postId, PostDraft draft, {bool confirmed = false}) async {
@@ -513,8 +572,14 @@ class SqliteForumRepository implements ForumRepository {
     final title = draft.title.trim();
     final body = draft.body.trim();
     if (title.length < 10) throw ForumRuleException(l10n.forumTitreTropCourt);
+    final listing = _listingOf(draft);
     final a = _control('$title\n$body', confirmed);
     final hide = a.alert && row['statut'] == ForumStatus.published.code;
+    if (listing != null) {
+      await _saveListing(db, postId, listing);
+    } else {
+      await db.delete('forum_annonces', where: 'sujet_id = ? AND auteur_id = ?', whereArgs: [postId, meId]);
+    }
     await db.update(
       'forum_sujets',
       {
@@ -523,7 +588,7 @@ class SqliteForumRepository implements ForumRepository {
         'categorie': draft.category.code,
         'sport': draft.sport?.name,
         'tags': jsonEncode(ForumAi.cleanTags(draft.tags)),
-        'images': jsonEncode(draft.images.take(4).toList()),
+        'images': jsonEncode(draft.images.take(maxMedia).toList()),
         'mentions': jsonEncode(ForumAi.mentions(body)),
         'score_ia': a.score,
         'motif_ia': a.score >= 0.15 ? a.reason : null,
@@ -543,6 +608,87 @@ class SqliteForumRepository implements ForumRepository {
     final row = await _row(db, ForumTarget.post, postId);
     if (row['auteur_id'] != meId) throw ForumRuleException(l10n.forumSeulLAuteur);
     await db.update('forum_sujets', {'statut': ForumStatus.deleted.code}, where: 'id = ? AND auteur_id = ?', whereArgs: [postId, meId]);
+  }
+
+  // ── Marketplace ───────────────────────────────────────────────────────────────────────────
+
+  @override
+  Future<void> markSold(String postId, {required bool sold}) async {
+    final db = await _db;
+    final updated = await db.update(
+      'forum_annonces',
+      {'statut': sold ? 'vendu' : 'disponible', 'maj_le': _nowIso},
+      where: 'sujet_id = ? AND auteur_id = ?',
+      whereArgs: [postId, meId],
+    );
+    if (updated == 0) throw ForumRuleException(l10n.forumSeulLAuteur);
+  }
+
+  @override
+  Future<ForumReviews> sellerReviews(String sellerId) async {
+    final db = await _db;
+    final members = await _members(db);
+    final me = meId;
+    final rows = await db.rawQuery(
+      'SELECT a.*, s.titre FROM forum_avis a LEFT JOIN forum_sujets s ON s.id = a.sujet_id '
+      "WHERE a.vendeur_id = ? AND (a.statut = 'publie' OR a.auteur_id = ?) ORDER BY a.cree_le DESC",
+      [sellerId, me],
+    );
+    final blocked = await _blocked(db);
+    final reviews = [
+      for (final r in rows)
+        if (!blocked.contains(r['auteur_id']))
+          ForumReview(
+            id: r['id']! as String,
+            author: members[r['auteur_id']] ?? _unknown(r['auteur_id']! as String),
+            rating: r['note']! as int,
+            text: r['texte'] as String? ?? '',
+            item: r['titre'] as String?,
+            createdAt: DateTime.parse(r['cree_le']! as String),
+            mine: r['auteur_id'] == me,
+            hidden: r['statut'] != 'publie',
+          ),
+    ];
+    final stars = List.filled(5, 0);
+    for (final r in reviews) {
+      if (!r.hidden) stars[5 - r.rating]++;
+    }
+    return ForumReviews(
+      seller: members[sellerId] ?? _unknown(sellerId),
+      reviews: reviews,
+      stars: stars,
+      mine: reviews.where((r) => r.mine).firstOrNull,
+    );
+  }
+
+  @override
+  Future<void> review(String sellerId, int rating, String text, {String? postId, bool confirmed = false}) async {
+    if (sellerId == meId) throw ForumRuleException(l10n.mktPasTonPropreAvis);
+    if (rating < 1 || rating > 5) throw ForumRuleException(l10n.mktChoisisUneNote);
+    final body = text.trim();
+    final db = await _db;
+    await _checkCanWrite(db);
+    final a = body.isEmpty ? null : _control(body, confirmed);
+    final values = {
+      'note': rating,
+      'texte': body,
+      'sujet_id': postId,
+      'statut': a != null && a.alert ? ForumStatus.hidden.code : ForumStatus.published.code,
+      'modifie_le': _nowIso,
+    };
+    await db.transaction((txn) async {
+      await _ensureMe(txn);
+      final updated = await txn.update('forum_avis', values, where: 'auteur_id = ? AND vendeur_id = ?', whereArgs: [meId, sellerId]);
+      if (updated == 0) {
+        await txn.insert('forum_avis', {'id': newForumId(), 'auteur_id': meId, 'vendeur_id': sellerId, 'cree_le': _nowIso, ...values});
+      }
+    });
+  }
+
+  @override
+  Future<void> deleteReview(String sellerId) async {
+    final db = await _db;
+    await db.delete('forum_avis', where: 'auteur_id = ? AND vendeur_id = ?', whereArgs: [meId, sellerId]);
   }
 
   // ── Replies ───────────────────────────────────────────────────────────────────────────────
